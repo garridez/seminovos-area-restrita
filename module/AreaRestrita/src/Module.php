@@ -5,15 +5,14 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace AreaRestrita;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-
-class IndexController extends AbstractActionController
+class Module
 {
-    public function indexAction()
+    const VERSION = '3.0.3-dev';
+
+    public function getConfig()
     {
-        return new ViewModel();
+        return include __DIR__ . '/../config/module.config.php';
     }
 }

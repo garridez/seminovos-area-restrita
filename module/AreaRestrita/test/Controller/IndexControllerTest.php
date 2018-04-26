@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ApplicationTest\Controller;
+namespace AreaRestritaTest\Controller;
 
 use Application\Controller\IndexController;
 use Zend\Stdlib\ArrayUtils;
