@@ -10,7 +10,23 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
 return [
-    // ...
+    'ApiClient' => [
+        'credentials' => [
+            'serverUrl' => 'http://api2.seminovosbh.com.br'
+        ],
+        'headers' => [
+            'Accept' => 'application/vnd.seminovos-bh.v1+json'
+        ]
+    ],
+    'cache' => array(
+        'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
+        'options' => array(
+            'ttl' => 3600,
+            'cacheDir' => 'data/cache',
+        ),
+        'plugins' => array(
+            'Serializer',
+        )
+    )
 ];

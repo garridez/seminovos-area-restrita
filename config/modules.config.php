@@ -21,5 +21,6 @@ return [
     'Zend\Cache',
     'Zend\Router',
     'Zend\Validator',
+    'SnBH\ApiClientModule',
     'AreaRestrita',
 ];
