@@ -1,30 +1,9 @@
 {
-  "name": "site",
-  "version": "1.0.0",
-  "description": "## Introduction",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
-    "watch-poll": "npm run watch -- --watch-poll",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "bootstrap": "^4.1.0",
-    "cross-env": "^5.1.4",
-    "gulp": "^3.9.1",
-    "jquery": "^3.3.1",
-    "laravel-mix": "^2.1.11"
+  "name": "site", "version": "1.0.0", "description": "## Introduction", "main": "index.js", "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", "dev": "npm run development", "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js", "watch": "npm run development -- --watch", "watch-poll": "npm run watch -- --watch-poll", "prod": "npm run production", "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  }, "repository": {
+    "type": "git", "url": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+  }, "author": "", "license": "ISC", "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme", "dependencies": {}, "devDependencies": {
+    "bootstrap": "^4.1.1", "cross-env": "^5.1.4", "font-awesome": "^4.7.0", "gulp": "^3.9.1", "jquery": "^3.3.1", "laravel-mix": "^2.1.11"
   }
 }
