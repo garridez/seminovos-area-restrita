@@ -35,12 +35,12 @@
         }
     },
     "repositories": [{
-         "type": "vcs",
-         "url": "https://bitbucket.org/seminovosbh/api-client-module.git"
-     }, {
-         "type": "vcs",
-         "url": "https://bitbucket.org/seminovosbh/api-client.git"
-     }],
+            "type": "vcs",
+            "url": "https://bitbucket.org/seminovosbh/api-client-module.git"
+        }, {
+            "type": "vcs",
+            "url": "https://bitbucket.org/seminovosbh/api-client.git"
+        }],
     "extra": {
         "sort-packages": true
     },
