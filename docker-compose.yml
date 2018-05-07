@@ -5,36 +5,10 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: snbh-area-restrita
-        links:
-            - snbh-api
         ports:
             - "8093:80"
         volumes:
             - .:/home/www-data
         environment:
             - APPLICATION_ENV=development
-            - SNBH_API_HOST=http://snbh-area-restrita-api
-    snbh-api:
-        image: snbh/api
-        container_name: snbh-area-restrita-api
-        links:
-            - snbh-database
-            - snbh-mongo
-        restart: on-failure
-        environment:
-            APPLICATION_ENV: development
-            DATABASE_HOST: snbh-database
-            MONGO_HOST: snbh-mongo
-    snbh-database:
-        image: snbh/database
-        container_name: snbh-area-restrita-database
-        restart: on-failure
-        environment:
-            MYSQL_DATABASE: seminovosb1_2
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: seminovosb1_2
-            MYSQL_PASSWORD: 91hkdkafhh3
-    snbh-mongo:
-        image: mongo:3.4
-        container_name: snbh-area-restrita-mongo
-        restart: on-failure
+            - SNBH_API_HOST=http://api2homolog.seminovosbh.com.br
