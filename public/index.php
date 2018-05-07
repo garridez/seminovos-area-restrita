@@ -35,6 +35,13 @@ $appConfig = require __DIR__ . '/../config/application.config.php';
 if (file_exists(__DIR__ . '/../config/development.config.php')) {
     $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/../config/development.config.php');
 }
+/**
+ * Disponibiliza globalmente o service manager e a aplicação como atalho
+ */
+global $sm, $application;
 
+$application = Application::init($appConfig);
+$sm = $application->getServiceManager();
+    
 // Run the application!
-Application::init($appConfig)->run();
+$application->run();
