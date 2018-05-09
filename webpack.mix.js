@@ -7,7 +7,7 @@ mix.js([
   basePath + '/js/app.js'
 ], 'public/js/app.js');
 
-mix.sass('resources/assets/sass/app.scss', 'public/css');
+mix.standaloneSass('resources/assets/sass/app.scss', 'public/css');
 
 mix.copy(basePath + '/img', 'public/img');
 
