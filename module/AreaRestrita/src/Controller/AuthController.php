@@ -3,7 +3,8 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
-use SnBH\ApiClient\Client;
+use AreaRestrita\Service\AuthManager;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -12,8 +13,16 @@ class AuthController extends AbstractActionController
 
     public function loginAction()
     {
-        /* @var $sm ServiceLocatorInterface */
-        global $sm;
+        /* @var $container ServiceLocatorInterface */
+        global $container;
+
+        /* @var $authService AuthenticationService */
+        $authService = $container->get(AuthenticationService::class);
+
+        if ($authService->hasIdentity()) {
+            return $this->redirect()->toRoute('restrito');
+        }
+
         $particularForm = new Login\ParticularForm();
         $revendaForm = new Login\RevendaForm();
 
@@ -34,21 +43,37 @@ class AuthController extends AbstractActionController
 
             if ($form->isValid()) {
                 /* @var $apiClient \SnBH\ApiClient\Client */
-                $apiClient = $sm->get(Client::class);
-                $data = $form->getData();                
-                $data['acao'] = 'login';
+                $data = $form->getData();
 
-                /* @var $resLoginPost \SnBH\ApiClient\Response */
-                $resLoginPost = $apiClient->loginPost($data);
-                var_dump($resLoginPost->json());
+                $rememberMe = true;
 
-                die;
+                /* @var $authManager AuthManager  */
+                $authManager = $container->get(AuthManager::class);
+
+                $result = $authManager->login($data['usuarioEmail'], $data['usuarioSenha'], $data['tipoCadastro'], $rememberMe);
+                if ($result->getCode() === $result::SUCCESS) {
+                    return $this->redirect()->toRoute('restrito');
+                } else {
+                    var_dump('Erro ao entrar');
+                    die;
+                }
             }
         }
-        
+
         return new ViewModel([
             'particularForm' => $particularForm,
             'revendaForm' => $revendaForm
         ]);
+    }
+
+    public function logoutAction()
+    {
+        global $container;
+
+        /* @var $authService AuthenticationService */
+        $authService = $container->get(AuthenticationService::class);
+        $authService->clearIdentity();
+
+        return $this->redirect()->toRoute('auth');
     }
 }

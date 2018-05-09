@@ -9,7 +9,8 @@ namespace AreaRestrita;
 
 class Module
 {
-    const VERSION = '3.0.3-dev';
+
+    const SESSION_NAMESPACE = __CLASS__;
 
     public function getConfig()
     {

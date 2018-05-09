@@ -7,40 +7,50 @@
 
 namespace AreaRestrita;
 
+use AreaRestrita\Service\AuthenticationServiceFactory;
 use Zend\Router\Http\Literal;
-use Zend\Router\Http\Segment;
+use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
+    'session_containers' => [
+        Module::SESSION_NAMESPACE
+    ],
     'router' => [
         'routes' => [
-            'home' => [
+            'restrito' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'index',
+                        'middleware' => [
+                            Middleware\LoginMiddleware::class,
+                            Middleware\DispatchMiddleware::class,
+                        ]
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => require __DIR__ . '/arearestrita.routes.php',
             ],
             'auth' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/login',
+                    'route' => '/entrar',
                     'defaults' => [
                         'controller' => Controller\AuthController::class,
                         'action' => 'login',
                     ],
                 ],
             ],
-            'application' => [
-                'type' => Segment::class,
+            'logout' => [
+                'type' => Literal::class,
                 'options' => [
-                    'route' => '/application[/:action]',
+                    'route' => '/sair',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'index',
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'logout',
                     ],
                 ],
             ],
@@ -51,6 +61,14 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthController::class => InvokableFactory::class,
         ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            AuthenticationService::class => AuthenticationServiceFactory::class,
+            Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
+            Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
+            Service\AuthManager::class => Service\AuthManagerFactory::class
+        ]
     ],
     'view_manager' => [
         'display_not_found_reason' => true,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Global Configuration Override
  *
@@ -10,6 +11,11 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
+use Zend\Cache\Storage\Adapter\Filesystem;
+use Zend\Session\Storage\SessionArrayStorage;
+use Zend\Session\Validator\HttpUserAgent;
+use Zend\Session\Validator\RemoteAddr;
+
 return [
     'ApiClient' => [
         'credentials' => [
@@ -23,7 +29,7 @@ return [
         ],
     ],
     'cache' => array(
-        'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
+        'adapter' => Filesystem::class,
         'options' => array(
             'ttl' => 3600,
             'cacheDir' => 'data/cache',
@@ -31,5 +37,20 @@ return [
         'plugins' => array(
             'Serializer',
         )
-    )
+    ),
+    'session_config' => [
+        'cookie_lifetime' => 60 * 60 * 4,
+        'gc_maxlifetime' => 60 * 60 * 24 * 30,
+    ],
+    'session_manager' => [
+        'validators' => [
+            RemoteAddr::class,
+            HttpUserAgent::class,
+        ]
+    ],
+    // Session storage configuration.
+    'session_storage' => [
+        'type' => SessionArrayStorage::class
+    ],
+    // ...
 ];

@@ -38,10 +38,10 @@ if (file_exists(__DIR__ . '/../config/development.config.php')) {
 /**
  * Disponibiliza globalmente o service manager e a aplicação como atalho
  */
-global $sm, $application;
+global $sm, $container, $application;
 
 $application = Application::init($appConfig);
-$sm = $application->getServiceManager();
+$container = $sm = $application->getServiceManager();
     
 // Run the application!
 $application->run();
