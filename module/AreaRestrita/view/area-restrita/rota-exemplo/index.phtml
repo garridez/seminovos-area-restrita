@@ -1,0 +1,10 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+
+echo $this->partial('partials/menu.phtml', ['routeName' => $this->routeParams['routeName']]);
+
+echo $this->partial('partials/show-route.phtml', [
+    'routeParams' => $this->routeParams,
+    'file' => __FILE__
+]);
+

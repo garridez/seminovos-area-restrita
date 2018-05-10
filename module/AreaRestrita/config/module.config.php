@@ -60,6 +60,7 @@ return [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthController::class => InvokableFactory::class,
+            Controller\RotaExemploController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
