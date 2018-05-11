@@ -24,11 +24,13 @@
         "zendframework/zend-session": "^2.7.1",
         "snbh/api-client-module": "dev-master",
         "zendframework/zend-stratigility": "^2.0.1",
-        "http-interop/http-middleware": "0.4.1"
+        "http-interop/http-middleware": "0.4.1",
+        "zendframework/zend-serializer": "^2.8"
     },
     "autoload": {
         "psr-4": {
-            "AreaRestrita\\": "module/AreaRestrita/src/"
+            "AreaRestrita\\": "module/AreaRestrita/src/",
+            "SnBH\\ApiModel\\": "module/ApiModel/src/"
         }
     },
     "autoload-dev": {

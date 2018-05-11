@@ -22,5 +22,6 @@ return [
     'Zend\Router',
     'Zend\Validator',
     'SnBH\ApiClientModule',
+    'SnBH\ApiModel',
     'AreaRestrita',
 ];

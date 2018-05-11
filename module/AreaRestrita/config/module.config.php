@@ -87,4 +87,9 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'SnBH\ApiModel' => [
+        'model_factory_namespace_prefix' => [
+            Model::class
+        ]
+    ]
 ];
