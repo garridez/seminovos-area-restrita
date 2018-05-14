@@ -7,7 +7,6 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 

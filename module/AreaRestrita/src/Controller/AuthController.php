@@ -5,7 +5,6 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
 use Zend\Authentication\AuthenticationService;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class AuthController extends AbstractActionController
