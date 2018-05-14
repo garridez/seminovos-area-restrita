@@ -52,4 +52,41 @@ return [
             ],
         ],
     ],
+    'meus-dados' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'meus-dados',
+            'defaults' => [
+                'controller' => Ctrl\MeusDadosController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'parametro-opcional' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/[:parametro]'
+                ],
+            ],
+            'sub-rota' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/sub-rota',
+                    'defaults' => [
+                        'action' => 'sub-rota',
+                    ],
+                ],
+            ],
+            'outra-sub-rota' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/outra-sub-rota/:parametro-obrigatorio',
+                    'defaults' => [
+                        'action' => 'outra-sub-rota',
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];
