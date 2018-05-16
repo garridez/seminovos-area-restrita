@@ -23,5 +23,6 @@ return [
     'Zend\Validator',
     'SnBH\ApiClientModule',
     'SnBH\ApiModel',
+    'SnBH\Common',
     'AreaRestrita',
 ];
