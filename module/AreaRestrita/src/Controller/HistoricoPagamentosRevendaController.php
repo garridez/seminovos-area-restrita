@@ -45,7 +45,7 @@ class HistoricoPagamentosRevendaController extends AbstractActionController
         $historicoPagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         $dadosHistoricoPagamentos = $historicoPagamentosModel->get();
-        
+
         return new ViewModel([
             'historicoPagamentoRevenda' => $dadosHistoricoPagamentos
         ]);

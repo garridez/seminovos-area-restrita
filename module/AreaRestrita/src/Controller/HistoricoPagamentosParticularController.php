@@ -44,17 +44,10 @@ class HistoricoPagamentosParticularController extends AbstractActionController
         /* @var $historicoPagamentosModel Pagamentos */
         $historicoPagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
-        $dadosHistoricoPagamentos = $historicoPagamentosModel->get()->getData();
+        $dadosHistoricoPagamentos = $historicoPagamentosModel->get();
 
-        $arrayDados = array();
-        foreach ($dadosHistoricoPagamentos as $key => $dados) {
-            $arrayDados[$key]['idPagamento'] = $dados['idPagamento'];
-            $arrayDados[$key]['valor'] = $dados['valor'];
-            $arrayDados[$key]['dataCadastro'] = $dados['dataCadastro'];
-            $arrayDados[$key]['formaPagamento'] = $dados['formaPagamento'];
-        }
         return new ViewModel([
-            'historicoPagamentoParticular' => $arrayDados
+            'historicoPagamentoParticular' => $dadosHistoricoPagamentos
         ]);
     }
 }

@@ -40,7 +40,24 @@ class FaturaController extends AbstractActionController
 
     public function particularAction()
     {
-        return new ViewModel();
+        $idPagamento = $this->params('idPagamento');
+
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        // Busca os dados do cadastro
+        $dadosCadastro = $cadastrosModel->getCurrent(false);
+
+        /* @var $historicoPagamentosModel Pagamentos */
+        $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
+
+        // Busca os dados do Pagamento/Fatura
+        $dadosPagamento = $pagamentosModel->get($idPagamento);
+
+        return new ViewModel([
+            'dadosCadastro' => $dadosCadastro,
+            'dadosPagamento' => $dadosPagamento,
+        ]);
     }
 
     public function revendaAction()
@@ -57,12 +74,11 @@ class FaturaController extends AbstractActionController
         $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         // Busca os dados do Pagamento/Fatura
-        $dadosPagamentos = $pagamentosModel->get($idPagamento);
+        $dadosPagamento = $pagamentosModel->get($idPagamento);
 
-        $result = array_merge($dadosPagamentos, $dadosCadastro);
-
-        var_dump($result);exit;
-
-        return new ViewModel();
+        return new ViewModel([
+            'dadosCadastro' => $dadosCadastro,
+            'dadosPagamento' => $dadosPagamento,
+        ]);
     }
 }
