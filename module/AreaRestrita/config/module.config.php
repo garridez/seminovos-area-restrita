@@ -61,7 +61,12 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthController::class => InvokableFactory::class,
             Controller\RotaExemploController::class => InvokableFactory::class,
-            Controller\MeusDadosController::class => InvokableFactory::class,
+            Controller\MeusDadosParticularController::class => InvokableFactory::class,
+            Controller\MeusDadosRevendaController::class => InvokableFactory::class,
+            Controller\ContratoRevendaController::class => InvokableFactory::class,
+            Controller\HistoricoPagamentosParticularController::class => InvokableFactory::class,
+            Controller\HistoricoPagamentosRevendaController::class => InvokableFactory::class,
+            Controller\FaturaController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [

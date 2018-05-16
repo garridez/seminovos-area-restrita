@@ -52,40 +52,73 @@ return [
             ],
         ],
     ],
-    'meus-dados' => [
+    'meus-dados-particular' => [
         'type' => Http\Segment::class,
         'options' => [
-            'route' => 'meus-dados',
+            'route' => 'meus-dados-particular',
             'defaults' => [
-                'controller' => Ctrl\MeusDadosController::class,
+                'controller' => Ctrl\MeusDadosParticularController::class,
                 'action' => 'index'
             ],
         ],
-        'may_terminate' => true,
-        'child_routes' => [
-            'parametro-opcional' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/[:parametro]'
-                ],
+    ],
+    'meus-dados-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'meus-dados-revenda',
+            'defaults' => [
+                'controller' => Ctrl\MeusDadosRevendaController::class,
+                'action' => 'index'
             ],
-            'sub-rota' => [
-                'type' => Http\Literal::class,
-                'options' => [
-                    'route' => '/sub-rota',
-                    'defaults' => [
-                        'action' => 'sub-rota',
-                    ],
-                ],
+        ],
+    ],
+    'contrato-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'contrato-revenda',
+            'defaults' => [
+                'controller' => Ctrl\ContratoRevendaController::class,
+                'action' => 'index'
             ],
-            'outra-sub-rota' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/outra-sub-rota/:parametro-obrigatorio',
-                    'defaults' => [
-                        'action' => 'outra-sub-rota',
-                    ],
-                ],
+        ],
+    ],
+    'historico-pagamentos-particular' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'historico-pagamentos-particular',
+            'defaults' => [
+                'controller' => Ctrl\HistoricoPagamentosParticularController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'historico-pagamentos-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'historico-pagamentos-revenda',
+            'defaults' => [
+                'controller' => Ctrl\HistoricoPagamentosRevendaController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'fatura-particular' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'fatura/particular/id/:idPagamento',
+            'defaults' => [
+                'controller' => Ctrl\FaturaController::class,
+                'action' => 'particular'
+            ],
+        ],
+    ],
+    'fatura-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'fatura/revenda/id/:idPagamento',
+            'defaults' => [
+                'controller' => Ctrl\FaturaController::class,
+                'action' => 'revenda'
             ],
         ],
     ],

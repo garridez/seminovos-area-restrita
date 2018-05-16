@@ -37,7 +37,7 @@ class RevendaForm extends Form
                     [
                         'spec' => [
                             'type' => Element\Text::class,
-                            'name' => 'cnpj',
+                            'name' => 'usuarioEmail',
                             'options' => [
                                 'label' => 'CNPJ',
                             ],
@@ -46,7 +46,7 @@ class RevendaForm extends Form
                     [
                         'spec' => [
                             'type' => Element\Password::class,
-                            'name' => 'senha',
+                            'name' => 'usuarioSenha',
                             'options' => [
                                 'label' => 'Senha',
                             ]
@@ -63,7 +63,7 @@ class RevendaForm extends Form
                     ],
                 ],
                 'input_filter' => [
-                    'senha' => [
+                    'usuarioSenha' => [
                         'required' => true,
                         'validators' => [
                             ['name' => 'notempty',],
