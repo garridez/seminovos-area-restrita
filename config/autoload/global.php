@@ -33,6 +33,7 @@ return [
         'options' => array(
             'ttl' => 3600,
             'cacheDir' => 'data/cache',
+            'namespace' => 'main-cache'
         ),
         'plugins' => array(
             'Serializer',

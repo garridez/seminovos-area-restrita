@@ -8,8 +8,9 @@
 namespace AreaRestrita;
 
 use AreaRestrita\Service\AuthenticationServiceFactory;
-use Zend\Router\Http\Literal;
 use Zend\Authentication\AuthenticationService;
+use Zend\Cache\Service\StorageCacheFactory;
+use Zend\Router\Http\Literal;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
@@ -71,10 +72,13 @@ return [
     ],
     'service_manager' => [
         'factories' => [
+            'cache' => StorageCacheFactory::class,
+            // Auth
             AuthenticationService::class => AuthenticationServiceFactory::class,
+            Service\AuthManager::class => Service\AuthManagerFactory::class,
+            // Middleware
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
-            Service\AuthManager::class => Service\AuthManagerFactory::class
         ]
     ],
     'view_manager' => [
