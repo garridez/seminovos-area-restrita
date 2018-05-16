@@ -35,6 +35,15 @@ class RotaExemploController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
+    public function todasRotasAction()
+    {
+
+        return new ViewModel([
+            'router' => $this->getEvent()->getRouter(),
+            'routeParams' => $this->routeParams,
+        ]);
+    }
+
     public function indexAction()
     {
 
