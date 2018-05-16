@@ -8,18 +8,15 @@ use Zend\Router\Http\Part;
 $restrito = $this->router->getRoutes();
 
 
-global $ctx, $parametros;
-$ctx = $this;
 $parametros = [
     'idPagamento' => 23424232,
     'parametro-obrigatorio' => 'Parametro Obrigatorio'
 ];
-renderRoutes($restrito);
 
-function renderRoutes(PriorityList $routeList, $baseRoute = '')
+renderRoutes($restrito, '', $this, $parametros);
+
+function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
 {
-    global $ctx, $parametros;
-
     foreach ($routeList as $routeName => $route) {
         /* @var $route \Zend\Router\Http\Literal */
         if ($baseRoute) {
@@ -27,13 +24,13 @@ function renderRoutes(PriorityList $routeList, $baseRoute = '')
         }
 
         $url = ($ctx->url($routeName, $parametros));
-        echo '<a href="' . $url . '">' . $routeName . '</a> <br>';
-        echo 'Exemplo: ';
-        echo '<b>' . $url . '</b><br><br>';
+        echo '<b>Route name: </b>' . $routeName . '<br>';
+        echo '<b>Exemplo: </b>';
+        echo '<b><a href="' . $url . '"><i class="fa fa-link" aria-hidden="true"></i> ' . $url . '</a></b><br><br>';
 
         if ($route instanceof Part) {
             echo '<h3>Rota pai: ' . $routeName . '</h3>';
-            renderRoutes($route->getRoutes(), $routeName);
+            renderRoutes($route->getRoutes(), $routeName, $ctx, $parametros);
         }
     }
 }
