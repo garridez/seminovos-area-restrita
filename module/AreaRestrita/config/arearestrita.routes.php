@@ -122,4 +122,14 @@ return [
             ],
         ],
     ],
+    'financeiro' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'financeiro',
+            'defaults' => [
+                'controller' => Ctrl\FinanceiroController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
 ];

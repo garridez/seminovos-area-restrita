@@ -68,6 +68,7 @@ return [
             Controller\HistoricoPagamentosParticularController::class => InvokableFactory::class,
             Controller\HistoricoPagamentosRevendaController::class => InvokableFactory::class,
             Controller\FaturaController::class => InvokableFactory::class,
+            Controller\FinanceiroController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
