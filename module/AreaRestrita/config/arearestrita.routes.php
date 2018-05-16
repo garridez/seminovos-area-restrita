@@ -32,6 +32,15 @@ return [
                     'route' => '/[:parametro]'
                 ],
             ],
+            'todas-rotas' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/todas-rotas',
+                    'defaults' => [
+                        'action' => 'todas-rotas',
+                    ],
+                ],
+            ],
             'sub-rota' => [
                 'type' => Http\Literal::class,
                 'options' => [

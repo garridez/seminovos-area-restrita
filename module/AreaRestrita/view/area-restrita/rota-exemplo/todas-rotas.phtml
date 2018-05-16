@@ -1,0 +1,39 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+
+use Zend\Router\PriorityList;
+use Zend\Router\Http\Part;
+
+/* @var $restrito Zend\Router\Http\Part */
+$restrito = $this->router->getRoutes();
+
+
+global $ctx, $parametros;
+$ctx = $this;
+$parametros = [
+    'idPagamento' => 23424232,
+    'parametro-obrigatorio' => 'Parametro Obrigatorio'
+];
+renderRoutes($restrito);
+
+function renderRoutes(PriorityList $routeList, $baseRoute = '')
+{
+    global $ctx, $parametros;
+
+    foreach ($routeList as $routeName => $route) {
+        /* @var $route \Zend\Router\Http\Literal */
+        if ($baseRoute) {
+            $routeName = $baseRoute . '/' . $routeName;
+        }
+
+        $url = ($ctx->url($routeName, $parametros));
+        echo '<a href="' . $url . '">' . $routeName . '</a> <br>';
+        echo 'Exemplo: ';
+        echo '<b>' . $url . '</b><br><br>';
+
+        if ($route instanceof Part) {
+            echo '<h3>Rota pai: ' . $routeName . '</h3>';
+            renderRoutes($route->getRoutes(), $routeName);
+        }
+    }
+}
