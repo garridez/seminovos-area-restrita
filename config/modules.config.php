@@ -21,6 +21,7 @@ return [
     'Zend\Cache',
     'Zend\Router',
     'Zend\Validator',
+    'TwbBundle',
     'SnBH\ApiClientModule',
     'SnBH\ApiModel',
     'SnBH\Common',

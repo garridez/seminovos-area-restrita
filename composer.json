@@ -25,7 +25,8 @@
         "snbh/api-client-module": "dev-master",
         "zendframework/zend-stratigility": "^2.0.1",
         "http-interop/http-middleware": "0.4.1",
-        "zendframework/zend-serializer": "^2.8"
+        "zendframework/zend-serializer": "^2.8",
+        "neilime/zf2-twb-bundle": "^3.2"
     },
     "autoload": {
         "psr-4": {
