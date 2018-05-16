@@ -5,118 +5,92 @@ namespace AreaRestrita\Form\MeusDados;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-class ParticularForm extends Form
+class RevendaForm extends Form
 {
 
-    public function __construct($name = 'form_particularSite', $options = array())
+    public function __construct($name = 'form_revendaSite', $options = array())
     {
         parent::__construct($name, $options);
 
         $this->add([
             'type' => Element\Text::class,
+            'name' => 'nomeFantasia',
+            'options' => [
+                'label' => 'Nome Fantasia',
+            ],
+            'attributes' => [
+                'required' => true,
+                'readonly' => true,
+            ]
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
             'name' => 'responsavelNome',
             'options' => [
-                'label' => 'Nome',
+                'label' => 'Nome Responsável',
             ],
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
             ]
         ]);
-
-        $this->add([
-            'type' => Element\Date::class,
-            'name' => 'dataNascimento',
-            'options' => [
-                'label' => 'Data de Nascimento',
-            ],
-        ]);
-
-        $this->add([
-            'type' => Element\Email::class,
-            'name' => 'email',
-            'options' => [
-                'label' => 'E-mail',
-            ],
-            'attributes' => [
-                'required' => true,
-                'readonly' => true,
-            ]
-        ]);
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'rg',
-            'options' => [
-                'label' => 'Rg',
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'cpfResponsavel',
-            'options' => [
-                'label' => 'CPF',
-            ],
-            'attributes' => [
-                'required' => true,
-                'readonly' => true,
-            ]
-        ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'idEstado',
-            'options' => [
-                'label' => 'Estado',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '11' => 'MINAS GERAIS',
-                    '26' => 'SÃO PAULO',
-                    '20' => 'RIO DE JANEIRO',
-                    '27' => 'TOCANTINS',
-                ],
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'idCidade',
-            'options' => [
-                'label' => 'Cidade',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '2700' => 'BH',
-                    '2922' => 'CONTAGEM',
-                    '2' => 'BETIM',
-                    '3' => 'NOVA LIMA',
-                ],
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
-
         $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_1',
             'options' => [
-                'label' => 'Telefone Residencial',
+                'label' => 'Telefone 1',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Select::class,
+            'name' => 'operadora_1',
+            'options' => [
+                'label' => 'Operadora 1',
+                'value_options' => [
+                    '' => 'Selecione',
+                    '1' => 'OI',
+                    '2' => 'TIM',
+                    '3' => 'CLARO',
+                    '4' => 'VIVO',
+                    '5' => 'NEXTEL',
+                ],
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'telefone_1_is_wpp',
+            'options' => [
+                'label' => 'Whatsapp',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
             'attributes' => [
-                'required' => true,
-            ]
+                'value' => 1,
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_2',
             'options' => [
-                'label' => 'Celular',
+                'label' => 'Telefone 2',
             ],
         ]);
-
+        $this->add([
+            'type' => Element\Select::class,
+            'name' => 'operadora_2',
+            'options' => [
+                'label' => 'Operadora 2',
+                'value_options' => [
+                    '' => 'Selecione',
+                    '1' => 'OI',
+                    '2' => 'TIM',
+                    '3' => 'CLARO',
+                    '4' => 'VIVO',
+                    '5' => 'NEXTEL',
+                ],
+            ],
+        ]);
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'telefone_2_is_wpp',
@@ -131,33 +105,17 @@ class ParticularForm extends Form
             ],
         ]);
         $this->add([
-            'type' => Element\Select::class,
-            'name' => 'operadora_2',
-            'options' => [
-                'label' => 'Operadora',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => 'OI',
-                    '2' => 'TIM',
-                    '3' => 'CLARO',
-                    '4' => 'VIVO',
-                    '5' => 'NEXTEL',
-                ],
-            ],
-        ]);
-
-        $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_3',
             'options' => [
-                'label' => 'Celular',
+                'label' => 'Telefone 3',
             ],
         ]);
         $this->add([
             'type' => Element\Select::class,
             'name' => 'operadora_3',
             'options' => [
-                'label' => 'Operadora',
+                'label' => 'Operadora 3',
                 'value_options' => [
                     '' => 'Selecione',
                     '1' => 'OI',
@@ -173,15 +131,114 @@ class ParticularForm extends Form
             'name' => 'telefone_3_is_wpp',
             'options' => [
                 'label' => 'Whatsapp',
-//                'checked_value' => 1,
+                'use_hidden_element' => true,
+                'checked_value' => 1,
                 'unchecked_value' => 0,
+            ],
+            'attributes' => [
+                'value' => 1,
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'telefone_4',
+            'options' => [
+                'label' => 'Telefone 4',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Select::class,
+            'name' => 'operadora_4',
+            'options' => [
+                'label' => 'Operadora 4',
+                'value_options' => [
+                    '' => 'Selecione',
+                    '1' => 'OI',
+                    '2' => 'TIM',
+                    '3' => 'CLARO',
+                    '4' => 'VIVO',
+                    '5' => 'NEXTEL',
+                ],
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'telefone_4_is_wpp',
+            'options' => [
+                'label' => 'Whatsapp',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+            'attributes' => [
+                'value' => 1,
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'celular_financeiro',
+            'options' => [
+                'label' => 'Celular Financeiro',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Email::class,
+            'name' => 'email_financeiro',
+            'options' => [
+                'label' => 'E-mail Financeiro',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Email::class,
+            'name' => 'email',
+            'options' => [
+                'label' => 'E-mail Principal',
+            ],
+            'attributes' => [
+                'required' => true,
+                'readonly' => true,
+            ]
+        ]);
+        $this->add([
+            'type' => Element\Email::class,
+            'name' => 'email_secundario',
+            'options' => [
+                'label' => 'E-mail Secundário',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'facebook',
+            'options' => [
+                'label' => 'Facebook',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'instagram',
+            'options' => [
+                'label' => 'Instagram',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'youtube',
+            'options' => [
+                'label' => 'Youtube',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'twitter',
+            'options' => [
+                'label' => 'Twitter',
             ],
         ]);
         $this->add([
             'type' => Element\Password::class,
             'name' => 'senha',
             'options' => [
-                'label' => 'Nova Senha',
+                'label' => 'Senha',
             ],
             'attributes' => [
                 'required' => true,
@@ -192,18 +249,6 @@ class ParticularForm extends Form
             'name' => 'confirmacaoSenha',
             'options' => [
                 'label' => 'Confirmar Senha',
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'termo',
-            'options' => [
-                'label' => 'Sim',
-                'checked_value' => 1,
-                'unchecked_value' => 0,
             ],
             'attributes' => [
                 'required' => true,
@@ -223,6 +268,10 @@ class ParticularForm extends Form
     protected function configureInputFilter()
     {
         $inputFilter = $this->getInputFilter();
+        $inputFilter->add([
+            'name' => 'nomeFantasia',
+            'required' => true,
+        ]);
         $inputFilter->add([
             'name' => 'responsavelNome',
             'required' => true,
@@ -249,34 +298,6 @@ class ParticularForm extends Form
                 ],
             ],
         ]);
-        $inputFilter->add([
-            'name' => 'rg',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StringToUpper'],
-            ],
-//            'validators' => [
-//                [
-//                    'name' => \Zend\Validator\Regex::class,
-//                    'options' => [
-//                        'pattern' => '/^[A-Z]{2}\s[0-9]{2,3}\.[0-9]{3}\.[0-9]{3}$|^[A-Z][0-9]{6}-[0-9]$/'
-//                    ]
-//                ],
-//            ],
-        ]);
-        $inputFilter->add([
-            'name' => 'cpfResponsavel',
-            'required' => true,
-        ]);
-        $inputFilter->add([
-            'name' => 'idEstado',
-            'required' => true,
-        ]);
-        $inputFilter->add([
-            'name' => 'idCidade',
-            'required' => true,
-        ]);
         #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
             'name' => 'telefone_1',
@@ -301,8 +322,12 @@ class ParticularForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'termo',
-            'required' => true,
+            'name' => 'operadora_4',
+            'required' => false,
+        ]);
+        $inputFilter->add([
+            'name' => 'email_secundario',
+            'required' => false,
         ]);
     }
 }

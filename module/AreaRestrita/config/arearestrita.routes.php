@@ -52,4 +52,74 @@ return [
             ],
         ],
     ],
+    'meus-dados-particular' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'meus-dados-particular',
+            'defaults' => [
+                'controller' => Ctrl\MeusDadosParticularController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'meus-dados-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'meus-dados-revenda',
+            'defaults' => [
+                'controller' => Ctrl\MeusDadosRevendaController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'contrato-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'contrato-revenda',
+            'defaults' => [
+                'controller' => Ctrl\ContratoRevendaController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'historico-pagamentos-particular' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'historico-pagamentos-particular',
+            'defaults' => [
+                'controller' => Ctrl\HistoricoPagamentosParticularController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'historico-pagamentos-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'historico-pagamentos-revenda',
+            'defaults' => [
+                'controller' => Ctrl\HistoricoPagamentosRevendaController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
+    'fatura-particular' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'fatura/particular/id/:idPagamento',
+            'defaults' => [
+                'controller' => Ctrl\FaturaController::class,
+                'action' => 'particular'
+            ],
+        ],
+    ],
+    'fatura-revenda' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'fatura/revenda/id/:idPagamento',
+            'defaults' => [
+                'controller' => Ctrl\FaturaController::class,
+                'action' => 'revenda'
+            ],
+        ],
+    ],
 ];
