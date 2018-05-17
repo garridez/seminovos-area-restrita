@@ -19,7 +19,9 @@
   "author": "",
   "license": "ISC",
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
-  "dependencies": {},
+  "dependencies": {
+    "popper.js": "^1.14.3"
+  },
   "devDependencies": {
     "bootstrap": "^4.1.1",
     "cross-env": "^5.1.4",

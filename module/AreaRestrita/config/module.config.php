@@ -81,6 +81,14 @@ return [
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
         ]
     ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
+        ],
+        'aliases' => [
+            'userInfo' => View\Helper\UserInfo::class,
+        ]
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions' => true,
