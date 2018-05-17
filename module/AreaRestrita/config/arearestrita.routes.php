@@ -141,4 +141,63 @@ return [
             ],
         ],
     ],
+    'meus-veiculos-particular' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'meus-veiculos-particular',
+            'defaults' => [
+                'controller' => Ctrl\MeusVeiculosParticularController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'excluir' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/excluir/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'excluir',
+                    ],
+                ],
+            ],
+            'vendido' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/vendido/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'vendido',
+                    ],
+                ],
+            ],
+            'reativar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/reativar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'reativar',
+                    ],
+                ],
+            ],
+            'renovar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/renovar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'renovar',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'meus-veiculos-revenda' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'meus-veiculos-revenda',
+            'defaults' => [
+                'controller' => Ctrl\MeusVeiculosRevendaController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
 ];
