@@ -3,9 +3,7 @@
 namespace AreaRestrita\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use SnBH\ApiModel\Model\Cadastros;
 
-// This view helper class displays a menu bar.
 class UserInfo extends AbstractHelper
 {
 

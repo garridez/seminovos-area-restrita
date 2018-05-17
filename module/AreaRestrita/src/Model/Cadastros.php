@@ -19,6 +19,7 @@ class Cadastros extends ApiModelCadastros
     {
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
+
     /**
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
@@ -34,5 +35,14 @@ class Cadastros extends ApiModelCadastros
         }
 
         return parent::put($data, $idCadastro);
+    }
+
+    /**
+     * Atalho para verificar se o usuario atual é revenda ou não
+     * @return boolean
+     */
+    public function isRevenda()
+    {
+        return $this->getCurrent()['tipoCadastro'] == self::TIPO_CADASTRO_REVENDA;
     }
 }

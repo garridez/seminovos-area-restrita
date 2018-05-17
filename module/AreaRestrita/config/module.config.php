@@ -87,9 +87,11 @@ return [
     'view_helpers' => [
         'factories' => [
             View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
+            View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
+            'bodyClass' => View\Helper\BodyClass::class,
         ]
     ],
     'view_manager' => [
