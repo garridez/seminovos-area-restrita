@@ -22,7 +22,8 @@ class BodyClassFactory implements FactoryInterface
 
         $controller = $params['controller'];
         $controller = explode('\\', $controller);
-        $controller = preg_replace('/(.)([A-Z])/', '$1-$2', end($controller));
+        $controller = preg_replace('/Controller$/', '', end($controller));
+        $controller = preg_replace('/(.)([A-Z])/', '$1-$2', $controller);
 
         $classs = [
             // Nome da rota da requisição
