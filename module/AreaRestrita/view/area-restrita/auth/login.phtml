@@ -1,7 +1,45 @@
 <?php
 /* @var $this Zend\View\Renderer\PhpRenderer */
 
+?>
 
-echo $this->form($this->particularForm);
-echo '<hr>';
-echo $this->form($this->revendaForm);
+<img src="/img/svg/snbh_logo.svg" alt="logo" width="180" height="66">
+
+<p class="p-t-35">Preencha corretamente os campos abaixo e clique no botão entrar para acessar sua área restrita.</p>
+<br class="clearfix">
+
+<form class="tipo-cadastro-container container">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-check form-check-inline" title="Entrar usando minha conta particular">
+                <input type="radio" class="form-check-input" id="radioTipoCadastroParticular" name="tipoCadastro" value="container-form-particular" checked> 
+                <label class="form-check-label" for="radioTipoCadastroParticular">
+                    Particular
+                </label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-check form-check-inline" title="Entrar usando minha conta de revendedor">
+                <input type="radio" class="form-check-input"  id="radioTipoCadastroRevenda" name="tipoCadastro" value="container-form-revenda"> 
+                <label class="form-check-label" for="radioTipoCadastroRevenda">
+                    Revenda
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+<?php
+
+$this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+$this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+
+
+?>
+<div class="forms-container">
+    <div class="container-form-particular">
+        <?= $this->form($this->particularForm) ?>
+    </div>
+    <div class="container-form-revenda hide">
+        <?= $this->form($this->revendaForm) ?>
+    </div>
+</div>

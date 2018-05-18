@@ -16,14 +16,9 @@ mix.options({
     processCssUrls: false
 });
 
-mix.js([
-    basePath + '/js/app.js'
-], 'public/js/app.js');
-
+mix.js('resources/assets/js/Main.js', 'public/js/app.js');
 mix.standaloneSass('resources/assets/sass/app.scss', 'public/css');
-
 mix.copy(basePath + '/img', 'public/img');
-
 mix.copy(basePath + '/fonts', 'public/fonts');
 mix.copy('node_modules/font-awesome/fonts', 'public/node_modules/font-awesome/fonts');
 

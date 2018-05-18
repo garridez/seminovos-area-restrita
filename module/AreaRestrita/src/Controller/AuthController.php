@@ -59,10 +59,13 @@ class AuthController extends AbstractActionController
             }
         }
 
-        return new ViewModel([
+        $viewModel = new ViewModel([
             'particularForm' => $particularForm,
             'revendaForm' => $revendaForm
         ]);
+        $this->layout('layout/login.phtml');
+        
+        return $viewModel;
     }
 
     public function logoutAction()

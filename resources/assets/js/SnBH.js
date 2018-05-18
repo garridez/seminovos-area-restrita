@@ -32,7 +32,7 @@ const SnBH = {
                 if (body.is(seletor)) {
                     let callbacks = this.registered[seletor];
                     callbacks.map(function (callback) {
-                        callback();
+                        callback($, window, document, document.body);
                     });
                 }
             }
