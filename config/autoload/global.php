@@ -18,15 +18,15 @@ use Zend\Session\Validator\RemoteAddr;
 
 return [
     'ApiClient' => [
-        'credentials' => [
-            'serverUrl' => 'http://api2.seminovosbh.com.br',
-            'headers' => [
-                'Accept' => 'application/vnd.seminovos-bh.v1+json'
-            ],
-            'options' => [
-                'timeout' => 30
-            ]
-        ],
+//        'credentials' => [
+//            'serverUrl' => 'http://api2.seminovosbh.com.br',
+//            'headers' => [
+//                'Accept' => 'application/vnd.seminovos-bh.v1+json'
+//            ],
+//            'options' => [
+//                'timeout' => 30
+//            ]
+//        ],
     ],
     'cache' => array(
         'adapter' => Filesystem::class,
