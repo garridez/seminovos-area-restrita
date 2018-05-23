@@ -17,6 +17,9 @@ class Cadastros extends ApiModelCadastros
      */
     public function getCurrent($cacheable = true)
     {
+        if ($this->getIdentity() === null) {
+            return false;
+        }
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
