@@ -1,0 +1,44 @@
+@keyframes #{$namespace}forms-container-presentation {
+    0% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 1;
+    }
+}
+
+@keyframes #{$namespace}snbh-logo-container-presentation {
+    0% {
+        transform: translate(0, 100%) scale(1.5);
+    }
+    50% {
+        transform: translate(0, 100%) scale( 1.5);
+    }
+    100% {
+        transform: translate(0, 0%) scale(1);
+    }
+}
+
+@keyframes #{$namespace}snbh-logo-layer-car {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes #{$namespace}snbh-logo-layer-letters {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

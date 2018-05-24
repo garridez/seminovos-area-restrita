@@ -1,0 +1,16 @@
+@mixin keyframes( $animationName, $namespace)
+{
+    $animationFullName: "#{$namespace}#{$animationName}";
+    @-webkit-keyframes #{$animationFullName} {
+        @content;
+    }
+    @-moz-keyframes #{$animationFullName} {
+        @content;
+    }
+    @-o-keyframes #{$animationFullName} {
+        @content;
+    }
+    @keyframes #{$animationFullName} {
+        @content;
+    }
+}

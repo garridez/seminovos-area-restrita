@@ -7,5 +7,7 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
 @import "theme_pages/pages.scss";
 
+@import "tools/mixins";
 @import "components/all";
-//@import "mvc/routes/all";
+@import "mvc/layout/all";
+@import "mvc/routes/all";

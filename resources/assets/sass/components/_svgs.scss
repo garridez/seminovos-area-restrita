@@ -1,17 +1,17 @@
 .snbh-logo{     
     vertical-align: middle;
     border-style: none;
-    .layer_letters{
+    .layer-letters{
         fill: #010101;
     }
-    .layer_car{
+    .layer-car{
         fill: #fecf0a;
     }
     &.inverse{
-        .layer_letters{
+        .layer-letters{
             fill: #fff;
         }
-        .layer_car{
+        .layer-car{
             fill: #fecf0a;
         }
     }
