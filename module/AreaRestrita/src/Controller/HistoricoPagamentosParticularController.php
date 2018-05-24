@@ -13,6 +13,7 @@ use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\Veiculos;
 
 class HistoricoPagamentosParticularController extends AbstractActionController
 {
@@ -45,6 +46,23 @@ class HistoricoPagamentosParticularController extends AbstractActionController
         $historicoPagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         $dadosHistoricoPagamentos = $historicoPagamentosModel->get();
+
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        foreach ($dadosHistoricoPagamentos['data'] as $key => $row) {
+
+            // Busca os dados do cadastro
+            $dadosVeiculo = $veiculosModel->getVeiculo([
+                'idVeiculo' => $row['idVeiculo'],
+                'ignorarCondicoesBasicas' => true
+            ]);
+
+            $dadosHistoricoPagamentos['data'][$key]['nomePlano'] = $dadosVeiculo['data'][0]['nomePlano'];
+            $dadosHistoricoPagamentos['data'][$key]['marca'] = $dadosVeiculo['data'][0]['marca'];
+            $dadosHistoricoPagamentos['data'][$key]['modelo'] = $dadosVeiculo['data'][0]['modelo'];
+            $dadosHistoricoPagamentos['data'][$key]['caracteristica'] = $dadosVeiculo['data'][0]['caracteristica'];
+
+        }
 
         return new ViewModel([
             'historicoPagamentoParticular' => $dadosHistoricoPagamentos

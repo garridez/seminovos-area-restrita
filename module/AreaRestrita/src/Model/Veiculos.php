@@ -40,4 +40,10 @@ class Veiculos extends ApiModelVeiculos
         ])->json();
 
     }
+
+    public function getVeiculo($dados)
+    {
+        return parent::get($dados)->json();
+
+    }
 }

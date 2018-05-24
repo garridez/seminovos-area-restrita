@@ -198,18 +198,6 @@ class ParticularForm extends Form
             ]
         ]);
         $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'termo',
-            'options' => [
-                'label' => 'Sim',
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
-        $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
             'attributes' => [
@@ -298,10 +286,6 @@ class ParticularForm extends Form
         ]);
         $inputFilter->add([
             'name' => 'confirmacaoSenha',
-            'required' => true,
-        ]);
-        $inputFilter->add([
-            'name' => 'termo',
             'required' => true,
         ]);
     }

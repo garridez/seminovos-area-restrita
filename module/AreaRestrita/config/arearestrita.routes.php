@@ -188,6 +188,15 @@ return [
                     ],
                 ],
             ],
+            'veiculo' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'veiculo',
+                    ],
+                ],
+            ],
         ],
     ],
     'meus-veiculos-revenda' => [

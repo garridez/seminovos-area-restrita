@@ -116,9 +116,28 @@ class MeusVeiculosParticularController extends AbstractActionController
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
-            'idVeiculo' => $idVeiculo
+            'idVeiculo' => $idVeiculo,
+            'idStatus' => 2,
         ], $idVeiculo);
 
         var_dump($dadosVeiculos);exit;
+    }
+
+    public function veiculoAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculo = $veiculosModel->getVeiculo([
+            'idVeiculo' => $idVeiculo,
+            'ignorarCondicoesBasicas' => true
+        ]);
+
+        return new ViewModel([
+            'veiculo' => $dadosVeiculo
+        ]);
     }
 }
