@@ -20,6 +20,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
   "dependencies": {
+    "animate-sass": "^0.8.2",
+    "modernizr": "^3.6.0",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
