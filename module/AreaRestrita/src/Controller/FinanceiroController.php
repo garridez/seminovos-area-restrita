@@ -7,14 +7,15 @@
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Model\Planos;
-use Zend\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
+use AreaRestrita\Model\Planos;
+use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
+use SnBH\ApiClient\Client as ApiClient;
+use Zend\View\Model\ViewModel;
 
 class FinanceiroController extends AbstractActionController
 {
@@ -63,6 +64,15 @@ class FinanceiroController extends AbstractActionController
             return $dadosPlanos['idPlanoRevenda'] == $this->idPlano;
         });
 
+        /* @var $servicosAdicionaisModel ServicosAdicionais */
+        $servicosAdicionaisModel = $this->getContainer()->get(ServicosAdicionais::class);
+
+        // Busca os dados do ServicosAdicionais
+        $dadosServicosAdicionais = $servicosAdicionaisModel->get(1);//o valor está fixo porque não foi encontrado no BD alternativa para consultar na tabela
+
+        //valor adicional do serviço de site
+        $valorServicoAdicional = $dadosServicosAdicionais['_embedded']['servicos_adicionais'][1][0]['valor'];
+
         $valorPlano = array_values($dadosPlano)[0]['valor'];
 
         $valor = $dadosCadastro['icms'] == 'S' ? $valorPlano - ((4.3 / 100.0) * $valorPlano) : $valorPlano;
@@ -72,7 +82,7 @@ class FinanceiroController extends AbstractActionController
 
         $dadosSiteHospedado = $siteHospedado->get();
 
-        $valorAdicional = sizeof($dadosSiteHospedado['data']) > 0 ? 29.00 : 0;
+        $valorAdicional = sizeof($dadosSiteHospedado['data']) > 0 ? $valorServicoAdicional : 0;
         $valorAdicionalString = 'R$ ' . number_format($valorAdicional, 2, ',', '.');
         $maisSite = sizeof($dadosSiteHospedado['data']) > 0 ? ' <i title="+ R$ ' . number_format($valorAdicional, 2, ',', '.') . '"> + Site</i>' : '';
 
