@@ -9,6 +9,7 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
+use AreaRestrita\Model\VeiculosFotos;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
@@ -56,5 +57,65 @@ class MeusVeiculosRevendaController extends AbstractActionController
         return new ViewModel([
             'meusVeiculos' => $dadosVeiculos
         ]);
+    }
+
+    public function deleteAction()
+    {
+
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $veiculosFotosModel VeiculosFotos */
+        $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
+
+        // Busca os dados das fotos do veiculo
+        $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
+
+//        var_dump($dadosVeiculoFotos);exit;
+
+        $listaFotos = array();
+        foreach ($dadosVeiculoFotos as $key => $dado) {
+            $listaFotos[] = $dado['idFoto'];
+        }
+
+        #deletar fotos do servidor
+        $retorno = $veiculosFotosModel->delete($listaFotos);
+
+        #deletar registro da tabela veiculos e anuncios_veiculos
+
+        var_dump($retorno);exit;
+
+
+    }
+
+    public function ativarAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculos = $veiculosModel->put([
+            'idVeiculo' => $idVeiculo,
+            'idStatus' => 2,
+        ], $idVeiculo);
+
+        var_dump($dadosVeiculos);exit;
+    }
+
+    public function inativarAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculos = $veiculosModel->put([
+            'idVeiculo' => $idVeiculo,
+            'idStatus' => 5,
+        ], $idVeiculo);
+
+        var_dump($dadosVeiculos);exit;
     }
 }

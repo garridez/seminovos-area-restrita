@@ -1,15 +1,16 @@
 <?php
 
 /**
- * 
+ *
  * Todas rotas internas do sistema deve ficar aqui.
  * As rotas adicionadas aqui serão rotas filha da rota 'restrito'
  * Como a rota 'restrito' já possui um middleware de autenticação, todas as
  *  rotas filhas estão protegidas.
- * 
+ *
  * @see https://framework.zend.com/manual/2.4/en/modules/zend.mvc.routing.html
- * 
+ *
  */
+
 use AreaRestrita\Controller as Ctrl;
 use Zend\Router\Http;
 
@@ -208,5 +209,36 @@ return [
                 'action' => 'index'
             ],
         ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'excluir' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/excluir/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'delete',
+                    ],
+                ],
+            ],
+            'ativar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/ativar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'ativar',
+                    ],
+                ],
+            ],
+            'inativar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/inativar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'inativar',
+                    ],
+                ],
+            ],
+        ],
     ],
+
 ];
