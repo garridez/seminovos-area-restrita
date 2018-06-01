@@ -70,15 +70,14 @@ class MeusVeiculosRevendaController extends AbstractActionController
         // Busca os dados das fotos do veiculo
         $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
 
-//        var_dump($dadosVeiculoFotos);exit;
-
         $listaFotos = array();
         foreach ($dadosVeiculoFotos as $key => $dado) {
             $listaFotos[] = $dado['idFoto'];
         }
-
         #deletar fotos do servidor
-        $retorno = $veiculosFotosModel->delete($listaFotos);
+        $retorno = $veiculosFotosModel->delete([
+            'listaFotos'=> $listaFotos
+        ]);
 
         #deletar registro da tabela veiculos e anuncios_veiculos
 
@@ -114,6 +113,7 @@ class MeusVeiculosRevendaController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 5,
+            'clicks' => 0
         ], $idVeiculo);
 
         var_dump($dadosVeiculos);exit;
