@@ -9,11 +9,10 @@ $restrito = $this->router->getRoutes();
 
 
 $parametros = [
+    'idVeiculo' => 87687,
     'idPagamento' => 23424232,
     'parametro-obrigatorio' => 'Parametro Obrigatorio'
 ];
-
-renderRoutes($restrito, '', $this, $parametros);
 
 function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
 {
@@ -23,14 +22,38 @@ function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
             $routeName = $baseRoute . '/' . $routeName;
         }
 
+        $hasParts = $route instanceof Part;
+        if ($hasParts) {
+            echo '<div class="sub--route">';
+            echo '<h3>Rota pai: ' . $routeName . '</h3>';
+        }
+
         $url = ($ctx->url($routeName, $parametros));
         echo '<b>Route name: </b>' . $routeName . '<br>';
         echo '<b>Exemplo: </b>';
-        echo '<b><a href="' . $url . '"><i class="fa fa-link" aria-hidden="true"></i> ' . $url . '</a></b><br><br>';
+        echo '<b><a href="' . $url . '"><i class="fa fa-link" aria-hidden="true"></i> ' . $url . '</a></b>';
 
-        if ($route instanceof Part) {
-            echo '<h3>Rota pai: ' . $routeName . '</h3>';
+        if ($hasParts) {
+            echo '<div class="sub-route">';
             renderRoutes($route->getRoutes(), $routeName, $ctx, $parametros);
+            echo '</div>';
+            echo '</div>';
+            continue;
         }
+        echo '<hr>';
     }
 }
+
+?>
+<style>
+    .sub-route{
+        margin-left: 50px;
+        border-left: 1px solid #e6e6e6;
+        padding-left: 35px;
+    }
+    .sub-route > h3{
+        /*margin-left: -30px;*/
+    }
+</style>
+<?php
+renderRoutes($restrito, '', $this, $parametros);
