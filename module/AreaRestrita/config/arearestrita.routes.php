@@ -62,22 +62,12 @@ return [
             ],
         ],
     ],
-    'meus-dados-particular' => [
+    'meus-dados' => [
         'type' => Http\Segment::class,
         'options' => [
-            'route' => 'meus-dados-particular',
+            'route' => 'meus-dados',
             'defaults' => [
-                'controller' => Ctrl\MeusDadosParticularController::class,
-                'action' => 'index'
-            ],
-        ],
-    ],
-    'meus-dados-revenda' => [
-        'type' => Http\Segment::class,
-        'options' => [
-            'route' => 'meus-dados-revenda',
-            'defaults' => [
-                'controller' => Ctrl\MeusDadosRevendaController::class,
+                'controller' => Ctrl\MeusDadosController::class,
                 'action' => 'index'
             ],
         ],

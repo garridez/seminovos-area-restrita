@@ -13,7 +13,7 @@ use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 
-class MeusDadosRevendaController extends AbstractActionController
+class MeusDadosController extends AbstractActionController
 {
     protected $container;
     protected $routeParams;
@@ -45,32 +45,46 @@ class MeusDadosRevendaController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        $revendaForm = new MeusDados\RevendaForm();
-        $revendaForm->get('senha')->setAttribute('required', false);
-        $revendaForm->get('confirmacaoSenha')->setAttribute('required', false);
-        $revendaForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
-        $request = $this->getRequest();
+        if ($cadastrosModel->isRevenda()) {
+            $dadosForm = new MeusDados\RevendaForm();
+            $dadosForm->get('senha')->setAttribute('required', false);
+            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
+            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
+            $request = $this->getRequest();
+
+        } else {
+            $dadosForm = new MeusDados\ParticularForm();
+            $dadosForm->get('senha')->setAttribute('required', false);
+            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
+            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
+            $request = $this->getRequest();
+        }
 
         if ($request->isPost()) {
             $post = $request->getPost();
-            $revendaForm->setData($post);
-            if ($revendaForm->isValid()) {
+            $dadosForm->setData($post);
+            if ($dadosForm->isValid()) {
+
                 /* @var $apiClient \SnBH\ApiClient\Client */
-                $data = $revendaForm->getData();
+                $data = $dadosForm->getData();
+
+                $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
 
                 #campos não existentes na tabela
                 unset($data['confirmacaoSenha']);
                 unset($data['submit']);
 
-                $data['tipoCadastro'] = 1;
+                #campos que não podem ser alterados
+                unset($data['dataNascimento']);
+                unset($data['cpf']);
 
                 $resPut = $cadastrosModel->put($data);
                 if ($resPut->status === 200) {
                     // Busca os dados do cadastro atualizado
                     $dadosCadastro = $cadastrosModel->getCurrent(false);
-                    $revendaForm->populateValues($dadosCadastro);
+                    $dadosForm->populateValues($dadosCadastro);
                     return new ViewModel([
-                        'formCadastro' => $revendaForm
+                        'formCadastro' => $dadosForm
                     ]);
                 } else {
                     var_dump($resPut->detail);
@@ -78,13 +92,13 @@ class MeusDadosRevendaController extends AbstractActionController
                 }
             } else {
                 echo 'não validou os dados';//exit;
-                var_dump($revendaForm->getMessages());
+                var_dump($dadosForm->getMessages());
                 die;
             }
         } else {
-            $revendaForm->populateValues($dadosCadastro);
+            $dadosForm->populateValues($dadosCadastro);
             return new ViewModel([
-                'formCadastro' => $revendaForm
+                'formCadastro' => $dadosForm
             ]);
         }
     }
