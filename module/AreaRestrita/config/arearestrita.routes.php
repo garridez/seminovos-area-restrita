@@ -82,22 +82,12 @@ return [
             ],
         ],
     ],
-    'historico-pagamentos-particular' => [
+    'historico-pagamentos' => [
         'type' => Http\Segment::class,
         'options' => [
-            'route' => 'historico-pagamentos-particular',
+            'route' => 'historico-pagamentos',
             'defaults' => [
-                'controller' => Ctrl\HistoricoPagamentosParticularController::class,
-                'action' => 'index'
-            ],
-        ],
-    ],
-    'historico-pagamentos-revenda' => [
-        'type' => Http\Segment::class,
-        'options' => [
-            'route' => 'historico-pagamentos-revenda',
-            'defaults' => [
-                'controller' => Ctrl\HistoricoPagamentosRevendaController::class,
+                'controller' => Ctrl\HistoricoPagamentosController::class,
                 'action' => 'index'
             ],
         ],
