@@ -7,15 +7,16 @@
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Model\Pagamentos;
-use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\Pagamentos;
+use AreaRestrita\Model\Veiculos;
+use AreaRestrita\Model\VeiculosFotos;
 
-class MeusVeiculosParticularController extends AbstractActionController
+class MeusVeiculosController extends AbstractActionController
 {
     protected $container;
     protected $routeParams;
@@ -58,7 +59,14 @@ class MeusVeiculosParticularController extends AbstractActionController
         ]);
     }
 
-    public function excluirAction()
+    /*
+     * Função generica que faz as seguintes ações
+     * reativa o veiculo quando for particular
+     * renova o veiculo quando for particular
+     * ativa o veiculo quando for revenda
+     */
+
+    public function reativarAction()
     {
         $idVeiculo = $this->params('idVeiculo');
 
@@ -68,11 +76,29 @@ class MeusVeiculosParticularController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
-            'idStatus' => 7,
-            'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
+            'idStatus' => 2,
         ], $idVeiculo);
 
-        var_dump($dadosVeiculos);exit;
+        var_dump($dadosVeiculos);
+        exit;
+    }
+
+    public function inativarAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculos = $veiculosModel->put([
+            'idVeiculo' => $idVeiculo,
+            'idStatus' => 5,
+            'clicks' => 0
+        ], $idVeiculo);
+
+        var_dump($dadosVeiculos);
+        exit;
     }
 
     public function vendidoAction()
@@ -88,40 +114,62 @@ class MeusVeiculosParticularController extends AbstractActionController
             'idStatus' => 8,
         ], $idVeiculo);
 
-        var_dump($dadosVeiculos);exit;
+        var_dump($dadosVeiculos);
+        exit;
     }
 
-    public function reativarAction()
+    public function excluirAction()
     {
         $idVeiculo = $this->params('idVeiculo');
 
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
-        // Busca os dados do cadastro
-        $dadosVeiculos = $veiculosModel->put([
-            'idVeiculo' => $idVeiculo,
-            'idStatus' => 2,
-        ], $idVeiculo);
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        var_dump($dadosVeiculos);exit;
+        if ($cadastrosModel->isRevenda()) {
+            echo 'colocar a função delete da revenda aqui, função está abaixo e está pendente ';
+            exit;
+        } else {
+            // Busca os dados do cadastro
+            $dadosVeiculos = $veiculosModel->put([
+                'idVeiculo' => $idVeiculo,
+                'idStatus' => 7,
+                'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
+            ], $idVeiculo);
+        }
+
+        var_dump($dadosVeiculos);
+        exit;
     }
 
-    public function renovarAction()
+    public function deleteAction()
     {
+
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
-        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        /* @var $veiculosFotosModel VeiculosFotos */
+        $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
 
-        // Busca os dados do cadastro
-        $dadosVeiculos = $veiculosModel->put([
-            'idVeiculo' => $idVeiculo,
-            'idStatus' => 2,
-        ], $idVeiculo);
+        // Busca os dados das fotos do veiculo
+        $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
 
-        var_dump($dadosVeiculos);exit;
+        $listaFotos = array();
+        foreach ($dadosVeiculoFotos as $key => $dado) {
+            $listaFotos[] = $dado['idFoto'];
+        }
+        #deletar fotos do servidor
+        $retorno = $veiculosFotosModel->delete([
+            'listaFotos' => $listaFotos
+        ]);
+
+        #deletar registro da tabela veiculos e anuncios_veiculos
+
+        var_dump($retorno);
+        exit;
     }
+
 
     public function veiculoAction()
     {

@@ -122,12 +122,12 @@ return [
             ],
         ],
     ],
-    'meus-veiculos-particular' => [
+    'meus-veiculos' => [
         'type' => Http\Literal::class,
         'options' => [
-            'route' => 'meus-veiculos-particular',
+            'route' => 'meus-veiculos',
             'defaults' => [
-                'controller' => Ctrl\MeusVeiculosParticularController::class,
+                'controller' => Ctrl\MeusVeiculosController::class,
                 'action' => 'index'
             ],
         ],
@@ -178,6 +178,25 @@ return [
                     ],
                 ],
             ],
+            'inativar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/inativar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'inativar',
+                    ],
+                ],
+            ],
+            'excluir' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/excluir/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'excluir',
+                    ],
+                ],
+            ],
+
         ],
     ],
     'meus-veiculos-revenda' => [
