@@ -11,7 +11,7 @@ class Veiculos extends ApiModelVeiculos
 
     /**
      * Retorna os dados do usuário logado
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -19,6 +19,7 @@ class Veiculos extends ApiModelVeiculos
     {
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
+
     /**
      * Atualiza na api os dados do veiculo
      * Se o parametro $idCadastro não for passado, será usado
@@ -44,6 +45,12 @@ class Veiculos extends ApiModelVeiculos
     public function getVeiculo($dados)
     {
         return parent::get($dados)->json();
+
+    }
+
+    public function delete($idVeiculo)
+    {
+        return parent::delete(null , $idVeiculo)->json();
 
     }
 }

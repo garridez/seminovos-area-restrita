@@ -165,7 +165,16 @@ return [
                 'options' => [
                     'route' => '/renovar/:idVeiculo',
                     'defaults' => [
-                        'action' => 'renovar',
+                        'action' => 'reativar',
+                    ],
+                ],
+            ],
+            'ativar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/ativar/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'reativar',
                     ],
                 ],
             ],
@@ -193,47 +202,6 @@ return [
                     'route' => '/excluir/:idVeiculo',
                     'defaults' => [
                         'action' => 'excluir',
-                    ],
-                ],
-            ],
-
-        ],
-    ],
-    'meus-veiculos-revenda' => [
-        'type' => Http\Literal::class,
-        'options' => [
-            'route' => 'meus-veiculos-revenda',
-            'defaults' => [
-                'controller' => Ctrl\MeusVeiculosRevendaController::class,
-                'action' => 'index'
-            ],
-        ],
-        'may_terminate' => true,
-        'child_routes' => [
-            'excluir' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/excluir/:idVeiculo',
-                    'defaults' => [
-                        'action' => 'delete',
-                    ],
-                ],
-            ],
-            'ativar' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/ativar/:idVeiculo',
-                    'defaults' => [
-                        'action' => 'ativar',
-                    ],
-                ],
-            ],
-            'inativar' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/inativar/:idVeiculo',
-                    'defaults' => [
-                        'action' => 'inativar',
                     ],
                 ],
             ],

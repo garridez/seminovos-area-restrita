@@ -61,9 +61,9 @@ class MeusVeiculosController extends AbstractActionController
 
     /*
      * Função generica que faz as seguintes ações
-     * reativa o veiculo quando for particular
-     * renova o veiculo quando for particular
-     * ativa o veiculo quando for revenda
+     * reativar o veiculo quando for particular
+     * renovar o veiculo quando for particular
+     * ativar o veiculo quando for revenda
      */
 
     public function reativarAction()
@@ -129,9 +129,28 @@ class MeusVeiculosController extends AbstractActionController
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         if ($cadastrosModel->isRevenda()) {
-            echo 'colocar a função delete da revenda aqui, função está abaixo e está pendente ';
-            exit;
+
+            /* @var $veiculosFotosModel VeiculosFotos */
+            $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
+
+            // Busca os dados das fotos do veiculo
+            $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
+
+            $listaFotos = array();
+            foreach ($dadosVeiculoFotos as $key => $dado) {
+                $listaFotos[] = $dado['idFoto'];
+            }
+
+            #deletar fotos do servidor
+            $retorno = $veiculosFotosModel->delete([
+                'listaFotos' => $listaFotos
+            ]);
+
+            #quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
+            $dadosVeiculos = $veiculosModel->delete($idVeiculo);
+
         } else {
+
             // Busca os dados do cadastro
             $dadosVeiculos = $veiculosModel->put([
                 'idVeiculo' => $idVeiculo,
@@ -143,33 +162,6 @@ class MeusVeiculosController extends AbstractActionController
         var_dump($dadosVeiculos);
         exit;
     }
-
-    public function deleteAction()
-    {
-
-        $idVeiculo = $this->params('idVeiculo');
-
-        /* @var $veiculosFotosModel VeiculosFotos */
-        $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
-
-        // Busca os dados das fotos do veiculo
-        $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
-
-        $listaFotos = array();
-        foreach ($dadosVeiculoFotos as $key => $dado) {
-            $listaFotos[] = $dado['idFoto'];
-        }
-        #deletar fotos do servidor
-        $retorno = $veiculosFotosModel->delete([
-            'listaFotos' => $listaFotos
-        ]);
-
-        #deletar registro da tabela veiculos e anuncios_veiculos
-
-        var_dump($retorno);
-        exit;
-    }
-
 
     public function veiculoAction()
     {
