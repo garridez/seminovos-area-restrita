@@ -1,3 +1,140 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-var_dump($this->meusVeiculos);
+$veiculos = $this->meusVeiculos['data'];
+?>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php foreach ($veiculos as $veiculo): ?>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        foto
+                        <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
+                            <img class="card-img" src="<?= $veiculo['thumb'] ?>" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        Infos veiculo
+                        <h6><?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></h6>
+                        <h6> R$ <?= $veiculo['valorFormatado'] ?></h6>
+                        <ul>
+                            <li>Visualizado: <?= $veiculo['clicks'] ?></li>
+                            <li>Placa: <?= $veiculo['placa'] ?></li>
+                            <li>Cadastrado: <?= $veiculo['dataCadastro'] ?></li>
+                            <li>Renovado: <?= $veiculo['dataRenovacao'] ?></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        Plano
+                        <h6><?= $veiculo['nomePlano'] ?></h6>
+                    </div>
+                    <div class="col-md-2">
+                        Status
+                        <h6><?= $veiculo['tituloStatus'] ?></h6>
+                        <h6><?= $veiculo['dataExpiracao'] ?> Expira seu anúncio</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php if ($veiculo['tipoCadastro'] == 1) {
+                        if ($veiculo['idStatus'] == 5) { ?>
+                            <div class="col-md-1">
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Ativar</a>
+                            </div>
+                        <?php }
+                        if ($veiculo['idStatus'] != 8) { ?>
+                            <div class="col-md-1">
+                                <a href="#">Editar</a>
+                            </div>
+                        <?php } ?>
+                        <div class="col-md-1">
+                            <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>">Excluir</a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="#">Fotos</a>
+                        </div>
+                        <?php if ($veiculo['idStatus'] == 2) { ?>
+                            <div class="col-md-1">
+                                <a href="meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
+                            </div>
+                        <?php } ?>
+                        <div class="col-md-1">
+                            <a href="#">Propostas</a>
+                        </div>
+                        <?php if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1)) { ?>
+                            <div class="col-md-2">
+                                <a href="#">Trocar Plano</a>
+                            </div>
+                        <?php } ?>
+                        <div class="col-md-1">
+                            <a href="#">Visualizar</a>
+                        </div>
+                    <?php } else if ($veiculo['tipoCadastro'] == 2) {
+
+                        $date1 = new DateTime($veiculo['dataTrocaStatus']);
+                        $date2 = new DateTime("now");
+                        $diff = $date1->diff($date2);
+                        $horas = ($diff->d * 24) + $diff->h;
+
+                        $expiracaoMenos48Hs = date('Y-m-d', strtotime('-2 day', strtotime($veiculo['dataExpiracao'])));
+
+                        if ($veiculo['idStatus'] == 1 || $veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 3 || $veiculo['idStatus'] == 9 || $veiculo['idStatus'] == 10) { ?>
+                            <div class="col-md-1">
+                                <a href="#">Editar</a>
+                            </div>
+                        <?php }
+                        if (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4) && ($veiculo['idPlano'] != 1)) { ?>
+                            <div class="col-md-1">
+                                <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>">Excluir</a>
+                            </div>
+                        <?php }
+                        if ($veiculo['idStatus'] == 1) { ?>
+                            <div class="col-md-2">
+                                <a href="#">Finalizar Compra</a>
+                            </div>
+                        <?php }
+                        if (($veiculo['idStatus'] == 2 && $veiculo['idPlano'] >= 2) || ($veiculo['idStatus'] == 9 && $veiculo['idPlano'] >= 2)) { ?>
+                            <div class="col-md-1">
+                                <a href="#">Fotos</a>
+                            </div>
+                        <?php } ?>
+                        <div class="col-md-1">
+                            <a href="#">Propostas</a>
+                        </div>
+                        <?php if (($veiculo['idPlano'] != 1) && ($veiculo['idStatus'] == 7 || $veiculo['idStatus'] == 8) && $horas < 49) { ?>
+                            <div class="col-md-2">
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Reativar Anúncio</a>
+                            </div>
+                        <?php }
+                        if (($veiculo['idStatus'] == 4 || (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 9) && date('Y-m-d') >= $expiracaoMenos48Hs)) && $veiculo['idPlano'] >= 2) { ?>
+                            <div class="col-md-1">
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Renovar</a>
+                            </div>
+                        <?php }
+                        if (($veiculo['idStatus'] == 4 || $veiculo['idStatus'] == 2) && $veiculo['idPlano'] != 1) { ?>
+                            <div class="col-md-1">
+                                <a href="#">Troca</a>
+                            </div>
+                        <?php }
+                        if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1 && $veiculo['destaqueHome'] == 'N')) { ?>
+                            <div class="col-md-2">
+                                <a href="#">Trocar Plano</a>
+                            </div>
+                        <?php }
+                        if ($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4 && $veiculo['idPlano'] != 1) { ?>
+                            <div class="col-md-1">
+                                <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>">Vendido</a>
+                            </div>
+                        <?php }
+                        if ($veiculo['idStatus'] != 4) { ?>
+                            <div class="col-md-1">
+                                <a href="#">Visualizar</a>
+                            </div>
+                        <?php }
+                    } ?>
+                </div>
+            </div>
+            <hr>
+        <?php endforeach; ?>
+    </div>
+</div>
