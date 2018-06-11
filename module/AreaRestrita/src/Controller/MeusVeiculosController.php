@@ -52,7 +52,7 @@ class MeusVeiculosController extends AbstractActionController
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         // Busca os dados do cadastro
-        $dadosVeiculos = $veiculosModel->get();
+        $dadosVeiculos = $veiculosModel->getAll();
 
         return new ViewModel([
             'meusVeiculos' => $dadosVeiculos
@@ -171,10 +171,8 @@ class MeusVeiculosController extends AbstractActionController
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         // Busca os dados do cadastro
-        $dadosVeiculo = $veiculosModel->getVeiculo([
-            'idVeiculo' => $idVeiculo,
-            'ignorarCondicoesBasicas' => true
-        ]);
+        $dadosVeiculo = $veiculosModel->get($idVeiculo);
+
 
         return new ViewModel([
             'veiculo' => $dadosVeiculo

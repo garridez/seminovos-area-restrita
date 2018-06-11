@@ -33,18 +33,15 @@ class Veiculos extends ApiModelVeiculos
         return parent::put($data, $idVeiculo)->json();
     }
 
-    public function get()
-    {
+    public function getAll(){
         return parent::get([
             'idCadastro' => $this->getIdentity(),
             'ignorarCondicoesBasicas' => true
         ])->json();
-
     }
-
-    public function getVeiculo($dados)
+    public function get($idVeiculo)
     {
-        return parent::get($dados)->json();
+        return parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo)->getData()[0];
 
     }
 

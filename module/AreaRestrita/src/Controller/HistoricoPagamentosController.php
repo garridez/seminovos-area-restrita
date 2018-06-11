@@ -50,27 +50,42 @@ class HistoricoPagamentosController extends AbstractActionController
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
+        $tipoCadastro = 1;
+
         if (!$cadastrosModel->isRevenda()) {
             /* @var $veiculosModel Veiculos */
             $veiculosModel = $this->getContainer()->get(Veiculos::class);
             foreach ($dadosHistoricoPagamentos['data'] as $key => $row) {
 
                 // Busca os dados do cadastro
-                $dadosVeiculo = $veiculosModel->getVeiculo([
-                    'idVeiculo' => $row['idVeiculo'],
-                    'ignorarCondicoesBasicas' => true
-                ]);
+                $dadosVeiculo = $veiculosModel->get($row['idVeiculo']);
 
-                $dadosHistoricoPagamentos['data'][$key]['nomePlano'] = $dadosVeiculo['data'][0]['nomePlano'];
-                $dadosHistoricoPagamentos['data'][$key]['marca'] = $dadosVeiculo['data'][0]['marca'];
-                $dadosHistoricoPagamentos['data'][$key]['modelo'] = $dadosVeiculo['data'][0]['modelo'];
-                $dadosHistoricoPagamentos['data'][$key]['caracteristica'] = $dadosVeiculo['data'][0]['caracteristica'];
+                $dadosHistoricoPagamentos['data'][$key]['nomePlano'] = $dadosVeiculo['nomePlano'];
+                $dadosHistoricoPagamentos['data'][$key]['marca'] = $dadosVeiculo['marca'];
+                $dadosHistoricoPagamentos['data'][$key]['modelo'] = $dadosVeiculo['modelo'];
+                $dadosHistoricoPagamentos['data'][$key]['caracteristica'] = $dadosVeiculo['caracteristica'];
 
             }
+            $tipoCadastro = 2;
         }
 
+        $arrayStatus = array(
+            1 => 'Aguardando Pagamento',
+            2 => 'Aprovado',
+            3 => 'Cancelado'
+        );
+
+        $arrayFormaPagamento = array(
+            'cielo' => 'Cartão de Crédito',
+            'deposito' => 'Depósito/Transferência',
+            'pagseguro' => 'PagSeguro'
+        );
+
         return new ViewModel([
-            'historicoPagamentos' => $dadosHistoricoPagamentos
+            'historicoPagamentos' => $dadosHistoricoPagamentos['data'],
+            'arrayStatus' => $arrayStatus,
+            'arrayFormaPagamento' => $arrayFormaPagamento,
+            'tipoCadastro' => $tipoCadastro
         ]);
     }
 }
