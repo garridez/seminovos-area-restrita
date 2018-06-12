@@ -13,12 +13,15 @@ use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
+use AreaRestrita\Model\Planos;
+use AreaRestrita\Model\Veiculos;
 
 class FaturaController extends AbstractActionController
 {
     protected $container;
     protected $routeParams;
     protected $routeName;
+    protected $idPlano;
 
     public function __construct()
     {
@@ -54,9 +57,15 @@ class FaturaController extends AbstractActionController
         // Busca os dados do Pagamento/Fatura
         $dadosPagamento = $pagamentosModel->get($idPagamento);
 
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        $dadosVeiculo = $veiculosModel->get($dadosPagamento['data'][0]['idVeiculo']);
+
+        $dadosPagamento['data'][0]['nomePlano'] = $dadosVeiculo['nomePlano'];
+
         return new ViewModel([
             'dadosCadastro' => $dadosCadastro,
-            'dadosPagamento' => $dadosPagamento,
+            'dadosPagamento' => $dadosPagamento['data'][0],
         ]);
     }
 
@@ -76,9 +85,26 @@ class FaturaController extends AbstractActionController
         // Busca os dados do Pagamento/Fatura
         $dadosPagamento = $pagamentosModel->get($idPagamento);
 
+        /* @var $planosModel Planos */
+        $planosModel = $this->getContainer()->get(Planos::class);
+
+        // Busca os planos de acordo com o tipo
+        $dadosPlanos = $planosModel->get('revenda');
+
+        $this->idPlano = $dadosPagamento['data'][0]['idPlano'];
+
+        //filtra o array e retorna os dados de acordo com o idPlano
+        $dadosPlanoPagamento = array_filter($dadosPlanos, function ($dadosPlanos) {
+            $dadosPlanos['idPlanoRevenda'] == $this->idPlano;
+            return $dadosPlanos['idPlanoRevenda'] == $this->idPlano;
+        });
+
+        $nomePlano = array_values($dadosPlanoPagamento)[0]['nome'];
+
         return new ViewModel([
             'dadosCadastro' => $dadosCadastro,
-            'dadosPagamento' => $dadosPagamento,
+            'dadosPagamento' => $dadosPagamento['data'][0],
+            'nomePlano' => $nomePlano
         ]);
     }
 }
