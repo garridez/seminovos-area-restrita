@@ -1,0 +1,157 @@
+<?php
+/**
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace AreaRestritaAnuncio;
+
+use AreaRestrita\Middleware\DispatchMiddleware;
+use AreaRestrita\Middleware\LoginMiddleware;
+use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'session_containers' => [
+        Module::SESSION_NAMESPACE
+    ],
+    'router' => [
+        'routes' => [
+            'criar-anuncio' => [
+                'may_terminate' => true,
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/:tipo',
+                    'constraints' => [
+                        'tipo' => 'moto|carro|caminhao',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'index'
+                    ]
+                ],
+                'child_routes' => [
+                    'check-login' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/:email',
+                            'constraints' => [
+                                'email' => '.*@.*',
+                            ],
+                            'defaults' => [
+                                'controller' => Controller\LoginController::class,
+                                'action' => 'check-login',
+                            ],
+                        ]
+                    ],
+                    'login' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/entrar',
+                            'defaults' => [
+                                'controller' => Controller\LoginController::class,
+                                'action' => 'login',
+                            ],
+                        ]
+                    ],
+                    'criar-cadastro' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/me-cadastrar',
+                            'defaults' => [
+                                'controller' => Controller\CadastrarController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'anuncio' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '',
+                            'defaults' => [
+                                'middleware' => [
+                                    LoginMiddleware::class,
+                                    DispatchMiddleware::class,
+                                ],
+                            ],
+                        ],
+                        'child_routes' => [
+                            'dados' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/',
+                                    'defaults' => [
+                                        'controller' => Controller\DadosVeiculoController::class,
+                                    ],
+                                ],
+                                'child_routes' => [
+                                    'pages' => [
+                                        'type' => Segment::class,
+                                        'options' => [
+                                            'route' => ':action',
+                                            'constraints' => [
+                                                'action' => 'dados|preco|mais-informacoes|fotos|video'
+                                            ]
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            'planos' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/planos',
+                                    'defaults' => [
+                                        'controller' => Controller\PlanoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'pagamento' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/checkout',
+                                    'defaults' => [
+                                        'controller' => Controller\PagamentoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                                'child_routes' => [
+                                    'confirmacao' => [
+                                        'type' => Literal::class,
+                                        'options' => [
+                                            'route' => '/confirmacao',
+                                            'defaults' => [
+                                                'action' => 'confirmacao',
+                                            ],
+                                        ],
+                                    ],
+                                    'vamos-aguardar' => [
+                                        'type' => Literal::class,
+                                        'options' => [
+                                            'route' => '/vamos-aguardar',
+                                            'defaults' => [
+                                                'action' => 'aguardar-confirmacao',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            Controller\CriarAnuncioController::class => InvokableFactory::class,
+            Controller\LoginController::class => InvokableFactory::class,
+            Controller\CadastrarController::class => InvokableFactory::class,
+            Controller\DadosVeiculoController::class => InvokableFactory::class,
+            Controller\IndexController::class => InvokableFactory::class,
+        ],
+    ],
+];

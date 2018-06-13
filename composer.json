@@ -31,6 +31,7 @@
     "autoload": {
         "psr-4": {
             "AreaRestrita\\": "module/AreaRestrita/src/",
+            "AreaRestritaAnuncio\\": "module/AreaRestritaAnuncio/src/",
             "SnBH\\ApiModel\\": "module/ApiModel/src/",
             "SnBH\\Common\\": "module/Common/src/"
         }

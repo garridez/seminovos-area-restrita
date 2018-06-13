@@ -26,4 +26,5 @@ return [
     'SnBH\ApiModel',
     'SnBH\Common',
     'AreaRestrita',
+    'AreaRestritaAnuncio',
 ];

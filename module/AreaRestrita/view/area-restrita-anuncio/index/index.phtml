@@ -1,0 +1,61 @@
+<?php
+
+function rUrl($url)
+{
+    echo '<a href="' . $url . '">' . $url . '</a><br>';
+}
+$default = [
+    'tipo' => 'carro',
+    'email' => 'email@seminovosbh.com.br'
+];
+
+?>
+<h1>Fluxo da criação de anúncio</h1>
+
+
+<p>É recebido o email pela url</p>
+<?= rUrl($this->url('criar-anuncio/check-login', $default)) ?>
+<p>Se o email existe, cai nessa rota para o cara logar:<br>
+    <?= rUrl($this->url('criar-anuncio/login', $default)) ?>
+</p>
+<p>Se o email não existe no banco, então o usuário deve se cadastrar:<br>
+    <?= rUrl($this->url('criar-anuncio/criar-cadastro', $default)) ?>
+</p>
+<hr>
+<p>
+    Com o login feito, começa de fato o cadastro de anúncio
+    <?php
+    foreach (
+    [
+        'dados',
+        'preco',
+        'mais-informacoes',
+        'fotos',
+        'video',
+    ]
+    as $action
+    ) {
+        rUrl($this->url('criar-anuncio/anuncio/dados/pages', $default + ['action' => $action]));
+    }
+
+    ?>
+</p>
+<hr>
+<p>
+    Aqui escolhe o plano<br>
+    <?= rUrl($this->url('criar-anuncio/anuncio/planos', $default)) ?>
+</p>
+<hr>
+<p>
+    Faz o pagamento<br>
+    <?= rUrl($this->url('criar-anuncio/anuncio/pagamento', $default)) ?>
+</p>
+<hr>
+<p>
+    Se o pagamento for automaticamente aprovado, vai para esse link<br>
+    <?= rUrl($this->url('criar-anuncio/anuncio/pagamento/confirmacao', $default)) ?>
+</p>
+<p>
+    Se for preciso aguardar a confirmação (boleto), então cai nessa tela<br>
+    <?= rUrl($this->url('criar-anuncio/anuncio/pagamento/vamos-aguardar', $default)) ?>
+</p>

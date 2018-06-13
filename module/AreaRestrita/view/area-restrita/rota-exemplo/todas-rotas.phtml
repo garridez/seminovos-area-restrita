@@ -11,7 +11,11 @@ $restrito = $this->router->getRoutes();
 $parametros = [
     'idVeiculo' => 87687,
     'idPagamento' => 23424232,
-    'parametro-obrigatorio' => 'Parametro Obrigatorio'
+    'parametro-obrigatorio' => 'Parametro Obrigatorio',
+    'tipo' => 'carro',
+    'email' => 'email@seminovosbh.com.br',
+    'action' => 'dados'
+    
 ];
 
 function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
@@ -23,15 +27,35 @@ function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
         }
 
         $hasParts = $route instanceof Part;
-        if ($hasParts) {
-            echo '<div class="sub--route">';
-            echo '<h3>Rota pai: ' . $routeName . '</h3>';
+        try {
+            $url = ($ctx->url($routeName, $parametros));
+        } catch (\Exception $ex) {
+            $reflection = new ReflectionClass($route);
+            $properties = $reflection->getProperties();
+            $mayTerminate = null;
+            foreach ($properties as $property) {
+                if ($property->name != 'mayTerminate') {
+                    continue;
+                }
+                $property->setAccessible(true);
+                $mayTerminate = $property->getValue($route);
+            }
+            if ($mayTerminate === null) {
+                throw $ex;
+            }
+
+            $url = false;
         }
 
-        $url = ($ctx->url($routeName, $parametros));
+
+        if ($hasParts) {
+            echo '<div class="sub--route">';
+        }
         echo '<b>Route name: </b>' . $routeName . '<br>';
-        echo '<b>Exemplo: </b>';
-        echo '<b><a href="' . $url . '"><i class="fa fa-link" aria-hidden="true"></i> ' . $url . '</a></b>';
+        if ($url) {
+            echo '<b>Exemplo: </b>';
+            echo '<b><a href="' . $url . '"><i class="fa fa-link" aria-hidden="true"></i> ' . $url . '</a></b>';
+        }
 
         if ($hasParts) {
             echo '<div class="sub-route">';
