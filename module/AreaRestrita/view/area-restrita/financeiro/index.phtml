@@ -1,3 +1,103 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-var_dump($this->financeiro);
+$dadosFinanceiro = $this->financeiro;
+?>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Escolha o tempo que deseja pagar:</h5>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <h5>Forma de pagamento:</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <hr></hr>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <hr></hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Valor mensal do plano R$ </h5>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <h5>Clique no botão abaixo para selecionar a forma de pagamento e finalizar a compra. </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" id="radioTempoContrato1" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_mensal'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Mensal <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_mensal'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_mensal'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_mensal'] ?></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-default" type="button">FINALIZAR COMPRA</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" id="radioTempoContrato2" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_trimestral'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Trimestral <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_trimestral'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_trimestral'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_trimestral'] ?></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" id="radioTempoContrato3" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_semestral'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Semestral <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_semestral'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_semestral'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_semestral'] ?></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" id="radioTempoContrato4" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_anual'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Anual <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_anual'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_anual'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_anual'] ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
