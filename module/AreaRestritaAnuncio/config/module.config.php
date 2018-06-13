@@ -153,11 +153,13 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\CriarAnuncioController::class => InvokableFactory::class,
-            Controller\LoginController::class => InvokableFactory::class,
             Controller\CadastrarController::class => InvokableFactory::class,
+            Controller\CriarAnuncioController::class => InvokableFactory::class,
             Controller\DadosVeiculoController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\LoginController::class => InvokableFactory::class,
+            Controller\PagamentoController::class => InvokableFactory::class,
+            Controller\PlanoController::class => InvokableFactory::class,
         ],
     ],
 ];
