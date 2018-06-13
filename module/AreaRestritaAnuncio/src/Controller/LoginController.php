@@ -23,17 +23,35 @@ class LoginController extends AbstractActionController
     {
         $email = $this->params('email');
 
+
         if ($email === null) {
             $this->redirect()->toRoute(/* Colocar a rota aqui */);
             die;
         }
-        // verificar a existencia do email
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+
+
+
+        $apiClient = $this->getApiClient();
+        $res = $apiClient->cadastrosGet([
+            'email' => $email
+        ]);
+        $this->checkApiError($res);
+
+        if (sizeof($res->getData())) {
+            $route = 'criar-anuncio/login';
+        } else {
+            $route = 'criar-anuncio/criar-cadastro';
+        }
+
+
+        return $this->redirect()->toRoute($route, $this->params()->fromRoute());
     }
 
     public function loginAction()
     {
-        return new ViewModel();
+        $email = $this->params('email');
+        return new ViewModel([
+            'email' => $email
+        ]);
     }
 }

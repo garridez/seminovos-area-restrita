@@ -47,9 +47,12 @@ return [
                         ]
                     ],
                     'login' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/entrar',
+                            'route' => '/entrar[/:email]',
+                            'constraints' => [
+                                'email' => '.*@.*',
+                            ],
                             'defaults' => [
                                 'controller' => Controller\LoginController::class,
                                 'action' => 'login',
@@ -57,9 +60,12 @@ return [
                         ]
                     ],
                     'criar-cadastro' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/me-cadastrar',
+                            'route' => '/me-cadastrar[/:email]',
+                            'constraints' => [
+                                'email' => '.*@.*',
+                            ],
                             'defaults' => [
                                 'controller' => Controller\CadastrarController::class,
                                 'action' => 'index',

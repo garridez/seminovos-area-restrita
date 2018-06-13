@@ -15,6 +15,9 @@ class CadastrarController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel();
+        $email = $this->params('email');
+        return new ViewModel([
+            'email' => $email
+        ]);
     }
 }
