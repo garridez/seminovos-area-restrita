@@ -1,11 +1,5 @@
-
-Renderizar aqui o formulário de cadastro
-
-<br>
-
 <?php
-if ($email) {
-    echo "Email passado <b>$email</b>";
-} else {
-    echo "Não foi passado um email";
-}
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+echo $this->form($this->formCadastro);
+
+?>

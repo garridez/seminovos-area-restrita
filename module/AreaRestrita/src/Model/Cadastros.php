@@ -48,4 +48,14 @@ class Cadastros extends ApiModelCadastros
     {
         return $this->getCurrent()['tipoCadastro'] == self::TIPO_CADASTRO_REVENDA;
     }
+
+    public function post(array $data)
+    {
+        return parent::post($data);
+    }
+    
+    public function get(array $data)
+    {
+        return parent::get($data)->getData();
+    }
 }
