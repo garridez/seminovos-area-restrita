@@ -33,12 +33,14 @@ class Veiculos extends ApiModelVeiculos
         return parent::put($data, $idVeiculo)->json();
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         return parent::get([
             'idCadastro' => $this->getIdentity(),
             'ignorarCondicoesBasicas' => true
         ])->json();
     }
+
     public function get($idVeiculo)
     {
         return parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo)->getData()[0];
@@ -47,7 +49,12 @@ class Veiculos extends ApiModelVeiculos
 
     public function delete($idVeiculo)
     {
-        return parent::delete(null , $idVeiculo)->json();
+        return parent::delete(null, $idVeiculo)->json();
 
+    }
+
+    public function post(array $data)
+    {
+        return parent::post($data)->getData();
     }
 }

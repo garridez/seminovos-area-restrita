@@ -1,0 +1,29 @@
+<?php
+
+namespace SnBH\Common\Form\Element;
+
+use Zend\Form\Element\Select;
+
+class SelectPortas extends Select
+{
+
+    protected $valueOptions = [
+        '' => 'Selecione',
+        1 => '1 Porta',
+        2 => '2 Portas',
+        3 => '3 Portas',
+        4 => '4 Portas',
+        5 => '5 Portas',
+        6 => '6 Portas',
+    ];
+
+    public function __construct($name = 'carroPortas', $options = array())
+    {
+        $options = array_merge([
+            'label' => 'Portas',
+            'name' => 'carroPortas'
+            ], $options);
+
+        parent::__construct($name, $options);
+    }
+}

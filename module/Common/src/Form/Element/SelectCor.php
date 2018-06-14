@@ -7,7 +7,7 @@ use Zend\Form\Element\Select;
 class SelectCor extends Select
 {
 
-    protected $valuaaaeOptions = [
+    protected $valueOptions = [
         '' => 'Selecione',
         'Prata' => 'Prata',
         'Preto' => 'Preto',
@@ -32,7 +32,7 @@ class SelectCor extends Select
         'Vermelho' => 'Vermelho',
         'Vinho' => 'Vinho',
     ];
-    protected $valueOptions = [
+    protected $valuaaaeOptions = [
         [
         'label' => 'Prata',
         'value' => false,
@@ -128,6 +128,7 @@ class SelectCor extends Select
     {
         $options = array_merge([
             'label' => 'Cor',
+            'name' => 'cor'
             ], $options);
 
         parent::__construct($name, $options);
