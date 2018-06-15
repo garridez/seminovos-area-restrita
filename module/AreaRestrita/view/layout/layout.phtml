@@ -69,7 +69,13 @@
           </button>
         </div>
       </div>
-      <?= $this->partial('partials/menu.phtml') ?>
+      <?php
+      if ($this->userInfo('tipoCadastro') == 1) {
+          echo $this->partial('partials/menu-revenda.phtml');
+      } else if ($this->userInfo('tipoCadastro') == 2) {
+          echo $this->partial('partials/menu-particular.phtml');
+      }
+      ?>
     </nav>
     <div class="page-container ">
       <div class="header ">
