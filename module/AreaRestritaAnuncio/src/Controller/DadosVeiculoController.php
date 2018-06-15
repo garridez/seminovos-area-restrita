@@ -26,12 +26,20 @@ class DadosVeiculoController extends AbstractActionController
 
     public function precoAction()
     {
-        return new ViewModel();
+        $precoForm = new Veiculo\PrecoForm();
+
+        return new ViewModel([
+            'formPrecoVeiculo' => $precoForm
+        ]);
     }
 
     public function maisInformacoesAction()
     {
-        return new ViewModel();
+        $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
+
+        return new ViewModel([
+            'formMaisInformacoesVeiculo' => $maisInformacoesForm
+        ]);
     }
 
     public function fotosAction()
@@ -41,7 +49,11 @@ class DadosVeiculoController extends AbstractActionController
 
     public function videoAction()
     {
-        return new ViewModel();
+        $videoForm = new Veiculo\VideoForm();
+
+        return new ViewModel([
+            'formVideoVeiculo' => $videoForm
+        ]);
     }
 
     public function salvarDadosAction()
