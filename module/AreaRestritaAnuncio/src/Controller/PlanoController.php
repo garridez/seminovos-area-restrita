@@ -8,6 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Model\Planos;
 use Zend\View\Model\ViewModel;
 
 class PlanoController extends AbstractActionController
@@ -15,6 +16,14 @@ class PlanoController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel();
+        /* @var $planosModel Planos */
+        $planosModel = $this->getContainer()->get(Planos::class);
+
+        // Busca os planos de acordo com o tipo
+        $dadosPlanos = $planosModel->get('particular');
+
+        return new ViewModel([
+            'planos' => $dadosPlanos
+        ]);
     }
 }

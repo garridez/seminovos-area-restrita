@@ -23,6 +23,32 @@ class PrecoForm extends Form
             ]
         ]);
         $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'combinarValor',
+            'options' => [
+                'label' => 'Não exibir valor do veículo (não recomendado)',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+            'attributes' => [
+                'value' => 1,
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'financiamento',
+            'options' => [
+                'label' => 'Possui financiamento',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+            'attributes' => [
+                'value' => 1,
+            ],
+        ]);
+        $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
             'attributes' => [
@@ -38,6 +64,14 @@ class PrecoForm extends Form
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
             'name' => 'valor',
+            'required' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'combinarValor',
+            'required' => true,
+        ]);
+        $inputFilter->add([
+            'name' => 'financiamento',
             'required' => true,
         ]);
     }
