@@ -20,11 +20,21 @@ trait TraitIdentity
      */
     private $identity;
 
+    /**
+     * @return \Zend\ServiceManager\ServiceManager
+     */
+    protected function getContainer()
+    {
+        global $container;
+
+        return $container;
+    }
+
     protected function getIdentity()
     {
         if (!$this->identity) {
             /* @var $authService AuthenticationService */
-            $authService = $this->container->get(AuthenticationService::class);
+            $authService = $this->getContainer()->get(AuthenticationService::class);
             $this->identity = $authService->getIdentity();
         }
         return $this->identity;

@@ -7,6 +7,7 @@
 
 namespace AreaRestrita\Controller;
 
+use SnBH\Common\ServiceVeiculo;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
@@ -166,13 +167,19 @@ class MeusVeiculosController extends AbstractActionController
     public function veiculoAction()
     {
         $idVeiculo = $this->params('idVeiculo');
+        $dadosVeiculo = [];
 
-        /* @var $veiculosModel Veiculos */
-        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        $serviceVeiculo = new ServiceVeiculo();
 
-        // Busca os dados do cadastro
-        $dadosVeiculo = $veiculosModel->get($idVeiculo);
+        if ($serviceVeiculo ->verificaCadastroVeiculo($idVeiculo)) {
 
+            /* @var $veiculosModel Veiculos */
+            $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+            // Busca os dados do cadastro
+            $dadosVeiculo = $veiculosModel->get($idVeiculo);
+
+        }
 
         return new ViewModel([
             'veiculo' => $dadosVeiculo

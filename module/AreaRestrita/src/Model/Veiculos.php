@@ -41,9 +41,9 @@ class Veiculos extends ApiModelVeiculos
         ])->json();
     }
 
-    public function get($idVeiculo)
+    public function get($idVeiculo, $useCache = false)
     {
-        return parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo)->getData()[0];
+        return parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo, $useCache)->getData()[0];
 
     }
 
