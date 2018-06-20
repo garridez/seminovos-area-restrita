@@ -64,7 +64,7 @@ class AuthController extends AbstractActionController
             'revendaForm' => $revendaForm
         ]);
         $this->layout('layout/login.phtml');
-        
+
         return $viewModel;
     }
 

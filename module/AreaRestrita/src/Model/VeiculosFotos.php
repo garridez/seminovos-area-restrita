@@ -23,14 +23,12 @@ class VeiculosFotos extends ApiModelVeiculosFotos
     public function get($idVeiculo)
     {
         return parent::get([
-            'idVeiculo' => $idVeiculo
-        ])->getData();
-
+                'idVeiculo' => $idVeiculo
+            ])->getData();
     }
 
     public function delete($dados)
     {
         return parent::delete($dados)->json();
-
     }
 }

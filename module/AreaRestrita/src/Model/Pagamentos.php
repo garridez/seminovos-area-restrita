@@ -19,6 +19,7 @@ class Pagamentos extends ApiModelPagamentos
     {
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
+
     /**
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
@@ -39,10 +40,9 @@ class Pagamentos extends ApiModelPagamentos
     public function get($idPagamento = null)
     {
         return parent::get([
-            'idCadastro' => $this->getIdentity(),
-            'sort' => 'idPagamento',
-            'direction' => 'DESC'
-        ], $idPagamento)->json();
-
+                'idCadastro' => $this->getIdentity(),
+                'sort' => 'idPagamento',
+                'direction' => 'DESC'
+                ], $idPagamento)->json();
     }
 }

@@ -13,6 +13,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class IndexControllerTest extends AbstractHttpControllerTestCase
 {
+
     public function setUp()
     {
         // The module configuration should still be applicable for tests.
@@ -22,8 +23,8 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $configOverrides = [];
 
         $this->setApplicationConfig(ArrayUtils::merge(
-            include __DIR__ . '/../../../../config/application.config.php',
-            $configOverrides
+                include __DIR__ . '/../../../../config/application.config.php',
+                $configOverrides
         ));
 
         parent::setUp();

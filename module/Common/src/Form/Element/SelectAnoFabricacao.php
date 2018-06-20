@@ -105,7 +105,7 @@ class SelectAnoFabricacao extends Select
         $options = array_merge([
             'label' => 'Ano Fabricação',
             'name' => 'anoFabricacao'
-        ], $options);
+            ], $options);
 
         parent::__construct($name, $options);
     }

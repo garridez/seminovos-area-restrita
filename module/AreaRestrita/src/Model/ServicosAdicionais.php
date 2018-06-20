@@ -19,6 +19,7 @@ class ServicosAdicionais extends ApiModelServicosAdicionais
     {
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
+
     /**
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
@@ -30,7 +31,7 @@ class ServicosAdicionais extends ApiModelServicosAdicionais
     public function get($idServicosAdicional)
     {
         return parent::get([
-            'idServicosAdicional' => $idServicosAdicional
-        ])->json();
+                'idServicosAdicional' => $idServicosAdicional
+            ])->json();
     }
 }

@@ -106,7 +106,7 @@ class SelectAnoModelo extends Select
         $options = array_merge([
             'label' => 'Ano Modelo',
             'name' => 'anoModelo'
-        ], $options);
+            ], $options);
 
         parent::__construct($name, $options);
     }

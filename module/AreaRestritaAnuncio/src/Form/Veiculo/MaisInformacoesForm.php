@@ -73,5 +73,4 @@ class MaisInformacoesForm extends Form
             'required' => true,
         ]);
     }
-
 }

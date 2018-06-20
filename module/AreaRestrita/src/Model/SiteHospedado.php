@@ -19,6 +19,7 @@ class SiteHospedado extends ApiModelSiteHospedado
     {
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
+
     /**
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
@@ -30,7 +31,7 @@ class SiteHospedado extends ApiModelSiteHospedado
     public function get()
     {
         return parent::get([
-            'idCadastro' => $this->getIdentity()
-        ])->json();
+                'idCadastro' => $this->getIdentity()
+            ])->json();
     }
 }

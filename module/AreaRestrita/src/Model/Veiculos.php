@@ -36,21 +36,19 @@ class Veiculos extends ApiModelVeiculos
     public function getAll()
     {
         return parent::get([
-            'idCadastro' => $this->getIdentity(),
-            'ignorarCondicoesBasicas' => true
-        ])->json();
+                'idCadastro' => $this->getIdentity(),
+                'ignorarCondicoesBasicas' => true
+            ])->json();
     }
 
     public function get($idVeiculo, $useCache = false)
     {
         return parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo, $useCache)->getData()[0];
-
     }
 
     public function delete($idVeiculo)
     {
         return parent::delete(null, $idVeiculo)->json();
-
     }
 
     public function post(array $data)

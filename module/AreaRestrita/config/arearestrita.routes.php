@@ -10,7 +10,6 @@
  * @see https://framework.zend.com/manual/2.4/en/modules/zend.mvc.routing.html
  *
  */
-
 use AreaRestrita\Controller as Ctrl;
 use Zend\Router\Http;
 
@@ -207,5 +206,4 @@ return [
             ],
         ],
     ],
-
 ];

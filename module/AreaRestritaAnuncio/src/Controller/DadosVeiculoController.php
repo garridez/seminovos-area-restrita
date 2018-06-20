@@ -105,7 +105,6 @@ class DadosVeiculoController extends AbstractActionController
 
                 echo json_encode($resPost->json());
                 die;
-
             } else {
                 echo 'dados invalidos';
                 var_dump($dadosForm->getMessages());

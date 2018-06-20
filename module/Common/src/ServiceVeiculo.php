@@ -14,6 +14,7 @@ class ServiceVeiculo
     /*
      * Verifica se o veiculo consultado pertence ao usuário que está logado
      */
+
     public function verificaCadastroVeiculo($idVeiculo)
     {
         global $container;
@@ -25,7 +26,5 @@ class ServiceVeiculo
         $dadosVeiculo = $veiculosModel->get($idVeiculo, true);
 
         return $dadosVeiculo['cadastro']['idCadastro'] == $this->getIdentity();
-
     }
-
 }

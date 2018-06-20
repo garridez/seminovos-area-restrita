@@ -23,8 +23,7 @@ class Planos extends ApiModelPagamentos
     public function get($tipoPlano = null)
     {
         return parent::get([
-            'tipoPlano' => $tipoPlano
-        ])->getData();
-
+                'tipoPlano' => $tipoPlano
+            ])->getData();
     }
 }

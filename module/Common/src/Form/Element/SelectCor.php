@@ -34,92 +34,92 @@ class SelectCor extends Select
     ];
     protected $valuaaaeOptions = [
         [
-        'label' => 'Prata',
-        'value' => false,
+            'label' => 'Prata',
+            'value' => false,
         ],
         [
-        'label' => 'Preto',
-        'value' => '',
+            'label' => 'Preto',
+            'value' => '',
         ],
         [
-        'label' => 'Branco',
-        'value' => '',
+            'label' => 'Branco',
+            'value' => '',
         ],
         [
-        'label' => 'Cinza',
-        'value' => '',
+            'label' => 'Cinza',
+            'value' => '',
         ],
         [
-        'label' => 'Vermelho',
-        'value' => '',
+            'label' => 'Vermelho',
+            'value' => '',
         ],
         [
-        'label' => '',
-        'value' => '',
+            'label' => '',
+            'value' => '',
         ],
         [
-        'label' => 'Amarelo',
-        'value' => '',
+            'label' => 'Amarelo',
+            'value' => '',
         ],
         [
-        'label' => 'Azul',
-        'value' => '',
+            'label' => 'Azul',
+            'value' => '',
         ],
         [
-        'label' => 'Bege',
-        'value' => '',
+            'label' => 'Bege',
+            'value' => '',
         ],
         [
-        'label' => 'Branco',
-        'value' => '',
+            'label' => 'Branco',
+            'value' => '',
         ],
         [
-        'label' => 'Bronze',
-        'value' => '',
+            'label' => 'Bronze',
+            'value' => '',
         ],
         [
-        'label' => 'Cinza',
-        'value' => '',
+            'label' => 'Cinza',
+            'value' => '',
         ],
         [
-        'label' => 'Dourado',
-        'value' => '',
+            'label' => 'Dourado',
+            'value' => '',
         ],
         [
-        'label' => 'Laranja',
-        'value' => '',
+            'label' => 'Laranja',
+            'value' => '',
         ],
         [
-        'label' => 'Marrom',
-        'value' => '',
+            'label' => 'Marrom',
+            'value' => '',
         ],
         [
-        'label' => 'Prata',
-        'value' => '',
+            'label' => 'Prata',
+            'value' => '',
         ],
         [
-        'label' => 'Preto',
-        'value' => '',
+            'label' => 'Preto',
+            'value' => '',
         ],
         [
-        'label' => 'Rosa',
-        'value' => '',
+            'label' => 'Rosa',
+            'value' => '',
         ],
         [
-        'label' => 'Roxo',
-        'value' => '',
+            'label' => 'Roxo',
+            'value' => '',
         ],
         [
-        'label' => 'Verde',
-        'value' => '',
+            'label' => 'Verde',
+            'value' => '',
         ],
         [
-        'label' => 'Vermelho',
-        'value' => '',
+            'label' => 'Vermelho',
+            'value' => '',
         ],
         [
-        'label' => 'Vinho',
-        'value' => '',
+            'label' => 'Vinho',
+            'value' => '',
         ],
     ];
     protected $emptyOption = 'Selecione';

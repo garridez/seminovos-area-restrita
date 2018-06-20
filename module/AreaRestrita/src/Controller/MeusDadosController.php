@@ -15,6 +15,7 @@ use AreaRestrita\Model\Cadastros;
 
 class MeusDadosController extends AbstractActionController
 {
+
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -51,7 +52,6 @@ class MeusDadosController extends AbstractActionController
             $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
             $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
             $request = $this->getRequest();
-
         } else {
             $dadosForm = new MeusDados\ParticularForm();
             $dadosForm->get('senha')->setAttribute('required', false);
@@ -91,7 +91,7 @@ class MeusDadosController extends AbstractActionController
                     die;
                 }
             } else {
-                echo 'não validou os dados';//exit;
+                echo 'não validou os dados'; //exit;
                 var_dump($dadosForm->getMessages());
                 die;
             }

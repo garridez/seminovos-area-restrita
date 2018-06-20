@@ -48,7 +48,7 @@
             "type": "vcs",
             "url": "https://bitbucket.org/seminovosbh/api-client.git"
         }],
-    "extra": {
+    "config": {
         "sort-packages": true
     },
     "scripts": {

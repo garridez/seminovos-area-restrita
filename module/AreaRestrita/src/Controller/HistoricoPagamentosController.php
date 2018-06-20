@@ -17,6 +17,7 @@ use AreaRestrita\Model\Veiculos;
 
 class HistoricoPagamentosController extends AbstractActionController
 {
+
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -64,7 +65,6 @@ class HistoricoPagamentosController extends AbstractActionController
                 $dadosHistoricoPagamentos['data'][$key]['marca'] = $dadosVeiculo['marca'];
                 $dadosHistoricoPagamentos['data'][$key]['modelo'] = $dadosVeiculo['modelo'];
                 $dadosHistoricoPagamentos['data'][$key]['caracteristica'] = $dadosVeiculo['caracteristica'];
-
             }
             $tipoCadastro = 2;
         }

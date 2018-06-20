@@ -19,6 +19,7 @@ use Zend\View\Model\ViewModel;
 
 class FinanceiroController extends AbstractActionController
 {
+
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -68,8 +69,7 @@ class FinanceiroController extends AbstractActionController
         $servicosAdicionaisModel = $this->getContainer()->get(ServicosAdicionais::class);
 
         // Busca os dados do ServicosAdicionais
-        $dadosServicosAdicionais = $servicosAdicionaisModel->get(1);//o valor está fixo porque não foi encontrado no BD alternativa para consultar na tabela
-
+        $dadosServicosAdicionais = $servicosAdicionaisModel->get(1); //o valor está fixo porque não foi encontrado no BD alternativa para consultar na tabela
         //valor adicional do serviço de site
         $valorServicoAdicional = $dadosServicosAdicionais['_embedded']['servicos_adicionais'][1][0]['valor'];
 

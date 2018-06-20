@@ -16,9 +16,7 @@ use Zend\View\Renderer\PhpRenderer;
  * @method UserInfo userInfo($key = null) Passe a key do dado que vc quer, ou não passe nada e use os metodos da classe
  * 
  */
-
 class AutocompleteClass extends PhpRenderer
 {
-
-
+    
 }

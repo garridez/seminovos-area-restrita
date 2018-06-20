@@ -38,12 +38,12 @@ class CadastrarController extends AbstractActionController
 
                 #verifica se o email informado já foi cadastrado no sistema
                 $dadosCadastro = $cadastrosModel->get([
-                   'tipoCadastro' =>  $data['tipoCadastro'],
-                   'email' =>  $data['email'],
-                   'checkEmail' =>  true
+                    'tipoCadastro' => $data['tipoCadastro'],
+                    'email' => $data['email'],
+                    'checkEmail' => true
                 ]);
 
-                if(sizeof($dadosCadastro) > 0) {
+                if (sizeof($dadosCadastro) > 0) {
                     echo 'Email já cadastrado no sistema!';
                     var_dump($dadosForm->getMessages());
                     die;
@@ -59,7 +59,6 @@ class CadastrarController extends AbstractActionController
                     echo json_encode($resPost->json());
                     die;
                 }
-
             } else {
                 echo 'dados invalidos';
                 var_dump($dadosForm->getMessages());

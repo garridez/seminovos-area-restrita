@@ -15,6 +15,7 @@ use AreaRestrita\Model\Cadastros;
 
 class ContratoRevendaController extends AbstractActionController
 {
+
     protected $container;
     protected $routeParams;
     protected $routeName;

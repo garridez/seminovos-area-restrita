@@ -111,5 +111,4 @@ class CadastroParticularForm extends Form
             'required' => true,
         ]);
     }
-
 }

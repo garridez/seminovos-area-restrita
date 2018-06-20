@@ -53,7 +53,7 @@ class Cadastros extends ApiModelCadastros
     {
         return parent::post($data);
     }
-    
+
     public function get(array $data)
     {
         return parent::get($data)->getData();

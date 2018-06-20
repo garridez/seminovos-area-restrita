@@ -18,6 +18,7 @@ use AreaRestrita\Model\Veiculos;
 
 class FaturaController extends AbstractActionController
 {
+
     protected $container;
     protected $routeParams;
     protected $routeName;

@@ -1,5 +1,6 @@
 <?php
 $routeParams = $this->routeParams;
+
 ?>
 
 <h1>Controller: <b><?= $routeParams['controller'] ?></b></h1>
@@ -8,5 +9,5 @@ $routeParams = $this->routeParams;
     <legend>Todos parametros</legend>
     <?php foreach ($routeParams as $name => $value): ?>
         "<?= $name ?>": <b><code style="white-space: pre;"><?= trim(print_r($value, true)) ?></code></b><br>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
 </fieldset>

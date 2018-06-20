@@ -41,5 +41,4 @@ class VideoForm extends Form
             'required' => true,
         ]);
     }
-
 }
