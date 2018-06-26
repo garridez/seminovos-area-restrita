@@ -20,12 +20,14 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
   "dependencies": {
-    "autocomplete.js": "^0.30.0",
+    "animate-sass": "^0.8.2",
     "bootstrap": "^4.1.1",
-    "bootstrap-slider": "^10.0.2",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.1.4",
+    "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
     "jquery": "^3.3.1",
     "laravel-mix": "^2.1.11",
+    "modernizr": "^3.6.0",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {}
