@@ -204,6 +204,15 @@ return [
                     ],
                 ],
             ],
+            'propostas' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/propostas/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'propostas',
+                    ],
+                ],
+            ],
         ],
     ],
 ];

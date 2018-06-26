@@ -118,7 +118,7 @@ $veiculos = $this->meusVeiculos['data'];
                             </div>
                         <?php } ?>
                         <div class="col-md-1">
-                            <a href="#">Propostas</a>
+                            <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">Propostas</a>
                         </div>
                         <?php if (($veiculo['idPlano'] != 1) && ($veiculo['idStatus'] == 7 || $veiculo['idStatus'] == 8) && $horas < 49) { ?>
                             <div class="col-md-2">
