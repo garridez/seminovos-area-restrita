@@ -1,5 +1,5 @@
 {
-    "name": "zendframework/skeleton-application",
+    "name": "snbh/area-restrita",
     "description": "Skeleton Application for Zend Framework zend-mvc applications",
     "type": "project",
     "license": "BSD-3-Clause",
@@ -13,20 +13,20 @@
     "prefer-stable": true,
     "require": {
         "php": "^5.6 || ^7.0",
-        "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
-        "zendframework/zend-mvc": "^3.0.1",
-        "zfcampus/zf-development-mode": "^3.0",
+        "http-interop/http-middleware": "0.4.1",
+        "neilime/zf2-twb-bundle": "^3.2",
+        "snbh/api-client-module": "dev-master",
         "zendframework/zend-cache": "^2.7.1",
-        "zendframework/zend-mvc-form": "^1.0",
+        "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
         "zendframework/zend-log": "^2.9",
+        "zendframework/zend-mvc": "^3.0.1",
+        "zendframework/zend-mvc-form": "^1.0",
         "zendframework/zend-mvc-plugins": "^1.0.1",
         "zendframework/zend-psr7bridge": "^0.2.2",
-        "zendframework/zend-session": "^2.7.1",
-        "snbh/api-client-module": "dev-master",
-        "zendframework/zend-stratigility": "^2.0.1",
-        "http-interop/http-middleware": "0.4.1",
         "zendframework/zend-serializer": "^2.8",
-        "neilime/zf2-twb-bundle": "^3.2"
+        "zendframework/zend-session": "^2.7.1",
+        "zendframework/zend-stratigility": "^2.0.1",
+        "zfcampus/zf-development-mode": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -44,7 +44,8 @@
     "repositories": [{
             "type": "vcs",
             "url": "https://bitbucket.org/seminovosbh/api-client-module.git"
-        }, {
+        },
+        {
             "type": "vcs",
             "url": "https://bitbucket.org/seminovosbh/api-client.git"
         }],

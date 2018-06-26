@@ -28,7 +28,8 @@
     "jquery": "^3.3.1",
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "snbh-site": "git+https://x-token-auth:oV4aRN2f_36fH8AYG7F_G9pJpFxO3sPLZSLd12dB2FRggcTkovP2mjrPHt-HeW5iOx74wStdoBmg2bjlUiY=@bitbucket.org/seminovosbh/site_novo.git#*"
   },
   "devDependencies": {}
 }
