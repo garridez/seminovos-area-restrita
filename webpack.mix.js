@@ -17,7 +17,8 @@ mix.options({
 });
 
 mix.js('resources/assets/js/Main.js', 'public/js/app.js');
-mix.standaloneSass('resources/assets/sass/app.scss', 'public/css');
+mix.sass('resources/assets/sass/app.scss', 'public/css');
+mix.sourceMaps(true, 'source-map');
 mix.copy(basePath + '/img', 'public/img');
 mix.copy(basePath + '/fonts', 'public/fonts');
 mix.copy('node_modules/font-awesome/fonts', 'public/node_modules/font-awesome/fonts');
