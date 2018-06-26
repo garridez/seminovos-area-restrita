@@ -7,6 +7,7 @@
 
 namespace AreaRestrita\Controller;
 
+use AreaRestrita\Model\Propostas;
 use SnBH\Common\ServiceVeiculo;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
@@ -60,6 +61,7 @@ class MeusVeiculosController extends AbstractActionController
             'meusVeiculos' => $dadosVeiculos
         ]);
     }
+
     /*
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular
@@ -78,7 +80,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 2,
-            ], $idVeiculo);
+        ], $idVeiculo);
 
         var_dump($dadosVeiculos);
         exit;
@@ -96,7 +98,7 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 5,
             'clicks' => 0
-            ], $idVeiculo);
+        ], $idVeiculo);
 
         var_dump($dadosVeiculos);
         exit;
@@ -113,7 +115,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
-            ], $idVeiculo);
+        ], $idVeiculo);
 
         var_dump($dadosVeiculos);
         exit;
@@ -149,6 +151,7 @@ class MeusVeiculosController extends AbstractActionController
 
             #quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
             $dadosVeiculos = $veiculosModel->delete($idVeiculo);
+
         } else {
 
             // Busca os dados do cadastro
@@ -156,7 +159,7 @@ class MeusVeiculosController extends AbstractActionController
                 'idVeiculo' => $idVeiculo,
                 'idStatus' => 7,
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
-                ], $idVeiculo);
+            ], $idVeiculo);
         }
 
         var_dump($dadosVeiculos);
@@ -181,6 +184,21 @@ class MeusVeiculosController extends AbstractActionController
 
         return new ViewModel([
             'veiculo' => $dadosVeiculo
+        ]);
+    }
+
+    public function propostasAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+
+        /* @var $propostasModel Propostas */
+        $propostasModel = $this->getContainer()->get(Propostas::class);
+
+        // Busca os dados das propostas
+        $dadosPropostas = $propostasModel->getAll($idVeiculo);
+
+        return new ViewModel([
+            'propostas' => $dadosPropostas
         ]);
     }
 }
