@@ -68,6 +68,7 @@ return [
             Controller\FaturaController::class => InvokableFactory::class,
             Controller\FinanceiroController::class => InvokableFactory::class,
             Controller\MeusVeiculosController::class => InvokableFactory::class,
+            Controller\MeuSiteController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
