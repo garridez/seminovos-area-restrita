@@ -197,6 +197,11 @@ class MeusVeiculosController extends AbstractActionController
         // Busca os dados das propostas
         $dadosPropostas = $propostasModel->getAll($idVeiculo);
 
+        // Verifica se retornou propostas para o veículo
+        if($dadosPropostas['status'] == 405) {
+            $dadosPropostas = [];
+        }
+
         return new ViewModel([
             'propostas' => $dadosPropostas
         ]);

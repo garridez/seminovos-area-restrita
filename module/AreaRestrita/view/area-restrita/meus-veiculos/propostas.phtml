@@ -1,7 +1,30 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-if (sizeof($this->propostas) > 0) {
-    var_dump($this->propostas);
-} else {
-    echo 'Nenhuma proposta encontrado para o veículo!!!';
-}
+?>
+
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Propostas</h6>
+    <?php
+    if (sizeof($this->propostas) > 0) {
+        foreach ($this->propostas as $propostas):
+            ?>
+            <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark"><?= $propostas['nome'] ?></strong>
+                    <strong>Data: </strong><?= $propostas['dataFormatada'] ?><br>
+                    <strong>E-mail: </strong><?= $propostas['email'] ?><br>
+                    <strong>Telefone: </strong><?= $propostas['telefone'] ?><br>
+                    <strong>Mensagem: </strong><?= $propostas['texto'] ?>
+                </>
+            </div>
+        <?php endforeach;
+    } else { ?>
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">Nenhuma proposta enviada para o veículo.</strong>
+            </p>
+        </div>
+        <?php
+    }
+    ?>
+</div>
