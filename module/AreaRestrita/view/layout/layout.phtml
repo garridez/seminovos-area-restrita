@@ -31,36 +31,12 @@
     </head>
     <body class="fixed-header menu-pin l-layout <?= $this->bodyClass() ?>">
         <nav class="page-sidebar" data-pages="sidebar">
-            <div class="sidebar-overlay-slide from-top" id="appMenu">
-                <div class="row">
-                    <div class="col-xs-6 no-padding">
-                        <a href="#" class="p-l-40"><img src="/assets/img/demo/social_app.svg" alt="socail">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 no-padding">
-                        <a href="#" class="p-l-10"><img src="/assets/img/demo/email_app.svg" alt="socail">
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-6 m-t-20 no-padding">
-                        <a href="#" class="p-l-40"><img src="/assets/img/demo/calendar_app.svg" alt="socail">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 m-t-20 no-padding">
-                        <a href="#" class="p-l-10"><img src="assets/img/demo/add_more.svg" alt="socail">
-                        </a>
-                    </div>
-                </div>
-            </div>
             <div class="sidebar-header">
                 <svg viewBox="0 0 180 66" width="90" height="33"  class="snbh-logo inverse brand">
                 <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
                 <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
                 </svg>
                 <div class="sidebar-header-controls">
-                    <button type="button" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20 hidden-md-down" data-pages-toggle="#appMenu"><i class="fa fa-angle-down fs-16"></i>
-                    </button>
                     <button type="button" class="btn btn-link hidden-md-down" data-toggle-pin="sidebar"><i class="fa fs-12"></i>
                     </button>
                 </div>
@@ -94,8 +70,14 @@
                     <div class="dropdown pull-right hidden-md-down">
                         <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="thumbnail-wrapper d32 circular inline">
-                                <!--<?= $this->userInfo()->getImgPerfil() ?>-->
-                                <img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                                <?php /*
+                                  echo $this->userInfo()->getImgPerfil();
+                                  echo '<img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">';
+                                 */
+
+                                ?>
+
                             </span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
@@ -106,21 +88,10 @@
                             </a>
                         </div>
                     </div>
-                    <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a>
                 </div>
             </div>
-            <div class="page-content-wrapper ">
-                <div class="content ">
-                    <div class="jumbotron" data-pages="parallax">
-                        <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
-                            <div class="inner">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                    <li class="breadcrumb-item active">Blank template</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
+            <div class="page-content-wrapper">
+                <div class="content">
                     <div class=" container-fluid   container-fixed-lg">
                         <?= $this->content ?>
                     </div>
@@ -128,13 +99,9 @@
                 <div class=" container-fluid  container-fixed-lg footer">
                     <div class="copyright sm-text-center">
                         <p class="small no-margin pull-left sm-pull-reset">
-                            <span class="hint-text">Copyright &copy; 2017 </span>
-                            <span class="font-montserrat">REVOX</span>.
-                            <span class="hint-text">All rights reserved. </span>
-                            <span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a> <span class="muted">|</span> <a href="#" class="m-l-10">Privacy Policy</a></span>
-                        </p>
-                        <p class="small no-margin pull-right sm-pull-reset">
-                            Hand-crafted <span class="hint-text">&amp; made with Love</span>
+                            <span class="hint-text">Copyright &copy; 2018 </span>
+                            <span class="font-montserrat">SeminovosBH</span>.
+                            <span class="hint-text">Todos direitos reservados</span>
                         </p>
                         <div class="clearfix"></div>
                     </div>
