@@ -76,6 +76,7 @@ return [
             // Auth
             AuthenticationService::class => AuthenticationServiceFactory::class,
             Service\AuthManager::class => Service\AuthManagerFactory::class,
+            Service\Identity::class => Service\Factory\IdentityFactory::class,
             // Middleware
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,

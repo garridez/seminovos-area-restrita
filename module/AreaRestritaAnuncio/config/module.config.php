@@ -19,6 +19,17 @@ return [
     ],
     'router' => [
         'routes' => [
+            'criar-anuncio-flow' => [
+                'may_terminate' => true,
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/criar-anuncio-flow',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'criar-anuncio-flow'
+                    ]
+                ],
+            ],
             'criar-anuncio' => [
                 'may_terminate' => true,
                 'type' => Segment::class,

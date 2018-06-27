@@ -9,6 +9,7 @@ namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use AreaRestrita\Service\Identity;
 
 class LoginController extends AbstractActionController
 {
@@ -23,6 +24,14 @@ class LoginController extends AbstractActionController
     {
         $email = $this->params('email');
 
+        /* @var $identity Identity */
+        $identity = $this->getContainer()->get(Identity::class);
+        if ($identity->hasIdentity()) {
+
+            return $this->redirect()->toRoute('criar-anuncio', [
+                    'tipo' => $this->params('tipo'),
+            ]);
+        }
 
         if ($email === null) {
             $this->redirect()->toRoute(/* Colocar a rota aqui */);
