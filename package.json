@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "prod": "npm run production",
@@ -29,7 +29,7 @@
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
     "popper.js": "^1.14.3",
-    "snbh-site": "git+https://x-token-auth:oV4aRN2f_36fH8AYG7F_G9pJpFxO3sPLZSLd12dB2FRggcTkovP2mjrPHt-HeW5iOx74wStdoBmg2bjlUiY=@bitbucket.org/seminovosbh/site_novo.git#*"
+    "snbh-site": "git+https://x-token-auth:JUEqsiBRn0nGnDeTuVPcahFNVoJiuZCyyc3u_uJQpVTC39XkXxkG1-ZBkkabbl7KiG1w-04tQQ1F4USLV7I=@bitbucket.org/seminovosbh/site_novo.git#*"
   },
   "devDependencies": {}
 }
