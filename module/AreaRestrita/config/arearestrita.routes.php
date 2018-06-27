@@ -215,4 +215,14 @@ return [
             ],
         ],
     ],
+    'meu-site' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'meu-site',
+            'defaults' => [
+                'controller' => Ctrl\MeuSiteController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
 ];

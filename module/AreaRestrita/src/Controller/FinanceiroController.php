@@ -82,9 +82,9 @@ class FinanceiroController extends AbstractActionController
 
         $dadosSiteHospedado = $siteHospedado->get();
 
-        $valorAdicional = sizeof($dadosSiteHospedado['data']) > 0 ? $valorServicoAdicional : 0;
+        $valorAdicional = sizeof($dadosSiteHospedado) > 0 ? $valorServicoAdicional : 0;
         $valorAdicionalString = 'R$ ' . number_format($valorAdicional, 2, ',', '.');
-        $maisSite = sizeof($dadosSiteHospedado['data']) > 0 ? ' <i title="+ R$ ' . number_format($valorAdicional, 2, ',', '.') . '"> + Site</i>' : '';
+        $maisSite = sizeof($dadosSiteHospedado) > 0 ? ' <i title="+ R$ ' . number_format($valorAdicional, 2, ',', '.') . '"> + Site</i>' : '';
 
         $dadosFinanceiro['valor'] = (float) ($valorPlano + $valorAdicional);
         $dadosFinanceiro['valorAdicionalString'] = $valorAdicionalString;
