@@ -7,13 +7,23 @@
 
 namespace AreaRestritaAnuncio\Controller;
 
+use AreaRestritaAnuncio\Form\Veiculo;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Veiculos;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
-use AreaRestritaAnuncio\Form\Veiculo;
 
 class DadosVeiculoController extends AbstractActionController
 {
+
+    public function onDispatch(MvcEvent $e)
+    {
+        $res = parent::onDispatch($e);
+        if ($res instanceof ViewModel) {
+            $res->setTerminal(true);
+        }
+        return $res;
+    }
 
     public function dadosAction()
     {
@@ -28,6 +38,7 @@ class DadosVeiculoController extends AbstractActionController
     {
         $precoForm = new Veiculo\PrecoForm();
 
+        $this->layout()->setTemplate('none');
         return new ViewModel([
             'formPrecoVeiculo' => $precoForm
         ]);

@@ -50,6 +50,7 @@
             "url": "https://bitbucket.org/seminovosbh/api-client.git"
         }],
     "config": {
+        "apcu-autoloader": true,
         "sort-packages": true
     },
     "scripts": {

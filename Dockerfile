@@ -4,6 +4,8 @@ RUN apt-get install gnupg -y && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs libpng-dev
 
+RUN pecl install apcu && docker-php-ext-enable apcu opcache
+
 VOLUME /root/.npm
 
 COPY package*.json ./

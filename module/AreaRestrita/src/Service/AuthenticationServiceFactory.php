@@ -18,9 +18,21 @@ class AuthenticationServiceFactory implements FactoryInterface
         $requestedName, array $options = null)
     {
         $sessionManager = $container->get(SessionManager::class);
-        $authStorage = new SessionStorage(Module::SESSION_NAMESPACE, 'idCadastro', $sessionManager);
+
+        $authStorage = $this->getSessionStorage($sessionManager);
+
         $authAdapter = new AuthAdapter($container->get(ApiClient::class));
 
         return new AuthenticationService($authStorage, $authAdapter);
+    }
+
+    protected function getSessionStorage(SessionManager $sessionManager)
+    {
+        try {
+            return new SessionStorage(Module::SESSION_NAMESPACE, 'idCadastro', $sessionManager);
+        } catch (\Exception $ex) {
+            $sessionManager->destroy();
+            return $this->getSessionStorage($sessionManager);
+        }
     }
 }

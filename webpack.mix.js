@@ -5,6 +5,7 @@ let basePath = 'resources/assets';
 
 mix.webpackConfig({
     resolve: {
+        modules: [path.resolve(__dirname, 'resources/assets/js'), 'node_modules'],
         alias: {
             SnBH: path.resolve('resources/assets/js/SnBH.js')
         }

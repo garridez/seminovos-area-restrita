@@ -1,0 +1,52 @@
+<?php
+/* @var $this Zend\View\Renderer\PhpRenderer */
+
+$rotasAnuncio = [
+    'veiculo' => [
+        'dados' => 'dados',
+        'preco' => 'preco',
+        'mais-informacoes' => 'mais-informacoes',
+        'fotos' => 'fotos',
+        'video' => 'video',
+    ],
+    'planos' => $this->url('criar-anuncio/anuncio/planos', $routeParams),
+    'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
+];
+
+foreach ($rotasAnuncio['veiculo'] as &$rota) {
+    $rota = $this->url('criar-anuncio/anuncio/dados/pages', ['action' => $rota] + $routeParams);
+}
+
+?>
+
+<div class="row">
+    <div class="col-md-6 offset-3 anuncio-steps step-container">
+        <div class="step-0 step-veiculo step-container active">
+            <?php
+            $count = 0;
+            foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
+                echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-url="' . $rota . '"></div>';
+            }
+
+            ?>
+        </div>
+        <div class="step-1 step-plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
+            Step Plano
+        </div>
+        <div class="step-3 step-checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
+            Step Checkout
+        </div>
+    </div>
+</div>
+
+<div class="row step-controls">
+
+    <div class="col-3 offset-3">
+        <button class="btn-voltar btn btn-lg btn-secondary btn-block text-white">VOLTAR</button>
+    </div>
+    <div class="col-3 offset--1">
+        <button class="btn-continuar btn btn-lg btn-laranja btn-block text-white">CONTINUAR</button>
+    </div>
+
+</div>
+<br class="clearfix">

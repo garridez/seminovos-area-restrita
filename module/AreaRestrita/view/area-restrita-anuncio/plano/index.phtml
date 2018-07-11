@@ -1,5 +1,8 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-var_dump($this->planos);
 
 ?>
+
+<?php foreach ($this->planos as $plano): ?>
+    <?= $plano['nomePlano'] ?><br>
+<?php endforeach; ?>

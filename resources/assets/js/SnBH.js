@@ -36,6 +36,24 @@ const SnBH = {
                     });
                 }
             }
+        },
+        requireAndRegister: function () {
+            
+            var self = this;
+            var webpackContext = require
+                    .context('./mvc', true, /\.js$/);
+
+            webpackContext.keys()
+                    .forEach(function (file) {
+                        module = webpackContext(file);
+                        if (module.seletor) {
+                            self.registerCallback(
+                                    module.seletor,
+                                    (module.callback || module),
+                                    !!module.prepend);
+                        }
+                    });
+            return self;
         }
     }
 };

@@ -1,0 +1,67 @@
+<?php
+/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
+
+?><!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <meta charset="utf-8" />
+        <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+        <link rel="apple-touch-icon" href="pages/ico/60.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <!--<link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />-->
+        <link href="/css/app.css?<?= rand(0, 1000) ?>" media="screen" rel="stylesheet" type="text/css">
+        <!--<link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />-->
+        <!--<link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" media="screen" />-->
+        <!--<link href="assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" type="text/css" media="screen" />-->
+        <!--<link href="pages/css/pages-icons.css" rel="stylesheet" type="text/css">-->
+
+    </head>
+    <body class="fixed-header l-criar-anuncio <?= $this->bodyClass() ?>">
+        <div class="page-container p-0 ">
+            <div class="header ">
+                <div class="">
+                    <div class="brand inline">
+                        <svg viewBox="0 0 180 66" alt="logo" width="78" height="29"  class="snbh-logo">
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer_letters"></use>
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer_car"></use>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+            <div class="page-content-wrapper">
+                <div class="content">
+                    <div class="container-fluid container-fixed-lg">
+                        <?= $this->content ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class=" container-fluid  container-fixed-lg footer">
+            <div class="copyright sm-text-center">
+                <p class="small no-margin pull-left sm-pull-reset">
+                    <span class="hint-text">Copyright &copy; 2018 </span>
+                    <span class="font-montserrat">SeminovosBH</span>.
+                    <span class="hint-text">Todos direitos reservados</span>
+                </p>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <script src="/js/app.js?<?= rand(0, 1000) ?>" async="true"></script>
+    </body>
+</html>
+

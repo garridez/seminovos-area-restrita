@@ -8,13 +8,18 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class CriarAnuncioController extends AbstractActionController
 {
 
-    public function __construct()
+    public function indexAction()
     {
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+        $viewModel = new ViewModel([
+            'routeParams' => $this->params()->fromRoute()
+        ]);
+
+        $this->layout('layout/criar-anuncio');
+        return $viewModel;
     }
 }
