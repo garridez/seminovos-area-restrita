@@ -29,7 +29,7 @@
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
     "popper.js": "^1.14.3",
-    "snbh-site": "git+https://x-token-auth:JUEqsiBRn0nGnDeTuVPcahFNVoJiuZCyyc3u_uJQpVTC39XkXxkG1-ZBkkabbl7KiG1w-04tQQ1F4USLV7I=@bitbucket.org/seminovosbh/site_novo.git#*"
+    "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#*"
   },
   "devDependencies": {}
 }
