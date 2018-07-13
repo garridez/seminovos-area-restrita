@@ -39,7 +39,7 @@ return [
                         'tipo' => 'moto|carro|caminhao',
                     ],
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\CriarAnuncioController::class,
                         'action' => 'index'
                     ]
                 ],

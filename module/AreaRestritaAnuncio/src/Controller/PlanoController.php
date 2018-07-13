@@ -22,8 +22,12 @@ class PlanoController extends AbstractActionController
         // Busca os planos de acordo com o tipo
         $dadosPlanos = $planosModel->get('particular');
 
-        return new ViewModel([
-            'planos' => $dadosPlanos
+        $viewModel = new ViewModel([
+            'planos' => $dadosPlanos,
         ]);
+
+        $viewModel->setTerminal(true);
+
+        return $viewModel;
     }
 }

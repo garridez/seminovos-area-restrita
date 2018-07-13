@@ -1,6 +1,9 @@
-body{
 
+body{
     &.l-login{
-        @import '_login.scss';
+        @import 'login';
+    }
+    &.l-criar-anuncio{
+        @import 'criar-anuncio';
     }
 }

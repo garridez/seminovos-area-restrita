@@ -20,10 +20,10 @@ class Planos extends ApiModelPagamentos
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
-    public function get($tipoPlano = null)
+    public function get($tipoPlano = null, $cache = true)
     {
         return parent::get([
                 'tipoPlano' => $tipoPlano
-            ])->getData();
+            ], null, $cache)->getData();
     }
 }
