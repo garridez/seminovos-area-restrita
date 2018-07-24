@@ -20,6 +20,14 @@ class AuthAdapter implements AdapterInterface
     public function authenticate(): AuthResult
     {
         $data = $this->data;
+        if ($data['loginWithoutPassword']) {
+            return $this->authenticateNoPassword();
+        }
+        return $this->authenticateWithPassword();
+    }
+
+    public function authenticateWithPassword(): AuthResult
+    {
         $data['acao'] = 'login';
 
         /* @var $loginResult \SnBH\ApiClient\Response */
@@ -28,6 +36,15 @@ class AuthAdapter implements AdapterInterface
         $code = $loginResult->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;
 
         return new AuthResult($code, (int) $loginResult->getData()[0]['idCadastro']);
+    }
+
+    public function authenticateNoPassword(): AuthResult
+    {
+        $res = $this->apiClient->cadastrosGet([], $this->data['idCadastro']);
+
+        $code = $res->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;
+
+        return new AuthResult($code, (int) $this->data['idCadastro']);
     }
 
     /**

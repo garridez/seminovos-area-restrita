@@ -4,9 +4,9 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
+use SnBH\Common\Helper\Encrypter;
 use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
-use AreaRestrita\Model\Cadastros;
 
 class AuthController extends AbstractActionController
 {
@@ -50,7 +50,12 @@ class AuthController extends AbstractActionController
                 /* @var $authManager AuthManager  */
                 $authManager = $container->get(AuthManager::class);
 
-                $result = $authManager->login($data['usuarioEmail'], $data['usuarioSenha'], $data['tipoCadastro'], $rememberMe);
+                $result = $authManager->login([
+                    'emailOrCnpj' => $data['usuarioEmail'],
+                    'usuarioSenha' => $data['usuarioSenha'],
+                    'tipoCadastro' => $data['tipoCadastro'],
+                    'rememberMe' => $rememberMe
+                ]);
                 if ($result->getCode() === $result::SUCCESS) {
                     return $this->redirect()->toRoute('restrito');
                 } else {
@@ -85,34 +90,22 @@ class AuthController extends AbstractActionController
         /* @var $container ServiceLocatorInterface */
         global $container;
 
-        $dados = $this->params('dados');
-
-        $dados = str_replace("HBSOVONIMES", "/", $dados);
-
-        $dadosCriptografados = base64_decode($dados);
-
-        list($encryptedText, $encryptionMethod, $secretHash, $iv) = explode("@#", $dadosCriptografados);
-        $iv = hex2bin($iv);
-
-        $decryptedText = openssl_decrypt($encryptedText, $encryptionMethod, $secretHash, 0, $iv);
+        $encryptedText = $this->params('dados');
+        $decryptedText = Encrypter::decrypt($encryptedText);
 
         list($fusoHorario, $idCadastro, $idAnuncio, $dataValidade) = explode(";", $decryptedText);
 
-
         if ($dataValidade >= date('Y-m-d')) {
-
-            /* @var $cadastrosModel Cadastros */
-            $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-
-            // Busca os dados do cadastro
-            $dadosCadastro = $cadastrosModel->get(["idCadastro" => $idCadastro]);
-
-            $rememberMe = true;
 
             /* @var $authManager AuthManager  */
             $authManager = $container->get(AuthManager::class);
-
-            $result = $authManager->login($dadosCadastro[0]['email'], "123456789", 2, $rememberMe);
+           
+            $result = $authManager->login([
+                'loginWithoutPassword' => true,
+                'idCadastro' => $idCadastro,
+                'rememberMe' => true
+            ]);
+            
             if ($result->getCode() === $result::SUCCESS) {
                 return $this->redirect()->toRoute('restrito');
             } else {
@@ -123,6 +116,6 @@ class AuthController extends AbstractActionController
             var_dump('Redirecionar para a tela de login');
 //            return $this->redirect()->toRoute('auth');
         }
-
     }
+
 }
