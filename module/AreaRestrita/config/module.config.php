@@ -11,6 +11,7 @@ use AreaRestrita\Service\AuthenticationServiceFactory;
 use Zend\Authentication\AuthenticationService;
 use Zend\Cache\Service\StorageCacheFactory;
 use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
@@ -52,6 +53,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\AuthController::class,
                         'action' => 'logout',
+                    ],
+                ],
+            ],
+            'login-automatico' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/login-automatico/:dados',
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'login-automatico',
                     ],
                 ],
             ],
