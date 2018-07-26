@@ -107,14 +107,13 @@ class AuthController extends AbstractActionController
             ]);
             
             if ($result->getCode() === $result::SUCCESS) {
-                return $this->redirect()->toRoute('restrito');
+                return $this->redirect()->toUrl('../meus-veiculos');
             } else {
                 var_dump('Erro ao entrar');
                 die;
             }
         } else {
-            var_dump('Redirecionar para a tela de login');
-//            return $this->redirect()->toRoute('auth');
+            return $this->redirect()->toRoute('auth');
         }
     }
 
