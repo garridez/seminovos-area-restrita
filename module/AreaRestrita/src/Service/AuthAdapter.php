@@ -28,6 +28,7 @@ class AuthAdapter implements AdapterInterface
 
     public function authenticateWithPassword(): AuthResult
     {
+        $data = $this->data;
         $data['acao'] = 'login';
 
         /* @var $loginResult \SnBH\ApiClient\Response */
