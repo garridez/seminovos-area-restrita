@@ -17,6 +17,11 @@ use Zend\Session\Validator\HttpUserAgent;
 use Zend\Session\Validator\RemoteAddr;
 
 return [
+    'SnBH' => [
+        'urls' => [
+            'site' => getenv('SNBH_URL_SITE')
+        ]
+    ],
     'ApiClient' => [
 //        'credentials' => [
 //            'serverUrl' => 'http://api2.seminovosbh.com.br',

@@ -12,3 +12,4 @@ services:
         environment:
             - APPLICATION_ENV=development
             - SNBH_API_HOST=http://api2homolog.seminovosbh.com.br
+            - SNBH_URL_SITE=http://localhost:8091

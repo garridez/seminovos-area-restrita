@@ -25,7 +25,7 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\MeusVeiculosController::class,
                         'action' => 'index',
                         'middleware' => [
                             Middleware\LoginMiddleware::class,
