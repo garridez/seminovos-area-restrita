@@ -6,3 +6,31 @@
 .footer{
     background-color: #fff;
 }
+
+ul.steps-list{
+    list-style: none;
+    li {
+        padding: 0;
+        display: inline-block;
+        &:not(:last-child)::after{
+            content: " ";
+            display: inline-block;
+            border-bottom: 1px solid #707070;
+            width: 40px;
+        }
+        &.active{
+            svg{
+                fill: #ED9902;
+            }
+        }
+        &.active ~ li{
+            svg{
+                fill: #DADADA;
+            }
+        }
+    }
+    svg{
+        width: 42px;
+        fill: #7B7B7B;
+    }
+}
