@@ -66,4 +66,10 @@ class RotaExemploController extends AbstractActionController
             'routeParams' => $this->routeParams
         ]);
     }
+
+    public function guiaAction()
+    {
+        return new ViewModel([
+        ]);
+    }
 }

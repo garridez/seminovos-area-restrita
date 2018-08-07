@@ -1,0 +1,320 @@
+<?php
+/* @var $this Zend\View\Renderer\PhpRenderer */
+global $themes;
+$themes = [
+    // SnBH
+    "laranja",
+    "plano-nitro-home",
+    "plano-nitro",
+    "plano-turbo",
+    "plano-basico",
+    "plano-simples",
+    // Bootstrap
+    "primary",
+    "secondary",
+    "success",
+    "danger",
+    "warning",
+    "info",
+    "light",
+    "dark",
+];
+
+/**
+ * 
+ * @param array|string $prefix Se string é adicionado como prefixo a todos valores do array
+ *                                  Se array, é adicionado de acordo com o indice da chave
+ * @param array $array
+ * @param array|string $sufix Igual ao prefix
+ */
+function prefixArray($prefix, $sufix, $arrayToMerge = [])
+{
+    global $themes;
+    $newThemes = array_merge($themes, $arrayToMerge);
+
+    $prefixIsArray = is_array($prefix);
+    $sufixIsArray = is_array($sufix);
+
+    $coringaPrefix = '';
+    $coringaSufix = '';
+    if ($prefixIsArray) {
+        if (isset($prefix['*'])) {
+            $coringaPrefix = $prefix['*'];
+        }
+        if (!isset($prefix['default'])) {
+            $prefix['default'] = '';
+        }
+    }
+    if ($sufixIsArray) {
+        if (isset($sufix['*'])) {
+            $coringaSufix = $sufix['*'];
+        }
+        if (!isset($sufix['default'])) {
+            $sufix['default'] = '';
+        }
+    }
+
+    foreach ($newThemes as $key => &$value) {
+        $newValue = $coringaPrefix . $value . $coringaSufix;
+
+        if ($prefixIsArray) {
+            if (isset($prefix[$value])) {
+                $newValue = $prefix[$value] . $newValue;
+            } else {
+                $newValue = $prefix['default'] . $newValue;
+            }
+        } else {
+            $newValue = $prefix . $newValue;
+        }
+        if ($sufixIsArray) {
+            if (isset($sufix[$value])) {
+                $newValue .= $sufix[$value];
+            } else {
+                $newValue .= $sufix['default'];
+            }
+        } else {
+            $newValue .= $sufix;
+        }
+        $value = $newValue;
+    }
+    return array_combine($newThemes, $newThemes);
+}
+
+function renderArray($array, $format)
+{
+    foreach ($array as $key => $value) {
+        printf($format, $key, $value);
+    }
+}
+
+function prefiAndRendArray(string $format, $prefix = '', $sufix = '', $arrayToMerge = [])
+{
+    $array = prefixArray($prefix, $sufix, $arrayToMerge);
+    renderArray($array, $format);
+}
+
+?><style>
+    [class*="col"] {
+        margin-bottom: 10px;        
+    }
+</style>
+<div class="row text-center">
+    <div class="col-md-3 debug">
+        col-md-3
+    </div>
+    <div class="col-md-3 d-none d-md-block debug">
+        col-md-3 show on <b>md</b>
+    </div>
+    <div class="col-sm-3 d-sm-none debug">
+        col-md-3 hide on <b>sm</b>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>Tipografia</h1>
+    </div>
+    <div class="col-6">
+        <h3>Cabeçalhos</h3>
+        <hr>
+        <h1>h1. Bootstrap heading - 25px</h1>
+        <h2>h2. Bootstrap heading - 20px</h2>
+        <h3>h3. Bootstrap heading - 18px</h3>
+        <h4>h4. Bootstrap heading - 16px</h4>
+        <h5>h5. Bootstrap heading - 14px</h5>
+        <h6>h6. Bootstrap heading - 12px</h6>
+    </div>
+    <div class="col-6">
+        <h3>Conteúdo</h3>
+        <hr>
+        <h1 class="display-1">Display 1 - 18px</h1>
+        <h1 class="display-2">Display 2 - 14px</h1>
+        <h1 class="display-3">Display 3 - 12px</h1>
+        <h1 class="display-4">Display 4 - 10px</h1>
+    </div>
+    <div class="col-12">
+        <h3>
+            Fancy display heading
+            <small class="text-muted">With faded secondary text</small>
+        </h3>
+    </div>
+    <div class="col-6">
+        <p>You can use the mark tag to <mark>highlight</mark> text.</p>
+        <p><del>This line of text is meant to be treated as deleted text.</del></p>
+        <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+        <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+        <p><u>This line of text will render as underlined</u></p>
+        <p><small>This line of text is meant to be treated as fine print.</small></p>
+        <p><strong>This line rendered as bold text.</strong></p>
+        <p><em>This line rendered as italicized text.</em></p>
+    </div>
+    <div class="col-6">
+        <p><abbr title="attribute">attr</abbr></p>
+        <p><abbr title="HyperText Markup Language" class="initialism">HTML</abbr></p>
+    </div>
+    <div class="col-12">
+        <h1>Exemplos de cores</h1>
+    </div>
+    <div class="col-4">
+        <h3>Cor parágrafo</h3>
+        <hr>
+        <?php
+        prefiAndRendArray('<p class="%s"> %s </p>', 'text-', [
+            'light' => ' bg-dark',
+            'white-50' => ' bg-dark',
+            ], [
+            'body',
+            'muted',
+            'white bg-dark',
+            'black-50',
+            'white-50',
+        ]);
+
+        ?>
+    </div>
+    <div class="col-4">
+        <h3>Cor links</h3>
+        <hr>
+        <?php
+        prefiAndRendArray('<p><a href="#" class="%s">%s</a></p>', 'text-', [
+            'light' => ' bg-dark'
+            ], [
+            'muted',
+            'white bg-dark'
+        ]);
+
+        ?>
+    </div>
+    <div class="col-4">
+        <h3>Cor Background</h3>
+        <hr>
+        <?php
+        prefiAndRendArray('<div class="p-3 mb-2 %s">%s</div>', 'bg-', [
+            'default' => ' text-white',
+            'warning' => ' text-dark',
+            'light' => ' text-dark',
+            'white' => ' text-dark',
+            'transparent' => ' text-dark'
+            ], [
+            'white',
+            'transparent'
+        ]);
+
+        ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>Exemplo de botões</h1>
+    </div>
+    <div class="col-12">
+        <?php
+        prefiAndRendArray('<button type="button" class="%s">%s</button> ',
+            'btn btn-',
+            '', ['link']);
+
+        ?>
+    </div>
+    <div class="col-12">
+        <?php prefiAndRendArray('<button type="button" class="%s">%s</button> ', 'btn btn-outline-'); ?>
+    </div>
+    <div class="col-md-12">
+        <div class="text-center">
+            <h2>Exemplo de botões tamanhos</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-primary btn-lg">Large button</button>
+        <button type="button" class="btn btn-secondary btn-lg">Large button</button>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-primary btn-sm">Small button</button>
+        <button type="button" class="btn btn-secondary btn-sm">Small button</button>
+    </div>
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+        <button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>Elementos de formulário</h1>
+    </div>
+    <div class="col-md-6 snbh-form">
+        <div>
+            <input type="checkbox" id="option"/>
+            <label for="option"> <span></span> Check and Uncheck Me </label>
+        </div>
+        <div>
+            <input type="radio" name="my-radio" id="radio-option-1"/>
+            <label for="radio-option-1"> <span></span> Pick Me </label>
+        </div>
+        <div>
+            <input type="radio" name="my-radio" id="radio-option-2"/>
+            <label for="radio-option-2"> <span></span> Or Pick Me </label>
+        </div>
+        <div>
+            <label for="range1">Example range single</label>
+            <input type="range" min="0" max="5" step="0.5" id="range1" />
+        </div>
+        <div>
+            <label for="range2">Example range multiple</label>
+            <input type="range" min="0" max="5" step="0.5" value="2,4" id="range2" multiple />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="text-center">
+        <h2>Icons</h2>
+    </div>
+    <div class="col-md-12">
+
+        <?php
+        $path = 'resources/assets/img/svg/icons/';
+        foreach (scandir($path) as $k => $icon) {
+            if ($icon[0] == '.') {
+                continue;
+            }
+            $svg = file_get_contents($path . $icon);
+            preg_match_all('/id="(?P<id>[a-zA-Z-]{3,})"/', $svg, $matches);
+            if (!$matches['id']) {
+                $icons = [$icon];
+            } else {
+                $icons = $matches['id'];
+            }
+
+            ?>
+
+            <?php foreach ($icons as $icon): ?>
+                <?php $class = 'icon icon-' . str_replace('.svg', '', $icon); ?>
+                <hr>
+                <div>
+                    <h4>
+                        <code class="border p-2" title="Classe"><?= $class ?></code>
+                    </h4>
+                    <div>
+                        <code class="border p-2" title="Html"><?= $this->escapeHtml('<i class="' . $class . '"></i>'); ?></code>
+                    </div>
+
+                    <?php
+                    foreach (range(1, 6) as $size):
+                        $size = 'icon-' . $size . 'x';
+
+                        ?>
+                        <span>
+                            <i class="<?= $class . ' ' . $size ?> ml-2" title="<?= $size ?>"></i>
+                            <span class="clear"><?= $size ?></span>
+                        </span>
+                    <?php endforeach ?>
+
+                </div>
+            <?php endforeach; ?>
+            <?php
+        }
+
+        ?>
+    </div>
+</div>

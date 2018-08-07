@@ -1,6 +1,5 @@
 <?php
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
-
 ?><!DOCTYPE html>
 <html>
     <head>
@@ -29,21 +28,73 @@
         <!--<link href="pages/css/pages-icons.css" rel="stylesheet" type="text/css">-->
 
     </head>
-    <body class="fixed-header l-criar-anuncio <?= $this->bodyClass() ?>">
+    <body class="fixed--header l-criar-anuncio <?= $this->bodyClass() ?>">
         <div class="page-container p-0 ">
-            <div class="header ">
-                <div class="">
-                    <div class="brand inline">
-                        <svg viewBox="0 0 180 66" alt="logo" width="78" height="29"  class="snbh-logo">
-                        <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer_letters"></use>
-                        <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer_car"></use>
-                        </svg>
+            <div class="hea-der">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <svg viewBox="0 0 180 66" alt="logo" width="78" height="29"  class="snbh-logo">
+                            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer_letters"></use>
+                            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer_car"></use>
+                            </svg>
+                        </div>
+                        <div class="col-md-10">
+                            <ul class="steps-list">
+                                <li title="Seu dados">
+                                    <svg viewBox="0 0 42 42" alt="usuário">
+                                    <use xlink:href="/img/svg/icons/aduser.svg#icon"></use>
+                                    </svg>
+                                </li>
+                                <li title="Dados do seu veículo" class="active">
+                                    <svg viewBox="0 0 42 42" alt="veículo">
+                                    <use xlink:href="/img/svg/icons/adveiculo.svg#body"></use>
+                                    <use xlink:href="/img/svg/icons/adveiculo.svg#light-1" style="fill:#fff"></use>
+                                    <use xlink:href="/img/svg/icons/adveiculo.svg#light-2" style="fill:#fff"></use>
+                                    </svg>
+                                </li>
+                                <li title="Fotos do veículo">
+                                    <svg viewBox="0 0 42 42" alt="fotos">
+                                    <use xlink:href="/img/svg/icons/adfotos.svg#body"></use>
+                                    <use xlink:href="/img/svg/icons/adfotos.svg#lens"></use>
+                                    </svg>
+                                </li>
+                                <li title="Planos de Anúncio">
+                                    <svg viewBox="0 0 42 42" alt="plano">
+                                    <use xlink:href="/img/svg/icons/adplano.svg#item-1"></use>
+                                    <use xlink:href="/img/svg/icons/adplano.svg#item-2"></use>
+                                    <use xlink:href="/img/svg/icons/adplano.svg#item-3"></use>
+                                    </svg>
+                                </li>
+                                <li title="Pagamento">
+                                    <svg viewBox="0 0 42 42" alt="pagamento">
+                                    <use xlink:href="/img/svg/icons/adpagamento.svg#icon"></use>
+                                    </svg>
+                                </li>
+                                <li class="Conclusão">
+                                    <svg viewBox="0 0 42 42" alt="concluído">
+                                    <use xlink:href="/img/svg/icons/adconcluido.svg#circle"></use>
+                                    <use xlink:href="/img/svg/icons/adconcluido.svg#check" style="fill:#fff"></use>
+                                    </svg>
+                                </li>
+                            </ul>
+
+                        </div>
                     </div>
 
                 </div>
+
+
             </div>
             <div class="page-content-wrapper">
                 <div class="content">
+                    <div class="container">
+                        <div class="row">
+                            <!-------->
+
+                        </div>
+                    </div>
                     <div class="container-fluid container-fixed-lg">
                         <?= $this->content ?>
                     </div>

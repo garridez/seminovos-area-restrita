@@ -6,11 +6,11 @@ $veiculos = $this->meusVeiculos['data'];
 
 <div class="row">
     <div class="col-md-12">
+        <h1 class="text-laranja">Meus Veículos</h1>
         <?php foreach ($veiculos as $veiculo): ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
-                        foto
                         <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
                             <img class="card-img" src="<?= $veiculo['thumb'] ?>" alt="">
                         </a>
@@ -43,7 +43,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Ativar</a>
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Ativar</a>
                             </div>
                             <?php
                         }
@@ -51,30 +51,30 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="#">Editar</a>
+                                <a href="#" class="btn btn-light btn-sm">Editar</a>
                             </div>
                         <?php } ?>
                         <div class="col-md-1">
-                            <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>">Excluir</a>
+                            <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
                         </div>
                         <div class="col-md-1">
                             <a href="#">Fotos</a>
                         </div>
                         <?php if ($veiculo['idStatus'] == 2) { ?>
                             <div class="col-md-1">
-                                <a href="meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
+                                <a href="meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Inativar</a>
                             </div>
                         <?php } ?>
                         <div class="col-md-1">
-                            <a href="#">Propostas</a>
+                            <a href="#" class="btn btn-light btn-sm">Propostas</a>
                         </div>
                         <?php if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1)) { ?>
                             <div class="col-md-2">
-                                <a href="#">Trocar Plano</a>
+                                <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
                             </div>
                         <?php } ?>
                         <div class="col-md-1">
-                            <a href="#">Visualizar</a>
+                            <a href="#" class="btn btn-light btn-sm">Visualizar</a>
                         </div>
                         <?php
                     } else if ($veiculo['tipoCadastro'] == 2) {
@@ -90,7 +90,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="#">Editar</a>
+                                <a href="#" class="btn btn-light btn-sm">Editar</a>
                             </div>
                             <?php
                         }
@@ -98,7 +98,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>">Excluir</a>
+                                <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
                             </div>
                             <?php
                         }
@@ -106,7 +106,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-2">
-                                <a href="#">Finalizar Compra</a>
+                                <a href="#" class="btn btn-light btn-sm">Finalizar Compra</a>
                             </div>
                             <?php
                         }
@@ -114,15 +114,15 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="#">Fotos</a>
+                                <a href="#" class="btn btn-light btn-sm">Fotos</a>
                             </div>
                         <?php } ?>
                         <div class="col-md-1">
-                            <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">Propostas</a>
+                            <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Propostas</a>
                         </div>
                         <?php if (($veiculo['idPlano'] != 1) && ($veiculo['idStatus'] == 7 || $veiculo['idStatus'] == 8) && $horas < 49) { ?>
                             <div class="col-md-2">
-                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Reativar Anúncio</a>
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Reativar Anúncio</a>
                             </div>
                             <?php
                         }
@@ -130,7 +130,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">Renovar</a>
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Renovar</a>
                             </div>
                             <?php
                         }
@@ -138,7 +138,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="#">Troca</a>
+                                <a href="#" class="btn btn-light btn-sm">Troca</a>
                             </div>
                             <?php
                         }
@@ -146,7 +146,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-2">
-                                <a href="#">Trocar Plano</a>
+                                <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
                             </div>
                             <?php
                         }
@@ -154,7 +154,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>">Vendido</a>
+                                <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Vendido</a>
                             </div>
                             <?php
                         }
@@ -162,7 +162,7 @@ $veiculos = $this->meusVeiculos['data'];
 
                             ?>
                             <div class="col-md-1">
-                                <a href="#">Visualizar</a>
+                                <a href="#" class="btn btn-light btn-sm">Visualizar</a>
                             </div>
                             <?php
                         }

@@ -59,6 +59,15 @@ return [
                     ],
                 ],
             ],
+            'guia' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/guia',
+                    'defaults' => [
+                        'action' => 'guia',
+                    ],
+                ],
+            ],
         ],
     ],
     'meus-dados' => [

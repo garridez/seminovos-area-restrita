@@ -201,7 +201,7 @@ class ParticularForm extends Form
             'type' => Element\Submit::class,
             'name' => 'submit',
             'attributes' => [
-                'value' => 'Próxima',
+                'value' => 'Salvar',
             ],
         ]);
 
