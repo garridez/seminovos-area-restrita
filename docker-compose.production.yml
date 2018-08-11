@@ -1,0 +1,13 @@
+version: '3'
+services:
+    snbh-area-restrita-production:
+        build: 
+            context: .
+            dockerfile: DockerfileProduction
+        container_name: snbh-area-restrita-production
+        ports:
+            - "8091:80"
+        environment:
+            - APPLICATION_ENV=production
+            - SNBH_API_HOST=http://api2homolog.seminovosbh.com.br
+            - SNBH_URL_AREA_RESTRITA=https://meus-anuncios.seminovosbh.com.br
