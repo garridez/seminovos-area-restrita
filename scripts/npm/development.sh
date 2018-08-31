@@ -1,9 +1,7 @@
 #!/bin/bash
 
-echo "Copying node_modules..."
+echo 'yarn install...';
+yarn install
 
-if [ ! -d node_modules ]; then
-    cp -R /var/node_modules node_modules
-fi
-
-npm run watch &
+echo  'yarn run watch...';
+yarn run watch &
