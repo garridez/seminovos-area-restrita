@@ -1,3 +1,6 @@
+/**
+ * @todo Fazer uma pequena documentação de como se usa esse plugin
+ */
 var $ = require('jquery');
 module.exports = Plugin;
 
@@ -8,7 +11,9 @@ var defaults = {
     stepSeletor: '> [class*="step-"]',
     activeSeletor: '> .active',
     activeClass: 'active',
-    scrollOffset: 60
+    scrollOffset: 60,
+    nestingPropagation: true,
+    debug: false
 };
 
 function Plugin(element, options) {
@@ -62,12 +67,22 @@ $.extend(Plugin.prototype, {
      */
     goToIndex: function (index) {
         if (typeof index !== 'number') {
+            this._log(index, "!== 'number'");
             index = this.getStepIndex(index);
         }
         if (index >= this.getSteps().length || index < 0 || index === this.getCurrentStepIndex()) {
+            this._log(index, 'out of interval');
+            this._log('Current step:', this.getCurrentStepIndex());
+            this._log('Max steps:', this.getSteps().length);
             return;
         }
-
+        var initialIndex = this.getCurrentStepIndex();
+        if (!this._triggerEvent('pre-exit', initialIndex)) {
+            return false;
+        }
+        if (!this._triggerEvent('pre-change', index)) {
+            return false;
+        }
         var activeClass = this.opts.activeClass;
         var scrollOffset = this.opts.scrollOffset;
         this.getSteps()
@@ -78,18 +93,50 @@ $.extend(Plugin.prototype, {
                     $("html, body").animate({
                         scrollTop: $(this).offset().top - scrollOffset
                     }, 400);
-
                 });
+
+        this._triggerEvent('exit', initialIndex);
+        this._triggerEvent('change', this.getCurrentStepIndex());
     },
     goTo: function (index) {
         this.goToIndex(index);
     },
     next: function () {
+        if (this.opts.nestingPropagation && this.inLastStep()) {
+            return this.$ctx
+                    .parent()
+                    .closest(this.opts.root)[pluginName]('next');
+        }
+
         this.goToIndex(this.getCurrentStepIndex() + 1);
     },
     prev: function () {
         this.goToIndex(this.getCurrentStepIndex() - 1);
     },
+    _log: function () {
+        if (this.opts.debug) {
+            arguments.unshift && arguments.unshift(pluginName + ' Debug:');
+            console.log.apply(this, arguments);
+        }
+    },
+    _triggerEvent: function (event, index) {
+        var eventRes = {};// Event Result
+        this._log('Event triggered:', 'step:' + event);
+
+        eventRes.a = this.$ctx.triggerHandler('step:' + event);
+
+        var eventName = 'step:' + event + ':index-' + index;
+        eventRes.b = this.$ctx.triggerHandler(eventName);
+        this._log('Event triggered:', eventName);
+
+        var stepLabel = this.getSteps().eq(index).data('step-label');
+        if (stepLabel) {
+            eventName = 'step:' + event + ':' + stepLabel;
+            eventRes.c = this.$ctx.triggerHandler(eventName);
+            this._log('Event triggered:', eventName);
+        }
+        return !(eventRes.a === false || eventRes.b === false || eventRes.c === false);
+    }
 });
 
 
