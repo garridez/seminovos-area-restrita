@@ -78,7 +78,7 @@ class DadosForm extends Form
         ]);
         $this->add([
             'type' => Element\Select::class,
-            'name' => 'idMotor',
+            'name' => 'motor',
             'options' => [
                 'label' => 'Motor',
                 'value_options' => [
@@ -110,30 +110,35 @@ class DadosForm extends Form
         ]);
         $this->add([
             'type' => SelectAnoFabricacao::class,
+            'name' => 'anoFabricacao',
             'attributes' => [
                 'required' => true,
             ]
         ]);
         $this->add([
             'type' => SelectAnoModelo::class,
+            'name' => 'anoModelo',
             'attributes' => [
                 'required' => true,
             ]
         ]);
         $this->add([
             'type' => SelectPortas::class,
+            'name' => 'portas',
             'attributes' => [
                 'required' => true,
             ]
         ]);
         $this->add([
             'type' => SelectCor::class,
+            'name' => 'cor',
             'attributes' => [
                 'required' => true,
             ]
         ]);
         $this->add([
             'type' => SelectCombustivel::class,
+            'name' => 'combustivel',
             'attributes' => [
                 'required' => true,
             ]
@@ -180,7 +185,7 @@ class DadosForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'idMotor',
+            'name' => 'motor',
             'required' => true,
         ]);
         $inputFilter->add([
@@ -188,23 +193,23 @@ class DadosForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'selectanofabricacao',
+            'name' => 'anoFabricacao',
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'selectanomodelo',
+            'name' => 'anoModelo',
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'selectportas',
+            'name' => 'portas',
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'selectcor',
+            'name' => 'cor',
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'selectcombustivel',
+            'name' => 'combustivel',
             'required' => true,
         ]);
         $inputFilter->add([

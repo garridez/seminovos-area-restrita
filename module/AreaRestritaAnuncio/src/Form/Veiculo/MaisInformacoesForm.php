@@ -24,12 +24,12 @@ class MaisInformacoesForm extends Form
         ]);
         $this->add([
             'type' => Element\Radio::class,
-            'name' => 'idTroca',
+            'name' => 'troca',
             'options' => [
                 'label' => 'Aceita Troca?',
                 'value_options' => [
-                    '0' => 'NÃO',
-                    '1' => 'SIM'
+                    '4' => 'SIM',
+                    '1' => 'NÃO',
                 ],
             ],
         ]);

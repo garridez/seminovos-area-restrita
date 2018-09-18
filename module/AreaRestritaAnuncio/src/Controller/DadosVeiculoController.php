@@ -10,7 +10,10 @@ namespace AreaRestritaAnuncio\Controller;
 use AreaRestritaAnuncio\Form\Veiculo;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Veiculos;
+use AreaRestrita\Service\Identity;
+use SnBH\ApiClient\Client as ApiClient;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class DadosVeiculoController extends AbstractActionController
@@ -28,6 +31,45 @@ class DadosVeiculoController extends AbstractActionController
     public function dadosAction()
     {
         $dadosForm = new Veiculo\DadosForm();
+
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        $request = $this->request;
+        if ($request->isPost()) {
+            /* @var $identity Identity */
+            $identity = $this->getContainer()->get(Identity::class);
+            /* @var $apiClient ApiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+
+            /**
+             * @TODO
+             * Criar um único lugar para recuperar o idTipo pelo nome
+             * 
+             */
+            $tipos = [
+                'carro' => 1,
+                'caminhao' => 2,
+                'moto' => 3
+            ];
+
+            $data = [
+                'tipoVeiculo' => $tipos[strtolower($this->params()->fromRoute('tipo'))],
+                'idCadastro' => $identity->getIdentity(),
+                'video' => '',
+                'idPlano' => 3,
+            ];
+
+            $data += $request->getPost()->toArray();
+
+            $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? $data['idVeiculo'] : null;
+
+            $res = $apiClient->veiculosPost($data, $idVeiculo);
+
+            if ($res->status) {
+                $this->response->setStatusCode($res->status);
+            }
+
+            return new JsonModel($res->json());
+        }
 
         return new ViewModel([
             'formDadosVeiculos' => $dadosForm

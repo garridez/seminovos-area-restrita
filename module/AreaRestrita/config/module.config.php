@@ -119,6 +119,9 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
     ],
     'SnBH\ApiModel' => [
         'model_factory_namespace_prefix' => [
