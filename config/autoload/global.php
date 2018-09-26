@@ -33,6 +33,10 @@ return [
 //            ]
 //        ],
     ],
+    'dir' => [
+        'temp' => 'data/temp',
+        'upload' => 'data/temp/upload'
+    ],
     'cache' => array(
         'adapter' => Filesystem::class,
         'options' => array(
