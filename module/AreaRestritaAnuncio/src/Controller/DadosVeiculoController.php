@@ -12,6 +12,7 @@ use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Service\Identity;
 use SnBH\ApiClient\Client as ApiClient;
+use SnBH\Common\Helper\MoveUpload;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -97,6 +98,41 @@ class DadosVeiculoController extends AbstractActionController
 
     public function fotosAction()
     {
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        $request = $this->request;
+        if ($request->isPost()) {
+
+            $dataPost = $request->getPost();
+            $apiClient = $this->getApiClient();
+            $tempDir = $this->getContainer()->get('config')['dir']['upload'];
+            $tempDir .= DIRECTORY_SEPARATOR . $dataPost->idVeiculo;
+            if (!file_exists($tempDir)) {
+                mkdir($tempDir);
+            }
+            $moveUpload = new MoveUpload([
+                'target' => $tempDir,
+                'overwrite' => true,
+                'randomize' => true,
+                'use_upload_name' => true,
+                'use_upload_extension' => true,
+            ]);
+
+            $files = $moveUpload->move($request->getFiles()->fotos, true);
+
+            $data = [
+                'idTipo' => $dataPost->tipoCadastro,
+                'idVeiculo' => $dataPost->idVeiculo,
+                $apiClient::KEY_FILES => [
+                    'fotos' => $files
+                ],
+            ];
+
+            $res = $this->getApiClient()->veiculosFotosPost($data);
+            foreach ($files as $file) {
+                unlink($file);
+            }
+            return new JsonModel($res->json());
+        }
         return new ViewModel();
     }
 
