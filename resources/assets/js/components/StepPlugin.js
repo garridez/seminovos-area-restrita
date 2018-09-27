@@ -63,27 +63,36 @@ $.extend(Plugin.prototype, {
     },
     /**
      * 
-     * @param int|string index Seletor or index of step
+     * @param {int|string} index Seletor or index of step
+     * @returns {boolean} 
      */
     goToIndex: function (index) {
         if (typeof index !== 'number') {
             this._log(index, "!== 'number'");
             index = this.getStepIndex(index);
         }
+        var initialIndex = this.getCurrentStepIndex();
+        var activeClass = this.opts.activeClass;
         if (index >= this.getSteps().length || index < 0 || index === this.getCurrentStepIndex()) {
             this._log(index, 'out of interval');
             this._log('Current step:', this.getCurrentStepIndex());
             this._log('Max steps:', this.getSteps().length);
-            return;
+            // Mesmo que não tenha um próximo step, dispara o evento e remove a classe active
+            if (!this._triggerEvent('pre-exit', initialIndex)) {
+                return false;
+            }
+            this.getSteps()
+                    .removeClass(activeClass);
+            return true;
         }
-        var initialIndex = this.getCurrentStepIndex();
+
         if (!this._triggerEvent('pre-exit', initialIndex)) {
             return false;
         }
         if (!this._triggerEvent('pre-change', index)) {
             return false;
         }
-        var activeClass = this.opts.activeClass;
+
         var scrollOffset = this.opts.scrollOffset;
         this.getSteps()
                 .removeClass(activeClass)
@@ -97,12 +106,18 @@ $.extend(Plugin.prototype, {
 
         this._triggerEvent('exit', initialIndex);
         this._triggerEvent('change', this.getCurrentStepIndex());
+
+        return true;
     },
     goTo: function (index) {
-        this.goToIndex(index);
+        return this.goToIndex(index);
     },
     next: function () {
         if (this.opts.nestingPropagation && this.inLastStep()) {
+            var currentIndex = this.getCurrentStepIndex() + 1;
+            if (this.goToIndex() === false) {
+                return false;
+            }
             return this.$ctx
                     .parent()
                     .closest(this.opts.root)[pluginName]('next');
