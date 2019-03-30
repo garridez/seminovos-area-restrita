@@ -1,10 +1,4 @@
-FROM snbh-server-base:7.2
-
-RUN apt-get install gnupg -y && \
-    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-    apt-get install -y nodejs libpng-dev
-
-RUN pecl install apcu && docker-php-ext-enable apcu opcache
+FROM snbh-server-base:7.2-node
 
 COPY . .
 
