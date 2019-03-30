@@ -27,7 +27,7 @@ class MoveUpload
 
         if (!$this->renameUpload) {
             throw new \Exception('O parametro $optionsOrObject deve ser uma string '
-            . 'de configuração da class ' . RenameUpload::class . ' ou uma instância dela');
+                . 'de configuração da class ' . RenameUpload::class . ' ou uma instância dela');
         }
     }
 

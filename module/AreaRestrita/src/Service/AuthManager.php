@@ -20,6 +20,7 @@ class AuthManager
         $this->sessionManager = $sessionManager;
         $this->apiClient = $apiClient;
     }
+
     /**
      * O parametro $dados deve ser um array com as seguintes chaves:
      *   emailOrCnpj  // Opcional - se não for passado, o campo idCadastro vira obrigatório
@@ -28,7 +29,7 @@ class AuthManager
      *   loginWithoutPassword // Opcional - Se true, será usado o idCadastro para realizar o login sem senha
      *   tipoCadastro // Opcional
      *   rememberMe   // Opcional - Mantém a sessão ativa por 30 dias
-     * 
+     *
      * @param array $options
      * @return Result
      * @throws \Exception

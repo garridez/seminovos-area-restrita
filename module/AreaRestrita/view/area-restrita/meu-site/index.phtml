@@ -1,23 +1,22 @@
 <div id="meioDados">
 
-    <?php
+  <?php
+  $dadosSiteHospedado = $this->siteHospedado;
 
-    $dadosSiteHospedado = $this->siteHospedado;
+  foreach ($this->siteHospedadoConteudo as $key => $conteudo):
+      $active = $key === 0 ? 'active' : '';
+      $pageId = 'idsite_hospedado_conteudo_' . $conteudo['idsite_hospedado_conteudo'];
 
-    foreach ($this->siteHospedadoConteudo as $key => $conteudo):
-        $active = $key === 0 ? 'active' : '';
-        $pageId = 'idsite_hospedado_conteudo_' . $conteudo['idsite_hospedado_conteudo'];
+      $inputTituloAttrs = '';
 
-        $inputTituloAttrs = '';
+      if ($conteudo['pagina'] == 'contato') {
+          $inputTituloAttrs = 'readonly title="Esta é uma página especial. Não é possível alterar o seu título"';
+      }
 
-        if ($conteudo['pagina'] == 'contato') {
-            $inputTituloAttrs = 'readonly title="Esta é uma página especial. Não é possível alterar o seu título"';
-        }
-
-        $navTabs['tabs'][] = "<li role=presentation class=\"$active\">"
-            . "<a href=\"#$pageId\" role=tab data-toggle=tab>{$conteudo['titulo']}</a>"
-            . '</li>';
-        $navTabs['contents'][] = <<<TAB
+      $navTabs['tabs'][] = "<li role=presentation class=\"$active\">"
+          . "<a href=\"#$pageId\" role=tab data-toggle=tab>{$conteudo['titulo']}</a>"
+          . '</li>';
+      $navTabs['contents'][] = <<<TAB
 
     <div role="tabpanel" class="tab-pane $active" id="$pageId">
         <form method="POST">
@@ -63,152 +62,154 @@
         </form>
     </div>
 TAB;
-    endforeach;
-    ?>
+  endforeach;
 
-    <div class="menu-padrao">
-        <ul role="tablist">
-            <li role="presentation" class="active"><a href="#pages" role="tab" data-toggle="tab">Editar Páginas</a></li>
-            <li role="presentation"><a href="#banners" role="tab" data-toggle="tab">Banners</a></li>
-        </ul>
-    </div>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="pages">
-            <div class="tabs-pages">
-                <div class="container-fluid">
-                    <div class="row">
-                        <p>
-                            Aqui você pode editar o conteúdo de cada página do seu site
-                        </p>
-                        <div class="col-xs-3">
-                            <ul class="nav nav-tabs tabs-left" role="tablist">
-                                <?= implode(PHP_EOL, $navTabs['tabs']); ?>
-                            </ul>
-                        </div>
+  ?>
 
-                        <div class="col-xs-9">
-                            <div class="tab-content">
-                                <?= implode(PHP_EOL, $navTabs['contents']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="menu-padrao">
+    <ul role="tablist">
+      <li role="presentation" class="active"><a href="#pages" role="tab" data-toggle="tab">Editar Páginas</a></li>
+      <li role="presentation"><a href="#banners" role="tab" data-toggle="tab">Banners</a></li>
+    </ul>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="pages">
+      <div class="tabs-pages">
+        <div class="container-fluid">
+          <div class="row">
+            <p>
+              Aqui você pode editar o conteúdo de cada página do seu site
+            </p>
+            <div class="col-xs-3">
+              <ul class="nav nav-tabs tabs-left" role="tablist">
+                  <?= implode(PHP_EOL, $navTabs['tabs']); ?>
+              </ul>
             </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="banners">
-            <form id="banner-form" action="/site-hospedado/banner" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="href">
-                        Link do banner:
-                    </label>
-                    <input type="text" name="href" id="href" placeholder="http://www.url.com.br" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>
-                        Tipo do banner:
-                        <select name="slot" class="form-control slot" required>
-                            <option value="1" data-tamanho="1170x270">Principal</option>
-                            <option value="2" data-tamanho="262x262">Lateral</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>
-                        Image: <span>1170x270</span>
-                        <input type="file" name="image" accept="image/*" class="form-control" required>
-                    </label>
-                </div>
 
-                <div class="form-group">
-                    <label>
-                        Abrir link em:
-                        <select name="target" class="form-control" required>
-                            <option value="_BLANK">Nova aba</option>
-                            <option value="_TOP">Mesma aba</option>
-                        </select>
-                    </label>
-                </div>
-                <input type="submit" value="Salvar" class="btn btn-success btn-salvar">
-            </form>
-            <div role="tabpanel" class="tab-pane" id="banners">
-                <form id="banner-form" action="/site-hospedado/banner" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="href">
-                            Link do banner:
-                        </label>
-                        <input type="text" name="href" id="href" placeholder="http://www.url.com.br"
-                               class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            Tipo do banner:
-                            <select name="slot" class="form-control slot" required>
-                                <option value="1" data-tamanho="1170x270">Principal</option>
-                                <option value="2" data-tamanho="262x262">Lateral</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            Image: <span>1170x270</span>
-                            <input type="file" name="image" accept="image/*" class="form-control" required>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            Abrir link em:
-                            <select name="target" class="form-control" required>
-                                <option value="_BLANK">Nova aba</option>
-                                <option value="_TOP">Mesma aba</option>
-                            </select>
-                        </label>
-                    </div>
-                    <input type="submit" value="Salvar" class="btn btn-success btn-salvar">
-                </form>
-                <hr>
-                <div class="banner-list">
-                    <?php foreach ($this->siteHospedadoBanner as $banner): ?>
-                        <div class="banner">
-                            <h4>
-                                <i class="fa fa-times remove text-danger" aria-hidden="true"
-                                   title="Clique para remover"></i>
-                                <b>Link:</b> <?= $banner['href'] ? $banner['href'] : htmlentities('<nenhum>') ?>
-                            </h4>
-                            <span>Tipo:
-                                <?php
-                                $tipos = array(
-                                    1 => 'Principal',
-                                    2 => 'Lateral',
-                                );
-                                echo $tipos[$banner['slot']];
-                                ?>
-                            </span>
-                            <img src="http://<?= BUCKET_SITE_REVENDA . '/' . $this->siteHospedado['dominio'] . '/banners/' . $banner['image'] ?>"
-                                 class="img-responsive">
-                            <input type="hidden" class="idSiteHospedadoBanner"
-                                   value="<?= $banner['idSiteHospedadoBanner'] ?>">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <div class="col-xs-9">
+              <div class="tab-content">
+                  <?= implode(PHP_EOL, $navTabs['contents']); ?>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div role="tabpanel" class="tab-pane" id="banners">
+      <form id="banner-form" action="/site-hospedado/banner" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="href">
+            Link do banner:
+          </label>
+          <input type="text" name="href" id="href" placeholder="http://www.url.com.br" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>
+            Tipo do banner:
+            <select name="slot" class="form-control slot" required>
+              <option value="1" data-tamanho="1170x270">Principal</option>
+              <option value="2" data-tamanho="262x262">Lateral</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            Image: <span>1170x270</span>
+            <input type="file" name="image" accept="image/*" class="form-control" required>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Abrir link em:
+            <select name="target" class="form-control" required>
+              <option value="_BLANK">Nova aba</option>
+              <option value="_TOP">Mesma aba</option>
+            </select>
+          </label>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-success btn-salvar">
+      </form>
+      <div role="tabpanel" class="tab-pane" id="banners">
+        <form id="banner-form" action="/site-hospedado/banner" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="href">
+              Link do banner:
+            </label>
+            <input type="text" name="href" id="href" placeholder="http://www.url.com.br"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label>
+              Tipo do banner:
+              <select name="slot" class="form-control slot" required>
+                <option value="1" data-tamanho="1170x270">Principal</option>
+                <option value="2" data-tamanho="262x262">Lateral</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              Image: <span>1170x270</span>
+              <input type="file" name="image" accept="image/*" class="form-control" required>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>
+              Abrir link em:
+              <select name="target" class="form-control" required>
+                <option value="_BLANK">Nova aba</option>
+                <option value="_TOP">Mesma aba</option>
+              </select>
+            </label>
+          </div>
+          <input type="submit" value="Salvar" class="btn btn-success btn-salvar">
+        </form>
+        <hr>
+        <div class="banner-list">
+            <?php foreach ($this->siteHospedadoBanner as $banner): ?>
+              <div class="banner">
+                <h4>
+                  <i class="fa fa-times remove text-danger" aria-hidden="true"
+                     title="Clique para remover"></i>
+                  <b>Link:</b> <?= $banner['href'] ? $banner['href'] : htmlentities('<nenhum>') ?>
+                </h4>
+                <span>Tipo:
+                    <?php
+                    $tipos = array(
+                        1 => 'Principal',
+                        2 => 'Lateral',
+                    );
+                    echo $tipos[$banner['slot']];
+
+                    ?>
+                </span>
+                <img src="http://<?= BUCKET_SITE_REVENDA . '/' . $this->siteHospedado['dominio'] . '/banners/' . $banner['image'] ?>"
+                     class="img-responsive">
+                <input type="hidden" class="idSiteHospedadoBanner"
+                       value="<?= $banner['idSiteHospedadoBanner'] ?>">
+              </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <style>
-    html {
-        overflow-x: auto !important;
-    }
+  html {
+      overflow-x: auto !important;
+  }
 
-    #meioDados {
-        width: 770px;
-    }
+  #meioDados {
+      width: 770px;
+  }
 
-    .form-group {
-        margin-bottom: 15px;
-    }
+  .form-group {
+      margin-bottom: 15px;
+  }
 
-    .tabs-pages .nav-tabs > li {
-        width: 100%;
-    }
+  .tabs-pages .nav-tabs > li {
+      width: 100%;
+  }
 </style>

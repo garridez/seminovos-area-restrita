@@ -1,47 +1,47 @@
 <div class="sidebar-menu">
-    <!-- BEGIN SIDEBAR MENU ITEMS-->
-    <ul class="menu-items">
-        <li class="m-t-30 ">
-            <a href="<?= $this->url('restrito') ?>" class="detailed">
-                <span class="title">Dashboard</span>
-                <span class="details">12 New Updates</span>
-            </a>
-            <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
+  <!-- BEGIN SIDEBAR MENU ITEMS-->
+  <ul class="menu-items">
+    <li class="m-t-30 ">
+      <a href="<?= $this->url('restrito') ?>" class="detailed">
+        <span class="title">Dashboard</span>
+        <span class="details">12 New Updates</span>
+      </a>
+      <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
+    </li>
+    <li class="">
+      <a href="<?= $this->url('restrito/meus-veiculos') ?>" class="detailed">
+        <span class="title">Veículos</span>
+      </a>
+      <span class="icon-thumbnail"><i class="pg-mail"></i></span>
+    </li>
+    <li class="">
+      <a href="/" class="detailed">
+        <span class="title">Email</span>
+        <span class="details">234 New Emails</span>
+      </a>
+      <span class="icon-thumbnail"><i class="pg-mail"></i></span>
+    </li>
+    <li class="">
+      <a href="<?= $this->url('restrito/meus-dados') ?>">
+        <span class="title">Meus Dados</span></a>
+      <span class="icon-thumbnail"><i class="fa fa-list" aria-hidden="true"></i></span>
+    </li>
+    <li class=""><!-- open active -->
+      <a href="javascript:;"><span class="title">Financeiro</span>
+        <span class=" arrow"></span></a>
+      <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
+      <ul class="sub-menu">
+        <li class="">
+          <a href="<?= $this->url('restrito/historico-pagamentos') ?>">Hist. Pagamentos</a>
+          <span class="icon-thumbnail">Hp</span>
         </li>
         <li class="">
-            <a href="<?= $this->url('restrito/meus-veiculos') ?>" class="detailed">
-                <span class="title">Veículos</span>
-            </a>
-            <span class="icon-thumbnail"><i class="pg-mail"></i></span>
+          <a href="<?= $this->url('restrito/contrato-revenda') ?>">Contrato</a>
+          <span class="icon-thumbnail">L</span>
         </li>
-        <li class="">
-            <a href="/" class="detailed">
-                <span class="title">Email</span>
-                <span class="details">234 New Emails</span>
-            </a>
-            <span class="icon-thumbnail"><i class="pg-mail"></i></span>
-        </li>
-        <li class="">
-            <a href="<?= $this->url('restrito/meus-dados') ?>">
-                <span class="title">Meus Dados</span></a>
-            <span class="icon-thumbnail"><i class="fa fa-list" aria-hidden="true"></i></span>
-        </li>
-        <li class=""><!-- open active -->
-            <a href="javascript:;"><span class="title">Financeiro</span>
-                <span class=" arrow"></span></a>
-            <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
-            <ul class="sub-menu">
-                <li class="">
-                    <a href="<?= $this->url('restrito/historico-pagamentos') ?>">Hist. Pagamentos</a>
-                    <span class="icon-thumbnail">Hp</span>
-                </li>
-                <li class="">
-                    <a href="<?= $this->url('restrito/contrato-revenda') ?>">Contrato</a>
-                    <span class="icon-thumbnail">L</span>
-                </li>
-            </ul>
-        </li>
+      </ul>
+    </li>
 
-    </ul>
-    <div class="clearfix"></div>
+  </ul>
+  <div class="clearfix"></div>
 </div>

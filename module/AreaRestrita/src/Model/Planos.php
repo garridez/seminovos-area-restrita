@@ -24,6 +24,6 @@ class Planos extends ApiModelPagamentos
     {
         return parent::get([
                 'tipoPlano' => $tipoPlano
-            ], null, $cache)->getData();
+                ], null, $cache)->getData();
     }
 }

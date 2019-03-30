@@ -36,5 +36,4 @@ class Encrypter
         $iv = bin2hex($iv);
         return $encrypted . self::$delimiter . $iv;
     }
-
 }

@@ -22,417 +22,417 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
 ?>
 <style type="text/css">
 
-    #fatura {
-        font-size: 14px;
-        line-height: 20px;
-    }
+  #fatura {
+      font-size: 14px;
+      line-height: 20px;
+  }
 
-    h1 {
-        font-size: 20px;
-    }
+  h1 {
+      font-size: 20px;
+  }
 
-    h1 span {
-        float: right;
-    }
+  h1 span {
+      float: right;
+  }
 
-    h1 img {
-        float: left;
-    }
+  h1 img {
+      float: left;
+  }
 
-    #fatura div {
-        clear: both;
-    }
+  #fatura div {
+      clear: both;
+  }
 
-    table {
-        width: 100%;
-    }
+  table {
+      width: 100%;
+  }
 
-    td,
-    th {
-        padding: 10px !important;
-    }
+  td,
+  th {
+      padding: 10px !important;
+  }
 
-    #texto_final,
-    #creditos,
-    #publicidadeRodape,
-    #menuRodape {
-        display: none;
-    }
+  #texto_final,
+  #creditos,
+  #publicidadeRodape,
+  #menuRodape {
+      display: none;
+  }
 
-    .align-right {
-        text-align: right;
-    }
+  .align-right {
+      text-align: right;
+  }
 
-    button {
-        padding: 10px;
-        border: 1px solid;
-    }
+  button {
+      padding: 10px;
+      border: 1px solid;
+  }
 
-    .adsbygoogle {
-        display: none !important;
-    }
+  .adsbygoogle {
+      display: none !important;
+  }
 
 </style>
 <div>
 
-    <table width="581" cellpadding="7" cellspacing="0" style="">
-        <colgroup>
-            <col width="217">
-            <col width="161">
-            <col width="160">
-        </colgroup>
-        <tbody>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p align="center"><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 13pt;">FATURA
-                        DE SERVIÇOS ELETRÔNICA</font></font></font></p>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td width="217" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p><font color="#c42b16"><font face="76dqrnknuzkt, serif">
-                        <font style="font-size: 18pt;">Nº: <?= date('Y'); ?>
-                        /<?= str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?></font></font></font>
-                    </p>
-                </td>
-                <td colspan="2" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in;"><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                            style="font-size: 8pt;"><b>Emitida
-                            em:</b></font></font></font></p>
-                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 12pt;"><b>
-                            <?= date('d/m/Y'); ?>
-                        </b></font></font></font><font color="#175366"><font face="76dqrnknuzkt, serif"><font
-                            style="font-size: 8pt;">às
-                        <?= date('H:i:s'); ?></font></font></font></p>
-                </td>
-                <!-- <td width="160" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in;"><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Competência:</b></font></font></font></p>
-                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 12pt;"><b><?= date('d/m/Y'); ?></b></font></font></font></p>
-                </td> -->
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+  <table width="581" cellpadding="7" cellspacing="0" style="">
+    <colgroup>
+      <col width="217">
+      <col width="161">
+      <col width="160">
+    </colgroup>
+    <tbody>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p align="center"><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 13pt;">FATURA
+            DE SERVIÇOS ELETRÔNICA</font></font></font></p>
+        </td>
+      </tr>
+      <tr valign="top">
+        <td width="217" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p><font color="#c42b16"><font face="76dqrnknuzkt, serif">
+            <font style="font-size: 18pt;">Nº: <?= date('Y'); ?>
+            /<?= str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?></font></font></font>
+          </p>
+        </td>
+        <td colspan="2" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in;"><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                style="font-size: 8pt;"><b>Emitida
+              em:</b></font></font></font></p>
+          <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 12pt;"><b>
+                  <?= date('d/m/Y'); ?>
+            </b></font></font></font><font color="#175366"><font face="76dqrnknuzkt, serif"><font
+                style="font-size: 8pt;">às
+            <?= date('H:i:s'); ?></font></font></font></p>
+        </td>
+        <!-- <td width="160" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+            <p style="margin-bottom: 0in;"><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Competência:</b></font></font></font></p>
+            <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 12pt;"><b><?= date('d/m/Y'); ?></b></font></font></font></p>
+        </td> -->
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
 
-                    <table width="566" cellpadding="7" cellspacing="0">
-                        <colgroup>
-                            <col width="93">
-                            <col width="228">
-                            <col width="203">
-                        </colgroup>
-                        <tbody>
-                            <tr valign="top">
-                                <td rowspan="5" width="93" style="border: none; padding: 0in;">
-                                    <!--                            <p><img src="/images/logo_fatura.jpg" alt="Seminovos BH" width="213" height="120"></p>-->
-                                    <p><img src="/img/profiles/f2x.jpg" alt="Seminovos BH" width="213" height="120"></p>
-                                </td>
-                                <td colspan="2" width="445" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;"><b>
-                                            SEMINOVOS
-                                            BH SERVICOS DE PROCESSAMENTOS DE DADOS LTDA -
-                                            ME</b></font></font></font></p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="228" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;"><b>CPF/CNPJ:
-                                            08.030.680/0001-06</b></font></font></font></p>
-                                </td>
-                                <td width="203" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;"><b>Inscrição
-                                            Municipal: 0919816/001-5</b></font></font></font></p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="228" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">RUA
-                                        NÍQUEL, 11-a, Serra - Cep: 30240-020</font></font></font></p>
-                                </td>
-                                <td width="203" style="border: none; padding: 0in;">
-                                    <p><br>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="228" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Belo
-                                        Horizonte</font></font></font></p>
-                                </td>
-                                <td width="203" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font
-                                            style="font-size: 8pt;">MG</font></font></font></p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="228" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Telefone:
-                                        (31) 3077-5888</font></font></font></p>
-                                </td>
-                                <td width="203" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
-                                        financeiro@seminovosbh.com.br</font></font></font></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+          <table width="566" cellpadding="7" cellspacing="0">
+            <colgroup>
+              <col width="93">
+              <col width="228">
+              <col width="203">
+            </colgroup>
+            <tbody>
+              <tr valign="top">
+                <td rowspan="5" width="93" style="border: none; padding: 0in;">
+                    <!--                            <p><img src="/images/logo_fatura.jpg" alt="Seminovos BH" width="213" height="120"></p>-->
+                  <p><img src="/img/profiles/f2x.jpg" alt="Seminovos BH" width="213" height="120"></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><a name="_GoBack"></a>
-                        <font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;"><b>Tomador
-                            do(s) Serviço(s)</b></font></font></font></p>
+                <td colspan="2" width="445" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;"><b>
+                      SEMINOVOS
+                      BH SERVICOS DE PROCESSAMENTOS DE DADOS LTDA -
+                      ME</b></font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-
-                    <table width="561" cellpadding="7" cellspacing="0">
-                        <colgroup>
-                            <col width="326">
-                            <col width="207">
-                        </colgroup>
-                        <tbody>
-                            <tr valign="top">
-                                <td width="326" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;">
-                                        <b>CPF/CNPJ: <?= $dadosCadastro['cnpj'] ?> <br></b></font></font></font></p>
-                                </td>
-                                <td width="207" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;">
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="326" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
-                                            style="font-size: 9pt;">
-                                        <b><?= $dadosCadastro['razaoSocial'] ?> <br></b></font></font></font></p>
-                                </td>
-                                <td width="207" style="border: none; padding: 0in;">
-                                    <p><br>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="326" style="border: none; padding: 0in;">
-                                    <p>
-                                        <font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">
-                                        <?= $dadosCadastro['logradouro'] . ' ' . $dadosCadastro['numero'] ?>
-                                        , <?= $dadosCadastro['bairro'] ?>
-                                        - CEP: <?= $dadosCadastro['cep'] ?>
-                                        </font></font></font>
-                                    </p>
-
-                                </td>
-                                <td width="207" style="border: none; padding: 0in;">
-                                    <p><br>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="326" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">
-                                        <?= $dadosCadastro['cidade'] ?>
-                                        </font></font></font></p>
-                                </td>
-                                <td width="207" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif">
-                                        <font style="font-size: 8pt;"><?= $dadosCadastro['estado'] ?></font>
-                                        </font></font>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td width="326" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif">
-                                        <font style="font-size: 8pt;">
-                                        Telefone:
-                                        <?php
-                                        if (!empty($dadosCadastro['telefone_1'])) {
-                                            echo $dadosCadastro['telefone_1'];
-                                        } elseif (!empty($dadosCadastro['telefone_2'])) {
-                                            echo $dadosCadastro['telefone_2'];
-                                        } else {
-                                            echo "Não Informado";
-                                        }
-
-                                        ?>
-                                        </font></font></font></p>
-                                </td>
-                                <td width="207" style="border: none; padding: 0in;">
-                                    <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
-                                        <?php
-                                        if (!empty($dadosCadastro['email'])) {
-                                            echo $dadosCadastro['email'];
-                                        } else {
-                                            echo "Não Informado";
-                                        }
-
-                                        ?></font></font></font></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+              </tr>
+              <tr valign="top">
+                <td width="228" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;"><b>CPF/CNPJ:
+                      08.030.680/0001-06</b></font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font
-                            style="font-size: 9pt;"><b>Informação</b></font></font></font></p>
+                <td width="203" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;"><b>Inscrição
+                      Municipal: 0919816/001-5</b></font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Operação
-                        não tributada pelo ISS, conforme veto do item 17.07 da lista de
-                        Serviços anexa a lei Complementar No. 116 de 31/01/2003 (DOU de
-                        01/08/2003).</font></font></font></p>
-                    <br>
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Empresa
-                            dispensada de emissão de nota fiscal, </b></font></font></font><font
-                            color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;">conforme
-                        processo PBH Nº 01-175.711/15-00, de 04/12/2015. </font></font></font>
-                    </p>
+              </tr>
+              <tr valign="top">
+                <td width="228" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">RUA
+                    NÍQUEL, 11-a, Serra - Cep: 30240-020</font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;"><b>Discriminação
-                            do(s) Serviço(s)</b></font></font></font></p>
+                <td width="203" style="border: none; padding: 0in;">
+                  <p><br>
+                  </p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif">
-                        <font>HOSPEDAGEM DE LOJA VIRTUAL NO SITE SEMINOVOSBH.</font></font></font></p>
+              </tr>
+              <tr valign="top">
+                <td width="228" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Belo
+                    Horizonte</font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif">
-                        <font style="font-size: 8pt;">PLANO <?= $this->nomePlano ?></font></font></font></p>
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif">
-                        <font style="font-size: 8pt; text-transform: uppercase">
-                        <?php
-                        switch ($dadosPagamento['tempoContrato']) {
-                            case '3':
-                                echo "Trimestral";
-                                break;
+                <td width="203" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font
+                        style="font-size: 8pt;">MG</font></font></font></p>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td width="228" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Telefone:
+                    (31) 3077-5888</font></font></font></p>
+                </td>
+                <td width="203" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
+                    financeiro@seminovosbh.com.br</font></font></font></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-                            case '6':
-                                echo "Semestral";
-                                break;
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><a name="_GoBack"></a>
+            <font color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;"><b>Tomador
+              do(s) Serviço(s)</b></font></font></font></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
 
-                            case '12':
-                                echo "Anual";
-                                break;
-
-                            default:
-                                echo "Mensal";
-                                break;
-                        }
-
-                        ?>
-                        </font></font></font></p>
+          <table width="561" cellpadding="7" cellspacing="0">
+            <colgroup>
+              <col width="326">
+              <col width="207">
+            </colgroup>
+            <tbody>
+              <tr valign="top">
+                <td width="326" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;">
+                    <b>CPF/CNPJ: <?= $dadosCadastro['cnpj'] ?> <br></b></font></font></font></p>
+                </td>
+                <td width="207" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;">
+                  </p>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td width="326" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="62igeomzdisd,Bold, serif"><font
+                        style="font-size: 9pt;">
+                    <b><?= $dadosCadastro['razaoSocial'] ?> <br></b></font></font></font></p>
+                </td>
+                <td width="207" style="border: none; padding: 0in;">
+                  <p><br>
+                  </p>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td width="326" style="border: none; padding: 0in;">
+                  <p>
+                    <font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">
+                    <?= $dadosCadastro['logradouro'] . ' ' . $dadosCadastro['numero'] ?>
+                    , <?= $dadosCadastro['bairro'] ?>
+                    - CEP: <?= $dadosCadastro['cep'] ?>
+                    </font></font></font>
+                  </p>
 
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Anúncios
-
-                        <?php
-                        if (empty($dataPagamento)) {
-                            echo "(Período de {$meses})";
-                        } else {
-
-                            ?>
-                            (Período de <?= $dataPagamento; ?> até <?= $dataExpiracao; ?>)
-                            <?php
-                        }
-
-                        ?>
-
+                <td width="207" style="border: none; padding: 0in;">
+                  <p><br>
+                  </p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;">
-                        <b>
-                            Valor dos serviços: R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.') ?>
-                            (<?= $dadosPagamento['parcelas'] ?>X)
-                        </b></font></font></font></p>
-                    <br>
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif"><font style="font-size: 9pt;">(-)
-                        Descontos:
-                        R$ <?= number_format($dadosPagamento['desconto'], 2, ',', '.') ?></font></font></font>
-                    </p>
-                    <br>
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#c42b16"><font
-                            face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;">
-                        <b>Valor Líquido:
-                            R$ <?= number_format($dadosPagamento['total'], 2, ',', '.') ?></b></font></font></font>
-                    </p>
-
+              </tr>
+              <tr valign="top">
+                <td width="326" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">
+                      <?= $dadosCadastro['cidade'] ?>
+                    </font></font></font></p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Forma
-                            de pagamento: </b></font></font></font><font color="#175366"><font
-                            face="76dqrnknuzkt, serif">
-                        <font style="font-size: 8pt;">
-                        <?php
-                        echo $dadosPagamento['formaPagamento'];
-
-                        ?>
-                        </font></font></font></p>
-
+                <td width="207" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif">
+                    <font style="font-size: 8pt;"><?= $dadosCadastro['estado'] ?></font>
+                    </font></font>
+                  </p>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Não
-                        é permitida a veiculação de veículos de revendas ou lojistas
-                        fora da sua área específica.</font></font></font></p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
-                    <p align="center" style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="62igeomzdisd,Bold, serif"><font
-                            style="font-size: 9pt;"><b>www.seminovosbh.com.br</b></font></font></font></p>
-                    <p align="center" style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
-                            face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">SEMINOVOSBH,
-                        aqui tem negócio!</font></font></font></p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+              </tr>
+              <tr valign="top">
+                <td width="326" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif">
+                    <font style="font-size: 8pt;">
+                    Telefone:
+                    <?php
+                    if (!empty($dadosCadastro['telefone_1'])) {
+                        echo $dadosCadastro['telefone_1'];
+                    } elseif (!empty($dadosCadastro['telefone_2'])) {
+                        echo $dadosCadastro['telefone_2'];
+                    } else {
+                        echo "Não Informado";
+                    }
 
-    <br><br>
-    <button onclick="window.print()">Imprimir fatura</button>
+                    ?>
+                    </font></font></font></p>
+                </td>
+                <td width="207" style="border: none; padding: 0in;">
+                  <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
+                      <?php
+                      if (!empty($dadosCadastro['email'])) {
+                          echo $dadosCadastro['email'];
+                      } else {
+                          echo "Não Informado";
+                      }
+
+                      ?></font></font></font></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font
+                style="font-size: 9pt;"><b>Informação</b></font></font></font></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Operação
+            não tributada pelo ISS, conforme veto do item 17.07 da lista de
+            Serviços anexa a lei Complementar No. 116 de 31/01/2003 (DOU de
+            01/08/2003).</font></font></font></p>
+          <br>
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Empresa
+              dispensada de emissão de nota fiscal, </b></font></font></font><font
+                color="#175366"><font face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;">conforme
+            processo PBH Nº 01-175.711/15-00, de 04/12/2015. </font></font></font>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;"><b>Discriminação
+              do(s) Serviço(s)</b></font></font></font></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif">
+            <font>HOSPEDAGEM DE LOJA VIRTUAL NO SITE SEMINOVOSBH.</font></font></font></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif">
+            <font style="font-size: 8pt;">PLANO <?= $this->nomePlano ?></font></font></font></p>
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif">
+            <font style="font-size: 8pt; text-transform: uppercase">
+            <?php
+            switch ($dadosPagamento['tempoContrato']) {
+                case '3':
+                    echo "Trimestral";
+                    break;
+
+                case '6':
+                    echo "Semestral";
+                    break;
+
+                case '12':
+                    echo "Anual";
+                    break;
+
+                default:
+                    echo "Mensal";
+                    break;
+            }
+
+            ?>
+            </font></font></font></p>
+
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Anúncios
+
+            <?php
+            if (empty($dataPagamento)) {
+                echo "(Período de {$meses})";
+            } else {
+
+                ?>
+                (Período de <?= $dataPagamento; ?> até <?= $dataExpiracao; ?>)
+                <?php
+            }
+
+            ?>
+
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;">
+            <b>
+              Valor dos serviços: R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.') ?>
+              (<?= $dadosPagamento['parcelas'] ?>X)
+            </b></font></font></font></p>
+          <br>
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif"><font style="font-size: 9pt;">(-)
+            Descontos:
+            R$ <?= number_format($dadosPagamento['desconto'], 2, ',', '.') ?></font></font></font>
+          </p>
+          <br>
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#c42b16"><font
+                face="62igeomzdisd,Bold, serif"><font style="font-size: 9pt;">
+            <b>Valor Líquido:
+              R$ <?= number_format($dadosPagamento['total'], 2, ',', '.') ?></b></font></font></font>
+          </p>
+
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font style="font-size: 8pt;"><b>Forma
+              de pagamento: </b></font></font></font><font color="#175366"><font
+                face="76dqrnknuzkt, serif">
+            <font style="font-size: 8pt;">
+            <?php
+            echo $dadosPagamento['formaPagamento'];
+
+            ?>
+            </font></font></font></p>
+
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Não
+            é permitida a veiculação de veículos de revendas ou lojistas
+            fora da sua área específica.</font></font></font></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" width="565" valign="top" style="border: 1px solid rgb(0, 0, 10); padding: 0in 0.08in;">
+          <p align="center" style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="62igeomzdisd,Bold, serif"><font
+                style="font-size: 9pt;"><b>www.seminovosbh.com.br</b></font></font></font></p>
+          <p align="center" style="margin-bottom: 0in; line-height: 115%;"><font color="#175366"><font
+                face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">SEMINOVOSBH,
+            aqui tem negócio!</font></font></font></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+  <button onclick="window.print()">Imprimir fatura</button>
 
 </div>
 

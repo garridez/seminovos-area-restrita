@@ -19,41 +19,41 @@ foreach ($rotasAnuncio['veiculo'] as &$rota) {
 
 ?>
 <div id="dados-basicos">
-    <form>
-        <input type="text" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
-        <input type="text" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
-    </form>
+  <form>
+    <input type="text" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+    <input type="text" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
+  </form>
 </div>
 <div class="row">
-    <div class="col-md-6 offset-3 anuncio-steps step-container">
+  <div class="col-md-6 offset-3 anuncio-steps step-container">
 
-        <div class="step-0 step-veiculo step-container active">
-            <?php
-            $count = 0;
-            unset($rota);
-            foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
-                echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
-            }
+    <div class="step-0 step-veiculo step-container active">
+        <?php
+        $count = 0;
+        unset($rota);
+        foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
+            echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
+        }
 
-            ?>
-        </div>
-        <div class="step-1 step-plano" data-step-label="plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
-            Step Plano
-        </div>
-        <div class="step-3 step-checkout" data-step-label="checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
-            Step Checkout
-        </div>
+        ?>
     </div>
+    <div class="step-1 step-plano" data-step-label="plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
+      Step Plano
+    </div>
+    <div class="step-3 step-checkout" data-step-label="checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
+      Step Checkout
+    </div>
+  </div>
 </div>
 
 <div class="row step-controls">
 
-    <div class="col-3 offset-3">
-        <button class="btn-voltar btn btn-lg btn-secondary btn-block text-white">VOLTAR</button>
-    </div>
-    <div class="col-3 offset--1">
-        <button class="btn-continuar btn btn-lg btn-laranja btn-block text-white">CONTINUAR</button>
-    </div>
+  <div class="col-3 offset-3">
+    <button class="btn-voltar btn btn-lg btn-secondary btn-block text-white">VOLTAR</button>
+  </div>
+  <div class="col-3 offset--1">
+    <button class="btn-continuar btn btn-lg btn-laranja btn-block text-white">CONTINUAR</button>
+  </div>
 
 </div>
 <br class="clearfix">

@@ -81,7 +81,7 @@ class AuthController extends AbstractActionController
         /* @var $authService AuthenticationService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
-        
+
         $url = $container->get('Config')['SnBH']['urls']['site'];
 
         return $this->redirect()->toUrl($url);
@@ -101,13 +101,13 @@ class AuthController extends AbstractActionController
 
             /* @var $authManager AuthManager  */
             $authManager = $container->get(AuthManager::class);
-           
+
             $result = $authManager->login([
                 'loginWithoutPassword' => true,
                 'idCadastro' => $idCadastro,
                 'rememberMe' => true
             ]);
-            
+
             if ($result->getCode() === $result::SUCCESS) {
                 return $this->redirect()->toUrl('../meus-veiculos');
             } else {
@@ -118,5 +118,4 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('auth');
         }
     }
-
 }

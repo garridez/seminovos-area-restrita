@@ -6,8 +6,8 @@ $routeParams = $this->routeParams;
 <h1>Controller: <b><?= $routeParams['controller'] ?></b></h1>
 <h2>Action: <b><?= $routeParams['action'] ?></b></h2>
 <fieldset>
-    <legend>Todos parametros</legend>
-    <?php foreach ($routeParams as $name => $value): ?>
-        "<?= $name ?>": <b><code style="white-space: pre;"><?= trim(print_r($value, true)) ?></code></b><br>
-        <?php endforeach; ?>
+  <legend>Todos parametros</legend>
+  <?php foreach ($routeParams as $name => $value): ?>
+      "<?= $name ?>": <b><code style="white-space: pre;"><?= trim(print_r($value, true)) ?></code></b><br>
+    <?php endforeach; ?>
 </fieldset>

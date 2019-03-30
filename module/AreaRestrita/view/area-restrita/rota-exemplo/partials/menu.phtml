@@ -7,26 +7,26 @@ $isRoute = function($route)use($routeName) {
 
 ?>
 <a class="btn <?= $isRoute('restrito/rota-exemplo') ?>" href="<?= $this->url('restrito/rota-exemplo') ?>">
-    Rota Exemplo
+  Rota Exemplo
 </a>
 
 
 <a class="btn <?= $isRoute('restrito/rota-exemplo/parametro-opcional') ?>" href="<?= $this->url('restrito/rota-exemplo/parametro-opcional') ?>">
-    Parametro opcional
+  Parametro opcional
 </a>
 
 
 <a class="btn <?= $isRoute('restrito/rota-exemplo/parametro-opcional') ?>" href="<?= $this->url('restrito/rota-exemplo/parametro-opcional', ['parametro' => 'Valor exemplo do parametro opcional']) ?>">
-    Parametro opcional definido
+  Parametro opcional definido
 </a>
 
 
 <a class="btn <?= $isRoute('restrito/rota-exemplo/sub-rota') ?>" href="<?= $this->url('restrito/rota-exemplo/sub-rota') ?>">
-    Sub rota
+  Sub rota
 </a>
 
 
 <a class="btn <?= $isRoute('restrito/rota-exemplo/outra-sub-rota') ?>" href="<?= $this->url('restrito/rota-exemplo/outra-sub-rota', ['parametro-obrigatorio' => 'Valo do parametro obrigatório']) ?>">
-    Outra sub rota
+  Outra sub rota
 </a>
 

@@ -29,13 +29,12 @@ class Propostas extends ApiModelVeiculos
      * @param string DESC - campo que será realizado para determinar o tipo de ordenação
      * @return \SnBH\ApiClient\Response
      */
-
     public function getAll($idVeiculo)
     {
         return parent::get([
-            'idAnuncio' => $idVeiculo,
-            'sort' => 'idProposta', /* TODO - falta implementar na API */
-            'direction' => 'DESC'
-        ])->getData();
+                'idAnuncio' => $idVeiculo,
+                'sort' => 'idProposta', /* TODO - falta implementar na API */
+                'direction' => 'DESC'
+            ])->getData();
     }
 }
