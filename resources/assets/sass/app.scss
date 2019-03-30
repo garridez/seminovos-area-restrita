@@ -1,12 +1,8 @@
-@import "~snbh-site/resources/assets/sass/utilities/variables/_snbh_colors";
-@import "~snbh-site/resources/assets/sass/utilities/variables/_themes-colors";
+@import "~snbh-site/resources/assets/sass/variables";
+@import "~snbh-site/resources/assets/sass/bootstrap";
 @import "~snbh-site/resources/assets/sass/components/all";
 
 @import "theme_pages/pages.scss";
-@import "~bootstrap/scss/bootstrap";
-
-
-
 
 $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
