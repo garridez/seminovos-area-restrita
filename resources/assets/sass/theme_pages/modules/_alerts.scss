@@ -47,7 +47,7 @@
             opacity: 1;
         }
     }
-    
+
 }
 
 /* Alert : Color Options
@@ -79,7 +79,7 @@
     background-color: $color-success-lighter;
     color: $color-success-darker;
     border-color: $color-success-darker;
-     .close {
+    .close {
         background-position: -38px -10px !important;
     }
 }
@@ -87,7 +87,7 @@
     background-color: #fff;
     color: $color-master;
     border-color: $color-master-light;
-     .close {
+    .close {
         background-position: -67px -10px !important;
     }
 }

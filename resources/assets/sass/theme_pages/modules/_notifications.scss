@@ -90,11 +90,11 @@
             background-color: #fff;
             padding-right: 26px;
             &.unread{
-                 .heading{
+                .heading{
                     opacity: 1;
                 }
                 .option{
-                background-color: $color-complete-lighter;
+                    background-color: $color-complete-lighter;
                 }
                 .option .mark{
                     color:$color-complete-light;
@@ -123,7 +123,7 @@
                 .thumbnail-wrapper {
                     cursor: pointer;
                     i{
-                    @include transition(all 0.12s linear);
+                        @include transition(all 0.12s linear);
 
                     }
                 }
@@ -199,7 +199,7 @@
                 height: 100%;
                 .mark{
                     background-color: transparent;
-                     color:  mix($color-master, #fff, 40%);
+                    color:  mix($color-master, #fff, 40%);
                     &:before{
                         content: ' \25CF';
                         font-size: 12px;
@@ -246,7 +246,7 @@
         left: auto;
     }
     &[data-placement^='top-']{
-         top: $layout-header-height + 20px;
+        top: $layout-header-height + 20px;
         bottom: auto;
     }
     &[data-placement^='bottom-']{
@@ -267,7 +267,7 @@
             top: 15px;
         }
     }
-    
+
 }
 
 /* Pages Notifications plugin
@@ -322,7 +322,7 @@ body.menu-pin > .pgn-wrapper[data-position="bottom"]{
     max-width: 500px;
     animation: fadeIn .3s cubic-bezier(.05, .74, .27, .99) forwards;
     -webkit-animation: fadeIn .3s cubic-bezier(.05, .74, .27, .99) forwards;
-     max-height: 250px;
+    max-height: 250px;
     overflow: hidden;
 }
 /* Bar 
@@ -434,7 +434,7 @@ body.menu-pin > .pgn-wrapper[data-position="bottom"]{
 
 }
 .pgn-circle .alert > div > div.pgn-message > div p:only-child{
-padding:12px 0;
+    padding:12px 0;
 }
 .pgn-circle .alert .close {
     margin-top: -12px;
@@ -613,7 +613,7 @@ body > .pgn-wrapper[data-position^='top-'] {
 
 .pgn-circle .alert .close {
     margin-top: -4px;
-    }
+}
 body > .pgn-wrapper{
     z-index: $zIndex-notifications;
 }
@@ -635,7 +635,7 @@ body > .pgn-wrapper{
     body > .pgn-wrapper[data-position$='-right'] .alert,
     body > .pgn-wrapper[data-position$='-left'] .alert{
         max-width: 100%;
-            width: 100%;
+        width: 100%;
     }
 }
 
@@ -648,7 +648,7 @@ body > .pgn-wrapper{
     border:3px dashed $color-master-light;
     height: 370px;
     position: relative;
-    
+
     & > div > .position:not(:only-child){
         max-width: 50%;
     }
@@ -664,12 +664,12 @@ body > .pgn-wrapper{
             border-color:#0090d9;
         }
         &.pull-top, &.pull-bottom{
-                left: 0;
-                right: 0;
+            left: 0;
+            right: 0;
 
-            }
-            img{
-                width: 100%;
-            }
+        }
+        img{
+            width: 100%;
+        }
     }  
 }

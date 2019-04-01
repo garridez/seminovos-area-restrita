@@ -96,8 +96,8 @@ a[ng-click] {
     cursor: pointer;
 }
 br {
-   line-height: normal;
-   clear: both;
+    line-height: normal;
+    clear: both;
 }
 code{
     color:$color-danger-dark;
@@ -194,13 +194,13 @@ blockquote {
     }
 }
 hr{
-  border-color:$color-master-light;
-  &.double{
-    border-width:2px;
-  }
-  &.dotted{
-    border-style:dotted none none;
-  }
+    border-color:$color-master-light;
+    &.double{
+        border-width:2px;
+    }
+    &.dotted{
+        border-style:dotted none none;
+    }
 }
 
 /* Font Sizes 
@@ -219,7 +219,7 @@ hr{
 
 /* Font Weights
 ------------------------------------
- */
+*/
 
 .normal {
     font-weight: normal;
@@ -256,7 +256,7 @@ hr{
 }
 /* Monochrome Colors
 ------------------------------------
- */
+*/
 
 .bg-master{
     background-color: $color-master;
@@ -381,7 +381,7 @@ hr{
 
 /* Warning
 ------------------------------------
- */
+*/
 .bg-warning {
     background-color: $color-warning !important;
 }
@@ -682,8 +682,8 @@ hr{
         line-height: 25.88px;
     }
     small, .small{
-         font-size: 89%;
-         line-height: 17px;
+        font-size: 89%;
+        line-height: 17px;
     }
 
 }

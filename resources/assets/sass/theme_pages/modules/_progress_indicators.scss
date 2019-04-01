@@ -26,31 +26,31 @@
     background-size: cover;
     &.progress-bar-primary{
         background-image: url('#{$base-img-url}/progress/progress-bar-primary.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-complete{
         background-image: url('#{$base-img-url}/progress/progress-bar-complete.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-success{
         background-image: url('#{$base-img-url}/progress/progress-bar-success.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-info{
         background-image: url('#{$base-img-url}/progress/progress-bar-info.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-warning{
         background-image: url('#{$base-img-url}/progress/progress-bar-warning.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-danger{
         background-image: url('#{$base-img-url}/progress/progress-bar-danger.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
     &.progress-bar-master{
         background-image: url('#{$base-img-url}/progress/progress-bar-master.svg');
-         background-color: transparent;
+        background-color: transparent;
     }
 }
 /* Progress Bar
@@ -216,10 +216,10 @@
         }
     }
     .shadow {
-            border: $border solid fade-out(#000, .9);
-            border-radius: 50%;
-            height: 100%;
-            width: 100%;
+        border: $border solid fade-out(#000, .9);
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
     }
 
 }

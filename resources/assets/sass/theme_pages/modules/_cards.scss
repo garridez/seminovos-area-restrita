@@ -19,13 +19,13 @@
         z-index: 3;
         min-height: 48px;
         &.separator:after {
-                    content:"";
-                    height:1px;
-                    background:rgba(0,0,0,0.08);
-                    left:16px;
-                    right:16px;
-                    position:absolute;
-                    bottom:0;
+            content:"";
+            height:1px;
+            background:rgba(0,0,0,0.08);
+            left:16px;
+            right:16px;
+            position:absolute;
+            bottom:0;
         }
         & + .card-block{
             padding-top: 0;
@@ -63,8 +63,8 @@
             }
             &:after{
                 content:"";
-                  display:table;
-                  clear:both;
+                display:table;
+                clear:both;
             }
         }
         &.card-header-hover{
@@ -96,7 +96,7 @@
             padding: $panel-condensed-heading-padding;
             min-height: 30px;
             .card-title{
-              opacity: .4;
+                opacity: .4;
             }
         }
         .card-block{
@@ -276,7 +276,7 @@
         &.refreshing{
             opacity: 1;    
         }
-        
+
     }
 }
 .card-header {
@@ -327,7 +327,7 @@
     height: 15px;
     display: block;
     background-size: cover;
-     @include transition(opacity .3s ease);
+    @include transition(opacity .3s ease);
     &.fade{
         opacity: 0.1;
     }
@@ -402,7 +402,7 @@
     padding-bottom: 100px;
 }
 .demo-card-scrollable{
-   height:158px
+    height:158px
 }
 
 
