@@ -13,46 +13,46 @@
 @mixin button($text-color, $background-color, $border-color) {
     &,
     &:focus{
-    color: $text-color;
-    background-color: $background-color;
-    border-color: $background-color;
+        color: $text-color;
+        background-color: $background-color;
+        border-color: $background-color;
     }
 
-  &.active,
-  &:active,
-  &.active:focus,
-  &:active:focus,
-  &:active:hover,
-  .show .dropdown-toggle#{&} {
-    background-color: mix($background-color, $color-black, $mix-percentage-dark);
-    border-color: mix($background-color, $color-black, $mix-percentage-dark);
-    color:$text-color;
-  }
-  &.hover,
-  &:hover,
-  .show .dropdown-toggle#{&}
-  {
-    background-color: mix($background-color, $color-white, $mix-percentage-light);
-    border-color: mix($background-color, $color-white, $mix-percentage-light);
-    color: $text-color;
-  }
+    &.active,
+    &:active,
+        &.active:focus,
+        &:active:focus,
+        &:active:hover,
+        .show .dropdown-toggle#{&} {
+        background-color: mix($background-color, $color-black, $mix-percentage-dark);
+        border-color: mix($background-color, $color-black, $mix-percentage-dark);
+        color:$text-color;
+    }
+    &.hover,
+    &:hover,
+        .show .dropdown-toggle#{&}
+    {
+        background-color: mix($background-color, $color-white, $mix-percentage-light);
+        border-color: mix($background-color, $color-white, $mix-percentage-light);
+        color: $text-color;
+    }
     &.active:hover{
-    background: mix($background-color, #000, 86%) ;
-    border-color: mix($background-color, #000, 86%) ;
+        background: mix($background-color, #000, 86%) ;
+        border-color: mix($background-color, #000, 86%) ;
     }
 
-      &.disabled,
-      &[disabled],
-      fieldset[disabled] & {
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
         &,
         &:hover,
-        &:focus,
-        &:active,
-        &.active {
-          background-color: $background-color;
-              border-color: $border-color;
+            &:focus,
+            &:active,
+            &.active {
+            background-color: $background-color;
+            border-color: $border-color;
         }
-      }
+    }
 
     .badge {
         color: $background-color;
@@ -71,14 +71,14 @@
     -webkit-font-feature-settings: "kern" 1;
     -moz-font-feature-settings: "kern" 1;
     margin-bottom: 0;
-    border: 1px solid $color-master-lighter;
+    /*border: 1px solid $color-master-lighter;*/
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     @include border-radius(3px);
     background-image: none !important;
     color: $color-master;
-    background-color:  $color-white ;
+    /*background-color:  $color-white ;*/
     text-shadow: none;
     box-shadow: none;
     line-height: 21px;
@@ -86,18 +86,18 @@
     transition: color 0.1s linear 0s,background-color 0.1s linear 0s,opacity 0.2s linear 0s !important;
     padding: 6px $padding-base-horizontal;
     &:hover{
-        background-color: #fafafa;
+        /*background-color: #fafafa;*/
         border: 1px solid fade-out($color-master,.73);
         color: #333;
     }
     &.active{
         border-color: $color-master-light;
-        background: #fff;
+        /*background: #fff;*/
         color: #333;
     }
     &:focus,
-    &:active:focus,
-    &.active:focus {
+        &:active:focus,
+        &.active:focus {
         outline: none !important;
         outline-style: none;
         color: #333;
@@ -109,11 +109,11 @@
         }
     }
     &:hover,
-    &:focus,
-    &:active,
-    &.active,
-    &.disabled,
-    &[disabled] {
+        &:focus,
+        &:active,
+        &.active,
+        &.disabled,
+        &[disabled] {
         box-shadow: none;
     }
 }
@@ -150,19 +150,19 @@ Alternate buttons
     border-color: $color-master-lighter;
 }
 .btn-default {
-  &.active, &:active, &.active:focus, &:active:focus, &:active:hover{
-    background-color: $color-master-lighter;
-    border-color: $color-master-light;
-    color:$color-master-dark;
-  }
-  &.hover, &:hover{
-    background-color: $color-master-lightest;
-    border-color: fade-out($color-master,.73);
-    color: $color-master-darker;
-  }
-  &.active:hover{
-    background: mix($color-white, #000, 94%) ;
-  }
+    &.active, &:active, &.active:focus, &:active:focus, &:active:hover{
+        background-color: $color-master-lighter;
+        border-color: $color-master-light;
+        color:$color-master-dark;
+    }
+    &.hover, &:hover{
+        background-color: $color-master-lightest;
+        border-color: fade-out($color-master,.73);
+        color: $color-master-darker;
+    }
+    &.active:hover{
+        background: mix($color-white, #000, 94%) ;
+    }
 }
 
 // Link button
@@ -272,21 +272,21 @@ Rounded buttons
         }
         &.dropup {
             & > .btn-primary + .dropdown-menu:after,
-            & > .btn-success + .dropdown-menu:after,
-            & > .btn-complete + .dropdown-menu:after,
-            & > .btn-warning + .dropdown-menu:after,
-            & > .btn-danger + .dropdown-menu:after,
-            & > .btn-info + .dropdown-menu:after{
+                & > .btn-success + .dropdown-menu:after,
+                & > .btn-complete + .dropdown-menu:after,
+                & > .btn-warning + .dropdown-menu:after,
+                & > .btn-danger + .dropdown-menu:after,
+                & > .btn-info + .dropdown-menu:after{
                 top: auto;
                 bottom: 0;
             }
         }
         & > .btn-primary + .dropdown-menu:after,
-        & > .btn-success + .dropdown-menu:after,
-        & > .btn-complete + .dropdown-menu:after,
-        & > .btn-warning + .dropdown-menu:after,
-        & > .btn-danger + .dropdown-menu:after,
-        & > .btn-info + .dropdown-menu:after{
+            & > .btn-success + .dropdown-menu:after,
+            & > .btn-complete + .dropdown-menu:after,
+            & > .btn-warning + .dropdown-menu:after,
+            & > .btn-danger + .dropdown-menu:after,
+            & > .btn-info + .dropdown-menu:after{
             top:0;
             height: 42px;
         }
@@ -318,7 +318,7 @@ Rounded buttons
                     margin-bottom: -47px;
                     padding-bottom: 49px;
                     &:after{
-                           bottom: 49px;
+                        bottom: 49px;
                     }
                 }
             }
@@ -327,7 +327,7 @@ Rounded buttons
                     margin-bottom: -34px;
                     padding-bottom: 36px;
                     &:after{
-                           bottom: 36px;
+                        bottom: 36px;
                     }
                 }
             }
@@ -336,7 +336,7 @@ Rounded buttons
                     margin-bottom: -29px;
                     padding-bottom: 31px;
                     &:after{
-                           bottom: 31px;
+                        bottom: 31px;
                     }
                 }
             }
@@ -363,7 +363,7 @@ Rounded buttons
                 margin-top: -47px;
                 padding-top: 49px;
                 &:after{
-                       top: 49px;
+                    top: 49px;
                 }
             }
         }
@@ -376,7 +376,7 @@ Rounded buttons
                 margin-top: -34px;
                 padding-top: 36px;
                 &:after{
-                       top: 36px;
+                    top: 36px;
                 }
             }
         }
@@ -389,7 +389,7 @@ Rounded buttons
                 margin-top: -29px;
                 padding-top: 31px;
                 &:after{
-                       top: 31px;
+                    top: 31px;
                 }
             }
         }
@@ -435,10 +435,10 @@ Rounded buttons
 
 .dropdown-toggle{
     &:after{
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            margin-top: -2px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        margin-top: -2px;
     }
 }
 
@@ -488,7 +488,7 @@ Rounded buttons
         &.active {
             &,
             &:hover,
-            &:focus{
+                &:focus{
                 color: $color-master-darker;
                 text-decoration: none;
                 background-color: $color-master-lighter;
@@ -497,7 +497,7 @@ Rounded buttons
         &.disabled {
             &,
             &:hover,
-            &:focus{
+                &:focus{
                 color: lighten($color-master, 20%);
             }
             &:hover, &:focus{
@@ -517,9 +517,9 @@ Animated buttons
 */
 
 .btn-animated{
-        overflow: hidden;
-        @include backface-visibility(hidden);
-        @include transform-style(preserve-3d);
+    overflow: hidden;
+    @include backface-visibility(hidden);
+    @include transform-style(preserve-3d);
     & > span {
         display: inline-block;
         width: 100%;
@@ -549,7 +549,7 @@ Animated buttons
         }
         &:hover, &.show-icon{
             &:before{
-            top: 0;
+                top: 0;
             }
             & > span{
                 @include translateY(300%);
@@ -563,7 +563,7 @@ Animated buttons
         }
         &:hover, &.show-icon{
             &:before{
-            left: 0;
+                left: 0;
             }
             & > span{
                 @include translateX(200%);
@@ -575,7 +575,7 @@ Animated buttons
             font-family: FontAwesome;
         }
     }
-   &.pg{
+    &.pg{
         &:before {
             font-family: "pages-icon";
         }
@@ -626,8 +626,8 @@ Misc buttons
 .pager .disabled{
     > button,
     > button:hover,
-    > button:focus,
-    > span{
+        > button:focus,
+        > span{
         cursor: not-allowed;
         opacity: .5;
     }
