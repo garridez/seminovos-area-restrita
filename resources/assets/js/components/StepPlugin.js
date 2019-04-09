@@ -77,12 +77,14 @@ $.extend(Plugin.prototype, {
             this._log(index, 'out of interval');
             this._log('Current step:', this.getCurrentStepIndex());
             this._log('Max steps:', this.getSteps().length);
-            // Mesmo que não tenha um próximo step, dispara o evento e remove a classe active
+            // Mesmo que não tenha um próximo step, dispara o evento
             if (!this._triggerEvent('pre-exit', initialIndex)) {
                 return false;
             }
-            this.getSteps()
-                    .removeClass(activeClass);
+            if (!this.inLastStep()) {
+                this.getSteps()
+                        .removeClass(activeClass);
+            }
             return true;
         }
 
@@ -115,7 +117,7 @@ $.extend(Plugin.prototype, {
     next: function () {
         if (this.opts.nestingPropagation && this.inLastStep()) {
             var currentIndex = this.getCurrentStepIndex() + 1;
-            if (this.goToIndex() === false) {
+            if (this.goToIndex(currentIndex) === false) {
                 return false;
             }
             return this.$ctx
