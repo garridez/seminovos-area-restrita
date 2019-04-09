@@ -19,7 +19,7 @@ class VideoForm extends Form
                 'label' => 'Video',
             ],
             'attributes' => [
-                'required' => true,
+                'required' => false,
             ]
         ]);
         $this->add([
@@ -38,7 +38,7 @@ class VideoForm extends Form
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
             'name' => 'video',
-            'required' => true,
+            'required' => false,
         ]);
     }
 }
