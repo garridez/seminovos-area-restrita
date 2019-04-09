@@ -16,11 +16,10 @@ class PlanoController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $planosModel Planos */
-        $planosModel = $this->getContainer()->get(Planos::class);
-
-        // Busca os planos de acordo com o tipo
-        $dadosPlanos = $planosModel->get('particular');
+        
+        $dadosPlanos = $this->getContainer()
+            ->get(Planos::class)
+            ->getCurrent();
 
         $viewModel = new ViewModel([
             'planos' => $dadosPlanos,

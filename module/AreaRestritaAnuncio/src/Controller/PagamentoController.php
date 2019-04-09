@@ -8,6 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Model\Planos;
 use Zend\View\Model\ViewModel;
 
 class PagamentoController extends AbstractActionController
@@ -15,7 +16,14 @@ class PagamentoController extends AbstractActionController
 
     public function indexAction()
     {
-        $viewModel = new ViewModel();
+
+        $planos = $this->getContainer()
+            ->get(Planos::class)
+            ->getCurrent();
+
+        $viewModel = new ViewModel([
+            'planos' => $planos
+        ]);
         $viewModel->setTerminal(true);
         return $viewModel;
     }
