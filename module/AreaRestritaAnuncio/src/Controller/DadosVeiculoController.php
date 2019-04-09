@@ -44,7 +44,7 @@ class DadosVeiculoController extends AbstractActionController
             /**
              * @TODO
              * Criar um único lugar para recuperar o idTipo pelo nome
-             * 
+             *
              */
             $tipos = [
                 'carro' => 1,
@@ -139,6 +139,19 @@ class DadosVeiculoController extends AbstractActionController
     public function videoAction()
     {
         $videoForm = new Veiculo\VideoForm();
+
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        $request = $this->request;
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $apiClient = $this->getApiClient();
+
+            $res = $apiClient->veiculosPut([
+                'video' => $post->video,
+                ], $post->idVeiculo);
+
+            return new JsonModel($res->json());
+        }
 
         return new ViewModel([
             'formVideoVeiculo' => $videoForm
