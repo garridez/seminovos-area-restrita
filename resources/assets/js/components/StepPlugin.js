@@ -50,7 +50,7 @@ $.extend(Plugin.prototype, {
                 .index(step);
     },
     getCurrentStepIndex: function () {
-        var index = 0;
+        var index = false;
         var activeClass = this.opts.activeClass;
         this.getSteps()
                 .each(function (i) {
@@ -62,9 +62,9 @@ $.extend(Plugin.prototype, {
         return index;
     },
     /**
-     * 
+     *
      * @param {int|string} index Seletor or index of step
-     * @returns {boolean} 
+     * @returns {boolean}
      */
     goToIndex: function (index) {
         if (typeof index !== 'number') {
@@ -136,20 +136,26 @@ $.extend(Plugin.prototype, {
     },
     _triggerEvent: function (event, index) {
         var eventRes = {};// Event Result
+        var stepElement = this.getSteps().eq(index);
+        var extraParams = {
+            'stepIndex': index,
+            'stepElement': stepElement
+        };
         this._log('Event triggered:', 'step:' + event);
 
-        eventRes.a = this.$ctx.triggerHandler('step:' + event);
+        eventRes.a = this.$ctx.triggerHandler('step:' + event, extraParams);
 
         var eventName = 'step:' + event + ':index-' + index;
-        eventRes.b = this.$ctx.triggerHandler(eventName);
+        eventRes.b = this.$ctx.triggerHandler(eventName, extraParams);
         this._log('Event triggered:', eventName);
 
-        var stepLabel = this.getSteps().eq(index).data('step-label');
+        var stepLabel = stepElement.data('step-label');
         if (stepLabel) {
             eventName = 'step:' + event + ':' + stepLabel;
-            eventRes.c = this.$ctx.triggerHandler(eventName);
+            eventRes.c = this.$ctx.triggerHandler(eventName, extraParams);
             this._log('Event triggered:', eventName);
         }
+        // Se pelo menos 1 for falso, então é retornado falso
         return !(eventRes.a === false || eventRes.b === false || eventRes.c === false);
     }
 });
