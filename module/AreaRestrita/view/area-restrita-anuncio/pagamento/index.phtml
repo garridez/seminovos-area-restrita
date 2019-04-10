@@ -1,2 +1,68 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4 debug">
+            <div class="container">
+                <?php foreach ($planos as $plano) { ?>
+                    <div class="row">
+                        <div class="col debug">
+                            <div><?= $plano['nomePlano'] ?></div>
+                            <div>Até a venda</div>
+                        </div>
+                        <div class="col-3 debug">R$ <?= number_format($plano['valorPlano'], 2, ',', '.') ?></div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="col-8 debug">
+            <div class="accordion" id="accordion-payment">
+                <div class="card">
+                    <div class="card-header" id="cartao-de-credito-label">
+                        <h2>
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-payment .cartao-de-credito">
+                                Cartão de crédito<br>
+                                <small>Ativação imediata</small>
+                            </button>
+                        </h2>
+                    </div>
+                    <div class="cartao-de-credito collapse sh-ow" aria-labelledby="cartao-de-credito-label" data-parent="#accordion-payment">
+                        <div class="card-body">
+                            <?= $this->partial('partials/cartao-de-credito.phtml') ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="boleto-label">
+                        <h2>
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#boleto">
+                                Boleto Bancário<br>
+                                <small>Ativação em até 3 dias úteis</small>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="boleto" class="collapse" aria-labelledby="boleto-label" data-parent="#accordion-payment">
+                        <div class="card-body">
+                            <?= $this->partial('partials/boleto.phtml') ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="transferencia-label">
+                        <h2>
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#transferencia">
+                                Transferencia ou depósito em conta<br>
+                                <small>Ativação mediante confirmação de depósito</small>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="transferencia" class="collapse show" aria-labelledby="transferencia-label" data-parent="#accordion-payment">
+                        <div class="card-body">
+                            <?= $this->partial('partials/transferencia.phtml') ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-Renderizar aqui o pagamento
+
