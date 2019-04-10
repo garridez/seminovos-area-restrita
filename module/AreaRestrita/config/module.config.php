@@ -66,20 +66,30 @@ return [
                     ],
                 ],
             ],
+            'termos' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/termos/[:action]',
+                    'defaults' => [
+                        'controller' => Controller\TermosController::class,
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthController::class => InvokableFactory::class,
-            Controller\RotaExemploController::class => InvokableFactory::class,
-            Controller\MeusDadosController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
-            Controller\HistoricoPagamentosController::class => InvokableFactory::class,
             Controller\FaturaController::class => InvokableFactory::class,
             Controller\FinanceiroController::class => InvokableFactory::class,
-            Controller\MeusVeiculosController::class => InvokableFactory::class,
+            Controller\HistoricoPagamentosController::class => InvokableFactory::class,
+            Controller\IndexController::class => InvokableFactory::class,
             Controller\MeuSiteController::class => InvokableFactory::class,
+            Controller\MeusDadosController::class => InvokableFactory::class,
+            Controller\MeusVeiculosController::class => InvokableFactory::class,
+            Controller\RotaExemploController::class => InvokableFactory::class,
+            Controller\TermosController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
