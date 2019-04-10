@@ -1,8 +1,50 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
+//var_dump($planos);
+
+
+usort($planos, function ($a, $b) {
+    return $b['ordem'] <=> $a['ordem'];
+});
+//var_dump(current($planos));
+$prioridade = [
+    1 => 'máxima',
+    2 => 'alta',
+    3 => 'média',
+    4 => 'baixa',
+    5 => 'mínima',
+];
 
 ?>
-
-<?php foreach ($this->planos as $plano): ?>
-    <?= $plano['nomePlano'] ?><br>
-<?php endforeach; ?>
+<div class="container">
+  <div class="row">
+    <form name="form_Plano">
+        <?php foreach ($planos as $k => $plano) : ?>
+          <div class="col debug">
+            <?= $k + 1 ?>º
+            <div>
+                <?= $plano['nomePlano'] ?> 
+            </div>
+            -
+            <ul class="list-unstyled">
+              <li><?= $plano['valorPlano'] ?> por anúncio</li>
+              <li>1 vídeo</li>
+              <li>Exibição no site até a venda*</li>
+              <li>
+                Prioridade <b><?= $prioridade[$plano['prioridade']] ?></b> de exibição
+              </li>
+            </ul>
+            -
+            <div>
+              R$ <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?> 
+            </div>
+            <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano" value="<?= $plano['idPlano'] ?>" class="hid-den">
+            <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>">
+              Selecione
+            </label>
+          </div>
+      <?php endforeach; ?> 
+      <input type="submit">
+    </form>
+  </div>
+</div>
