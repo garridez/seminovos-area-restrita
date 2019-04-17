@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo 'yarn install...';
-yarn install
+echo 'npm install...';
+npm install
 
-echo  'yarn run watch...';
-yarn run watch &
+echo  'npm run watch...';
+npm run watch &
