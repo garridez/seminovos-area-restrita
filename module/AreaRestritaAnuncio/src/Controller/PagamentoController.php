@@ -28,13 +28,51 @@ class PagamentoController extends AbstractActionController
         return $viewModel;
     }
 
-    public function confirmacaoAction()
+    public function concluidoAction()
     {
-        return new ViewModel();
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
     }
 
-    public function aguardarConfirmacaoAction()
+    public function comprovanteAction()
     {
-        return new ViewModel();
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function aguardandoPagamentoAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function planoRenovadoAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function processarAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function cancelarPagamentosEmAbertoAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function retornoCieloAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
+    }
+
+    public function retornoPagseguroAction()
+    {
+        var_dump(__METHOD__ . ':' . __LINE__);
+        die;
     }
 }
