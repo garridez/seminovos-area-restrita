@@ -26,6 +26,7 @@ function setValidation(ctx) {
         messages: {
             termos: 'É preciso ler e aceitar os termos para continuar'
         },
+        submitHandler: function (form, event) {
             event.preventDefault();
             requestPagXamento($(form).serialize());
             return false;
@@ -68,5 +69,9 @@ module.exports.callback = ($) => {
     });
     stepsContainer.on('step:change:checkout', function (e) {
         $('.btn-continuar').removeClass('btn-laranja');
+        init();
+        $('.btn-continuar').removeClass('btn-laranja')
+                .attr('disabled', true);
+    });
     });
 };
