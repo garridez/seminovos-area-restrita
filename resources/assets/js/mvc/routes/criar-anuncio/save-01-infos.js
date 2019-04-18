@@ -39,6 +39,7 @@ module.exports.callback = ($) => {
                  *      na hora de salvar é enviado o id do veículo e assim é feita a edição
                  */
                 $('#dados-basicos .idVeiculo').val(data.data[0].idVeiculo);
+                $('#dados-basicos .idAnuncioVeiculo').val(data.data[0].idAnuncio);
                 
                 // Guarda o que foi serializado para garantir que não vai salvar dados que não foram alterados
                 lastSavedData = form.serialize();
