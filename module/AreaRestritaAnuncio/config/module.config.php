@@ -136,21 +136,13 @@ return [
                                 ],
                                 'may_terminate' => true,
                                 'child_routes' => [
-                                    'confirmacao' => [
-                                        'type' => Literal::class,
+                                    'metodos' => [
+                                        'type' => Segment::class,
                                         'options' => [
-                                            'route' => '/confirmacao',
-                                            'defaults' => [
-                                                'action' => 'confirmacao',
-                                            ],
-                                        ],
-                                    ],
-                                    'vamos-aguardar' => [
-                                        'type' => Literal::class,
-                                        'options' => [
-                                            'route' => '/vamos-aguardar',
-                                            'defaults' => [
-                                                'action' => 'aguardar-confirmacao',
+                                            'route' => '/:action[/.*]',
+                                            'route' => '/:action',
+                                            'constraints' => [
+                                                'action' => 'concluido|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro',
                                             ],
                                         ],
                                     ],
