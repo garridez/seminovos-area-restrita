@@ -2,10 +2,11 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\ServiceManager\ServiceManager;
+use AreaRestrita\Model\Cadastros;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Zend\ServiceManager\ServiceManager;
 
 class AbstractActionController extends ZendAbstractActionController
 {
@@ -31,5 +32,17 @@ class AbstractActionController extends ZendAbstractActionController
         if ($apiResponse->status !== 200) {
             throw new \Exception;
         }
+    }
+
+    /**
+     * Retorna os dados de cadastro do usuário atual
+     * @return Array|null
+     */
+    public function getCadastro()
+    {
+        return $this
+                ->getContainer()
+                ->get(Cadastros::class)
+                ->getCurrent();
     }
 }
