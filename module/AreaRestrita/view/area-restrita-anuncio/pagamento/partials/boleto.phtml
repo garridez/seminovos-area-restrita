@@ -1,12 +1,12 @@
-<form>
+<form class="pagamento-boleto-form">
     <div class="form-group" title="Termos de adesão">
         <label>
-            <input type="checkbox" required>
+            <input type="checkbox" name="termos" required>
             Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
         </label>
     </div>
     <div class="form-group">
-        <input type="hidden" name="metodo" value="cielo" required aria-required="true">
+        <input type="hidden" name="metodo" value="pagseguro" required aria-required="true">
         <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">GERAR BOLETO</button>
     </div>
 </form>

@@ -1,4 +1,4 @@
-<form>
+<form class="pagamento-transferencia-form">
     <table>
         <thead>
             <tr>
@@ -65,18 +65,22 @@
     </table>
     <div class="form-group" title="Termos de adesão">
         <label>
-            <input type="checkbox" required>
+            <input type="checkbox" name="termos" required>
             Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
         </label>
     </div>
     <div class="form-inline">
         <div class="form-group" title="Já fiz a transferência">
+            <input type="file" name="comprovanteAnexo" id="comprovanteAnexo" required>
             <input type="hidden" name="metodo" value="deposito">
             <input type="hidden" name="tipoEmail" value="comprovante">
+            <input type="hidden" name="nome" value="nome">
+            <input type="hidden" name="email" value="email">
             <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">ENVIAR COMPROVANTE</button>
         </div>
         <div class="form-group" title="Ainda vou fazer a transferência">
-            <a href="#" class="btn btn-success btn-block">FINALIZAR COMPRA</a>
+
+            <a href="#" class="pagamento-finalizar-deposito btn btn-success btn-block">FINALIZAR COMPRA</a>
         </div>
     </div>
 </form>
