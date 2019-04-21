@@ -1,90 +1,34 @@
-var pgtoDisplay = {
-    ctx: $('.checkout-metodos-container'),
-    ctxBaseClass: $('.checkout-metodos-container').attr('class'),
-    ctxClass: function (newClass) {
-        this.ctx.removeClass().addClass(this.ctxBaseClass);
-        if (newClass) {
-            this.ctx.addClass(newClass);
-        }
-    },
-    normal: function () {
-        console.log('pgtoDisplay: normal');
-        return;
-        this.ctxClass();
-        this.ctx.find('.checkout-metodos').slideDown();
-        this.ctx.find('.processando').slideUp();
-        this.ctx.find('.error-output').slideUp();
-    },
-    processando: function () {
-        console.log('pgtoDisplay: processando');
-        return;
-        this.ctxClass('status-processando');
-        this.ctx.find('.checkout-metodos').slideUp();
-        this.ctx.find('.processando').slideDown();
-        this.ctx.find('.error-output').slideUp();
-
-    },
-    erro: function (text) {
-        console.log('pgtoDisplay: erro');
-        return;
-        this.ctxClass('status-erro');
-        this.ctx.find('.checkout-metodos').slideUp();
-        this.ctx.find('.processando').slideUp();
-        this.ctx.find('.error-output').slideDown();
-
-        if (text && typeof text === "object") {
-            if (text.detail) {
-                text = text.detail;
-            } else if (text.title) {
-                text = text.title;
-            } else {
-                text = false;
-            }
-
-        }
-        if (!text) {
-            text = 'Erro ao processar pagamento.<br>Tente novamente mais tarde';
-        }
-
-        this.ctx.find('.error-message').html(text);
-    }
-};
-
+/**
+ * 
+ * @param array formData Dados adicionais na requisição
+ * @param object ajaxParams Parametros para a função "ajax" do jQuery
+ * @returns {undefined}
+ */
 module.exports = function (formData, ajaxParams) {
-    pgtoDisplay.processando();
+    var requestAlerts = require('./request-alerts');
+    requestAlerts.processando();
 
     var data = $('#dados-basicos form').serializeArray();
-
 
     if (formData && Array.isArray(formData)) {
         data = data.concat(formData);
     }
-
 
     var ajaxDefaultParams = {
         url: '/carro/checkout/processar',
         cache: false,
         data: data,
         type: 'POST',
-//        dataType: 'json',
-        success: function (text, httpResponse) {
-
-            console.log(httpResponse);
-            console.log(arguments);
-            $('.output').html(text);
-            return;
-            if (typeof httpResponse === 'object') {
-                for (var i in httpResponse) {
-                    if (httpResponse.hasOwnProperty(i)) {
-                        console.log(i + ':', httpResponse[i]);
-                    }
-                }
-            }
+        dataType: 'json',
+        success: function (httpResponse) {
             if (httpResponse.type === 15002) {
+                /**
+                 * @todo implementar essa função
+                 */
                 pagamentoEmAndamento();
             }
             if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
-                pgtoDisplay.erro(httpResponse);
+                requestAlerts.erro(httpResponse);
                 return;
             }
 
@@ -100,7 +44,7 @@ module.exports = function (formData, ajaxParams) {
             }
         },
         error: function (e) {
-            pgtoDisplay.erro(e);
+            requestAlerts.erro(e);
             console.log(e);
         }
     };

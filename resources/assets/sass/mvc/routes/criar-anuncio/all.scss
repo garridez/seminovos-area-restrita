@@ -1,3 +1,6 @@
 &.c-criar-anuncio{
     @import 'index';
 }
+&.c-criar-anuncio .step-checkout{
+    @import 'checkout';
+}

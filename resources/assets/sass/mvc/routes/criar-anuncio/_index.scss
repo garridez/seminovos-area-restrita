@@ -23,7 +23,10 @@
 
         }
         .step-plano{
-
+            input[type="radio"]:checked + label{
+                color: #FFFFFF !important;
+                background-color: #C86325 !important;
+            }
         }
         .step-checkout{
 
