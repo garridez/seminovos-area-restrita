@@ -1,0 +1,44 @@
+<?php
+$anoFabricacao = substr($this->veiculo['anoFabricacao'], -2);
+$anoModelo = substr($this->veiculo['anoModelo'], -2);
+
+$marcaModelo = $this->veiculo['marca'] . ' '
+    . $this->veiculo['modelo'] . ' '
+    . $anoFabricacao . '/'
+    . $anoModelo;
+
+$url = 'https://www.seminovos.com.br/' . implode('-', [
+        $this->veiculo['marca'],
+        $this->veiculo['modelo'],
+        $anoFabricacao,
+        $anoModelo,
+        '-' . $this->veiculo['idVeiculo']
+    ]);
+$url = strtolower($url);
+
+?>
+<div class="share-container">
+    <div style="font-weight: bold;color:#acacac;margin-top: 10px">Quer acelerar sua venda?</div>
+    <div style="font-weight: bold;color:#acacac;margin-top: 10px">Compartilhe com seus amigos</div>
+    <br>
+    <div class="fb-share-button"
+         data-href="<?= $url ?>"
+         data-layout="button"
+         data-size="large"
+         data-mobile-iframe="true"></div> 
+    <a href="https://twitter.com/share"
+       class="twitter-share-button"
+       data-url="<?= $url ?>"
+       data-text="Vendo <?= $marcaModelo ?>"
+       data-via="seminovosbh"
+       data-size="large"
+       data-related="seminovosbh"
+       data-hashtags="seminovosbh"></a>
+
+
+</div>
+
+<?php // Twitter   ?>
+<script>!function(d, s, id){var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location)?'http':'https'; if (!d.getElementById(id)){js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); }}(document, 'script', 'twitter-wjs');</script>
+<?php // Facebook   ?>
+<script>(function (d, s, id) {var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id))return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8&appId=984805604894951"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>

@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <img src="/img/pagamento/obrigado.jpg" /> 
+        </div>
+        <div class="col-md-6">
+
+
+            <div class="mensagem_pendente">
+
+                <p style="color:#da5228; font-size:18px;font-weight: bold;">Parabéns,</p><br>
+                <p style="color:#333; font-size:14px;font-weight: bold; margin-bottom: 20px;">Seu anúncio foi concluído com sucesso!</p>
+                <br>
+                <p style="font-weight: bold;color:#333;margin-top: 20px">Em até 10 minutos seu veículo estará ativo no portal.</p>
+                <br>
+                <?= $this->partial('partials/share', ['veiculo' => $this->veiculo]) ?>
+                <br>
+                <br>
+                <br>
+                <p style="font-weight: bold;color:#333;margin-top: 10px">Obrigado por anunciar conosco.</p>
+
+                <p style="color:#acacac; font-size:14px;font-weight: bold; margin-top: 20px; float:right;">Equipe SeminovosBH!</p>
+            </div>
+        </div>
+    </div>
+</div>
