@@ -28,28 +28,39 @@ class PagamentoController extends AbstractActionController
         return $viewModel;
     }
 
+    protected function getVeiculoData($idVeiculo = null)
+    {
+        if ($idVeiculo == null) {
+            $idVeiculo = (int) $this->params()->fromQuery('idVeiculo');
+        }
+        return $this->getApiClient()->veiculosGet([], $idVeiculo, true)->getData()[0];
+    }
+
+    protected function getModelVeiculo()
+    {
+        return new ViewModel([
+            'veiculo' => $this->getVeiculoData()
+        ]);
+    }
+
     public function concluidoAction()
     {
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+        return $this->getModelVeiculo();
     }
 
     public function comprovanteAction()
     {
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+        return $this->getModelVeiculo();
     }
 
     public function aguardandoPagamentoAction()
     {
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+        return $this->getModelVeiculo();
     }
 
     public function planoRenovadoAction()
     {
-        var_dump(__METHOD__ . ':' . __LINE__);
-        die;
+        return $this->getModelVeiculo();
     }
 
     public function processarAction()
@@ -107,7 +118,7 @@ class PagamentoController extends AbstractActionController
 
 
         $response = $this->getApiClient()
-            ->pagamentosPost($dadosPagamento, null, !false)
+            ->pagamentosPost($dadosPagamento, null, false)
             ->json();
 
         // Em caso de sucesso no pagamento
@@ -150,9 +161,6 @@ HTML;
             }
         }
         echo json_encode($response);
-        die;
-//        var_dump();
-        die;
         die;
     }
 
