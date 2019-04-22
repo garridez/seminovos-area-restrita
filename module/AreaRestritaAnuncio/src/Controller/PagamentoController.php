@@ -67,11 +67,11 @@ class PagamentoController extends AbstractActionController
         if (isset($dados['idPagamento'])) {
             $dadosPagamento['idPagamento'] = $dados['idPagamento'];
         }
-
+        $idVeiculo = isset($dados['idVeiculo']) ? $dados['idVeiculo'] : null;
         $dadosPagamento['metodo'] = $dados['metodo'];
         $dadosPagamento['total'] = $dados['total'];
         $dadosPagamento['tempo_contrato'] = isset($dados['tempo_contrato']) ? $dados['tempo_contrato'] : null;
-        $dadosPagamento['idVeiculo'] = isset($dados['idVeiculo']) ? $dados['idVeiculo'] : null;
+        $dadosPagamento['idVeiculo'] = $idVeiculo;
         $dadosPagamento['idAnuncioVeiculo'] = isset($dados['idAnuncioVeiculo']) ? $dados['idAnuncioVeiculo'] : null;
         $dadosPagamento['idCadastro'] = $cadastro['idCadastro'];
         $dadosPagamento['idPlano'] = $dados['idPlano'];
@@ -99,9 +99,9 @@ class PagamentoController extends AbstractActionController
 
         $routeParams = $this->params()->fromRoute();
         $urlHelper = $this->url();
-        $getUrlRedirect = function ($action) use($urlHelper, $routeParams) {
+        $getUrlRedirect = function ($action) use($urlHelper, $routeParams, $idVeiculo) {
             $routeParams['action'] = $action;
-            return $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams);
+            return $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo;
         };
 
 
