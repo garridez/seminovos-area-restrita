@@ -1,4 +1,6 @@
-body{
-    @import "AuthController/all";
-    @import "criar-anuncio/all";
+body {
+  @import "AuthController/all";
+  @import "criar-anuncio/all";
+  @import "meus-veiculos/all";
+  @import "general";
 }
