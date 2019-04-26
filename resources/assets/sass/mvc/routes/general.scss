@@ -1,0 +1,100 @@
+.borda-nitrohome {
+  background-color: $red-dark;
+}
+
+/*
+    TEMA DE CORES
+"laranja":    $orange,
+"amarelo":    $yellow,
+"cinza":      #7B7B7B,
+"primary":    $primary,
+"secondary":  $secondary,
+"success":    $success,
+"info":       $info,
+"warning":    $warning,
+"danger":     $danger,
+"light":      $light,
+"white":      $white,
+"dark":       $dark,
+"nitro-home": $red-dark,
+"nitro":      $red,
+"turbo":      $orange,
+"basico":     $yellow,
+"simples":    $gray-500
+*/
+@each $theme, $color in $theme-colors {
+  .text-#{$theme} {
+    color: $color;
+  }
+}
+@each $theme, $color in $theme-colors {
+  .bg-#{$theme} {
+    background-color: $color;
+  }
+}
+
+$sizes: ();
+$sizes: map-merge(
+  (
+    "1": 1px,
+    "2": 2px,
+    "3": 3px,
+    "4": 4px,
+    "5": 5px
+  ),
+  $sizes
+);
+@each $sizeN, $size in $sizes {
+  .border-s-#{$sizeN} {
+    border-width: $size;
+  }
+}
+
+$color-planos: ();
+$color-planos: map-merge(
+  (
+    "1": $yellow,
+    "2": $orange,
+    "3": $red,
+    "4": $red-dark,
+    "5": $gray-500
+  ),
+  $color-planos
+);
+@each $id, $color in $color-planos {
+  .bg-#{$id} {
+    background-color: $color;
+  }
+}
+@each $id, $color in $color-planos {
+  $color-scales: ();
+  $color-scales: map-merge(
+    (
+      "10": lighten($color, 10%),
+      "20": lighten($color, 20%),
+      "30": lighten($color, 30%),
+      "40": lighten($color, 40%),
+      "50": lighten($color, 50%),
+      "60": lighten($color, 60%)
+    ),
+    $color-scales
+  );
+  @each $percent, $scale in $color-scales {
+    .border-c-#{$id}-#{$percent} {
+      border-color: $scale;
+    }
+  }
+}
+
+$styles: ();
+$styles: map-merge(
+  (
+    "solid": solid
+  ),
+  $styles
+);
+@each $sytleN, $style in $styles {
+  .border-st-#{$sytleN} {
+    border-style: $style;
+  }
+}
