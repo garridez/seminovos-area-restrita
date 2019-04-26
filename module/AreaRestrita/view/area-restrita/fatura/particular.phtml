@@ -252,13 +252,13 @@ $dadosPagamento = $this->dadosPagamento;
                     <font style="font-size: 8pt;">
                     Telefone:
                     <?php
-                    if (!empty($dadosCadastro['telefone_1'])) {
+                    if (!empty($dadosCadastro['telefone_1'])) :
                         echo $dadosCadastro['telefone_1'];
-                    } elseif (!empty($dadosCadastro['telefone_2'])) {
+                    elseif (!empty($dadosCadastro['telefone_2'])) :
                         echo $dadosCadastro['telefone_2'];
-                    } else {
+                    else :
                         echo "Não Informado";
-                    }
+                    endif;
 
                     ?>
                     </font></font></font></p>
@@ -266,11 +266,11 @@ $dadosPagamento = $this->dadosPagamento;
                 <td width="207" style="border: none; padding: 0in;">
                   <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
                       <?php
-                      if (!empty($dadosCadastro['email'])) {
+                      if (!empty($dadosCadastro['email'])) :
                           echo $dadosCadastro['email'];
-                      } else {
+                      else :
                           echo "Não Informado";
-                      }
+                      endif;
 
                       ?></font></font></font></p>
                 </td>

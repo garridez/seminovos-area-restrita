@@ -254,13 +254,13 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     <font style="font-size: 8pt;">
                     Telefone:
                     <?php
-                    if (!empty($dadosCadastro['telefone_1'])) {
+                    if (!empty($dadosCadastro['telefone_1'])) :
                         echo $dadosCadastro['telefone_1'];
-                    } elseif (!empty($dadosCadastro['telefone_2'])) {
+                    elseif (!empty($dadosCadastro['telefone_2'])) :
                         echo $dadosCadastro['telefone_2'];
-                    } else {
+                    else :
                         echo "Não Informado";
-                    }
+                    endif;
 
                     ?>
                     </font></font></font></p>
@@ -268,11 +268,11 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 <td width="207" style="border: none; padding: 0in;">
                   <p><font color="#175366"><font face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Email:
                       <?php
-                      if (!empty($dadosCadastro['email'])) {
+                      if (!empty($dadosCadastro['email'])) :
                           echo $dadosCadastro['email'];
-                      } else {
+                      else :
                           echo "Não Informado";
-                      }
+                      endif;
 
                       ?></font></font></font></p>
                 </td>
@@ -327,7 +327,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 face="76dqrnknuzkt, serif">
             <font style="font-size: 8pt; text-transform: uppercase">
             <?php
-            switch ($dadosPagamento['tempoContrato']) {
+            switch ($dadosPagamento['tempoContrato']) :
                 case '3':
                     echo "Trimestral";
                     break;
@@ -343,7 +343,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 default:
                     echo "Mensal";
                     break;
-            }
+            endswitch;
 
             ?>
             </font></font></font></p>
@@ -357,14 +357,13 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 face="76dqrnknuzkt, serif"><font style="font-size: 8pt;">Anúncios
 
             <?php
-            if (empty($dataPagamento)) {
+            if (empty($dataPagamento)) :
                 echo "(Período de {$meses})";
-            } else {
-
+             else :
                 ?>
                 (Período de <?= $dataPagamento; ?> até <?= $dataExpiracao; ?>)
                 <?php
-            }
+            endif;
 
             ?>
 
