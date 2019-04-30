@@ -1,165 +1,107 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-$veiculos = $this->meusVeiculos['data'];
-//idPlano
-?>
+$veiculos = $this->meusVeiculos['data']; //idPlano 
+//var_dump($veiculos); ?>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12"> <h1 class="text-laranja">Meus Veículos</h1> </div>
-            <div class="col-12 row justify-content-between p-0 m-0">
-                <?php foreach ($veiculos as $veiculo): ?>
-                    <!-- border-st-solid border-s-5 border-c-<?= $veiculo['idPlano']?>-20 -->
-                    <div class="col-6 row mb-1 bg-<?=$veiculo['idPlano']?> p-0 mr-1">
-                        <div class="col-3 p-0 m-0 bg-menu text-center">
-                            <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>"> 
-                                <img class="img-150" src="<?= $veiculo['thumb'] ?>" alt="">
-                            </a>
-                            <h3 class="text-laranja"><?= $veiculo['nomePlano'] ?></h3>
+    <div class="row justify-content-center">
+        <div class="col-11">
+            <h1 class="text-laranja">Meus Veículos</h1>
+        </div>
+        <div class="col-11 row justify-content-between p-0 m-0">
+            <?php foreach ($veiculos as $veiculo): ?>
+            <!-- border-st-solid border-s-5 border-c-<?= $veiculo['idPlano']?>-20 bg-<?=$veiculo['idPlano']?>  -->
+            <div class="col-12 row mb-1 bg-white p-0 mr-1">
+                <div class="col-2 p-0 m-0 text-center">
+                    <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
+                        <img class="img-150" src="<?= $veiculo['thumb'] ?>" alt="" />
+                    </a>
+                    <!-- <h3 class="text-laranja"><?= $veiculo['nomePlano'] ?></h3> -->
+                </div>
+                <!--  align-items-end justify-content-between text-black -->
+                <div class="col-7">
+                    <div class="row px-2">
+                        <div
+                            class="d-flex col-12 h-auto justify-content-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano']?>-20">
+                            <h4 class="m-0 p-0">
+                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
+                                <small class="small"><?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></small>
+                            </h4>
+                            <h3 class="m-0 p-0 text-verde">
+                                R$ <?= $veiculo['valorFormatado'] ?>
+                            </h3>
                         </div>
-                        <div class="col-9 row bg-white">
-                            <div class="col-12 d-flex justify-content-between">
-                                <h4 class="m-0 text-danger"><?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></h4>
-                                <h4 class="m-0 text-dark"> R$ <?= $veiculo['valorFormatado'] ?></h4>
-                            </div>
-
-                        <div class="col-4">
+                        <div class="col-12 h-100">
                             <ul>
-                                <li>Visualizado: <?= $veiculo['clicks'] ?></li>
-                                <li>Placa: <?= $veiculo['placa'] ?></li>
-                                <li>Cadastrado: <?= $veiculo['dataCadastro'] ?></li>
-                                <li>Renovado: <?= $veiculo['dataRenovacao'] ?></li>
+                                <li>
+                                    Placa:
+                                    <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
+                                </li>
+                                <li>
+                                    Cadastrado:
+                                    <?= $veiculo['dataCadastro'] ?>
+                                </li>
+                                <li>
+                                    Renovado:
+                                    <?= $veiculo['dataRenovacao'] ?>
+                                </li>
                             </ul>
                         </div>
-                        <div class="col-4">
-                            Plano
-                            <h3><?= $veiculo['nomePlano'] ?></h3>
+                    </div>
+                </div>
+                <div class="col-3 border-left-c border-s-1 border-light">
+                    <div data-index="0" class="company-stat-box m-t-15 active padding-20 bg-master-lightest">
+                        <div>
+                            <p class="company-name pull-left text-uppercase bold no-margin">
+                                <span class="fa fa-circle text-s-<?= $veiculo['idStatus'] ?> fs-11"></span>
+                                <?= $veiculo['tituloStatus'] ?>
+                            </p>
+                            <small class="hint-text m-l-10"></small>
+
                         </div>
-                        <div class="col-4">
-                            Status
-                            <h6><?= $veiculo['tituloStatus'] ?></h6>
-                            <h6><?= $veiculo['dataExpiracao'] ?> Expira seu anúncio</h6>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="control row mt-3">
-                            <?php  
-                            if ($veiculo['tipoCadastro'] == 1) :
-                                if ($veiculo['idStatus'] == 5) : ?>
-                                    <div class="col-1">
-                                        <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Ativar</a>
-                                    </div>
-                                <?php endif;
-                                if ($veiculo['idStatus'] != 8) : ?>
-                                    <div class="col-1">
-                                        <a href="#" class="btn btn-light btn-sm">Editar</a>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="col-1">
-                                    <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
-                                </div>
-                                <div class="col-1"> 
-                                    <a href="#">Fotos</a>
-                                </div>
-
-                                <?php if ($veiculo['idStatus'] == 2) :?>
-                                    <div class="col-1">
-                                        <a href="meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Inativar</a>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="col-1">
-                                    <a href="#" class="btn btn-light btn-sm">Propostas</a>
-                                </div>
-
-                                <?php if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1)) : ?>
-                                    <div class="col-2">
-                                        <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="col-1">
-                                    <a href="#" class="btn btn-light btn-sm">Visualizar</a>
-                                </div>
-                                
-                            <?php elseif ($veiculo['tipoCadastro'] == 2) :
-
-                                $date1 = new DateTime($veiculo['dataTrocaStatus']);
-                                $date2 = new DateTime("now");
-                                $diff = $date1->diff($date2);
-                                $horas = ($diff->d * 24) + $diff->h;
-                                $expiracaoMenos48Hs = date('Y-m-d', strtotime('-2 day', strtotime($veiculo['dataExpiracao'])));
-
-                                if ($veiculo['idStatus'] == 1 || $veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 3 || $veiculo['idStatus'] == 9 || $veiculo['idStatus'] == 10) : ?>
-                                    <div class="col-1">
-                                        <a href="#" class="btn btn-light btn-sm">Editar</a>
-                                    </div>
-                                <?php   endif;
-
-                                if (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4) && ($veiculo['idPlano'] != 1)) :   ?>
-                                <div class="col-1">
-                                    <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
-                                </div>
-                                <?php   endif;
-
-                                if ($veiculo['idStatus'] == 1) : ?>
-                                    <div class="col-2">
-                                        <a href="#" class="btn btn-light btn-sm">Finalizar Compra</a>
-                                    </div>
-                                <?php   endif;
-
-                                if (($veiculo['idStatus'] == 2 && $veiculo['idPlano'] >= 2) || ($veiculo['idStatus'] == 9 && $veiculo['idPlano'] >= 2)) : ?>
-                                    <div class="col-1">
-                                        <a href="#" class="btn btn-light btn-sm">Fotos</a>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="col-1">
-                                    <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Propostas</a>
-                                </div>
-
-                                <?php if (($veiculo['idPlano'] != 1) && ($veiculo['idStatus'] == 7 || $veiculo['idStatus'] == 8) && $horas < 49) : ?>
-                                    <div class="col-2">
-                                        <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Reativar Anúncio</a>
-                                    </div>
-                                <?php   endif;
-
-                                if (($veiculo['idStatus'] == 4 || (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 9) && date('Y-m-d') >= $expiracaoMenos48Hs)) && $veiculo['idPlano'] >= 2) : ?>
-                                    <div class="col-1">
-                                        <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Renovar</a>
-                                    </div>
-                                <?php   endif;
-
-                                if (($veiculo['idStatus'] == 4 || $veiculo['idStatus'] == 2) && $veiculo['idPlano'] != 1) : ?>
-                                    <div class="col-1">
-                                        <a href="#" class="btn btn-light btn-sm">Troca</a>
-                                    </div>
-                                <?php endif;
-
-                                if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1 && $veiculo['destaqueHome'] == 'N')) : ?>
-                                    <div class="col-2">
-                                        <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
-                                    </div>
-                                <?php endif;
-                                
-                                if ($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4 && $veiculo['idPlano'] != 1) :   ?>
-                                    <div class="col-1">
-                                        <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Vendido</a>
-                                    </div>
-                                <?php endif;
-                                
-                                if ($veiculo['idStatus'] != 4) :    ?>
-                                    <div class="col-1">
-                                        <a href="#" class="btn btn-light btn-sm">Visualizar</a>
-                                    </div>
-                                <?php endif;
-                            endif; ?>
+                        <div class="m-t-10 d-flex justify-content-between">
+                            <p class="small hint-text no-margin p-t-5 ">
+                                <?= $veiculo['dataExpiracao'] ?>
+                            </p>
+                            <div class="d-flex">
+                                <p class="no-margin p-t-5 ">
+                                    <span>
+                                        R$ <?= $veiculo['valorPlano'] ?>
+                                    </span>
+                                    <br>
+                                    <small class="text-p-<?= $veiculo['idPlano'] ?>">
+                                        <?= $veiculo['nomePlano'] ?>
+                                    </small>
+                                </p>
+                                <button class="btn btn-success ml-3">Renovar</button>
+                            </div>
+                            <!-- <div class="pull-right">
+                                <p class="small hint-text no-margin inline">37.73</p>
+                                <span class=" label label-important p-t-5 m-l-5 p-b-5 inline fs-12">+ 0.09</span>
+                            </div> -->
+                            <!-- <?= $veiculo['dataExpiracao'] ?>
+                            Expira seu anúncio -->
                         </div>
                     </div>
-                                            </div>
-                <?php endforeach; ?>
+                    <div data-index="0" class="company-stat-box m-t-15 active padding-20 bg-master-lightest">
+                        <div>
+                            <p class="company-name pull-left bold no-margin">
+                                <span class="fa fa-circle text-success fs-11"></span>
+                                <?= $veiculo['clicks'] ?> clicks
+                            </p>
+                            <small class="hint-text m-l-10"></small>
+                        </div>
+                        <div class="m-t-10">
+                            <p class="pull-left small hint-text no-margin p-t-5">9:42AM ET</p>
+                            <div class="pull-right">
+                                <p class="small hint-text no-margin inline">37.73</p>
+                                <span class=" label label-important p-t-5 m-l-5 p-b-5 inline fs-12">+ 0.09</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>  
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
-
