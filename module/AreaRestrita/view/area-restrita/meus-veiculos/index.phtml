@@ -3,6 +3,8 @@
 $veiculos = $this->meusVeiculos['data']; //idPlano 
 //var_dump($veiculos); ?>
 
+
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-11">
@@ -45,6 +47,10 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                     Renovado:
                                     <?= $veiculo['dataRenovacao'] ?>
                                 </li>
+                                <li>
+                                    Kilometragem:
+                                    <?= $veiculo['kilometragem'] ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -84,10 +90,14 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                         </div>
                     </div>
                     <div data-index="0" class="company-stat-box m-t-15 active padding-20 bg-master-lightest">
-                        <div>
-                            <p class="company-name pull-left bold no-margin">
+                        <div class="row">
+                            <p class="col-6 company-name pull-left bold no-margin">
                                 <span class="fa fa-circle text-success fs-11"></span>
                                 <?= $veiculo['clicks'] ?> clicks
+                            </p>
+                            <p class="col-6 company-name pull-left bold no-margin">
+                                <span class="fa fa-circle text-success fs-11"></span>
+                                <?= $veiculo['acessos'] ?> acessos
                             </p>
                             <small class="hint-text m-l-10"></small>
                         </div>
