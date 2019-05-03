@@ -21,7 +21,8 @@
 $theme-colors: ();
 $theme-colors: map-merge(
   (
-    "verde": $verde
+    "verde": $verde,
+    "cinza-escuro" : #626262
   ),
   $theme-colors
 );
@@ -83,11 +84,11 @@ $sizes: map-merge(
 $color-planos: ();
 $color-planos: map-merge(
   (
-    "1": $yellow,
-    "2": $orange,
-    "3": $red,
-    "4": $red-dark,
-    "5": $gray-500
+    "1": $yellow, // BASICO
+    "2": $orange, // TURBO
+    "3": $red,    // NITRO
+    "4": $red-dark, // NITRO HOME
+    "5": $gray-500  // SIMPLES
   ),
   $color-planos
 );

@@ -1,0 +1,147 @@
+
+// SVG Icons
+//
+
+.icon-svg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    width:  $icon-base-size + px;
+    height: $icon-base-size + px;
+}
+
+@each $size in $icon-sizes-x {
+    .icon-svg-#{$size}x {
+        width:  ($icon-base-size * $size) + px;
+        height: ($icon-base-size * $size) + px;
+    }
+}
+
+@while $icon-sizes-p-start <= $icon-sizes-p-max { 
+    .icon-svg-#{$icon-sizes-p-start}p {
+        width:  $icon-sizes-p-start + px;
+        height: $icon-sizes-p-start + px;
+    }
+    $icon-sizes-p-start: $icon-sizes-p-start + $icon-sizes-p-steps;
+}
+
+
+// For icon list
+//
+
+$icons-svg-list: (
+// core icons
+'admin-stock': 'admin-stock',
+'advertise': 'advertise',
+'bugle': 'bugle', // anti ad-block
+'ad-payment': 'ad-payment',
+'ad-plan': 'ad-plan',
+'alert': 'alert',
+'arrow-left': 'arrow-left',
+'arrow-right': 'arrow-right',
+'arrow-up': 'arrow-up',
+'arrow-down': 'arrow-down',
+'bin': 'bin',
+'calendar': 'calendar',
+'calendar-o': 'calendar-o',
+'cell': 'cell',
+'change-stock': 'change-stock',
+'check': 'check',
+'discount': 'discount',
+'file': 'file',
+'globe': 'globe',
+'heart': 'heart',
+'email-pro': 'email-pro',
+'mail': 'mail',
+'mail-white': 'mail-white',
+'multicars': 'multicars',
+'phone': 'phone',
+'phone-salles': 'phone-salles',
+'photos': 'photos',
+'pin': 'pin',
+'print': 'print',
+'time': 'time',
+'user': 'user',
+'user-avatar': 'user-avatar',
+'video': 'video',
+'video-white': 'video-white',
+'school': 'school',
+'view-grid': 'view-grid',
+'view-list': 'view-list',
+
+// theme icons
+'ad-car': 'ad-car',
+'color': 'color',
+'car-check': 'carcheck',
+'car-remove': 'carremove',
+'consult': 'consult',
+'comments': 'comments',
+'compare': 'compare',
+'doors': 'doors',
+'featured-ad': 'featured-ad',
+'featured-smart': 'featured-smart',
+'fuel': 'fuel',
+'gearbox': 'gearbox',
+'gearshift': 'gearshift',
+'irregularity': 'irregularity',
+'money': 'money',
+'plate': 'plate',
+'plan-private': 'plan-private',
+'plan-reseller': 'plan-reseller',
+'plan-list': 'plan-list',
+'seller': 'seller',
+'seller-online': 'seller-online',
+'sold': 'sold',
+'swap': 'swap',
+'type-car': 'type-car',
+'type-car-active': 'type-car-active',
+'type-bus': 'type-bus',
+'type-truck': 'type-truck',
+'type-truck-active': 'type-truck-active',
+'type-moto': 'type-moto',
+'type-moto-active': 'type-moto-active',
+'warning': 'warning',
+'velocity': 'velocity',
+'website': 'website',
+
+// Social
+'sm-facebook': 'sm-facebook',
+'sm-googleplus': 'sm-googleplus',
+'sm-instagram': 'sm-instagram',
+'sm-twitter': 'sm-twitter',
+'sm-youtube': 'sm-youtube',
+'sm-whatsapp': 'sm-whatsapp',
+
+// Payment
+'mastercard': 'mastercard',
+'visa': 'visa',
+'american-express': 'american-express',
+'elo': 'elo',
+
+// Contact
+'tim': 'tim',
+'claro': 'claro',
+'vivo': 'vivo',
+'oi': 'oi',
+'nextel': 'nextel',
+'whatsapp': 'whatsapp',
+
+
+'ico_destaquead':'ico_destaquead'
+
+);
+
+@each $fragment, $file in $icons-svg-list {
+    $seletor: $fragment;
+    @if $fragment == $file {
+        $fragment: '';
+        $seletor: $file;
+    } @else {
+        $fragment: '##{$fragment}';
+    }
+    .icon-svg-#{$seletor}{
+        background-image: url('~snbh-site/resources/img/svg/icons/#{$file}.svg#{$fragment}');
+    }
+}
