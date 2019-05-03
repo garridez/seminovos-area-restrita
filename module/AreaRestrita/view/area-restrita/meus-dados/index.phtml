@@ -1,25 +1,23 @@
 <?php
+/* @var $this \AreaRestrita\Form\MeusDados\ParticularForm */
 $formCadastro = $this->formCadastro;
-$this->form($formCadastro);
+//var_dump($formCadastro->getElements());
+$fields = $formCadastro->getElements();
 
 $formCadastro->get('responsavelNome')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('responsavelNome')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('email')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('email')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('cpfResponsavel')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('cpfResponsavel')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('rg')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('rg')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('idEstado')->setAttributes([
@@ -43,8 +41,7 @@ $formCadastro->get('telefone_2')->setAttributes([
 ]);
 
 $formCadastro->get('operadora_2')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('operadora_2')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('telefone_2_is_wpp')->setAttributes([
@@ -58,8 +55,7 @@ $formCadastro->get('telefone_3')->setAttributes([
 ]);
 
 $formCadastro->get('operadora_3')->setAttributes([
-    'class' => 'form-control',
-    'value' => $formCadastro->get('operadora_3')->getValue()
+    'class' => 'form-control'
 ]);
 
 $formCadastro->get('telefone_3_is_wpp')->setAttributes([
@@ -80,6 +76,16 @@ $formCadastro->get('submit')->setAttributes([
 ]);
 
 ?>
+
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10 text-left">
+            <h3 class="font-montserrat all-caps hint-text">MEUS DADOS</h3>
+        </div>
+    </div>
+</div>
+
 <div class=" container-fluid   container-fixed-lg">
     <div class="row">
         <div class="col-lg-2"></div>
@@ -91,38 +97,38 @@ $formCadastro->get('submit')->setAttributes([
                 </div>
                 <div class="card-body">
                     <div class="form-group form-group-default required ">
-                        <label><?= $formCadastro->get('responsavelNome')->getLabel() ?></label>
-                        <?= $this->formElement($formCadastro->get('responsavelNome')) ?>
+                        <?= $this->formLabel($fields['responsavelNome']) ?>
+                        <?= $this->formText($fields['responsavelNome']) ?>
                     </div>
                     <div class="form-group form-group-default required ">
-                        <label><?= $formCadastro->get('email')->getLabel() ?></label>
-                        <?= $this->formElement($formCadastro->get('email')) ?>
+                        <?= $this->formLabel($fields['email']) ?>
+                        <?= $this->formText($fields['email']) ?>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label><?= $formCadastro->get('cpfResponsavel')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('cpfResponsavel')) ?>
+                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                <?= $this->formText($fields['cpfResponsavel']) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('rg')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('rg')) ?>
+                                <?= $this->formLabel($fields['rg']) ?>
+                                <?= $this->formText($fields['rg']) ?>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-default required">
-                                <label><?= $formCadastro->get('idEstado')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('idEstado')) ?>
+                                <?= $this->formLabel($fields['idEstado']) ?>
+                                <?= $this->formSelect($fields['idEstado']) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('idCidade')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('idCidade')) ?>
+                                <?= $this->formLabel($fields['idCidade']) ?>
+                                <?= $this->formSelect($fields['idCidade']) ?>
                             </div>
                         </div>
                     </div>
@@ -145,44 +151,44 @@ $formCadastro->get('submit')->setAttributes([
                 </div>
                 <div class="card-body">
                     <div class="form-group form-group-default required ">
-                        <label><?= $formCadastro->get('telefone_1')->getLabel() ?></label>
-                        <?= $this->formElement($formCadastro->get('telefone_1')) ?>
+                        <?= $this->formLabel($fields['telefone_1']) ?>
+                        <?= $this->formText($fields['telefone_1']) ?>
                     </div>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group form-group-default required">
-                                <label><?= $formCadastro->get('telefone_2')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('telefone_2')) ?>
+                                <?= $this->formLabel($fields['telefone_2']) ?>
+                                <?= $this->formText($fields['telefone_2']) ?>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('operadora_2')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('operadora_2')) ?>
+                                <?= $this->formLabel($fields['operadora_2']) ?>
+                                <?= $this->formSelect($fields['operadora_2']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="checkbox check-success">
-                                <?= $this->formElement($formCadastro->get('telefone_2_is_wpp')) ?>
+                                <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group form-group-default required">
-                                <label><?= $formCadastro->get('telefone_3')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('telefone_3')) ?>
+                                <?= $this->formLabel($fields['telefone_3']) ?>
+                                <?= $this->formText($fields['telefone_3']) ?>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('operadora_3')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('operadora_3')) ?>
+                                <?= $this->formLabel($fields['operadora_3']) ?>
+                                <?= $this->formSelect($fields['operadora_3']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="checkbox check-success">
-                                <?= $this->formElement($formCadastro->get('telefone_3_is_wpp')) ?>
+                                <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
                             </div>
                         </div>
                     </div>
@@ -217,43 +223,17 @@ $formCadastro->get('submit')->setAttributes([
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-10"></div>
-                        <div class="col-md-2">
-                            <?= $this->formElement($formCadastro->get('submit')) ?>
-                            <!--                                <button class="btn btn-primary btn-cons m-t-10" type="submit">Create a new account</button>-->
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- END card -->
         </div>
         <div class="col-lg-2"></div>
     </div>
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-5 text-right">
+            <?= $this->formElement($formCadastro->get('submit')) ?>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 </div>
-
-
-<!---->
-<!--<h1 class="text-laranja">Meus Dados</h1>-->
-<!--<div class="row">-->
-<!--  <div class="col-md-6">-->
-<!---->
-<!---->
-<!--    --><?php
-//    $formCadastro = $this->formCadastro;
-//    $formCadastro->get('dataNascimento')->setAttributes([
-//        'class'=>'form-control',
-//        'value'=>'1980-07-07'
-//    ]);
-//
-//    var_dump($formCadastro->get('dataNascimento')->getLabel());
-//
-//    /* @var $this \Zend\View\Renderer\PhpRenderer */
-//    echo $this->form($this->formCadastro);
-//
-//
-//
-//
-//    ?>
-<!--  </div>-->
-<!--</div>-->
