@@ -1,11 +1,239 @@
-<h1 class="text-laranja">Meus Dados</h1>
-<div class="row">
-  <div class="col-md-6">
-    <?php
-    /* @var $this \Zend\View\Renderer\PhpRenderer */
+<?php
+/* @var $this \AreaRestrita\Form\MeusDados\ParticularForm */
+$formCadastro = $this->formCadastro;
+//var_dump($formCadastro->getElements());
+$fields = $formCadastro->getElements();
 
-    echo $this->form($this->formCadastro);
+$formCadastro->get('responsavelNome')->setAttributes([
+    'class' => 'form-control'
+]);
 
-    ?>
-  </div>
+$formCadastro->get('email')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('cpfResponsavel')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('rg')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('idEstado')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('idEstado')->getValue()
+]);
+
+$formCadastro->get('idCidade')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('idCidade')->getValue()
+]);
+
+$formCadastro->get('telefone_1')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_1')->getValue()
+]);
+
+$formCadastro->get('telefone_2')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_2')->getValue()
+]);
+
+$formCadastro->get('operadora_2')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('telefone_2_is_wpp')->setAttributes([
+    'value' => $formCadastro->get('telefone_2_is_wpp')->getValue()
+]);
+
+
+$formCadastro->get('telefone_3')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_3')->getValue()
+]);
+
+$formCadastro->get('operadora_3')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('telefone_3_is_wpp')->setAttributes([
+    'value' => $formCadastro->get('telefone_3_is_wpp')->getValue()
+]);
+
+$formCadastro->get('senha')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('confirmacaoSenha')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('submit')->setAttributes([
+    'class' => 'btn btn-success btn-cons',
+    'value' => $formCadastro->get('submit')->getValue()
+]);
+
+?>
+
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10 text-left">
+            <h3 class="font-montserrat all-caps hint-text">MEUS DADOS</h3>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Dados Pessoais</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group form-group-default required ">
+                        <?= $this->formLabel($fields['responsavelNome']) ?>
+                        <?= $this->formText($fields['responsavelNome']) ?>
+                    </div>
+                    <div class="form-group form-group-default required ">
+                        <?= $this->formLabel($fields['email']) ?>
+                        <?= $this->formText($fields['email']) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                <?= $this->formText($fields['cpfResponsavel']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <?= $this->formLabel($fields['rg']) ?>
+                                <?= $this->formText($fields['rg']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <?= $this->formLabel($fields['idEstado']) ?>
+                                <?= $this->formSelect($fields['idEstado']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <?= $this->formLabel($fields['idCidade']) ?>
+                                <?= $this->formSelect($fields['idCidade']) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Contatos</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group form-group-default required ">
+                        <?= $this->formLabel($fields['telefone_1']) ?>
+                        <?= $this->formText($fields['telefone_1']) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default required">
+                                <?= $this->formLabel($fields['telefone_2']) ?>
+                                <?= $this->formText($fields['telefone_2']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default">
+                                <?= $this->formLabel($fields['operadora_2']) ?>
+                                <?= $this->formSelect($fields['operadora_2']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox check-success">
+                                <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default required">
+                                <?= $this->formLabel($fields['telefone_3']) ?>
+                                <?= $this->formText($fields['telefone_3']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default">
+                                <?= $this->formLabel($fields['operadora_3']) ?>
+                                <?= $this->formSelect($fields['operadora_3']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox check-success">
+                                <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Alterar Senha</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('senha')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('senha')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('confirmacaoSenha')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('confirmacaoSenha')) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-5 text-right">
+            <?= $this->formElement($formCadastro->get('submit')) ?>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 </div>
