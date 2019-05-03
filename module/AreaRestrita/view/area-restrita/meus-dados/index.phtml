@@ -1,11 +1,259 @@
-<h1 class="text-laranja">Meus Dados</h1>
-<div class="row">
-  <div class="col-md-6">
-    <?php
-    /* @var $this \Zend\View\Renderer\PhpRenderer */
+<?php
+$formCadastro = $this->formCadastro;
+$this->form($formCadastro);
 
-    echo $this->form($this->formCadastro);
+$formCadastro->get('responsavelNome')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('responsavelNome')->getValue()
+]);
 
-    ?>
-  </div>
+$formCadastro->get('email')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('email')->getValue()
+]);
+
+$formCadastro->get('cpfResponsavel')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('cpfResponsavel')->getValue()
+]);
+
+$formCadastro->get('rg')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('rg')->getValue()
+]);
+
+$formCadastro->get('idEstado')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('idEstado')->getValue()
+]);
+
+$formCadastro->get('idCidade')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('idCidade')->getValue()
+]);
+
+$formCadastro->get('telefone_1')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_1')->getValue()
+]);
+
+$formCadastro->get('telefone_2')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_2')->getValue()
+]);
+
+$formCadastro->get('operadora_2')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('operadora_2')->getValue()
+]);
+
+$formCadastro->get('telefone_2_is_wpp')->setAttributes([
+    'value' => $formCadastro->get('telefone_2_is_wpp')->getValue()
+]);
+
+
+$formCadastro->get('telefone_3')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('telefone_3')->getValue()
+]);
+
+$formCadastro->get('operadora_3')->setAttributes([
+    'class' => 'form-control',
+    'value' => $formCadastro->get('operadora_3')->getValue()
+]);
+
+$formCadastro->get('telefone_3_is_wpp')->setAttributes([
+    'value' => $formCadastro->get('telefone_3_is_wpp')->getValue()
+]);
+
+$formCadastro->get('senha')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('confirmacaoSenha')->setAttributes([
+    'class' => 'form-control'
+]);
+
+$formCadastro->get('submit')->setAttributes([
+    'class' => 'btn btn-success btn-cons',
+    'value' => $formCadastro->get('submit')->getValue()
+]);
+
+?>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Dados Pessoais</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group form-group-default required ">
+                        <label><?= $formCadastro->get('responsavelNome')->getLabel() ?></label>
+                        <?= $this->formElement($formCadastro->get('responsavelNome')) ?>
+                    </div>
+                    <div class="form-group form-group-default required ">
+                        <label><?= $formCadastro->get('email')->getLabel() ?></label>
+                        <?= $this->formElement($formCadastro->get('email')) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <label><?= $formCadastro->get('cpfResponsavel')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('cpfResponsavel')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('rg')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('rg')) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default required">
+                                <label><?= $formCadastro->get('idEstado')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('idEstado')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('idCidade')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('idCidade')) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
 </div>
+
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Contatos</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group form-group-default required ">
+                        <label><?= $formCadastro->get('telefone_1')->getLabel() ?></label>
+                        <?= $this->formElement($formCadastro->get('telefone_1')) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default required">
+                                <label><?= $formCadastro->get('telefone_2')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('telefone_2')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('operadora_2')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('operadora_2')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox check-success">
+                                <?= $this->formElement($formCadastro->get('telefone_2_is_wpp')) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default required">
+                                <label><?= $formCadastro->get('telefone_3')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('telefone_3')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('operadora_3')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('operadora_3')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checkbox check-success">
+                                <?= $this->formElement($formCadastro->get('telefone_3_is_wpp')) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <!-- START card -->
+            <div class="card card-default">
+                <div class="card-header ">
+                    <div class="card-title">Alterar Senha</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('senha')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('senha')) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label><?= $formCadastro->get('confirmacaoSenha')->getLabel() ?></label>
+                                <?= $this->formElement($formCadastro->get('confirmacaoSenha')) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <?= $this->formElement($formCadastro->get('submit')) ?>
+                            <!--                                <button class="btn btn-primary btn-cons m-t-10" type="submit">Create a new account</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card -->
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+
+
+<!---->
+<!--<h1 class="text-laranja">Meus Dados</h1>-->
+<!--<div class="row">-->
+<!--  <div class="col-md-6">-->
+<!---->
+<!---->
+<!--    --><?php
+//    $formCadastro = $this->formCadastro;
+//    $formCadastro->get('dataNascimento')->setAttributes([
+//        'class'=>'form-control',
+//        'value'=>'1980-07-07'
+//    ]);
+//
+//    var_dump($formCadastro->get('dataNascimento')->getLabel());
+//
+//    /* @var $this \Zend\View\Renderer\PhpRenderer */
+//    echo $this->form($this->formCadastro);
+//
+//
+//
+//
+//    ?>
+<!--  </div>-->
+<!--</div>-->
