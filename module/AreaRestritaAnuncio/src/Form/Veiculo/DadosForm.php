@@ -34,7 +34,7 @@ class DadosForm extends Form
             'options' => [
                 'label' => 'Marca',
                 'value_options' => [
-                    '' => 'Selecione',
+                    '' => 'Selecione a marca',
                     '7' => 'Chevrolet',
                     '18' => 'Fiat',
                     '19' => 'Ford',
@@ -50,7 +50,7 @@ class DadosForm extends Form
             'options' => [
                 'label' => 'Modelo',
                 'value_options' => [
-                    '' => 'Selecione',
+                    '' => 'Selecione o modelo',
                     '232' => 'Chevrolet Zafira',
                     '1964' => 'Fiat Toro',
                     '146' => 'Ford Ranger Cab. Dupla',
@@ -106,6 +106,7 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'data-init-plugin' => 'select2',
             ]
         ]);
         $this->add([
