@@ -21,6 +21,7 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
+                'class' => 'form-control'
             ]
         ]);
 
@@ -29,6 +30,7 @@ class ParticularForm extends Form
             'name' => 'dataNascimento',
             'options' => [
                 'label' => 'Data de Nascimento',
+                'class' => 'form-control'
             ],
         ]);
 
@@ -41,6 +43,7 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -51,6 +54,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -62,6 +66,7 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -79,6 +84,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -96,6 +102,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
 
@@ -107,6 +114,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -115,6 +123,9 @@ class ParticularForm extends Form
             'options' => [
                 'label' => 'Celular',
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ]
         ]);
 
         $this->add([
@@ -144,6 +155,9 @@ class ParticularForm extends Form
                     '5' => 'NEXTEL',
                 ],
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ],
         ]);
 
         $this->add([
@@ -151,6 +165,9 @@ class ParticularForm extends Form
             'name' => 'telefone_3',
             'options' => [
                 'label' => 'Celular',
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -166,6 +183,9 @@ class ParticularForm extends Form
                     '4' => 'VIVO',
                     '5' => 'NEXTEL',
                 ],
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -185,6 +205,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -195,6 +216,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'class' => 'form-control'
             ]
         ]);
         $this->add([
@@ -202,6 +224,7 @@ class ParticularForm extends Form
             'name' => 'submit',
             'attributes' => [
                 'value' => 'Salvar',
+                'class' => 'btn btn-success btn-cons',
             ],
         ]);
 

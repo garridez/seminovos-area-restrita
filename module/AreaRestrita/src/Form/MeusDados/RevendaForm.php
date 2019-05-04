@@ -21,7 +21,8 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-            ]
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -32,13 +33,17 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-            ]
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_1',
             'options' => [
                 'label' => 'Telefone 1',
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -54,6 +59,9 @@ class RevendaForm extends Form
                     '4' => 'VIVO',
                     '5' => 'NEXTEL',
                 ],
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -75,6 +83,9 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Telefone 2',
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -89,6 +100,9 @@ class RevendaForm extends Form
                     '4' => 'VIVO',
                     '5' => 'NEXTEL',
                 ],
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -110,6 +124,9 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Telefone 3',
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -124,6 +141,9 @@ class RevendaForm extends Form
                     '4' => 'VIVO',
                     '5' => 'NEXTEL',
                 ],
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -145,6 +165,9 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Telefone 4',
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -159,6 +182,9 @@ class RevendaForm extends Form
                     '4' => 'VIVO',
                     '5' => 'NEXTEL',
                 ],
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -180,12 +206,18 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Celular Financeiro',
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Email::class,
             'name' => 'email_financeiro',
             'options' => [
                 'label' => 'E-mail Financeiro',
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -197,13 +229,17 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-            ]
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Email::class,
             'name' => 'email_secundario',
             'options' => [
                 'label' => 'E-mail Secundário',
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ],
         ]);
         $this->add([
@@ -212,12 +248,20 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Facebook',
             ],
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder'=>'https://www.facebook.com/{pagina}',
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
             'name' => 'instagram',
             'options' => [
                 'label' => 'Instagram',
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder'=>'https://www.instagram.com/{usuario}',
             ],
         ]);
         $this->add([
@@ -226,12 +270,20 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Youtube',
             ],
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder'=>'https://www.youtube.com/user/{canal}',
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
             'name' => 'twitter',
             'options' => [
                 'label' => 'Twitter',
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder'=>'https://twitter.com/{usuario}',
             ],
         ]);
         $this->add([
@@ -242,7 +294,8 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -252,13 +305,15 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+                'class' => 'form-control'
+            ],
         ]);
         $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
             'attributes' => [
-                'value' => 'Próxima',
+                'value' => 'Salvar',
+                'class' => 'btn btn-success btn-cons',
             ],
         ]);
 
