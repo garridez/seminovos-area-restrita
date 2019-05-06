@@ -45,6 +45,7 @@ class MeusDadosController extends AbstractActionController
 
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
+        $tipoCadastro = 1;
 
         if ($cadastrosModel->isRevenda()) {
             $dadosForm = new MeusDados\RevendaForm();
@@ -58,6 +59,7 @@ class MeusDadosController extends AbstractActionController
             $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
             $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
             $request = $this->getRequest();
+            $tipoCadastro = 2;
         }
 
         if ($request->isPost()) {
@@ -98,6 +100,7 @@ class MeusDadosController extends AbstractActionController
         } else {
             $dadosForm->populateValues($dadosCadastro);
             return new ViewModel([
+                'tipoCadastro' => $tipoCadastro,
                 'formCadastro' => $dadosForm
             ]);
         }

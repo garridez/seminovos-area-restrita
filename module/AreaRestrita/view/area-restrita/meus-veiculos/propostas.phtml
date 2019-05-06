@@ -1,33 +1,107 @@
 <?php
+//setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+//date_default_timezone_set('America/Sao_Paulo');
+//echo strftime('%d de %B de %Y', strtotime('today'));;exit;
+
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-
+$veiculo = $this->veiculo;
 ?>
-
-<div class="my-3 p-3 bg-white rounded box-shadow">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Propostas</h6>
-    <?php
-    if (sizeof($this->propostas) > 0) :
-        foreach ($this->propostas as $propostas):
-
-            ?>
-            <div class="media text-muted pt-3">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark"><?= $propostas['nome'] ?></strong>
-                    <strong>Data: </strong><?= $propostas['dataFormatada'] ?><br>
-                    <strong>E-mail: </strong><?= $propostas['email'] ?><br>
-                    <strong>Telefone: </strong><?= $propostas['telefone'] ?><br>
-                    <strong>Mensagem: </strong><?= $propostas['texto'] ?>
-                </>
-            </div>
-        <?php
-        endforeach;
-    else :
-
-        ?>
-        <div class="media text-muted pt-3">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">Nenhuma proposta enviada para o veículo.</strong>
-            </p>
+<div class="container-fluid container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Propostas</h3>
         </div>
-    <?php endif; ?>
+    </div>
 </div>
+<div class="container-fluid  container-fixed-lg bg-master-lighter">
+    <div class="timeline-container top-circle">
+        <section class="timeline">
+            <div class="timeline-block">
+                <div class="timeline-point success">
+                    <i class="fa fa-car"></i>
+                </div>
+                <div class="timeline-content">
+                    <div class="card social-card share full-width">
+                        <div class="circle" data-toggle="tooltip" title="Label" data-container="body">
+                        </div>
+                        <div class="card-header clearfix">
+                            <div class="user-pic">
+                                <img alt="" style="height: 90px; width: 90px;" src="<?= $veiculo['imagem'] ?>">
+                            </div>
+                            <p class="m-0 p-0 text-uppercase h4 text-cinza-escuro">
+                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
+                                <small class=" small">
+                                    <?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></small>
+                            </p>
+                            <h6 class="text-uppercase">Placa: <?= $veiculo['placa'] ?></h6>
+                            <h6 class="">R$: <?= $veiculo['valorFormatado'] ?></h6>
+                            <h6 class="">Kilometragem: <?= $veiculo['kilometragemFormatada'] ?></h6>
+                            <h6 class="">Código: <?= $veiculo['idVeiculo'] ?></h6>
+                        </div>
+                        <div class="event-date">
+                            <h6 class="font-montserrat all-caps hint-text m-t-0">Cadastrado em</h6>
+                            <small class="fs-12 hint-text"><?= strftime('%d de %B de %Y', strtotime($veiculo['dataCadastro'])) ?></small>
+                        </div>
+                    </div>
+                </div>
+
+                <?php #TODO retirar o igual (=) da condição, alterar o for para foreach e colocar as variaveis que estão no final dessa página?>
+                <?php if (sizeof($this->propostas) >= 0) :
+//                    foreach ($this->propostas as $propostas):
+                for ($i = 0; $i < 3; $i++) :
+                ?>
+                    <div class="timeline-block">
+                        <div class="timeline-point small"></div>
+                        <div class="timeline-content">
+                            <div class="card  social-card share full-width">
+                                <div class="circle" data-toggle="tooltip" title="Label" data-container="body"></div>
+                                <div class="card-header clearfix">
+                                    <h5>Shannon Williams</h5>
+                                    <h6>E-mail: <span class="location semi-bold">wesley@seminovosbh.com.br</span></h6>
+                                    <h6>Telefone: <span class="location semi-bold">(037)988198436</span></h6>
+                                </div>
+                                <div class="card-description">
+                                    <p>
+                                        <strong>Mensagem:</strong> Boa noite. Consegue me enviar fotos do carro no meu
+                                        whatsapp? Consegue me enviar fotos do carro no meu whatsapp?
+                                        Consegue me enviar fotos do carro no meu whatsapp?
+                                        Consegue me enviar fotos do carro no meu whatsapp?
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="event-date">
+                                <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
+                            </div>
+                        </div>
+                    </div>
+                <?php //endforeach;?>
+                <?php endfor;?>
+                <?php else : ?>
+                <div class="timeline-block">
+                    <div class="timeline-point small">
+                    </div>
+                    <div class="timeline-content">
+                        <div class="card  social-card share full-width">
+                            <div class="circle" data-toggle="tooltip" title="Label" data-container="body">
+                            </div>
+                            <div class="card-header clearfix">
+                                <h5>Nenhuma proposta <span class="semi-bold">enviada para o veículo.</span> </h5>
+                            </div>
+                        </div>
+                        <div class="event-date">
+                            <small class="fs-12 hint-text">03 de maio de 2019 as 06:50</small>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+        </section>
+    </div>
+</div>
+
+<!--    <h5>--><?php //$propostas['nome'] ?><!--</h5>-->
+<!--    <h6>E-mail: <span class="location semi-bold">--><?php //$propostas['email'] ?><!--</span></h6>-->
+<!--    <h6>Telefone: <span class="location semi-bold">--><?php //$propostas['telefone'] ?><!--</span></h6>-->
+<!---->
+<!--    <p><strong>Mensagem: </strong>--><?php //$propostas['texto'] ?><!--</p>-->
+<!---->
+<!--    <small class="fs-12 hint-text">--><?php ////$propostas['dataFormatada'] ?><!--</small>-->

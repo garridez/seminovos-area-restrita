@@ -54,6 +54,9 @@ class MeusVeiculosController extends AbstractActionController
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
+        /* @var $propostasModel Propostas */
+        $propostasModel = $this->getContainer()->get(Propostas::class);
+
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->getAll();
 
@@ -162,6 +165,10 @@ class MeusVeiculosController extends AbstractActionController
            $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
            $dadosVeiculos['data'][$key]['frase'] = $frase;
+
+
+            // Busca os dados das propostas
+            $dadosVeiculos['data'][$key]['propostas'] = $propostasModel->getAll($veiculo['idVeiculo']);
         }
         return new ViewModel([
             'meusVeiculos' => $dadosVeiculos
@@ -301,13 +308,25 @@ class MeusVeiculosController extends AbstractActionController
         // Busca os dados das propostas
         $dadosPropostas = $propostasModel->getAll($idVeiculo);
 
+        $serviceVeiculo = new ServiceVeiculo();
+
+        if ($serviceVeiculo->verificaCadastroVeiculo($idVeiculo)) {
+
+            /* @var $veiculosModel Veiculos */
+            $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+            // Busca os dados do cadastro
+            $dadosVeiculo = $veiculosModel->get($idVeiculo);
+        }
+
         // Verifica se retornou propostas para o veículo
         if ($dadosPropostas['status'] == 405) {
             $dadosPropostas = [];
         }
 
         return new ViewModel([
-            'propostas' => $dadosPropostas
+            'propostas' => $dadosPropostas,
+            'veiculo' => $dadosVeiculo
         ]);
     }
 }
