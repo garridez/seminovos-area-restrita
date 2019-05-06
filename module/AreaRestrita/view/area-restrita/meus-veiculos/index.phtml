@@ -1,177 +1,197 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-$veiculos = $this->meusVeiculos['data'];
+$veiculos = $this->meusVeiculos['data']; //idPlano 
+//echo '<pre>';
+//print_r($veiculos); 
 
 ?>
 
-<div class="row">
-  <div class="col-md-12">
-    <h1 class="text-laranja">Meus Veículos</h1>
-    <?php foreach ($veiculos as $veiculo): ?>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2">
-              <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>"> 
-                <img class="img-fluid" src="<?= $veiculo['thumb'] ?>" alt="">
-              </a>
-            </div>
-            <div class="col-md-3">
-              Infos veiculo
-              <h6><?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></h6>
-              <h6> R$ <?= $veiculo['valorFormatado'] ?></h6>
-              <ul>
-                <li>Visualizado: <?= $veiculo['clicks'] ?></li>
-                <li>Placa: <?= $veiculo['placa'] ?></li>
-                <li>Cadastrado: <?= $veiculo['dataCadastro'] ?></li>
-                <li>Renovado: <?= $veiculo['dataRenovacao'] ?></li>
-              </ul>
-            </div>
-            <div class="col-md-2">
-              Plano
-              <h6><?= $veiculo['nomePlano'] ?></h6>
-            </div>
-            <div class="col-md-2">
-              Status
-              <h6><?= $veiculo['tituloStatus'] ?></h6>
-              <h6><?= $veiculo['dataExpiracao'] ?> Expira seu anúncio</h6>
-            </div>
-          </div>
-          <div class="row">
-              <?php
-              if ($veiculo['tipoCadastro'] == 1) {
-                  if ($veiculo['idStatus'] == 5) {
 
-                      ?>
-                    <div class="col-md-1">
-                      <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Ativar</a>
-                    </div>
-                    <?php
-                }
-                if ($veiculo['idStatus'] != 8) {
 
-                    ?>
-                    <div class="col-md-1">
-                      <a href="#" class="btn btn-light btn-sm">Editar</a>
-                    </div>
-                <?php } ?>
-                <div class="col-md-1">
-                  <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
-                </div>
-                <div class="col-md-1">
-                  <a href="#">Fotos</a>
-                </div>
-                <?php if ($veiculo['idStatus'] == 2) { ?>
-                    <div class="col-md-1">
-                      <a href="meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Inativar</a>
-                    </div>
-                <?php } ?>
-                <div class="col-md-1">
-                  <a href="#" class="btn btn-light btn-sm">Propostas</a>
-                </div>
-                <?php if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1)) { ?>
-                    <div class="col-md-2">
-                      <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
-                    </div>
-                <?php } ?>
-                <div class="col-md-1">
-                  <a href="#" class="btn btn-light btn-sm">Visualizar</a>
-                </div>
-                <?php
-            } else if ($veiculo['tipoCadastro'] == 2) {
-
-                $date1 = new DateTime($veiculo['dataTrocaStatus']);
-                $date2 = new DateTime("now");
-                $diff = $date1->diff($date2);
-                $horas = ($diff->d * 24) + $diff->h;
-
-                $expiracaoMenos48Hs = date('Y-m-d', strtotime('-2 day', strtotime($veiculo['dataExpiracao'])));
-
-                if ($veiculo['idStatus'] == 1 || $veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 3 || $veiculo['idStatus'] == 9 || $veiculo['idStatus'] == 10) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="#" class="btn btn-light btn-sm">Editar</a>
-                    </div>
-                    <?php
-                }
-                if (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4) && ($veiculo['idPlano'] != 1)) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Excluir</a>
-                    </div>
-                    <?php
-                }
-                if ($veiculo['idStatus'] == 1) {
-
-                    ?>
-                    <div class="col-md-2">
-                      <a href="#" class="btn btn-light btn-sm">Finalizar Compra</a>
-                    </div>
-                    <?php
-                }
-                if (($veiculo['idStatus'] == 2 && $veiculo['idPlano'] >= 2) || ($veiculo['idStatus'] == 9 && $veiculo['idPlano'] >= 2)) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="#" class="btn btn-light btn-sm">Fotos</a>
-                    </div>
-                <?php } ?>
-                <div class="col-md-1">
-                  <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Propostas</a>
-                </div>
-                <?php if (($veiculo['idPlano'] != 1) && ($veiculo['idStatus'] == 7 || $veiculo['idStatus'] == 8) && $horas < 49) { ?>
-                    <div class="col-md-2">
-                      <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Reativar Anúncio</a>
-                    </div>
-                    <?php
-                }
-                if (($veiculo['idStatus'] == 4 || (($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 9) && date('Y-m-d') >= $expiracaoMenos48Hs)) && $veiculo['idPlano'] >= 2) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Renovar</a>
-                    </div>
-                    <?php
-                }
-                if (($veiculo['idStatus'] == 4 || $veiculo['idStatus'] == 2) && $veiculo['idPlano'] != 1) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="#" class="btn btn-light btn-sm">Troca</a>
-                    </div>
-                    <?php
-                }
-                if (($veiculo['idStatus'] == 4 && $veiculo['idPlano'] == 1) || ($veiculo['idStatus'] != 4 && $veiculo['idStatus'] != 8 && $veiculo['idStatus'] != 7 && $veiculo['idStatus'] != 1 && $veiculo['destaqueHome'] == 'N')) {
-
-                    ?>
-                    <div class="col-md-2">
-                      <a href="#" class="btn btn-light btn-sm">Trocar Plano</a>
-                    </div>
-                    <?php
-                }
-                if ($veiculo['idStatus'] == 2 || $veiculo['idStatus'] == 4 && $veiculo['idPlano'] != 1) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" class="btn btn-light btn-sm">Vendido</a>
-                    </div>
-                    <?php
-                }
-                if ($veiculo['idStatus'] != 4) {
-
-                    ?>
-                    <div class="col-md-1">
-                      <a href="#" class="btn btn-light btn-sm">Visualizar</a>
-                    </div>
-                    <?php
-                }
-            }
-
-            ?>
-          </div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-11">
+            <h3>Meus Veículos</h3>
         </div>
-        <hr>
-    <?php endforeach; ?>
-  </div>
+        <div class="col-11 col-lg-12 row justify-content-center p-0 m-0">
+            <?php foreach ($veiculos as $veiculo): ?>
+            <!-- border-st-solid border-s-5 border-c-<?= $veiculo['idPlano']?>-20 bg-<?=$veiculo['idPlano']?>  -->
+            <div class="col-12 row mb-3 bg-white p-0 justify-content-center">
+                <div class="col-12 col-lg-2 d-flex pt-3 justify-content-center">
+                    <a href="meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
+                        <img class="img-fluid" src="<?= $veiculo['imagem'] ?>" alt="" />
+                    </a>
+                </div>
+                <!--  align-items-end justify-content-between text-black -->
+                <div class="col-12 col-lg-7">
+                    <div class="row justify-content-between m-t-10 active px-2 py-2">
+                        <div
+                            class="d-flex col-12 h-auto justify-content-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano']?>-20 pb-2">
+                            <p class="m-0 p-0 text-uppercase h4 text-cinza-escuro">
+                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
+                                <small class=" small">
+                                    <?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></small>
+                            </p>
+                            <h4 class="m-0 p-0 h4 text-cinza-escuro">
+                                R$ <?= $veiculo['valorFormatado'] ?>
+                            </h4>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <ul class="h-auto">
+                                <li>
+                                    Placa:
+                                    <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
+                                </li>
+                                <li>
+                                    Cadastrado:
+                                    <?= $veiculo['dataCadastro'] ?>
+                                </li>
+                                <li>
+                                    Renovado:
+                                    <?= $veiculo['dataRenovacao'] ?>
+                                </li>
+                                <li>
+                                    Kilometragem:
+                                    <?= $veiculo['kilometragem'] ?>
+                                </li>
+                                <li>
+                                    Código:
+                                    <?= $veiculo['idVeiculo'] ?>
+                                </li>
+                            </ul>
+                            <div class="btn-group">
+                                <?php if($veiculo["botoes"]["excluir"]){?>
+                                <button type="button" class="btn btn-danger icon-2"><i
+                                        class=" fa fa-trash-o"></i></button>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["editar_dados"]){?>
+                                <button type="button" class="btn bg-cinza text-white icon-2"><i
+                                        class=" fa fa-pencil"></i></button>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["editar_fotos"]){?>
+                                <button type="button" class="btn bg-cinza text-white icon-2"><i
+                                        class=" fa fa-camera"></i></button>
+                                <?php }?>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3 mt-2  p-0 m-0 row justify-content-center">
+                            <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
+                                <div class="pl-3 bold no-margin">
+                                    <?= $veiculo['cliques'] ? : 0 ?> cliques
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
+                                <div class="pl-3 bold no-margin">
+                                    <?= $veiculo['acessos'] ? : 0 ?> acessos
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-12 mt-1 padding-15  bg-master-lightest">
+                                <div class="row d-flex justify-content-between pl-3">
+                                    <div class="bold no-margin d-flex align-items-center  ">
+                                        <span class="fa fa-circle text-success fs-11 mr-1"></span>
+                                        Propostas
+                                        <?php
+                                                /** @todo
+                                                *  Trazer o numero de propostas
+                                                *  Trazer bolinha verde quando há nova proposta
+                                                */
+                                            ?>
+                                    </div>
+                                    <span class=" label bg-verde text-white p-t-3 p-b-3 inline fs-12 mr-2">
+                                        Ver
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 h-100">
+                    <div data-index="0" class="company-stat-box m-t-10 px-4 py-3 bg-master-lightest">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="pull-left d-flex text-uppercase bold align-items-center mb-0">
+                                <span class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></span>
+                                <?= $veiculo['nomePlano'] ?>
+                            </p>
+                            <div>
+                                <?php if($veiculo["botoes"]["trocar_plano"]){?>
+                                <button class="btn btn-sm btn-info text-white">Trocar Plano</button>
+                                <?php }?>
+                                <?php if($veiculo["botoes"]["upgrade_plano"]){?>
+                                <button class="btn btn-sm btn-info text-white">Melhorar meu Plano</button>
+                                <?php }?>
+                                <?php
+                                /** @todo
+                                 *  Centralizar verticalmente
+                                 */
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pb-2">
+                        <div data-index="0" class="company-stat-box m-t-10 bg-master-lightest active px-4 pt-3 h-100 ">
+                            <div class="d-flex justify-content-between">
+                                <p
+                                    class="company-name pull-left text-uppercase bold no-margin d-flex align-items-center">
+                                    <span class="fa fa-circle text-s-<?= $veiculo['idStatus'] ?> fs-11 mr-1"></span>
+                                    <?= $veiculo['tituloStatus'] ?>
+                                </p>
+                            </div>
+                            <div class=" d-flex mt-1">
+                                <small class="hint-text"><?=$veiculo["frase"]?></small>
+                            </div>
+                            <div class="d-flex mt-1">
+                                <small class="hint-text mt-1">
+                                    <?php 
+                                                                                                                                                                                                                                                            if($veiculo["intervaloData"] == 0){ ?>
+                                    Expira Hoje
+                                    <?php 
+                                                                                                                                                                                                                                                            } 
+                                                                                                                                                                                                                                                            elseif($veiculo["intervaloData"] >= 1){ ?>
+                                    Expira em <?= $veiculo["intervaloData"] ?> dias
+                                    <?php 
+                                                                                                                                                                                                                                                            } 
+                                                                                                                                                                                                                                                            else { ?>
+                                    Expirado em <?= $veiculo["dataExpiracao"] ?>
+                                    <?php } ?>
+                                </small>
+                            </div>
+                            <div class="justify-content-end d-flex m-t-15 pb-2">
+
+                                <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
+                                <button class="btn btn-sm btn-cinza text-white  ml-2 ">enviar comprovante</button>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["realizar_pagamento"]){?>
+                                <button class="btn btn-sm bg-verde text-white ml-2 ">Pagar</button>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["vendido"]){?>
+                                <button class="btn btn-sm btn-complete ml-2">Vendido</button>
+                                <?php }?>
+
+
+                                <?php if($veiculo["botoes"]["renovar"]){?>
+                                <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["reativar"]){?>
+                                <button class="btn btn-sm btn-laranja text-white ml-2 ">Reativar</button>
+                                <?php }?>
+
+                                <?php
+                            /** @todo
+                                *  ENVIAR COMPROVANTE
+                                */
+                            ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </div>

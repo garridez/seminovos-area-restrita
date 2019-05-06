@@ -1,27 +1,41 @@
-<h1>FOTOS DO SEU VEÍCULO</h1>
+<div class="container container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
 
-<span>
-  Agora esta na hora de mostrar a sua joia! Se você já preparou o book do seu veículo, clique no box abaixo, ou arraste para dentro dele, para enviar as fotos que deseja inserir no seu anúncio.
-</span>
+            <h4 class="text-center">
+                FOTOS DO SEU VEÍCULO
+            </h4>
+            <div class="text-center my-3">
+                <small class="my-3 align-center">Agora esta na hora de mostrar a sua joia! Se você já preparou o book do seu veículo, clique no box abaixo,
+                    ou arraste para dentro dele, para enviar as fotos que deseja inserir no seu anúncio.
+                </small>
+            </div>
 
-<form>
-  <input type="file" name="fotos" multiple accept="image/jpg, image/jpeg"/>
-  <input type="file" name="foto" accept="image/jpg, image/jpeg"/>
-  Formulário de fotos
-  <div class=" container">
-    <div class="fotos-container">
-        <?php foreach (range(0, 2) as $i): ?>
-          <div class="row">
-              <?php foreach (range(0, 3) as $i): ?>
-                <div class="foto col-md-3 col-sm-6">
-                  <img src="https://placehold.it/180x126&text=Foto" data-placeholder="https://placehold.it/180x126&text=Foto" class="img-fluid img-thumbnail">
-                  <button type="button" class="btn-remove-img btn btn-small btn-outline-dark" title="Remover imagem">x</button>
+            <form>
+                <input type="file" name="fotos" multiple accept="image/jpg, image/jpeg"/>
+                <input type="file" name="foto" accept="image/jpg, image/jpeg"/>
+                Formulário de fotos
+                <div class=" container">
+                    <div class="fotos-container">
+                        <?php foreach (range(0, 2) as $i): ?>
+                            <div class="row">
+                                <?php foreach (range(0, 3) as $i): ?>
+                                    <div class="foto col-md-3 col-sm-6">
+                                        <img src="https://placehold.it/180x126&text=Foto" data-placeholder="https://placehold.it/180x126&text=Foto" class="img-fluid img-thumbnail">
+                                        <button type="button" class="btn-remove-img btn btn-small btn-outline-dark" title="Remover imagem">x</button>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            <?php endforeach; ?>
 
-          </div>
-      <?php endforeach; ?>
+                <div class="form-group ">
+                    <input type="submit">
+                </div>
+            </form>
+
+        </div>
     </div>
-  </div>
-  <input type="submit">
-</form>
+</div>
