@@ -91,6 +91,7 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                 <div class="row d-flex justify-content-between pl-3">
                                     <div class="bold no-margin d-flex align-items-center  ">
                                         <span class="fa fa-circle text-success fs-11 mr-1"></span>
+
                                         Propostas
                                         <?php
                                                 /** @todo
@@ -100,7 +101,7 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                             ?>
                                     </div>
                                     <span class=" label bg-verde text-white p-t-3 p-b-3 inline fs-12 mr-2">
-                                        Ver
+                                        <a class="text-white" href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">Ver</a>
                                     </span>
                                 </div>
                             </div>
