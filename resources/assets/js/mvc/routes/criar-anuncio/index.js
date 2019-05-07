@@ -32,8 +32,6 @@ module.exports.callback = ($) => {
             return;
         }
     });
-    
-    $('.anuncio-steps').on('steps-loaded', populate);
 };
 function loadContentStepsAsync() {
     var stepsUrl = $('div.anuncio-steps [data-url]');
