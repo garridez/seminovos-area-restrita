@@ -61,18 +61,20 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                             </ul>
                             <div class="btn-group">
                                 <?php if($veiculo["botoes"]["excluir"]){?>
-                                <button type="button" class="btn btn-danger icon-2"><i
-                                        class=" fa fa-trash-o"></i></button>
+                                <a href="meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"><button type="button"
+                                        class="btn btn-danger icon-2"><i class=" fa fa-trash-o"></i></button></a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_dados"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2"><i
-                                        class=" fa fa-pencil"></i></button>
+                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()">
+                                    <i class=" fa fa-pencil"></i>
+                                </button>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2"><i
-                                        class=" fa fa-camera"></i></button>
+                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()">
+                                    <i class=" fa fa-camera"></i>
+                                </button>
                                 <?php }?>
                             </div>
                         </div>
@@ -88,21 +90,25 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                 </div>
                             </div>
                             <div class="col-12 col-lg-12 mt-1 padding-15  bg-master-lightest">
-                                <div class="row d-flex justify-content-between pl-3">
-                                    <div class="bold no-margin d-flex align-items-center  ">
-                                        <span class="fa fa-circle text-success fs-11 mr-1"></span>
-                                        Propostas
-                                        <?php
+                                <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">
+                                    <div class="row d-flex justify-content-between pl-3">
+                                        <div class="bold no-margin d-flex align-items-center  ">
+                                            <span class="fa fa-circle text-success fs-11 mr-1"></span>
+                                            Propostas
+                                            <?php
                                                 /** @todo
                                                 *  Trazer o numero de propostas
                                                 *  Trazer bolinha verde quando há nova proposta
                                                 */
                                             ?>
+                                        </div>
+                                        <a href="meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">
+                                            <span class=" label bg-verde text-white p-t-3 p-b-3 inline fs-12 mr-2">
+                                                Ver
+                                            </span>
+                                        </a>
                                     </div>
-                                    <span class=" label bg-verde text-white p-t-3 p-b-3 inline fs-12 mr-2">
-                                        Ver
-                                    </span>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -161,24 +167,32 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                             <div class="justify-content-end d-flex m-t-15 pb-2">
 
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
-                                <button class="btn btn-sm btn-cinza text-white  ml-2 ">enviar comprovante</button>
+                                <button class="btn btn-sm btn-cinza text-white  ml-2" onclick="alerta_fazer()">enviar
+                                    comprovante</button>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["realizar_pagamento"]){?>
-                                <button class="btn btn-sm bg-verde text-white ml-2 ">Pagar</button>
+                                <button class="btn btn-sm bg-verde text-white ml-2"
+                                    onclick="alerta_fazer()">Pagar</button>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["vendido"]){?>
-                                <button class="btn btn-sm btn-complete ml-2">Vendido</button>
+                                <a href="meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>">
+                                    <button class="btn btn-sm btn-complete ml-2">Vendido</button>
+                                </a>
                                 <?php }?>
 
 
                                 <?php if($veiculo["botoes"]["renovar"]){?>
-                                <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">
+                                    <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
+                                </a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["reativar"]){?>
-                                <button class="btn btn-sm btn-laranja text-white ml-2 ">Reativar</button>
+                                <a href="meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>">
+                                    <button class="btn btn-sm btn-laranja text-white ml-2 ">Reativar</button>
+                                </a>
                                 <?php }?>
 
                                 <?php
@@ -195,3 +209,8 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
         </div>
     </div>
 </div>
+<script>
+    let alerta_fazer = () => {
+        window.alert("TEM QUE FAZER !!!! TEM QUE FAZER !!!!")
+    }
+</script>
