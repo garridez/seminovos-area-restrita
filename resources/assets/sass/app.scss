@@ -1,8 +1,8 @@
+// @import "~snbh-site/resources/assets/fonts/icons.svg";
 @import "~snbh-site/resources/assets/sass/variables";
 @import "~snbh-site/resources/assets/sass/bootstrap";
 @import "~snbh-site/resources/assets/sass/components/all";
 @import "~bootstrap/scss/card";
-
 
 @import "theme_pages/pages.scss";
 
@@ -13,7 +13,7 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "components/all";
 @import "mvc/layout/all";
 @import "mvc/routes/all";
-
 .debug {
-    outline: red solid 1px;
+  outline: red solid 1px;
 }
+@import "~snbh-site/resources/assets/fonts/icons.css";

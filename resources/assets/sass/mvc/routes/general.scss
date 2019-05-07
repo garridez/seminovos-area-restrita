@@ -1,0 +1,153 @@
+/*
+    TEMA DE CORES
+"laranja":    $orange,
+"amarelo":    $yellow,
+"cinza":      #7B7B7B,
+"primary":    $primary,
+"secondary":  $secondary,
+"success":    $success,
+"info":       $info,
+"warning":    $warning,
+"danger":     $danger,
+"light":      $light,
+"white":      $white,
+"dark":       $dark,
+"nitro-home": $red-dark,
+"nitro":      $red,
+"turbo":      $orange,
+"basico":     $yellow,
+"simples":    $gray-500
+*/
+$theme-colors: ();
+$theme-colors: map-merge(
+  (
+    "verde": $verde,
+    "cinza-escuro" : #626262
+  ),
+  $theme-colors
+);
+@each $theme, $color in $theme-colors {
+  .text-#{$theme} {
+    color: $color;
+  }
+}
+@each $theme, $color in $theme-colors {
+  .bg-#{$theme} {
+    background-color: $color;
+  }
+}
+@each $theme, $color in $theme-colors {
+  .border-#{$theme} {
+    border-color: $color;
+  }
+}
+
+$status: ();
+$status: map-merge(
+  (
+    "1": $yellow,
+    "2": $verde,
+    "3": "",
+    "4": "",
+    "5": $red,
+    "6": $yellow,
+    "7": $red,
+    "8": $verde,
+    "9": "",
+    "10": ""
+  ),
+  $status
+);
+@each $statusN, $statusC in $status {
+  .text-s-#{$statusN} {
+    color: $statusC;
+  }
+}
+
+$sizes: ();
+$sizes: map-merge(
+  (
+    "1": 1px,
+    "2": 2px,
+    "3": 3px,
+    "4": 4px,
+    "5": 5px
+  ),
+  $sizes
+);
+@each $sizeN, $size in $sizes {
+  .border-s-#{$sizeN} {
+    border-width: $size;
+  }
+}
+
+$color-planos: ();
+$color-planos: map-merge(
+  (
+    "1": $yellow, // BASICO
+    "2": $orange, // TURBO
+    "3": $red,    // NITRO
+    "4": $red-dark, // NITRO HOME
+    "5": $gray-500  // SIMPLES
+  ),
+  $color-planos
+);
+@each $id, $color in $color-planos {
+  .bg-#{$id} {
+    background-color: $color;
+  }
+  .text-p-#{$id} {
+    color: $color;
+  }
+}
+@each $id, $color in $color-planos {
+  $color-scales: ();
+  $color-scales: map-merge(
+    (
+      "10": lighten($color, 10%),
+      "20": lighten($color, 20%),
+      "30": lighten($color, 30%),
+      "40": lighten($color, 40%),
+      "50": lighten($color, 50%),
+      "60": lighten($color, 60%)
+    ),
+    $color-scales
+  );
+  @each $percent, $scale in $color-scales {
+    .border-#{$id}-#{$percent} {
+      border-color: $scale;
+    }
+  }
+}
+
+
+$positions: ();
+$positions: map-merge(
+  (
+    "top": border-top-style,
+    "bottom": border-bottom-style,
+    "left": border-left-style,
+    "right": border-right-style
+  ),
+  $positions
+);
+@each $positionN, $position in $positions {
+    .border-#{$positionN}-c {
+      #{$position}: solid;
+    }
+}
+//   CODIGO PARA GERAR BORDAS DE OUTROS ESTILOS, MAS NÃO FOI IDENTIFICADO UMA SITUAÇÃO PARA NÃO USAR SOLID MESMO
+//  $styles: ();
+//  $styles: map-merge(
+//    (
+//      "solid": solid
+//    ),
+//    $styles
+//  );
+//  @each $positionN, $position in $positions {
+//    @each $sytleN, $style in $styles {
+//      .border-#{$positionN}-#{$sytleN} {
+//        #{$position}: $style;
+//      }
+//    }
+//  }

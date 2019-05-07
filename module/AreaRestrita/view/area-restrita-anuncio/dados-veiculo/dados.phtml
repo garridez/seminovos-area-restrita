@@ -1,5 +1,126 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
-echo $this->form($this->formDadosVeiculos);
+    /* @var $this \Zend\View\Renderer\PhpRenderer */
+    /* @var $form \Zend\Form\View\Helper\Form */
+    //echo $this->form($this->formDadosVeiculos);
 
+    /* @var $this \AreaRestritaAnuncio\Form\Veiculo\DadosForm */
+    $form = $this->formDadosVeiculos;
+    //var_dump($form->getElements());
+    $fields = $form->getElements();
+
+    foreach ($fields as $element) {
+        if ($element->getAttribute('name') != 'checkboxacessorios')
+            $element->setAttribute('class', 'form-control');
+    }
+
+    $form->setAttribute('class', 'form');
 ?>
+<div class="container container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h4 class="text-center">
+                DADOS DO ANÚNCIO
+            </h4>
+            <div class="text-center my-3">
+                <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu anúncio.
+                    <br/>Campos com * são de preenchimento obrigatório.
+                </small>
+            </div>
+            
+            <!-- <? $this->form()->openTag($form); ?>
+
+            <form class="" role="form"> -->
+            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">            
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['placa']) ?>
+                    <?= $this->formText($fields['placa']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['idMarca']) ?>
+                    <?= $this->formSelect($fields['idMarca']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['modeloCarro']) ?>
+                    <?= $this->formSelect($fields['modeloCarro']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['versao']) ?>
+                    <?= $this->formSelect($fields['versao']) ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['motor']) ?>
+                            <?= $this->formSelect($fields['motor']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['idValvula']) ?>
+                            <?= $this->formSelect($fields['idValvula']) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoFabricacao']) ?>
+                            <?= $this->formSelect($fields['anoFabricacao']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoModelo']) ?>
+                            <?= $this->formSelect($fields['anoModelo']) ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['portas']) ?>
+                            <?= $this->formSelect($fields['portas']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['cor']) ?>
+                            <?= $this->formSelect($fields['cor']) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['combustivel']) ?>
+                            <?= $this->formSelect($fields['combustivel']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['kilometragem']) ?>
+                            <?= $this->formText($fields['kilometragem']) ?>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="text-center">
+                Acessórios
+                </h5>
+                <div class="form-group form-group-default">
+                    <?= $this->formLabel($fields['checkboxacessorios']) ?>
+
+                    <?= $this->formMultiCheckbox($fields['checkboxacessorios']) ?>
+
+                </div>
+                <!-- <div class="form-group "><div class=""><button type="submit" name="submit" class="btn btn-default" value="Cadastrar">Cadastrar</button></div></div> -->
+                <div class="form-group ">
+                    <?= $this->formSubmit($fields['submit']) ?>
+                </div>
+            </form>    
+            <!--<? $this->form()->closeTag(); ?> -->
+
+        </div>
+    </div>
+</div>

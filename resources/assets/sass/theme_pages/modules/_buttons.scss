@@ -87,7 +87,7 @@
     padding: 6px $padding-base-horizontal;
     &:hover{
         /*background-color: #fafafa;*/
-        border: 1px solid fade-out($color-master,.73);
+        // border: 1px solid fade-out($color-master,.73);
         color: #333;
     }
     &.active{
