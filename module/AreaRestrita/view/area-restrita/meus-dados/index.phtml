@@ -3,6 +3,8 @@
 /* @var $this \AreaRestrita\Form\MeusDados\ParticularForm */
 $formCadastro = $this->formCadastro;
 
+$formCadastro->prepare();
+
 $fields = $formCadastro->getElements();
 
 $tipoCadastro = $this->tipoCadastro;
@@ -19,6 +21,7 @@ $tipoCadastro = $this->tipoCadastro;
 </div>
 
 <div class=" container-fluid   container-fixed-lg">
+<form method="POST" name="form_particularSite" class="" id="form_particularSite">
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
@@ -305,3 +308,4 @@ $tipoCadastro = $this->tipoCadastro;
         <div class="col-md-2"></div>
     </div>
 </div>
+</form>
