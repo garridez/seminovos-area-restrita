@@ -157,9 +157,15 @@ class MeusVeiculosController extends AbstractActionController
            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
            $dadosVeiculos['data'][$key]['frase'] = $frase;
         }
-        return new ViewModel([
+        $viewModel = new ViewModel([
             'meusVeiculos' => $dadosVeiculos
         ]);
+        
+        $request = $this->getRequest();
+        // Se for ajax, desativa o layout
+        $viewModel->setTerminal($request->isXmlHttpRequest());
+
+        return $viewModel;
     }
     /*
      * Função generica que faz as seguintes ações
