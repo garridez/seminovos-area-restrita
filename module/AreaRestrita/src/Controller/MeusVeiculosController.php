@@ -45,17 +45,8 @@ class MeusVeiculosController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $cadastrosModel Cadastros */
-        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-
-        // Busca os dados do cadastro
-        $dadosCadastro = $cadastrosModel->getCurrent(false);
-
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
-        /* @var $propostasModel Propostas */
-        $propostasModel = $this->getContainer()->get(Propostas::class);
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->getAll();
