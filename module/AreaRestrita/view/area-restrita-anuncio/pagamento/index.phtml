@@ -1,28 +1,41 @@
 <div class="container">
+    <h4 class="text-center">
+        PAGAMENTO
+    </h4>
+    <div class="text-center my-3">
+        <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu anúncio.
+            <br/>Campos com * são de preenchimento obrigatório.
+        </small>
+    </div>
     <div class="row">
-        <div class="col-4 debug">
-            <div class="container">
+        <div class="col-md-5">
+            <div class="container-fixed-lg">
+                <div class="text-left"><strong>RESUMO DA SUA COMPRA</strong></div>
                 <?php foreach ($planos as $plano) { ?>
-                    <div class="row">
-                        <div class="col debug">
-                            <div><?= $plano['nomePlano'] ?></div>
-                            <div>Até a venda</div>
+                <div id="planos<?=$plano['idPlano']?>" class="form-group form-group-default align-items-center row hidden">
+                        <div class="col-md-8">
+                            <div><strong><?= $plano['nomePlano'] ?></strong></div>
+                            <div><small>Até a venda</small></div>
                         </div>
-                        <div class="col-3 debug">R$ <?= number_format($plano['valorPlano'], 2, ',', '.') ?></div>
+                        <div class="col-md-4">
+                            <strong>R$ <?= number_format($plano['valorPlano'], 2, ',', '.') ?></strong>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
         </div>
-        <div class="col-8 checkout-metodos-container debug">
+        <div class="col-md-7 checkout-metodos-container p-l-0">
+            <div class="text-left"><strong>FORMA DE PAGAMENTO</strong></div>
             <div class="accordion" id="accordion-payment">
                 <div class="card">
                     <div class="card-header" id="cartao-de-credito-label">
-                        <h2>
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-payment .cartao-de-credito">
-                                Cartão de crédito<br>
-                                <small>Ativação imediata</small>
-                            </button>
-                        </h2>
+
+                        <button class="h-25 btn btn-link text-left" type="button" data-toggle="collapse" data-target=".cartao-de-credito">
+                            <strong>Cartão de crédito</strong><br>
+                            <small class="text-capitalize">Ativação imediata</small>
+                        </button>
+
+
                     </div>
                     <div class="cartao-de-credito collapse show" aria-labelledby="cartao-de-credito-label" data-parent="#accordion-payment">
                         <div class="card-body">
@@ -32,12 +45,11 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="boleto-label">
-                        <h2>
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#boleto">
-                                Boleto Bancário<br>
-                                <small>Ativação em até 3 dias úteis</small>
-                            </button>
-                        </h2>
+                        <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse" data-target="#boleto">
+                            <strong>Boleto Bancário</strong><br>
+                            <small class="text-capitalize">Ativação em até 3 dias úteis</small>
+                        </button>
+
                     </div>
                     <div id="boleto" class="collapse" aria-labelledby="boleto-label" data-parent="#accordion-payment">
                         <div class="card-body">
@@ -47,12 +59,10 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="transferencia-label">
-                        <h2>
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#transferencia">
-                                Transferencia ou depósito em conta<br>
-                                <small>Ativação mediante confirmação de depósito</small>
-                            </button>
-                        </h2>
+                        <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse" data-target="#transferencia">
+                            <strong>Transferencia ou depósito em conta</strong><br>
+                            <small class="text-capitalize">Ativação mediante confirmação de depósito</small>
+                        </button>
                     </div>
                     <div id="transferencia" class="collapse" aria-labelledby="transferencia-label" data-parent="#accordion-payment">
                         <div class="card-body">
@@ -86,5 +96,3 @@
         </div>
     </div>
 </div>
-
-
