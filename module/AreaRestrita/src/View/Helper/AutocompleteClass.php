@@ -14,6 +14,7 @@ use Zend\View\Renderer\PhpRenderer;
  * Então, caso crie algum helper, adicione aqui para todo mundo saber pelo autocomplete
  * 
  * @method UserInfo userInfo($key = null) Passe a key do dado que vc quer, ou não passe nada e use os metodos da classe
+ * @method QtdAnuncios qtdAnuncios()
  * 
  */
 class AutocompleteClass extends PhpRenderer
