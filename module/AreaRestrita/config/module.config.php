@@ -108,10 +108,12 @@ return [
         'factories' => [
             View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
             View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
+            View\Helper\QtdAnuncios::class => View\Helper\Factory\QtdAnunciosFactory::class,
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
             'bodyClass' => View\Helper\BodyClass::class,
+            'qtdAnuncios' => View\Helper\QtdAnuncios::class,
         ]
     ],
     'view_manager' => [
