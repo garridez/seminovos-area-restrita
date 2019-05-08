@@ -165,10 +165,6 @@ class MeusVeiculosController extends AbstractActionController
            $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
            $dadosVeiculos['data'][$key]['frase'] = $frase;
-
-
-            // Busca os dados das propostas
-            $dadosVeiculos['data'][$key]['propostas'] = $propostasModel->getAll($veiculo['idVeiculo']);
         }
         return new ViewModel([
             'meusVeiculos' => $dadosVeiculos
