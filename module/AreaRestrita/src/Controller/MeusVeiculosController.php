@@ -181,8 +181,8 @@ class MeusVeiculosController extends AbstractActionController
             'idStatus' => 2,
             ], $idVeiculo);
 
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function inativarAction()
@@ -199,8 +199,8 @@ class MeusVeiculosController extends AbstractActionController
             'clicks' => 0
             ], $idVeiculo);
 
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function vendidoAction()
@@ -215,9 +215,8 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
             ], $idVeiculo);
-
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function excluirAction()
@@ -259,9 +258,8 @@ class MeusVeiculosController extends AbstractActionController
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
                 ], $idVeiculo);
         }
-
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function veiculoAction()
