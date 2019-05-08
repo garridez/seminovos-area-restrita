@@ -12,7 +12,7 @@
             <div class="container-fixed-lg">
                 <div class="text-left"><strong>RESUMO DA SUA COMPRA</strong></div>
                 <?php foreach ($planos as $plano) { ?>
-                    <div class="form-group form-group-default align-items-center row">
+                <div id="planos<?=$plano['idPlano']?>" class="form-group form-group-default align-items-center row hidden">
                         <div class="col-md-8">
                             <div><strong><?= $plano['nomePlano'] ?></strong></div>
                             <div><small>Até a venda</small></div>

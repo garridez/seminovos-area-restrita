@@ -26,8 +26,10 @@ module.exports.callback = ($) => {
                 .stepPlugin('prev');
     });
     $('.btn-continuar').on('click', function () {
-        var form = stepsContainer.find('[class*="step-"].active form').first();
+        let form = stepsContainer.find('[class*="step-"].active form').first();
         form.find('[type="submit"]').first().click();
+        let plano = "planos"+$("#idPlano").val();
+        $("#"+plano).show();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
@@ -48,7 +50,7 @@ module.exports.callback = ($) => {
              * Útil para não gerar conflito com placa existe
              * Mas cuidado pra não encher de cadastros diferentes
              */
-            placaAleatoria: false,
+            placaAleatoria: true,
             //placaAleatoria: true,
             // Valor fixo de placa
             placa: 'LJL5173',
