@@ -51,7 +51,7 @@ $arrFormaPagamento = $this->arrayFormaPagamento;
                             <td class="v-align-middle text-center"><?= $pagamento['parcelas'] ?></td>
                             <td class="v-align-middle text-center"><?= $statusPagamento[$pagamento['status']] ?></td>
                             <?php if($pagamento['status'] == 2): ?>
-                                <td class="v-align-middle text-center"><a class="btn btn-tag" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" role="button" target="_blank">Ver Fatura</a></td>
+                                <td class="v-align-middle text-center"><a class="btn btn-tag" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" role="button" target="">Ver Fatura</a></td>
                             <?php else: ?>
                                 <td class="v-align-middle text-center"> - </td>
                             <?php endif;?>
@@ -79,7 +79,7 @@ $arrFormaPagamento = $this->arrayFormaPagamento;
                             <td class="v-align-middle"><?= $statusPagamento[$pagamento['status']] ?><br>Forma de pagamento: <?= $arrFormaPagamento[$pagamento['formaPagamento']] ?></td>
                             <td class="v-align-middle"><?= $pagamento['dataCadastro'] ?></td>
                             <?php if($pagamento['status'] == 2): ?>
-                                <td class="v-align-middle"><a class="btn btn-tag" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" role="button" target="_blank">Ver Fatura</a></td>
+                                <td class="v-align-middle"><a class="btn btn-tag" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" role="button" target="">Ver Fatura</a></td>
                             <?php else: ?>
                                 <td class="v-align-middle"> - </td>
                             <?php endif;?>
