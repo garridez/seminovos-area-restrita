@@ -48,8 +48,20 @@
     <?php
       if ($this->userInfo('tipoCadastro') == 1) {
           echo $this->partial('partials/menu-revenda.phtml');
+          $arrayPlanos = [
+              1 => ['nitro',      'Nitro',      '12',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+              2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+              3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+          ];
       } else if ($this->userInfo('tipoCadastro') == 2) {
           echo $this->partial('partials/menu-particular.phtml');
+          $arrayPlanos = [
+              1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
+              2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+              3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+              4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+              5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
+          ];
       }
 
       ?>
@@ -60,13 +72,7 @@
       </a>
 
       <div class="d-flex">
-        <?php /* foreach ([
-        				1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value'],
-        				2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value'],
-        				3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value'],
-        				4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value'],
-        				5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value'],
-              ] as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue) = $plano; ?>
+        <?php  foreach ($arrayPlanos as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano; ?>
 
         <div class="linha-plano size-2x plano-<?= $slug ?>">
           <div class="icon-plano">
@@ -77,7 +83,8 @@
             <span class="bar-4"></span>
           </div>
         </div>
-        <?php endforeach; */?>
+            <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
+        <?php endforeach; ?>
       </div>
 
 

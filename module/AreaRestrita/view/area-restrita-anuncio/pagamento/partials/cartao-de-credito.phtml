@@ -1,24 +1,28 @@
 <form class="pagamento-cc-form">
-    <div class="form-group" title="Digite o número na frente do cartão">
+    <div class="form-group form-group-default" title="Digite o número na frente do cartão">
         <label for="numero_cartao">Número Cartão:*</label>
         <input type="text" class="form-control" id="numero_cartao" name="numero_cartao" placeholder="Digite apenas os números" required>
     </div>
-    <div class="form-group" title="Digite o nome igual está no cartão">
+    <div class="form-group form-group-default" title="Digite o nome igual está no cartão">
         <label for="nome_cartao">Nome no cartão:*</label>
         <input type="text" class="form-control" id="nome_cartao" name="nome_cartao" placeholder="Digite o nome" required>
     </div>
-    <div class="form-inline">
-        <div class="form-group" title="Validade do cartão">
-            <label for="validade_cartao">Validade</label><br>
-            <input type="text" class="form-control" id="validade_cartao" name="validade_cartao" placeholder="mês/ano" required>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group form-group-default required" title="Validade do cartão">
+                <label for="validade_cartao">Validade</label>
+                <input type="text" class="form-control" id="validade_cartao" name="validade_cartao" placeholder="mês/ano" required>
+            </div>
         </div>
-        <div class="form-group" title="Código de segurança do cartão">
-            <label for="cvc_cartao">CVV / Código de Segurança</label><br>
-            <input type="text" class="form-control" id="cvc_cartao" name="cvc_cartao" placeholder="CVV / Código de Segurança" required maxlength="4">
+        <div class="col-md-6">
+            <div class="form-group form-group-default required" title="Código de segurança do cartão">
+                <label for="cvc_cartao">CVV </label>
+                <input type="text" class="form-control" id="cvc_cartao" name="cvc_cartao" placeholder="CVV / Código de Segurança" required maxlength="4">
+            </div>
         </div>
     </div>
 
-    <div class="form-group" title="Termos de adesão">
+    <div class="form-group form-group-default" title="Termos de adesão">
         <label>
             <input type="checkbox" name="termos" required>
             Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
