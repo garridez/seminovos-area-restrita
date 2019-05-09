@@ -136,6 +136,14 @@ $positions: map-merge(
       #{$position}: solid;
     }
 }
+.row-full{
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  height: auto;
+  left: 50%;
+ }
+
 //   CODIGO PARA GERAR BORDAS DE OUTROS ESTILOS, MAS NÃO FOI IDENTIFICADO UMA SITUAÇÃO PARA NÃO USAR SOLID MESMO
 //  $styles: ();
 //  $styles: map-merge(
@@ -151,3 +159,34 @@ $positions: map-merge(
 //      }
 //    }
 //  }
+
+input[type=checkbox]:checked{
+    .checkbox.check-success &:before{
+        border-color: $color-success;
+    }
+    .checkbox.check-primary &:before{
+        border-color: $color-primary;
+    }
+    .checkbox.check-complete &:before{
+        border-color: $color-complete;
+    }
+    .checkbox.check-warning &:before{
+        border-color: $color-warning;
+    }
+    .checkbox.check-danger &:before{
+        border-color: $color-danger;
+    }
+    .checkbox.check-info &:before{
+        border-color: $color-info;
+    }
+
+    .checkbox.check-success &::after,
+    .checkbox.check-primary &::after,
+    .checkbox.check-complete &::after,
+    .checkbox.check-warning &::after,
+    .checkbox.check-danger &::after,
+    .checkbox.check-info &::after {
+        color: $color-white;
+    }
+
+}
