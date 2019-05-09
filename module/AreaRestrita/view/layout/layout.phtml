@@ -33,8 +33,8 @@
 
 </head>
 
-<body class="fixed-header menu-pin l-layout <?= $this->bodyClass() ?>">
-  <nav class="page-sidebar" data-pages="sidebar">
+<body class="fixed-header desktop pace-done pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
+  <nav class="page-sidebar animated" data-pages="sidebar">
     <div class="sidebar-header">
       <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
         <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
@@ -66,24 +66,37 @@
 
       ?>
   </nav>
-  <div class="page-container">
-    <div class="header">
-      <a href="#" class="btn-link toggle-sidebar hidden-lg-up pg pg-menu" data-toggle="sidebar">
-      </a>
 
+  <div class="page-container">
+    <div class="header d-flex justify-content-around">
+      <a href="#" class="btn-link toggle-sidebar pg pg-menu" data-toggle="sidebar">
+        <span class="thumbnail-wrapper d32 circular inline">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </span>
+      </a>
       <div class="d-flex">
         <?php  foreach ($arrayPlanos as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano; ?>
-
-        <div class="linha-plano size-2x plano-<?= $slug ?>">
-          <div class="icon-plano">
-            <span class="bar-1"></span>
-            <span class="bar-2"></span>
-            <span class="bar-3"></span>
-            <span class="bar-4"></span>
-            <span class="bar-4"></span>
+        <div class="mx-3 justify-content-start d-flex align-items-center">
+          <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+            <div class="icon-plano m-0">
+              <span class="bar-1"></span>
+              <span class="bar-2"></span>
+              <span class="bar-3"></span>
+              <span class="bar-4"></span>
+              <span class="bar-4"></span>
+            </div>
           </div>
+          <div class="text-left ml-2">
+            <div>
+              <b><?= $plano ?></b>
+            </div>
+            <div>
+              <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
+            </div>
+          </div>
+
+
         </div>
-            <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
         <?php endforeach; ?>
       </div>
 
@@ -93,18 +106,16 @@
           <span class="semi-bold"><?= $this->userInfo('responsavelNome') ?></span>
         </div>
         <div class="dropdown pull-right hidden-md-down">
-          <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+          <?php /* <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <span class="thumbnail-wrapper d32 circular inline">
               <i class="fa fa-bars" aria-hidden="true"></i>
-              <?php /*
-                  echo $this->userInfo()->getImgPerfil();
-                  echo '<img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">';
-                 */
+            
+                  <!-- echo $this->userInfo()->getImgPerfil();
+                  echo '<img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">'; -->
 
-                ?>
 
-            </span>
+          </span> */ ?>
           </button>
           <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
             <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item"><i class="pg-settings_small"></i>

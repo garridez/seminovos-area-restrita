@@ -1,0 +1,14 @@
+.linha-plano {
+    &.size-3x {
+        [class^="bar-"] {
+            height: 39px;
+            margin-right: 4px;
+        }
+
+        .bar-1 { width: 3px; }
+        .bar-2 { width: 4px; }
+        .bar-3 { width: 5px; }
+        .bar-4 { width: 6px; }
+        .bar-5 { width: 7px; }
+    }
+}
