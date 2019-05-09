@@ -36,16 +36,19 @@ $boxes = [
         PLANOS DE ANÚNCIOS
     </h4>
     <div class="text-center my-3">
-        <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu anúncio.
-            <br/>Campos com * são de preenchimento obrigatório.
+        <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu
+            anúncio.
+            <br />Campos com * são de preenchimento obrigatório.
         </small>
     </div>
 
     <div class="row">
 
         <form name="form_Plano">
-            <div class="row grupo-planos">
-                <?php /* foreach ([
+            <div class="row-full">
+                <div class="container">
+                    <div class="row grupo-planos">
+                        <?php /* foreach ([
                   1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value'],
                   2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value'],
                   3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value'],
@@ -54,51 +57,60 @@ $boxes = [
                   ] as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue) = $plano; */
 
                 foreach ($planos as $k => $plano) : ?>
-                    <div class="col-12 col-sm col-md col-lg">
-                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>">
-                            <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
-                                <div class="plano-number"><?php echo $k + 1 . 'º' ?></div>
-                                <div class="icon-plano">
-                                    <span class="bar-1"></span>
-                                    <span class="bar-2"></span>
-                                    <span class="bar-3"></span>
-                                    <span class="bar-4"></span>
-                                    <span class="bar-4"></span>
+                        <div class="col-12 col-sm col-md col-lg">
+                            <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>">
+                                <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
+                                    <div class="plano-number"><?php echo $k + 1 . 'º' ?></div>
+                                    <div class="icon-plano">
+                                        <span class="bar-1"></span>
+                                        <span class="bar-2"></span>
+                                        <span class="bar-3"></span>
+                                        <span class="bar-4"></span>
+                                        <span class="bar-4"></span>
+                                    </div>
+                                    <h3><?= $plano['nomePlano'] ?></h3>
                                 </div>
-                                <h3><?= $plano['nomePlano'] ?></h3>
-                            </div>
-                            <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
-                                <li><span><strong><?= $plano['quantidadeFotos']; ?></strong> fotos por anúncio</span></li>
-                                <?php
+                                <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
+                                    <li><span><strong><?= $plano['quantidadeFotos']; ?></strong> fotos por
+                                            anúncio</span>
+                                    </li>
+                                    <?php
                                 if ($boxes[$plano['prioridade']] == 'nitro-home' || $boxes[$plano['prioridade']] == 'nitro' || $boxes[$plano['prioridade']] == 'turbo') {
                                     $videoQtd = '<li><span>1 vídeo</span></li>';
                                 } else {
                                     $videoQtd = '<li><span class="text-black-50"><s>0 vídeos</s></span></li>';
                                 }
                                 ?>
-                                <?= $videoQtd ?>
-                                <?php
+                                    <?= $videoQtd ?>
+                                    <?php
                                 if ($boxes[$plano['prioridade']] == 'simples') {
                                     $anuncioTempo = 'Exibição no site por 10 dias';
                                 } else {
                                     $anuncioTempo = 'Exibição no site até a venda*';
                                 }
                                 ?>
-                                <li><span><?= $anuncioTempo; ?></span></li>
+                                    <li><span><?= $anuncioTempo; ?></span></li>
 
-                                <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de exibição</span></li>
-                            </ul>
-                            <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>" >R$ <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
-                            <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano" value="<?= $plano['idPlano'] ?>" class="hid-den" data-valor-plano="<?= $plano['valorPlano'] ?>">
-                            <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>">
-                                Selecione
-                            </label>
+                                    <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de
+                                            exibição</span></li>
+                                </ul>
+                                <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
+                                    <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
+                                <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano"
+                                    value="<?= $plano['idPlano'] ?>" class="hidden"
+                                    data-valor-plano="<?= $plano['valorPlano'] ?>">
+                                <label class="btn btn-block btn-sm bg-light text-dark"
+                                    for="radio-idPlano-<?= $k + 1 ?>">
+                                    Selecione
+                                </label>
+                            </div>
                         </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="form-group ">
-                <input type="submit">
+                    <div class="form-group ">
+                        <input type="submit">
+                    </div>
+                </div>
             </div>
         </form>
     </div>
