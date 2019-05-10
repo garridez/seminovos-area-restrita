@@ -109,12 +109,21 @@ return [
             View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
             View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
             View\Helper\QtdAnuncios::class => View\Helper\Factory\QtdAnunciosFactory::class,
+            Form\View\Helper\FormCheckbox::class => InvokableFactory::class
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
             'bodyClass' => View\Helper\BodyClass::class,
             'qtdAnuncios' => View\Helper\QtdAnuncios::class,
-        ]
+            'formcheckbox' => Form\View\Helper\FormCheckbox::class,
+            'form_checkbox' => Form\View\Helper\FormCheckbox::class,
+            'formCheckbox' => Form\View\Helper\FormCheckbox::class,
+            'FormCheckbox' => Form\View\Helper\FormCheckbox::class,
+        ],
+        'invokables' => [
+            'formCheckbox' => Form\View\Helper\FormCheckbox::class,
+            'formcheckbox' => Form\View\Helper\FormCheckbox::class,
+        ],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,

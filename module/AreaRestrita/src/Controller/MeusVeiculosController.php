@@ -45,9 +45,6 @@ class MeusVeiculosController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $cadastrosModel Cadastros */
-        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
@@ -160,9 +157,15 @@ class MeusVeiculosController extends AbstractActionController
            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
            $dadosVeiculos['data'][$key]['frase'] = $frase;
         }
-        return new ViewModel([
+        $viewModel = new ViewModel([
             'meusVeiculos' => $dadosVeiculos
         ]);
+        
+        $request = $this->getRequest();
+        // Se for ajax, desativa o layout
+        $viewModel->setTerminal($request->isXmlHttpRequest());
+
+        return $viewModel;
     }
     /*
      * Função generica que faz as seguintes ações
@@ -184,8 +187,8 @@ class MeusVeiculosController extends AbstractActionController
             'idStatus' => 2,
             ], $idVeiculo);
 
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function inativarAction()
@@ -202,8 +205,8 @@ class MeusVeiculosController extends AbstractActionController
             'clicks' => 0
             ], $idVeiculo);
 
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function vendidoAction()
@@ -218,9 +221,8 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
             ], $idVeiculo);
-
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function excluirAction()
@@ -262,9 +264,8 @@ class MeusVeiculosController extends AbstractActionController
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
                 ], $idVeiculo);
         }
-
-        var_dump($dadosVeiculos);
-        exit;
+        echo json_encode($dadosVeiculos);
+        die;
     }
 
     public function veiculoAction()

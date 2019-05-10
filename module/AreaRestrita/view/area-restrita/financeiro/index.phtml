@@ -3,102 +3,342 @@
 $dadosFinanceiro = $this->financeiro;
 
 ?>
+</div>
+<div class="page-content-wrapper ">
+    <!-- START PAGE CONTENT -->
+    <div class="content ">
+        <!-- START CONTAINER FLUID -->
+        <div class=" container-fluid   container-fixed-lg">
+            <div id="rootwizard" class="m-t-50">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
+                    data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a class="active" data-toggle="tab" href="#tab1" data-target="#tab1" role="tab"><i
+                                    class="fa fa-shopping-cart tab-icon"></i> <span>Plano tual</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" data-toggle="tab" href="#tab3" data-target="#tab2" role="tab"><i
+                                    class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" data-toggle="tab" href="#tab4" data-target="#tab4" role="tab"><i
+                                    class="fa fa-check tab-icon"></i> <span>Resumo</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane padding-20 sm-no-padding active slide-left" id="tab1">
+                        <div class="row row-same-height">
+                            <div class="col-md-5 b-r b-dashed b-grey sm-b-b">
+                                <div class="padding-30 sm-padding-5 sm-m-t-15 m-t-50">
+                                    <i class="fa fa-shopping-cart fa-2x hint-text"></i>
+                                    <h5>Valor mensal do plano atual: R$ 134,00</h5>
+<!--                                    <p>Valor mensal do plano R$ 134,00</p>-->
+                                    <p class="small hint-text">Escolha o tempo que deseja pagar.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="padding-30 sm-padding-5">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td class="col-lg-5 col-md-6 col-sm-7 ">
+<!--                                                <a href="#" class="remove-item"><i class="pg-close"></i></a>-->
+                                                <input type="radio" name="options" id="option1"> <span class="m-l-10 font-montserrat fs-11 all-caps">Plano Mensal</span>
+<!--                                                <span class="m-l-10 "></span>-->
+                                            </td>
+                                            <td class=" col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Desconto de 0%</span>
+                                            </td>
+                                            <td class=" col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Economia de R$ 0,00</span>
+                                            </td>
+                                            <td class=" col-lg-3 col-md-3 col-sm-2 text-right">
+                                                <h4 class="text-primary no-margin font-montserrat">R$ 134,00</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-lg-5 col-md-6 col-sm-7">
+                                                <input type="radio" name="options" id="option2"> <span class="m-l-10 font-montserrat fs-11 all-caps">Plano Trimestral</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Desconto de 5%</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Economia de R$ 20,10</span>
+                                            </td>
+                                            <td class=" col-lg-2 col-md-3 col-sm-2 text-right">
+                                                <h4 class="text-primary no-margin font-montserrat">R$ 381,90</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-lg-5 col-md-6 col-sm-7">
+                                                <input type="radio" name="options" id="option3"> <span class="m-l-10 font-montserrat fs-11 all-caps">Plano Semestral</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Desconto de 10%</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Economia de R$ 80,40</span>
+                                            </td>
+                                            <td class=" col-lg-2 col-md-3 col-sm-2 text-right">
+                                                <h4 class="text-primary no-margin font-montserrat">R$ 723,60</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-lg-5 col-md-6 col-sm-7">
+                                                <input type="radio" name="options" id="option4"> <span class="m-l-10 font-montserrat fs-11 all-caps">Plano Anual</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Desconto de 15%</span>
+                                            </td>
+                                            <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                                <span>Economia de R$ 241,20</span>
+                                            </td>
+                                            <td class=" col-lg-2 col-md-3 col-sm-2 text-right">
+                                                <h4 class="text-primary no-margin font-montserrat">R$ 1.366,80</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <div class="row b-a b-grey no-margin">
+                                        <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
+                                            <div>
+                                                <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                                    Desconto </h5>
+                                                <p class="no-margin">10%</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
+                                            <div>
+                                                <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                                    Economia</h5>
+                                                <p class="no-margin">R$ 80,40</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-right bg-primary padding-10">
+                                            <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
+                                                Total</h5>
+                                            <h4 class="no-margin text-white">R$ 723,60</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab2">
+                        <div class="row row-same-height">
+                            <div class="col-md-5 b-r b-dashed b-grey ">
+                                <div class="padding-30 sm-padding-5 sm-m-t-15 m-t-50">
+                                    <h2>Forma de pagamento</h2>
+                                    <p>Escolha ao lado a forma de pagamento desejda para finalizar a compra.</p>
+                                    <p class="small hint-text">Dados do plano contratado</p>
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td class=" col-md-6">
+                                                <span class="m-l-10 font-montserrat fs-11 all-caps">Plano Semestral</span>
+                                            </td>
+                                            <td class=" col-md-3 text-right">
+                                                <span>Desconto 10%</span>
+                                            </td>
+                                            <td class=" col-md-3 text-right">
+                                                <span>Economia R$ 80,40</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class=" col-md-3 text-right">
+                                                <h4 class="text-primary no-margin font-montserrat">R$ 723,60</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p>A fatura estará disponivel no seu histórico de pagamentos após a confirmação de pagamentona. Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
+                                    <p>Ao pressionar Pagar agora, você concorda com os nossos <a href="#">Termos &amp; Condições</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="padding-30 sm-padding-5">
+                                    <ul class="list-unstyled list-inline m-l-30">
+                                        <li><a href="#" class="p-r-30 text-black">Cartão de Crédito</a></li>
+                                        <li><a href="#" class="p-r-30 text-black  hint-text">PayPal</a></li>
+                                        <li><a href="#" class="p-r-30 text-black  hint-text">Wire transfer</a></li>
+                                    </ul>
+                                    <form role="form" class="form-control">
+                                        <div class="bg-master-light padding-30 b-rad-lg">
+                                            <h2 class="pull-left no-margin">Credit Card</h2>
+                                            <ul class="list-unstyled pull-right list-inline no-margin">
+                                                <li>
+                                                    <a href="#">
+                                                        <img width="51" height="32" data-src-retina="assets/img/form-wizard/visa2x.png" data-src="assets/img/form-wizard/visa.png" class="brand" alt="logo" src="assets/img/form-wizard/visa.png">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="hint-text">
+                                                        <img width="51" height="32" data-src-retina="assets/img/form-wizard/amex2x.png" data-src="assets/img/form-wizard/amex.png" class="brand" alt="logo" src="assets/img/form-wizard/amex.png">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="hint-text">
+                                                        <img width="51" height="32" data-src-retina="assets/img/form-wizard/mastercard2x.png" data-src="assets/img/form-wizard/mastercard.png" class="brand" alt="logo" src="assets/img/form-wizard/mastercard.png">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                            <div class="form-group form-group-default required m-t-25">
+                                                <label>Nome igual no Cartão</label>
+                                                <input type="text" class="form-control" placeholder="Name on the card" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>Número do Cartão</label>
+                                                <input type="text" class="form-control" placeholder="8888-8888-8888-8888" required>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Validade</label>
+                                                    <br>
+                                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                                        <option selected>Jan (01)</option>
+                                                        <option>Feb (02)</option>
+                                                        <option>Mar (03)</option>
+                                                        <option>Apr (04)</option>
+                                                        <option>May (05)</option>
+                                                        <option>Jun (06)</option>
+                                                        <option>Jul (07)</option>
+                                                        <option>Aug (08)</option>
+                                                        <option>Sep (09)</option>
+                                                        <option>Oct (10)</option>
+                                                        <option>Nov (11)</option>
+                                                        <option>Dec (12)</option>
+                                                    </select>
+                                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                                        <option value="2019">2019</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2025">2025</option>
+                                                        <option value="2026">2026</option>
+                                                        <option value="2027">2027</option>
+                                                        <option value="2028">2028</option>
+                                                        <option value="2029">2029</option>
+                                                        <option value="2030">2030</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 offset-md-4">
+                                                    <div class="form-group required">
+                                                        <label>CVV Code</label>
+                                                        <input type="text" class="form-control" placeholder="000" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="row">
-  <div class="col-md-12">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h5>Escolha o tempo que deseja pagar:</h5>
+    <div class="col-md-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Escolha o tempo que deseja pagar:</h5>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <h5>Forma de pagamento:</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <hr></hr>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <hr></hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Valor mensal do plano R$ </h5>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <h5>Clique no botão abaixo para selecionar a forma de pagamento e finalizar a compra. </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="radioTempoContrato1" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_mensal'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Mensal <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_mensal'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_mensal'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_mensal'] ?></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-default" type="button">FINALIZAR COMPRA</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="radioTempoContrato2" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_trimestral'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Trimestral <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_trimestral'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_trimestral'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_trimestral'] ?></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="radioTempoContrato3" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_semestral'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Semestral <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_semestral'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_semestral'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_semestral'] ?></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="radioTempoContrato4" name="radioTempoContrato"
+                               value="<?= $dadosFinanceiro['value_checbox_anual'] ?>">
+                        <label class="form-check-label" for="radioTempoContrato1">
+                            Plano Anual <?= $dadosFinanceiro['maisSite'] ?>
+                        </label>
+                    </div>
+                    <p>R$ <?= $dadosFinanceiro['valor_anual'] ?></p>
+                    <p>Desconto de <?= $dadosFinanceiro['desconto_anual'] ?></p>
+                    <p>Economia de R$ <?= $dadosFinanceiro['economia_anual'] ?></p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-4">
-          <h5>Forma de pagamento:</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <hr></hr>
-        </div>
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-4">
-          <hr></hr>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <h5>Valor mensal do plano R$ </h5>
-        </div>
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-4">
-          <h5>Clique no botão abaixo para selecionar a forma de pagamento e finalizar a compra. </h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-check form-check-inline" >
-            <input type="radio" class="form-check-input" id="radioTempoContrato1" name="radioTempoContrato"
-                   value="<?= $dadosFinanceiro['value_checbox_mensal'] ?>">
-            <label class="form-check-label" for="radioTempoContrato1">
-              Plano Mensal <?= $dadosFinanceiro['maisSite'] ?>
-            </label>
-          </div>
-          <p>R$ <?= $dadosFinanceiro['valor_mensal'] ?></p>
-          <p>Desconto de <?= $dadosFinanceiro['desconto_mensal'] ?></p>
-          <p>Economia de R$ <?= $dadosFinanceiro['economia_mensal'] ?></p>
-        </div>
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-default" type="button">FINALIZAR COMPRA</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-check form-check-inline" >
-            <input type="radio" class="form-check-input" id="radioTempoContrato2" name="radioTempoContrato"
-                   value="<?= $dadosFinanceiro['value_checbox_trimestral'] ?>">
-            <label class="form-check-label" for="radioTempoContrato1">
-              Plano Trimestral <?= $dadosFinanceiro['maisSite'] ?>
-            </label>
-          </div>
-          <p>R$ <?= $dadosFinanceiro['valor_trimestral'] ?></p>
-          <p>Desconto de <?= $dadosFinanceiro['desconto_trimestral'] ?></p>
-          <p>Economia de R$ <?= $dadosFinanceiro['economia_trimestral'] ?></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-check form-check-inline" >
-            <input type="radio" class="form-check-input" id="radioTempoContrato3" name="radioTempoContrato"
-                   value="<?= $dadosFinanceiro['value_checbox_semestral'] ?>">
-            <label class="form-check-label" for="radioTempoContrato1">
-              Plano Semestral <?= $dadosFinanceiro['maisSite'] ?>
-            </label>
-          </div>
-          <p>R$ <?= $dadosFinanceiro['valor_semestral'] ?></p>
-          <p>Desconto de <?= $dadosFinanceiro['desconto_semestral'] ?></p>
-          <p>Economia de R$ <?= $dadosFinanceiro['economia_semestral'] ?></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-check form-check-inline" >
-            <input type="radio" class="form-check-input" id="radioTempoContrato4" name="radioTempoContrato"
-                   value="<?= $dadosFinanceiro['value_checbox_anual'] ?>">
-            <label class="form-check-label" for="radioTempoContrato1">
-              Plano Anual <?= $dadosFinanceiro['maisSite'] ?>
-            </label>
-          </div>
-          <p>R$ <?= $dadosFinanceiro['valor_anual'] ?></p>
-          <p>Desconto de <?= $dadosFinanceiro['desconto_anual'] ?></p>
-          <p>Economia de R$ <?= $dadosFinanceiro['economia_anual'] ?></p>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 

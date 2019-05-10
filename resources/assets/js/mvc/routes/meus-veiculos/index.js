@@ -4,8 +4,17 @@ module.exports.seletor = '.c-meus-veiculos.a-index';
 module.exports.callback = ($) => {
     require('components/JsBsModal');
     var Alerts = require('components/Alerts');
+    /**
+     * Baixa o conteúdo da página atualizado
+     * Baixa apenas o conteúdo dentro da div ".container-anuncios"
+     */
+    function reloadPageContent() {
+        $.get('/', function (data) {
+                $('.container-anuncios').replaceWith(data);
+        });
+    }
 
-    $('.anuncios').on('click', '[data-modal]', function () {
+    $('body').on('click', '.anuncios [data-modal]', function () {
         var modal;
         var $this = $(this);
         var url = $this.data('url');
@@ -16,11 +25,13 @@ module.exports.callback = ($) => {
         var btnSuccess = $('<button class="btn btn-success">')
                 .html(yesText)
                 .click(function () {
+                    $(this).attr('disabled', true);
                     $.getJSON(url).done(function (data, jqXHR, type) {
                         if (data.status !== 200) {
                             Alerts.error(data.detail, 'Houve um problema...', 10000);
                         } else {
                             Alerts.success(successText);
+                            reloadPageContent();
                         }
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         Alerts.error('Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.', 'Houve um problema...', 10000);
