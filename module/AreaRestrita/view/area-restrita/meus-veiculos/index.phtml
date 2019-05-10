@@ -64,17 +64,23 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_dados"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()"
+                                <a href="<?=$this->url('criar-anuncio', [
+                                            'tipo' => strtolower($veiculo['tipo']),
+                                            'idVeiculo' => $veiculo['idVeiculo']
+                                        ])?>" class="btn bg-cinza text-white icon-2"
                                     title="Editar Anúncio">
                                     <i class=" fa fa-pencil"></i>
-                                </button>
+                                </a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()"
+                                <a href="<?=$this->url('criar-anuncio', [
+                                            'tipo' => strtolower($veiculo['tipo']),
+                                            'idVeiculo' => $veiculo['idVeiculo']
+                                        ])?>" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()"
                                     title="Editar Fotos">
                                     <i class=" fa fa-camera"></i>
-                                </button>
+                                </a>
                                 <?php }?>
                             </div>
                         </div>
