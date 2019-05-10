@@ -158,9 +158,11 @@ class DadosForm extends Form
                 'required' => true,
             ]
         ]);
-        $this->add([
-            'type' => CheckboxAcessorios::class,
-        ]);
+        global $container;
+        /** @var CheckboxAcessorios $checkboxAcessorios */
+        $checkboxAcessorios = $container->get(CheckboxAcessorios::class);
+        $checkboxAcessorios->setName('checkboxacessorios');
+        $this->add($checkboxAcessorios);
 
 
         $this->add([
@@ -225,5 +227,11 @@ class DadosForm extends Form
             'name' => 'selectcor',
             'required' => false,
         ]);
+    }
+
+    public function setTipoVeiculo($tipoVeiculo)
+    {
+        $this->get('tipoVeiculo')->setValue($tipoVeiculo);
+        $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
     }
 }

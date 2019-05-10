@@ -120,7 +120,8 @@ return [
             View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
             View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
             View\Helper\QtdAnuncios::class => View\Helper\Factory\QtdAnunciosFactory::class,
-            Form\View\Helper\FormCheckbox::class => InvokableFactory::class
+            Form\View\Helper\FormCheckbox::class => InvokableFactory::class,
+            Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
@@ -130,10 +131,16 @@ return [
             'form_checkbox' => Form\View\Helper\FormCheckbox::class,
             'formCheckbox' => Form\View\Helper\FormCheckbox::class,
             'FormCheckbox' => Form\View\Helper\FormCheckbox::class,
+            'formmulticheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'form_multicheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'formMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'FormMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
         ],
         'invokables' => [
             'formCheckbox' => Form\View\Helper\FormCheckbox::class,
             'formcheckbox' => Form\View\Helper\FormCheckbox::class,
+            'formMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'formmulticheckbox' => Form\View\Helper\FormMultiCheckbox::class,
         ],
     ],
     'view_manager' => [

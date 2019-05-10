@@ -9,6 +9,7 @@ return [
         'factories' => [
             Element\SelectCidades::class => Element\Factory\SelectCidadeFactory::class,
             Element\SelectMarca::class => Element\Factory\SelectMarcaFactory::class,
+            Element\CheckboxAcessorios::class => Element\Factory\CheckboxAcessoriosFactory::class,
         ]
     ],
     'form_elements' => [
