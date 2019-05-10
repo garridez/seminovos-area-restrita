@@ -35,4 +35,15 @@ class CheckboxAcessorios extends MultiCheckbox
         $this->optionsVeiculoTipo = $optionsVeiculoTipo;
         return $this;
     }
+
+    public function setValue($value)
+    {
+        /**
+         * Se estiver no formato da API, converte para o formato do ZF
+         */
+        if (is_array(current($value))) {
+            $value = array_column($value, 'idAcessorio');
+        }
+        parent::setValue($value);
+    }
 }

@@ -2,15 +2,17 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
+use SnBH\ApiClient\Client as ApiClient;
 use SnBH\Common\Form\Element\CheckboxAcessorios;
 use SnBH\Common\Form\Element\SelectAnoFabricacao;
 use SnBH\Common\Form\Element\SelectAnoModelo;
 use SnBH\Common\Form\Element\SelectCombustivel;
 use SnBH\Common\Form\Element\SelectCor;
 use SnBH\Common\Form\Element\SelectMarca;
+use SnBH\Common\Form\Element\SelectModelo;
 use SnBH\Common\Form\Element\SelectPortas;
-use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\Form\Form;
 
 class DadosForm extends Form
 {
@@ -34,30 +36,24 @@ class DadosForm extends Form
                 'required' => true,
             ]
         ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'idMarca',
-            'options' => [
-                'label' => 'Marca',
-                'value_options' => [
-                    '' => 'Selecione a marca',
-                ],
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
+
+        global $container;
+        /**
+         * @todo mover isso pra uma factory
+         */
+        /** @var SelectMarca $selectMarca */
+        $selectMarca = $container->get(SelectMarca::class);
+        $selectMarca->setAttribute('required', true);
+
+        $this->add($selectMarca);
 
         $this->add([
-            'type' => Element\Select::class,
+            'type' => SelectModelo::class,
             'name' => 'modeloCarro',
             'options' => [
                 'label' => 'Modelo',
                 'value_options' => [
                     '' => 'Selecione o modelo',
-                    '232' => 'Chevrolet Zafira',
-                    '1964' => 'Fiat Toro',
-                    '146' => 'Ford Ranger Cab. Dupla',
                 ],
             ],
             'attributes' => [
@@ -229,9 +225,50 @@ class DadosForm extends Form
         ]);
     }
 
+    /**
+     * Seta o tipo de veículo dentro dos inputs relevantes
+     * @param int $tipoVeiculo
+     */
     public function setTipoVeiculo($tipoVeiculo)
     {
         $this->get('tipoVeiculo')->setValue($tipoVeiculo);
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
+    }
+
+    /**
+     * Define como apenas leitura alguns campos
+     */
+    public function setIsEdition($isEdition)
+    {
+        $isEdition = (boolean) $isEdition;
+        $readonly = [
+            'idMarca',
+            'placa',
+            'modeloCarro',
+            'motor',
+            'idValvula',
+            'versao',
+            'anoFabricacao',
+            'anoModelo',
+            'cor',
+            'portas',
+            'combustivel',
+        ];
+        foreach ($readonly as $name) {
+            $this->get($name)
+                ->setAttribute('readonly', $isEdition)
+                ->setAttribute('disabled', $isEdition);
+        }
+    }
+
+    public function populateValues($data, $onlyBase = false)
+    {
+        if (isset($data['idMarca']) && $data['idMarca']) {
+            $this->get('modeloCarro')->setModelosFromMarca($data['idMarca']);
+        }
+        if (isset($data['acessorios']) && $data['acessorios']) {
+            $data['checkboxacessorios'] = $data['acessorios'];
+        }
+        parent::populateValues($data, $onlyBase);
     }
 }

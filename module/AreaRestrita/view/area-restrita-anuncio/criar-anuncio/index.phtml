@@ -18,13 +18,13 @@ foreach ($rotasAnuncio['veiculo'] as &$rota) {
 }
 
 ?>
-<div id="dados-basicos">
+<div id="dados-basicos" class="hide">
   <form>
-    tipoCadastro: <input type="text" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro"> <br>
-    idVeiculo: <input type="text" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo"> <br>
-    idAnuncioVeiculo: <input type="text" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="" class="idAnuncioVeiculo"> <br>
-    idPlano: <input type="text" id="idPlano" name="idPlano" value="" class="idPlano"> <br>
-    total: <input type="text" id="total" name="total" value="" class="total"> <br>
+      <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+      <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
+      <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
+      <input type="hidden" id="idPlano" name="idPlano" value="<?= $this->idPlano ?>" class="idPlano">
+      <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total"> <br>
   </form>
 </div>
 <div class="row">
