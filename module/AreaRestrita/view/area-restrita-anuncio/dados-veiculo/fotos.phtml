@@ -12,15 +12,14 @@
             </div>
 
             <form>
-                <input type="file" name="fotos" multiple accept="image/jpg, image/jpeg"/>
+                <input type="file" name="fotos" multiple accept="image/jpg, image/jpeg"/> &nbsp;&nbsp;
                 <input type="file" name="foto" accept="image/jpg, image/jpeg"/>
-                Formulário de fotos
                 <div class=" container">
                     <div class="fotos-container">
                         <?php foreach (range(0, 2) as $i): ?>
                             <div class="row">
                                 <?php foreach (range(0, 3) as $i): ?>
-                                    <div class="foto col-md-3 col-sm-6">
+                                    <div class="foto col-md-3 col-sm-6 py-2">
                                         <img src="https://placehold.it/180x126&text=Foto" data-placeholder="https://placehold.it/180x126&text=Foto" class="img-fluid img-thumbnail">
                                         <button type="button" class="btn-remove-img btn btn-small btn-outline-dark" title="Remover imagem">x</button>
                                     </div>

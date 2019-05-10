@@ -18,7 +18,7 @@ $dadosPagamento = $this->dadosPagamento;
     </div>
 </div>
 
-<div class=" container-fluid">
+<div class=" container">
     <div class="card card-default m-t-20">
         <div class="card-body">
             <div class="invoice padding-50 sm-padding-10">
@@ -48,17 +48,17 @@ $dadosPagamento = $this->dadosPagamento;
                 </div>
 
             </div>
-            <div class="invoice padding-50 py-0">
+            <div class="invoice p-l-50 py-0">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="border-bottom pb-2">
-                            <span>
+                            <span class="text-uppercase hint-text">
                                 Tomador dos Serviços
                             </span>
                         </div>
                         <h5 class="semi-bold mt-3"><?= $dadosCadastro['responsavelNome'] ?></h5>
                         <div class="row">
-                            <address class="col-5">
+                            <address class="col-12">
                                 <div class="d-flex justify-content-between">
                                     <span class="all-caps">
                                         CPF:
@@ -113,20 +113,16 @@ $dadosPagamento = $this->dadosPagamento;
                             </address>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4"></div>
+                    <div class="col-4">
                         <div class="border-bottom pb-2">
-                            <span>
+                            <span class="text-uppercase hint-text">
                                 Prestador dos Serviços
                             </span>
                         </div>
                         <h5 class="semi-bold mt-3">SEMINOVOS LTDA</h5>
                         <div class="row">
-                            <address class="col-5">
-                                <!-- <div class="d-flex justify-content-between">
-                                    <address class="m-t-10">
-                                        Rua Níquel, 11-a, Serra - Belo Horizonte/MG - CEP: 30240-020 - (31) 3077-5888
-                                    </address>
-                                </div> -->
+                            <address class="col-12">
                                 <div class="d-flex justify-content-between">
                                     <span class="all-caps">
                                         CNPJ:
@@ -143,19 +139,141 @@ $dadosPagamento = $this->dadosPagamento;
                                         0919816/001-5
                                     </span>
                                 </div>
-                                <div class="mt-2">
+                                <span class="mt-2">
                                     <span class="">
-                                        Rua Níquel, 11-a, Serra
+                                        Rua Níquel, 11-a, Serra - Belo Horizonte/MG
                                     </span>
-                                    <div>
-                                        Belo Horizonte/MG - CEP: 30240-020
+                                    <div class="">
+                                        CEP: 30240-020
                                     </div>
-                                </div>
-                            </address>
+                                </span>
                         </div>
+                        </address>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice p-l-50 py-0 table-responsive table-invoice">
+                <table class="table m-t-50 w-100">
+                    <thead>
+                        <tr>
+                            <th class="">Serviço</th>
+                            <th class="text-center">Pagamento</th>
+                            <th class="text-center">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="">
+                                <div>
+                                    <p class="text-black">
+                                        Hospedagem e veiculação de anúncio virtual no portal Seminovosbh.
+                                    </p>
+                                </div>
+                                <span class="mr-1">
+                                    Código do anuncio: <?= $dadosPagamento['idVeiculo'] ?>
+                                </span>
+                                <div class="d-flex">
+                                    <span class="mr-1">
+                                        Plano: <?= $dadosPagamento['nomePlano'] ?>,
+                                    </span>
+                                    <span>
+                                        no período de
+                                        <?= date('d/m/Y', strtotime($dadosPagamento['dataCadastro']));?>
+                                        até a venda do veículo*
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-center"><?= strtoupper($dadosPagamento['formaPagamento']) ?>
+                            </td>
+                            <td class="text-center">
+                                R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.'); ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="invoice p-l-50 py-0 p-l-15 p-r-15 mt-3">
+                <div class="row b-a b-grey">
+                    <div class="col-md-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
+                        <h5 class="font-montserrat all-caps small no-margin hint-text bold">Data de
+                            Pagamento</h5>
+                        <h3 class="no-margin">
+                            <?= date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])); ?></h3>
+                    </div>
+                    <div
+                        class="col-md-4 text-right bg-master-darker col-sm-height padding-15 d-flex flex-column justify-content-center align-items-end">
+                        <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
+                            Total</h5>
+                        <h1 class="no-margin text-white">R$
+                            <?= number_format($dadosPagamento['valor'], 2, ',', '.'); ?></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice p-l-50 row mt-4">
+                <div class="col-12">
+                    <div class="border-bottom pb-2">
+                        <span class="text-uppercase hint-text">
+                            Informações
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-12">
+                        <div class="">
+                            <small class="">
+                                * Entretanto o cliente deverá renová-lo sem ônus a cada 30 dias visando a
+                                atualização do
+                                site.
+                                Caso o cliente não reative ou renove depois de 30 dias, o mesmo será excluído do
+                                banco
+                                de dados perdendo o direito de renovação gratuita.
+                            </small>
+                        </div>
+                        <div>
+                            <small class=" ">
+                                Operação não tributada pelo ISS, conforme veto do item 17.07 da lista de
+                                Serviços anexa a lei Complementar No. 116 de 31/01/2003 (DOU de 01/08/2003).
+                            </small>
+                        </div>
+                        <div>
+                            <small class=" ">
+                                <strong>Empresa dispensada de emissão de nota fiscal, conforme processo PBH Nº
+                                    01-175.711/15-00, de 04/12/2015.</strong>
+                            </small>
+                        </div>
+
+                        <div>
+                            <small class=" ">
+                                Não é permitida a veiculação de veículos de revendas ou lojistas fora da sua área
+                                específica.
+                                Esta fatura de serviços eletrônica foi gerada após o cliente ter aceito o termo de
+                                responsabilidade presente no link: www.seminovos.com.br/termoresponsabilidade.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice p-l-50 row">
+                <div class="col-12 border-top mt-5 pt-2 d-flex align-items-baseline justify-content-between">
+
+                    <div class="d-flex align-items-baseline">
+                        <img src="/img/svg/snbh_logo.svg" alt="logo" data-src="assets/img/logo.png"
+                            data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                        <span class="m-l-70 text-black">Seminovos, aqui tem negócio!</span>
+                    </div>
+                    <div>
+                        <a href="www.seminovos.com.br" class="m-l-40 text-black">www.seminovos.com.br</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<?php /* TODO 
+    LOGO RODAPÉ PRETA
+    ALINHAMENTO DAS BORDAS PARA DENTRO TODOSO TEM QUE SER IGUAIS SERVIÇO E INFORMAÇÕES DIFERENTES.
+
+
+
+*/?>
