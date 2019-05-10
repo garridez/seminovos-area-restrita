@@ -33,28 +33,24 @@
 
 </head>
 
-<body class="fixed-header desktop pace-done pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
+<body
+  class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
   <nav class="page-sidebar animated" data-pages="sidebar">
-    <div class="sidebar-header">
+    <div class="sidebar-header d-flex d-md-none justify-content-center mt-3">
       <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
         <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
         <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
       </svg>
-      <div class="sidebar-header-controls">
-        <button type="button" class="btn btn-link hidden-md-down" data-toggle-pin="sidebar"><i class="fa fs-12"></i>
-        </button>
-      </div>
     </div>
     <?php
       if ($this->userInfo('tipoCadastro') == 1) {
-          echo $this->partial('partials/menu-revenda.phtml');
           $arrayPlanos = [
               1 => ['nitro',      'Nitro',      '12',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
               2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
               3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
           ];
+          echo $this->partial('partials/menu-revenda.phtml',["arrayPlanos" => $arrayPlanos]);
       } else if ($this->userInfo('tipoCadastro') == 2) {
-          echo $this->partial('partials/menu-particular.phtml');
           $arrayPlanos = [
               1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
               2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
@@ -62,6 +58,8 @@
               4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
               5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
           ];
+          echo $this->partial('partials/menu-particular.phtml',["arrayPlanos" => $arrayPlanos]);
+
       }
 
       ?>
@@ -69,41 +67,25 @@
 
   <div class="page-container">
     <div class="header d-flex justify-content-around">
-      <a href="#" class="btn-link toggle-sidebar pg pg-menu" data-toggle="sidebar">
+      <a href="#" class="btn-link toggle-sidebar d-lg-none" data-toggle="sidebar">
         <span class="thumbnail-wrapper d32 circular inline">
           <i class="fa fa-bars" aria-hidden="true"></i>
         </span>
       </a>
-      <div class="d-flex">
-        <?php  foreach ($arrayPlanos as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano; ?>
-        <div class="mx-3 justify-content-start d-flex align-items-center">
-          <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
-            <div class="icon-plano m-0">
-              <span class="bar-1"></span>
-              <span class="bar-2"></span>
-              <span class="bar-3"></span>
-              <span class="bar-4"></span>
-              <span class="bar-4"></span>
-            </div>
-          </div>
-          <div class="text-left ml-2">
-            <div>
-              <b><?= $plano ?></b>
-            </div>
-            <div>
-              <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
-            </div>
-          </div>
-
-
-        </div>
-        <?php endforeach; ?>
+      <div class="sidebar-header">
+        <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
+          <use xlink:href="/img/svg/snbh_logo.svg#layer_letters"></use>
+          <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+        </svg>
       </div>
-
-
-      <div class="d-flex align-items-center">
-        <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down">
-          <span class="semi-bold"><?= $this->userInfo('responsavelNome') ?></span>
+      <div class="d-flex align-items-center ml-auto">
+        <div class="p-r-10 fs-14 font-heading hidden-md-down">
+          <?php 
+           $new_nome = explode(" ",$this->userInfo('responsavelNome'));
+            $new_nome = $new_nome[0] . " " . $new_nome[1]
+          ?>
+          <span class="semi-bold d-block d-md-none"><?= $new_nome ?></span>
+          <span class="semi-bold d-none d-md-block"><?= $this->userInfo('responsavelNome') ?></span>
         </div>
         <div class="dropdown pull-right hidden-md-down">
           <?php /* <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"

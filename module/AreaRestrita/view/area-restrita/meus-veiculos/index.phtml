@@ -5,7 +5,7 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
 
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center">
-        <div class="col-11">
+        <div class="col-12">
             <h3>Meus Veículos</h3>
         </div>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
@@ -52,29 +52,27 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                     <?= $veiculo['idVeiculo'] ?>
                                 </li>
                             </ul>
-                                
+
                             <div class="btn-group">
                                 <?php if($veiculo["botoes"]["excluir"]){?>
-                                <a href="#"
-                                   data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"
-                                   data-modal
-                                   data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                   data-modal-yes-text="Sim, Excluir"
-                                   data-modal-success-msg="Veiculo excluído"
-                                   title="Excluir anúncio"
-                                   class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                <a href="#" data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" data-modal
+                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
+                                    data-modal-yes-text="Sim, Excluir" data-modal-success-msg="Veiculo excluído"
+                                    title="Excluir anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
                                     <i class=" fa fa-trash-o"></i>
                                 </a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_dados"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()" title="Editar Anúncio">
+                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()"
+                                    title="Editar Anúncio">
                                     <i class=" fa fa-pencil"></i>
                                 </button>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
-                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()" title="Editar Fotos">
+                                <button type="button" class="btn bg-cinza text-white icon-2" onclick="alerta_fazer()"
+                                    title="Editar Fotos">
                                     <i class=" fa fa-camera"></i>
                                 </button>
                                 <?php }?>
@@ -83,12 +81,16 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                         <div class="col-12 col-md-12 col-lg-3 mt-2  p-0 m-0 row justify-content-center">
                             <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
                                 <div class="pl-3 bold no-margin">
-<!--                                    --><?//= $veiculo['cliques'] ? : 0 ?><!-- cliques-->
+                                    <!--                                    -->
+                                    <?//= $veiculo['cliques'] ? : 0 ?>
+                                    <!-- cliques-->
                                 </div>
                             </div>
                             <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
                                 <div class="pl-3 bold no-margin">
-<!--                                    --><?//= $veiculo['acessos'] ? : 0 ?><!-- acessos-->
+                                    <!--                                    -->
+                                    <?//= $veiculo['acessos'] ? : 0 ?>
+                                    <!-- acessos-->
                                 </div>
                             </div>
                             <div class="col-12 col-lg-12 mt-1 padding-15  bg-master-lightest">
@@ -141,7 +143,8 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                     <div class="pb-2">
                         <div data-index="0" class="company-stat-box m-t-10 bg-master-lightest active px-4 pt-3 h-100 ">
                             <div class="d-flex justify-content-between">
-                                <p class="company-name pull-left text-uppercase bold no-margin d-flex align-items-center">
+                                <p
+                                    class="company-name pull-left text-uppercase bold no-margin d-flex align-items-center">
                                     <span class="fa fa-circle text-s-<?= $veiculo['idStatus'] ?> fs-11 mr-1"></span>
                                     <?= $veiculo['tituloStatus'] ?>
                                 </p>
@@ -173,14 +176,10 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["vendido"]){?>
-                                <a href="#"
-                                   data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
-                                   data-modal
-                                   data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                   data-modal-yes-text="Sim, marcar como vendido!"
-                                   data-modal-success-msg="Vendido!"
-                                   title="Marcar como vendido"
-                                   >
+                                <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
+                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
+                                    data-modal-yes-text="Sim, marcar como vendido!" data-modal-success-msg="Vendido!"
+                                    title="Marcar como vendido">
                                     <button class="btn btn-sm btn-complete ml-2">Vendido</button>
                                 </a>
                                 <?php }?>
@@ -191,24 +190,18 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                      * @todo O renovar vai mesmo para o ativar?
                                      */
                                     ?>
-                                <a href="#"
-                                    data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
-                                    data-modal
+                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente renovar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, renovar"
-                                    data-modal-success-msg="Veiculo Renovado"
+                                    data-modal-yes-text="Sim, renovar" data-modal-success-msg="Veiculo Renovado"
                                     title="Renovar anúncio">
                                     <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
                                 </a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["reativar"]){?>
-                                <a href="#"
-                                    data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
-                                    data-modal
+                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente reativar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, reativar"
-                                    data-modal-success-msg="Veiculo Reativado"
+                                    data-modal-yes-text="Sim, reativar" data-modal-success-msg="Veiculo Reativado"
                                     title="Reativar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
                                 </a>
