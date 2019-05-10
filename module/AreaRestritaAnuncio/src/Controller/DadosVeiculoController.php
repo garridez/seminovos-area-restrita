@@ -44,7 +44,7 @@ class DadosVeiculoController extends AbstractActionController
         $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
 
         $dadosForm = new Veiculo\DadosForm();
-        $dadosForm->get('tipoVeiculo')->setValue($tipoVeiculo);
+        $dadosForm->setTipoVeiculo($tipoVeiculo);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
