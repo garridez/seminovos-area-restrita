@@ -17,24 +17,22 @@ $url = 'https://www.seminovos.com.br/' . implode('-', [
 $url = strtolower($url);
 
 ?>
-<div class="share-container">
-    <div style="font-weight: bold;color:#acacac;margin-top: 10px">Quer acelerar sua venda?</div>
-    <div style="font-weight: bold;color:#acacac;margin-top: 10px">Compartilhe com seus amigos</div>
-    <br>
-    <div class="fb-share-button"
-         data-href="<?= $url ?>"
-         data-layout="button"
-         data-size="large"
-         data-mobile-iframe="true"></div> 
-    <a href="https://twitter.com/share"
-       class="twitter-share-button"
-       data-url="<?= $url ?>"
-       data-text="Vendo <?= $marcaModelo ?>"
-       data-via="seminovosbh"
-       data-size="large"
-       data-related="seminovosbh"
-       data-hashtags="seminovosbh"></a>
-
+<div class="row share-container align-baseline">
+    <div style="font-weight: bold;color:#acacac;"> Quer acelerar sua venda? Compartilhe com seus amigos &nbsp;&nbsp;</div>
+        <div class="fb-share-button"
+             data-href="<?= $url ?>"
+             data-layout="button"
+             data-size="large"
+             data-mobile-iframe="true"></div>&nbsp; 
+        <div><a href="https://twitter.com/share"
+           class="twitter-share-button"
+           data-url="<?= $url ?>"
+           data-text="Vendo <?= $marcaModelo ?>"
+           data-via="seminovosbh"
+           data-size="large"
+           data-related="seminovosbh"
+           data-hashtags="seminovosbh"></a>
+    </div>
 
 </div>
 

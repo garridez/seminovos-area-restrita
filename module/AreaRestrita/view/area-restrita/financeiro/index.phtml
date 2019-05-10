@@ -150,20 +150,19 @@ $dadosFinanceiro = $this->financeiro;
                                             </td>
                                         </tr>
                                     </table>
-                                    <p>A fatura estará disponivel no seu histórico de pagamentos após a confirmação de pagamentona. Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
-                                    <p>Ao pressionar Pagar agora, você concorda com os nossos <a href="#">Termos &amp; Condições</a></p>
+                                    <p>A fatura estará disponível no seu histórico de pagamentos após a confirmação de pagamento. <br>Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
+                                    <p>Ao selecionar pagar agora, você concorda com os nossos <a href="#">Termos &amp; Condições</a></p>
                                 </div>
                             </div>
                             <div class="col-md-7">
                                 <div class="padding-30 sm-padding-5">
                                     <ul class="list-unstyled list-inline m-l-30">
                                         <li><a href="#" class="p-r-30 text-black">Cartão de Crédito</a></li>
-                                        <li><a href="#" class="p-r-30 text-black  hint-text">PayPal</a></li>
-                                        <li><a href="#" class="p-r-30 text-black  hint-text">Wire transfer</a></li>
+                                        <li><a href="#" class="p-r-30 text-black  hint-text">Boleto Bancŕio</a></li>
                                     </ul>
                                     <form role="form" class="form-control">
                                         <div class="bg-master-light padding-30 b-rad-lg">
-                                            <h2 class="pull-left no-margin">Credit Card</h2>
+                                            <h2 class="pull-left no-margin">Cartão de Crédito</h2>
                                             <ul class="list-unstyled pull-right list-inline no-margin">
                                                 <li>
                                                     <a href="#">
@@ -183,8 +182,8 @@ $dadosFinanceiro = $this->financeiro;
                                             </ul>
                                             <div class="clearfix"></div>
                                             <div class="form-group form-group-default required m-t-25">
-                                                <label>Nome igual no Cartão</label>
-                                                <input type="text" class="form-control" placeholder="Name on the card" required>
+                                                <label>Nome igual ao do Cartão</label>
+                                                <input type="text" class="form-control" placeholder="Nome no cartão" required>
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Número do Cartão</label>
@@ -194,21 +193,21 @@ $dadosFinanceiro = $this->financeiro;
                                                 <div class="col-md-6">
                                                     <label>Validade</label>
                                                     <br>
-                                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                                        <option selected>Jan (01)</option>
-                                                        <option>Feb (02)</option>
-                                                        <option>Mar (03)</option>
-                                                        <option>Apr (04)</option>
-                                                        <option>May (05)</option>
-                                                        <option>Jun (06)</option>
-                                                        <option>Jul (07)</option>
-                                                        <option>Aug (08)</option>
-                                                        <option>Sep (09)</option>
-                                                        <option>Oct (10)</option>
-                                                        <option>Nov (11)</option>
-                                                        <option>Dec (12)</option>
+                                                    <select class="form-control cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                                        <option value="01" selected>Jan (01)</option>
+                                                        <option value="02">Feb (02)</option>
+                                                        <option value="03">Mar (03)</option>
+                                                        <option value="04">Abr (04)</option>
+                                                        <option value="05">Mai (05)</option>
+                                                        <option value="06">Jun (06)</option>
+                                                        <option value="07">Jul (07)</option>
+                                                        <option value="08">Ago (08)</option>
+                                                        <option value="09">Set (09)</option>
+                                                        <option value="10">Out (10)</option>
+                                                        <option value="11">Nov (11)</option>
+                                                        <option value="12">Dez (12)</option>
                                                     </select>
-                                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                                    <select class="form-control cs-select cs-skin-slide" data-init-plugin="cs-select">
                                                         <option value="2019">2019</option>
                                                         <option value="2020">2020</option>
                                                         <option value="2021">2021</option>
@@ -225,7 +224,7 @@ $dadosFinanceiro = $this->financeiro;
                                                 </div>
                                                 <div class="col-md-2 offset-md-4">
                                                     <div class="form-group required">
-                                                        <label>CVV Code</label>
+                                                        <label>Código CVV</label>
                                                         <input type="text" class="form-control" placeholder="000" required>
                                                     </div>
                                                 </div>
@@ -236,6 +235,33 @@ $dadosFinanceiro = $this->financeiro;
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab3">
+                        <h1>Obrigado.</h1>
+                    </div>
+                </div>
+                <div class="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
+                    <ul class="pager wizard no-style">
+                        <li class="next">
+                            <button class="btn btn-primary btn-cons btn-animated from-left fa fa-truck pull-right" type="button">
+                                <span>Next</span>
+                            </button>
+                        </li>
+                        <li class="next finish hidden">
+                            <button class="btn btn-primary btn-cons btn-animated from-left fa fa-cog pull-right" type="button">
+                                <span>Finish</span>
+                            </button>
+                        </li>
+                        <li class="previous first hidden">
+                            <button class="btn btn-default btn-cons btn-animated from-left fa fa-cog pull-right" type="button">
+                                <span>First</span>
+                            </button>
+                        </li>
+                        <li class="previous">
+                            <button class="btn btn-default btn-cons pull-right" type="button">
+                                <span>Previous</span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -31,7 +31,20 @@ class DadosVeiculoController extends AbstractActionController
 
     public function dadosAction()
     {
+        /**
+         * @TODO
+         * Criar um único lugar para recuperar o idTipo pelo nome
+         *
+         */
+        $tipos = [
+            'carro' => 1,
+            'caminhao' => 2,
+            'moto' => 3
+        ];
+        $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+
         $dadosForm = new Veiculo\DadosForm();
+        $dadosForm->get('tipoVeiculo')->setValue($tipoVeiculo);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
@@ -41,19 +54,8 @@ class DadosVeiculoController extends AbstractActionController
             /* @var $apiClient ApiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
-            /**
-             * @TODO
-             * Criar um único lugar para recuperar o idTipo pelo nome
-             *
-             */
-            $tipos = [
-                'carro' => 1,
-                'caminhao' => 2,
-                'moto' => 3
-            ];
-
             $data = [
-                'tipoVeiculo' => $tipos[strtolower($this->params()->fromRoute('tipo'))],
+                'tipoVeiculo' => $tipoVeiculo,
                 'idCadastro' => $identity->getIdentity(),
                 'video' => '',
                 'idPlano' => 3,

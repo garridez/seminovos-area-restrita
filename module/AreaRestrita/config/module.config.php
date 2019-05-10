@@ -75,6 +75,16 @@ return [
                     ],
                 ],
             ],
+            'filtros' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/filtros',
+                    'defaults' => [
+                        'controller' => Controller\FiltrosController::class,
+                        'action' => 'index'
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -82,6 +92,7 @@ return [
             Controller\AuthController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
             Controller\FaturaController::class => InvokableFactory::class,
+            Controller\FiltrosController::class => InvokableFactory::class,
             Controller\FinanceiroController::class => InvokableFactory::class,
             Controller\HistoricoPagamentosController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
