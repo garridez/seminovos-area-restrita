@@ -1,18 +1,16 @@
-<div class="container">
+<div class="container container-fixed-lg bg-white">
     <div class="row">
-        <div class="col-md-6 text-center">
+        <div class="col-12 m-t-20 text-center">
+            <h3 style="color:#da5228;">PARABÉNS!</h3>
+            <h4>Seu plano foi renovado com sucesso.</h4>
+        </div>
+        <div class="col-md-12 text-center">
             <img src="/img/pagamento/obrigado.jpg" /> 
         </div>
-        <div class="col-md-6">
-            <div class="mensagem_pendente">
-                <p style="color:#da5228; font-size:18px;font-weight: bold;">Parabéns,</p>
-                <p style="color:#acacac; font-size:14px;font-weight: bold; margin-bottom: 20px;">Seu plano foi renovado com sucesso.</p>
-                <p style="font-weight: bold;color:#333;margin-top: 10px">Obrigado por anunciar conosco.</p>
-                <p style="color:#acacac; font-size:14px;font-weight: bold; margin-top: 20px; float:right;">Equipe SeminovosBH!</p>
-            </div>
-            <?= $this->partial('partials/share', ['veiculo' => $this->veiculo]) ?>
-        </div>
-
+        
+    </div>
+    <div class="mx-auto py-4 text-center">
+            <p style="font-weight: bold;color:#333;">Obrigado por anunciar conosco.</p>
+            <p style="color:#acacac; font-size:14px;font-weight: bold;">Equipe SeminovosBH!</p>
     </div>
 </div>
-
