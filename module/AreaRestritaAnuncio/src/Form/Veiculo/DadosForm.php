@@ -7,6 +7,7 @@ use SnBH\Common\Form\Element\SelectAnoFabricacao;
 use SnBH\Common\Form\Element\SelectAnoModelo;
 use SnBH\Common\Form\Element\SelectCombustivel;
 use SnBH\Common\Form\Element\SelectCor;
+use SnBH\Common\Form\Element\SelectMarca;
 use SnBH\Common\Form\Element\SelectPortas;
 use Zend\Form\Form;
 use Zend\Form\Element;
@@ -28,22 +29,16 @@ class DadosForm extends Form
                 'required' => true,
             ]
         ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'idMarca',
-            'options' => [
-                'label' => 'Marca',
-                'value_options' => [
-                    '' => 'Selecione a marca',
-                    '7' => 'Chevrolet',
-                    '18' => 'Fiat',
-                    '19' => 'Ford',
-                ],
-            ],
-            'attributes' => [
-                'required' => true,
-            ]
-        ]);
+        global $container;
+        /**
+         * @todo mover isso pra uma factory
+         */
+        /** @var SelectMarca $selectMarca */
+        $selectMarca = $container->get(SelectMarca::class);
+        $selectMarca->setAttribute('required', true);    
+        
+        $this->add($selectMarca);
+
         $this->add([
             'type' => Element\Select::class,
             'name' => 'modeloCarro',
