@@ -32,6 +32,7 @@
 
             <form class="" role="form"> -->
             <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">            
+                <?= $this->formElement($fields['tipoVeiculo']) ?>
                 <div class="form-group form-group-default required ">
                     <?= $this->formLabel($fields['placa']) ?>
                     <?= $this->formText($fields['placa']) ?>

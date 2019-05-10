@@ -20,6 +20,11 @@ class DadosForm extends Form
         parent::__construct($name, $options);
 
         $this->add([
+            'type' => Element\Hidden::class,
+            'name' => 'tipoVeiculo',
+        ]);
+
+        $this->add([
             'type' => Element\Text::class,
             'name' => 'placa',
             'options' => [
@@ -29,15 +34,19 @@ class DadosForm extends Form
                 'required' => true,
             ]
         ]);
-        global $container;
-        /**
-         * @todo mover isso pra uma factory
-         */
-        /** @var SelectMarca $selectMarca */
-        $selectMarca = $container->get(SelectMarca::class);
-        $selectMarca->setAttribute('required', true);    
-        
-        $this->add($selectMarca);
+        $this->add([
+            'type' => Element\Select::class,
+            'name' => 'idMarca',
+            'options' => [
+                'label' => 'Marca',
+                'value_options' => [
+                    '' => 'Selecione a marca',
+                ],
+            ],
+            'attributes' => [
+                'required' => true,
+            ]
+        ]);
 
         $this->add([
             'type' => Element\Select::class,
