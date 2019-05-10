@@ -34,13 +34,15 @@ return [
                 'may_terminate' => true,
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/:tipo',
+                    'route' => '/:tipo[/:idVeiculo]',
                     'constraints' => [
                         'tipo' => 'moto|carro|caminhao',
+                        'idVeiculo' => '[0-9]{4,}|novo',
                     ],
                     'defaults' => [
                         'controller' => Controller\CriarAnuncioController::class,
-                        'action' => 'index'
+                        'action' => 'index',
+                        'idVeiculo' => 'novo'
                     ]
                 ],
                 'child_routes' => [

@@ -16,6 +16,7 @@ if (file_exists('config/development.config.php')) {
 /**
  * Disponibiliza globalmente o service manager e a aplicação como atalho
  */
+/** @var Zend\ServiceManager\ServiceManager $container */
 global $sm, $container, $application;
 
 $application = Application::init($appConfig);

@@ -29,6 +29,26 @@ class DadosVeiculoController extends AbstractActionController
         return $res;
     }
 
+    /**
+     * Retorna os dados do veículo que estiver na rota
+     */
+    public function getVeiculo()
+    {
+        $idVeiculo = (int) $this->params()->fromRoute('idVeiculo');
+
+        if (!$idVeiculo) {
+            return [];
+        }
+        $data = $this->getApiClient()->veiculosGet([
+            'ignorarCondicoesBasicas' => true
+        ], $idVeiculo)->getData();
+        if ($data) {
+            $data[0]['modeloCarro'] = $data[0]['idModelo'];
+            return $data[0];
+        }
+        return [];
+    }
+
     public function dadosAction()
     {
         /**
@@ -45,6 +65,12 @@ class DadosVeiculoController extends AbstractActionController
 
         $dadosForm = new Veiculo\DadosForm();
         $dadosForm->setTipoVeiculo($tipoVeiculo);
+
+        $veiculoDados = $this->getVeiculo();
+        if ($veiculoDados) {
+            $dadosForm->populateValues($veiculoDados);
+            $dadosForm->setIsEdition(true);
+        }
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
