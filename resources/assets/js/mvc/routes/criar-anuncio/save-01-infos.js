@@ -10,9 +10,15 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
+    var marcaModelo = require('components/MarcaModelo');
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
+    
+    //($('#form_dadosVeiculo'))
+    $('.anuncio-steps').on('steps-loaded', function(){
+        marcaModelo($('#form_dadosVeiculo'));
+    });
 
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
 
