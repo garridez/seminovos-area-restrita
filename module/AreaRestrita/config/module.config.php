@@ -135,12 +135,18 @@ return [
             'form_multicheckbox' => Form\View\Helper\FormMultiCheckbox::class,
             'formMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
             'FormMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'formradio' => Form\View\Helper\FormRadio::class,
+            'form_radio' => Form\View\Helper\FormRadio::class,
+            'formRadio' => Form\View\Helper\FormRadio::class,
+            'FormRadio' => Form\View\Helper\FormRadio::class,
         ],
         'invokables' => [
             'formCheckbox' => Form\View\Helper\FormCheckbox::class,
             'formcheckbox' => Form\View\Helper\FormCheckbox::class,
             'formMultiCheckbox' => Form\View\Helper\FormMultiCheckbox::class,
             'formmulticheckbox' => Form\View\Helper\FormMultiCheckbox::class,
+            'formRadio' => Form\View\Helper\FormRadio::class,
+            'formradio' => Form\View\Helper\FormRadio::class,
         ],
     ],
     'view_manager' => [
