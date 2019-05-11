@@ -16,6 +16,7 @@ class SelectModelo extends Select
 
         parent::__construct($name, $options);
     }
+
     /**
      * 
      * Seta os modelos de acordo com as marcas
@@ -29,13 +30,13 @@ class SelectModelo extends Select
         /** @var ApiClient $apiClient */
         $apiClient = $container->get(ApiClient::class);
         $data = $apiClient->modelos([
-                'idMarca' => $data['idMarca']
+                'idMarca' => $idMarca
                 ], null, true)->getData();
         $modelos = [];
         foreach ($data as $modelo) {
             $modelos[$modelo['idModelo']] = $modelo['modelo'];
         }
-        
+
         $this->setValueOptions($modelos);
         return $this;
     }

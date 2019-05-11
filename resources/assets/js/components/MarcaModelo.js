@@ -66,11 +66,13 @@ metodos = {
     campos: {
         marca: function () {
             var marcas = metodos.getMarcas();
-            var marcaInput = $form.find('[name="idMarca"]');
+            var marcaInput = metodos.getInputVal('idMarca');
             var self = this;
+
             metodos
-                    .makeOptions(marcaInput, marcas, 'nome', 'id')
+                    .makeOptions(marcaInput.input, marcas, 'nome', 'id')
                     .prepend('<option selected value="">Selecione a marca</option>')
+                    .val(marcaInput.value)
                     .unbind('change')
                     .change(function () {
                         self.modelos();
@@ -79,17 +81,23 @@ metodos = {
         },
         modelos: function () {
             var modelos = metodos.getModelos();
-            var input = metodos.getInputVal('modeloCarro').input;
-            input.html('<option selected value="">Selecione o modelo</option>');
-            if (modelos !== false) {
-                metodos
-                        .makeOptions(input, modelos, 'nome', 'id')
-                        .unbind('change')
-                        /*.change(function () {
-                         self.motores();
-                         })*/
-                        .change();
-                input.prepend('<option selected value="">Selecione o modelo</option>');
+            var modeloInput = metodos.getInputVal('modeloCarro');
+            if (modelos === false) {
+                return;
+            }
+            metodos
+                    .makeOptions(modeloInput.input, modelos, 'nome', 'id')
+                    .prepend('<option selected value="">Selecione o modelo</option>');
+
+            var value = modeloInput.value;
+            if (value) {
+                modeloInput.input
+                        .find('option')
+                        .filter(function () {
+                            return value === $(this).val();
+                        })
+                        .parent()
+                        .val(value);
             }
         },
     },
@@ -126,17 +134,6 @@ metodos = {
 
         return select.html(optionsString);
     },
-    money_format: function (num) {
-        return num
-                .toFixed(2)
-                .replace('.', ',')
-                .replace(/./g, function (c, i, a) {
-                    return i && c !== "," && ((a.length - i) % 3 === 0) ? '.' + c : c;
-                });
-    },
-    changeVeichle: function (num) {
-        console.log('vamos la ', num);
-    }
 };
 var filtro = {
     isInited: false,

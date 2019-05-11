@@ -61,16 +61,10 @@ class DadosForm extends Form
             ]
         ]);
         $this->add([
-            'type' => Element\Select::class,
+            'type' => Element\Text::class,
             'name' => 'versao',
             'options' => [
                 'label' => 'Versão',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => 'ELX',
-                    '2' => 'FIRE',
-                    '3' => 'FLEX',
-                ],
             ],
             'attributes' => [
                 'required' => true,

@@ -21,7 +21,7 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                         <div
                             class="d-flex col-12 h-auto justify-content-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano']?>-20 pb-2">
                             <p class="m-0 p-0 text-uppercase h4 text-cinza-escuro">
-                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
+                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['caracteristica']; ?>
                                 <small class=" small">
                                     <?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></small>
                             </p>
