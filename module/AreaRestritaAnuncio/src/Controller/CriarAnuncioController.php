@@ -20,13 +20,29 @@ class CriarAnuncioController extends AbstractActionController
             'caminhao' => 2,
             'moto' => 3
         ];
-
+        $adicionalData = [];
+        $params = $this->params();
+        $idVeiculo = $params->fromRoute('idVeiculo', false);
+        if ($idVeiculo) {
+            $data = $this->getApiClient()
+                    ->veiculosGet([
+                        'ignorarCondicoesBasicas' => true,
+                        ], (int) $idVeiculo, true)
+                    ->getData()[0];
+            $data['total'] = $data['valorPlano'];
+            $adicionalData = array_intersect_key($data, [
+                'tipoCadastro' => '',
+                'idVeiculo' => '',
+                'idAnuncio' => '',
+                'idPlano' => '',
+                'total' => '',
+            ]);
+        }
 
         $viewModel = new ViewModel([
-            'routeParams' => $this->params()->fromRoute(),
+            'routeParams' => $params->fromRoute(),
             'tipoCadastro' => $tipos[strtolower($this->params()->fromRoute('tipo'))],
-            'idVeiculo' => null
-        ]);
+            ] + $adicionalData);
 
         $this->layout('layout/criar-anuncio');
         return $viewModel;

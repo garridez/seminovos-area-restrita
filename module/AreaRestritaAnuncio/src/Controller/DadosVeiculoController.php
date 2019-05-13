@@ -40,8 +40,8 @@ class DadosVeiculoController extends AbstractActionController
             return [];
         }
         $data = $this->getApiClient()->veiculosGet([
-            'ignorarCondicoesBasicas' => true
-        ], $idVeiculo)->getData();
+                'ignorarCondicoesBasicas' => true
+                ], $idVeiculo)->getData();
         if ($data) {
             $data[0]['modeloCarro'] = $data[0]['idModelo'];
             return $data[0];
@@ -89,9 +89,33 @@ class DadosVeiculoController extends AbstractActionController
 
             $data += $request->getPost()->toArray();
 
-            $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? $data['idVeiculo'] : null;
+            $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
-            $res = $apiClient->veiculosPost($data, $idVeiculo);
+            if ($idVeiculo) {
+                // Atualiza
+                $data = array_diff_key($data, array_flip([
+                    'idVeiculo',
+                    'video',
+                    'idAnuncioVeiculo',
+                    'total',
+                    'termo'
+                ]));
+
+                $keyRemap = [
+                    'checkboxacessorios' => 'listaAcessorios',
+                    'combinarValor' => 'combinarPreco'
+                ];
+                foreach ($keyRemap as $from => $to) {
+                    $data[$to] = $data[$from];
+                    unset($data[$from]);
+                }
+
+                $res = $apiClient->veiculosPut($data, $idVeiculo);
+            } else {
+                // Cria
+                $res = $apiClient->veiculosPost($data, $idVeiculo);
+            }
+
 
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
