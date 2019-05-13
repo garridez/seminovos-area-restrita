@@ -1,7 +1,22 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
-if (sizeof($this->veiculo) > 0) {
-    var_dump($this->veiculo);
-} else {
-    echo 'Veículo não encontrado!!!';
-}
+$dadosVeiculos = $this->veiculo;
+
+//$idVeiculo = $dadosVeiculos['idVeiculo'];
+$idVeiculo = 1986286;
+
+$textToEncrypt = "SP;" . $idVeiculo . ";" . date('Y-m-d', strtotime('+2 minutes'));
+
+$encryptedText = \SnBH\Common\Helper\Encrypter::base64_dencode($textToEncrypt);
+
+?>
+
+<div class="container-fluid container-anuncios">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h3>Preview do Anúncio</h3>
+        </div>
+        <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
+            <iframe src="http://localhost:8091/<?= $idVeiculo . '/' . $encryptedText ?>" style="width: 1400px; height: 800px; pointer-events: none"></iframe>
+        </div>
+    </div>
+</div>
