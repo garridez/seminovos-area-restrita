@@ -18,10 +18,10 @@ $dadosPagamento = $this->dadosPagamento;
     </div>
 </div>
 
-<div class=" container">
+<div class=" container to-print">
     <div class="card card-default m-t-20">
         <div class="card-body">
-            <div class="invoice padding-50 sm-padding-10">
+            <div class="invoice padding-50 sm-padding-10 mb-print-4">
                 <div class="d-flex justify-content-between">
                     <div>
                         <img width="135" height="47" alt="" class="invoice-logo"
@@ -33,7 +33,7 @@ $dadosPagamento = $this->dadosPagamento;
 
                     </div>
                 </div>
-                <div class="pull-right mt-3">
+                <div class="pull-right mt-3 mb-print-1">
                     <div class="d-flex justify-content-between">
                         <span class="font-montserrat bold all-caps">N° :</span>
                         <span>
@@ -48,17 +48,17 @@ $dadosPagamento = $this->dadosPagamento;
                 </div>
 
             </div>
-            <div class="invoice p-l-50 py-0">
-                <div class="row">
-                    <div class="col-4">
+            <div class="invoice mt-print-4 pl-print-2 p-l-50 py-0 row-print pl-print-0 col-print-12">
+                <div class="row row-print mt-print-4 description-print col-print-12">
+                    <div class="col-4 col-print-5">
                         <div class="border-bottom pb-2">
                             <span class="text-uppercase hint-text">
                                 Tomador dos Serviços
                             </span>
                         </div>
-                        <h5 class="semi-bold mt-3"><?= $dadosCadastro['responsavelNome'] ?></h5>
+                        <h5 class="semi-bold mt-3 mt-print-3"><?= $dadosCadastro['responsavelNome'] ?></h5>
                         <div class="row">
-                            <address class="col-12">
+                            <address class="col-12 col-print-12">
                                 <div class="d-flex justify-content-between">
                                     <span class="all-caps">
                                         CPF:
@@ -81,7 +81,7 @@ $dadosPagamento = $this->dadosPagamento;
                                     ?>
                                     </span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between col-print-12">
                                     <span class="all-caps">
                                         Telefone:
                                     </span>
@@ -97,7 +97,7 @@ $dadosPagamento = $this->dadosPagamento;
                                     ?>
                                     </span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between col-print-12">
                                     <span class="all-caps">
                                         Cidade:
                                     </span>
@@ -113,15 +113,15 @@ $dadosPagamento = $this->dadosPagamento;
                             </address>
                         </div>
                     </div>
-                    <div class="col-4"></div>
-                    <div class="col-4">
+                    <div class="col-3"></div>
+                    <div class="col-4 col-print-7">
                         <div class="border-bottom pb-2">
                             <span class="text-uppercase hint-text">
                                 Prestador dos Serviços
                             </span>
                         </div>
-                        <h5 class="semi-bold mt-3">SEMINOVOS LTDA</h5>
-                        <div class="row">
+                        <h5 class="semi-bold mt-3 mt-print-3">SEMINOVOS LTDA</h5>
+                        <div class="row row-print">
                             <address class="col-12">
                                 <div class="d-flex justify-content-between">
                                     <span class="all-caps">
@@ -152,7 +152,7 @@ $dadosPagamento = $this->dadosPagamento;
                     </div>
                 </div>
             </div>
-            <div class="invoice p-l-50 py-0 table-responsive table-invoice">
+            <div class="invoice mt-print-4 pl-print-2 p-l-50 py-0 row-print pl-print-0 col-print-12">
                 <table class="table m-t-50 w-100">
                     <thead>
                         <tr>
@@ -192,16 +192,16 @@ $dadosPagamento = $this->dadosPagamento;
                     </tbody>
                 </table>
             </div>
-            <div class="invoice p-l-50 py-0 p-l-15 p-r-15 mt-3">
+            <div class="invoice p-l-50 py-0 p-l-15 p-r-15 mt-3 mt-print-3 col-print-12">
                 <div class="row b-a b-grey">
-                    <div class="col-md-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
+                    <div class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
                         <h5 class="font-montserrat all-caps small no-margin hint-text bold">Data de
                             Pagamento</h5>
-                        <h3 class="no-margin">
+                        <h3 class="no-margin h3-print">
                             <?= date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])); ?></h3>
                     </div>
                     <div
-                        class="col-md-4 text-right bg-master-darker col-sm-height padding-15 d-flex flex-column justify-content-center align-items-end">
+                        class="col-md-4 col-print-4 text-right bg-master-darker col-sm-height padding-15 d-flex flex-column justify-content-center align-items-end">
                         <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
                             Total</h5>
                         <h1 class="no-margin text-white">R$
@@ -217,7 +217,7 @@ $dadosPagamento = $this->dadosPagamento;
                         </span>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 description-print">
                     <div class="col-12">
                         <div class="">
                             <small class="">
