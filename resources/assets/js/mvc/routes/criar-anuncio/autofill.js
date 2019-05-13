@@ -15,6 +15,7 @@ module.exports = function (options) {
     var $ = require('jquery');
 
     var defaultOptions = {
+        autofill: true,
         pararNoStep: false,
         placaAleatoria: true,
         placa: 'LZL5173',
@@ -35,7 +36,10 @@ module.exports = function (options) {
         }, 500);
     }
     $('.anuncio-steps').on('steps-loaded', function () {
-        setTimeout(populate, 1000);
+        if (options.autofill) {
+            setTimeout(populate, 1000);
+        }
+        setTimeout(avancar, 1100);
     });
     // Metodo para agilizar o desenvolvimento
     function populate() {
@@ -72,6 +76,10 @@ module.exports = function (options) {
         }, 500); // Pagamentos
 
 
+
+    }
+
+    function avancar() {
         var stopContinuar = false;
         $('.step-container').on('step:exit', function (e) {
             if (stopContinuar) {
@@ -94,38 +102,6 @@ module.exports = function (options) {
             }
             continuar();
         });
-        setTimeout(function () {
-            continuar();
-        }, 500);
-
-        return;
-        var i = 500;
-
-        function getTimeout() {
-            setTimeout(function () {
-                console.log();
-            }, 500);
-            i += 1000;
-            return i;
-        }
-
-//        return;
-
-        setTimeout(continuar, getTimeout()); // Dados
-        setTimeout(continuar, getTimeout()); // Observações
-        setTimeout(continuar, getTimeout()); // Fotos
-        setTimeout(continuar, getTimeout()); // Videos
-        setTimeout(continuar, getTimeout()); // Planos
-        setTimeout(continuar, getTimeout()); // Pagamentos
-
-
-        $('.step-container').on('step:change:checkout', function (e) {
-
-            setTimeout(function () {
-                var ctx = $('.pagamento-cc-form');
-                //ctx.find('.btn-submit-pagt')[0].click();
-            }, 100);
-        });
-
+        continuar();
     }
 };

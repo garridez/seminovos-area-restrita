@@ -41,6 +41,7 @@ module.exports.callback = ($) => {
     var autofill = false;
     if (autofill) {
         require('./autofill')({
+            autofill: true,
             /**
              * Serve para ir passando e parar num step específico
              */
@@ -50,7 +51,7 @@ module.exports.callback = ($) => {
              * Útil para não gerar conflito com placa existe
              * Mas cuidado pra não encher de cadastros diferentes
              */
-            placaAleatoria: true,
+            placaAleatoria: false,
             //placaAleatoria: true,
             // Valor fixo de placa
             placa: 'LJL5173',
