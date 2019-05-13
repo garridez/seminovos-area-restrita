@@ -36,4 +36,9 @@ class Encrypter
         $iv = bin2hex($iv);
         return $encrypted . self::$delimiter . $iv;
     }
+
+    public static function base64_dencode($textToEncrypt)
+    {
+        return base64_decode($textToEncrypt);
+    }
 }
