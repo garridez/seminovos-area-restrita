@@ -12,3 +12,12 @@
         .bar-5 { width: 7px; }
     }
 }
+// grid to print
+@media print {
+    .pl-print-0 {
+        padding-left: 0px !important;
+    }
+    .mt-print-5,{
+        margin-top: 3rem !important;
+    }
+}
