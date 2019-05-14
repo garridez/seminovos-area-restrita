@@ -103,12 +103,15 @@ class DadosVeiculoController extends AbstractActionController
 
                 $keyRemap = [
                     'checkboxacessorios' => 'listaAcessorios',
-                    'combinarValor' => 'combinarPreco'
+                    'ocultarValorACombinar' => 'combinarPreco',
                 ];
                 foreach ($keyRemap as $from => $to) {
                     $data[$to] = $data[$from];
                     unset($data[$from]);
                 }
+
+                // Essa opção está obsoleta na regra de negócio
+                $data['trocaVeiculoOpcoes']  = [];
 
                 $res = $apiClient->veiculosPut($data, $idVeiculo);
             } else {
@@ -132,6 +135,8 @@ class DadosVeiculoController extends AbstractActionController
     public function precoAction()
     {
         $precoForm = new Veiculo\PrecoForm();
+        $data = $this->getVeiculo();
+        $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
         return new ViewModel([
@@ -142,6 +147,8 @@ class DadosVeiculoController extends AbstractActionController
     public function maisInformacoesAction()
     {
         $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
+        $data = $this->getVeiculo();
+        $maisInformacoesForm->populateValues($data);
 
         return new ViewModel([
             'formMaisInformacoesVeiculo' => $maisInformacoesForm

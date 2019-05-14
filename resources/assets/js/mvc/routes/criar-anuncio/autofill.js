@@ -37,9 +37,9 @@ module.exports = function (options) {
     }
     $('.anuncio-steps').on('steps-loaded', function () {
         if (options.autofill) {
-            setTimeout(populate, 1000);
+            setTimeout(populate, 500);
         }
-        setTimeout(avancar, 1100);
+        setTimeout(avancar, 600);
     });
     // Metodo para agilizar o desenvolvimento
     function populate() {
