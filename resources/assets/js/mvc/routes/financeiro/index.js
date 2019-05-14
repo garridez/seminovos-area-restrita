@@ -4,6 +4,7 @@ module.exports.callback = ($) => {
     require('bootstrap/js/dist/util.js');
     require('bootstrap/js/dist/index.js');
     require('bootstrap/js/dist/tab');
+    require('bootstrap/js/dist/collapse');
 
     require('jquery-mask-plugin');
     require('jquery-validation');
@@ -24,10 +25,10 @@ module.exports.callback = ($) => {
         let resultado = $("#resultado");
         let pagamento = $("#tab2");
 
-        let plano =    $(clickado).find("#plano")   .html();
+        let plano = $(clickado).find("#plano").html();
         let desconto = $(clickado).find("#desconto").html();
         let economia = $(clickado).find("#economia").html();
-        let valor =    $(clickado).find("#valor")   .html();
+        let valor = $(clickado).find("#valor").html();
 
         resultado.find("#desconto").html(desconto);
         resultado.find("#economia").html(economia);
@@ -39,6 +40,6 @@ module.exports.callback = ($) => {
         pagamento.find("#valor").html(valor);
 
 
-        console.log(plano + " " + desconto + " " + economia + " " + valor + " ");
+        // console.log(plano + " " + desconto + " " + economia + " " + valor + " ");
     });
 }
