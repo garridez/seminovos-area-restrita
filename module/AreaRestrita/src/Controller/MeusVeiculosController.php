@@ -53,6 +53,18 @@ class MeusVeiculosController extends AbstractActionController
 
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+
+            $dataAtual = new \DateTime(date('Y-m-d'));
+
+            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $intevaloData = $dataAtual->diff($dataExpiracao);
+            $intevaloData = (int)$intevaloData->format('%R%a');
+            $dataExpiracao = $dataExpiracao->format('d/m/Y');
+
+            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
+            $intervaloDataCadastro = (int)$intervaloDataCadastro->format('%R%a');
+
             $frase = "";
             $temp_acoes = [
                 "realizar_pagamento" => false,
@@ -65,6 +77,7 @@ class MeusVeiculosController extends AbstractActionController
                 "trocar_plano" => false,
                 "reativar" => false,
                 "enviar_comprovante" => false,
+                "renovar_plano" => false,
             ];
             switch ($veiculo['idStatus']) {
             case "1":
@@ -84,7 +97,10 @@ class MeusVeiculosController extends AbstractActionController
                 }
                 if($veiculo['idPlano'] != 5){
                    $temp_acoes["excluir"] = true;
-                } 
+                }
+                if($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30){
+                    $temp_acoes["renovar_plano"] = true;
+                }
                 break;
             case "3":
                 $frase = "Conclua o cadastro do anúncio";            
@@ -113,7 +129,9 @@ class MeusVeiculosController extends AbstractActionController
                 break; 
             case "6":
                 $frase = "Aguardando liberação";
-                $temp_acoes["trocar_plano"] = true;
+                if($veiculo['idPlano'] != 4) {
+                    $temp_acoes["trocar_plano"] = true;
+                }
                 break;
             case "7":
                 $frase = "";
@@ -145,12 +163,6 @@ class MeusVeiculosController extends AbstractActionController
                 ];
                 break;
             }
-
-            $dataAtual = new \DateTime(date('Y-m-d'));
-            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
-            $intevaloData = $dataAtual->diff($dataExpiracao);
-            $intevaloData = (int)$intevaloData->format('%R%a');
-            $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
            $dadosVeiculos['data'][$key]['botoes'] = $temp_acoes;
            $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
