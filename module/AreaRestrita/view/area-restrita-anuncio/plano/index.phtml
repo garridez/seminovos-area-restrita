@@ -47,11 +47,19 @@ $boxes = [
                 <div class="container">
                     <div class="row grupo-planos">
                         <?php
+                        $planoJaEscolhido = false;
                         foreach ($planos as $k => $plano) :
+                            if ($plano['idPlano'] == $idPlanoAtual) {
+                                $planoJaEscolhido = true;
+                            }
+                            $desabilitarPlano = false;
+                            if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
+                                $desabilitarPlano = true;
+                            }
 
                             ?>
                             <div class="col-12 col-sm col-md col-lg">
-                                <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>">
+                                <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>" <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
                                     <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
                                         <div class="plano-number"><?= $k + 1 . 'º' ?></div>
                                         <div class="icon-plano">
@@ -97,8 +105,9 @@ $boxes = [
                                            value="<?= $plano['idPlano'] ?>"
                                            class="hidden"
                                            <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
+                                           <?= $desabilitarPlano ? 'disabled' : '' ?>
                                            data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                    <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>">
+                                    <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>" <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
                                         Selecione
                                     </label>
                                 </div>
