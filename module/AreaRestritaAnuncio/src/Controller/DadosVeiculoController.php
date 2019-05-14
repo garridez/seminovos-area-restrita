@@ -111,7 +111,7 @@ class DadosVeiculoController extends AbstractActionController
                 }
 
                 // Essa opção está obsoleta na regra de negócio
-                $data['trocaVeiculoOpcoes']  = [];
+                $data['trocaVeiculoOpcoes'] = [];
 
                 $res = $apiClient->veiculosPut($data, $idVeiculo);
             } else {
@@ -192,7 +192,14 @@ class DadosVeiculoController extends AbstractActionController
             }
             return new JsonModel($res->json());
         }
-        return new ViewModel();
+        $fotos = [];
+        $dadosVeiculo = $this->getVeiculo();
+        if ($dadosVeiculo) {
+            $fotos = $dadosVeiculo['fotos'];
+        }
+        return new ViewModel([
+            'fotos' => $fotos
+        ]);
     }
 
     public function videoAction()
