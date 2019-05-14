@@ -4,6 +4,13 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
+
+    var alerts = require('components/Alerts');
+
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
+        alerts.info('Não é possível diminuir o plano');
+    });
+
     $('.step-container').on('step:pre-exit:plano', function (e) {
         var ctx = $('.step-plano');
         var plano = ctx.find('[name="idPlano"]:checked');
