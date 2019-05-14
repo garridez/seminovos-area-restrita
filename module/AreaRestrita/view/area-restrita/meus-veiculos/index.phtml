@@ -141,6 +141,9 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano" class="btn btn-sm btn-info text-white">Melhorar meu Plano</a>
                                 <?php }?>
+                                <?php if($veiculo["botoes"]["renovar_plano"]){?>
+                                    <a href="<?=$urls['editarAnuncio']?>#plano" class="btn btn-sm btn-info text-white">Renovar Plano</a>
+                                <?php }?>
                                 <?php
                                 /** @todo
                                  *  Centralizar verticalmente
