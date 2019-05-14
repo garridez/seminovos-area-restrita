@@ -1,10 +1,11 @@
 <?php
-//setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-//date_default_timezone_set('America/Sao_Paulo');
-//echo strftime('%d de %B de %Y', strtotime('today'));;exit;
 
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $veiculo = $this->veiculo;
+
+/* @var $formatDate \AreaRestrita\View\Helper\Data */
+$formatDate = new \AreaRestrita\View\Helper\Data();
+
 ?>
 <div class="container-fluid container-fixed-lg">
     <div class="row">
@@ -40,7 +41,7 @@ $veiculo = $this->veiculo;
                         </div>
                         <div class="event-date">
                             <h6 class="font-montserrat all-caps hint-text m-t-0">Cadastrado em</h6>
-                            <small class="fs-12 hint-text"><?= strftime('%d de %B de %Y', strtotime($veiculo['dataCadastro'])) ?></small>
+                            <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso($veiculo['dataCadastro'])?></small>
                         </div>
                     </div>
                 </div>
@@ -58,8 +59,8 @@ $veiculo = $this->veiculo;
                                 <div class="card-header clearfix">
                                     <h5>Shannon Williams</h5>
 <!--                                    <h5>--><?//= $propostas['nome'] ?><!--</h5>-->
-                                    <h6>E-mail: <span class="location semi-bold">wesley@seminovosbh.com.br</span></h6>
-<!--                                    <h6>E-mail: <span class="location semi-bold">--><?//= $propostas['email'] ?><!--</span></h6>-->
+                                    <h6>E-mail: <span class="location semi-bold text-lowercase">wesley@seminovosbh.com.br</span></h6>
+<!--                                    <h6>E-mail: <span class="location semi-bold text-lowercase">--><?//= $propostas['email'] ?><!--</span></h6>-->
                                     <h6>Telefone: <span class="location semi-bold">(037)988198436</span></h6>
 <!--                                    <h6>Telefone: <span class="location semi-bold">--><?//= $propostas['telefone'] ?><!--</span></h6>-->
 
@@ -70,8 +71,8 @@ $veiculo = $this->veiculo;
                                 </div>
                             </div>
                             <div class="event-date">
-                                <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
-<!--                                <small class="fs-12 hint-text">--><?//= $propostas['dataFormatada'] ?><!--</small>-->
+                                <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso(date('Y-m-d'))?></small>
+<!--                                <small class="fs-12 hint-text">--><?//= $formatDate->dataPorExtenso($propostas['dataFormatada']) ?><!--</small>-->
                             </div>
                         </div>
                     </div>
