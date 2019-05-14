@@ -1,6 +1,10 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
-$veiculos = $this->meusVeiculos['data']; //idPlano 
+$veiculos = $this->meusVeiculos['data']; //idPlano
+
+/* @var $formatDate \AreaRestrita\View\Helper\Data */
+$formatDate = new \AreaRestrita\View\Helper\Data();
+
 ?>
 
 <div class="container-fluid container-anuncios">
@@ -37,11 +41,11 @@ $veiculos = $this->meusVeiculos['data']; //idPlano
                                 </li>
                                 <li>
                                     Cadastrado:
-                                    <?= $veiculo['dataCadastro'] ?>
+                                    <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
                                 </li>
                                 <li>
                                     Renovado:
-                                    <?= $veiculo['dataRenovacao'] ?>
+                                    <?= $formatDate->converterDataHoraBR($veiculo['dataRenovacao']) ?>
                                 </li>
                                 <li>
                                     Kilometragem:

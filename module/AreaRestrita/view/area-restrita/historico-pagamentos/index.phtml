@@ -4,6 +4,8 @@ $pagamentos = $this->historicoPagamentos;
 $statusPagamento = $this->arrayStatus;
 $arrFormaPagamento = $this->arrayFormaPagamento;
 
+/* @var $formatDate \AreaRestrita\View\Helper\Data */
+$formatDate = new \AreaRestrita\View\Helper\Data();
 ?>
 <div class=" container-fluid   container-fixed-lg">
     <div class="row">
@@ -55,8 +57,8 @@ $arrFormaPagamento = $this->arrayFormaPagamento;
                             <?php else: ?>
                                 <td class="v-align-middle text-center"> - </td>
                             <?php endif;?>
-                            <td class="v-align-middle text-center">Cad.: <?= $pagamento['dataCadastro'] ?><br>Ren.: <?= $pagamento['dataRenovacao'] ?>
-                                <br>Exp.: <?= $pagamento['dataExpiracao'] ?></td>
+                            <td class="v-align-middle text-center">Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?>
+                                <br>Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -77,7 +79,7 @@ $arrFormaPagamento = $this->arrayFormaPagamento;
                                 <br><?= $pagamento['nomePlano'] ?></td>
                             <td class="v-align-middle">R$ <?= $pagamento['total'] ?></td>
                             <td class="v-align-middle"><?= $statusPagamento[$pagamento['status']] ?><br>Forma de pagamento: <?= $arrFormaPagamento[$pagamento['formaPagamento']] ?></td>
-                            <td class="v-align-middle"><?= $pagamento['dataCadastro'] ?></td>
+                            <td class="v-align-middle"><?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?></td>
                             <?php if($pagamento['status'] == 2): ?>
                                 <td class="v-align-middle"><a class="btn btn-tag" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" role="button" target="">Ver Fatura</a></td>
                             <?php else: ?>
