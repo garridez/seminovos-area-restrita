@@ -39,7 +39,7 @@ module.exports.callback = ($) => {
         pagamento.find("#economia").html(economia);
         pagamento.find("#valor").html(valor);
 
-        console.log(plano);
+        // console.log(plano);
         $("#parcelas").html("");
         if (plano == "Plano Trimestral") {
             for (let i = 0; i < 3; i++) {
