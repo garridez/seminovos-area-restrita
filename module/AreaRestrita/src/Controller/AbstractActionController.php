@@ -45,4 +45,24 @@ class AbstractActionController extends ZendAbstractActionController
                 ->get(Cadastros::class)
                 ->getCurrent();
     }
+
+    /**
+     * Retorna os dados do veículo que estiver na rota
+     */
+    public function getVeiculo()
+    {
+        $idVeiculo = (int) $this->params()->fromRoute('idVeiculo');
+
+        if (!$idVeiculo) {
+            return [];
+        }
+        $data = $this->getApiClient()->veiculosGet([
+                'ignorarCondicoesBasicas' => true
+                ], $idVeiculo)->getData();
+        if ($data) {
+            $data[0]['modeloCarro'] = $data[0]['idModelo'];
+            return $data[0];
+        }
+        return [];
+    }
 }

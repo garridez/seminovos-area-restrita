@@ -96,6 +96,7 @@ $boxes = [
                                            name="idPlano"
                                            value="<?= $plano['idPlano'] ?>"
                                            class="hidden"
+                                           <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
                                            data-valor-plano="<?= $plano['valorPlano'] ?>">
                                     <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>">
                                         Selecione
