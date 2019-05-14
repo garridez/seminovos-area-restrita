@@ -39,7 +39,23 @@ module.exports.callback = ($) => {
         pagamento.find("#economia").html(economia);
         pagamento.find("#valor").html(valor);
 
+        console.log(plano);
+        $("#parcelas").html("");
+        if (plano == "Plano Trimestral") {
+            for (let i = 0; i < 3; i++) {
+                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
+            }
+        }
+        if (plano == "Plano Semestral") {
+            for (let i = 0; i < 6; i++) {
+                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
+            }
+        }
+        if (plano == "Plano Anual") {
+            for (let i = 0; i < 8; i++) {
+                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
+            }
+        }
 
-        // console.log(plano + " " + desconto + " " + economia + " " + valor + " ");
     });
 }

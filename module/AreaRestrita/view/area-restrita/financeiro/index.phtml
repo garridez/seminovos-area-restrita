@@ -10,15 +10,15 @@ $dadosFinanceiro = $this->financeiro;
             data-init-reponsive-tabs="dropdownfx">
             <li class="nav-item">
                 <a class="active" data-toggle="tab" href="#tab1" data-target="#tab1" role="tab"><i
-                            class="fa fa-shopping-cart tab-icon"></i> <span>Plano tual</span></a>
+                        class="fa fa-shopping-cart tab-icon"></i> <span>Plano tual</span></a>
             </li>
             <li class="nav-item">
                 <a class="" data-toggle="tab" href="#tab3" data-target="#tab2" role="tab"><i
-                            class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span></a>
+                        class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span></a>
             </li>
             <li class="nav-item">
                 <a class="" data-toggle="tab" href="#tab4" data-target="#tab3" role="tab"><i
-                            class="fa fa-check tab-icon"></i> <span>Resumo</span></a>
+                        class="fa fa-check tab-icon"></i> <span>Resumo</span></a>
             </li>
         </ul>
         <div class="tab-content">
@@ -36,35 +36,42 @@ $dadosFinanceiro = $this->financeiro;
                             <table class="table table-condensed">
                                 <?php
                                 $planos = [
-                                    ["nome" => "Plano Mensal", "desconto" => $dadosFinanceiro['desconto_mensal'], "economia" => $dadosFinanceiro['economia_mensal'], "valor" => $dadosFinanceiro['valor_mensal'], "value_checkbox" => $dadosFinanceiro['value_checkbox_mensal']],
-                                    ["nome" => "Plano Trimestral", "desconto" => $dadosFinanceiro['desconto_trimestral'], "economia" => $dadosFinanceiro['economia_trimestral'], "valor" => $dadosFinanceiro['valor_trimestral'], "value_checkbox" => $dadosFinanceiro['value_checbkox_trimestral']],
-                                    ["nome" => "Plano Semestral", "desconto" => $dadosFinanceiro['desconto_semestral'], "economia" => $dadosFinanceiro['economia_semestral'], "valor" => $dadosFinanceiro['valor_semestral'], "value_checkbox" => $dadosFinanceiro['value_checkbox_semestral']],
-                                    ["nome" => "Plano Anual", "desconto" => $dadosFinanceiro['desconto_anual'], "economia" => $dadosFinanceiro['economia_anual'], "valor" => $dadosFinanceiro['valor_anual'], "value_checkbox" => $dadosFinanceiro['value_checkbox_anual']],
+                                    ["nome" => "Plano Mensal", "desconto" => $dadosFinanceiro['desconto_mensal'], "economia" => $dadosFinanceiro['economia_mensal'], "valor" => $dadosFinanceiro['valor_mensal'], "value_checkbox" => $dadosFinanceiro['value_checkbox_mensal'],"parcelas"=>false],
+                                    ["nome" => "Plano Trimestral", "desconto" => $dadosFinanceiro['desconto_trimestral'], "economia" => $dadosFinanceiro['economia_trimestral'], "valor" => $dadosFinanceiro['valor_trimestral'], "value_checkbox" => $dadosFinanceiro['value_checbkox_trimestral'],"parcelas"=>'3'],
+                                    ["nome" => "Plano Semestral", "desconto" => $dadosFinanceiro['desconto_semestral'], "economia" => $dadosFinanceiro['economia_semestral'], "valor" => $dadosFinanceiro['valor_semestral'], "value_checkbox" => $dadosFinanceiro['value_checkbox_semestral'],"parcelas"=>'6'],
+                                    ["nome" => "Plano Anual", "desconto" => $dadosFinanceiro['desconto_anual'], "economia" => $dadosFinanceiro['economia_anual'], "valor" => $dadosFinanceiro['valor_anual'], "value_checkbox" => $dadosFinanceiro['value_checkbox_anual'],"parcelas"=>'8'],
                                 ];
                                 foreach ($planos as $i => $plano):
                                     ?>
-                                    <tr>
-                                        <td class="radio radio-success col-lg-5 col-md-6 col-sm-7 ">
-                                            <input type="radio" name="options" id="option<?= $i ?>" value="<?= $plano['value_checkbox'] ?>">
-                                            <label class="m-l-10 font-montserrat fs-11 all-caps"
-                                                   for="option<?= $i ?>"><span
-                                                        id="plano"><?= $plano['nome'] ?></span>
-                                            </label>
-                                        </td>
-                                        <td class="col-lg-2 col-md-3 col-sm-3 text-right">
-                                            <span>Desconto de <span
-                                                        id="desconto"><?= $plano['desconto'] ?></span></span>
-                                        </td>
-                                        <td class="col-lg-2 col-md-3 col-sm-3 text-right">
-                                            <span>Economia de R$ <span
-                                                        id="economia"><?= $plano['economia'] ?></span></span>
-                                        </td>
-                                        <td class="col-lg-3 col-md-3 col-sm-2 text-right">
-                                            <h4 class="text-primary no-margin font-montserrat">R$
-                                                <span id="valor"><?= $plano['valor'] ?></span></h4>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                <tr>
+                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7 " onclick="$('#parcelas<?=$i?>').collapse('toggle')">
+                                        <input type="radio" name="options" id="option<?= $i ?>"
+                                            value="<?= $plano['value_checkbox'] ?>">
+                                        <label class="m-l-10 font-montserrat fs-11 all-caps" for="option<?= $i ?>"><span
+                                                id="plano"><?= $plano['nome'] ?></span>
+                                        </label>
+                                    </td>
+
+                                    <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                        <span>Desconto de <span id="desconto"><?= $plano['desconto'] ?></span></span>
+                                    </td>
+
+                                    <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                        <span>Economia de R$ <span id="economia"><?= $plano['economia'] ?></span></span>
+                                    </td>
+
+                                    <td class="col-lg-3 col-md-3 col-sm-2 text-right">
+                                        <h4 class="text-primary no-margin font-montserrat">R$
+                                            <span id="valor"><?= $plano['valor'] ?></span></h4>
+                                    </td>
+                                </tr>
+                                <?php if($plano["parcelas"]):?>
+                                <tr id="parcelas<?=$i?>" class="collapse">
+                                    <td colspan="4" class="d-flex justify-content-start">
+                                        <p>Pode Ser parcelado em até <span id="nParcelas"><?=$plano["parcelas"]?></span></p>
+                                    </td>
+                                </tr>
+                                <?php endif; endforeach; ?>
                             </table>
                             <div class="row b-a b-grey no-margin" id="resultado">
                                 <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
@@ -141,12 +148,12 @@ $dadosFinanceiro = $this->financeiro;
                                 role="tablist" data-init-reponsive-tabs="dropdownfx">
                                 <li class="nav-item">
                                     <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab"
-                                       role="tab"><i class="fa fa-shopping-cart tab-icon"></i> <span>Cartão de
+                                        role="tab"><i class="fa fa-shopping-cart tab-icon"></i> <span>Cartão de
                                             Crédito</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="" data-toggle="tab" href="#tab3" data-target="#boleto_tab" role="tab"><i
-                                                class="fa fa-credit-card tab-icon"></i> <span>Boleto Bancŕio</span></a>
+                                            class="fa fa-credit-card tab-icon"></i> <span>Boleto Bancŕio</span></a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -160,28 +167,28 @@ $dadosFinanceiro = $this->financeiro;
                                                         <li>
                                                             <a href="#">
                                                                 <img width="51" height="32"
-                                                                     data-src-retina="assets/img/form-wizard/visa2x.png"
-                                                                     data-src="assets/img/form-wizard/visa.png"
-                                                                     class="brand" alt="logo"
-                                                                     src="assets/img/form-wizard/visa.png">
+                                                                    data-src-retina="assets/img/form-wizard/visa2x.png"
+                                                                    data-src="assets/img/form-wizard/visa.png"
+                                                                    class="brand" alt="logo"
+                                                                    src="assets/img/form-wizard/visa.png">
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a href="#" class="hint-text">
                                                                 <img width="51" height="32"
-                                                                     data-src-retina="assets/img/form-wizard/amex2x.png"
-                                                                     data-src="assets/img/form-wizard/amex.png"
-                                                                     class="brand" alt="logo"
-                                                                     src="assets/img/form-wizard/amex.png">
+                                                                    data-src-retina="assets/img/form-wizard/amex2x.png"
+                                                                    data-src="assets/img/form-wizard/amex.png"
+                                                                    class="brand" alt="logo"
+                                                                    src="assets/img/form-wizard/amex.png">
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a href="#" class="hint-text">
                                                                 <img width="51" height="32"
-                                                                     data-src-retina="assets/img/form-wizard/mastercard2x.png"
-                                                                     data-src="assets/img/form-wizard/mastercard.png"
-                                                                     class="brand" alt="logo"
-                                                                     src="assets/img/form-wizard/mastercard.png">
+                                                                    data-src-retina="assets/img/form-wizard/mastercard2x.png"
+                                                                    data-src="assets/img/form-wizard/mastercard.png"
+                                                                    class="brand" alt="logo"
+                                                                    src="assets/img/form-wizard/mastercard.png">
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -189,32 +196,44 @@ $dadosFinanceiro = $this->financeiro;
                                                 <div class="form-group form-group-default required">
                                                     <label>Número do Cartão</label>
                                                     <input type="text" class="form-control" name="numero_cartao"
-                                                           placeholder="8888-8888-8888-8888" required>
+                                                        placeholder="8888-8888-8888-8888" required>
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Nome igual ao do Cartão</label>
                                                     <input type="text" class="form-control" placeholder="Nome no cartão"
-                                                           required>
+                                                        required>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-default required"
-                                                             title="Validade do cartão">
+                                                            title="Validade do cartão">
                                                             <label for="validade_cartao">Validade</label>
                                                             <input type="text" class="form-control" id="validade_cartao"
-                                                                   name="validade_cartao" placeholder="mês/ano"
-                                                                   required="">
+                                                                name="validade_cartao" placeholder="mês/ano"
+                                                                required="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-default required"
-                                                             title="Código de segurança do cartão">
+                                                            title="Código de segurança do cartão">
                                                             <label for="cvc_cartao">CVV </label>
                                                             <input type="text" class="form-control" id="cvc_cartao"
-                                                                   name="cvc_cartao"
-                                                                   placeholder="CVV / Código de Segurança" required=""
-                                                                   maxlength="4">
+                                                                name="cvc_cartao"
+                                                                placeholder="CVV / Código de Segurança" required=""
+                                                                maxlength="4">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group form-group-default required"
+                                                            title="Validade do cartão">
+                                                            <label for="validade_cartao">Parcelas</label>
+                                                            <select type="text" class="form-control" id="parcelas"
+                                                                required="" name="parcelas">
+
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,6 +259,7 @@ $dadosFinanceiro = $this->financeiro;
                     </div>
                 </div>
             </div>
+
             <div class="tab-pane padding-20 sm-no-padding slide-left" id="tab3">
                 <div class="row row-same-height padding-30">
                     <h2>
