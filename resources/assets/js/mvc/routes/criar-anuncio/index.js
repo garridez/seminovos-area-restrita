@@ -28,11 +28,35 @@ module.exports.callback = ($) => {
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
         form.find('[type="submit"]').first().click();
-        let plano = "planos"+$("#idPlano").val();
-        $("#"+plano).show();
+        let plano = "planos" + $("#idPlano").val();
+        $("#" + plano).show();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
+    });
+    $('.anuncio-steps').on('steps-loaded', function () {
+        var hash = window.location.hash;
+        if (!hash) {
+            return;
+        }
+        hash = '.step-' + hash.replace('#', '');
+
+        $('.step-container').each(function () {
+            var $this = $(this);
+            if ($this.find(hash).length) {
+                $this.stepPlugin('goTo', hash);
+                $this.closest('[class*="step-"]:not(.anuncio-steps)')
+                        .each(function () {
+                            $(this)
+                                    .parent()
+                                    .closest('.step-container')
+                                    .stepPlugin('goTo', this);
+                        });
+            } else {
+                var lastStep = $this.stepPlugin('getSteps').last();
+                $this.stepPlugin('goTo', lastStep);
+            }
+        });
     });
     /**
      * NÃO COMMIT O AUTOFILL COMO "true"
