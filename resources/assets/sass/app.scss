@@ -11,11 +11,11 @@
 $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
 @import "~font-awesome/scss/font-awesome";
-// @import "tools/mixins";
-// @import "components/all";
-// @import "mvc/layout/all";
-// @import "mvc/routes/all";
-// .debug {
-//   outline: red solid 1px;
-// }
+@import "tools/mixins";
+@import "components/all";
+@import "mvc/layout/all";
+@import "mvc/routes/all";
+.debug {
+  outline: red solid 1px;
+}
 @import "~snbh-site/resources/assets/fonts/icons.css";
