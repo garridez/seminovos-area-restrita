@@ -16,14 +16,22 @@ class PlanoController extends AbstractActionController
 
     public function indexAction()
     {
-        
+
         $dadosPlanos = $this->getContainer()
             ->get(Planos::class)
             ->getCurrent();
 
-        $viewModel = new ViewModel([
+        $data = [
             'planos' => $dadosPlanos,
-        ]);
+        ];
+
+        $dadosVeiculo = $this->getVeiculo();
+
+        if ($dadosVeiculo) {
+            $data['idPlanoAtual'] = (int) $dadosVeiculo['idPlano'];
+        }
+
+        $viewModel = new ViewModel($data);
 
         $viewModel->setTerminal(true);
 

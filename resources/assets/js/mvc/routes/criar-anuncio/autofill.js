@@ -33,7 +33,7 @@ module.exports = function (options) {
     function continuar() {
         setTimeout(function () {
             $('.btn-continuar').click();
-        }, 500);
+        }, 10);
     }
     $('.anuncio-steps').on('steps-loaded', function () {
         if (options.autofill) {

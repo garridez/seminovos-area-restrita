@@ -37,6 +37,30 @@ module.exports.callback = ($) => {
             return;
         }
     });
+    $('.anuncio-steps').on('steps-loaded', function () {
+        var hash = window.location.hash;
+        if (!hash) {
+            return;
+        }
+        hash = '.step-' + hash.replace('#', '');
+
+        $('.step-container').each(function () {
+            var $this = $(this);
+            if ($this.find(hash).length) {
+                $this.stepPlugin('goTo', hash);
+                $this.closest('[class*="step-"]:not(.anuncio-steps)')
+                    .each(function () {
+                        $(this)
+                            .parent()
+                            .closest('.step-container')
+                            .stepPlugin('goTo', this);
+                    });
+            } else {
+                var lastStep = $this.stepPlugin('getSteps').last();
+                $this.stepPlugin('goTo', lastStep);
+            }
+        });
+    });
     /**
      * NÃO COMMIT O AUTOFILL COMO "true"
      * Isso serve para agilizar o desenvolvimento

@@ -37,8 +37,8 @@ class Encrypter
         return $encrypted . self::$delimiter . $iv;
     }
 
-    public static function base64_dencode($textToEncrypt)
+    public static function base64_encode($textToEncrypt)
     {
-        return base64_decode($textToEncrypt);
+        return base64_encode($textToEncrypt);
     }
 }
