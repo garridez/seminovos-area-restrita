@@ -15,21 +15,24 @@ module.exports.callback = ($) => {
     var stepsContainer = $('.step-container');
 
     stepsContainer
-            .stepPlugin()
-            .on('submit', 'form', function (e) {
-                $(this).closest('.step-container').stepPlugin('next');
-                return stopEvent(e);
-            });
+        .stepPlugin()
+        .on('submit', 'form', function (e) {
+            $(this).closest('.step-container').stepPlugin('next');
+            return stopEvent(e);
+        });
     $('.btn-voltar').on('click', function () {
         $('.step-container [class*="step"].active')
-                .closest('.step-container')
-                .stepPlugin('prev');
+            .closest('.step-container')
+            .stepPlugin('prev');
     });
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
         form.find('[type="submit"]').first().click();
-        let plano = "planos"+$("#idPlano").val();
-        $("#"+plano).show();
+        let plano = "planos" + $("#idPlano").val();
+        $('[id^="planos"]').each((i, obj) => {
+            $(obj).hide();
+        });
+        $("#" + plano).show();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
