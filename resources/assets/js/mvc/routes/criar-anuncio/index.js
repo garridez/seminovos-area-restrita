@@ -15,15 +15,15 @@ module.exports.callback = ($) => {
     var stepsContainer = $('.step-container');
 
     stepsContainer
-        .stepPlugin()
-        .on('submit', 'form', function (e) {
-            $(this).closest('.step-container').stepPlugin('next');
-            return stopEvent(e);
-        });
+            .stepPlugin()
+            .on('submit', 'form', function (e) {
+                $(this).closest('.step-container').stepPlugin('next');
+                return stopEvent(e);
+            });
     $('.btn-voltar').on('click', function () {
         $('.step-container [class*="step"].active')
-            .closest('.step-container')
-            .stepPlugin('prev');
+                .closest('.step-container')
+                .stepPlugin('prev');
     });
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
@@ -49,12 +49,12 @@ module.exports.callback = ($) => {
             if ($this.find(hash).length) {
                 $this.stepPlugin('goTo', hash);
                 $this.closest('[class*="step-"]:not(.anuncio-steps)')
-                    .each(function () {
-                        $(this)
-                            .parent()
-                            .closest('.step-container')
-                            .stepPlugin('goTo', this);
-                    });
+                        .each(function () {
+                            $(this)
+                                    .parent()
+                                    .closest('.step-container')
+                                    .stepPlugin('goTo', this);
+                        });
             } else {
                 var lastStep = $this.stepPlugin('getSteps').last();
                 $this.stepPlugin('goTo', lastStep);
@@ -92,14 +92,17 @@ module.exports.callback = ($) => {
     }
 };
 function loadContentStepsAsync() {
+    var loading = require('components/Loading');
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
+    loading.open();
     stepsUrl.each(function (i) {
         var ctx = $(this);
         $.get(ctx.data('url'), function (data) {
             ctx.html(data);
             if (--totalSteps === 0) {
                 $('.anuncio-steps').trigger('steps-loaded');
+                loading.close();
             }
         });
     });
