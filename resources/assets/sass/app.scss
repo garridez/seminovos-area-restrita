@@ -1,10 +1,20 @@
 // @import "~snbh-site/resources/assets/fonts/icons.svg";
+
+/**
+ * @todo Colocar as variáveis abaixo num arquivo separado
+ * Essas variáveis são para a versão 4.3.1 do bootstrap
+ */
+
+$enable-pointer-cursor-for-buttons: true !default;
+$font-weight-bolder: bolder !default;
+
 @import "~snbh-site/resources/assets/sass/variables";
 @import "~snbh-site/resources/assets/sass/bootstrap";
 @import "~snbh-site/resources/assets/sass/components/all";
 @import "~snbh-site/resources/assets/sass/mvc/layouts/print";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/spinners";
 
 @import "theme_pages/themes/corporate/corporate";
 
@@ -16,6 +26,6 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "mvc/layout/all";
 @import "mvc/routes/all";
 .debug {
-  outline: red solid 1px;
+    outline: red solid 1px;
 }
 @import "~snbh-site/resources/assets/fonts/icons.css";

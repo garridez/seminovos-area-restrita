@@ -21,7 +21,7 @@
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
   "dependencies": {
     "animate-sass": "^0.8.2",
-    "bootstrap": "4.1.3",
+    "bootstrap": "^4.3.1",
     "cross-env": "^5.1.4",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
