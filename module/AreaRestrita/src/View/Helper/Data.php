@@ -25,7 +25,7 @@ class Data
         $dia = date($dianum[0]);
         $mes = date($data[1]);
         $ano = date($data[0]);
-        $semana = date("w", mktime(0,0,0,$mes,$dia,$ano) );
+        $semana = date("w", mktime(0,0,0, $mes, $dia, $ano));
 
         switch ($mes){
             case 1: $mes = "Janeiro"; break;
