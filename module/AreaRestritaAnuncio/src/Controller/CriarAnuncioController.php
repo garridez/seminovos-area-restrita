@@ -22,7 +22,8 @@ class CriarAnuncioController extends AbstractActionController
         ];
         $adicionalData = [];
         $params = $this->params();
-        $idVeiculo = $params->fromRoute('idVeiculo', false);
+        $idVeiculo = (int) $params->fromRoute('idVeiculo', false);
+
         if ($idVeiculo) {
             $data = $this->getApiClient()
                 ->veiculosGet([
