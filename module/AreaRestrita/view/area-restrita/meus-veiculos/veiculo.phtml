@@ -8,14 +8,22 @@ $textToEncrypt = "SP;" . $idVeiculo . ";" . date('Y-m-d H:i:s', strtotime('+2 mi
 $encryptedText = \SnBH\Common\Helper\Encrypter::base64_encode($textToEncrypt);
 
 ?>
-
+<div class="d-flex justify-content-left bg-light">
+    <div class="py-2">
+        <a href="/meus-veiculos" title="Voltar" class="btn">
+            <i class="link-primary fa fa-arrow-circle-left mr-1"></i>
+            Voltar
+        </a>
+    </div>
+</div>
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center">
         <div class="col-12">
             <h3>Preview do Anúncio</h3>
         </div>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
-            <iframe src="http://siteemdev.seminovosbh.com.br/<?= $idVeiculo . '/' . $encryptedText ?>" style="width: 1400px; height: 800px; pointer-events: none"></iframe>
+            <iframe src="http://siteemdev.seminovosbh.com.br/<?= $idVeiculo . '/' . $encryptedText ?>"
+                style="width: 1400px; height: 800px; pointer-events: none"></iframe>
         </div>
     </div>
 </div>

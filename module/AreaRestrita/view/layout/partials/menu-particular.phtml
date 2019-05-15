@@ -3,12 +3,26 @@
   <ul class="menu-items">
     <li class="mt-md-5 m-b-20">
       <div class="p-l-10 p-r-10">
-        <a href="/carro" class="btn-block btn btn-laranja text-capitalize ">
+        <a class="btn-block btn btn-laranja text-capitalize" data-toggle="collapse" href="#cirarAnuncio" role="button"
+          aria-expanded="false" aria-controls="collapseExample">
           <span class="text-black title">
             Novo Anúncio
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </span>
         </a>
+        <div class="collapse mt-2" id="cirarAnuncio">
+          <div class="d-flex justify-content-around">
+            <a class="link-white" href="/carro">
+              <i class="fa-2x icon icon-type-car"></i>
+            </a>
+            <a class="link-white" href="/moto">
+              <i class="fa-2x icon icon-type-moto"></i>
+            </a>
+            <a class="link-white" href="/caminhao">
+              <i class="fa-2x icon icon-type-truck"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </li>
     <li class="m-t-30 hide">

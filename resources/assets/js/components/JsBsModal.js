@@ -16,7 +16,7 @@ var jQuery = require('jquery');
                 'modal-dialog': '<div class="modal-dialog" role="document">',
                 'modal-content': '<div class="modal-content">',
                 'modal-header': '<div class="modal-header">',
-                'close': '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>',
+                'close': `<button type="button" class="btn-close btn btn-light d-flex justify-content-center" data-dismiss="modal">&times;</button>`,                
                 'modal-title': '<h4 class="modal-title">',
                 'modal-body': '<div class="modal-body">',
                 'modal-footer': '<div class="modal-footer">'

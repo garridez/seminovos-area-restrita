@@ -8,7 +8,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+  <title>Área restrita - Seminovos.com.br</title>
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
   <link rel="apple-touch-icon" href="pages/ico/60.png">
@@ -89,11 +89,11 @@
             $new_nome = $new_nome[0] . " " . $new_nome[1]
           ?>
           <span class="semi-bold d-block d-md-none"><?= $new_nome ?></span>
-            <?php if ($this->userInfo('tipoCadastro') == 1) :?>
-                <span class="semi-bold d-none d-md-block"><?= $this->userInfo('nomeFantasia') ?></span>
-            <?php elseif ($this->userInfo('tipoCadastro') == 2) : ?>
-                <span class="semi-bold d-none d-md-block"><?= $this->userInfo('responsavelNome') ?></span>
-            <?php endif; ?>
+          <?php if ($this->userInfo('tipoCadastro') == 1) :?>
+          <span class="semi-bold d-none d-md-block"><?= $this->userInfo('nomeFantasia') ?></span>
+          <?php elseif ($this->userInfo('tipoCadastro') == 2) : ?>
+          <span class="semi-bold d-none d-md-block"><?= $this->userInfo('responsavelNome') ?></span>
+          <?php endif; ?>
         </div>
         <div class="dropdown pull-right hidden-md-down">
           <?php /* <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
