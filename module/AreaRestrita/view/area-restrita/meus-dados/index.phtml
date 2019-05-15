@@ -20,209 +20,105 @@ $tipoCadastro = $this->tipoCadastro;
     </div>
 </div>
 
-<div class=" container-fluid   container-fixed-lg">
 <form method="POST" name="form_particularSite" class="" id="form_particularSite">
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-            <!-- START card -->
-            <div class="card card-default">
-                <?php if ($tipoCadastro == 1) : ?>
-                    <div class="card-header ">
-                        <div class="card-title">Dados Revenda</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['nomeFantasia']) ?>
-                            <?= $this->formText($fields['nomeFantasia']) ?>
-                        </div>
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['responsavelNome']) ?>
-                            <?= $this->formText($fields['responsavelNome']) ?>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default required ">
-                                    <?= $this->formLabel($fields['email']) ?>
-                                    <?= $this->formText($fields['email']) ?>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['email_secundario']) ?>
-                                    <?= $this->formText($fields['email_secundario']) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['email_financeiro']) ?>
-                                    <?= $this->formText($fields['email_financeiro']) ?>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['celular_financeiro']) ?>
-                                    <?= $this->formText($fields['celular_financeiro']) ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php elseif ($tipoCadastro == 2) : ?>
-                    <div class="card-header ">
-                        <div class="card-title">Dados Pessoais</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['responsavelNome']) ?>
-                            <?= $this->formText($fields['responsavelNome']) ?>
-                        </div>
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['email']) ?>
-                            <?= $this->formText($fields['email']) ?>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default required">
-                                    <?= $this->formLabel($fields['cpfResponsavel']) ?>
-                                    <?= $this->formText($fields['cpfResponsavel']) ?>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['rg']) ?>
-                                    <?= $this->formText($fields['rg']) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default required">
-                                    <?= $this->formLabel($fields['idEstado']) ?>
-                                    <?= $this->formSelect($fields['idEstado']) ?>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['idCidade']) ?>
-                                    <?= $this->formSelect($fields['idCidade']) ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <!-- END card -->
-        </div>
-        <div class="col-lg-2"></div>
-    </div>
-</div>
-
-<div class=" container-fluid   container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-            <!-- START card -->
-            <div class="card card-default">
-                <div class="card-header ">
-                    <div class="card-title">Contatos</div>
-                </div>
-                <div class="card-body">
+    <div class=" container-fluid   container-fixed-lg">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <!-- START card -->
+                <div class="card card-default">
                     <?php if ($tipoCadastro == 1) : ?>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group form-group-default ">
-                                    <?= $this->formLabel($fields['telefone_1']) ?>
-                                    <?= $this->formText($fields['telefone_1']) ?>
+                        <div class="card-header ">
+                            <div class="card-title">Dados Revenda</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group form-group-default required ">
+                                <?= $this->formLabel($fields['nomeFantasia']) ?>
+                                <?= $this->formText($fields['nomeFantasia']) ?>
+                            </div>
+                            <div class="form-group form-group-default required ">
+                                <?= $this->formLabel($fields['responsavelNome']) ?>
+                                <?= $this->formText($fields['responsavelNome']) ?>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default required ">
+                                        <?= $this->formLabel($fields['email']) ?>
+                                        <?= $this->formText($fields['email']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['email_secundario']) ?>
+                                        <?= $this->formText($fields['email_secundario']) ?>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['operadora_1']) ?>
-                                    <?= $this->formSelect($fields['operadora_1']) ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['email_financeiro']) ?>
+                                        <?= $this->formText($fields['email_financeiro']) ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="checkbox check-success">
-                                    <?= $this->formCheckbox($fields['telefone_1_is_wpp']) ?>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['celular_financeiro']) ?>
+                                        <?= $this->formText($fields['celular_financeiro']) ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     <?php elseif ($tipoCadastro == 2) : ?>
-                        <div class="form-group form-group-default  ">
-                            <?= $this->formLabel($fields['telefone_1']) ?>
-                            <?= $this->formText($fields['telefone_1']) ?>
+                        <div class="card-header ">
+                            <div class="card-title">Dados Pessoais</div>
                         </div>
-                    <?php endif; ?>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group form-group-default ">
-                                <?= $this->formLabel($fields['telefone_2']) ?>
-                                <?= $this->formText($fields['telefone_2']) ?>
+                        <div class="card-body">
+                            <div class="form-group form-group-default required ">
+                                <?= $this->formLabel($fields['responsavelNome']) ?>
+                                <?= $this->formText($fields['responsavelNome']) ?>
                             </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group form-group-default">
-                                <?= $this->formLabel($fields['operadora_2']) ?>
-                                <?= $this->formSelect($fields['operadora_2']) ?>
+                            <div class="form-group form-group-default required ">
+                                <?= $this->formLabel($fields['email']) ?>
+                                <?= $this->formText($fields['email']) ?>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="checkbox check-success">
-                                <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group form-group-default ">
-                                <?= $this->formLabel($fields['telefone_3']) ?>
-                                <?= $this->formText($fields['telefone_3']) ?>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group form-group-default">
-                                <?= $this->formLabel($fields['operadora_3']) ?>
-                                <?= $this->formSelect($fields['operadora_3']) ?>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="checkbox check-success">
-                                <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <?php if ($tipoCadastro == 1) : ?>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group form-group-default ">
-                                    <?= $this->formLabel($fields['telefone_4']) ?>
-                                    <?= $this->formText($fields['telefone_4']) ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default required">
+                                        <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                        <?= $this->formText($fields['cpfResponsavel']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['rg']) ?>
+                                        <?= $this->formText($fields['rg']) ?>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['operadora_4']) ?>
-                                    <?= $this->formSelect($fields['operadora_4']) ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default required">
+                                        <?= $this->formLabel($fields['idEstado']) ?>
+                                        <?= $this->formSelect($fields['idEstado']) ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="checkbox check-success">
-                                    <?= $this->formCheckbox($fields['telefone_4_is_wpp']) ?>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['idCidade']) ?>
+                                        <?= $this->formSelect($fields['idCidade']) ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     <?php endif; ?>
                 </div>
+                <!-- END card -->
             </div>
-            <!-- END card -->
+            <div class="col-lg-2"></div>
         </div>
-        <div class="col-lg-2"></div>
     </div>
-</div>
 
-<?php if ($tipoCadastro == 1) : ?>
     <div class=" container-fluid   container-fixed-lg">
         <div class="row">
             <div class="col-lg-2"></div>
@@ -230,34 +126,171 @@ $tipoCadastro = $this->tipoCadastro;
                 <!-- START card -->
                 <div class="card card-default">
                     <div class="card-header ">
-                        <div class="card-title">Redes Sociais</div>
+                        <div class="card-title">Contatos</div>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($tipoCadastro == 1) : ?>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group form-group-default ">
+                                        <?= $this->formLabel($fields['telefone_1']) ?>
+                                        <?= $this->formText($fields['telefone_1']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['operadora_1']) ?>
+                                        <?= $this->formSelect($fields['operadora_1']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="checkbox check-success">
+                                        <?= $this->formCheckbox($fields['telefone_1_is_wpp']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php elseif ($tipoCadastro == 2) : ?>
+                            <div class="form-group form-group-default  ">
+                                <?= $this->formLabel($fields['telefone_1']) ?>
+                                <?= $this->formText($fields['telefone_1']) ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group form-group-default ">
+                                    <?= $this->formLabel($fields['telefone_2']) ?>
+                                    <?= $this->formText($fields['telefone_2']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group form-group-default">
+                                    <?= $this->formLabel($fields['operadora_2']) ?>
+                                    <?= $this->formSelect($fields['operadora_2']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox check-success">
+                                    <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group form-group-default ">
+                                    <?= $this->formLabel($fields['telefone_3']) ?>
+                                    <?= $this->formText($fields['telefone_3']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group form-group-default">
+                                    <?= $this->formLabel($fields['operadora_3']) ?>
+                                    <?= $this->formSelect($fields['operadora_3']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox check-success">
+                                    <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if ($tipoCadastro == 1) : ?>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group form-group-default ">
+                                        <?= $this->formLabel($fields['telefone_4']) ?>
+                                        <?= $this->formText($fields['telefone_4']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['operadora_4']) ?>
+                                        <?= $this->formSelect($fields['operadora_4']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="checkbox check-success">
+                                        <?= $this->formCheckbox($fields['telefone_4_is_wpp']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <!-- END card -->
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+
+    <?php if ($tipoCadastro == 1) : ?>
+        <div class=" container-fluid   container-fixed-lg">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <!-- START card -->
+                    <div class="card card-default">
+                        <div class="card-header ">
+                            <div class="card-title">Redes Sociais</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['facebook']) ?>
+                                        <?= $this->formText($fields['facebook']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['instagram']) ?>
+                                        <?= $this->formText($fields['instagram']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['youtube']) ?>
+                                        <?= $this->formText($fields['youtube']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-default">
+                                        <?= $this->formLabel($fields['twitter']) ?>
+                                        <?= $this->formText($fields['twitter']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END card -->
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class=" container-fluid container-fixed-lg">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <!-- START card -->
+                <div class="card card-default">
+                    <div class="card-header ">
+                        <div class="card-title">Alterar Senha</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['facebook']) ?>
-                                    <?= $this->formText($fields['facebook']) ?>
+                                    <label><?= $formCadastro->get('senha')->getLabel() ?></label>
+                                    <?= $this->formElement($formCadastro->get('senha')) ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['instagram']) ?>
-                                    <?= $this->formText($fields['instagram']) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['youtube']) ?>
-                                    <?= $this->formText($fields['youtube']) ?>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <?= $this->formLabel($fields['twitter']) ?>
-                                    <?= $this->formText($fields['twitter']) ?>
+                                    <label><?= $formCadastro->get('confirmacaoSenha')->getLabel() ?></label>
+                                    <?= $this->formElement($formCadastro->get('confirmacaoSenha')) ?>
                                 </div>
                             </div>
                         </div>
@@ -267,45 +300,12 @@ $tipoCadastro = $this->tipoCadastro;
             </div>
             <div class="col-lg-2"></div>
         </div>
-    </div>
-<?php endif; ?>
-
-<div class=" container-fluid container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-            <!-- START card -->
-            <div class="card card-default">
-                <div class="card-header ">
-                    <div class="card-title">Alterar Senha</div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('senha')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('senha')) ?>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default">
-                                <label><?= $formCadastro->get('confirmacaoSenha')->getLabel() ?></label>
-                                <?= $this->formElement($formCadastro->get('confirmacaoSenha')) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-5 text-right">
+                <?= $this->formElement($formCadastro->get('submit')) ?>
             </div>
-            <!-- END card -->
+            <div class="col-md-2"></div>
         </div>
-        <div class="col-lg-2"></div>
     </div>
-    <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-5 text-right">
-            <?= $this->formElement($formCadastro->get('submit')) ?>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-</div>
 </form>
