@@ -69,7 +69,7 @@ $boxes = [
                                     <span class="bar-4"></span>
                                     <span class="bar-4"></span>
                                 </div>
-                                <h3><?= $plano['nomePlano'] ?></h3>
+                                <h3><?= $plano['nomePlano']=="Grátis"?"Simples":$plano['nomePlano'] ?></h3>
                             </div>
                             <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
                                 <li>
