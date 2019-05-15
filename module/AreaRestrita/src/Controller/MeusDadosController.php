@@ -86,6 +86,7 @@ class MeusDadosController extends AbstractActionController
                     $dadosCadastro = $cadastrosModel->getCurrent(false);
                     $dadosForm->populateValues($dadosCadastro);
                     return new ViewModel([
+                        'tipoCadastro' => $tipoCadastro,
                         'formCadastro' => $dadosForm
                     ]);
                 } else {
