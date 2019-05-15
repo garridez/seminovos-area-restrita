@@ -45,11 +45,10 @@
                                     $foto = $fotos[$count] ?? $default;
 
                                     ?>
-                                    <div class="foto col-md-3 col-sm-6 py-2" data-idFoto="<?= $foto['idFoto'] ?>">
-                                        <!--<img src="<?= $foto['imagem'] ?>" data-placeholder="https://placehold.it/262x196&text=Foto" class="img-fluid img-thumbnail">-->
-
+                                    <div class="foto col-md-3 col-sm-6 py-2">
                                         <div class="display-img img-thumbnail"
-                                             style="background-image: url('<?= $foto['imagem'] ?>')" 
+                                             style="background-image: url('<?= $foto['imagem'] ?>')"
+                                             data-idfoto="<?= $foto['idFoto'] ?>"
                                              data-placeholder="https://placehold.it/262x196&text=Foto"
                                              data-original="<?= $foto['imagem'] ?>"
                                              ></div>
