@@ -34,11 +34,14 @@ function init() {
 
     ctx.on('click', '.btn-remove-img', function () {
         // Seta o placeholder e limpa os metadados
-        showPhoto($(this).closest('.foto').find('.display-img'));
+        var img = $(this).closest('.foto').find('.display-img');
+        img.data('delete', true);
+        showPhoto(img);
     });
     ctx.on('click', '.btn-restaurar-img', function () {
         // Seta o placeholder e limpa os metadados
         var displayImg = $(this).closest('.foto').find('.display-img');
+        displayImg.removeData('delete');
         showPhoto(displayImg, displayImg.data('original'));
     });
     /**
@@ -51,6 +54,7 @@ function init() {
      * @return void
      */
     function showPhoto(imgElement, file) {
+        
         imgElement = $(imgElement);
         if (file === undefined) {
             file = imgElement.data('placeholder');
@@ -78,6 +82,9 @@ function init() {
 
         var reader = new FileReader();
         reader.onload = function (e) {
+            if (imgElement.data('idfoto')) {
+                imgElement.data('delete', true);
+            }
             imgElement.css('background-image', 'url("' + e.target.result + '")')
                     .data('file-data', file)
                     .data('uploaded', false);

@@ -156,21 +156,39 @@ class DadosVeiculoController extends AbstractActionController
                 'use_upload_extension' => true,
             ]);
 
-            $files = $moveUpload->move($request->getFiles()->fotos, true);
-
-            $data = [
-                'idTipo' => $dataPost->tipoCadastro,
-                'idVeiculo' => $dataPost->idVeiculo,
-                $apiClient::KEY_FILES => [
+            $fotos = $request->getFiles()->fotos;
+            // Upload
+            if ($fotos) {
+                $data = [
+                    'idTipo' => $dataPost->tipoCadastro,
+                    'idVeiculo' => $dataPost->idVeiculo,
+                ];
+                $files = $moveUpload->move($request->getFiles()->fotos, true);
+                $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files
-                ],
-            ];
-
-            $res = $this->getApiClient()->veiculosFotosPost($data);
-            foreach ($files as $file) {
-                unlink($file);
+                ];
+                $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
+                foreach ($files as $file) {
+                    unlink($file);
+                }
             }
-            return new JsonModel($res->json());
+            // Delete
+            if ($dataPost->fotosToDelete) {
+                $resDelete = $this->getApiClient()->veiculosFotosDelete([
+                        'listaFotos' => $dataPost->fotosToDelete
+                    ])->json();
+            }
+            $dataJson = [
+                'status' => 200
+            ];
+            if (isset($resUpload) && $resUpload['status'] !== 200) {
+                $dataJson = $resUpload;
+            }
+            if (isset($resDelete) && $resDelete['status'] !== 200) {
+                $dataJson = $resDelete;
+            }
+
+            return new JsonModel($dataJson);
         }
         $fotos = [];
         $dadosVeiculo = $this->getVeiculo();

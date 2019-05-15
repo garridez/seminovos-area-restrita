@@ -5,6 +5,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     $('.step-container').on('step:pre-exit:fotos', function (e) {
+        // Busca as imgs que serão feitas o upload
         var imgs = $('.fotos-container .display-img')
                 // Filtra deixando só as tags que contém uma imagem
                 .filter(function () {
@@ -14,14 +15,27 @@ module.exports.callback = ($) => {
                 .filter(function () {
                     return $(this).data('uploaded') !== true;
                 });
-        // Se zero, não tem nenhuma foto pra subir, então deixa passar pra próxima step
-        if (!imgs.length) {
+        var imgsToDelete = $('.fotos-container .display-img')
+                // Filtra deixando só as tags que contém uma imagem
+                .filter(function () {
+                    return !!$(this).data('delete');
+                })
+                // Filtras as imagens que já foram deletadas
+                .filter(function () {
+                    return $(this).data('deleted') !== true;
+                });
+
+        // Se zero, não tem nenhuma foto pra subir ou excluir, então deixa passar pra próxima step
+        if (!imgs.length && !imgsToDelete.length) {
             return true;
         }
 
         var formData = new FormData();
         imgs.each(function () {
             formData.append('fotos[]', $(this).data('file-data'));
+        });
+        imgsToDelete.each(function () {
+            formData.append('fotosToDelete[]', $(this).data('idfoto'));
         });
         $('#dados-basicos form')
                 .serializeArray()
@@ -38,6 +52,8 @@ module.exports.callback = ($) => {
             success: function (data) {
                 // Marca as imagens como "já carregadas"
                 imgs.data('uploaded', true);
+                imgsToDelete.data('deleted', true);
+
                 $('.fotos-container')
                         .closest('.step-container')
                         .stepPlugin('next');
