@@ -41,12 +41,11 @@ $boxes = [
         </small>
     </div>
 
-    <div class="row">
-        <form name="form_Plano">
-            <div class="row-full">
-                <div class="container">
-                    <div class="row grupo-planos">
-                        <?php
+    <div class="row-full">
+        <div class="container">
+            <form name="form_Plano">
+                <div class="row grupo-planos">
+                    <?php
                         $planoJaEscolhido = false;
                         foreach ($planos as $k => $plano) :
                             if ($plano['idPlano'] == $idPlanoAtual) {
@@ -58,27 +57,28 @@ $boxes = [
                             }
 
                             ?>
-                            <div class="col-12 col-sm col-md col-lg">
-                                <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>" <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
-                                    <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
-                                        <div class="plano-number"><?= $k + 1 . 'º' ?></div>
-                                        <div class="icon-plano">
-                                            <span class="bar-1"></span>
-                                            <span class="bar-2"></span>
-                                            <span class="bar-3"></span>
-                                            <span class="bar-4"></span>
-                                            <span class="bar-4"></span>
-                                        </div>
-                                        <h3><?= $plano['nomePlano'] ?></h3>
-                                    </div>
-                                    <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
-                                        <li>
-                                            <span>
-                                                <strong><?= $plano['quantidadeFotos']; ?></strong>
-                                                fotos por anúncio
-                                            </span>
-                                        </li>
-                                        <?php
+                    <div class="col-12 col-sm col-md col-lg">
+                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>"
+                            <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
+                            <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
+                                <div class="plano-number"><?= $k + 1 . 'º' ?></div>
+                                <div class="icon-plano">
+                                    <span class="bar-1"></span>
+                                    <span class="bar-2"></span>
+                                    <span class="bar-3"></span>
+                                    <span class="bar-4"></span>
+                                    <span class="bar-4"></span>
+                                </div>
+                                <h3><?= $plano['nomePlano'] ?></h3>
+                            </div>
+                            <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
+                                <li>
+                                    <span>
+                                        <strong><?= $plano['quantidadeFotos']; ?></strong>
+                                        fotos por anúncio
+                                    </span>
+                                </li>
+                                <?php
                                         if ($boxes[$plano['prioridade']] == 'nitro-home' || $boxes[$plano['prioridade']] == 'nitro' || $boxes[$plano['prioridade']] == 'turbo') {
                                             echo '<li><span>1 vídeo</span></li>';
                                         } else {
@@ -92,33 +92,30 @@ $boxes = [
                                         }
 
                                         ?>
-                                        <li><span><?= $anuncioTempo; ?></span></li>
+                                <li><span><?= $anuncioTempo; ?></span></li>
 
-                                        <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de
-                                                exibição</span></li>
-                                    </ul>
-                                    <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
-                                        <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
-                                    <input type="radio"
-                                           id="radio-idPlano-<?= $k + 1 ?>"
-                                           name="idPlano"
-                                           value="<?= $plano['idPlano'] ?>"
-                                           class="hidden"
-                                           <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
-                                           <?= $desabilitarPlano ? 'disabled' : '' ?>
-                                           data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                    <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>" <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
-                                        Selecione
-                                    </label>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
+                                <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de
+                                        exibição</span></li>
+                            </ul>
+                            <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
+                                <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
+                            <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano"
+                                value="<?= $plano['idPlano'] ?>" class="hidden"
+                                <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
+                                <?= $desabilitarPlano ? 'disabled' : '' ?>
+                                data-valor-plano="<?= $plano['valorPlano'] ?>">
+                            <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>"
+                                <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
+                                Selecione
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group ">
-                        <input type="submit">
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-            </div>
-        </form>
+                <div class="form-group ">
+                    <input type="submit">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
