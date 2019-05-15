@@ -20,6 +20,10 @@ class PrecoForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'data-mask' => '000.000.000.000.000,00' ,
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
             ]
         ]);
         $this->add([

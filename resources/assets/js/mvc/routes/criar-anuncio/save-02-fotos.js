@@ -4,6 +4,7 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
+    var HandleApiError = require('components/HandleApiError');
     $('.step-container').on('step:pre-exit:fotos', function (e) {
         // Busca as imgs que serão feitas o upload
         var imgs = $('.fotos-container .display-img')
@@ -49,6 +50,7 @@ module.exports.callback = ($) => {
             type: 'POST',
             contentType: false,
             processData: false,
+            dataType: 'json',
             success: function (data) {
                 // Marca as imagens como "já carregadas"
                 imgs.data('uploaded', true);
@@ -57,6 +59,13 @@ module.exports.callback = ($) => {
                 $('.fotos-container')
                         .closest('.step-container')
                         .stepPlugin('next');
+            },
+            error: function (e) {
+                if (e.responseJSON) {
+                    HandleApiError(e.responseJSON);
+                } else {
+                    HandleApiError(false);
+                }
             }
         });
         return false;

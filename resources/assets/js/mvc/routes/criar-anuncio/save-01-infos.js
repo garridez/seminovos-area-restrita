@@ -10,13 +10,14 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
+    var HandleApiError = require('components/HandleApiError');
     var marcaModelo = require('components/MarcaModelo');
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
-    
+
     //($('#form_dadosVeiculo'))
-    $('.anuncio-steps').on('steps-loaded', function(){
+    $('.anuncio-steps').on('steps-loaded', function () {
         marcaModelo($('#form_dadosVeiculo'));
     });
 
@@ -32,7 +33,7 @@ module.exports.callback = ($) => {
 
         $.ajax({
             type: "POST",
-            
+
             /**
              * @TODO Corrigir o "/carro" para o valor correto
              */
@@ -48,22 +49,17 @@ module.exports.callback = ($) => {
                     $('#dados-basicos .idVeiculo').val(data.data[0].idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data.data[0].idAnuncio);
                 }
-                
+
                 // Guarda o que foi serializado para garantir que não vai salvar dados que não foram alterados
                 lastSavedData = form.serialize();
                 stepsContainer.stepPlugin('next');
 
             },
             error: function (e) {
-                /**
-                 * @TODO Manipular em caso de erro
-                 */
-                console.log('ERROR');
                 if (e.responseJSON) {
-                    console.table(e.responseJSON);
-
+                    HandleApiError(e.responseJSON);
                 } else {
-                    console.log(e.responseTEXT);
+                    HandleApiError(false);
                 }
             }
         });

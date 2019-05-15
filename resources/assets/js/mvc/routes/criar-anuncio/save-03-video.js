@@ -17,8 +17,16 @@ module.exports.callback = ($) => {
             return stopEvent(e);
         }
         var data = $('form', '#dados-basicos,.step-video').serialize();
-        $.post('/carro/video', data, function (data) {
-            // @todo tratar em caso de erro
+        $.post('/carro/video', data, function (e) {
+            /**
+             * Implementar melhor esse metodo
+             */
+            return;
+            if (e.responseJSON) {
+                HandleApiError(e.responseJSON);
+            } else {
+                HandleApiError(false);
+            }
         });
         // O evento não espera o ajax terminar, pois não é um dado crítico
         // E melhora a fluidez da criação do anúncio
