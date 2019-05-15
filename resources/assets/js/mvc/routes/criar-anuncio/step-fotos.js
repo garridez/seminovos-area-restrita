@@ -10,7 +10,7 @@ function init() {
 
 
 
-    ctx.find('.fotos-container').on('click', 'img', function (e) {
+    ctx.find('.fotos-container').on('click', '.display-img', function (e) {
         e.preventDefault();
         inputFoto.data('img-element', this);
         inputFoto[0].click();
@@ -21,7 +21,7 @@ function init() {
     });
     ctx.find('[name="fotos"]') // Input de multiplos arquivos
             .change(function () {
-                var imgs = $('.fotos-container img');
+                var imgs = $('.fotos-container .display-img');
                 // Reseta as imagens
                 imgs.each(function () {
                     $(this).attr('src', $(this).data('placeholder'));
@@ -34,13 +34,18 @@ function init() {
 
     ctx.on('click', '.btn-remove-img', function () {
         // Seta o placeholder e limpa os metadados
-        showPhoto($(this).closest('.foto').find('img'));
+        showPhoto($(this).closest('.foto').find('.display-img'));
+    });
+    ctx.on('click', '.btn-restaurar-img', function () {
+        // Seta o placeholder e limpa os metadados
+        var displayImg = $(this).closest('.foto').find('.display-img');
+        showPhoto(displayImg, displayImg.data('original'));
     });
     /**
      * Exibe a miniatura da imagem selecionada na tag img passada
      * Também adiciona metadados ao elemento img
      * 
-     * @param HTMLImageElement imgElement
+     * @param HTMLElement imgElement
      * @param File file Imagem que será colocada no elemento IMG.
      *      Se não for passado, então é colocado no lugar o placeholder
      * @return void
@@ -48,13 +53,32 @@ function init() {
     function showPhoto(imgElement, file) {
         imgElement = $(imgElement);
         if (file === undefined) {
-            imgElement.attr('src', imgElement.data('placeholder'))
-                    .data('file-data', false);
+            file = imgElement.data('placeholder');
+        }
+
+        if (typeof file === 'string') {
+            var background = 'url("' + file + '")';
+            if (imgElement.css('background-image') === background) {
+                return;
+            }
+            imgElement.animate({
+                opacity: 0
+            }, 200).data('file-data', false);
+            // Animação pra suavizar a transição
+            setTimeout(function () {
+                imgElement.css('background-image', background);
+                setTimeout(function () {
+                    imgElement.animate({
+                        opacity: 1
+                    }, 200);
+                }, 200);
+            }, 200);
             return;
         }
+
         var reader = new FileReader();
         reader.onload = function (e) {
-            imgElement.attr('src', e.target.result)
+            imgElement.css('background-image', 'url("' + e.target.result + '")')
                     .data('file-data', file)
                     .data('uploaded', false);
         };

@@ -1,0 +1,11 @@
+&{
+    .foto{
+        .display-img{
+            $proportion: 3;
+            width: #{58*$proportion}px;
+            height: #{38.7*$proportion}px;
+            background-size: cover;
+            background-position: center;
+        }
+    }
+}

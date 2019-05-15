@@ -11,13 +11,13 @@
             </div>
 
             <form>
-                <div class="form-group-lg form-group form-group-default form-text-center">
+                <div class="form-group-lg form-group form-group-default form-text-center hidden">
                     <label class="form-control-lg" for="fotos">
                         Clique em um dos espaços abaixo para selecionar <b>uma foto</b>
                     </label>
                 </div>
-                <div class="h1 text-center">ou</div>
-                <div class="form-group-lg form-group form-group-default form-text-center">
+                <div class="h1 text-center hidden">ou</div>
+                <div class="form-group-lg form-group form-group-default form-text-center hidden">
                     <label class="form-control-lg" for="fotos">
                         Clique aqui para escolher <b>várias fotos</b>:
                         <input type="file" id="fotos" name="fotos" multiple accept="image/jpg, image/jpeg" class="hidden"/>
@@ -46,8 +46,19 @@
 
                                     ?>
                                     <div class="foto col-md-3 col-sm-6 py-2" data-idFoto="<?= $foto['idFoto'] ?>">
-                                        <img src="<?= $foto['imagem'] ?>" data-placeholder="https://placehold.it/262x196&text=Foto" class="img-fluid img-thumbnail">
-                                        <button type="button" class="btn-remove-img btn btn-small btn-outline-dark" title="Remover imagem">x</button>
+                                        <!--<img src="<?= $foto['imagem'] ?>" data-placeholder="https://placehold.it/262x196&text=Foto" class="img-fluid img-thumbnail">-->
+
+                                        <div class="display-img img-thumbnail"
+                                             style="background-image: url('<?= $foto['imagem'] ?>')" 
+                                             data-placeholder="https://placehold.it/262x196&text=Foto"
+                                             data-original="<?= $foto['imagem'] ?>"
+                                             ></div>
+                                        <button type="button" class="btn-restaurar-img btn btn-small" title="Restaurar imagem">
+                                            <i class="fa fa-history" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn-remove-img btn btn-small" title="Remover imagem">
+                                            <i class=" fa fa-trash-o"></i>
+                                        </button>
                                     </div>
                                 <?php endforeach; ?>
                             </div>

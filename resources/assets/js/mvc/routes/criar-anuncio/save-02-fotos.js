@@ -5,7 +5,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     $('.step-container').on('step:pre-exit:fotos', function (e) {
-        var imgs = $('.fotos-container img')
+        var imgs = $('.fotos-container .display-img')
                 // Filtra deixando só as tags que contém uma imagem
                 .filter(function () {
                     return !!$(this).data('file-data');
