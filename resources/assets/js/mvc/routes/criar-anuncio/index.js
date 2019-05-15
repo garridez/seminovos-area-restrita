@@ -102,9 +102,23 @@ function loadContentStepsAsync() {
             ctx.html(data);
             if (--totalSteps === 0) {
                 $('.anuncio-steps').trigger('steps-loaded');
+                setLoaddingForAllAjax();
                 loading.close();
+                setTimeout(function () {
+                    loading.close();
+                }, 200);
             }
         });
     });
 }
 
+function setLoaddingForAllAjax() {
+    var loading = require('components/Loading');
+    $(document)
+            .ajaxStart(function () {
+                loading.open();
+            })
+            .ajaxComplete(function () {
+                loading.close();
+            });
+}

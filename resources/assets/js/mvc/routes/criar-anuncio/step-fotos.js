@@ -82,10 +82,11 @@ function init() {
 
         var reader = new FileReader();
         reader.onload = function (e) {
+            showPhoto(imgElement, e.target.result);
             if (imgElement.data('idfoto')) {
                 imgElement.data('delete', true);
             }
-            imgElement.css('background-image', 'url("' + e.target.result + '")')
+            imgElement
                     .data('file-data', file)
                     .data('uploaded', false);
         };

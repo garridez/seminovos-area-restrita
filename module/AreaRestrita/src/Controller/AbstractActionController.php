@@ -57,8 +57,14 @@ class AbstractActionController extends ZendAbstractActionController
             return [];
         }
         $data = $this->getApiClient()->veiculosGet([
-                'ignorarCondicoesBasicas' => true
-                ], $idVeiculo)->getData();
+            'ignorarCondicoesBasicas' => true
+            ], $idVeiculo);
+
+        if ($data->status !== 200) {
+            return false;
+        }
+        $data = $data->getData();
+
         if ($data) {
             $data[0]['modeloCarro'] = $data[0]['idModelo'];
             return $data[0];

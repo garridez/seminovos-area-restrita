@@ -28,7 +28,7 @@ class CriarAnuncioController extends AbstractActionController
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
                     ], (int) $idVeiculo, true)
-                ->getData();
+                ->json();
             if ($data['status'] !== 200) {
                 /**
                  * @todo Redirecionar para algum lugar e informar o erro
@@ -36,7 +36,7 @@ class CriarAnuncioController extends AbstractActionController
                 die('O veículo não existe');
                 
             }
-            $data = $data[0];
+            $data = $data['data'][0];
             $data['total'] = $data['valorPlano'];
             $adicionalData = array_intersect_key($data, [
                 'tipoCadastro' => '',
