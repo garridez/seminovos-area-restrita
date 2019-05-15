@@ -69,7 +69,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <a href="#" data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, Excluir" data-modal-success-msg="Veiculo excluído"
-                                    title="Excluir anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                    title="Desativar anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
                                     <i class=" fa fa-trash-o"></i>
                                 </a>
                                 <?php }?>
@@ -82,7 +82,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#fotos" class="btn bg-cinza text-white icon-2" title="Editar Fotos">
+                                <a href="<?=$urls['editarAnuncio']?>#fotos" class="btn bg-cinza text-white icon-2"
+                                    title="Editar Fotos">
                                     <i class=" fa fa-camera"></i>
                                 </a>
                                 <?php }?>
@@ -136,13 +137,16 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             </p>
                             <div>
                                 <?php if($veiculo["botoes"]["trocar_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#plano" class="btn btn-sm btn-info text-white">Trocar Plano</a>
+                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                    class="btn btn-sm btn-info text-white">Trocar Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#plano" class="btn btn-sm btn-info text-white">Melhorar meu Plano</a>
+                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                    class="btn btn-sm btn-info text-white">Melhorar meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
-                                    <a href="<?=$urls['editarAnuncio']?>#plano" class="btn btn-sm btn-info text-white">Renovar Plano</a>
+                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                    class="btn btn-sm btn-info text-white">Renovar Plano</a>
                                 <?php }?>
                                 <?php
                                 /** @todo
