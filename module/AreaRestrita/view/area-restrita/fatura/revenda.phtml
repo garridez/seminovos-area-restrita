@@ -35,7 +35,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
 <div class=" container-fluid container-fixed-lg to-print">
     <div class="card card-default m-t-20">
         <div class="card-body">
-            <div class="invoice padding-50 sm-padding-10">
+            <div class="invoice px-3 py-3 pl-print-0 pt-print-0">
                 <div class="d-flex justify-content-between">
                     <div>
                         <img width="135" height="47" alt="" class="invoice-logo"
@@ -56,7 +56,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-print-12 mt-3 mt-print-3">
+            <div class="p-l-15 col-12 col-print-12 mt-4 mt-print-3">
                 <div class="row row-print">
                     <div class="col-lg-9 col-sm-height sm-no-padding col-print-7">
                         <p class="small no-margin">CNPJ</p>
@@ -80,7 +80,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="p-l-15 col-12">
                 <div class="border-bottom pb-2 mt-3 mt-print-3">
                     <span class="text-uppercase hint-text">
                         Tomador dos Serviços
@@ -127,8 +127,8 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </div>
                 </div>
             </div>
-            <div class="invoice mt-print-1 pl-print-2 py-0 row-print pl-print-0 col-print-12">
-                <table class="table m-t-50 w-100">
+            <div class="invoice pt-4 mt-print-2 py-0 row-print pl-print-0">
+                <table class="table w-100">
                     <thead>
                         <tr>
                             <th class="">Serviço</th>
@@ -141,7 +141,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     <tbody>
                         <tr>
                             <td class="">
-                                <p class="text-black">HOSPEDAGEM DE LOJA VIRTUAL NO SITE SEMINOVOSBH
+                                <p class="text-black description-print">HOSPEDAGEM DE LOJA VIRTUAL NO SITE SEMINOVOSBH
                                     <br>PLANO: <?= $this->nomePlano ?>
                                     <?php
                                     switch ($dadosPagamento['tempoContrato']) :
@@ -163,7 +163,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                                     endswitch;
                                     ?>
                                 </p>
-                                <p class="small hint-text">
+                                <p class="hint-text"><small>
                                     Anúncio
                                     <?php
                                     if (empty($dataPagamento)) :
@@ -173,17 +173,17 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                                         período de <?= $dataPagamento; ?> até <?= $dataExpiracao; ?>
                                     <?php
                                     endif;
-                                    ?>
+                                    ?></small>
                                 </p>
                             </td>
                             <td class="text-center"><?= strtoupper($dadosPagamento['formaPagamento']) ?></td>
-                            <td class="text-right">
+                            <td class="text-center">
                                 R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.'); ?>
                             </td>
-                            <td class="text-right">
+                            <td class="text-center">
                                 R$ <?= number_format($dadosPagamento['desconto'], 2, ',', '.'); ?>
                             </td>
-                            <td class="text-right">
+                            <td class="text-center">
                                 R$ <?= number_format($dadosPagamento['total'], 2, ',', '.'); ?>
                             </td>
                         </tr>
@@ -193,7 +193,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
             <br>
             <br>
 
-            <div class="invoice py-0 p-l-15 p-r-15 mt-2 mt-print-3 col-12 col-print-12">
+            <div class="invoice py-0 p-l-15 p-r-15 mt-3 mt-print-3 pl-print-0 col-print-12">
                 <div class="row b-a b-grey">
                     <div class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
                         <h5 class="font-montserrat all-caps small no-margin hint-text bold">Data de
@@ -210,7 +210,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </div>
                 </div>
             </div>
-            <div class="invoice row mt-3 mt-print-3 col-12 col-print-12">
+            <div class="invoice p-l-15 row mt-4 mt-print-3 row-print pl-print-0 col-print-12">
                 <div class="col-12">
                     <div class="border-bottom pb-2">
                         <span class="text-uppercase hint-text">
@@ -219,7 +219,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </div>
                 </div>
                 <div class="col-12 description-print">
-                    <div class="col-12">
+                    <div class="col-12 pl-0 pl-print-0">
                         <div>
                             <small class=" ">
                                 Operação não tributada pelo ISS, conforme veto do item 17.07 da lista de
@@ -242,7 +242,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </div>
                 </div>
             </div>
-            <div class="invoice p-l-50 mt-3 mt-print-3 row">
+            <div class="invoice p-l-15 row mt-print-3 row-print pl-print-0 col-print-12">
                 <div class="col-12 border-top mt-5 pt-2 d-flex align-items-baseline justify-content-between">
 
                     <div class="d-flex align-items-baseline">
