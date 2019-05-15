@@ -1,0 +1,308 @@
+@font-face {
+    font-family: "Webfont"; 
+    src: url("../fonts/icons.eot") format("embedded-opentype"),
+        url("../fonts/icons.woff2") format("woff2"),
+        url("../fonts/icons.woff") format("woff"),
+        url("../fonts/icons.ttf") format("truetype"),
+        url("../fonts/icons.svg#icons") format("svg");
+}
+
+i[class^="icon-"], 
+i[class*=" icon-"] {
+    &:before {
+        font-family: Webfont !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-variant: normal !important;
+        text-transform: none !important;
+        line-height: 0 !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+}
+
+.icon-410:before {
+    content: "\f102";
+}
+.icon-30alerta:before {
+    content: "\f101";
+}
+.icon-ad-car:before {
+    content: "\f103";
+}
+.icon-ad-payment:before {
+    content: "\f104";
+}
+.icon-ad-plan:before {
+    content: "\f105";
+}
+.icon-admin-stock:before {
+    content: "\f106";
+}
+.icon-adplanopf:before {
+    content: "\f107";
+}
+.icon-adplanopj:before {
+    content: "\f108";
+}
+.icon-adremove:before {
+    content: "\f109";
+}
+.icon-advertise:before {
+    content: "\f10a";
+}
+.icon-alert:before {
+    content: "\f10b";
+}
+.icon-arrow-down:before {
+    content: "\f10c";
+}
+.icon-arrow-left:before {
+    content: "\f10d";
+}
+.icon-arrow-next:before {
+    content: "\f10e";
+}
+.icon-arrow-right:before {
+    content: "\f10f";
+}
+.icon-arrow-up:before {
+    content: "\f110";
+}
+.icon-bin:before {
+    content: "\f111";
+}
+.icon-bugle:before {
+    content: "\f112";
+}
+.icon-calendar-o:before {
+    content: "\f113";
+}
+.icon-calendar:before {
+    content: "\f114";
+}
+.icon-car-check:before {
+    content: "\f115";
+}
+.icon-car-remove:before {
+    content: "\f116";
+}
+.icon-caret-left:before {
+    content: "\f117";
+}
+.icon-caret-right:before {
+    content: "\f118";
+}
+.icon-cell:before {
+    content: "\f119";
+}
+.icon-change-stock:before {
+    content: "\f11a";
+}
+.icon-check:before {
+    content: "\f11b";
+}
+.icon-claro:before {
+    content: "\f11c";
+}
+.icon-color:before {
+    content: "\f11d";
+}
+.icon-comments:before {
+    content: "\f11e";
+}
+.icon-compare:before {
+    content: "\f11f";
+}
+.icon-consult:before {
+    content: "\f120";
+}
+.icon-custobeneficio:before {
+    content: "\f121";
+}
+.icon-destaquead:before {
+    content: "\f122";
+}
+.icon-discount:before {
+    content: "\f123";
+}
+.icon-doors:before {
+    content: "\f124";
+}
+.icon-email-pro:before {
+    content: "\f125";
+}
+.icon-featured-ad:before {
+    content: "\f126";
+}
+.icon-featured-smart:before {
+    content: "\f127";
+}
+.icon-file:before {
+    content: "\f128";
+}
+.icon-financiamento:before {
+    content: "\f129";
+}
+.icon-fuel:before {
+    content: "\f12a";
+}
+.icon-gearbox:before {
+    content: "\f12b";
+}
+.icon-gearshift:before {
+    content: "\f12c";
+}
+.icon-globe:before {
+    content: "\f12d";
+}
+.icon-heart:before {
+    content: "\f12e";
+}
+.icon-irregularity:before {
+    content: "\f12f";
+}
+.icon-mail-white:before {
+    content: "\f130";
+}
+.icon-mail:before {
+    content: "\f131";
+}
+.icon-map-pointer:before {
+    content: "\f132";
+}
+.icon-money:before {
+    content: "\f133";
+}
+.icon-multicars:before {
+    content: "\f134";
+}
+.icon-nextel:before {
+    content: "\f135";
+}
+.icon-oi:before {
+    content: "\f136";
+}
+.icon-pesquisa:before {
+    content: "\f137";
+}
+.icon-phone-salles:before {
+    content: "\f138";
+}
+.icon-phone:before {
+    content: "\f139";
+}
+.icon-photos:before {
+    content: "\f13a";
+}
+.icon-pin:before {
+    content: "\f13b";
+}
+.icon-plan-list:before {
+    content: "\f13c";
+}
+.icon-plan-private:before {
+    content: "\f13d";
+}
+.icon-plan-reseller:before {
+    content: "\f13e";
+}
+.icon-plate:before {
+    content: "\f13f";
+}
+.icon-print:before {
+    content: "\f140";
+}
+.icon-propostaefetivas:before {
+    content: "\f141";
+}
+.icon-publicoalvo:before {
+    content: "\f142";
+}
+.icon-revenda:before {
+    content: "\f143";
+}
+.icon-school:before {
+    content: "\f144";
+}
+.icon-seller-online:before {
+    content: "\f145";
+}
+.icon-seller:before {
+    content: "\f146";
+}
+.icon-sm-facebook:before {
+    content: "\f147";
+}
+.icon-sm-googleplus:before {
+    content: "\f148";
+}
+.icon-sm-instagram:before {
+    content: "\f149";
+}
+.icon-sm-twitter:before {
+    content: "\f14a";
+}
+.icon-sm-whatsapp:before {
+    content: "\f14b";
+}
+.icon-sm-youtube:before {
+    content: "\f14c";
+}
+.icon-sold:before {
+    content: "\f14d";
+}
+.icon-sualogoaqui:before {
+    content: "\f14e";
+}
+.icon-swap:before {
+    content: "\f14f";
+}
+.icon-tim:before {
+    content: "\f150";
+}
+.icon-time:before {
+    content: "\f151";
+}
+.icon-trocaestoque:before {
+    content: "\f152";
+}
+.icon-type-bus:before {
+    content: "\f153";
+}
+.icon-type-car:before {
+    content: "\f154";
+}
+.icon-type-moto:before {
+    content: "\f155";
+}
+.icon-type-truck:before {
+    content: "\f156";
+}
+.icon-user-avatar:before {
+    content: "\f157";
+}
+.icon-user:before {
+    content: "\f158";
+}
+.icon-velocity:before {
+    content: "\f159";
+}
+.icon-video:before {
+    content: "\f15a";
+}
+.icon-view-grid:before {
+    content: "\f15b";
+}
+.icon-view-list:before {
+    content: "\f15c";
+}
+.icon-vivo:before {
+    content: "\f15d";
+}
+.icon-website:before {
+    content: "\f15e";
+}
+.icon-whatsapp:before {
+    content: "\f15f";
+}

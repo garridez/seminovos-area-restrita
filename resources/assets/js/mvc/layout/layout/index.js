@@ -1,6 +1,8 @@
 module.exports.seletor = '.l-layout';
 
 module.exports.callback = ($) => {
+    require('bootstrap/js/dist/util.js');
+    require('bootstrap/js/dist/collapse');
     if ($(window).width() < 992) {
         $("body").removeClass("desktop");
         $("body").addClass("mobile");
@@ -18,4 +20,7 @@ module.exports.callback = ($) => {
             $(".page-sidebar").addClass("visible");
         }
     });
+
+    let menu = $(".menu-items");
+    menu.find()
 };
