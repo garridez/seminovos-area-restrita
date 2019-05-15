@@ -25,10 +25,18 @@ class CriarAnuncioController extends AbstractActionController
         $idVeiculo = $params->fromRoute('idVeiculo', false);
         if ($idVeiculo) {
             $data = $this->getApiClient()
-                    ->veiculosGet([
-                        'ignorarCondicoesBasicas' => true,
-                        ], (int) $idVeiculo, true)
-                    ->getData()[0];
+                ->veiculosGet([
+                    'ignorarCondicoesBasicas' => true,
+                    ], (int) $idVeiculo, true)
+                ->getData();
+            if ($data['status'] !== 200) {
+                /**
+                 * @todo Redirecionar para algum lugar e informar o erro
+                 */
+                die('O veículo não existe');
+                
+            }
+            $data = $data[0];
             $data['total'] = $data['valorPlano'];
             $adicionalData = array_intersect_key($data, [
                 'tipoCadastro' => '',
