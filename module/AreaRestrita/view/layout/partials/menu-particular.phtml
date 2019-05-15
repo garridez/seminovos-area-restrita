@@ -49,13 +49,6 @@
       </a>
       <span class="icon-thumbnail"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
     </li>
-    <li class="">
-      <a href="<?= $this->url('logout') ?>">
-        <span class="title">Sair</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-    </li>
-
     <li>
       <?php  foreach ($arrayPlanos as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano; ?>
       <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
@@ -78,6 +71,12 @@
         </div>
       </div>
       <?php endforeach; ?>
+    </li>
+    <li class="">
+      <a href="<?= $this->url('logout') ?>">
+        <span class="title">Sair</span>
+      </a>
+      <span class="icon-thumbnail"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
     </li>
   </ul>
   <div class="clearfix"></div>
