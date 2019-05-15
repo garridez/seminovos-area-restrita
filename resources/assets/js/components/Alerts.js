@@ -16,8 +16,8 @@ module.exports = alerts = {
         var count = Math.floor(time / 1000);
         var spanCount = $('<span></span>').text('(' + count + ')');
         var close = $('<button class="btn btn-danger" data-dismiss="modal">')
-                .text('Fechar ')
-                .append(spanCount);
+            .text('Fechar ')
+            .append(spanCount);
 
         var intervalID = setInterval(function () {
             spanCount.text('(' + count + ')');
@@ -34,6 +34,7 @@ module.exports = alerts = {
 
         var modal = $.jsBsModal({
             contents: {
+                'close': '',
                 'modal-title': title,
                 'modal-body': text,
                 'modal-footer': [
