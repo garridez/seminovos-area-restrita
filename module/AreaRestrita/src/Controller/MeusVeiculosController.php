@@ -51,6 +51,136 @@ class MeusVeiculosController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->getAll();
 
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        if ($cadastrosModel->isRevenda()) {
+            $dadosVeiculos = self::retornaValidacaoRevenda($dadosVeiculos);
+        } else {
+            $dadosVeiculos = self::retornaValidacaoParticular($dadosVeiculos);
+        }
+
+        $viewModel = new ViewModel([
+            'meusVeiculos' => $dadosVeiculos
+        ]);
+        
+        $request = $this->getRequest();
+        // Se for ajax, desativa o layout
+        $viewModel->setTerminal($request->isXmlHttpRequest());
+
+        return $viewModel;
+    }
+
+    protected function retornaValidacaoRevenda($dadosVeiculos)
+    {
+        /** Adicionado verificações para cada tipo de plano e status do anuncio */
+        foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+
+            $dataAtual = new \DateTime(date('Y-m-d'));
+
+            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $intevaloData = $dataAtual->diff($dataExpiracao);
+            $intevaloData = (int)$intevaloData->format('%R%a');
+            $dataExpiracao = $dataExpiracao->format('d/m/Y');
+
+            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
+            $intervaloDataCadastro = (int)$intervaloDataCadastro->format('%R%a');
+
+            $frase = "";
+            $temp_acoes = [
+                "realizar_pagamento" => false,
+                "editar_dados" => false,
+                "editar_fotos" => false,
+                "vendido" => false,
+                "upgrade_plano" => false,
+                "excluir" => false,
+                "renovar" => false,
+                "trocar_plano" => false,
+                "reativar" => false,
+                "enviar_comprovante" => false,
+                "renovar_plano" => false,
+            ];
+            
+            switch ($veiculo['idStatus']) {
+                case "1":
+                    $frase = "Aguardando confirmação de pagamento";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 3) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "2":
+                    $frase = "Anúncio ativo no site";
+                    $temp_acoes["vendido"] = true;
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
+                    if ($veiculo['idPlano'] != 3) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "3":
+                    $frase = "Conclua o cadastro do anúncio";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 3) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "4":
+                    $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
+                    $temp_acoes["vendido"] = true;
+                    $temp_acoes["excluir"] = true;
+                    if ($veiculo['idPlano'] == 1) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "5":
+                    $frase = "Anúncio inativo no site";
+                    $temp_acoes["reativar"] = true;
+                    break;
+                case "6":
+                    $frase = "";
+                    break;
+                case "7":
+                    $frase = "";
+                    $temp_acoes["reativar"] = true;
+                    break;
+                case "8":
+                    $frase = "Veículo vendido";
+                    $temp_acoes["reativar"] = true;
+                    break;
+                case "9":
+                    $frase = "";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 3) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "10":
+                    $frase = "";
+                    break;
+                default:
+                    $temp_acoes = [
+                        "<h5>Huston we have a problem!!(Entre em contato com nosso suporte)</h5>",
+                    ];
+                    break;
+            }
+
+            $dadosVeiculos['data'][$key]['botoes'] = $temp_acoes;
+            $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
+            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
+            $dadosVeiculos['data'][$key]['frase'] = $frase;
+        }
+
+        return $dadosVeiculos;
+    }
+
+    protected function retornaValidacaoParticular($dadosVeiculos)
+    {
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
@@ -80,107 +210,102 @@ class MeusVeiculosController extends AbstractActionController
                 "renovar_plano" => false,
             ];
             switch ($veiculo['idStatus']) {
-            case "1":
-                $frase = "Aguardando confirmação de pagamento";
-                $temp_acoes["editar_dados"] = true;
-                $temp_acoes["editar_fotos"] = true;
-                $temp_acoes["enviar_comprovante"] = true;
-                if($veiculo['idPlano'] != 1){
-                    $temp_acoes["realizar_pagamento"] = true;
-                }
-                break;
-            case "2":
-                $frase = "Anúncio ativo no site";            
-                $temp_acoes["vendido"] = true;
-                $temp_acoes["editar_dados"] = true;
-                $temp_acoes["editar_fotos"] = true;
-                if($veiculo['idPlano'] != 4){
-                    $temp_acoes["upgrade_plano"] = true;   
-                }
-                if($veiculo['idPlano'] != 5){
-                   $temp_acoes["excluir"] = true;
-                }
-                if($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30){
-                    $temp_acoes["renovar_plano"] = true;
-                }
-                break;
-            case "3":
-                $frase = "Conclua o cadastro do anúncio";            
-                $temp_acoes["editar_dados"] = true;
-                $temp_acoes["editar_fotos"] = true;
-                if($veiculo['idPlano'] != 4){
-                    $temp_acoes["upgrade_plano"] = true;   
-                }
-                break;
-            case "4":
-                $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
-                $temp_acoes["vendido"] = true;
-                $temp_acoes["excluir"] = true;
-                if($veiculo['idPlano'] == 4){
-                    $temp_acoes["reativar"] = true;
-                    $temp_acoes["renovar"] = true;
-                } elseif ($veiculo['idPlano'] == 1){
-                    $temp_acoes["renovar"] = true;
-                }else{
-                    $temp_acoes["reativar"] = true;
-                }
-                break;
-            case "5":
-                $frase = "Anúncio inativo no site";
-                // NÃO HÁ AÇÕES PARA ESTE CASO
-                break; 
-            case "6":
-                $frase = "Aguardando liberação";
-                if($veiculo['idPlano'] != 4) {
+                case "1":
+                    $frase = "Aguardando confirmação de pagamento";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["enviar_comprovante"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["realizar_pagamento"] = true;
+                    }
+                    break;
+                case "2":
+                    $frase = "Anúncio ativo no site";
+                    $temp_acoes["vendido"] = true;
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 4) {
+                        $temp_acoes["upgrade_plano"] = true;
+                    }
+                    if ($veiculo['idPlano'] != 5) {
+                        $temp_acoes["excluir"] = true;
+                    }
+                    if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {
+                        $temp_acoes["renovar_plano"] = true;
+                    }
+                    break;
+                case "3":
+                    $frase = "Conclua o cadastro do anúncio";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 4) {
+                        $temp_acoes["upgrade_plano"] = true;
+                    }
+                    break;
+                case "4":
+                    $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
+                    $temp_acoes["vendido"] = true;
+                    $temp_acoes["excluir"] = true;
+                    if ($veiculo['idPlano'] == 4) {
+                        $temp_acoes["reativar"] = true;
+                        $temp_acoes["renovar"] = true;
+                    } elseif ($veiculo['idPlano'] == 1) {
+                        $temp_acoes["renovar"] = true;
+                    } else {
+                        $temp_acoes["reativar"] = true;
+                    }
+                    break;
+                case "5":
+                    $frase = "Anúncio inativo no site";
+                    // NÃO HÁ AÇÕES PARA ESTE CASO
+                    break;
+                case "6":
+                    $frase = "Aguardando liberação";
+                    if ($veiculo['idPlano'] != 4) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }
+                    break;
+                case "7":
+                    $frase = "";
+                    if ($veiculo['idPlano'] != 5) {
+                        $temp_acoes["reativar"] = true;
+                    }
+                    break;
+                case "8":
+                    $frase = "Veículo vendido";
+                    if ($veiculo['idPlano'] != 5  /* < 48 HORAS MARCADO COMO VENDIDO */) {
+                        $temp_acoes["reativar"] = true;
+                    }
+                    break;
+                case "9":
+                    $frase = "";
                     $temp_acoes["trocar_plano"] = true;
-                }
-                break;
-            case "7":
-                $frase = "";
-                if($veiculo['idPlano'] != 5){
-                    $temp_acoes["reativar"] = true;
-                } 
-                break;
-            case "8": 
-                $frase = "Veículo vendido";                
-                if($veiculo['idPlano'] != 5  /* < 48 HORAS MARCADO COMO VENDIDO */){
-                    $temp_acoes["reativar"] = true;                    
-                } 
-                break;
-            case "9":
-                $frase = "";
-                $temp_acoes["trocar_plano"] = true;
-                $temp_acoes["editar_dados"] = true;
-                $temp_acoes["editar_fotos"] = true;
-                 break;
-            case "10": 
-                $frase = "";
-                $temp_acoes["trocar_plano"] = true;
-                $temp_acoes["editar_dados"] = true;
-                $temp_acoes["editar_fotos"] = true;
-               break;
-            default: 
-                $temp_acoes = [
-                    "<h5>Huston we have a problem!!(Entre em contato com nosso suporte)</h5>",
-                ];
-                break;
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    break;
+                case "10":
+                    $frase = "";
+                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    break;
+                default:
+                    $temp_acoes = [
+                        "<h5>Huston we have a problem!!(Entre em contato com nosso suporte)</h5>",
+                    ];
+                    break;
             }
 
-           $dadosVeiculos['data'][$key]['botoes'] = $temp_acoes;
-           $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
-           $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
-           $dadosVeiculos['data'][$key]['frase'] = $frase;
+            $dadosVeiculos['data'][$key]['botoes'] = $temp_acoes;
+            $dadosVeiculos['data'][$key]['dataExpiracao'] = $dataExpiracao;
+            $dadosVeiculos['data'][$key]['intervaloData'] = $intevaloData;
+            $dadosVeiculos['data'][$key]['frase'] = $frase;
         }
-        $viewModel = new ViewModel([
-            'meusVeiculos' => $dadosVeiculos
-        ]);
-        
-        $request = $this->getRequest();
-        // Se for ajax, desativa o layout
-        $viewModel->setTerminal($request->isXmlHttpRequest());
 
-        return $viewModel;
+        return $dadosVeiculos;
     }
+
+
     /*
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular
@@ -199,7 +324,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 2,
-            ], $idVeiculo);
+        ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
         die;
@@ -217,7 +342,7 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 5,
             'clicks' => 0
-            ], $idVeiculo);
+        ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
         die;
@@ -234,7 +359,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
-            ], $idVeiculo);
+        ], $idVeiculo);
         echo json_encode($dadosVeiculos);
         die;
     }
@@ -276,7 +401,7 @@ class MeusVeiculosController extends AbstractActionController
                 'idVeiculo' => $idVeiculo,
                 'idStatus' => 7,
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
-                ], $idVeiculo);
+            ], $idVeiculo);
         }
         echo json_encode($dadosVeiculos);
         die;
