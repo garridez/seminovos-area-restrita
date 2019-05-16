@@ -127,16 +127,12 @@ function setLoaddingForAllAjax() {
         });
 }
 
+
+
 function setStepIconActive() {
     var stepsIcons = $('.steps-list li');
 
-    /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
-    $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
-        let acessorios = [4, 6, 7, 17, 33, 35];
-        acessorios.forEach((element, index) => {
-            $("#dadosAcessorios").find(`input[value='${element}']`).click();
-        })
-    });
+
     $('.anuncio-steps [class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
