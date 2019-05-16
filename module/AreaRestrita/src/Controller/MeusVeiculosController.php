@@ -100,13 +100,15 @@ class MeusVeiculosController extends AbstractActionController
                 "reativar" => false,
                 "enviar_comprovante" => false,
                 "renovar_plano" => false,
+                "inativar" => false,
             ];
-            
+
             switch ($veiculo['idStatus']) {
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
                     if ($veiculo['idPlano'] != 3) {
                         $temp_acoes["trocar_plano"] = true;
                     }
@@ -117,6 +119,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
+                    $temp_acoes["inativar"] = true;
                     if ($veiculo['idPlano'] != 3) {
                         $temp_acoes["trocar_plano"] = true;
                     }
@@ -125,6 +128,8 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
+                    $temp_acoes["inativar"] = true;
                     if ($veiculo['idPlano'] != 3) {
                         $temp_acoes["trocar_plano"] = true;
                     }
@@ -133,6 +138,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["excluir"] = true;
+                    $temp_acoes["inativar"] = true;
                     if ($veiculo['idPlano'] == 1) {
                         $temp_acoes["trocar_plano"] = true;
                     }
@@ -140,6 +146,7 @@ class MeusVeiculosController extends AbstractActionController
                 case "5":
                     $frase = "Anúncio inativo no site";
                     $temp_acoes["reativar"] = true;
+                    $temp_acoes["excluir"] = true;
                     break;
                 case "6":
                     $frase = "";
@@ -147,21 +154,26 @@ class MeusVeiculosController extends AbstractActionController
                 case "7":
                     $frase = "";
                     $temp_acoes["reativar"] = true;
+                    $temp_acoes["excluir"] = true;
                     break;
                 case "8":
                     $frase = "Veículo vendido";
                     $temp_acoes["reativar"] = true;
+                    $temp_acoes["excluir"] = true;
                     break;
                 case "9":
                     $frase = "";
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
+                    $temp_acoes["inativar"] = true;
                     if ($veiculo['idPlano'] != 3) {
                         $temp_acoes["trocar_plano"] = true;
                     }
                     break;
                 case "10":
                     $frase = "";
+                    $temp_acoes["excluir"] = true;
                     break;
                 default:
                     $temp_acoes = [
@@ -227,7 +239,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
-                    if ($veiculo['idPlano'] != 5) {
+                    if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["excluir"] = true;
                     }
                     if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {

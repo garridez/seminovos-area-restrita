@@ -192,6 +192,15 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     onclick="alerta_fazer()">Pagar</button>
                                 <?php }?>
 
+                                <?php if($veiculo["botoes"]["inativar"]){?>
+                                    <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
+                                       data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
+                                       data-modal-yes-text="Sim, inativar este vendido!" data-modal-success-msg="Inativar!"
+                                       title="Inativar veículo">
+                                        <button class="btn btn-sm btn-danger ml-2">Inativado b </button>
+                                    </a>
+                                <?php }?>
+
                                 <?php if($veiculo["botoes"]["vendido"]){?>
                                 <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
