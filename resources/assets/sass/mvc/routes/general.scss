@@ -86,11 +86,11 @@ $sizes: map-merge(
 $color-planos: ();
 $color-planos: map-merge(
   (
-    "1": $yellow, // BASICO
+    "1": $gray-500, // BASICO
     "2": $orange, // TURBO
     "3": $red,    // NITRO
     "4": $red-dark, // NITRO HOME
-    "5": $gray-500  // SIMPLES
+    "5": $yellow // SIMPLES
   ),
   $color-planos
 );
