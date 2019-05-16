@@ -19,15 +19,15 @@ module.exports.callback = ($) => {
     $('.anuncio-steps').on('steps-loaded', setStepIconActive);
 
     stepsContainer
-            .stepPlugin()
-            .on('submit', 'form', function (e) {
-                $(this).closest('.step-container').stepPlugin('next');
-                return stopEvent(e);
-            });
+        .stepPlugin()
+        .on('submit', 'form', function (e) {
+            $(this).closest('.step-container').stepPlugin('next');
+            return stopEvent(e);
+        });
     $('.btn-voltar').on('click', function () {
         $('.step-container [class*="step"].active')
-                .closest('.step-container')
-                .stepPlugin('prev');
+            .closest('.step-container')
+            .stepPlugin('prev');
     });
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
@@ -53,12 +53,12 @@ module.exports.callback = ($) => {
             if ($this.find(hash).length) {
                 $this.stepPlugin('goTo', hash);
                 $this.closest('[class*="step-"]:not(.anuncio-steps)')
-                        .each(function () {
-                            $(this)
-                                    .parent()
-                                    .closest('.step-container')
-                                    .stepPlugin('goTo', this);
-                        });
+                    .each(function () {
+                        $(this)
+                            .parent()
+                            .closest('.step-container')
+                            .stepPlugin('goTo', this);
+                    });
             } else {
                 var lastStep = $this.stepPlugin('getSteps').last();
                 $this.stepPlugin('goTo', lastStep);
@@ -119,25 +119,33 @@ function loadContentStepsAsync() {
 function setLoaddingForAllAjax() {
     var loading = require('components/Loading');
     $(document)
-            .ajaxStart(function () {
-                loading.open();
-            })
-            .ajaxComplete(function () {
-                loading.close();
-            });
+        .ajaxStart(function () {
+            loading.open();
+        })
+        .ajaxComplete(function () {
+            loading.close();
+        });
 }
 
 function setStepIconActive() {
     var stepsIcons = $('.steps-list li');
+
+    /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
+    $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
+        let acessorios = [4, 6, 7, 17, 33, 35];
+        acessorios.forEach((element, index) => {
+            $("#dadosAcessorios").find(`input[value='${element}']`).click();
+        })
+    });
     $('.anuncio-steps [class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
             stepsIcons.removeClass('active')
-                    .filter(function () {
-                        var labels = $(this).data('step').split(',');
-                        return labels.indexOf(labelStep) !== -1;
-                    })
-                    .addClass('active');
+                .filter(function () {
+                    var labels = $(this).data('step').split(',');
+                    return labels.indexOf(labelStep) !== -1;
+                })
+                .addClass('active');
         }
     });
 }

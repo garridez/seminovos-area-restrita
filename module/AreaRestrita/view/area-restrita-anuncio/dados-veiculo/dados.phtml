@@ -23,15 +23,16 @@
                 DADOS DO ANÚNCIO
             </h4>
             <div class="text-center my-3">
-                <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu anúncio.
-                    <br/>Campos com * são de preenchimento obrigatório.
+                <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar
+                    seu anúncio.
+                    <br />Campos com * são de preenchimento obrigatório.
                 </small>
             </div>
-            
+
             <!-- <? $this->form()->openTag($form); ?>
 
             <form class="" role="form"> -->
-            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">            
+            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">
                 <?= $this->formElement($fields['tipoVeiculo']) ?>
                 <div class="form-group form-group-default required ">
                     <?= $this->formLabel($fields['placa']) ?>
@@ -107,10 +108,17 @@
                     </div>
                 </div>
                 <h5 class="text-center">
-                Acessórios
+                    Acessórios
                 </h5>
-                <div class="form-group form-group-default">
-                    <?= $this->formLabel($fields['checkboxacessorios']) ?>
+                <div class="form-group form-group-default" id="dadosAcessorios">
+                    <div class="d-flex justify-content-between">
+
+                        <?= $this->formLabel($fields['checkboxacessorios']) ?>
+                        <button class="btn btn-success" id="btnCompleto"
+                            title="Marcar todos os acessórios de um carro completo.">
+                            Completo
+                        </button>
+                    </div>
                     <?php
                     // Gambiarra monstra pra mostrar o checkbox em 3 colunas :)
                     $acessoriosHTML = $this->formMultiCheckbox($fields['checkboxacessorios']);
@@ -139,7 +147,7 @@
                 <div class="form-group ">
                     <?= $this->formSubmit($fields['submit']) ?>
                 </div>
-            </form>    
+            </form>
             <!--<? $this->form()->closeTag(); ?> -->
 
         </div>
