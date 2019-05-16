@@ -148,6 +148,11 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'data-mask' => '000.000.000.000.000' ,
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
+                'placeholder' => '52.000' ,
             ]
         ]);
         global $container;
