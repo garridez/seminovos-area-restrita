@@ -14,6 +14,10 @@ module.exports.callback = ($) => {
     loadContentStepsAsync();
     var stepsContainer = $('.step-container');
 
+    // Troca o ícone ativo de acordo com o step ativo
+    stepsContainer.on('step:change', setStepIconActive);
+    $('.anuncio-steps').on('steps-loaded', setStepIconActive);
+
     stepsContainer
             .stepPlugin()
             .on('submit', 'form', function (e) {
@@ -121,4 +125,19 @@ function setLoaddingForAllAjax() {
             .ajaxComplete(function () {
                 loading.close();
             });
+}
+
+function setStepIconActive() {
+    var stepsIcons = $('.steps-list li');
+    $('.anuncio-steps [class*="step-"].active').each(function () {
+        var labelStep = $(this).data('step-label');
+        if (labelStep) {
+            stepsIcons.removeClass('active')
+                    .filter(function () {
+                        var labels = $(this).data('step').split(',');
+                        return labels.indexOf(labelStep) !== -1;
+                    })
+                    .addClass('active');
+        }
+    });
 }

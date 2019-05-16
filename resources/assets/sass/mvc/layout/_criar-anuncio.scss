@@ -7,7 +7,7 @@
     background-color: #fff;
 }
 .row-full{
-  width: 98vw;
+    width: 98vw;
 }
 
 ul.steps-list{
@@ -21,6 +21,9 @@ ul.steps-list{
             border-bottom: 1px solid #707070;
             width: 40px;
         }
+        svg{
+            transition: all 400ms;
+        }
         &.active{
             svg{
                 fill: #ED9902;
@@ -28,12 +31,12 @@ ul.steps-list{
         }
         &.active ~ li{
             svg{
-                fill: #DADADA;
+                fill: #7B7B7B;
             }
         }
     }
     svg{
         width: 42px;
-        fill: #7B7B7B;
+        fill: #DADADA;
     }
 }

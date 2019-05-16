@@ -82,10 +82,12 @@ class MeusVeiculosController extends AbstractActionController
             switch ($veiculo['idStatus']) {
             case "1":
                 $frase = "Aguardando confirmação de pagamento";
-                $temp_acoes["realizar_pagamento"] = true;
                 $temp_acoes["editar_dados"] = true;
                 $temp_acoes["editar_fotos"] = true;
                 $temp_acoes["enviar_comprovante"] = true;
+                if($veiculo['idPlano'] != 1){
+                    $temp_acoes["realizar_pagamento"] = true;
+                }
                 break;
             case "2":
                 $frase = "Anúncio ativo no site";            

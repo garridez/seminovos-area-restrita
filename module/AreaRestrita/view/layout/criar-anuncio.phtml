@@ -1,12 +1,12 @@
 <?php
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
-
+$this->headTitle()->setSeparator(' - ')->append('Seminovos.com.br');
 ?><!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+    <?php echo $this->headTitle() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <link rel="apple-touch-icon" href="pages/ico/60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
@@ -34,51 +34,48 @@
       <div class="hea-der">
 
         <div class="container">
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-md-2">
-              <a href="/meus-veiculos" title="Voltar para Home">
-                <svg viewBox="0 0 180 66" alt="logo" width="78" height="29"  class="snbh-logo">
-                <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer_letters"></use>
-                <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer_car"></use>
-                </svg>
-              </a>
+              <svg viewBox="0 0 180 66" alt="logo" width="78" height="29"  class="snbh-logo">
+              <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer_letters"></use>
+              <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer_car"></use>
+              </svg>
             </div>
             <div class="col-md-10">
               <ul class="steps-list">
-                <li title="Seu dados">
+                <li title="Seu dados" data-step="usuario">
                   <svg viewBox="0 0 42 42" alt="usuário">
-                  <use xlink:href="/img/svg/icons/aduser.svg#icon"></use>
+                  <use xlink:href="/img/svg/icons/user.svg#icon"></use>
                   </svg>
                 </li>
-                <li title="Dados do seu veículo" class="active">
+                <li title="Dados do seu veículo" data-step="dados,preco,mais-informacoes">
                   <svg viewBox="0 0 42 42" alt="veículo">
-                  <use xlink:href="/img/svg/icons/adveiculo.svg#body"></use>
-                  <use xlink:href="/img/svg/icons/adveiculo.svg#light-1" style="fill:#fff"></use>
-                  <use xlink:href="/img/svg/icons/adveiculo.svg#light-2" style="fill:#fff"></use>
+                  <use xlink:href="/img/svg/icons/ad-car.svg#body"></use>
+                  <use xlink:href="/img/svg/icons/ad-car.svg#light-1" style="fill:#fff"></use>
+                  <use xlink:href="/img/svg/icons/ad-car.svg#light-2" style="fill:#fff"></use>
                   </svg>
                 </li>
-                <li title="Fotos do veículo">
-                  <svg viewBox="0 0 42 42" alt="fotos">
-                  <use xlink:href="/img/svg/icons/adfotos.svg#body"></use>
-                  <use xlink:href="/img/svg/icons/adfotos.svg#lens"></use>
+                <li title="Fotos do veículo" data-step="fotos,video" class="active">
+                  <svg viewBox="0 0 16 16" alt="fotos">
+                  <use xlink:href="/img/svg/icons/photos.svg#cam"></use>
                   </svg>
                 </li>
-                <li title="Planos de Anúncio">
-                  <svg viewBox="0 0 42 42" alt="plano">
-                  <use xlink:href="/img/svg/icons/adplano.svg#item-1"></use>
-                  <use xlink:href="/img/svg/icons/adplano.svg#item-2"></use>
-                  <use xlink:href="/img/svg/icons/adplano.svg#item-3"></use>
+                <li title="Planos de Anúncio" data-step="plano">
+                  <svg viewBox="0 0 100 100" alt="plano">
+                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-1"></use>
+                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-2"></use>
+                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-3"></use>
                   </svg>
                 </li>
-                <li title="Pagamento">
+                <li title="Pagamento" data-step="checkout">
                   <svg viewBox="0 0 42 42" alt="pagamento">
-                  <use xlink:href="/img/svg/icons/adpagamento.svg#icon"></use>
+                  <use xlink:href="/img/svg/icons/ad-payment.svg#icon"></use>
                   </svg>
                 </li>
-                <li class="Conclusão">
+                <li class="Conclusão" data-step="">
                   <svg viewBox="0 0 42 42" alt="concluído">
-                  <use xlink:href="/img/svg/icons/adconcluido.svg#circle"></use>
-                  <use xlink:href="/img/svg/icons/adconcluido.svg#check" style="fill:#fff"></use>
+                  <use xlink:href="/img/svg/icons/check.svg#circle"></use>
+                  <use xlink:href="/img/svg/icons/check.svg#check" style="fill:#fff"></use>
                   </svg>
                 </li>
               </ul>
