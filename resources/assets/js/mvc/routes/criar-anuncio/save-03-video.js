@@ -4,6 +4,20 @@ module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
     var stepsContainer = $('.step-container');
 
+    $('.anuncio-steps').on('steps-loaded', function () {
+        /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
+
+        $("form[name='form_videoVeiculo']").find("input[name='video']").keyup(function () {
+            let result = parseVideo($(this).val());
+            if (result.type == "youtube") {
+                $(".preview-video").removeClass("d-flex");
+                $(".preview-video").addClass("d-none");
+                $("#videoWindow").removeClass("d-none");
+                $("#videoWindow").attr('src', "https://www.youtube.com/embed/" + result.id);
+            }
+        });
+    });
+
     stepsContainer.on('step:pre-exit:video', function (e, stepParams) {
 
         var video = stepParams.stepElement.find('form [name="video"]');

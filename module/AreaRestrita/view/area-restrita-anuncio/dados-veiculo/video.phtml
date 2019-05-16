@@ -21,10 +21,10 @@
                 TEM UM VÍDEO DO SEU VEÍCULO?
             </h4>
             <div class="text-center my-3">
-                <small class="my-3 align-center">Agora esta na hora de mostrar a sua joia! Se você já preparou o book do
-                    seu veículo,
-                    clique no box abaixo, ou arraste para dentro dele, para enviar as fotos que deseja inserir no seu
-                    anúncio.
+                <small class="my-3 align-center">
+                    Agora esta na hora de mostrar a sua joia! Se possuí um vídeo do seu veicúlo publicado no youtube
+                    cole a URL abaixo
+                    que ele será mostrado juntamente de suas fotos!
                 </small>
             </div>
 
@@ -49,6 +49,9 @@
                         <div class="preview-video bg-dark justify-content-center align-items-center d-flex">
                             <i class="text-white fa fa-youtube-play fa-3x" aria-hidden="true"></i>
                         </div>
+                        <iframe id="videoWindow" class="d-none" width="240" height="147" src="" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                     </div>
                 </div>
 
@@ -56,7 +59,6 @@
                     <?= $this->formSubmit($fields['submit']) ?>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

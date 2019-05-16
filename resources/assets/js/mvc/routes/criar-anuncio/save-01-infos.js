@@ -19,7 +19,15 @@ module.exports.callback = ($) => {
     //($('#form_dadosVeiculo'))
     $('.anuncio-steps').on('steps-loaded', function () {
         marcaModelo($('#form_dadosVeiculo'));
+        /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
+        $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
+            let acessorios = [4, 6, 7, 17, 33, 35];
+            acessorios.forEach((element, index) => {
+                $("#dadosAcessorios").find(`input[value='${element}']`).click();
+            })
+        });
     });
+
 
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
 
