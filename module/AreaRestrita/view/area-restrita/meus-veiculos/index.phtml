@@ -69,7 +69,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <a href="#" data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, Excluir" data-modal-success-msg="Veiculo excluído"
-                                    title="Desativar anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                    title="Excluir anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
                                     <i class=" fa fa-trash-o"></i>
                                 </a>
                                 <?php }?>
@@ -196,8 +196,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                        data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                        data-modal-yes-text="Sim, inativar este vendido!" data-modal-success-msg="Inativar!"
-                                       title="Inativar veículo">
-                                        <button class="btn btn-sm btn-danger ml-2">Inativado b </button>
+                                       title="Desativar veículo">
+                                        <button class="btn btn-sm btn-danger ml-2">Inativar</button>
                                     </a>
                                 <?php }?>
 

@@ -105,38 +105,21 @@ class MeusVeiculosController extends AbstractActionController
 
             switch ($veiculo['idStatus']) {
                 case "1":
-                    $frase = "Aguardando confirmação de pagamento";
-                    $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
-                    $temp_acoes["excluir"] = true;
-                    if ($veiculo['idPlano'] != 3) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
+                    $frase = "";
                     break;
                 case "2":
                     $frase = "Anúncio ativo no site";
-                    $temp_acoes["vendido"] = true;
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
                     $temp_acoes["inativar"] = true;
-                    if ($veiculo['idPlano'] != 3) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
+                    $temp_acoes["trocar_plano"] = true;
                     break;
                 case "3":
-                    $frase = "Conclua o cadastro do anúncio";
-                    $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
-                    $temp_acoes["excluir"] = true;
-                    $temp_acoes["inativar"] = true;
-                    if ($veiculo['idPlano'] != 3) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
+                    $frase = "";
                     break;
                 case "4":
-                    $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
-                    $temp_acoes["vendido"] = true;
+                    $frase = "";
                     $temp_acoes["excluir"] = true;
                     $temp_acoes["inativar"] = true;
                     if ($veiculo['idPlano'] == 1) {
@@ -153,27 +136,15 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "7":
                     $frase = "";
-                    $temp_acoes["reativar"] = true;
-                    $temp_acoes["excluir"] = true;
                     break;
                 case "8":
-                    $frase = "Veículo vendido";
-                    $temp_acoes["reativar"] = true;
-                    $temp_acoes["excluir"] = true;
+                    $frase = "";
                     break;
                 case "9":
                     $frase = "";
-                    $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
-                    $temp_acoes["excluir"] = true;
-                    $temp_acoes["inativar"] = true;
-                    if ($veiculo['idPlano'] != 3) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
                     break;
                 case "10":
                     $frase = "";
-                    $temp_acoes["excluir"] = true;
                     break;
                 default:
                     $temp_acoes = [
@@ -235,7 +206,9 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Anúncio ativo no site";
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
