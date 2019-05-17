@@ -191,6 +191,7 @@ class MeusVeiculosController extends AbstractActionController
                 "reativar" => false,
                 "enviar_comprovante" => false,
                 "renovar_plano" => false,
+                "alerta" => false,
             ];
             switch ($veiculo['idStatus']) {
                 case "1":
@@ -241,8 +242,8 @@ class MeusVeiculosController extends AbstractActionController
                     }
                     break;
                 case "5":
-                    $frase = "Anúncio inativo no site";
-                    // NÃO HÁ AÇÕES PARA ESTE CASO
+                    $frase = "Anúncio inativo no site. Entre em conto com nosso atendimento";
+                    $temp_acoes["alerta"] = true;
                     break;
                 case "6":
                     $frase = "Aguardando liberação";
