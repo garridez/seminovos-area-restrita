@@ -20,10 +20,16 @@ module.exports = function (apiResponse, time) {
         showError('Tivemos um problema ao processar sua solicitação.<br>Tente novamente.', 'Houve um problema...', time);
         return false;
     }
+    var title = 'Houve um problema...';
     var body = '';
-
+    if (apiResponse.title) {
+        title = apiResponse.title;
+    }
     if (apiResponse.detail) {
         body += apiResponse.detail;
+    } else {
+        body += 'Houve um problema';
+
     }
     var messages = apiResponse.messages;
     if (messages) {
@@ -33,12 +39,14 @@ module.exports = function (apiResponse, time) {
             /**
              * Quanto mais mensagens tiver, por mais tempo a mensagem será exibida
              */
-            time += messages.length *1000;
+            time += messages.length * 1000;
         } else {
             body += messages;
         }
+    } else {
+        body += 'Tivemos um problema ao processar sua solicitação.<br>Tente novamente.';
     }
-    showError(body, apiResponse.title, time);
+    showError(body, title, time);
     return false;
 
 };
