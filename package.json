@@ -11,7 +11,8 @@
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -w 1500"
   },
   "repository": {
     "type": "git",
@@ -38,8 +39,5 @@
   },
   "devDependencies": {
     "livereload": "^0.7.0"
-  },
-  "scripts": {
-    "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -w 1500"
   }
 }
