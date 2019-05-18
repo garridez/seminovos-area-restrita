@@ -49,7 +49,7 @@ class AbstractActionController extends ZendAbstractActionController
     /**
      * Retorna os dados do veículo que estiver na rota
      */
-    public function getVeiculo()
+    public function getVeiculo($cache = false)
     {
         $idVeiculo = (int) $this->params()->fromRoute('idVeiculo');
 
@@ -58,7 +58,7 @@ class AbstractActionController extends ZendAbstractActionController
         }
         $data = $this->getApiClient()->veiculosGet([
             'ignorarCondicoesBasicas' => true
-            ], $idVeiculo);
+            ], $idVeiculo, $cache);
 
         if ($data->status !== 200) {
             return false;
