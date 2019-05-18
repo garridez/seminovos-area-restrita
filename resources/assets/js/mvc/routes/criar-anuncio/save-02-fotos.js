@@ -52,6 +52,9 @@ module.exports.callback = ($) => {
             processData: false,
             dataType: 'json',
             success: function (data) {
+                if (!HandleApiError(data)) {
+                    return;
+                }
                 // Marca as imagens como "já carregadas"
                 imgs.data('uploaded', true);
                 imgsToDelete.data('deleted', true);
