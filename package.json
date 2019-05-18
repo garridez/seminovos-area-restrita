@@ -36,5 +36,10 @@
     "printthis": "^0.1.5",
     "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "livereload": "^0.7.0"
+  },
+  "scripts": {
+    "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -w 1500"
+  }
 }
