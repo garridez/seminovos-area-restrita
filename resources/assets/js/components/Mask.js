@@ -1,20 +1,36 @@
 
+function parseValueOfObject(maskOptions) {
+    if (typeof maskOptions !== 'object') {
+        return maskOptions;
+    }
+    $.each(maskOptions, function (i, obj) {
+        if (typeof obj === 'string') {
+            if (obj.indexOf('RegExp') !== -1) {
+                obj = eval(obj);
+                maskOptions[i] = obj;
+            }
+        } else if (typeof obj === 'object') {
+            obj = parseValueOfObject(obj);
+        }
+    });
 
+    return maskOptions;
+}
 function setMask($) {
     $('[data-mask]').each(function () {
         var $this = $(this);
         if ($this.data('mask-configured')) {
             return;
         }
-        var mask = $this.data('mask');
-        var maskOptions = $this.data('mask-options');
-        if (typeof maskOptions === 'string') {
+        $this.data('mask-configured', true);
+        var mask = $this.attr('data-mask');
+        var maskOptions = $this.attr('data-mask-options');
+        if (maskOptions) {
             maskOptions = JSON.parse(maskOptions.trim());
-
+            maskOptions = parseValueOfObject(maskOptions);
         }
+
         $this.mask(mask, maskOptions);
-        console.log(maskOptions);
-                $this.data('mask-configured', true);
     });
 }
 module.exports = function () {
