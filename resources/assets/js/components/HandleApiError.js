@@ -13,12 +13,11 @@ function showError(body, title, time) {
  */
 module.exports = function (apiResponse, time) {
     time = time || 15000;
-    if (apiResponse.status === 200) {
+    if (typeof apiResponse === 'object'  && apiResponse.status === 200) {
         return true;
     }
     if (!apiResponse) {
-        showError('Tivemos um problema ao processar sua solicitação.<br>Tente novamente.', 'Houve um problema...', time);
-        return false;
+        apiResponse = [];
     }
     var title = 'Houve um problema...';
     var body = '';
