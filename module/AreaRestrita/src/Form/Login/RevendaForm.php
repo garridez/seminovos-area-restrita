@@ -41,6 +41,9 @@ class RevendaForm extends Form
                             'options' => [
                                 'label' => 'CNPJ',
                             ],
+                            'attributes' => [
+                                'data-mask' => '00.000.000/0000-00',
+                            ]
                         ],
                     ],
                     [
