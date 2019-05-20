@@ -132,7 +132,7 @@ class ParticularForm extends Form
             'type' => Element\Text::class,
             'name' => 'telefone_2',
             'options' => [
-                'label' => 'Celular eeeeeeeeeeeee',
+                'label' => 'Celular',
             ],
             'attributes' => [
                 'class' => 'form-control',
