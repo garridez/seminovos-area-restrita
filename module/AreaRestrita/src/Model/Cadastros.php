@@ -20,7 +20,9 @@ class Cadastros extends ApiModelCadastros
         if ($this->getIdentity() === null) {
             return false;
         }
-        return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
+        return parent::get([
+                'considerarInativo' => 1
+                ], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
     /**
