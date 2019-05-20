@@ -5,6 +5,7 @@ module.exports.callback = ($) => {
     require('bootstrap/js/dist/index.js');
     require('bootstrap/js/dist/tab');
     require('bootstrap/js/dist/collapse');
+    require('bootstrap/js/dist/dropdown');
 
     require('jquery-mask-plugin');
     require('jquery-validation');
@@ -20,7 +21,7 @@ module.exports.callback = ($) => {
     formCC.find('[name="numero_cartao"]')
         .mask("9999 9999 9999 9??? ????", optional);
 
-    $(".tab-content").on("click", function () {
+    $(".table.table-condensed").on("change", function () {
         var clickado = $(".tab-content").find("input[name = 'options']:checked").parent().parent();
         let resultado = $("#resultado");
         let pagamento = $("#tab2");
@@ -28,7 +29,7 @@ module.exports.callback = ($) => {
         let plano = $(clickado).find("#plano").html();
         let desconto = $(clickado).find("#desconto").html();
         let economia = $(clickado).find("#economia").html();
-        let valor = $(clickado).find("#valor").html();
+        let valor = parseFloat($(clickado).find("#valor").html().replace('.', '').replace(',', '.').replace(' ', ''));
 
         resultado.find("#desconto").html(desconto);
         resultado.find("#economia").html(economia);
@@ -38,24 +39,31 @@ module.exports.callback = ($) => {
         pagamento.find("#desconto").html(desconto);
         pagamento.find("#economia").html(economia);
         pagamento.find("#valor").html(valor);
+        funcao(valor, plano);
 
-        // console.log(plano);
-        $("#parcelas").html("");
-        if (plano == "Plano Trimestral") {
-            for (let i = 0; i < 3; i++) {
-                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
-            }
-        }
-        if (plano == "Plano Semestral") {
-            for (let i = 0; i < 6; i++) {
-                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
-            }
-        }
-        if (plano == "Plano Anual") {
-            for (let i = 0; i < 8; i++) {
-                $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1));
-            }
-        }
+
 
     });
+    let funcao = (valor, plano) => {
+        switch (plano) {
+            case "Plano Trimestral":
+                for (let i = 0; i < 3; i++) {
+                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
+                }
+                break;
+            case "Plano Semestral":
+                for (let i = 0; i < 6; i++) {
+                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
+                }
+                break;
+            case "Plano Anual":
+                for (let i = 0; i < 8; i++) {
+                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
 }

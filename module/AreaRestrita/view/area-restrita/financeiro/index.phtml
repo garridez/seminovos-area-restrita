@@ -3,7 +3,13 @@
 $dadosFinanceiro = $this->financeiro;
 
 ?>
-
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Financeiro</h3>
+        </div>
+    </div>
+</div>
 <div class=" container-fluid container-fixed-lg">
     <div id="rootwizard">
         <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
@@ -44,7 +50,8 @@ $dadosFinanceiro = $this->financeiro;
                                 foreach ($planos as $i => $plano):
                                     ?>
                                 <tr>
-                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7 " onclick="$('#parcelas<?=$i?>').collapse('toggle')">
+                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7 "
+                                        onclick="$('#parcelas<?=$i?>').collapse('toggle')">
                                         <input type="radio" name="options" id="option<?= $i ?>"
                                             value="<?= $plano['value_checkbox'] ?>">
                                         <label class="m-l-10 font-montserrat fs-11 all-caps" for="option<?= $i ?>"><span
@@ -52,28 +59,35 @@ $dadosFinanceiro = $this->financeiro;
                                         </label>
                                     </td>
 
-                                    <td class="col-lg-2 col-md-3 col-sm-3 text-right">
-                                        <span>Desconto de <span id="desconto"><?= $plano['desconto'] ?></span></span>
+                                    <td class="col-lg-4 col-md-6 col-sm-6 text-left">
+                                        <span>Desconto de
+                                            <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
+                                            </span>
+                                            <small id="economia">
+                                                (<?= $plano['economia'] ?>)
+                                            </small>
+                                        </span>
                                     </td>
 
-                                    <td class="col-lg-2 col-md-3 col-sm-3 text-right">
+                                    <!-- <td class="col-lg-2 col-md-3 col-sm-3 text-right">
                                         <span>Economia de R$ <span id="economia"><?= $plano['economia'] ?></span></span>
-                                    </td>
+                                    </td> -->
 
                                     <td class="col-lg-3 col-md-3 col-sm-2 text-right">
-                                        <h4 class="text-primary no-margin font-montserrat">R$
+                                        <h4 class="text-orange no-margin font-montserrat">R$
                                             <span id="valor"><?= $plano['valor'] ?></span></h4>
                                     </td>
                                 </tr>
                                 <?php /*if($plano["parcelas"]):?>
                                 <tr id="parcelas<?=$i?>" class="collapse">
                                     <td colspan="4" class="d-flex justify-content-start">
-                                        <p>Pode Ser parcelado em até <span id="nParcelas"><?=$plano["parcelas"]?></span></p>
+                                        <p>Pode Ser parcelado em até <span id="nParcelas"><?=$plano["parcelas"]?></span>
+                                        </p>
                                     </td>
                                 </tr>
                                 <?php endif; */endforeach; ?>
                             </table>
-                            <div class="row b-a b-grey no-margin" id="resultado">
+                            <div class="row  mt-3" id="resultado">
                                 <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
                                     <div>
                                         <h5 class="font-montserrat all-caps small no-margin hint-text bold">
@@ -88,7 +102,7 @@ $dadosFinanceiro = $this->financeiro;
                                         <p class="no-margin">R$ <span id="economia">-</span></p>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-right bg-laranja padding-10">
+                                <div class="col-md-6 text-right bg-dark padding-10">
                                     <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
                                         Total</h5>
                                     <h4 class="no-margin text-white">R$ <span id="total">-</span></h4>
@@ -100,7 +114,7 @@ $dadosFinanceiro = $this->financeiro;
             </div>
             <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab2">
                 <div class="row row-same-height">
-                    <div class="col-md-5 b-r b-dashed b-grey ">
+                    <div class="col-md-6 b-r b-dashed b-grey ">
                         <div class="padding-30 sm-padding-5">
                             <h2>Forma de pagamento</h2>
                             <p>Escolha ao lado a forma de pagamento desejda para finalizar a compra.</p>
@@ -117,7 +131,6 @@ $dadosFinanceiro = $this->financeiro;
                                         <div class="d-flex align-items-center">
                                             <span>Desconto </span>
                                             <span id="desconto">-</span>
-                                            <span>%</span>
                                         </div>
                                     </td>
                                     <td class="align-items-center col-md-3 text-right">
@@ -129,7 +142,7 @@ $dadosFinanceiro = $this->financeiro;
                                     <td></td>
                                     <td></td>
                                     <td colspan="3" class="col-md-3 text-right justify-content-end">
-                                        <h4 class="text-primary no-margin font-montserrat d-flex align-items-center">
+                                        <h4 class="text-dark no-margin font-montserrat d-flex align-items-center">
                                             <span>R$ </span>
                                             <span id="valor">-<span>
                                         </h4>
@@ -138,11 +151,12 @@ $dadosFinanceiro = $this->financeiro;
                             </table>
                             <p>A fatura estará disponível no seu histórico de pagamentos após a confirmação de
                                 pagamento. <br>Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
-                            <p>Ao selecionar pagar agora, você concorda com os nossos <a href="#">Termos &amp;
+                            <p>Ao selecionar pagar agora, você concorda com os nossos <a href="#"
+                                    class="text-orange">Termos &amp;
                                     Condições</a></p>
                         </div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="padding-30 sm-padding-5">
                             <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm"
                                 role="tablist" data-init-reponsive-tabs="dropdownfx">
@@ -161,37 +175,22 @@ $dadosFinanceiro = $this->financeiro;
                                     <div class="row row-same-height">
                                         <form role="form" class="pagamento-cc-form">
                                             <div class="bg-master-light padding-30 b-rad-lg">
-                                                <div class="d-flex align-items-baseline justify-content-between mb-3">
+                                                <div class="d-flex align-items-center justify-content-between mb-3">
                                                     <h2 class="pull-left no-margin">Cartão de Crédito</h2>
-                                                    <ul class="list-unstyled pull-right list-inline no-margin">
-                                                        <li>
-                                                            <a href="#">
-                                                                <img width="51" height="32"
-                                                                    data-src-retina="assets/img/form-wizard/visa2x.png"
-                                                                    data-src="assets/img/form-wizard/visa.png"
-                                                                    class="brand" alt="logo"
-                                                                    src="assets/img/form-wizard/visa.png">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="hint-text">
-                                                                <img width="51" height="32"
-                                                                    data-src-retina="assets/img/form-wizard/amex2x.png"
-                                                                    data-src="assets/img/form-wizard/amex.png"
-                                                                    class="brand" alt="logo"
-                                                                    src="assets/img/form-wizard/amex.png">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="hint-text">
-                                                                <img width="51" height="32"
-                                                                    data-src-retina="assets/img/form-wizard/mastercard2x.png"
-                                                                    data-src="assets/img/form-wizard/mastercard.png"
-                                                                    class="brand" alt="logo"
-                                                                    src="assets/img/form-wizard/mastercard.png">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                    <div class="d-flex align-items-center ml-3">
+                                                        <div>
+                                                            <img width="51" height="32" class="brand" alt="logo"
+                                                                src="img/svg/visa_logo.svg">
+                                                        </div>
+                                                        <div>
+                                                            <img width="51" height="32" class="brand" alt="logo"
+                                                                src="img/svg/mastercard_logo.svg">
+                                                        </div>
+                                                        <div>
+                                                            <img width="51" height="32" class="brand" alt="logo"
+                                                                src="img/svg/american-express.svg">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Número do Cartão</label>
@@ -230,10 +229,13 @@ $dadosFinanceiro = $this->financeiro;
                                                         <div class="form-group form-group-default required"
                                                             title="Validade do cartão">
                                                             <label for="validade_cartao">Parcelas</label>
-                                                            <select type="text" class="form-control" id="parcelas"
-                                                                required="" name="parcelas">
+                                                            <select id="parcelas" name="parcelas"
+                                                                class="full-width select2-hidden-accessible"
+                                                                data-init-plugin="select2" tabindex="-1"
+                                                                aria-hidden="true">
 
                                                             </select>
+
                                                         </div>
                                                     </div>
                                                 </div>
