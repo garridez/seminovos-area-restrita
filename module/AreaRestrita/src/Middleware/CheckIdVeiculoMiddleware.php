@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiModel\Model\Veiculos;
 use Zend\Authentication\AuthenticationService as AuthServ;
+use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Router\Http\RouteMatch;
 
 /**
@@ -37,6 +38,14 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         // Se não tem idVeiculo no como parametro, então continua para o próximo middleware
         if (!$idVeiculo) {
             return $delegate->process($request);
+        }
+        // Quando está tentando editar um veículo mas não está logado
+        if (!$this->authService->hasIdentity()) {
+            $url = $this->container
+                ->get('Router')
+                ->getRoute('auth')
+                ->assemble();
+            return new RedirectResponse($url);
         }
 
         /** @var Veiculos $veiculosModel */
