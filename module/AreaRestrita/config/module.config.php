@@ -14,6 +14,8 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
+require __DIR__ . '/snbh.constants.php';
+
 return [
     'session_containers' => [
         Module::SESSION_NAMESPACE
