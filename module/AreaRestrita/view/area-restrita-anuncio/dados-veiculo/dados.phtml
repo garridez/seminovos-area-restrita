@@ -112,12 +112,13 @@
                 </h5>
                 <div class="form-group form-group-default" id="dadosAcessorios">
                     <div class="d-flex justify-content-between">
-
                         <?= $this->formLabel($fields['checkboxacessorios']) ?>
-                        <button class="btn btn-success" id="btnCompleto"
-                            title="Marcar todos os acessórios de um carro completo.">
-                            Completo
-                        </button>
+                        <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
+                            <div class="checkbox m-0 p-0 m-b-0">
+                                <input type="checkbox" id="completoCheckbox">
+                                <label for="completoCheckbox">Completo</label>
+                            </div>
+                        </div>
                     </div>
                     <?php
                     // Gambiarra monstra pra mostrar o checkbox em 3 colunas :)
