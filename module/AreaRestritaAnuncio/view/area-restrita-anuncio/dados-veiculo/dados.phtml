@@ -1,0 +1,156 @@
+<?php
+    /* @var $this \Zend\View\Renderer\PhpRenderer */
+    /* @var $form \Zend\Form\View\Helper\Form */
+    //echo $this->form($this->formDadosVeiculos);
+
+    /* @var $this \AreaRestritaAnuncio\Form\Veiculo\DadosForm */
+    $form = $this->formDadosVeiculos;
+    //var_dump($form->getElements());
+    $fields = $form->getElements();
+
+    foreach ($fields as $element) {
+        if ($element->getAttribute('name') != 'checkboxacessorios')
+            $element->setAttribute('class', 'form-control');
+    }
+
+    $form->setAttribute('class', 'form');
+?>
+<div class="container container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h4 class="text-center">
+                DADOS DO ANÚNCIO
+            </h4>
+            <div class="text-center my-3">
+                <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar
+                    seu anúncio.
+                    <br />Campos com * são de preenchimento obrigatório.
+                </small>
+            </div>
+
+            <!-- <? $this->form()->openTag($form); ?>
+
+            <form class="" role="form"> -->
+            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">
+                <?= $this->formElement($fields['tipoVeiculo']) ?>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['placa']) ?>
+                    <?= $this->formText($fields['placa']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['idMarca']) ?>
+                    <?= $this->formSelect($fields['idMarca']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['modeloCarro']) ?>
+                    <?= $this->formSelect($fields['modeloCarro']) ?>
+                </div>
+                <div class="form-group form-group-default required ">
+                    <?= $this->formLabel($fields['versao']) ?>
+                    <?= $this->formElement($fields['versao']) ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['motor']) ?>
+                            <?= $this->formSelect($fields['motor']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['idValvula']) ?>
+                            <?= $this->formSelect($fields['idValvula']) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoFabricacao']) ?>
+                            <?= $this->formSelect($fields['anoFabricacao']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoModelo']) ?>
+                            <?= $this->formSelect($fields['anoModelo']) ?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['portas']) ?>
+                            <?= $this->formSelect($fields['portas']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['cor']) ?>
+                            <?= $this->formSelect($fields['cor']) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['combustivel']) ?>
+                            <?= $this->formSelect($fields['combustivel']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['kilometragem']) ?>
+                            <?= $this->formText($fields['kilometragem']) ?>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="text-center">
+                    Acessórios
+                </h5>
+                <div class="form-group form-group-default" id="dadosAcessorios">
+                    <div class="d-flex justify-content-between">
+                        <?= $this->formLabel($fields['checkboxacessorios']) ?>
+                        <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
+                            <div class="checkbox m-0 p-0 m-b-0">
+                                <input type="checkbox" id="completoCheckbox">
+                                <label for="completoCheckbox">Completo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    // Gambiarra monstra pra mostrar o checkbox em 3 colunas :)
+                    $acessoriosHTML = $this->formMultiCheckbox($fields['checkboxacessorios']);
+
+                    $acessoriosHTML = explode('<div', $acessoriosHTML);
+
+                    if (trim($acessoriosHTML[0]) == '') {
+                        unset($acessoriosHTML[0]);
+                    }
+                    $t = "\t";
+                    echo '<div class="row">' . PHP_EOL;
+                    foreach ($acessoriosHTML as $key => $acessorio) {
+                        echo $t . '<div class="col-md-4">' . PHP_EOL;
+                        echo $t . $t . '<div' . $acessorio . PHP_EOL;
+                        echo $t . '</div>' . PHP_EOL;
+                        if ($key % 3 === 0) {
+                            echo '</div>' . PHP_EOL . PHP_EOL;
+                            echo '<div class="row">' . PHP_EOL;
+                        }
+                    }
+                    echo '</div>' . PHP_EOL;
+
+                    ?>
+                </div>
+                <!-- <div class="form-group "><div class=""><button type="submit" name="submit" class="btn btn-default" value="Cadastrar">Cadastrar</button></div></div> -->
+                <div class="form-group ">
+                    <?= $this->formSubmit($fields['submit']) ?>
+                </div>
+            </form>
+            <!--<? $this->form()->closeTag(); ?> -->
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<?php
+global $self;
+$self = $this;
+
+function rUrl($route, $params = [])
+{
+    global $self;
+    $url = $self->url($route, $params);
+    echo '<a href="' . $url . '"><b>' . $url . '</b></a> ';
+
+    echo '<i> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' . $route . '</i>';
+    echo '<br>';
+}
+$default = [
+    'tipo' => 'carro',
+    'email' => 'email@seminovosbh.com.br'
+];
+
+?>
+<h1>Fluxo da criação de anúncio</h1>
+
+
+<p>É recebido o email pela url</p>
+<?= rUrl('criar-anuncio/check-login', $default) ?>
+<p>Se o email existe, cai nessa rota para o cara logar:<br>
+    <?= rUrl('criar-anuncio/login', $default) ?>
+</p>
+<p>Se o email não existe no banco, então o usuário deve se cadastrar:<br>
+    <?= rUrl('criar-anuncio/criar-cadastro', $default) ?>
+</p>
+<hr>
+
+<p><i>A partir daqui, para todas as rotas é necessário estar logado</i></p>
+<p>
+  Com o login feito, começa de fato o cadastro de anúncio<br>
+  <?php
+  foreach (
+  [
+      'dados',
+      'preco',
+      'mais-informacoes',
+      'fotos',
+      'video',
+  ]
+  as $action
+  ) {
+      rUrl('criar-anuncio/anuncio/dados/pages', $default + ['action' => $action]);
+  }
+
+  ?>
+</p>
+<hr>
+<p>
+  Aqui escolhe o plano<br>
+  <?= rUrl('criar-anuncio/anuncio/planos', $default) ?>
+</p>
+<hr>
+<p>
+  Faz o pagamento<br>
+  <?= rUrl('criar-anuncio/anuncio/pagamento', $default) ?>
+</p>
+<hr>
+<p>
+  Se o pagamento for automaticamente aprovado, vai para esse link<br>
+  <?= rUrl('criar-anuncio/anuncio/pagamento/confirmacao', $default) ?>
+</p>
+<p>
+  Se for preciso aguardar a confirmação (boleto), então cai nessa tela<br>
+  <?= rUrl('criar-anuncio/anuncio/pagamento/vamos-aguardar', $default) ?>
+</p>
