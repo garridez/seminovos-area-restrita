@@ -29,6 +29,7 @@ return [
                         'action' => 'index',
                         'middleware' => [
                             Middleware\LoginMiddleware::class,
+                            Middleware\CheckIdVeiculoMiddleware::class,
                             Middleware\DispatchMiddleware::class,
                         ]
                     ],
@@ -113,6 +114,7 @@ return [
             // Middleware
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
+            Middleware\CheckIdVeiculoMiddleware::class => Middleware\Factory\CheckIdVeiculoMiddlewareFactory::class,
         ]
     ],
     'view_helpers' => [

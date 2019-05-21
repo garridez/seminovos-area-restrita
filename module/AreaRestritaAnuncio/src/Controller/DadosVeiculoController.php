@@ -98,12 +98,12 @@ class DadosVeiculoController extends AbstractActionController
                 // Cria
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
-
+            // Limpa o cache do middleware
+            $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
 
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
-
             return new JsonModel($res->json());
         }
 

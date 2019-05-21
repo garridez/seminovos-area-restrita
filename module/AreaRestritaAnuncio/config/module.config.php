@@ -7,6 +7,7 @@
 
 namespace AreaRestritaAnuncio;
 
+use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Middleware\DispatchMiddleware;
 use AreaRestrita\Middleware\LoginMiddleware;
 use Zend\Router\Http\Literal;
@@ -42,7 +43,11 @@ return [
                     'defaults' => [
                         'controller' => Controller\CriarAnuncioController::class,
                         'action' => 'index',
-                        'idVeiculo' => 'novo'
+                        'idVeiculo' => 'novo',
+                        'middleware' => [
+                            CheckIdVeiculoMiddleware::class,
+                            DispatchMiddleware::class,
+                        ]
                     ]
                 ],
                 'child_routes' => [

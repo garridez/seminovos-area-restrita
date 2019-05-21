@@ -2,7 +2,60 @@
 
 namespace SnBH\ApiModel\Model;
 
+use Zend\Cache\Storage\Adapter\Filesystem;
+
 class Veiculos extends AbstractModel
 {
-    
+
+    use \AreaRestrita\Model\Traits\TraitIdentity;
+
+    protected function getCacheKey()
+    {
+        return 'isOwner_cache_' . md5(__METHOD__ . 'Cache');
+    }
+
+    /**
+     * Essa função verifica se o idVeiculo pertence ao idCadastro que está loggado
+     * 
+     * @param int|array $idVeiculo Pode ser um id ou um array de id
+     */
+    public function isOwner($idVeiculo)
+    {
+        $idCadastro = $this->getIdentity();
+
+        /** @var Filesystem $cache */
+        $cache = $this->container->get('cache');
+        $cacheKey = $this->getCacheKey();
+
+        $idVeiculo = (array) $idVeiculo;
+        $idVeiculo = array_map('intVal', $idVeiculo);
+
+        $veiculos = $cache->getItem($cacheKey);
+        if ($veiculos === null) {
+            $veiculos = $this->get([
+                    'idCadastro' => $idCadastro,
+                    'ignorarCondicoesBasicas' => true,
+                    'registrosPagina' => -1,
+                ])->getData();
+            $veiculos = array_map(function($item) {
+                return (int) $item['idVeiculo'];
+            }, $veiculos);
+            $cache->setItem($cacheKey, $veiculos);
+        }
+
+        /**
+         * Retorna true se todos os id de um continver no outro
+         */
+        return count(array_intersect($idVeiculo, $veiculos)) == count($idVeiculo);
+    }
+
+    public function clearIsOwnerCache()
+    {
+        $cacheKey = $this->getCacheKey();
+
+        /** @var Filesystem $cache */
+        $cache = $this->container->get('cache');
+
+        return $cache->removeItem($cacheKey);
+    }
 }
