@@ -16,8 +16,15 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     if (url.search('#erro') > 0) {
         $('#modalErroSenha').modal('show');
         setTimeout(function () {
-            $('#myModal1').modal('hide')
-        }, 2000);
+            $('#modalErroSenha').modal('hide')
+        }, 8000);
+
+    }
+    if (url.search('#cuidado') > 0) {
+        $('#modalCuidado').modal('show');
+        setTimeout(function () {
+            $('#modalCuidado').modal('hide')
+        }, 8000);
 
     }
 });
