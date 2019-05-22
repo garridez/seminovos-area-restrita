@@ -59,8 +59,7 @@ class AuthController extends AbstractActionController
                 if ($result->getCode() === $result::SUCCESS) {
                     return $this->redirect()->toRoute('restrito');
                 } else {
-                    var_dump('Erro ao entrar');
-                    die;
+                    return $this->redirect()->toUrl('../entrar#erro');
                 }
             }
         }
@@ -111,8 +110,7 @@ class AuthController extends AbstractActionController
             if ($result->getCode() === $result::SUCCESS) {
                 return $this->redirect()->toUrl('../meus-veiculos');
             } else {
-                var_dump('Erro ao entrar');
-                die;
+                return $this->redirect()->toUrl('../entrar#erro');
             }
         } else {
             return $this->redirect()->toRoute('auth');

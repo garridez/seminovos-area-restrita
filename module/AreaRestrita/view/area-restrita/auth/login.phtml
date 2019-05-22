@@ -4,10 +4,10 @@
 ?>
 
 <div class="snbh-logo-container">
-    <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
-  <svg viewBox="0 0 180 66" width="180" height="66"  class="snbh-logo">
-  <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-  <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+  <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
+  <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+    <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+    <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
   </svg>
 </div>
 
@@ -20,7 +20,8 @@
     <div class="row">
       <div class="col-6">
         <div class="form-check form-check-inline" title="Entrar usando minha conta particular">
-          <input type="radio" class="form-check-input" id="radioTipoCadastroParticular" name="tipoCadastro" value="container-form-particular" checked> 
+          <input type="radio" class="form-check-input" id="radioTipoCadastroParticular" name="tipoCadastro"
+            value="container-form-particular" checked>
           <label class="form-check-label" for="radioTipoCadastroParticular">
             Particular
           </label>
@@ -28,7 +29,8 @@
       </div>
       <div class="col-6">
         <div class="form-check form-check-inline" title="Entrar usando minha conta de revendedor">
-          <input type="radio" class="form-check-input"  id="radioTipoCadastroRevenda" name="tipoCadastro" value="container-form-revenda"> 
+          <input type="radio" class="form-check-input" id="radioTipoCadastroRevenda" name="tipoCadastro"
+            value="container-form-revenda">
           <label class="form-check-label" for="radioTipoCadastroRevenda">
             Revenda
           </label>
@@ -43,10 +45,29 @@
   ?>
   <div class="forms-group">
     <div class="container-form-particular">
-        <?= $this->form($this->particularForm) ?>
+      <?= $this->form($this->particularForm) ?>
     </div>
     <div class="container-form-revenda hide">
       <?= $this->form($this->revendaForm) ?>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalErroSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Usuario e/ou Senha estão incorretos</b></h5>
+        <p>Confira os campos de usuario e senha e tente novamente</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      </div>
     </div>
   </div>
 </div>
