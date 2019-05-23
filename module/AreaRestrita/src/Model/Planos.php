@@ -32,7 +32,7 @@ class Planos extends ApiModelPagamentos
     public function get($tipoPlano = null, $cache = true)
     {
         return parent::get([
-                'tipoPlano' => $tipoPlano
+                'tipoPlano' => Cadastros::TIPO_ID_STRING[$tipoPlano]
                 ], null, $cache)->getData();
     }
 }
