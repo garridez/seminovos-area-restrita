@@ -9,60 +9,77 @@ $rotasAnuncio = [
         'fotos' => 'fotos',
         'video' => 'video',
     ],
-    'planos' => $this->url('criar-anuncio/anuncio/planos', $routeParams),
+    'plano' => $this->url('criar-anuncio/anuncio/planos', $routeParams),
     'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
 ];
+
+if ($this->userInfo('tipoCadastro') == 1) {
+    unset($rotasAnuncio['checkout']);
+    $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
+}
 
 foreach ($rotasAnuncio['veiculo'] as &$rota) {
     $rota = $this->url('criar-anuncio/anuncio/dados/pages', ['action' => $rota] + $routeParams);
 }
 
 if ($this->idVeiculo) {
-    $this->headTitle()->append($this->placa.' '.$this->marca . ' '. $this->modelo);
+    $this->headTitle()->append($this->placa . ' ' . $this->marca . ' ' . $this->modelo);
 } else {
     $this->headTitle()->append('Novo anúncio');
 }
 
 ?>
 <div id="dados-basicos" class="hide">
-  <form>
-      <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
-      <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
-      <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
-      <input type="hidden" id="idPlano" name="idPlano" value="<?= $this->idPlano ?>" class="idPlano">
-      <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total"> <br>
-  </form>
+    <form>
+        <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+        <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
+        <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
+        <input type="hidden" id="idPlano" name="idPlano" value="<?= $this->idPlano ?>" class="idPlano">
+        <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total"> <br>
+    </form>
 </div>
 <div class="row">
-  <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 anuncio-steps step-container">
+    <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 anuncio-steps step-container">
 
-    <div class="step-0 step-veiculo step-container active">
+        <div class="step-0 step-veiculo step-container active">
+            <?php
+            $count = 0;
+            unset($rota);
+            foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
+                echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
+            }
+
+            ?>
+        </div>
         <?php
         $count = 0;
         unset($rota);
-        foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
-            echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
+        unset($rotasAnuncio['veiculo']); // Já foi impresso acima
+
+        foreach ($rotasAnuncio as $name => $rota) {
+            echo '<div class="' . ('step-' . $count++) . ' step-' . $name . '" '
+            . 'data-step-label="' . $name . '" '
+            . 'data-url="' . $rota . '"></div>';
         }
 
         ?>
+<!--        <div class="step-1 step-plano" data-step-label="plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
+            Step Plano
+        </div>
+        <div class="step-2 step-checkout" data-step-label="checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
+            Step Checkout
+        </div>-->
     </div>
-    <div class="step-1 step-plano" data-step-label="plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
-      Step Plano
-    </div>
-    <div class="step-2 step-checkout" data-step-label="checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
-      Step Checkout
-    </div>
-  </div>
 </div>
 
 <div class="row step-controls">
 
-  <div class="col-3 offset-3">
-    <button class="btn-voltar btn btn-lg btn-secondary btn-block text-white">VOLTAR</button>
-  </div>
-  <div class="col-3 offset--1">
-    <button class="btn-continuar btn btn-lg btn-laranja btn-block text-white">CONTINUAR</button>
-  </div>
+    <div class="col-3 offset-3">
+        <button class="btn-voltar btn btn-lg btn-secondary btn-block text-white">VOLTAR</button>
+    </div>
+    <div class="col-3 offset--1">
+        <button class="btn-continuar btn btn-lg btn-laranja btn-block text-white">CONTINUAR</button>
+    </div>
 
 </div>
 <br class="clearfix">

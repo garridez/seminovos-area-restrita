@@ -19,7 +19,21 @@ class PlanoController extends AbstractActionController
 
         $dadosPlanos = $this->getContainer()
             ->get(Planos::class)
-            ->getCurrent();
+            ->get(2);
+
+        if ($this->getCadastro('tipoCadastro') == '1') {
+            $template = 'revenda';
+            $planosAnuncioRevenda = [
+                5, # Básico
+                2, # Turbo
+                3, # Nitro
+            ];
+            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda) {
+                return in_array($i['idPlano'], $planosAnuncioRevenda);
+            });
+        } else {
+            $template = 'particular';
+        }
 
         $data = [
             'planos' => $dadosPlanos,

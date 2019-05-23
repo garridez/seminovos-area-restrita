@@ -1,5 +1,7 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
+
+$isRevenda = $this->userInfo('tipoCadastro') == 1;
 
 usort($planos, function ($a, $b) {
     return $b['ordem'] <=> $a['ordem'];
@@ -55,6 +57,9 @@ $boxes = [
                             if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
                                 $desabilitarPlano = true;
                             }
+                            if ($isRevenda) {
+                                $desabilitarPlano = false;
+                            }
 
                             ?>
                     <div class="col-12 col-sm col-md col-lg">
@@ -92,13 +97,17 @@ $boxes = [
                                         }
 
                                         ?>
+                            <?php if (!$isRevenda): ?>
                                 <li><span><?= $anuncioTempo; ?></span></li>
+                            <?php endif; ?>
 
                                 <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de
                                         exibição</span></li>
                             </ul>
-                            <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
-                                <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
+                            <?php if (!$isRevenda): ?>
+                                <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
+                                    <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
+                            <?php endif; ?>
                             <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano"
                                 value="<?= $plano['idPlano'] ?>" class="hidden"
                                 <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>

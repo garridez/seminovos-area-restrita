@@ -155,6 +155,30 @@ return [
                                     ],
                                 ],
                             ],
+                            'finalizar' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/finalizar',
+                                    'defaults' => [
+                                        'controller' => Controller\FinalizarController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                                'child_routes' => [
+                                    'metodos' => [
+                                        'type' => Segment::class,
+                                        'options' => [
+                                            'route' => '/:action[/.*]',
+                                            'route' => '/:action',
+                                            'constraints' => [
+                                                'action' => 'concluido|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            
                         ],
                     ],
                 ],
@@ -166,6 +190,7 @@ return [
             Controller\CadastrarController::class => InvokableFactory::class,
             Controller\CriarAnuncioController::class => InvokableFactory::class,
             Controller\DadosVeiculoController::class => InvokableFactory::class,
+            Controller\FinalizarController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
             Controller\LoginController::class => InvokableFactory::class,
             Controller\PagamentoController::class => InvokableFactory::class,
