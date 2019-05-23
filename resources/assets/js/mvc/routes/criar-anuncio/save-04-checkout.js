@@ -24,16 +24,6 @@ module.exports.callback = ($) => {
         handlers.transferenciaUpload();
     }
     $('.step-container')
-            .on('step:change:checkout', function (e) {
-                init();
-                $('.btn-continuar')
-                        .removeClass('btn-laranja')
-                        .attr('disabled', true);
-            })
-            .on('step:pre-exit:checkout', function (e) {
-                $('.btn-continuar')
-                        .addClass('btn-laranja')
-                        .attr('disabled', false);
-            });
+            .on('step:change:checkout', init);
 
 };

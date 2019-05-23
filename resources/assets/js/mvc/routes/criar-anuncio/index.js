@@ -19,15 +19,15 @@ module.exports.callback = ($) => {
     $('.anuncio-steps').on('steps-loaded', setStepIconActive);
 
     stepsContainer
-        .stepPlugin()
-        .on('submit', 'form', function (e) {
-            $(this).closest('.step-container').stepPlugin('next');
-            return stopEvent(e);
-        });
+            .stepPlugin()
+            .on('submit', 'form', function (e) {
+                $(this).closest('.step-container').stepPlugin('next');
+                return stopEvent(e);
+            });
     $('.btn-voltar').on('click', function () {
         $('.step-container [class*="step"].active')
-            .closest('.step-container')
-            .stepPlugin('prev');
+                .closest('.step-container')
+                .stepPlugin('prev');
     });
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
@@ -41,6 +41,19 @@ module.exports.callback = ($) => {
             return;
         }
     });
+
+    stepsContainer
+            .on('step:change:checkout step:change:finalizar', function (e) {
+                console.log('okokokokok')
+                $('.btn-continuar')
+                        .removeClass('btn-laranja')
+                        .attr('disabled', true);
+            })
+            .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
+                $('.btn-continuar')
+                        .addClass('btn-laranja')
+                        .attr('disabled', false);
+            });
     $('.anuncio-steps').on('steps-loaded', function () {
         var hash = window.location.hash;
         if (!hash) {
@@ -53,12 +66,12 @@ module.exports.callback = ($) => {
             if ($this.find(hash).length) {
                 $this.stepPlugin('goTo', hash);
                 $this.closest('[class*="step-"]:not(.anuncio-steps)')
-                    .each(function () {
-                        $(this)
-                            .parent()
-                            .closest('.step-container')
-                            .stepPlugin('goTo', this);
-                    });
+                        .each(function () {
+                            $(this)
+                                    .parent()
+                                    .closest('.step-container')
+                                    .stepPlugin('goTo', this);
+                        });
             } else {
                 var lastStep = $this.stepPlugin('getSteps').last();
                 $this.stepPlugin('goTo', lastStep);
@@ -119,12 +132,12 @@ function loadContentStepsAsync() {
 function setLoaddingForAllAjax() {
     var loading = require('components/Loading');
     $(document)
-        .ajaxStart(function () {
-            loading.open();
-        })
-        .ajaxComplete(function () {
-            loading.close();
-        });
+            .ajaxStart(function () {
+                loading.open();
+            })
+            .ajaxComplete(function () {
+                loading.close();
+            });
 }
 
 
@@ -137,11 +150,11 @@ function setStepIconActive() {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
             stepsIcons.removeClass('active')
-                .filter(function () {
-                    var labels = $(this).data('step').split(',');
-                    return labels.indexOf(labelStep) !== -1;
-                })
-                .addClass('active');
+                    .filter(function () {
+                        var labels = $(this).data('step').split(',');
+                        return labels.indexOf(labelStep) !== -1;
+                    })
+                    .addClass('active');
         }
     });
 }
