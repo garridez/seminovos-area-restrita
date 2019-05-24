@@ -35,9 +35,6 @@ class PrecoForm extends Form
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-            'attributes' => [
-                'value' => 1,
-            ],
         ]);
         $this->add([
             'type' => Element\Checkbox::class,
@@ -47,9 +44,6 @@ class PrecoForm extends Form
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
-            ],
-            'attributes' => [
-                'value' => 1,
             ],
         ]);
         $this->add([
