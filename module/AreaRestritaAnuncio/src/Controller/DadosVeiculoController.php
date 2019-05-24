@@ -96,6 +96,7 @@ class DadosVeiculoController extends AbstractActionController
                 $res = $apiClient->veiculosPut($data, $idVeiculo);
             } else {
                 // Cria
+                $data['idPlano'] = 1; // Cria o anúncio por padrão no grátis
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
             // Limpa o cache do middleware

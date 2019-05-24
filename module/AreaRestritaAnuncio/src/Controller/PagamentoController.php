@@ -51,6 +51,11 @@ class PagamentoController extends AbstractActionController
         return $this->getModelVeiculo();
     }
 
+    public function gratisAction()
+    {
+        return $this->getModelVeiculo();
+    }
+
     public function comprovanteAction()
     {
         return $this->getModelVeiculo();
