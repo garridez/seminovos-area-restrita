@@ -15,6 +15,8 @@ module.exports.callback = ($) => {
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
+    var dataWithError;
+    var formWithError;
 
     //($('#form_dadosVeiculo'))
     $('.anuncio-steps').on('steps-loaded', function () {
@@ -36,6 +38,9 @@ module.exports.callback = ($) => {
         var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
         var dataSerialized = form.serialize();
 
+        if (formWithError && dataSerialized === dataWithError) {
+            return;
+        }
         if (!dataSerialized || dataSerialized === lastSavedData) {
             return;
         }
@@ -62,9 +67,13 @@ module.exports.callback = ($) => {
                 // Guarda o que foi serializado para garantir que não vai salvar dados que não foram alterados
                 lastSavedData = form.serialize();
                 stepsContainer.stepPlugin('next');
+                formWithError = false;
 
             },
             error: function (e) {
+                formWithError = true;
+                dataWithError = form.serialize();
+                stepsContainer.stepPlugin('goTo','.step-dados');
                 if (e.responseJSON) {
                     HandleApiError(e.responseJSON);
                 } else {
