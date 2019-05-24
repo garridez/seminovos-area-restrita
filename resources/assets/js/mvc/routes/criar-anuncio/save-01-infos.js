@@ -34,6 +34,12 @@ module.exports.callback = ($) => {
 
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
 
+        var formInfo = $('.step-mais-informacoes form');
+        formInfo.find('[type="submit"]').first().click();
+        if (!formInfo.get(0).checkValidity()) {
+            return stopEvent(e);;
+        }
+
         // Salvar todo o formulario anterior as fotos aqui
         var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
         var dataSerialized = form.serialize();
@@ -73,7 +79,7 @@ module.exports.callback = ($) => {
             error: function (e) {
                 formWithError = true;
                 dataWithError = form.serialize();
-                stepsContainer.stepPlugin('goTo','.step-dados');
+                stepsContainer.stepPlugin('goTo', '.step-dados');
                 if (e.responseJSON) {
                     HandleApiError(e.responseJSON);
                 } else {
