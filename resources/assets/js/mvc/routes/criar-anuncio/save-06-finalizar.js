@@ -19,8 +19,6 @@ module.exports.callback = ($) => {
         var acao = status === 2 ? 'ativar' : 'inativar';
         var idVeiculo = dadosBasicos.find('#idVeiculo').val();
 
-
-
         $.ajax({
             type: 'POST',
             url: '/meus-veiculos/' + acao + '/' + idVeiculo,
