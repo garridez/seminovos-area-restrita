@@ -46,8 +46,11 @@ module.exports = function (options) {
         var form = $('#form_dadosVeiculo');
 
         form.find('[name="placa"]').val(options.placa);
-        form.find('[name="idMarca"]').val('18');
-        form.find('[name="modeloCarro"]').val('1964');
+        form.find('[name="idMarca"]').val('18').change();
+        setTimeout(function(){
+            form.find('[name="modeloCarro"]').val('1964');
+        }, 50);
+        
         form.find('[name="versao"]').val('3');
         form.find('[name="motor"]').val('3');
         form.find('[name="idValvula"]').val('2');
@@ -80,6 +83,9 @@ module.exports = function (options) {
     }
 
     function avancar() {
+        if (!options.pararNoStep) {
+            return;
+        }
         var stopContinuar = false;
         $('.step-container').on('step:exit', function (e) {
             if (stopContinuar) {
