@@ -16,13 +16,16 @@ class PagamentoController extends AbstractActionController
 
     public function indexAction()
     {
+        $dadosVeiculo = $this->getVeiculo();
 
         $planos = $this->getContainer()
             ->get(Planos::class)
             ->getCurrent();
 
         $viewModel = new ViewModel([
-            'planos' => $planos
+            'planos' => $planos,
+            'valorPlanoAtual' => (double) ($dadosVeiculo['valorPlano'] + 0.00),
+            'idStatus' => $dadosVeiculo['idStatus']
         ]);
         $viewModel->setTerminal(true);
         return $viewModel;
