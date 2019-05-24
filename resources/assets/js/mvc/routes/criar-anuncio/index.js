@@ -44,7 +44,6 @@ module.exports.callback = ($) => {
 
     stepsContainer
             .on('step:change:checkout step:change:finalizar', function (e) {
-                console.log('okokokokok')
                 $('.btn-continuar')
                         .removeClass('btn-laranja')
                         .attr('disabled', true);

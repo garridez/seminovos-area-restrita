@@ -65,7 +65,7 @@ module.exports = function (options) {
         $('[name="observacoes"]').val('Observação de teste');
 
 
-        $('[name="troca"]').filter('[value="4"]').prop("checked", true);
+        $('[name="idTroca"]').filter('[value="1"]').prop("checked", true);
         $('#radio-idPlano-3').click();
 
         setTimeout(function () {
