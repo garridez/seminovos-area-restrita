@@ -30,15 +30,16 @@ module.exports.callback = ($) => {
         let desconto = $(clickado).find("#desconto").html();
         let economia = $(clickado).find("#economia").html();
         let valor = parseFloat($(clickado).find("#valor").html().replace('.', '').replace(',', '.').replace(' ', ''));
+        let valorFormatado = valor.toLocaleString('pt-BR',{minimumFractionDigits: 2});
 
         resultado.find("#desconto").html(desconto);
         resultado.find("#economia").html(economia);
-        resultado.find("#total").html(valor);
+        resultado.find("#total").html(valorFormatado);
 
         pagamento.find("#plano").html(plano);
         pagamento.find("#desconto").html(desconto);
         pagamento.find("#economia").html(economia);
-        pagamento.find("#valor").html(valor);
+        pagamento.find("#valor").html(valorFormatado);
         funcao(valor, plano);
 
 
