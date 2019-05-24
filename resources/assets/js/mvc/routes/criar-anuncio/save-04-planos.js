@@ -9,6 +9,13 @@ module.exports.callback = ($) => {
         alerts.info('Não é possível diminuir o plano');
     });
 
+    $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
+        let plano = "planos" + $("#idPlano").val();
+        $('[id^="planos"]').each((i, obj) => {
+            $(obj).hide();
+        });
+        $("#" + plano).show();
+    });
     $('.step-container').on('step:pre-exit:plano', function (e) {
         var ctx = $('.step-plano');
         var plano = ctx.find('[name="idPlano"]:checked');

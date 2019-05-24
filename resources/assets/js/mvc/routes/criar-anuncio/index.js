@@ -32,11 +32,6 @@ module.exports.callback = ($) => {
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
         form.find('[type="submit"]').first().click();
-        let plano = "planos" + $("#idPlano").val();
-        $('[id^="planos"]').each((i, obj) => {
-            $(obj).hide();
-        });
-        $("#" + plano).show();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
