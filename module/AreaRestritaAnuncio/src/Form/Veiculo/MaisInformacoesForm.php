@@ -32,6 +32,9 @@ class MaisInformacoesForm extends Form
                     '1' => 'NÃO',
                 ],
             ],
+            'attributes' => [
+                'required' => true,
+            ]
         ]);
         $this->add([
             'type' => Element\Checkbox::class,

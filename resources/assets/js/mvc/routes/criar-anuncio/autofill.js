@@ -49,7 +49,7 @@ module.exports = function (options) {
         form.find('[name="idMarca"]').val('18').change();
         setTimeout(function(){
             form.find('[name="modeloCarro"]').val('1964');
-        }, 50);
+        }, 100);
         
         form.find('[name="versao"]').val('3');
         form.find('[name="motor"]').val('3');
