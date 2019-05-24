@@ -33,7 +33,7 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestI $request, DelegateI $delegate)
     {
-        $idVeiculo = $this->routeMatch->getParam('idVeiculo', false);
+        $idVeiculo = (int) $this->routeMatch->getParam('idVeiculo', false);
 
         // Se não tem idVeiculo no como parametro, então continua para o próximo middleware
         if (!$idVeiculo) {
