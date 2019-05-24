@@ -76,4 +76,12 @@ class AbstractActionController extends ZendAbstractActionController
         }
         return [];
     }
+    /**
+     * Retorna se o cadasto do usuário atual é revenda
+     * @return bool
+     */
+    public function isRevenda()
+    {
+        return ((int) $this->getCadastro('tipoCadastro')) === Cadastros::TIPO_CADASTRO_REVENDA;
+    }
 }
