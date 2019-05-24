@@ -25,7 +25,8 @@ class PagamentoController extends AbstractActionController
         $viewModel = new ViewModel([
             'planos' => $planos,
             'valorPlanoAtual' => (double) ($dadosVeiculo['valorPlano'] + 0.00),
-            'idStatus' => $dadosVeiculo['idStatus']
+            'idStatus' => $dadosVeiculo['idStatus'],
+            'idPlano' => $dadosVeiculo['idPlano'],
         ]);
         $viewModel->setTerminal(true);
         return $viewModel;

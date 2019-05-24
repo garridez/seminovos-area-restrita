@@ -19,7 +19,7 @@
                         <div><small>Até a venda</small></div>
                     </div>
                     <div class="col-md-4">
-                        <?php if ($this->idStatus == 2) : ?>
+                        <?php if ($this->idStatus == 2 && $this->idPlano != 4) : ?>
                             <?php $valorPagar = (double)($plano['valorPlano'] - $this->valorPlanoAtual) ?>
                             <strong>R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
                         <?php else: ?>
