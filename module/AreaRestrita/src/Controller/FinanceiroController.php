@@ -57,12 +57,11 @@ class FinanceiroController extends AbstractActionController
         // Busca os planos de acordo com o tipo
         $dadosPlanos = $planosModel->get('revenda');
 
-        $this->idPlano = $dadosCadastro['idPlano'];
+        $idPlano = $this->idPlano = $dadosCadastro['idPlano'];
 
         //filtra o array e retorna os dados de acordo com o idPlano
-        $dadosPlano = array_filter($dadosPlanos, function ($dadosPlanos) {
-            $dadosPlanos['idPlanoRevenda'] == $this->idPlano;
-            return $dadosPlanos['idPlanoRevenda'] == $this->idPlano;
+        $dadosPlano = array_filter($dadosPlanos, function ($dadosPlanos) use($idPlano) {
+            return $dadosPlanos['idPlanoRevenda'] == $idPlano;
         });
 
         /* @var $servicosAdicionaisModel ServicosAdicionais */
