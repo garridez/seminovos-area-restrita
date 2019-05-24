@@ -13,7 +13,7 @@ function showError(body, title, time) {
  */
 module.exports = function (apiResponse, time) {
     time = time || 15000;
-    if (typeof apiResponse === 'object'  && apiResponse.status === 200) {
+    if (typeof apiResponse === 'object' && apiResponse.status === 200) {
         return true;
     }
     if (!apiResponse) {
@@ -27,7 +27,7 @@ module.exports = function (apiResponse, time) {
     if (apiResponse.detail) {
         body += apiResponse.detail;
     } else {
-        body += 'Houve um problema';
+        body += 'Houve um problema ao processar sua solicitação.<br>Tente novamente.';
 
     }
     var messages = apiResponse.messages;
@@ -42,8 +42,6 @@ module.exports = function (apiResponse, time) {
         } else {
             body += messages;
         }
-    } else {
-        body += 'Tivemos um problema ao processar sua solicitação.<br>Tente novamente.';
     }
     showError(body, title, time);
     return false;
