@@ -89,7 +89,7 @@ module.exports.callback = ($) => {
             /**
              * Serve para ir passando e parar num step específico
              */
-            pararNoStep: 'step-checkout',
+//            pararNoStep: 'step-checkout',
             /*
              * Se true, é sempre gerado uma placa nova
              * Útil para não gerar conflito com placa existe
