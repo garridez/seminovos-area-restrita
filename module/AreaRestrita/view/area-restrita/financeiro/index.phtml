@@ -1,5 +1,5 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
 $this->headTitle('Financeiro');
 $dadosFinanceiro = $this->financeiro;
 ?>
@@ -12,23 +12,26 @@ $dadosFinanceiro = $this->financeiro;
 </div>
 <div class=" container-fluid container-fixed-lg">
     <div id="rootwizard">
-        <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
+        <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm nab-main-financeiro" role="tablist"
             data-init-reponsive-tabs="dropdownfx">
             <li class="nav-item">
-                <a class="active" data-toggle="tab" href="#tab1" data-target="#tab1" role="tab"><i
-                        class="fa fa-shopping-cart tab-icon"></i> <span>Plano tual</span></a>
+                <a class="active" data-toggle="tab" href="#tab-planos" data-target="#tab-planos" role="tab">
+                    <i class="fa fa-shopping-cart tab-icon"></i> <span>Plano</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="" data-toggle="tab" href="#tab3" data-target="#tab2" role="tab"><i
-                        class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span></a>
+                <a class="" data-toggle="tab" href="#tab-pagamento" data-target="#tab-pagamento" role="tab">
+                    <i class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="" data-toggle="tab" href="#tab4" data-target="#tab3" role="tab"><i
-                        class="fa fa-check tab-icon"></i> <span>Resumo</span></a>
+                <a class="" data-toggle="tab" href="#tab-finalizar" data-target="#tab-finalizar" role="tab">
+                    <i class="fa fa-check tab-icon"></i> <span>Finalizar</span>
+                </a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane padding-20 sm-no-padding active slide-left" id="tab1">
+            <div class="tab-pane padding-20 sm-no-padding active slide-left" id="tab-planos">
                 <div class="row row-same-height">
                     <div class="col-md-5 b-r b-dashed b-grey sm-b-b">
                         <div class="padding-30 sm-padding-5 sm-m-t-15 m-t-50">
@@ -50,15 +53,13 @@ $dadosFinanceiro = $this->financeiro;
                                 foreach ($planos as $i => $plano):
                                     ?>
                                 <tr>
-                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7 "
-                                        onclick="$('#parcelas<?=$i?>').collapse('toggle')">
+                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7">
                                         <input type="radio" name="options" id="option<?= $i ?>"
                                             value="<?= $plano['value_checkbox'] ?>">
                                         <label class="m-l-10 font-montserrat fs-11 all-caps" for="option<?= $i ?>"><span
                                                 id="plano"><?= $plano['nome'] ?></span>
                                         </label>
                                     </td>
-
                                     <td class="col-lg-4 col-md-6 col-sm-6 text-left">
                                         <span>Desconto de
                                             <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
@@ -68,24 +69,12 @@ $dadosFinanceiro = $this->financeiro;
                                             </small>
                                         </span>
                                     </td>
-
-                                    <!-- <td class="col-lg-2 col-md-3 col-sm-3 text-right">
-                                        <span>Economia de R$ <span id="economia"><?= $plano['economia'] ?></span></span>
-                                    </td> -->
-
                                     <td class="col-lg-3 col-md-3 col-sm-2 text-right">
                                         <h4 class="text-orange no-margin font-montserrat">R$
                                             <span id="valor"><?= $plano['valor'] ?></span></h4>
                                     </td>
                                 </tr>
-                                <?php /*if($plano["parcelas"]):?>
-                                <tr id="parcelas<?=$i?>" class="collapse">
-                                    <td colspan="4" class="d-flex justify-content-start">
-                                        <p>Pode Ser parcelado em até <span id="nParcelas"><?=$plano["parcelas"]?></span>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <?php endif; */endforeach; ?>
+                                <?php endforeach; ?>
                             </table>
                             <div class="row  mt-3" id="resultado">
                                 <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
@@ -112,7 +101,7 @@ $dadosFinanceiro = $this->financeiro;
                     </div>
                 </div>
             </div>
-            <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab2">
+            <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-pagamento">
                 <div class="row row-same-height">
                     <div class="col-md-6 b-r b-dashed b-grey ">
                         <div class="padding-30 sm-padding-5">
@@ -262,28 +251,28 @@ $dadosFinanceiro = $this->financeiro;
                 </div>
             </div>
 
-            <div class="tab-pane padding-20 sm-no-padding slide-left" id="tab3">
+            <div class="tab-pane padding-20 sm-no-padding slide-left" id="tab-finalizar">
                 <div class="row row-same-height padding-30">
                     <h2>
                         Obrigado por renovar, seu plano a Seminovos agradeçe.
                     </h2>
-                </div>
+                </div>2
             </div>
             <div class="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
                 <ul class="pager wizard no-style">
                     <li class="next">
-                        <button class="btn btn-laranja text-white btn-cons pull-right" type="button">
+                        <a href="#" class="btn btn-laranja text-white btn-cons pull-right" type="button">
                             <span>Próximo</span>
-                        </button>
+                        </a>
                     </li>
-                    <li class="next finish hidden">
-                        <button class="btn btn-laranja text-white btn-cons pull-right" type="button">
+                    <li class="finish hidden">
+                        <a href="#" class="btn btn-laranja text-white btn-cons pull-right" type="button">
                             <span>Finalizar</span>
-                        </button>
+                        </a>
                     </li>
                     <li class="previous">
                         <button class="btn btn-default btn-cons pull-right" type="button">
-                            <span>Anterioir</span>
+                            <span>Anterior</span>
                         </button>
                     </li>
                 </ul>
@@ -291,102 +280,3 @@ $dadosFinanceiro = $this->financeiro;
         </div>
     </div>
 </div>
-
-
-<!-- <div class="row">
-    <div class="col-md-12">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Escolha o tempo que deseja pagar:</h5>
-                </div>
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-4">
-                    <h5>Forma de pagamento:</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <hr></hr>
-                </div>
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-4">
-                    <hr></hr>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Valor mensal do plano R$ </h5>
-                </div>
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-4">
-                    <h5>Clique no botão abaixo para selecionar a forma de pagamento e finalizar a compra. </h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" id="radioTempoContrato1" name="radioTempoContrato"
-                               value="<?= $dadosFinanceiro['value_checbox_mensal'] ?>">
-                        <label class="form-check-label" for="radioTempoContrato1">
-                            Plano Mensal <?= $dadosFinanceiro['maisSite'] ?>
-                        </label>
-                    </div>
-                    <p>R$ <?= $dadosFinanceiro['valor_mensal'] ?></p>
-                    <p>Desconto de <?= $dadosFinanceiro['desconto_mensal'] ?></p>
-                    <p>Economia de R$ <?= $dadosFinanceiro['economia_mensal'] ?></p>
-                </div>
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-default" type="button">FINALIZAR COMPRA</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" id="radioTempoContrato2" name="radioTempoContrato"
-                               value="<?= $dadosFinanceiro['value_checbox_trimestral'] ?>">
-                        <label class="form-check-label" for="radioTempoContrato1">
-                            Plano Trimestral <?= $dadosFinanceiro['maisSite'] ?>
-                        </label>
-                    </div>
-                    <p>R$ <?= $dadosFinanceiro['valor_trimestral'] ?></p>
-                    <p>Desconto de <?= $dadosFinanceiro['desconto_trimestral'] ?></p>
-                    <p>Economia de R$ <?= $dadosFinanceiro['economia_trimestral'] ?></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" id="radioTempoContrato3" name="radioTempoContrato"
-                               value="<?= $dadosFinanceiro['value_checbox_semestral'] ?>">
-                        <label class="form-check-label" for="radioTempoContrato1">
-                            Plano Semestral <?= $dadosFinanceiro['maisSite'] ?>
-                        </label>
-                    </div>
-                    <p>R$ <?= $dadosFinanceiro['valor_semestral'] ?></p>
-                    <p>Desconto de <?= $dadosFinanceiro['desconto_semestral'] ?></p>
-                    <p>Economia de R$ <?= $dadosFinanceiro['economia_semestral'] ?></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" id="radioTempoContrato4" name="radioTempoContrato"
-                               value="<?= $dadosFinanceiro['value_checbox_anual'] ?>">
-                        <label class="form-check-label" for="radioTempoContrato1">
-                            Plano Anual <?= $dadosFinanceiro['maisSite'] ?>
-                        </label>
-                    </div>
-                    <p>R$ <?= $dadosFinanceiro['valor_anual'] ?></p>
-                    <p>Desconto de <?= $dadosFinanceiro['desconto_anual'] ?></p>
-                    <p>Economia de R$ <?= $dadosFinanceiro['economia_anual'] ?></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

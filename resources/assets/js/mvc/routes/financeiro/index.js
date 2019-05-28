@@ -13,13 +13,13 @@ module.exports.callback = ($) => {
     require('jquery-validation/dist/localization/messages_pt_BR');
 
 
-    var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
+    var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
     var formCC = $('.pagamento-cc-form');
 
     formCC.find('[name="validade_cartao"]').mask("00/00");
     formCC.find('[name="cvc_cartao"]').mask("999?", optional);
     formCC.find('[name="numero_cartao"]')
-        .mask("9999 9999 9999 9??? ????", optional);
+            .mask("9999 9999 9999 9??? ????", optional);
 
     $(".table.table-condensed").on("change", function () {
         var clickado = $(".tab-content").find("input[name = 'options']:checked").parent().parent();
@@ -30,7 +30,7 @@ module.exports.callback = ($) => {
         let desconto = $(clickado).find("#desconto").html();
         let economia = $(clickado).find("#economia").html();
         let valor = parseFloat($(clickado).find("#valor").html().replace('.', '').replace(',', '.').replace(' ', ''));
-        let valorFormatado = valor.toLocaleString('pt-BR',{minimumFractionDigits: 2});
+        let valorFormatado = valor.toLocaleString('pt-BR', {minimumFractionDigits: 2});
 
         resultado.find("#desconto").html(desconto);
         resultado.find("#economia").html(economia);
@@ -40,31 +40,35 @@ module.exports.callback = ($) => {
         pagamento.find("#desconto").html(desconto);
         pagamento.find("#economia").html(economia);
         pagamento.find("#valor").html(valorFormatado);
-        funcao(valor, plano);
-
-
-
+        optionsParcelas(valor, plano);
     });
-    let funcao = (valor, plano) => {
-        switch (plano) {
-            case "Plano Trimestral":
-                for (let i = 0; i < 3; i++) {
-                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
-                }
-                break;
-            case "Plano Semestral":
-                for (let i = 0; i < 6; i++) {
-                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
-                }
-                break;
-            case "Plano Anual":
-                for (let i = 0; i < 8; i++) {
-                    $("#parcelas").append($("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2))));
-                }
-                break;
 
-            default:
-                break;
-        }
+};
+
+var optionsParcelas = (valor, plano) => {
+    var generateOption = function (i) {
+        return $("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2)));
+    };
+    var parcelas = $("#parcelas");
+    parcelas.html('');
+    switch (plano) {
+        case "Plano Trimestral":
+            for (let i = 0; i < 3; i++) {
+                parcelas.append(generateOption(i));
+            }
+            break;
+        case "Plano Semestral":
+            for (let i = 0; i < 6; i++) {
+                parcelas.append(generateOption(i));
+            }
+            break;
+        case "Plano Anual":
+            for (let i = 0; i < 8; i++) {
+                parcelas.append(generateOption(i));
+            }
+            break;
+
+        default:
+            break;
     }
-}
+};
