@@ -81,7 +81,7 @@ module.exports.callback = ($) => {
         require('./autofill')({
             autofill: true,
             /**
-             * Serve para ir passando e parar num step específico
+             * Serve para ir passando simulando click e parar num step específico
              */
 //            pararNoStep: 'step-checkout',
             /*
