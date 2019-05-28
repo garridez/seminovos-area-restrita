@@ -113,7 +113,6 @@ function loadContentStepsAsync() {
             ctx.html(data);
             if (--totalSteps === 0) {
                 $('.anuncio-steps').trigger('steps-loaded');
-                setLoaddingForAllAjax();
                 loading.close();
                 setTimeout(function () {
                     loading.close();
@@ -122,19 +121,6 @@ function loadContentStepsAsync() {
         });
     });
 }
-
-function setLoaddingForAllAjax() {
-    var loading = require('components/Loading');
-    $(document)
-            .ajaxStart(function () {
-                loading.open();
-            })
-            .ajaxComplete(function () {
-                loading.close();
-            });
-}
-
-
 
 function setStepIconActive() {
     var stepsIcons = $('.steps-list li');

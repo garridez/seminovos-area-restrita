@@ -64,7 +64,6 @@ class DadosVeiculoController extends AbstractActionController
                 'tipoVeiculo' => $tipoVeiculo,
                 'idCadastro' => $identity->getIdentity(),
                 'video' => '',
-                'idPlano' => 3,
             ];
 
             $data += $request->getPost()->toArray();
@@ -86,8 +85,10 @@ class DadosVeiculoController extends AbstractActionController
                     'ocultarValorACombinar' => 'combinarPreco',
                 ];
                 foreach ($keyRemap as $from => $to) {
-                    $data[$to] = $data[$from];
-                    unset($data[$from]);
+                    if (isset($data[$from])) {
+                        $data[$to] = $data[$from];
+                        unset($data[$from]);
+                    }
                 }
 
                 // Essa opção está obsoleta na regra de negócio

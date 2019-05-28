@@ -7,30 +7,32 @@ module.exports.callback = ($) => {
 
     $('.anuncio-steps').on('click', '.step-finalizar .btn-finalizar', function (e) {
         e.preventDefault();
-        var status = $(this).data('status');
+        var idStatus = parseInt($(this).data('status'), 10);
         var dadosBasicos = $('#dados-basicos');
-        var form = $('form', dadosBasicos);
+        var form = $('form', '#dados-basicos, .step-plano');
         var dataSerialized = form.serializeArray();
         dataSerialized.push({
-            name: 'status',
-            value: status
+            name: 'idStatus',
+            value: idStatus
         });
-
-        var acao = status === 2 ? 'ativar' : 'inativar';
+        console.log(dataSerialized);
+//return false;
+        var acao = idStatus === 2 ? 'ativar' : 'inativar';
         var idVeiculo = dadosBasicos.find('#idVeiculo').val();
 
         $.ajax({
             type: 'POST',
-            url: '/meus-veiculos/' + acao + '/' + idVeiculo,
+            url: '/carro/dados',
             data: dataSerialized,
             dataType: 'json',
             success: function (data) {
+                console.log(data);
                 if (!HandleApiError(data)) {
                     return;
                 }
                 var text = 'Seu veículo foi publicado';
                 var time = 5000;
-                if (status === 5) {
+                if (idStatus === 5) {
                     text = 'Criação do anúncio concluída!<br>'
                             + 'Seu anúncio não foi publicado/ativado.<br>'
                             + 'Você pode ativa-lo/publica-lo quando quiser através do menu "Meus Veículos"';

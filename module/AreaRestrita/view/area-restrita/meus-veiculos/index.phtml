@@ -192,21 +192,17 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#checkout"
                                    class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2">Enviar comprovante</a>
-<!--                                <button class="btn btn-sm btn-cinza text-white  ml-2" onclick="alerta_fazer()">enviar-->
-<!--                                    comprovante</button>-->
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["realizar_pagamento"]){?>
                                     <a href="<?=$urls['editarAnuncio']?>#plano"
                                        class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
-<!--                                <button class="btn btn-sm bg-verde text-white ml-2"-->
-<!--                                    onclick="alerta_fazer()">Pagar</button>-->
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["inativar"]){?>
                                 <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, inativar este vendido!" data-modal-success-msg="Inativar!"
+                                    data-modal-yes-text="Sim, inativar este veículo!" data-modal-success-msg="Veículo inativado!"
                                     title="Desativar veículo">
                                     <button class="btn btn-sm btn-danger ml-2">Inativar</button>
                                 </a>
@@ -215,7 +211,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["vendido"]){?>
                                 <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, marcar como vendido!" data-modal-success-msg="Vendido!"
+                                    data-modal-yes-text="Sim, marcar como vendido!" data-modal-success-msg="Marcado como vendido!"
                                     title="Marcar como vendido">
                                     <button class="btn btn-sm btn-complete ml-2">Vendido</button>
                                 </a>
@@ -270,8 +266,3 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
         </div>
     </div>
 </div>
-<script>
-    let alerta_fazer = () => {
-        window.alert("TEM QUE FAZER !!!! TEM QUE FAZER !!!!")
-    }
-</script>

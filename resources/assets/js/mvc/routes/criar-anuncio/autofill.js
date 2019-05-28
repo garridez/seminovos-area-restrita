@@ -49,7 +49,7 @@ module.exports = function (options) {
         form.find('[name="idMarca"]').val('18').change();
         setTimeout(function(){
             form.find('[name="modeloCarro"]').val('1964');
-        }, 100);
+        }, 50);
         
         form.find('[name="versao"]').val('3');
         form.find('[name="motor"]').val('3');
@@ -66,7 +66,7 @@ module.exports = function (options) {
 
 
         $('[name="idTroca"]').filter('[value="1"]').prop("checked", true);
-        $('#radio-idPlano-3').click();
+        $('#radio-idPlano-2').click();
 
         setTimeout(function () {
             var ctx = $('.pagamento-cc-form');
