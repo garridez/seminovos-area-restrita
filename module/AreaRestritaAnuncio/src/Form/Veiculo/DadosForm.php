@@ -10,7 +10,9 @@ use SnBH\Common\Form\Element\SelectCombustivel;
 use SnBH\Common\Form\Element\SelectCor;
 use SnBH\Common\Form\Element\SelectMarca;
 use SnBH\Common\Form\Element\SelectModelo;
+use SnBH\Common\Form\Element\SelectMotor;
 use SnBH\Common\Form\Element\SelectPortas;
+use SnBH\Common\Form\Element\SelectValvula;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
@@ -73,33 +75,15 @@ class DadosForm extends Form
             ]
         ]);
         $this->add([
-            'type' => Element\Select::class,
+            'type' => SelectMotor::class,
             'name' => 'motor',
-            'options' => [
-                'label' => 'Motor',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => '1.0',
-                    '2' => '1.6',
-                    '3' => '1.2',
-                ],
-            ],
             'attributes' => [
                 'required' => true,
             ]
         ]);
         $this->add([
-            'type' => Element\Select::class,
+            'type' => SelectValvula::class,
             'name' => 'idValvula',
-            'options' => [
-                'label' => 'Válvula',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => '16',
-                    '2' => '20',
-                    '3' => '8',
-                ],
-            ],
             'attributes' => [
                 'required' => true,
                 'data-init-plugin' => 'select2',
