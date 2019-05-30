@@ -105,6 +105,9 @@ class PagamentoController extends AbstractActionController
             $dadosPagamento['cvc_cartao'] = $dados['cvc_cartao'] ?: $dados['cvc'];
 
             $dadosPagamento['parcelas'] = !empty($dados['parcelas']) ? $dados['parcelas'] : $dadosPagamento['parcelas'];
+            if ($dadosPagamento['parcelas'] > 8) {
+                $dadosPagamento['parcelas'] = 8;
+            }
             $dadosPagamento['tipo_pagamento'] = !empty($dados['tipo_pagamento']) ? $dados['tipo_pagamento'] : 'credito';
         }
         if (isset($_FILES) && $_FILES) {
@@ -132,10 +135,8 @@ class PagamentoController extends AbstractActionController
 
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
-            $response['data']['redirect'] = true;
-
-            if (!isset($response['data']['url'])) {
-                $response['data']['url'] = $cadastro['tipoCadastro'] == 1 ? $getUrlRedirect('planorenovado') : $getUrlRedirect('concluido');
+            if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
+                $response['data']['url'] = $getUrlRedirect('planorenovado');
             }
 
             if ($dados['metodo'] == 'deposito' && $response['email_enviado']) {
@@ -143,6 +144,9 @@ class PagamentoController extends AbstractActionController
             }
             if ($dados['metodo'] == 'deposito' && !isset($_FILES['comprovanteAnexo'])) {
                 $response['data']['url'] = $getUrlRedirect('aguardando-comprovante');
+            }
+            if (isset($response['data']['url'])) {
+                $response['data']['redirect'] = true;
             }
         } else {
             // @todo Mudar isso aqui para um sistema de log

@@ -12,6 +12,7 @@ module.exports.callback = ($) => {
     require('jquery-validation/dist/additional-methods');
     require('jquery-validation/dist/localization/messages_pt_BR');
 
+    var HandleApiError = require('components/HandleApiError');
 
     var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
     var formCC = $('.pagamento-cc-form');
@@ -21,28 +22,134 @@ module.exports.callback = ($) => {
     formCC.find('[name="numero_cartao"]')
             .mask("9999 9999 9999 9??? ????", optional);
 
-    $(".table.table-condensed").on("change", function () {
-        var clickado = $(".tab-content").find("input[name = 'options']:checked").parent().parent();
-        let resultado = $("#resultado");
-        let pagamento = $("#tab2");
 
-        let plano = $(clickado).find("#plano").html();
-        let desconto = $(clickado).find("#desconto").html();
-        let economia = $(clickado).find("#economia").html();
-        let valor = parseFloat($(clickado).find("#valor").html().replace('.', '').replace(',', '.').replace(' ', ''));
-        let valorFormatado = valor.toLocaleString('pt-BR', {minimumFractionDigits: 2});
 
-        resultado.find("#desconto").html(desconto);
-        resultado.find("#economia").html(economia);
-        resultado.find("#total").html(valorFormatado);
+    $('form.pagamento-cc-form, form.pagamento-boleto-form').submit(function (e) {
+        e.preventDefault();
+        var data = $(this).serializeArray();
+        var tempo_contrato = $(".tab-content")
+                .find("input[name='tempo_contrato']:checked")
+                .data('tempo_contrato');
 
-        pagamento.find("#plano").html(plano);
-        pagamento.find("#desconto").html(desconto);
-        pagamento.find("#economia").html(economia);
-        pagamento.find("#valor").html(valorFormatado);
-        optionsParcelas(valor, plano);
+        data.push({
+            name: 'tempo_contrato',
+            value: tempo_contrato,
+        });
+        var ajaxDefaultParams = {
+            url: '/carro/checkout/processar',
+            cache: false,
+            data: data,
+            type: 'POST',
+            dataType: 'json',
+            success: function (httpResponse) {
+                if (httpResponse.type === 15002) {
+                    /**
+                     * @todo implementar essa função
+                     */
+                    pagamentoEmAndamento();
+                }
+                if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
+                    HandleApiError(httpResponse);
+                    return;
+                }
+
+                /**
+                 * Caso seja necessário redirecionar o cliente para alguma tela de pagamento
+                 * como PagSeguro ou se escolhido a opção 'débito' da Cielo
+                 * 
+                 * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
+                 * @return void
+                 */
+                if (httpResponse.data && httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
+                    window.location = httpResponse.data.url;
+                } else {
+                    $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
+                }
+            },
+            error: function (e) {
+                HandleApiError(e.responseText);
+            }
+        };
+        var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
+        $.ajax(ajaxParams);
+
+    });
+    $('.nav-main-financeiro li a').on('shown.bs.tab', function (e) {
+        var target = $(this).data('target').replace('#tab-', '');
+        var state = ({
+            'planos': {
+                prev: false,
+                next: true
+            },
+            'pagamento': {
+                prev: true,
+                next: false
+            },
+            'finalizar': {
+                prev: false,
+                next: false
+            },
+        })[target];
+
+        $('.pager .next a')[!state.next ? 'addClass' : 'removeClass']('disabled');
+        $('.pager .previous a')[!state.prev ? 'addClass' : 'removeClass']('disabled');
     });
 
+    $('.table.table-condensed').on('change', function () {
+        var clickado = $('.tab-content').find("input[name='tempo_contrato']:checked").closest('tr');
+        var resultado = $('#resultado');
+        var pagamento = $('#tab-pagamento');
+
+        var plano = $(clickado).find('#plano').html();
+        var desconto = $(clickado).find('#desconto').html();
+        var economia = $(clickado).find('#economia').html();
+        var valor = parseFloat($(clickado).find('#valor').html().replace('.', '').replace(',', '.').replace(' ', ''));
+        var valorFormatado = valor.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+
+        resultado.find('#desconto').html(desconto);
+        resultado.find('#economia').html(economia);
+        resultado.find('#total').html(valorFormatado);
+
+        pagamento.find('#plano').html(plano);
+        pagamento.find('#desconto').html(desconto);
+        pagamento.find('#economia').html(economia);
+        pagamento.find('#valor').html(valorFormatado);
+        optionsParcelas(valor, plano);
+    });
+    var tabsCallback = {
+        planos: function () {
+            if (!$('form.form-planos')[0].checkValidity()) {
+                require('components/Alerts').warning('Escolha a periodicidade do seu plano');
+                return false;
+            }
+            return true;
+        },
+        pagamento: function () {
+            return true;
+        },
+        finalizar: function () {
+            return true;
+        }
+    };
+
+    $('#rootwizard').on('click', 'a', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var direction = $this.data('nav-dir');
+        var idTab = $('.tab-content-main > .tab-pane.active').attr('id');
+        if (idTab) {
+            idTab = idTab.replace('tab-', '');
+        }
+        if (!tabsCallback[idTab] || !direction) {
+            return;
+        }
+
+        if (tabsCallback[idTab]()) {
+            $('.nav-main-financeiro [data-target="#tab-' + idTab + '"]')
+                    .closest('li')[direction]()
+                    .find('a').tab('show');
+        }
+    });
 };
 
 var optionsParcelas = (valor, plano) => {

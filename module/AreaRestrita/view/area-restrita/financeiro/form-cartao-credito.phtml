@@ -1,0 +1,79 @@
+<form role="form" class="pagamento-cc-form">
+    <div class="bg-master-light padding-30 b-rad-lg">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h2 class="pull-left no-margin">Cartão de Crédito</h2>
+            <div class="d-flex align-items-center ml-3">
+                <div>
+                    <img width="51" height="32" class="brand" alt="logo"
+                         src="img/svg/visa_logo.svg">
+                </div>
+                <div>
+                    <img width="51" height="32" class="brand" alt="logo"
+                         src="img/svg/mastercard_logo.svg">
+                </div>
+                <div>
+                    <img width="51" height="32" class="brand" alt="logo"
+                         src="img/svg/american-express.svg">
+                </div>
+            </div>
+        </div>
+        <div class="form-group form-group-default required">
+            <label for="numero_cartao">Número do Cartão</label>
+            <input type="text" class="form-control" name="numero_cartao" id="numero_cartao"
+                   placeholder="8888-8888-8888-8888" required>
+        </div>
+        <div class="form-group form-group-default required">
+            <label for="nome_cartao">Nome igual ao do Cartão</label>
+            <input type="text" class="form-control" placeholder="Nome no cartão"
+                   id="nome_cartao" name="nome_cartao" required>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group form-group-default required"
+                     title="Validade do cartão">
+                    <label for="validade_cartao">Validade</label>
+                    <input type="text" class="form-control" id="validade_cartao"
+                           name="validade_cartao" placeholder="mês/ano"
+                           required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group form-group-default required"
+                     title="Código de segurança do cartão">
+                    <label for="cvc_cartao">CVV </label>
+                    <input type="text"
+                           class="form-control"
+                           id="cvc_cartao"
+                           name="cvc_cartao"
+                           placeholder="CVV / Código de Segurança" required
+                           maxlength="4">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group form-group-default required"
+                     title="Validade do cartão">
+                    <label for="validade_cartao">Parcelas</label>
+                    <select id="parcelas" name="parcelas"
+                            class="full-width select2-hidden-accessible"
+                            data-init-plugin="select2" tabindex="-1"
+                            aria-hidden="true">
+
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="hidden" name="metodo" value="cielo" required aria-required="true">
+                    <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">EFETUAR PAGAMENTO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
