@@ -15,7 +15,7 @@ module.exports.callback = ($) => {
                 $("#videoWindow").removeClass("d-none");
                 $("#videoWindow").attr('src', "https://www.youtube.com/embed/" + result.id);
             }
-        });
+        }).trigger('keyup');
     });
 
     stepsContainer.on('step:pre-exit:video', function (e, stepParams) {

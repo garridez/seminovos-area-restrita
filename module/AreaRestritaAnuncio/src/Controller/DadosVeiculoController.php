@@ -199,7 +199,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($dataJson);
         }
         $fotos = [];
-        $dadosVeiculo = $this->getVeiculo();
+        $dadosVeiculo = $this->getVeiculo(true);
         if ($dadosVeiculo) {
             $fotos = $dadosVeiculo['fotos'];
         }
@@ -211,6 +211,8 @@ class DadosVeiculoController extends AbstractActionController
     public function videoAction()
     {
         $videoForm = new Veiculo\VideoForm();
+        $data = $this->getVeiculo(true);
+        $videoForm->populateValues($data);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
