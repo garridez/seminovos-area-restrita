@@ -79,15 +79,18 @@ module.exports.callback = ($) => {
         var state = ({
             'planos': {
                 prev: false,
-                next: true
+                next: true,
+                finish: false
             },
             'pagamento': {
                 prev: true,
-                next: false
+                next: false,
+                finish: false
             },
             'finalizar': {
                 prev: false,
-                next: false
+                next: false,
+                finish: true
             },
         })[target];
 
@@ -133,13 +136,17 @@ module.exports.callback = ($) => {
     };
 
     $('#rootwizard').on('click', 'a', function (e) {
-        e.preventDefault();
         var $this = $(this);
         var direction = $this.data('nav-dir');
+        if (direction === 'finish'){
+            return true;
+        }
+        
         var idTab = $('.tab-content-main > .tab-pane.active').attr('id');
         if (idTab) {
             idTab = idTab.replace('tab-', '');
         }
+        e.preventDefault();
         if (!tabsCallback[idTab] || !direction) {
             return;
         }
@@ -159,6 +166,9 @@ var optionsParcelas = (valor, plano) => {
     var parcelas = $("#parcelas");
     parcelas.html('');
     switch (plano) {
+        case "Plano Mensal":
+                parcelas.append(generateOption(0));
+            break;
         case "Plano Trimestral":
             for (let i = 0; i < 3; i++) {
                 parcelas.append(generateOption(i));
@@ -166,6 +176,11 @@ var optionsParcelas = (valor, plano) => {
             break;
         case "Plano Semestral":
             for (let i = 0; i < 6; i++) {
+                parcelas.append(generateOption(i));
+            }
+            break;
+        case "Plano Anual":
+            for (let i = 0; i < 8; i++) {
                 parcelas.append(generateOption(i));
             }
             break;
