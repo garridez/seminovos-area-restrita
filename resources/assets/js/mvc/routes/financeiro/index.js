@@ -96,6 +96,7 @@ module.exports.callback = ($) => {
 
         $('.pager .next a')[!state.next ? 'addClass' : 'removeClass']('disabled');
         $('.pager .previous a')[!state.prev ? 'addClass' : 'removeClass']('disabled');
+        $('.pager .finish a')[!state.finish ? 'addClass' : 'removeClass']('disabled');
     });
 
     $('.table.table-condensed').on('change', function () {

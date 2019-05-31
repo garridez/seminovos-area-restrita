@@ -53,7 +53,7 @@ $dadosFinanceiro = $this->financeiro;
                                         'economia' => $dadosFinanceiro['economia_mensal'],
                                         'valor' => $dadosFinanceiro['valor_mensal'],
                                         'value_checkbox' => $dadosFinanceiro['value_checkbox_mensal'],
-                                        'parcelas' => false
+                                        'parcelas' => '1'
                                     ],
                                     [
                                         'nome' => 'Plano Trimestral',
@@ -228,7 +228,7 @@ $dadosFinanceiro = $this->financeiro;
             <div class="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
                 <ul class="pager wizard no-style">
                     <li class="finish">
-                        <a href="/" class="btn btn-success text-white btn-cons pull-right" data-nav-dir="finish">
+                        <a href="/" class="btn btn-success text-white btn-cons pull-right disabled" data-nav-dir="finish">
                             <span>Finalizar</span>
                         </a>
                     </li>
@@ -238,7 +238,7 @@ $dadosFinanceiro = $this->financeiro;
                         </a>
                     </li>
                     <li class="previous">
-                        <a class="btn btn-default btn-cons pull-right" data-nav-dir="prev">
+                        <a class="btn btn-default btn-cons pull-right disabled" data-nav-dir="prev">
                             <span>Anterior</span>
                         </a>
                     </li>
