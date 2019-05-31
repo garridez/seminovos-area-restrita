@@ -10,7 +10,10 @@ module.exports.callback = ($) => {
      */
     function reloadPageContent() {
         $.get('/', function (data) {
-                $('.container-anuncios').replaceWith(data);
+            $('.container-anuncios').replaceWith(data);
+        });
+        $.get('/meus-veiculos/qtd-anuncios-menu', function (data) {
+            $('.qtd-anuncios-menu').html(data);
         });
     }
 

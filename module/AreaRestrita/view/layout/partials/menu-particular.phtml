@@ -49,28 +49,13 @@
       </a>
       <span class="icon-thumbnail"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
     </li>
-    <li>
-      <?php  foreach ($arrayPlanos as $i => $plano): list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano; ?>
-      <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
-        <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
-          <div class="icon-plano m-0">
-            <span class="bar-1"></span>
-            <span class="bar-2"></span>
-            <span class="bar-3"></span>
-            <span class="bar-4"></span>
-            <span class="bar-4"></span>
-          </div>
-        </div>
-        <div class="text-left ml-2">
-          <div>
-            <b><?= $plano ?></b>
-          </div>
-          <div>
-            <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
-          </div>
-        </div>
-      </div>
-      <?php endforeach; ?>
+    <li class="qtd-anuncios-menu">
+        <?=
+        $this->partial('partials/qtd-anuncios-menu.phtml', [
+            'arrayPlanos' => $arrayPlanos
+        ])
+
+        ?>
     </li>
     <li class="">
       <a href="<?= $this->url('logout') ?>">

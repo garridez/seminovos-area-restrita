@@ -445,4 +445,11 @@ class MeusVeiculosController extends AbstractActionController
             'veiculo' => $dadosVeiculo
         ]);
     }
+
+    public function qtdAnunciosMenuAction()
+    {
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
 }

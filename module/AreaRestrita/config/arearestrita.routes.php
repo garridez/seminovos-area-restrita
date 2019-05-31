@@ -222,6 +222,15 @@ return [
                     ],
                 ],
             ],
+            'qtd-anuncios-menu' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/qtd-anuncios-menu',
+                    'defaults' => [
+                        'action' => 'qtdAnunciosMenu',
+                    ],
+                ],
+            ],
         ],
     ],
     'meu-site' => [
