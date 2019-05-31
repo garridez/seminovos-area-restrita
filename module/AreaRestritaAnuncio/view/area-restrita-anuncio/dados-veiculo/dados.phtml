@@ -14,6 +14,8 @@
     }
 
     $form->setAttribute('class', 'form');
+
+    $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
 ?>
 <div class="container container-fixed-lg">
     <div class="row">
@@ -114,10 +116,12 @@
                     <div class="d-flex justify-content-between">
                         <?= $this->formLabel($fields['checkboxacessorios']) ?>
                         <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
-                            <div class="checkbox m-0 p-0 m-b-0">
-                                <input type="checkbox" id="completoCheckbox">
-                                <label for="completoCheckbox">Completo</label>
-                            </div>
+                            <?php if ($tipoVeiculo == 1) : ?>
+                                <div class="checkbox m-0 p-0 m-b-0">
+                                    <input type="checkbox" id="completoCheckbox">
+                                    <label for="completoCheckbox">Completo</label>
+                                </div>
+                            <?php endif;?>
                         </div>
                     </div>
                     <?php
