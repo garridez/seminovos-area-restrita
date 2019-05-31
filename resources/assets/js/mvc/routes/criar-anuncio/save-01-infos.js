@@ -31,8 +31,12 @@ module.exports.callback = ($) => {
         });
     });
 
-
+    var ajaxProcessing = false;
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
+        if (ajaxProcessing) {
+            return stopEvent(e);
+        }
+        ajaxProcessing = true;
 
         var formInfo = $('.step-mais-informacoes form');
         formInfo.find('[type="submit"]').first().click();
@@ -61,6 +65,7 @@ module.exports.callback = ($) => {
             data: dataSerialized,
             dataType: "json",
             success: function (data) {
+                ajaxProcessing = false;
                 /**
                  * Atribui o valor do veiculo no form, caso a pessoa volte e edite,
                  *      na hora de salvar é enviado o id do veículo e assim é feita a edição
@@ -77,6 +82,7 @@ module.exports.callback = ($) => {
 
             },
             error: function (e) {
+                ajaxProcessing = false;
                 formWithError = true;
                 dataWithError = form.serialize();
                 stepsContainer.stepPlugin('goTo', '.step-dados');
