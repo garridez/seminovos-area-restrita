@@ -12,6 +12,7 @@ module.exports.callback = ($) => {
     require('components/StepPlugin');
     var HandleApiError = require('components/HandleApiError');
     var marcaModelo = require('components/MarcaModelo');
+    var BtnContinuar = require('./helpers/BtnContinuar');
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
@@ -32,7 +33,17 @@ module.exports.callback = ($) => {
     });
 
     var ajaxProcessing = false;
+    stepsContainer.on('step:pre-change:mais-informacoes', function (e) {
+        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
+        var dataSerialized = form.serialize();
+        if (formWithError === true && dataSerialized === dataWithError) {
+            BtnContinuar.disable();
+        } else {
+            BtnContinuar.enable();
+        }
+    });
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
+        BtnContinuar.enable();
         if (ajaxProcessing) {
             return stopEvent(e);
         }
@@ -41,7 +52,8 @@ module.exports.callback = ($) => {
         var formInfo = $('.step-mais-informacoes form');
         formInfo.find('[type="submit"]').first().click();
         if (!formInfo.get(0).checkValidity()) {
-            return stopEvent(e);;
+            ajaxProcessing = false;
+            return stopEvent(e);
         }
 
         // Salvar todo o formulario anterior as fotos aqui
@@ -49,9 +61,11 @@ module.exports.callback = ($) => {
         var dataSerialized = form.serialize();
 
         if (formWithError && dataSerialized === dataWithError) {
+            ajaxProcessing = false;
             return;
         }
         if (!dataSerialized || dataSerialized === lastSavedData) {
+            ajaxProcessing = false;
             return;
         }
 
