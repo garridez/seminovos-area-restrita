@@ -30,6 +30,8 @@ module.exports.callback = ($) => {
                 $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
             });
         });
+    }).on('change', function () {
+        BtnContinuar.enable();
     });
 
     var ajaxProcessing = false;
