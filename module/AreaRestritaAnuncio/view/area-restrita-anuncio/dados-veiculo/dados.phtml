@@ -1,21 +1,20 @@
 <?php
-    /* @var $this \Zend\View\Renderer\PhpRenderer */
-    /* @var $form \Zend\Form\View\Helper\Form */
-    //echo $this->form($this->formDadosVeiculos);
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+/* @var $form \Zend\Form\View\Helper\Form */
 
-    /* @var $this \AreaRestritaAnuncio\Form\Veiculo\DadosForm */
-    $form = $this->formDadosVeiculos;
-    //var_dump($form->getElements());
-    $fields = $form->getElements();
+/* @var $this \AreaRestritaAnuncio\Form\Veiculo\DadosForm */
+$form = $this->formDadosVeiculos;
+$fields = $form->getElements();
 
-    foreach ($fields as $element) {
-        if ($element->getAttribute('name') != 'checkboxacessorios')
-            $element->setAttribute('class', 'form-control');
-    }
+foreach ($fields as $element) {
+    if ($element->getAttribute('name') != 'checkboxacessorios')
+        $element->setAttribute('class', 'form-control');
+}
 
-    $form->setAttribute('class', 'form');
+$form->setAttribute('class', 'form');
 
-    $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
+$tipoVeiculo = $form->get('tipoVeiculo')->getValue();
+
 ?>
 <div class="container container-fixed-lg">
     <div class="row">
@@ -121,7 +120,7 @@
                                     <input type="checkbox" id="completoCheckbox">
                                     <label for="completoCheckbox">Completo</label>
                                 </div>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <?php
