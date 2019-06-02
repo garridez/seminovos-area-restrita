@@ -4,6 +4,9 @@ namespace SnBH\ApiModel\Model;
 
 class VeiculoTipo
 {
+    const TIPO_CARRO = 1;
+    const TIPO_CAMINHAO = 2;
+    const TIPO_MOTO = 3;
 
     public static $idTipos = [
         1 => 'carro',

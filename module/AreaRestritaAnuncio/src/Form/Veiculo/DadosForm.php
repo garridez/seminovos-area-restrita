@@ -3,6 +3,7 @@
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
 use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiModel\Model\VeiculoTipo;
 use SnBH\Common\Form\Element\CheckboxAcessorios;
 use SnBH\Common\Form\Element\SelectAnoFabricacao;
 use SnBH\Common\Form\Element\SelectAnoModelo;
@@ -35,8 +36,8 @@ class DadosForm extends Form
                 'label' => 'Placa',
             ],
             'attributes' => [
-                'data-mask' => 'SSS0000' ,
-                'placeholder' => 'abc1234' ,
+                'data-mask' => 'SSS0000',
+                'placeholder' => 'abc1234',
                 'required' => true,
             ]
         ]);
@@ -132,11 +133,11 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'data-mask' => '000.000.000.000.000' ,
+                'data-mask' => '000.000.000.000.000',
                 'data-mask-options' => json_encode([
                     'reverse' => true
                 ]),
-                'placeholder' => '52.000' ,
+                'placeholder' => '52.000',
             ]
         ]);
         global $container;
@@ -218,6 +219,24 @@ class DadosForm extends Form
     {
         $this->get('tipoVeiculo')->setValue($tipoVeiculo);
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
+        $removerCamposPorTipo = [
+            VeiculoTipo::TIPO_CAMINHAO => [
+                'idValvula',
+                'motor',
+                'acessorios'
+            ],
+            VeiculoTipo::TIPO_MOTO => [
+                'idValvula',
+                'motor',
+                'portas'
+            ],
+        ];
+        if(isset($removerCamposPorTipo[$tipoVeiculo])){
+            foreach($removerCamposPorTipo[$tipoVeiculo] as $campo){
+                $this->remove($campo);
+            }
+        }
+        
     }
 
     /**
