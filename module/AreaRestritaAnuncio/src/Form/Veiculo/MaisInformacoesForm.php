@@ -20,6 +20,7 @@ class MaisInformacoesForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'maxlength' => 700
             ]
         ]);
         $this->add([
