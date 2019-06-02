@@ -21,7 +21,7 @@ module.exports = function (apiResponse, time) {
     }
     var title = 'Houve um problema...';
     var body = '';
-    if (apiResponse.title) {
+    if (apiResponse.title && apiResponse.title !== 'Method Not Allowed') {
         title = apiResponse.title;
     }
     if (apiResponse.detail) {
