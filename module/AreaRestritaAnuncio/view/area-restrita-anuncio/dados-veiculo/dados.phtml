@@ -62,7 +62,7 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                     <?php endif; ?>
                     <?php if (isset($fields['idValvula'])): ?>
                         <div class="col-md-6">
-                            <div class="form-group form-group-default">
+                            <div class="form-group form-group-default required">
                                 <?= $this->formLabel($fields['idValvula']) ?>
                                 <?= $this->formSelect($fields['idValvula']) ?>
                             </div>
