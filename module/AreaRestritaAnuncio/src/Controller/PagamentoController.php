@@ -143,7 +143,7 @@ class PagamentoController extends AbstractActionController
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
             if ($dados['metodo'] == 'deposito' && !isset($_FILES['comprovanteAnexo'])) {
-                $response['data']['url'] = $getUrlRedirect('aguardando-comprovante');
+                $response['data']['url'] = $getUrlRedirect('aguardando-pagamento');
             }
             if (isset($response['data']['url'])) {
                 $response['data']['redirect'] = true;
