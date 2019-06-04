@@ -25,9 +25,13 @@ module.exports.callback = ($) => {
                 return stopEvent(e);
             });
     $('.btn-voltar').on('click', function () {
-        $('.step-container [class*="step"].active')
-                .closest('.step-container')
-                .stepPlugin('prev');
+        var stepContainer = $('.step-container [class*="step"].active')
+                .closest('.step-container');
+        if ($('.step-dados').is('.active')) {
+            window.location.href = '/';
+        } else {
+            stepContainer.stepPlugin('prev');
+        }
     });
     $('.btn-continuar').on('click', function () {
         let form = stepsContainer.find('[class*="step-"].active form').first();
