@@ -19,7 +19,6 @@ class MaisInformacoesForm extends Form
                 'label' => 'Observações sobre o veículo',
             ],
             'attributes' => [
-                'required' => true,
                 'maxlength' => 700
             ]
         ]);
