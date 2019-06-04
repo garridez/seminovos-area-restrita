@@ -282,8 +282,8 @@ input[type=radio]:checked + label:before{
     }
     input[type=checkbox] {
         opacity: 0;
-        width: 0;
-        height: 0;
+        width: 1px; // O input precisa ter um tamanho mínino para mostrar a validação nativa do navegador
+        height: 1px;
     }
     &.checkbox-circle {
         label {
