@@ -72,6 +72,10 @@ class AbstractActionController extends ZendAbstractActionController
 
         if ($data) {
             $data[0]['modeloCarro'] = $data[0]['idModelo'];
+            $data[0]['versao'] = $data[0]['caracteristica'];
+            $data[0]['combustivel'] = $data[0]['idCombustivel'];
+            $data[0]['portas'] = $data[0]['carroPortas'];
+            $data[0]['motor'] = $data[0]['idMotor'];
             return $data[0];
         }
         return [];
