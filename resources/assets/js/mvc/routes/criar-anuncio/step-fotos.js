@@ -32,13 +32,20 @@ function init() {
             });
 
 
-    ctx.on('click', '.btn-remove-img', function () {
+    ctx.on('click', '.btn-upload-img', function (e) {
+        e.preventDefault();
+        // Trigga a imagem para abrir o upload
+        $(this).closest('.foto').find('.display-img').click();
+    });
+    ctx.on('click', '.btn-remove-img', function (e) {
+        e.preventDefault();
         // Seta o placeholder e limpa os metadados
         var img = $(this).closest('.foto').find('.display-img');
         img.data('delete', true);
         showPhoto(img);
     });
-    ctx.on('click', '.btn-restaurar-img', function () {
+    ctx.on('click', '.btn-restaurar-img', function (e) {
+        e.preventDefault();
         // Seta o placeholder e limpa os metadados
         var displayImg = $(this).closest('.foto').find('.display-img');
         displayImg.removeData('delete');
