@@ -34,7 +34,7 @@ module.exports.callback = ($) => {
         }
     });
     $('.btn-continuar').on('click', function () {
-        let form = stepsContainer.find('[class*="step-"].active form').first();
+        var form = stepsContainer.find('[class*="step-"].active:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
         if (form[0] && !form[0].checkValidity()) {
             return;
