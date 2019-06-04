@@ -31,6 +31,34 @@ $boxes = [
     5 => 'simples',
 ];
 
+if ($isRevenda) {
+    $qtdAnuncios = $this->qtdAnuncios()->getData();
+
+    $planosMap = [
+        5 => [
+            'publicado' => 'totalBasicoPublicado',
+            'total' => 'totalBasico',
+        ],
+        2 => [
+            'publicado' => 'totalTurboPublicados',
+            'total' => 'totalTurbo',
+        ],
+        3 => [
+            'publicado' => 'totalNitroPublicados',
+            'total' => 'totalNitro',
+        ]
+    ];
+    foreach ($planos as &$plano) {
+        $m = $planosMap[$plano['idPlano']];
+
+        $plano['qtd'] = [
+            'publicado' => $qtdAnuncios[$m['publicado']],
+            'total' => $qtdAnuncios[$m['total']],
+        ];
+    }
+    unset($plano);
+}
+
 ?>
 <div class="container">
     <h4 class="text-center">
@@ -60,6 +88,8 @@ $boxes = [
                             if ($isRevenda) {
                                 $desabilitarPlano = false;
                             }
+                            $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
+                            $nomePlano = mb_strtoupper($nomePlano);
 
                             ?>
                     <div class="col-12 col-sm col-md col-lg">
@@ -74,7 +104,7 @@ $boxes = [
                                     <span class="bar-4"></span>
                                     <span class="bar-4"></span>
                                 </div>
-                                <h3><?= $plano['nomePlano']=="Grátis"?"Simples":$plano['nomePlano'] ?></h3>
+                                <h3><?= $nomePlano ?></h3>
                             </div>
                             <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
                                 <li>
@@ -108,6 +138,17 @@ $boxes = [
                                 <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
                                     <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
                             <?php endif; ?>
+
+                            <?php if ($isRevenda): ?>
+                                <div class="m-2">
+                                    Anúncios
+                                    <b class="h4 text-laranja"><?= $nomePlano ?></b> disponíveis:
+                                    <b class="h4 text-laranja"><?= $plano['qtd']['publicado'] ?></b>
+                                    de
+                                    <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
+                                </div>
+                            <?php endif; ?>
+
                             <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano"
                                 value="<?= $plano['idPlano'] ?>" class="hidden"
                                 <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
