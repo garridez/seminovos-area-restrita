@@ -46,10 +46,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     </div>
                 </div>
 
-                <?php #TODO retirar o igual (=) da condição, alterar o for para foreach e retirar comentários ?>
-                <?php if (sizeof($this->propostas) >= 0) :
-//                    foreach ($this->propostas as $propostas):
-                for ($i = 0; $i < 3; $i++) :
+                <?php if (sizeof($this->propostas) > 0) :
+                    foreach ($this->propostas as $propostas):
                 ?>
                     <div class="timeline-block">
                         <div class="timeline-point small"></div>
@@ -57,27 +55,21 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div class="card  social-card share full-width">
                                 <div class="circle" data-toggle="tooltip" title="Label" data-container="body"></div>
                                 <div class="card-header clearfix">
-                                    <h5>Shannon Williams</h5>
-<!--                                    <h5>--><?//= $propostas['nome'] ?><!--</h5>-->
-                                    <h6>E-mail: <span class="location semi-bold text-lowercase">wesley@seminovosbh.com.br</span></h6>
-<!--                                    <h6>E-mail: <span class="location semi-bold text-lowercase">--><?//= $propostas['email'] ?><!--</span></h6>-->
-                                    <h6>Telefone: <span class="location semi-bold">(037)988198436</span></h6>
-<!--                                    <h6>Telefone: <span class="location semi-bold">--><?//= $propostas['telefone'] ?><!--</span></h6>-->
+                                    <h5><?= $propostas['nome'] ?></h5>
+                                    <h6>E-mail: <span class="location semi-bold text-lowercase"><?= $propostas['email'] ?></span></h6>
+                                    <h6>Telefone: <span class="location semi-bold"><?= $propostas['telefone'] ?></span></h6>
 
                                 </div>
                                 <div class="card-description">
-                                    <p><strong>Mensagem:</strong> Boa noite. Consegue me enviar fotos do carro no meu</p>
-<!--                                    <p><strong>Mensagem: </strong>--><?//= $propostas['texto'] ?><!--</p>-->
+                                    <p><strong>Mensagem: </strong><?= $propostas['texto'] ?></p>
                                 </div>
                             </div>
                             <div class="event-date">
-                                <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso(date('Y-m-d'))?></small>
-<!--                                <small class="fs-12 hint-text">--><?//= $formatDate->dataPorExtenso($propostas['dataFormatada']) ?><!--</small>-->
+                                <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso($propostas['dataFormatada']) ?></small>
                             </div>
                         </div>
                     </div>
-                <?php //endforeach;?>
-                <?php endfor;?>
+                <?php endforeach;?>
                 <?php else : ?>
                 <div class="timeline-block">
                     <div class="timeline-point small">
@@ -91,8 +83,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             </div>
                         </div>
                         <div class="event-date">
-                            <small class="fs-12 hint-text">03 de maio de 2019 as 06:50</small>
-<!--                            <small class="fs-12 hint-text">--><?//= date('d/m/Y')?><!--</small>-->
+                            <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso(date('Y-m-d'))?></small>
                         </div>
                     </div>
                 </div>
