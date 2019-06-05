@@ -41,12 +41,9 @@ class MaisInformacoesForm extends Form
             'name' => 'termo',
             'options' => [
                 'label' => 'Li e aceito os termos de responsabilidade e a política de privacidade.',
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
             ],
             'attributes' => [
-                'value' => 1,
+                'required' => true,
             ],
         ]);
         $this->add([

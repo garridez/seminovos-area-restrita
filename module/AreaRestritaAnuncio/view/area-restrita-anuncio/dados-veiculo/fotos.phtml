@@ -5,13 +5,21 @@
                 FOTOS DO SEU VEÍCULO
             </h4>
             <div class="text-center my-3">
-                <small class="my-3 align-center">Agora esta na hora de mostrar a sua joia! Se você já preparou o book do
+                <small class="my-3 align-center">
+                    Agora esta na hora de mostrar a sua joia! Se você já preparou o book do
                     seu veículo, clique no box abaixo,
-                    ou arraste para dentro dele, para enviar as fotos que deseja inserir no seu anúncio.
+                    <!--ou arraste para dentro dele, -->
+                    para enviar as fotos que deseja inserir no seu anúncio.
                 </small>
             </div>
 
             <form>
+                <?php
+                /**
+                 * @todo Futuramente essa funcionalidade vai ser liberada
+                 */
+                if (false):
+                    ?>
                 <div class="form-group-lg form-group form-group-default form-text-center">
                     <label class="form-control-lg" for="fotos">
                         Clique em um dos espaços abaixo para selecionar <b>uma foto</b>
@@ -25,6 +33,7 @@
                             class="hidden" />
                     </label>
                 </div>
+                <?php endif;?>
                 <input type="file" name="foto" accept="image/jpg, image/jpeg" class="hidden" />
                 <div class=" container">
                     <div class="fotos-container">
@@ -52,12 +61,18 @@
                                     data-idfoto="<?= $foto['idFoto'] ?>"
                                     data-placeholder="https://placehold.it/262x196&text=Enviar%20Foto"
                                     data-original="<?= $foto['imagem'] ?>" title="Enviar Foto"></div>
-                                <button type="button" class="btn-restaurar-img btn btn-small" title="Restaurar imagem">
-                                    <i class="fa fa-history" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn-remove-img btn btn-small" title="Remover imagem">
-                                    <i class=" fa fa-trash-o"></i>
-                                </button>
+                                
+                                <div class="text-justify">
+                                    <a href="#" class="btn-upload-img btn btn-small text-success px-2" title="Adicionar nova foto">
+                                        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="btn-restaurar-img btn btn-small text-primary px-2" title="Restaurar foto">
+                                        <i class="fa fa-history" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="btn-remove-img btn btn-small text-danger px-2" title="Remover foto">
+                                        <i class=" fa fa-trash-o"></i>
+                                    </a>
+                                </div>
                             </div>
                             <?php endforeach; ?>
                         </div>
