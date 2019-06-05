@@ -45,6 +45,7 @@ class DadosVeiculoController extends AbstractActionController
 
         $dadosForm = new Veiculo\DadosForm();
         $dadosForm->setTipoVeiculo($tipoVeiculo);
+        $dadosForm->setCombustivel($tipoVeiculo);
 
         $veiculoDados = $this->getVeiculo();
         if ($veiculoDados) {

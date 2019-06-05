@@ -275,4 +275,9 @@ class DadosForm extends Form
         }
         parent::populateValues($data, $onlyBase);
     }
+
+    public function setCombustivel($tipoVeiculo)
+    {
+        $this->get('combustivel')->setCombustivelFromVeiculo($tipoVeiculo);
+    }
 }

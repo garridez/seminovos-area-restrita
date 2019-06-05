@@ -7,24 +7,52 @@ use Zend\Form\Element\Select;
 class SelectCombustivel extends Select
 {
 
-    protected $valueOptions = [
-        '' => 'Selecione',
-        1 => 'Álcool',
-        2 => 'Bi-Combustível',
-        3 => 'Diesel',
-        4 => 'Gasolina',
-        5 => 'Gasolina + Kit Gás',
-        6 => 'Kit Gás',
-        7 => 'Tetra Fuel',
-    ];
-
     public function __construct($name = 'idCombustivel', $options = array())
     {
         $options = array_merge([
             'label' => 'Combustível',
-            'name' => 'idCombustivel'
-            ], $options);
+        ], $options);
 
         parent::__construct($name, $options);
+    }
+
+    /**
+     *
+     * Seta os tipos de combustiveis de com o tipo de veiculo
+     *
+     * @param int $$tipoVeiculo
+     */
+    public function setCombustivelFromVeiculo($tipoVeiculo)
+    {
+        switch ($tipoVeiculo) {
+            case 1:
+                $valueOptions = [
+                    '' => 'Selecione',
+                    1 => 'Álcool',
+                    2 => 'Bi-Combustível',
+                    3 => 'Diesel',
+                    4 => 'Gasolina',
+                    5 => 'Gasolina + Kit Gás',
+                    6 => 'Kit Gás',
+                    7 => 'Tetra Fuel',
+                ];
+                break;
+            case 2:
+                $valueOptions = [
+                    '' => 'Selecione',
+                    3 => 'Diesel',
+                ];
+                break;
+            case 3:
+                $valueOptions = [
+                    '' => 'Selecione',
+                    2 => 'Bi-Combustível',
+                    4 => 'Gasolina',
+                ];
+                break;
+        }
+
+        $this->setValueOptions($valueOptions);
+        return $this;
     }
 }
