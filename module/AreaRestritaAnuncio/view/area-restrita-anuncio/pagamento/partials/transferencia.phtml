@@ -32,6 +32,11 @@
     </small>
 </div>
 <form class="pagamento-transferencia-form">
+    <h5>Anexar Comprovante</h5>
+    <div class="form-group">
+        <input type="file" class="form-control-file" id="comprovanteAnexo" name="comprovanteAnexo">
+    </div>
+    <br>
     <div class="form-group form-group-default" title="Termos de adesão">
         <label>
             <input type="checkbox" name="termos" required>
@@ -52,7 +57,17 @@
         
             
     </div>
-    <div class="form-group" title="">
-        <a href="#" class="pagamento-finalizar-deposito btn btn-success btn-block">FINALIZAR COMPRA</a>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" title="">
+                <input type="hidden" name="metodo" value="deposito">
+                <button type="submit" class="btn btn-info btn-block btn-submit-pagt block">ENVIAR COMPROVANTE</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" title="">
+                <a href="#" class="pagamento-finalizar-deposito btn btn-success btn-block">FINALIZAR COMPRA</a>
+            </div>
+        </div>
     </div>
 </form>
