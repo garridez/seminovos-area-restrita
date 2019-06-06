@@ -13,6 +13,7 @@ module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
     var marcaModelo = require('components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
+    var GetUrl = require('./helpers/GetUrl');
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
