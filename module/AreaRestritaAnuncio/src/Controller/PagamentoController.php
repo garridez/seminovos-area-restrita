@@ -136,7 +136,7 @@ class PagamentoController extends AbstractActionController
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
-                $response['data']['url'] = $getUrlRedirect('planorenovado');
+                $response['data']['url'] = $getUrlRedirect('plano-renovado');
             }
 
             if ($dados['metodo'] == 'deposito' && $response['email_enviado']) {
