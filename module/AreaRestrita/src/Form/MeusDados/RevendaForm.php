@@ -369,6 +369,10 @@ class RevendaForm extends Form
             'required' => false,
         ]);
         $inputFilter->add([
+            'name' => 'operadora_1',
+            'required' => false,
+        ]);
+        $inputFilter->add([
             'name' => 'senha',
             'required' => true,
         ]);

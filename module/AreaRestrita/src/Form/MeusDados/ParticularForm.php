@@ -320,6 +320,10 @@ class ParticularForm extends Form
             'name' => 'operadora_2',
             'required' => false,
         ]);
+        $inputFilter->add([
+            'name' => 'operadora_1',
+            'required' => false,
+        ]);
         #campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_3',

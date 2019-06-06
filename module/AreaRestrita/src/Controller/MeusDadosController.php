@@ -84,26 +84,15 @@ class MeusDadosController extends AbstractActionController
                 if ($resPut->status === 200) {
                     // Busca os dados do cadastro atualizado
                     $dadosCadastro = $cadastrosModel->getCurrent(false);
-                    $dadosForm->populateValues($dadosCadastro);
-                    return new ViewModel([
-                        'tipoCadastro' => $tipoCadastro,
-                        'formCadastro' => $dadosForm
-                    ]);
-                } else {
-                    var_dump($resPut->detail);
-                    die;
                 }
-            } else {
-                echo 'não validou os dados'; //exit;
-                var_dump($dadosForm->getMessages());
-                die;
             }
-        } else {
-            $dadosForm->populateValues($dadosCadastro);
-            return new ViewModel([
-                'tipoCadastro' => $tipoCadastro,
-                'formCadastro' => $dadosForm
-            ]);
         }
+
+        $dadosForm->populateValues($dadosCadastro);
+        
+        return new ViewModel([
+            'tipoCadastro' => $tipoCadastro,
+            'formCadastro' => $dadosForm
+        ]);
     }
 }
