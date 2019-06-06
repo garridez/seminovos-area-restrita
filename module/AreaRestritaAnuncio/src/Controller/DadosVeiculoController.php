@@ -41,7 +41,10 @@ class DadosVeiculoController extends AbstractActionController
             'caminhao' => 2,
             'moto' => 3
         ];
-        $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+        $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
+        if ($tipoVeiculo === 0) {
+            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+        }
 
         $dadosForm = new Veiculo\DadosForm();
         $dadosForm->setTipoVeiculo($tipoVeiculo);
