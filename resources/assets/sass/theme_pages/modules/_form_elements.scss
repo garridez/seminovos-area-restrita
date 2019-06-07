@@ -284,6 +284,9 @@ input[type=radio]:checked + label:before{
         opacity: 0;
         width: 1px; // O input precisa ter um tamanho mínino para mostrar a validação nativa do navegador
         height: 1px;
+        position: absolute; // Para posicionar mehor o alert de validação nativo do navegador
+        top: 30px;
+        left: 20px;
     }
     &.checkbox-circle {
         label {
