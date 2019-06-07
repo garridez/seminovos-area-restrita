@@ -11,15 +11,26 @@
 }
 
 ul.steps-list{
-    list-style: none;
-    li {
-        padding: 0;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    list-style-type: none;
+    &:after {
+        content: "";
+        width: 100%;
         display: inline-block;
+    }
+    li {
+        display: inline;
         &:not(:last-child)::after{
             content: " ";
             display: inline-block;
             border-bottom: 1px solid #707070;
             width: 40px;
+            @include media-breakpoint-down(sm) {
+                width: 5px;
+            }
+
         }
         svg{
             transition: all 400ms;
@@ -40,3 +51,16 @@ ul.steps-list{
         fill: #DADADA;
     }
 }
+
+$namespace:_criar-anuncio-;
+
+.snbh-logo {
+    .layer-car {
+        animation: #{$namespace}snbh-logo-layer-car 1s ease-in-out;
+    }
+    .layer-letters {
+        animation: #{$namespace}snbh-logo-layer-letters 2s ease-in-out;
+    }
+}
+
+@import "imports/login_animations";
