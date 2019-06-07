@@ -87,11 +87,15 @@ module.exports.callback = ($) => {
                  * Atribui o valor do veiculo no form, caso a pessoa volte e edite,
                  *      na hora de salvar é enviado o id do veículo e assim é feita a edição
                  */
-                if (data.data) {
-                    $('#dados-basicos .idVeiculo').val(data.data[0].idVeiculo);
-                    $('#dados-basicos .idAnuncioVeiculo').val(data.data[0].idAnuncio);
-                }
+                data = data.data;
+                if (data) {
+                    var idVeiculo = data[0].idVeiculo;
+                    $('#dados-basicos .idVeiculo').val(idVeiculo);
+                    $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
 
+                    var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
+                    window.history.pushState(null, null, path);
+                }
                 // Guarda o que foi serializado para garantir que não vai salvar dados que não foram alterados
                 lastSavedData = form.serialize();
                 stepsContainer.stepPlugin('next');
