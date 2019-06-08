@@ -13,7 +13,9 @@ function randStr(length, type) {
 }
 module.exports = function (options) {
     var $ = require('jquery');
-
+    if ($('#idVeiculo').val() !== '') {
+        return;
+    }
     var defaultOptions = {
         autofill: true,
         pararNoStep: false,
@@ -43,14 +45,15 @@ module.exports = function (options) {
     });
     // Metodo para agilizar o desenvolvimento
     function populate() {
+
         var form = $('#form_dadosVeiculo');
 
         form.find('[name="placa"]').val(options.placa);
         form.find('[name="idMarca"]').val('18').change();
-        setTimeout(function(){
+        setTimeout(function () {
             form.find('[name="modeloCarro"]').val('1964');
         }, 50);
-        
+
         form.find('[name="versao"]').val('3');
         form.find('[name="motor"]').val('3');
         form.find('[name="idValvula"]').val('2');
@@ -63,6 +66,7 @@ module.exports = function (options) {
 
         $('[name="valor"]').val('15000');
         $('[name="observacoes"]').val('Observação de teste');
+        $('#form_maisInformacoesVeiculo [type="checkbox"][name="termo"]').click();
 
 
         $('[name="idTroca"]').filter('[value="1"]').prop("checked", true);
