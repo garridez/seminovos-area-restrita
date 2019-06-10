@@ -88,6 +88,27 @@ return [
                     ],
                 ],
             ],
+            'json' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/json',
+                    'defaults' => [
+                        'controller' => Controller\JsonController::class,
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'cidades' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/cidades.json',
+                            'defaults' => [
+                                'action' => 'cidades',
+                            ],
+                        ],
+                    ]
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -99,6 +120,7 @@ return [
             Controller\FinanceiroController::class => InvokableFactory::class,
             Controller\HistoricoPagamentosController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\JsonController::class => InvokableFactory::class,
             Controller\MeuSiteController::class => InvokableFactory::class,
             Controller\MeusDadosController::class => InvokableFactory::class,
             Controller\MeusVeiculosController::class => InvokableFactory::class,

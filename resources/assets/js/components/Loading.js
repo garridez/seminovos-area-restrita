@@ -51,11 +51,20 @@ module.exports = {
             return;
         }
         this._showing = false;
-        this._getModal().modal('hide');
+        var modal = this._getModal().modal('hide');
         var self = this;
+        // Para garantir que o modal vai desparecer caso o close seja chamado muito rapido
+        var intervalID = setInterval(function () {
+            if (modal) {
+                modal.modal('hide');
+            } else {
+                clearInterval(intervalID);
+            }
+        }, 200);
         this._getModal().on('hidden.bs.modal', function () {
             $(this).modal('dispose').remove();
             self._instance = null;
+            clearInterval(intervalID);
         });
         return this._getModal();
     }
