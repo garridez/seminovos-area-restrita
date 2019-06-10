@@ -10,6 +10,7 @@ namespace AreaRestritaAnuncio;
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Middleware\DispatchMiddleware;
 use AreaRestrita\Middleware\LoginMiddleware;
+use AreaRestritaAnuncio\Controller\CadastrarController;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -193,6 +194,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
                         'action' => 'index',
+                    ],
+                ],
+            ],
+            'remember-pass' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/remember-pass',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'rememberPass'
                     ],
                 ],
             ],
