@@ -25,6 +25,11 @@ class JsonController extends AbstractActionController
 
             $data[$idEstado][] = $cidade;
         }
+
+        if (isset($params['idEstado']) && isset($data[$params['idEstado']])) {
+            $data = $data[$params['idEstado']];
+        }
+
         return new JsonModel($data);
     }
 
