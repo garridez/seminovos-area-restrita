@@ -183,6 +183,19 @@ return [
                     ],
                 ],
             ],
+            'criar-cadastro' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/me-cadastrar[/:email]',
+                    'constraints' => [
+                        'email' => '.*@.*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
