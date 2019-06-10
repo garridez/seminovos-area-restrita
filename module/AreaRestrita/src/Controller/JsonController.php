@@ -11,6 +11,7 @@ class JsonController extends AbstractActionController
     public function cidadesAction()
     {
         $params = $this->params()->fromQuery();
+        unset($params['idEstado']);
 
         $cidadesData = $this->getApiClient()->cidadesGet($params, null, true)->getData();
         $this->setHeaderCache();
@@ -25,10 +26,30 @@ class JsonController extends AbstractActionController
 
             $data[$idEstado][] = $cidade;
         }
-
+        $params = $this->params()->fromQuery();
         if (isset($params['idEstado']) && isset($data[$params['idEstado']])) {
             $data = $data[$params['idEstado']];
+            if ($params['idEstado'] == 11) {
+                array_unshift($data,
+                    [
+                        'idCidade' => '2700',
+                        'cidade' => 'Belo Horizonte',
+                    ],
+                    [
+                        'idCidade' => '2922',
+                        'cidade' => 'Contagem',
+                    ],
+                    [
+                        'idCidade' => '2707',
+                        'cidade' => 'Betim',
+                    ],
+                    [
+                        'idCidade' => '',
+                        'cidade' => '-',
+                ]);
+            }
         }
+
 
         return new JsonModel($data);
     }
