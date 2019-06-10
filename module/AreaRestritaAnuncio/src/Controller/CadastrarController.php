@@ -8,6 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Model\EnviarEmail;
 use Zend\View\Model\ViewModel;
 use AreaRestritaAnuncio\Form\Cadastro;
 use AreaRestrita\Model\Cadastros;
@@ -72,5 +73,79 @@ class CadastrarController extends AbstractActionController
                 'formCadastro' => $dadosForm
             ]);
         }
+    }
+
+    public function rememberPassAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $post = $request->getPost();
+
+            $email = $post['emailLembrarSenha'];
+//            $tipoCadastro = $post['tipoCadastro'];
+            $tipoCadastro = 2;
+
+            /* @var $cadastrosModel Cadastros */
+            $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+            #verifica se o email informado já foi cadastrado no sistema
+            $dadosCadastro = $cadastrosModel->get([
+                'tipoCadastro' => $tipoCadastro,
+                'email' => $email,
+                'checkEmail' => true
+            ])[0];
+
+            if (sizeof($dadosCadastro) > 0) {
+                // gerar uma nova senha
+                $senha = substr(md5(uniqid('')), 0, 7);
+                $senha = str_replace('0', '', $senha); // não inserir zeros
+                $novaSenha = $senha;
+
+
+                $retorno = $cadastrosModel->put([
+                    'senha' => $novaSenha,
+                    'tipoCadastro' => $tipoCadastro
+                ], $dadosCadastro['idCadastro'], null);
+
+                if ($retorno->status !== 200) {
+                    echo 'Erro!';
+                    var_dump(__LINE__);
+                    die;
+                } else {
+                    // Envia email pela nova api
+                    $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> ' . $dadosCadastro['responsavelNome'] . ', conforme solicitado, segue sua nova senha de acesso para o site <a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br /><strong>Foi gerada uma nova senha: </strong>' . $senha . '<br /><strong>Login: </strong>: ' . $dadosCadastro['email'] . '<br /><strong>Nome do usuário: </strong>: ' . $dadosCadastro['responsavelNome'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+
+                    $dadosEmail = [
+                        'mensagem' => $mensagem,
+                        'assunto' => 'Nova senha de acesso',
+                        'email' => [
+                            $dadosCadastro['responsavelNome'] => $dadosCadastro['email'],
+                            'senha' => 'senha@seminovosbh.com.br'
+                        ],
+                        'nome' => $dadosCadastro['responsavelNome'],
+                        'emailRemetente' => 'senha@seminovosbh.com.br',
+                        'nomeRemetente' => 'SeminovosBH',
+                        'tipoEmail' => 'personalizado'
+                    ];
+
+                    /* @var $enviarEmailModel EnviarEmail */
+                    $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+
+                    $retorno = $enviarEmailModel->post($dadosEmail);
+
+                    var_dump('ok, email enviado');
+                    exit;
+                }
+
+            } else {
+                echo 'Email não cadastrado no sistema!';
+                var_dump(__LINE__);
+                die;
+            }
+        }
+        echo 'Não foi enviado o post!';
+        var_dump(__LINE__);
+        die;
     }
 }
