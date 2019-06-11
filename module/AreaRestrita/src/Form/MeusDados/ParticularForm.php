@@ -214,7 +214,19 @@ class ParticularForm extends Form
                 'label' => 'Celular',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
+
             ],
         ]);
         $this->add([
