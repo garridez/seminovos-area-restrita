@@ -1,0 +1,42 @@
+version: 0.2
+
+env:
+  variables:
+      APPLICATION_ENV: "production"
+      SNBH_API_HOST: "https://api2.seminovosbh.com.br"
+      SNBH_URL_AREA_RESTRITA: "https://meus-anuncios.seminovosbh.com.br"
+      IMAGE_REPO_NAME: "area-restrita"
+      IMAGE_TAG: "latest"
+      AWS_ACCOUNT_ID: "041122835851"
+      AWS_DEFAULT_REGION: "us-west-2"
+
+phases:
+  install:
+    commands:
+      - apt update -y && apt install git -y
+      - git checkout master
+      - PROJECT_TAG=$(git describe)
+      - echo $PROJECT_TAG
+      # Caso não seja uma tag release, o script para.
+      - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - echo Pulling snbh-server-base image
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/snbh-server-base:7.2-node
+      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/snbh-server-base:7.2-node snbh-server-base:7.2-node
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker-compose -f docker-compose.production.yml build
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$PROJECT_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$PROJECT_TAG
+      #- sh deploy-autoscaling.sh
