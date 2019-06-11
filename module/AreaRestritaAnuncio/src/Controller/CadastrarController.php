@@ -8,6 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\EnviarEmail;
 use Zend\View\Model\ViewModel;
 use AreaRestritaAnuncio\Form\Cadastro;
@@ -18,7 +19,8 @@ class CadastrarController extends AbstractActionController
 
     public function indexAction()
     {
-        $dadosForm = new Cadastro\CadastroParticularForm();
+//        $dadosForm = new Cadastro\CadastroParticularForm();
+        $dadosForm = new ParticularForm();
 
         $request = $this->getRequest();
 
@@ -52,6 +54,7 @@ class CadastrarController extends AbstractActionController
                     #campos não existentes na tabela
                     unset($data['confirmacaoSenha']);
                     unset($data['submit']);
+                    unset($data['dataNascimento']);
 
                     $resPost = $cadastrosModel->post($data);
 
@@ -69,9 +72,13 @@ class CadastrarController extends AbstractActionController
             $email = $this->params('email');
             $dadosForm->get('email')->setValue($email);
 
-            return new ViewModel([
+            $view = new ViewModel([
                 'formCadastro' => $dadosForm
             ]);
+
+            $this->layout('layout/blank.phtml');
+
+            return $view;
         }
     }
 

@@ -66,7 +66,8 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'data-mask' => '000.000.000-00',
             ]
         ]);
         $this->add([
