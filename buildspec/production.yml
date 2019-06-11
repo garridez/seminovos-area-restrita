@@ -12,6 +12,8 @@ env:
 
 phases:
   install:
+    runtime-versions:
+        docker: 18.09.0
     commands:
       - apt update -y && apt install git -y
       - git checkout master
