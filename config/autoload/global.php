@@ -23,15 +23,15 @@ return [
         ]
     ],
     'ApiClient' => [
-//        'credentials' => [
-//            'serverUrl' => 'http://api2.seminovosbh.com.br',
-//            'headers' => [
-//                'Accept' => 'application/vnd.seminovos-bh.v1+json'
-//            ],
-//            'options' => [
-//                'timeout' => 30
-//            ]
-//        ],
+        'credentials' => [
+            'serverUrl' => 'https://api2.seminovosbh.com.br',
+            'headers' => [
+                'Accept' => 'application/vnd.seminovos-bh.v1+json'
+            ],
+            'options' => [
+                'timeout' => 90
+            ]
+        ],
     ],
     'dir' => [
         'temp' => 'data/temp',
