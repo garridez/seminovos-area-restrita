@@ -1,6 +1,4 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
-//echo $this->form($this->formCadastro);
 
 $dadosForm = new \AreaRestrita\Form\MeusDados\ParticularForm();
 
@@ -94,7 +92,6 @@ $fields['telefone_3_is_wpp']->setChecked(false);
                             </div>
                             <div class="form-group col-4">
                                 <div class="checkbox check-success m-0">
-                                    <!--                                --><? //= $this->formLabel($fields['telefone_2_is_wpp']) ?>
                                     <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
                                 </div>
                             </div>
@@ -110,7 +107,6 @@ $fields['telefone_3_is_wpp']->setChecked(false);
                             </div>
                             <div class="form-group col-4">
                                 <div class="checkbox check-success m-0">
-                                    <!--                            --><? //= $this->formLabel($fields['telefone_3_is_wpp']) ?>
                                     <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
                                 </div>
                             </div>
@@ -127,12 +123,11 @@ $fields['telefone_3_is_wpp']->setChecked(false);
                         </div>
                         <div class="row">
                             <div class="form-group col-12">
-                                <button type="submit" class="btn-warning btn-block btn-lg">Entrar</button>
+                                <button type="submit" class="btn-warning btn-block btn-lg">Cadastrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- END card -->
             </div>
             <div class="col-lg-4"></div>
         </div>

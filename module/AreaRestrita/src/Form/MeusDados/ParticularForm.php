@@ -29,9 +29,11 @@ class ParticularForm extends Form
             'type' => Element\Date::class,
             'name' => 'dataNascimento',
             'options' => [
-                'label' => 'Data de Nascimento',
-                'class' => 'form-control'
+                'label' => 'Data de Nascimento'
             ],
+            'attributes' => [
+                'class' => 'form-control'
+            ]
         ]);
 
         $this->add([
