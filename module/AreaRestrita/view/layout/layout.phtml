@@ -1,6 +1,8 @@
 <?php
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 $this->headTitle()->setSeparator(' - ')->append('Área restrita')->append('Seminovos.com.br');
+
+$assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-development' : APPLICATION_VERSION;
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,7 +23,7 @@ $this->headTitle()->setSeparator(' - ')->append('Área restrita')->append('Semin
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta content="" name="description" />
   <meta content="" name="author" />
-  <link href="/css/app.css?<?= rand(0, 1000) ?>" media="screen" rel="stylesheet" type="text/css">
+  <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
 </head>
 
 <body class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
@@ -124,7 +126,7 @@ $this->headTitle()->setSeparator(' - ')->append('Área restrita')->append('Semin
       </div>
     </div>
   </div>
-  <script src="/js/app.js?<?= rand(0, 1000) ?>" async="true"></script>
+  <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 
 </html>

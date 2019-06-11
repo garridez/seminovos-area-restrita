@@ -5,6 +5,12 @@ use Zend\Stdlib\ArrayUtils;
 
 chdir(dirname(__DIR__));
 
+// @todo Colocar a versão como variável de ambiente
+define('APPLICATION_VERSION', file_get_contents('version'));
+define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
+define('APPLICATION_PROD', APPLICATION_ENV === 'production');
+define('APPLICATION_DEV', !APPLICATION_PROD);
+
 // Composer autoloading
 require 'vendor/autoload.php';
 
