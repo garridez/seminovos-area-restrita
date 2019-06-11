@@ -9,6 +9,7 @@ services:
                 - SESSION_SAVE_PATH=tcp://master.session.ugt1op.usw2.cache.amazonaws.com:6379?weight=1&timeout=1
                 - REDIS_ARRAYS_AUTH=k7hYTw_C-w9B!yZvv!_rf^2r?!zKd5FtcX6S8_*j5smQB39=Y#shG-6bCczqCZUF
         container_name: snbh-area-restrita-production
+        image: area-restrita
         ports:
             - "8093:80"
         environment:
