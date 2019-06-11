@@ -19,3 +19,4 @@ public/img/*
 !public/img/.gitkeep
 public/js/*
 !public/js/.gitkeep
+version

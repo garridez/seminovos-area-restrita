@@ -88,6 +88,16 @@ return [
                     ],
                 ],
             ],
+            'check' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/check',
+                    'defaults' => [
+                        'controller' => Controller\CheckController::class,
+                        'action' => 'index'
+                    ],
+                ],
+            ],
             'json' => [
                 'type' => Literal::class,
                 'options' => [
@@ -114,6 +124,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\AuthController::class => InvokableFactory::class,
+            Controller\CheckController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
             Controller\FaturaController::class => InvokableFactory::class,
             Controller\FiltrosController::class => InvokableFactory::class,
