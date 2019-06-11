@@ -5,8 +5,8 @@ services:
             context: .
             dockerfile: Dockerfile
             args:
-            - SESSION_PHP_SAVE_HANDLER=redis
-            - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
+                - SESSION_PHP_SAVE_HANDLER=redis
+                - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         container_name: snbh-area-restrita
         ports:
             - "8093:80"

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Copying node_modules..."
-
 basepath="/home/www-data/scripts/npm"
 
 fullpath=$basepath"/production.sh"
