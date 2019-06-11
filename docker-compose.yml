@@ -4,6 +4,9 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile
+            args:
+            - SESSION_PHP_SAVE_HANDLER=redis
+            - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         container_name: snbh-area-restrita
         ports:
             - "8093:80"
@@ -13,3 +16,8 @@ services:
             - APPLICATION_ENV=development
             - SNBH_API_HOST=http://api2homolog.seminovosbh.com.br
             - SNBH_URL_SITE=http://siteemdev.seminovosbh.com.br
+    snbh-area-restrita-redis:
+        image: redis:5.0.4
+        container_name: snbh-area-restrita-redis
+        ports:
+        - "6380:6379"
