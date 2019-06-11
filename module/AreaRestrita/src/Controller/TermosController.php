@@ -16,4 +16,9 @@ class TermosController extends AbstractActionController
     {
         return new ViewModel();
     }
+
+    public function politicaDePrivacidadeAction()
+    {
+        return new ViewModel();
+    }
 }
