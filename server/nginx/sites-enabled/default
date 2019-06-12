@@ -13,9 +13,9 @@ server {
 
 	# Add stdout logging
 	#error_log /dev/stdout info;
-	#access_log /dev/stdout;
-	error_log /var/log/nginx/errorr.log;
-	access_log /var/log/nginx/accesss.log;
+	access_log /dev/stdout;
+	error_log /var/log/nginx/error.log;
+	access_log /var/log/nginx/access.log;
 
         # Add option for x-forward-for (real ip when behind elb)
         #real_ip_header X-Forwarded-For;
