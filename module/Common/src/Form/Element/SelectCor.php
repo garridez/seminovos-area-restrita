@@ -9,12 +9,12 @@ class SelectCor extends Select
 
     protected $valueOptions = [
         '' => 'Selecione',
-        'Prata' => 'Prata',
-        'Preto' => 'Preto',
-        'Branco' => 'Branco',
-        'Cinza' => 'Cinza',
-        'Vermelho' => 'Vermelho',
-        '' => '',
+//        'Prata' => 'Prata',
+//        'Preto' => 'Preto',
+//        'Branco' => 'Branco',
+//        'Cinza' => 'Cinza',
+//        'Vermelho' => 'Vermelho',
+//        '' => '',
         'Amarelo' => 'Amarelo',
         'Azul' => 'Azul',
         'Bege' => 'Bege',
