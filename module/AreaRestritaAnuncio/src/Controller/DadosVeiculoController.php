@@ -74,6 +74,8 @@ class DadosVeiculoController extends AbstractActionController
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
+            $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+
             if ($idVeiculo) {
                 // Atualiza
                 $data = array_diff_key($data, array_flip([
