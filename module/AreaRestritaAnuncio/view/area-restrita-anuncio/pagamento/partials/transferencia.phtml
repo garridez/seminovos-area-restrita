@@ -35,9 +35,20 @@
         <?php endforeach;?>
     </div>
 
-<div class="col-md-12 m-t-20 m-b-20">
-    <small>Após efetuar o depósito ou transferência é necessário anexar o comprovante no menu: <strong>Meus veículos > Enviar Comprovante.</strong><br>
-        Ou entrar em contato conosco no número (31) 3077-5888 informando os dados do transação.
+<div class="d-flex m-t-20 m-b-20">
+    <small>
+        <div>
+            Após efetuar o depósito ou transferência é necessário anexar o comprovante no menu: 
+        </div>
+        <div>
+            <strong>Meus veículos > Enviar Comprovante.</strong>
+        </div>
+        <div>
+            Ou entrar em contato conosco no número: <a href="tel://(31) 3077-5888" class=text-sucess>(31) 3077-5888</a>
+        </div>
+        <div>
+           informando os dados do transação.
+        </div>
     </small>
 </div>
 <form class="pagamento-transferencia-form">
@@ -46,11 +57,17 @@
         <input type="file" class="form-control-file" id="comprovanteAnexo" name="comprovanteAnexo">
     </div>
     <br>
-    <div class="form-group form-group-default" title="Termos de adesão">
-        <label>
-            <input type="checkbox" name="termos" required>
-            Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
+    <div class="form-group form-group-default d-flex align-items-center font-theme checkbox check-success" title="Termos de adesão">
+        <input type="checkbox" name="termos" required="required" value="1" id="termo_ad_cdb">
+        <label for="termo_ad_cdb"> 
+            <span>
+                Li e estou de acordo com os
+                <div>
+                    <a href="/termos/pessoa-fisica" target="_BLANK" class="text-laranja">Termos de adesão</a>
+                </div>
+            </span>
         </label>
+
     </div>
     <!-- <div class="row">
         <div class="col-md-6">
