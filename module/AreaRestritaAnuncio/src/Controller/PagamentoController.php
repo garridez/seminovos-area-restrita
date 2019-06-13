@@ -110,8 +110,10 @@ class PagamentoController extends AbstractActionController
             }
             $dadosPagamento['tipo_pagamento'] = !empty($dados['tipo_pagamento']) ? $dados['tipo_pagamento'] : 'credito';
         }
+        $controle = false;
         if (isset($_FILES) && $_FILES) {
             $dadosPagamento['files'] = array();
+            $controle = true;
             foreach ($_FILES as $keyFile => $file) {
 
                 $cFile = curl_file_create($file['tmp_name'], $file['type'], $file['name']);
@@ -135,13 +137,13 @@ class PagamentoController extends AbstractActionController
 
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
+            if ($dados['metodo'] == 'deposito' && $controle) {
+                $response['data']['url'] = $getUrlRedirect('comprovante');
+            }
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
                 $response['data']['url'] = $getUrlRedirect('plano-renovado');
             }
 
-            if ($dados['metodo'] == 'deposito' && $response['email_enviado']) {
-                $response['data']['url'] = $getUrlRedirect('comprovante');
-            }
             if ($dados['metodo'] == 'deposito' && !isset($_FILES['comprovanteAnexo'])) {
                 $response['data']['url'] = $getUrlRedirect('aguardando-pagamento');
             }
