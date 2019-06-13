@@ -96,10 +96,6 @@ return [
                         'options' => [
                             'route' => '',
                             'defaults' => [
-                                'middleware' => [
-                                    LoginMiddleware::class,
-                                    DispatchMiddleware::class,
-                                ],
                             ],
                         ],
                         'child_routes' => [

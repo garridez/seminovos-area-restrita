@@ -2,8 +2,14 @@ window.$ = require('jquery');
 
 require('jquery')(function () {
     // Inicia a aplicação
-    require('./SnBH')
+    var SnBH = require('./SnBH')
             .autoRun
-            .requireAndRegister()
-            .run();
+            .requireAndRegister();
+    /**
+     * @todo quando puder fazer um anúncio sem login, remove isso
+     */
+    if (window.SnBHRunning !== true) {
+        window.SnBHRunning = true;
+        SnBH.run();
+    }
 });

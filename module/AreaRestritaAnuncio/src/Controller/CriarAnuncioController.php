@@ -15,6 +15,12 @@ class CriarAnuncioController extends AbstractActionController
 
     public function indexAction()
     {
+        /**
+         * Futuramente vamos exigir o login no meio do processo de criação
+         */
+        if (!$this->getCadastro()) {
+            $this->redirect()->toUrl('/');
+        }
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,

@@ -1,7 +1,7 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $this->headTitle('Meus Veículos');
-$veiculos = $this->meusVeiculos['data']; //idPlano
+$veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();

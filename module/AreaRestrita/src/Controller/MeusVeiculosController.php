@@ -164,6 +164,9 @@ class MeusVeiculosController extends AbstractActionController
 
     protected function retornaValidacaoParticular($dadosVeiculos)
     {
+        if (!$dadosVeiculos || !$dadosVeiculos['data']) {
+            return $dadosVeiculos;
+        }
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
