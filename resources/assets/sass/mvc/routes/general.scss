@@ -193,8 +193,12 @@ input[type=checkbox]:checked{
 
 }
 .page-sidebar{
-  width:290px !important;
+  width:$layout-sidepanel-pin-width !important;
 }
 .content{
-  padding-left:290px !important;
+  padding-left:$layout-sidepanel-pin-width !important;
+}
+.footer{
+  left:0 !important;
+  padding-left:$layout-sidepanel-pin-width; 
 }
