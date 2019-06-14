@@ -55,7 +55,7 @@ return [
     'session_manager' => [
         'validators' => [
             RemoteAddr::class,
-            HttpUserAgent::class,
+            #HttpUserAgent::class,
         ]
     ],
     // Session storage configuration.
