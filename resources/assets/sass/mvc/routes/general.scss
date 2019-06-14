@@ -196,9 +196,13 @@ input[type=checkbox]:checked{
   width:$layout-sidepanel-pin-width !important;
 }
 .content{
-  padding-left:$layout-sidepanel-pin-width !important;
+  @include media-breakpoint-up(sm) {
+    padding-left:$layout-sidepanel-pin-width !important;
+  }
 }
 .footer{
-  left:0 !important;
-  padding-left:$layout-sidepanel-pin-width; 
+  @include media-breakpoint-up(sm) {
+    left:0 !important;
+    padding-left:$layout-sidepanel-pin-width; 
+  }
 }
