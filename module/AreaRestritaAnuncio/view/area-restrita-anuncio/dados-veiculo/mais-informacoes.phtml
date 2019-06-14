@@ -40,11 +40,15 @@ $fields['observacoes']->setAttributes(
                 </div>
 
                 <div class="checkbox form-group form-group-default required">
-                    <?= $this->formCheckbox($fields['termo']) ?>
-                    <small class="ml-4 font-theme text-uppercase smallest">
-                        Leia atentamente as informações contidas no
-                        <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja">termo de responsabilidade</a> e <a href="/../termos/politica-de-privacidade" target="_blank" class="text-laranja">política de privacidade.</a>
-                    </small>
+                    <?= $this->formCheckbox($fields['termo'])?>
+                    <div class="ml-4">
+                        <small class="font-theme text-uppercase smallest">
+                            Leia atentamente as informações contidas no
+                            <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja">termo de responsabilidade</a> 
+                            e 
+                            <a href="/../termos/politica-de-privacidade" target="_blank" class="text-laranja">política de privacidade.</a>
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group ">
