@@ -12,9 +12,7 @@ server {
 	sendfile off;
 
 	# Add stdout logging
-	#error_log /dev/stdout info;
-	access_log /dev/stdout;
-	error_log /var/log/nginx/error.log;
+	error_log /var/log/nginx/error.log info;
 	access_log /var/log/nginx/access.log;
 
         # Add option for x-forward-for (real ip when behind elb)
