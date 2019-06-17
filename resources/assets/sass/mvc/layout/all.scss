@@ -6,5 +6,14 @@ body{
     &.l-criar-anuncio{
         @import 'criar-anuncio';
     }
+    .font-theme{
+        font-family: 'Montserrat';
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+    .text-size-theme{
+        font-size: 10.5px;
+    }
 }
 @import "layout";

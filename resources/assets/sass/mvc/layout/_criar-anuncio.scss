@@ -33,6 +33,9 @@ ul.steps-list{
             @include media-breakpoint-down(sm) {
                 width: 5px;
             }
+            @include media-breakpoint-down(xs) {
+                display: none;
+            }
 
         }
         svg{
