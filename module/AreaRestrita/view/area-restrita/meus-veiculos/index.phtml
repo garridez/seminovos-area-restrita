@@ -198,7 +198,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                        class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
                                 <?php }?>
 
-                                <?php if($veiculo["botoes"]["inativar"]){?>
+                                <?php if(isset($veiculo['botoes']['inativar']) && $veiculo['botoes']['inativar']){?>
                                 <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, inativar este veículo!" data-modal-success-msg="Veículo inativado!"
