@@ -30,6 +30,7 @@ RUN set -eux; \
     #
     # Instala os pacotes de front e gera os assets 
     npm install; \
+    npm run compile-icons; \
     npm run prod; \
     #
     # Limpa os dados temporários de desinstala os pacotes
