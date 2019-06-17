@@ -421,12 +421,6 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $propostasModel Propostas */
-        $propostasModel = $this->getContainer()->get(Propostas::class);
-
-        // Busca os dados das propostas
-        $dadosPropostas = $propostasModel->getAll($idVeiculo);
-
         $serviceVeiculo = new ServiceVeiculo();
 
         if ($serviceVeiculo->verificaCadastroVeiculo($idVeiculo)) {
@@ -436,6 +430,12 @@ class MeusVeiculosController extends AbstractActionController
 
             // Busca os dados do cadastro
             $dadosVeiculo = $veiculosModel->get($idVeiculo);
+
+            /* @var $propostasModel Propostas */
+            $propostasModel = $this->getContainer()->get(Propostas::class);
+
+            // Busca os dados das propostas
+            $dadosPropostas = $propostasModel->getAll($dadosVeiculo['idAnuncio']);
         }
 
         // Verifica se retornou propostas para o veículo
