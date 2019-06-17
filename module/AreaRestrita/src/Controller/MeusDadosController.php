@@ -95,4 +95,9 @@ class MeusDadosController extends AbstractActionController
             'formCadastro' => $dadosForm
         ]);
     }
+
+    public function alterarSenhaAction()
+    {
+        var_dump('oi');exit;
+    }
 }
