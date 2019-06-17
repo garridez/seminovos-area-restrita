@@ -98,6 +98,12 @@ class MeusDadosController extends AbstractActionController
 
     public function alterarSenhaAction()
     {
-        var_dump('oi');exit;
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            var_dump("POST");
+            die;
+        }
+        return new ViewModel([]);
     }
 }
