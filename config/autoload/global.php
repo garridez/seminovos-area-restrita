@@ -54,7 +54,7 @@ return [
     ],
     'session_manager' => [
         'validators' => [
-            RemoteAddr::class,
+            #RemoteAddr::class,
             #HttpUserAgent::class,
         ]
     ],
