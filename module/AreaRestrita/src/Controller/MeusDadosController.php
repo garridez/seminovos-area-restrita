@@ -101,8 +101,25 @@ class MeusDadosController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            var_dump("POST");
-            die;
+
+            /* @var $cadastrosModel Cadastros */
+            $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+            $post = $request->getPost();
+            $tipoCadastro = 2;
+
+            if ($cadastrosModel->isRevenda()) {
+                $tipoCadastro = 1;
+            }
+
+            $data['senha'] = $post['senha'];
+            $data['tipoCadastro'] = $tipoCadastro;
+
+            $resPut = $cadastrosModel->put($data);
+            if ($resPut->status === 200) {
+                // Busca os dados do cadastro atualizado
+                $dadosCadastro = $cadastrosModel->getCurrent(false);
+            }
         }
         return new ViewModel([]);
     }
