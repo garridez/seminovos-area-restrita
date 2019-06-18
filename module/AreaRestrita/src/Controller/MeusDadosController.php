@@ -7,11 +7,13 @@
 
 namespace AreaRestrita\Controller;
 
+use AreaRestrita\Service\AuthManager;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
+use Zend\Authentication\AuthenticationService;
 
 class MeusDadosController extends AbstractActionController
 {
@@ -105,11 +107,33 @@ class MeusDadosController extends AbstractActionController
             /* @var $cadastrosModel Cadastros */
             $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
+            /* @var $authManager AuthManager  */
+            $authManager = $this->container->get(AuthManager::class);
+
             $post = $request->getPost();
+
+            // Busca os dados do cadastro
+            $dadosCadastro = $cadastrosModel->getCurrent(false);
+
             $tipoCadastro = 2;
+            $login = $dadosCadastro['email'];
 
             if ($cadastrosModel->isRevenda()) {
                 $tipoCadastro = 1;
+                $login = $dadosCadastro['cnpj'];
+            }
+
+            #valida a senha atual do usuraio
+            $result = $authManager->login([
+                'emailOrCnpj' => $login,
+                'usuarioSenha' => $post['senhaAtual'],
+                'tipoCadastro' => $tipoCadastro,
+                'rememberMe' => false
+            ], false);
+
+            if ($result->getCode() !== $result::SUCCESS) {
+                var_dump('aqui deverá ter a mesagem que a senha está incorreta e redirecionar');exit;
+                return $this->redirect()->toRoute('restrito');
             }
 
             $data['senha'] = $post['senha'];
