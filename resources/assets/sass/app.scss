@@ -25,8 +25,8 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
 @import "tools/mixins";
 @import "components/all";
-@import "mvc/layout/all";
 @import "mvc/routes/all";
+@import "mvc/layout/all";
 .debug {
     outline: red solid 1px;
 }
