@@ -34,7 +34,7 @@ class AuthManager
      * @return Result
      * @throws \Exception
      */
-    public function login($options): Result
+    public function login($options, $condicaoIdentity = true): Result
     {
         $optionsDefault = [
             'emailOrCnpj' => '',
@@ -47,8 +47,10 @@ class AuthManager
 
         $options = array_merge($optionsDefault, $options);
 
-        if ($this->authService->getIdentity() != null) {
-            throw new \Exception('Already logged in');
+        if ($condicaoIdentity) {
+            if ($this->authService->getIdentity() != null) {
+                throw new \Exception('Already logged in');
+            }
         }
         if (!isset($options['emailOrCnpj']) && !isset($options['idCadastro'])) {
             throw new \Exception('emailOrCnpj ou idCadastro não passados');
