@@ -101,9 +101,10 @@ class CadastrarController extends AbstractActionController
                 'tipoCadastro' => $tipoCadastro,
                 'email' => $email,
                 'checkEmail' => true
-            ])[0];
+            ]);
 
-            if (sizeof($dadosCadastro) > 0) {
+            if ($dadosCadastro && sizeof($dadosCadastro[0]) > 0) {
+                $dadosCadastro = $dadosCadastro[0];
                 // gerar uma nova senha
                 $senha = substr(md5(uniqid('')), 0, 7);
                 $senha = str_replace('0', '', $senha); // não inserir zeros
@@ -113,13 +114,10 @@ class CadastrarController extends AbstractActionController
                 $retorno = $cadastrosModel->put([
                     'senha' => $novaSenha,
                     'tipoCadastro' => $tipoCadastro
-                ], $dadosCadastro['idCadastro'], null);
+                    ], $dadosCadastro['idCadastro'], null);
 
-                if ($retorno->status !== 200) {
-                    echo 'Erro!';
-                    var_dump(__LINE__);
-                    die;
-                } else {
+
+                if ($retorno->status == 200) {
                     // Envia email pela nova api
                     $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> ' . $dadosCadastro['responsavelNome'] . ', conforme solicitado, segue sua nova senha de acesso para o site <a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br /><strong>Foi gerada uma nova senha: </strong>' . $senha . '<br /><strong>Login: </strong>: ' . $dadosCadastro['email'] . '<br /><strong>Nome do usuário: </strong>: ' . $dadosCadastro['responsavelNome'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
 
@@ -140,14 +138,18 @@ class CadastrarController extends AbstractActionController
                     $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
 
                     $retorno = $enviarEmailModel->post($dadosEmail);
-
-                    var_dump('ok, email enviado');
-                    exit;
                 }
-
+                if ($retorno instanceof \SnBH\ApiClient\Response) {
+                    $retorno = $retorno->json();
+                }
+                echo json_encode($retorno);
+                die;
             } else {
-                echo 'Email não cadastrado no sistema!';
-                var_dump(__LINE__);
+                echo json_encode([
+                    'status' => 400,
+                    'title' => 'Method Not Allowed',
+                    'detail' => 'Email incorreto. Verifique e tente novamente',
+                ]);
                 die;
             }
         }

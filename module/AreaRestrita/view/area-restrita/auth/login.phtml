@@ -126,7 +126,7 @@
                     <div class="col-md-4 no-padding sm-p-l-10"></div>
                     <div class="col-md-8 d-flex align-items-center justify-content-end">
                         <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small">
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
                                 <small class="semi-bold"> Clique aqui</small>
                             </a>
                         </small>
@@ -159,7 +159,7 @@
             $fields = $formLogin->getElements();
             ?>
             <form method="POST" name="login-revenda-form" class="form-horizontal" role="form"
-                  id="login-particular-form">
+                  id="login-revenda-form">
                 <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
@@ -179,7 +179,7 @@
                     <div class="col-md-4 no-padding sm-p-l-10 text-center"></div>
                     <div class="col-md-8 d-flex align-items-center justify-content-end">
                         <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small">
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
                                 <small class="semi-bold"> Clique aqui</small>
                             </a></small>
                     </div>
