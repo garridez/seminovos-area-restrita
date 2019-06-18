@@ -12,7 +12,15 @@
                     <form action="/alterar-senha" method="POST">
                         <div class="d-flex">
                             <div class="w-50">
-                                <div class="form-group form-group-default">
+                                <div class="form-group form-group-default required">
+                                    <label>Senha Atual</label>
+                                    <input type="password" name="senhaatual" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="w-50">
+                                <div class="form-group form-group-default required">
                                     <label>Nova Senha</label>
                                     <input type="password" name="senha" class="form-control" value="">
                                 </div>
