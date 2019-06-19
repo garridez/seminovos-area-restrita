@@ -54,11 +54,19 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </li>
                                 <li>
                                     Cadastrado:
-                                    <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
+                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                        echo $formatDate->converterDataBR($veiculo['dataCadastro']);
+                                    } else {
+                                        echo '-';
+                                    } ?>
                                 </li>
                                 <li>
                                     Renovado:
-                                    <?= $formatDate->converterDataHoraBR($veiculo['dataRenovacao']) ?>
+                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                        echo $formatDate->converterDataBR($veiculo['dataRenovacao']);
+                                    } else {
+                                        echo '-';
+                                    } ?>
                                 </li>
                                 <li>
                                     Kilometragem:
