@@ -94,7 +94,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
               <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item">
                 <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
               </a>
-              <a href="#" class="dropdown-item">
+              <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item">
                 <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
               </a>
               <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
