@@ -11,7 +11,7 @@ $fields['email']->setAttribute('readonly', false);
 $fields['cpfResponsavel']->setAttribute('readonly', false);
 $fields['telefone_2_is_wpp']->setChecked(false);
 $fields['telefone_3_is_wpp']->setChecked(false);
-
+$fields['senha']->setAttribute('autocomplete', 'off');
 ?>
 <form method="POST" name="form_particularSite" class="form-group m-0 " role="form" id="form_particularSite" action="me-cadastrar">
     <div class="container-fluid container-fixed-lg">
@@ -48,11 +48,11 @@ $fields['telefone_3_is_wpp']->setChecked(false);
                         <div class="row">
                             <div class="form-group col-12 col-md-6">
                                 <?= $this->formLabel($fields['email']) ?>
-                                <?= $this->formText($fields['email']) ?>
+                                <?= $this->formEmail($fields['email']) ?>
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Confirme o e-mail</label>
-                                <input type="email" class="form-control" placeholder="seuemail@example.com.br" required>
+                                <input type="email" name="confirmacao-email" class="form-control" placeholder="seuemail@example.com.br" required>
                             </div>
                         </div>
                         <div class="row">
@@ -123,7 +123,7 @@ $fields['telefone_3_is_wpp']->setChecked(false);
                         </div>
                         <div class="row">
                             <div class="form-group col-12">
-                                <button type="submit" class="btn-warning btn-block btn-lg">Cadastrar</button>
+                                <button type="submit" class="btn btn-warning btn-block btn-lg">Cadastrar</button>
                             </div>
                         </div>
                     </div>

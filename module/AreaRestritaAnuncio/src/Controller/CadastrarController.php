@@ -29,39 +29,18 @@ class CadastrarController extends AbstractActionController
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-
                 /* @var $cadastrosModel Cadastros */
                 $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-                /* @var $apiClient \SnBH\ApiClient\Client */
                 $data = $dadosForm->getData();
+                if ($data['dataNascimento']) {
+                    $data['dataNascimento'] = date('d/m/Y', strtotime($data['dataNascimento']));
+                }
 
                 $data['tipoCadastro'] = 2;
-
-                #verifica se o email informado já foi cadastrado no sistema
-                $dadosCadastro = $cadastrosModel->get([
-                    'tipoCadastro' => $data['tipoCadastro'],
-                    'email' => $data['email'],
-                    'checkEmail' => true
-                ]);
-
-                if (sizeof($dadosCadastro) > 0) {
-                    echo 'Email já cadastrado no sistema!';
-                    var_dump($dadosForm->getMessages());
-                    die;
-                } else {
-                    #campos não existentes na tabela
-                    unset($data['confirmacaoSenha']);
-                    unset($data['submit']);
-                    unset($data['dataNascimento']);
-
-                    $resPost = $cadastrosModel->post($data);
-
-                    $this->checkApiError($resPost);
-
-                    echo json_encode($resPost->json());
-                    die;
-                }
+                $resPost = $cadastrosModel->post($data);
+                echo json_encode($resPost->json());
+                die;
             } else {
                 echo 'dados invalidos';
                 var_dump($dadosForm->getMessages());
