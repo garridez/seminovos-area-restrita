@@ -1,10 +1,10 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.eot?208e492cb131448246b8bf3db3b31e2f?#iefix") format("embedded-opentype"),
-url("./icons.woff2?208e492cb131448246b8bf3db3b31e2f") format("woff2"),
-url("./icons.woff?208e492cb131448246b8bf3db3b31e2f") format("woff"),
-url("./icons.ttf?208e492cb131448246b8bf3db3b31e2f") format("truetype"),
-url("./icons.svg?208e492cb131448246b8bf3db3b31e2f#icons") format("svg");
+    src: url("./icons.eot?7778ff3254aeffa81b85905cbdb63bbd?#iefix") format("embedded-opentype"),
+url("./icons.woff2?7778ff3254aeffa81b85905cbdb63bbd") format("woff2"),
+url("./icons.woff?7778ff3254aeffa81b85905cbdb63bbd") format("woff"),
+url("./icons.ttf?7778ff3254aeffa81b85905cbdb63bbd") format("truetype"),
+url("./icons.svg?7778ff3254aeffa81b85905cbdb63bbd#icons") format("svg");
 }
 
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -228,78 +228,84 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 .icon-seller:before {
     content: "\f146";
 }
-.icon-sm-facebook:before {
+.icon-sm-email:before {
     content: "\f147";
 }
-.icon-sm-googleplus:before {
+.icon-sm-facebook:before {
     content: "\f148";
 }
-.icon-sm-instagram:before {
+.icon-sm-googleplus:before {
     content: "\f149";
 }
-.icon-sm-twitter:before {
+.icon-sm-instagram:before {
     content: "\f14a";
 }
-.icon-sm-whatsapp:before {
+.icon-sm-twitter:before {
     content: "\f14b";
 }
-.icon-sm-youtube:before {
+.icon-sm-whatsapp:before {
     content: "\f14c";
 }
-.icon-sold:before {
+.icon-sm-whatsapp2:before {
     content: "\f14d";
 }
-.icon-sualogoaqui:before {
+.icon-sm-youtube:before {
     content: "\f14e";
 }
-.icon-swap:before {
+.icon-sold:before {
     content: "\f14f";
 }
-.icon-tim:before {
+.icon-sualogoaqui:before {
     content: "\f150";
 }
-.icon-time:before {
+.icon-swap:before {
     content: "\f151";
 }
-.icon-trocaestoque:before {
+.icon-tim:before {
     content: "\f152";
 }
-.icon-type-bus:before {
+.icon-time:before {
     content: "\f153";
 }
-.icon-type-car:before {
+.icon-trocaestoque:before {
     content: "\f154";
 }
-.icon-type-moto:before {
+.icon-type-bus:before {
     content: "\f155";
 }
-.icon-type-truck:before {
+.icon-type-car:before {
     content: "\f156";
 }
-.icon-user-avatar:before {
+.icon-type-moto:before {
     content: "\f157";
 }
-.icon-user:before {
+.icon-type-truck:before {
     content: "\f158";
 }
-.icon-velocity:before {
+.icon-user-avatar:before {
     content: "\f159";
 }
-.icon-video:before {
+.icon-user:before {
     content: "\f15a";
 }
-.icon-view-grid:before {
+.icon-velocity:before {
     content: "\f15b";
 }
-.icon-view-list:before {
+.icon-video:before {
     content: "\f15c";
 }
-.icon-vivo:before {
+.icon-view-grid:before {
     content: "\f15d";
 }
-.icon-website:before {
+.icon-view-list:before {
     content: "\f15e";
 }
-.icon-whatsapp:before {
+.icon-vivo:before {
     content: "\f15f";
+}
+.icon-website:before {
+    content: "\f160";
+}
+.icon-whatsapp:before {
+    content: "\f161";
 }
