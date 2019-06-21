@@ -11,24 +11,40 @@
                 <div class="card-body">
                     <form action="/alterar-senha" method="POST">
                         <div class="d-flex">
-                            <div class="w-50">
-                                <div class="form-group form-group-default required">
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
                                     <label>Senha Atual</label>
-                                    <input type="password" name="senhaAtual" class="form-control" value="">
+                                    <input type="password" name="senhaAtual" class="form-control disabled" disabled>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">
+                                        Please choose a username.
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="w-50">
-                                <div class="form-group form-group-default required">
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
                                     <label>Nova Senha</label>
-                                    <input type="password" name="senha" class="form-control" value="">
+                                    <input type="password" name="senha" class="form-control">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please choose a username.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="w-50">
-                                <div class="form-group form-group-default required">
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
                                     <label>Confirmar Senha</label>
-                                    <input type="password" name="confirmacaoSenha" class="form-control" value="">
+                                    <input type="password" name="confirmacaoSenha" class="form-control">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please choose a username.
+                                    </div>
                                 </div>
                             </div>
                         </div>
