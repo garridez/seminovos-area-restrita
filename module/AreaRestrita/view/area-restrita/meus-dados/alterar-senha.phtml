@@ -1,10 +1,3 @@
-<?php 
-if(isset($sucesso)){
-    echo "here";
-    die;
-}
-
-?>
 <div class="container">
     <div class="row">
         <div class="col-10 align-self-end">
@@ -22,10 +15,13 @@ if(isset($sucesso)){
                                 <div class="form-group required">
                                     <label>Senha Atual<small class="text-success smallest ml-2">confirme sua senha</small></label>
                                     <input type="password" name="senhaAtual" class="form-control
-                                    <?= (isset($erroSenha)) ? 'is-invalid' : 'valid' ?>">
+                                    <?= isset($sucesso) ? 'is-valid' : '' ?> <?= isset($erroSenha)?'is-invalid':''?>">
                                     <div class="valid-feedback"></div>
                                     <div class="invalid-feedback">
                                         Senha Inválida
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <?= isset($sucesso) ? 'Senha Atualizada' : '' ?>
                                     </div>
                                 </div>
                             </div>

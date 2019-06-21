@@ -5,6 +5,10 @@ module.exports.callback = ($) => {
     let atualSenha = $("input[name='senhaAtual']");
     let novaSenha = $("input[name='senha']");
     let confNovaSenha = $("input[name='confirmacaoSenha']");
+    var Alert = require('components/Alerts');
+    if($(atualSenha).hasClass("is-valid")){
+        Alert.success('Sua senha foi atualizada com sucesso', 'Sucesso');        
+    }
     $("input").change(function() {
         validForm();
     });
@@ -15,6 +19,7 @@ module.exports.callback = ($) => {
             if(novaSenha.val() == confNovaSenha.val()){
                 alterarErros(confNovaSenha,"Ok essa é uma senha boa","");
                 validar(confNovaSenha);
+                $("button[type='submit']").prop("disabled", false);
                 return;
             }
         }
