@@ -396,7 +396,7 @@
     body{
         &.sidebar-open{
             .page-container{
-                @include translate3d(250px,0,0);
+                @include translate3d(290px,0,0);
                 overflow: hidden;
                 position: fixed;
             }

@@ -203,6 +203,6 @@ input[type=checkbox]:checked{
 .footer{
   @include media-breakpoint-up(sm) {
     left:0 !important;
-    padding-left:$layout-sidepanel-pin-width; 
+    padding-left:$layout-sidepanel-pin-width !important; 
   }
 }

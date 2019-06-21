@@ -3,6 +3,7 @@ module.exports.seletor = '.l-layout';
 module.exports.callback = ($) => {
     require('bootstrap/js/dist/util.js');
     require('bootstrap/js/dist/collapse');
+    require('bootstrap/js/dist/dropdown');
     if ($(window).width() < 992) {
         $("body").removeClass("desktop");
         $("body").addClass("mobile");
