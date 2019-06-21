@@ -183,17 +183,19 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div class=" d-flex mt-1">
                                 <small class="hint-text"><?=$veiculo["frase"]?></small>
                             </div>
-                            <div class="d-flex mt-1">
-                                <small class="hint-text mt-1">
-                                    <?php if ($veiculo["intervaloData"] == 0) { ?>
-                                    Expira Hoje
-                                    <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
-                                    Expira em <?= $veiculo["intervaloData"] ?> dias
-                                    <?php } else { ?>
-                                    Expirado em <?= $veiculo["dataExpiracao"] ?>
-                                    <?php } ?>
-                                </small>
-                            </div>
+                            <?php if($veiculo['idStatus'] != 1): ?>
+                                <div class="d-flex mt-1">
+                                    <small class="hint-text mt-1">
+                                        <?php if ($veiculo["intervaloData"] == 0) { ?>
+                                        Expira Hoje
+                                        <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
+                                        Expira em <?= $veiculo["intervaloData"] ?> dias
+                                        <?php } else { ?>
+                                        Expirado em <?= $veiculo["dataExpiracao"] ?>
+                                        <?php } ?>
+                                    </small>
+                                </div>
+                            <?php endif; ?>
                             <div class="justify-content-end d-flex m-t-15 pb-2">
 
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
