@@ -37,7 +37,10 @@ class PagamentoController extends AbstractActionController
         if ($idVeiculo == null) {
             $idVeiculo = (int) $this->params()->fromQuery('idVeiculo');
         }
-        return $this->getApiClient()->veiculosGet([], $idVeiculo, true)->getData()[0];
+
+        return $this->getApiClient()->veiculosGet([
+            'ignorarCondicoesBasicas' => 1
+        ], $idVeiculo, true)->getData()[0];
     }
 
     protected function getModelVeiculo()

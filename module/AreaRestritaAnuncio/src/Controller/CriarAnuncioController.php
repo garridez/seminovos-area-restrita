@@ -44,16 +44,10 @@ class CriarAnuncioController extends AbstractActionController
             }
             $data = $data['data'][0];
             $data['total'] = $data['valorPlano'];
-            $adicionalData = array_intersect_key($data, [
-                'tipoCadastro' => '',
-                'idVeiculo' => '',
-                'idAnuncio' => '',
-                'idPlano' => '',
-                'total' => '',
-                'placa' => '',
-                'marca' => '',
-                'modelo' => '',
-            ]);
+
+            $data['idAnuncioVeiculo'] = $data['idAnuncio'] ?? null;
+
+            $adicionalData = $data;
         }
 
         $viewModel = new ViewModel([

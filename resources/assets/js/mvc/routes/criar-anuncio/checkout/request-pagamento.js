@@ -6,6 +6,7 @@
  */
 module.exports = function (formData, ajaxParams) {
     var requestAlerts = require('./request-alerts');
+    var pagamentoEmAndamento = require('./pagamento-em-andamento');
     requestAlerts.processando();
 
     var data = $('#dados-basicos form').serializeArray();
@@ -26,6 +27,7 @@ module.exports = function (formData, ajaxParams) {
                  * @todo implementar essa função
                  */
                 pagamentoEmAndamento();
+                return;
             }
             if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
                 requestAlerts.erro(httpResponse);

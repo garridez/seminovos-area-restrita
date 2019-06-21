@@ -3,6 +3,8 @@
 
 $isRevenda = $this->userInfo('tipoCadastro') == 1;
 
+$idPlanoAtual = $idPlanoAtual ?? false;
+
 usort($planos, function ($a, $b) {
     return $b['ordem'] <=> $a['ordem'];
 });
