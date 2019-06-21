@@ -76,6 +76,11 @@ class DadosVeiculoController extends AbstractActionController
 
             $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
 
+            if (isset($data['observacoes']) && $data['observacoes']) {
+                // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
+                $data['observacoes'] = substr(utf8_decode($data['observacoes']), 0, 700);
+            }
+
             if ($idVeiculo) {
                 // Atualiza
                 $data = array_diff_key($data, array_flip([
