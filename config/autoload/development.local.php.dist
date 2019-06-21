@@ -18,8 +18,7 @@
 return [
     'ApiClient' => [
         'credentials' => [
-            //'serverUrl' => getenv('SNBH_API_HOST'),
-            'serverUrl' => http://192.168.15.32:8081,
+            'serverUrl' => getenv('SNBH_API_HOST'),
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ]

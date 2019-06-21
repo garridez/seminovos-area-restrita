@@ -132,8 +132,7 @@ class MeusDadosController extends AbstractActionController
             ], false);
 
             if ($result->getCode() !== $result::SUCCESS) {
-                var_dump('aqui deverá ter a mesagem que a senha está incorreta e redirecionar');exit;
-                return $this->redirect()->toRoute('restrito');
+                return new ViewModel(["erroSenha"=>1]);
             }
 
             $data['senha'] = $post['senha'];
@@ -143,6 +142,7 @@ class MeusDadosController extends AbstractActionController
             if ($resPut->status === 200) {
                 // Busca os dados do cadastro atualizado
                 $dadosCadastro = $cadastrosModel->getCurrent(false);
+                return new ViewModel(["sucesso"=>1]);
             }
         }
         return new ViewModel([]);
