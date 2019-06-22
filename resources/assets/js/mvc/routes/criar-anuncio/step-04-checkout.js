@@ -4,6 +4,17 @@ module.exports.callback = ($) => {
     var Alerts = require('components/Alerts');
     var stepContainer = $('.step-container');
     stepContainer.on('step:change:checkout', function (e) {
+        var location = window.location;
+        if (location.hash && location.hash.indexOf('comprovante') !== -1) {
+            var btnTranferencia = $('#accordion-payment [data-target="#transferencia"]');
+            btnTranferencia.click();
+            setTimeout(function () {
+                $("html, body").animate({
+                    scrollTop: btnTranferencia.offset().top
+                }, 400);
+            }, 1000);
+        }
+
         window.location = '#checkout';
         var planoAtual = $('#dados-basicos #idPlano').val();
         // Se for grátis vai para a tela de selecionar um plano

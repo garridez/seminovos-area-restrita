@@ -54,10 +54,11 @@ module.exports.callback = ($) => {
             });
     $('.anuncio-steps').on('steps-loaded', function () {
         var hash = window.location.hash;
-        if (!hash) {
+        if (!hash || hash === '#') {
             return;
         }
-        hash = '.step-' + hash.replace('#', '');
+        var hashArr = hash.replace('#','').split('&');
+        hash = '.step-' + hashArr[0];
 
         $('.step-container').each(function () {
             var $this = $(this);
