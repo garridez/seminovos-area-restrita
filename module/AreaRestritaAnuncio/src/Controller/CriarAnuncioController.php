@@ -34,7 +34,7 @@ class CriarAnuncioController extends AbstractActionController
             $data = $this->getApiClient()
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
-                    ], (int) $idVeiculo, true)
+                    ], (int) $idVeiculo, false)
                 ->json();
             if ($data['status'] !== 200) {
                 /**
