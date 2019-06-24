@@ -62,8 +62,14 @@
                             <div class="row py-2 mb-2">
                                 <div class="form-group col-12">
                                     <div class="col-md-12 no-padding sm-p-l-10">
-                                        <label class="control-label">Email</label>
-                                        <input type="text" class="form-control d-flex w-100" id="emailLembrarSenha" name="emailLembrarSenha">
+                                        <!-- <label class="control-label">Email</label>
+                                        <input type="text" class="form-control d-flex w-100" id="emailLembrarSenha" name="emailLembrarSenha"> -->
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">@</div>
+                                            </div>
+                                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -113,12 +119,16 @@
                     <?= $this->formLabel($fields['usuarioEmail']) ?>
                     <div class="">
                         <?= $this->formText($fields['usuarioEmail']) ?>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <?= $this->formLabel($fields['usuarioSenha']) ?>
-                    <div class="">
+                    <div class="input-group">
                         <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                        </div>
                     </div>
                 </div>
                 <br>

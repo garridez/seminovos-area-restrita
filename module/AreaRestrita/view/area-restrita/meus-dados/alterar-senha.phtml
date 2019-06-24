@@ -14,8 +14,13 @@
                             <div class="w-50 px-3">
                                 <div class="form-group required">
                                     <label>Senha Atual<small class="text-success smallest ml-2">confirme sua senha</small></label>
-                                    <input type="password" name="senhaAtual" class="form-control
-                                    <?= isset($sucesso) ? 'is-valid' : '' ?> <?= isset($erroSenha)?'is-invalid':''?>">
+                                    <div class="input-group">
+                                        <input type="password" name="senhaAtual" class="form-control
+                                        <?= isset($sucesso) ? 'is-valid' : '' ?> <?= isset($erroSenha)?'is-invalid':''?>">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
                                     <div class="valid-feedback"></div>
                                     <div class="invalid-feedback">
                                         Senha Inválida
@@ -30,7 +35,12 @@
                             <div class="w-50 px-3">
                                 <div class="form-group required">
                                     <label>Nova Senha<small class="text-success smallest ml-2">sua senha deve conter no mínimo 4 caractéres</small></label>
-                                    <input type="password" name="senha" class="form-control ">
+                                    <div class="input-group">
+                                        <input type="password" name="senha" class="form-control ">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -42,7 +52,12 @@
                             <div class="w-50 px-3">
                                 <div class="form-group required">
                                     <label>Confirmar Senha</label>
-                                    <input type="password" name="confirmacaoSenha" class="form-control">
+                                    <div class="input-group">
+                                        <input type="password" name="confirmacaoSenha" class="form-control">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>

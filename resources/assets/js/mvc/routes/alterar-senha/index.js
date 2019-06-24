@@ -2,6 +2,9 @@
 module.exports.seletor = '.c-meus-dados.a-alterar-senha';
 
 module.exports.callback = ($) => {
+    var ShowPassword = require('components/ShowPassword');
+    ShowPassword($("input[type='password']"));
+
     let atualSenha = $("input[name='senhaAtual']");
     let novaSenha = $("input[name='senha']");
     let confNovaSenha = $("input[name='confirmacaoSenha']");
