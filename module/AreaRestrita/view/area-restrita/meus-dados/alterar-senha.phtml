@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+        <div class="col-10 align-self-end">
+            <div class="d-flex">
+                <h3 class="font-montserrat all-caps hint-text">MEUS DADOS</h3>
+            </div>
+            <div class="card card-default d-flex">
+                <div class="card-header ">
+                    <div class="card-title">Alterar Senha</div>
+                </div>
+                <div class="card-body">
+                    <form action="/alterar-senha" method="POST">
+                        <div class="d-flex">
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
+                                    <label>Senha Atual<small class="text-success smallest ml-2">confirme sua senha</small></label>
+                                    <div class="input-group">
+                                        <input type="password" name="senhaAtual" class="form-control
+                                        <?= isset($sucesso) ? 'is-valid' : '' ?> <?= isset($erroSenha)?'is-invalid':''?>">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">
+                                        Senha Inválida
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <?= isset($sucesso) ? 'Senha Atualizada' : '' ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
+                                    <label>Nova Senha<small class="text-success smallest ml-2">sua senha deve conter no mínimo 4 caractéres</small></label>
+                                    <div class="input-group">
+                                        <input type="password" name="senha" class="form-control ">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">     
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-50 px-3">
+                                <div class="form-group required">
+                                    <label>Confirmar Senha</label>
+                                    <div class="input-group">
+                                        <input type="password" name="confirmacaoSenha" class="form-control">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please choose a username.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-laranja text-white block-btn " type="submit" >
+                                ENVIAR
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

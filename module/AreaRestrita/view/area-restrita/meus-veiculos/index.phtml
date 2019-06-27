@@ -1,7 +1,7 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $this->headTitle('Meus Veículos');
-$veiculos = $this->meusVeiculos['data']; //idPlano
+$veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
@@ -54,11 +54,19 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </li>
                                 <li>
                                     Cadastrado:
-                                    <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
+                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                        echo $formatDate->converterDataBR($veiculo['dataCadastro']);
+                                    } else {
+                                        echo '-';
+                                    } ?>
                                 </li>
                                 <li>
                                     Renovado:
-                                    <?= $formatDate->converterDataHoraBR($veiculo['dataRenovacao']) ?>
+                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                        echo $formatDate->converterDataBR($veiculo['dataRenovacao']);
+                                    } else {
+                                        echo '-';
+                                    } ?>
                                 </li>
                                 <li>
                                     Kilometragem:
@@ -113,7 +121,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
                                         <div class="row d-flex justify-content-between pl-3">
                                             <div class="bold no-margin d-flex align-items-center link-danger">
-                                                <span class="fa fa-circle text-success fs-11 mr-1"></span>
+                                                <span class="fa fa-envelope fs-16 mr-1"></span>
                                                 Propostas
                                                 <?php
                                                 /** @todo
@@ -144,12 +152,11 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div>
                                 <?php if($veiculo["botoes"]["trocar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center">Trocar Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center">Melhorar meu
-                                    Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano"
@@ -176,21 +183,23 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div class=" d-flex mt-1">
                                 <small class="hint-text"><?=$veiculo["frase"]?></small>
                             </div>
-                            <div class="d-flex mt-1">
-                                <small class="hint-text mt-1">
-                                    <?php if ($veiculo["intervaloData"] == 0) { ?>
-                                    Expira Hoje
-                                    <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
-                                    Expira em <?= $veiculo["intervaloData"] ?> dias
-                                    <?php } else { ?>
-                                    Expirado em <?= $veiculo["dataExpiracao"] ?>
-                                    <?php } ?>
-                                </small>
-                            </div>
+                            <?php if($veiculo['idStatus'] != 1): ?>
+                                <div class="d-flex mt-1">
+                                    <small class="hint-text mt-1">
+                                        <?php if ($veiculo["intervaloData"] == 0) { ?>
+                                        Expira Hoje
+                                        <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
+                                        Expira em <?= $veiculo["intervaloData"] ?> dias
+                                        <?php } else { ?>
+                                        Expirado em <?= $veiculo["dataExpiracao"] ?>
+                                        <?php } ?>
+                                    </small>
+                                </div>
+                            <?php endif; ?>
                             <div class="justify-content-end d-flex m-t-15 pb-2">
 
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#checkout"
+                                <a href="<?=$urls['editarAnuncio']?>#checkout&comprovante"
                                    class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2">Enviar comprovante</a>
                                 <?php }?>
 
@@ -199,7 +208,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                        class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
                                 <?php }?>
 
-                                <?php if($veiculo["botoes"]["inativar"]){?>
+                                <?php if(isset($veiculo['botoes']['inativar']) && $veiculo['botoes']['inativar']){?>
                                 <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, inativar este veículo!" data-modal-success-msg="Veículo inativado!"

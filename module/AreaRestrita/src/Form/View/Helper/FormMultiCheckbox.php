@@ -52,6 +52,8 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
         $combinedMarkup = [];
         $count          = 0;
 
+        natsort($options);
+
         foreach ($options as $key => $optionSpec) {
             $count++;
             if ($count > 1 && array_key_exists('id', $attributes)) {

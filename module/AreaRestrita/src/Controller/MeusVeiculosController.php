@@ -63,7 +63,7 @@ class MeusVeiculosController extends AbstractActionController
         $viewModel = new ViewModel([
             'meusVeiculos' => $dadosVeiculos
         ]);
-        
+
         $request = $this->getRequest();
         // Se for ajax, desativa o layout
         $viewModel->setTerminal($request->isXmlHttpRequest());
@@ -80,12 +80,12 @@ class MeusVeiculosController extends AbstractActionController
 
             $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
-            $intevaloData = (int)$intevaloData->format('%R%a');
+            $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
             $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
-            $intervaloDataCadastro = (int)$intervaloDataCadastro->format('%R%a');
+            $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
             $frase = "";
             $temp_acoes = [
@@ -164,6 +164,9 @@ class MeusVeiculosController extends AbstractActionController
 
     protected function retornaValidacaoParticular($dadosVeiculos)
     {
+        if (!$dadosVeiculos || !$dadosVeiculos['data']) {
+            return $dadosVeiculos;
+        }
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
@@ -171,12 +174,12 @@ class MeusVeiculosController extends AbstractActionController
 
             $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
-            $intevaloData = (int)$intevaloData->format('%R%a');
+            $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
             $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
-            $intervaloDataCadastro = (int)$intervaloDataCadastro->format('%R%a');
+            $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
             $frase = "";
             $temp_acoes = [
@@ -259,7 +262,7 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "8":
                     $frase = "Veículo vendido";
-                    if ($veiculo['idPlano'] != 5  /* < 48 HORAS MARCADO COMO VENDIDO */) {
+                    if ($veiculo['idPlano'] != 5 /* < 48 HORAS MARCADO COMO VENDIDO */) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
@@ -290,8 +293,6 @@ class MeusVeiculosController extends AbstractActionController
 
         return $dadosVeiculos;
     }
-
-
     /*
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular
@@ -310,7 +311,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 2,
-        ], $idVeiculo);
+            ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
         die;
@@ -328,7 +329,7 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 5,
             'clicks' => 0
-        ], $idVeiculo);
+            ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
         die;
@@ -345,7 +346,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
-        ], $idVeiculo);
+            ], $idVeiculo);
         echo json_encode($dadosVeiculos);
         die;
     }
@@ -387,7 +388,7 @@ class MeusVeiculosController extends AbstractActionController
                 'idVeiculo' => $idVeiculo,
                 'idStatus' => 7,
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
-            ], $idVeiculo);
+                ], $idVeiculo);
         }
         echo json_encode($dadosVeiculos);
         die;
@@ -418,27 +419,17 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculo = $veiculosModel->get($idVeiculo);
+
         /* @var $propostasModel Propostas */
         $propostasModel = $this->getContainer()->get(Propostas::class);
 
         // Busca os dados das propostas
-        $dadosPropostas = $propostasModel->getAll($idVeiculo);
-
-        $serviceVeiculo = new ServiceVeiculo();
-
-        if ($serviceVeiculo->verificaCadastroVeiculo($idVeiculo)) {
-
-            /* @var $veiculosModel Veiculos */
-            $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
-            // Busca os dados do cadastro
-            $dadosVeiculo = $veiculosModel->get($idVeiculo);
-        }
-
-        // Verifica se retornou propostas para o veículo
-        if ($dadosPropostas['status'] == 405) {
-            $dadosPropostas = [];
-        }
+        $dadosPropostas = $propostasModel->getAll($dadosVeiculo['idVeiculo']) ?? [];
 
         return new ViewModel([
             'propostas' => $dadosPropostas,

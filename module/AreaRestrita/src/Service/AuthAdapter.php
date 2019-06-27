@@ -35,8 +35,11 @@ class AuthAdapter implements AdapterInterface
         $loginResult = $this->apiClient->loginPost($data);
 
         $code = $loginResult->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;
-
-        return new AuthResult($code, (int) $loginResult->getData()[0]['idCadastro']);
+        $identity = false;
+        if ($code === AuthResult::SUCCESS) {
+            $identity = (int) $loginResult->getData()[0]['idCadastro'];
+        }
+        return new AuthResult($code, $identity);
     }
 
     public function authenticateNoPassword(): AuthResult

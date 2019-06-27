@@ -243,4 +243,14 @@ return [
             ],
         ],
     ],
+    'alterar-senha' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'alterar-senha',
+            'defaults' => [
+                'controller' => Ctrl\MeusDadosController::class,
+                'action' => 'alterar-senha'
+            ],
+        ],
+    ],
 ];

@@ -32,7 +32,7 @@ class AuthenticationServiceFactory implements FactoryInterface
             return new SessionStorage(Module::SESSION_NAMESPACE, 'idCadastro', $sessionManager);
         } catch (\Exception $ex) {
             $sessionManager->destroy();
-            return $this->getSessionStorage($sessionManager);
+            throw $ex;
         }
     }
 }

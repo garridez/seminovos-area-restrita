@@ -53,21 +53,25 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            <div class="row border-top border-bottom py-2 mb-2">
+                            <div class="row pt-2">
                                 <div class="col-md-12 no-padding sm-p-l-10">
                                     <p>Não lembra sua senha? Digite o e-mail cadastrado do portal no campo abaixo, para
                                         receber sua nova senha!</p>
                                 </div>
                             </div>
-                            <div class="row py-2 mb-2">
+                            <div class="row pb-2">
                                 <div class="form-group col-12">
                                     <div class="col-md-12 no-padding sm-p-l-10">
-                                        <label class="control-label">Email</label>
-                                        <input type="text" class="form-control d-flex w-100" id="emailLembrarSenha" name="emailLembrarSenha">
+                                       <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">@</div>
+                                            </div>
+                                            <input type="email" class="form-control" id="inlineFormInputGroup" placeholder="Email">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row border-top py-2 mb-2">
+                            <div class="row border-top py-2">
                                 <div class="col-md-12 no-padding sm-p-l-10">
                                     <p class="text-justify">Ao solicitar uma nova senha o site enviará a nova senha para
                                         o e-mail cadastrado, se não receber o e-mail na sua caixa de entrada verifique
@@ -77,8 +81,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -113,23 +116,16 @@
                     <?= $this->formLabel($fields['usuarioEmail']) ?>
                     <div class="">
                         <?= $this->formText($fields['usuarioEmail']) ?>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <?= $this->formLabel($fields['usuarioSenha']) ?>
-                    <div class="">
+                    <div class="input-group">
                         <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 no-padding sm-p-l-10"></div>
-                    <div class="col-md-8 d-flex align-items-center justify-content-end">
-                        <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small">
-                                <small class="semi-bold"> Clique aqui</small>
-                            </a>
-                        </small>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -140,10 +136,19 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-12 no-padding sm-p-l-10 text-center">
+                    <div class="col-md-12 no-padding sm-p-l-10 text-right">
                         <small class="semi-bold">Não tem cadastro?
                             <a href="/me-cadastrar" class="text-info small">
                                 <small class="text-amarelo semi-bold"> Cadastre-se</small>
+                            </a>
+                        </small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 d-flex align-items-center justify-content-end">
+                        <small class="semi-bold">Esqueceu sua senha?
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
+                                <small class="semi-bold"> Clique aqui</small>
                             </a>
                         </small>
                     </div>
@@ -159,7 +164,7 @@
             $fields = $formLogin->getElements();
             ?>
             <form method="POST" name="login-revenda-form" class="form-horizontal" role="form"
-                  id="login-particular-form">
+                  id="login-revenda-form">
                 <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
@@ -171,15 +176,18 @@
                 </div>
                 <div class="form-group">
                     <?= $this->formLabel($fields['usuarioSenha']) ?>
-                    <div class="">
+                    <div class="input-group">
                         <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 no-padding sm-p-l-10 text-center"></div>
                     <div class="col-md-8 d-flex align-items-center justify-content-end">
                         <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small">
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
                                 <small class="semi-bold"> Clique aqui</small>
                             </a></small>
                     </div>

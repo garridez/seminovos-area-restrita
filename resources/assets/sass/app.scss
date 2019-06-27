@@ -8,6 +8,7 @@
 $enable-pointer-cursor-for-buttons: true !default;
 $font-weight-bolder: bolder !default;
 
+
 @import "~snbh-site/resources/assets/sass/variables";
 @import "~snbh-site/resources/assets/sass/bootstrap";
 @import "~snbh-site/resources/assets/sass/components/all";
@@ -15,6 +16,7 @@ $font-weight-bolder: bolder !default;
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/dropdown";
 
 @import "theme_pages/themes/corporate/corporate";
 
@@ -23,8 +25,8 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
 @import "tools/mixins";
 @import "components/all";
-@import "mvc/layout/all";
 @import "mvc/routes/all";
+@import "mvc/layout/all";
 .debug {
     outline: red solid 1px;
 }
