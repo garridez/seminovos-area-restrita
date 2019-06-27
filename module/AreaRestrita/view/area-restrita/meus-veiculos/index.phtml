@@ -116,6 +116,20 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                    acessos
                                 </div>
                             </div> -->
+                            <?php if($veiculo['combinarValor'] == 1) : ?>
+                                <div class="col-12 col-lg-12 ">
+                                    <div class="bg-master-lightest  mt-1 padding-15">
+                                        <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
+                                            <div class="row d-flex justify-content-between pl-3">
+                                                <div class="bold no-margin d-flex align-items-center link-danger">
+                                                    <span class="fa fa-circle text-warning fs-11 mr-1"></span>
+                                                    Valor a Combinar
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <div class="col-12 col-lg-12 ">
                                 <div class="bg-master-lightest  mt-1 padding-15">
                                     <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
