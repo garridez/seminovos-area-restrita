@@ -467,12 +467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/seminovosbh/api-client-module.git",
-                "reference": "40e60a81d4bd480e4df42f9a0283f2d32811f20b"
+                "reference": "45e5932f6ad7a27ef0115f50fcd27f42618936e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/api-client-module/get/40e60a81d4bd480e4df42f9a0283f2d32811f20b.zip",
-                "reference": "40e60a81d4bd480e4df42f9a0283f2d32811f20b",
+                "url": "https://bitbucket.org/seminovosbh/api-client-module/get/45e5932f6ad7a27ef0115f50fcd27f42618936e6.zip",
+                "reference": "45e5932f6ad7a27ef0115f50fcd27f42618936e6",
                 "shasum": ""
             },
             "require": {
@@ -493,9 +493,9 @@
             "description": "Modulo para o Zend Framework",
             "homepage": "https://bitbucket.org/seminovosbh/api-client-module",
             "support": {
-                "source": "https://bitbucket.org/seminovosbh/api-client-module/src/40e60a81d4bd480e4df42f9a0283f2d32811f20b/?at=master"
+                "source": "https://bitbucket.org/seminovosbh/api-client-module/src/45e5932f6ad7a27ef0115f50fcd27f42618936e6/?at=master"
             },
-            "time": "2018-05-07T16:51:13+00:00"
+            "time": "2019-07-02T01:51:08+00:00"
         },
         {
             "name": "webimpress/composer-extra-dependency",

@@ -13,8 +13,6 @@
  */
 use Zend\Cache\Storage\Adapter\Filesystem;
 use Zend\Session\Storage\SessionArrayStorage;
-use Zend\Session\Validator\HttpUserAgent;
-use Zend\Session\Validator\RemoteAddr;
 
 return [
     'SnBH' => [
@@ -32,6 +30,9 @@ return [
                 'timeout' => 90
             ]
         ],
+        'cache' => [
+            'use_from_service_manager' => 'cache',
+        ],
     ],
     'dir' => [
         'temp' => 'data/temp',
@@ -42,7 +43,7 @@ return [
         'options' => array(
             'ttl' => 3600,
             'cacheDir' => 'data/cache',
-            'namespace' => 'main-cache'
+            'namespace' => 'AreaRestritaProd'
         ),
         'plugins' => array(
             'Serializer',
@@ -54,8 +55,6 @@ return [
     ],
     'session_manager' => [
         'validators' => [
-            #RemoteAddr::class,
-            #HttpUserAgent::class,
         ]
     ],
     // Session storage configuration.
