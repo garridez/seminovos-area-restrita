@@ -11,7 +11,7 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-use Zend\Cache\Storage\Adapter\Filesystem;
+use Zend\Cache\Storage\Adapter\Redis;
 use Zend\Session\Storage\SessionArrayStorage;
 
 return [
@@ -39,11 +39,11 @@ return [
         'upload' => 'data/temp/upload'
     ],
     'cache' => array(
-        'adapter' => Filesystem::class,
+        'adapter' => Redis::class,
         'options' => array(
-            'ttl' => 3600,
-            'cacheDir' => 'data/cache',
-            'namespace' => 'AreaRestritaProd'
+            'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
+            'ttl' => 60 * 20, # 20 Minutos
+            'namespace' => 'SiteProd'
         ),
         'plugins' => array(
             'Serializer',
