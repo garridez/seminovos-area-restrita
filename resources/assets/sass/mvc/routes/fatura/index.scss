@@ -1,0 +1,26 @@
+.card {
+  .card-body {
+    @include media-breakpoint-down(md) {
+      img {
+        width: 67.5px;
+        height: 23.5px;
+      }
+      h3 {
+        font-size: 1.2rem;
+        line-height: 15pt;
+      }
+      .small {
+        font-size: 0.9rem;
+      }
+      h5 .small {
+        font-size: 0.7rem;
+      }
+    }
+    @include media-breakpoint-up(md) {
+      img {
+        width: 135px;
+        height: 47px;
+      }
+    }
+  }
+}
