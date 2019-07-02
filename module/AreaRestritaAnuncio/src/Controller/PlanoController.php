@@ -39,7 +39,7 @@ class PlanoController extends AbstractActionController
             'planos' => $dadosPlanos,
         ];
 
-        $dadosVeiculo = $this->getVeiculo();
+        $dadosVeiculo = $this->getVeiculo(20);
 
         if ($dadosVeiculo) {
             $data['idPlanoAtual'] = (int) $dadosVeiculo['idPlano'];

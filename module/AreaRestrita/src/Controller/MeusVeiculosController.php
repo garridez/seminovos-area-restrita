@@ -222,6 +222,9 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {
                         $temp_acoes["renovar_plano"] = true;
                     }
+                    if ($intevaloData <= 2){
+                        $temp_acoes["reativar"] = true;
+                    }
                     break;
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
