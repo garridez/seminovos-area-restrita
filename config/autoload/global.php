@@ -43,7 +43,7 @@ return [
         'options' => array(
             'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
             'ttl' => 60 * 20, # 20 Minutos
-            'namespace' => 'SiteProd'
+            'namespace' => 'AreaRestritaProd'
         ),
         'plugins' => array(
             'Serializer',
