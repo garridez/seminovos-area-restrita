@@ -23,12 +23,16 @@ return [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ]
         ],
+        'cache' => [
+            'use_from_service_manager' => 'cache'
+        ],
     ],
     'cache' => array(
         'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
         'options' => array(
-            'ttl' => 1,
+            'ttl' => 10,
             'cacheDir' => 'data/cache',
+            'namespace' => 'AreaRestritaDev',
         ),
         'plugins' => array(
             'Serializer',
