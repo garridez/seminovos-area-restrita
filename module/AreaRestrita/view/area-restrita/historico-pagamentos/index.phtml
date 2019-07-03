@@ -63,7 +63,47 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 <?php endforeach;?>
             </tbody>
             <?php elseif ($this->tipoCadastro == 2) : ?>
+            <thead>
+                <tr role="row">
+                    <th class="text-center text-success d-table-cell no-wrap d-md-table-cell">Valor R$</th>
+                    <th class="text-center d-none d-md-table-cell">Total</th>
+                    <th class="text-center d-none d-md-table-cell">Pagamento</th>
+                    <th class="text-center text-laranja d-table-cell status-cell d-md-table-cell">Status</th>
+                    <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
+                    <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pagamentos as $pagamento) : ?>
+                <tr role="row">
+                    <td class="text-center d-table-cell no-wrap d-md-table-cell"><?= $pagamento['valor'] ?></td>
+                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
+                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
+                    <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
+                    </td>
+                    <td class="text-center d-table-cell d-md-table-cell">
+                        <?php 
+                    /*
+                     * @todo melhorar a data tirando horas
+                     */
+                    ?>
+                        <?php if($pagamento['status'] == 2): ?>
+                        <a class="" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <?php else: ?>
+                        -
+                        <?php endif;?>
+                    </td>
 
+                    <td class="text-right d-table-cell no-wrap d-md-table-cell">
+                        Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>
+                        Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?><br>
+                        Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
             <?php endif; ?>
         </table>
     </div>
