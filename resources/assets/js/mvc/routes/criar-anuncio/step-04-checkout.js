@@ -3,6 +3,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var Alerts = require('components/Alerts');
     var stepContainer = $('.step-container');
+    var idPlano = $("#idPlano").val();
     stepContainer.on('step:change:checkout', function (e) {
         var location = window.location;
         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
@@ -13,6 +14,15 @@ module.exports.callback = ($) => {
                     scrollTop: btnTranferencia.offset().top
                 }, 400);
             }, 1000);
+        }
+        
+        if (location.hash && location.hash.indexOf('trocarPlano') !== -1 && location.hash.indexOf('planoNitroHome') !== -1) {
+            if(!$('#radio-idPlano-1').is(':checked') && idPlano==4){
+                $('#radio-idPlano-1').attr('checked',true);
+                $("#idPlano").val(4);
+            }
+            $("#acao").val("trocarPlano");
+            
         }
 
         window.location = '#checkout';
