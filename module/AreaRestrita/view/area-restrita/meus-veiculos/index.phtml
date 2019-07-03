@@ -169,11 +169,11 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                <a href="<?=$urls['editarAnuncio']?>#plano&trocarPlano"
                                     class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                <a href="<?=$urls['editarAnuncio']?>#checkout&trocarPlano&planoNitroHome"
                                     class="btn btn-sm btn-info text-white d-flex align-items-center">Renovar Plano</a>
                                 <?php }?>
                                 <?php
