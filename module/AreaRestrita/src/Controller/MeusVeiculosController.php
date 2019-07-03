@@ -181,6 +181,12 @@ class MeusVeiculosController extends AbstractActionController
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
             
+            $dataTrocaStatus = new \DateTime($veiculo["dataTrocaStatus"]);
+            $dataAtual->format('Y-m-d H:i:s');
+            $dataAtuall = new \DateTime(date('Y-m-d H:i:s'));
+            $intervaloDataTrocaStatus = $dataTrocaStatus->diff($dataAtuall);
+            $intervaloDataTrocaStatus = (int) $intervaloDataTrocaStatus->format('%R%a');
+            
             /* @var $pagamentosModel Pagamentos */
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
@@ -270,13 +276,13 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "7":
                     $frase = "";
-                    if ($veiculo['idPlano'] != 5) {
+                    if ($veiculo['idPlano'] != 5 && $intervaloDataTrocaStatus <= 2) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
                 case "8":
                     $frase = "Veículo vendido";
-                    if ($veiculo['idPlano'] != 5 /* < 48 HORAS MARCADO COMO VENDIDO */) {
+                    if ($veiculo['idPlano'] != 5 && ($intervaloDataTrocaStatus <= 2)) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
