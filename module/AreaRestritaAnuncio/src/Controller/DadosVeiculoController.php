@@ -81,6 +81,20 @@ class DadosVeiculoController extends AbstractActionController
                 $data['observacoes'] = substr($data['observacoes'], 0, 700);
             }
 
+            $keyRemap = [
+                'checkboxacessorios' => 'listaAcessorios',
+                'ocultarValorACombinar' => 'combinarPreco',
+            ];
+
+            foreach ($keyRemap as $from => $to) {
+                if (isset($data[$from])) {
+                    $data[$to] = $data[$from];
+                    unset($data[$from]);
+                }
+            }
+            // Se não for passado acessórios, envia "0" para apagar os existentes
+            $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
+
             if ($idVeiculo) {
                 // Atualiza
                 $data = array_diff_key($data, array_flip([
@@ -90,17 +104,6 @@ class DadosVeiculoController extends AbstractActionController
                     'total',
                     'termo'
                 ]));
-
-                $keyRemap = [
-                    'checkboxacessorios' => 'listaAcessorios',
-                    'ocultarValorACombinar' => 'combinarPreco',
-                ];
-                foreach ($keyRemap as $from => $to) {
-                    if (isset($data[$from])) {
-                        $data[$to] = $data[$from];
-                        unset($data[$from]);
-                    }
-                }
 
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
