@@ -191,9 +191,8 @@ class MeusVeiculosController extends AbstractActionController
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
             $pagamentosVeiculos = $pagamentosModel->get();
-            
+            $statusPagamento = null;
             $statusPagamento = $this->statusUltimoPagamentoVeiculo($pagamentosVeiculos);
-            //$statusPagamento = 
 
             $frase = "";
             $temp_acoes = [
@@ -239,7 +238,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($intevaloData <= 2){
                         $temp_acoes["reativar"] = true;
                     }
-                    if($statusPagamento == 1){
+                    if($veiculo['idPlano'] != 5 && $statusPagamento == 1){
                         $temp_acoes["enviar_comprovante"] = true;
                     }
                     break;
