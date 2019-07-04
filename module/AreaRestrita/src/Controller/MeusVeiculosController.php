@@ -164,7 +164,7 @@ class MeusVeiculosController extends AbstractActionController
 
     protected function retornaValidacaoParticular($dadosVeiculos)
     {
-        if (!$dadosVeiculos || !$dadosVeiculos['data']) {
+        if (!isset($dadosVeiculos['data'])) {
             return $dadosVeiculos;
         }
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
@@ -180,6 +180,20 @@ class MeusVeiculosController extends AbstractActionController
             $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
+            
+            $dataTrocaStatus = new \DateTime($veiculo["dataTrocaStatus"]);
+            $dataAtual->format('Y-m-d H:i:s');
+            $dataAtuall = new \DateTime(date('Y-m-d H:i:s'));
+            $intervaloDataTrocaStatus = $dataTrocaStatus->diff($dataAtuall);
+            $intervaloDataTrocaStatus = (int) $intervaloDataTrocaStatus->format('%R%a');
+            
+            /* @var $pagamentosModel Pagamentos */
+            $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
+            // Busca os dados do pagamento
+            $pagamentosVeiculos = $pagamentosModel->get();
+            
+            $statusPagamento = $this->statusUltimoPagamentoVeiculo($pagamentosVeiculos);
+            //$statusPagamento = 
 
             $frase = "";
             $temp_acoes = [
@@ -222,6 +236,12 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {
                         $temp_acoes["renovar_plano"] = true;
                     }
+                    if ($intevaloData <= 2){
+                        $temp_acoes["reativar"] = true;
+                    }
+                    if($statusPagamento == 1){
+                        $temp_acoes["enviar_comprovante"] = true;
+                    }
                     break;
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
@@ -256,13 +276,13 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "7":
                     $frase = "";
-                    if ($veiculo['idPlano'] != 5) {
+                    if ($veiculo['idPlano'] != 5 && $intervaloDataTrocaStatus <= 2) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
                 case "8":
                     $frase = "Veículo vendido";
-                    if ($veiculo['idPlano'] != 5 /* < 48 HORAS MARCADO COMO VENDIDO */) {
+                    if ($veiculo['idPlano'] != 5 && ($intervaloDataTrocaStatus <= 2)) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
@@ -293,6 +313,35 @@ class MeusVeiculosController extends AbstractActionController
 
         return $dadosVeiculos;
     }
+    
+    /*
+     * Verifica qual a ultima entrada de pagamento e captura o status desse
+     * @param type $pagamentosVeiculos
+     * @return type $status    
+     */
+    protected function statusUltimoPagamentoVeiculo($pagamentosVeiculos)
+    {
+        if (!isset($pagamentosVeiculos['data'])) {
+            return null;
+        }
+        
+        $statusPagamento = null;
+        $auxData = null;//new \DateTime('1969-01-01');
+        
+        foreach ($pagamentosVeiculos['data'] AS $pagamento){
+
+            $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+            
+            if($dataCadastro > $auxData){
+                $auxData = $dataCadastro;
+                $statusPagamento = (int) $pagamento["status"];
+            }
+        }
+        
+        return $statusPagamento;
+        
+    }
+    
     /*
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular

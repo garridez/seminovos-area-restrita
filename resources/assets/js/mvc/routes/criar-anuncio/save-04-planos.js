@@ -9,6 +9,13 @@ module.exports.callback = ($) => {
         alerts.info('Não é possível diminuir o plano');
     });
 
+    $('.step-container').on('step:change:plano', function () {
+        var location = window.location;
+        if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
+            $("#acao").val("trocarPlano");
+        }
+    });
+    
     $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
         let plano = "planos" + $("#idPlano").val();
         $('[id^="planos"]').each((i, obj) => {

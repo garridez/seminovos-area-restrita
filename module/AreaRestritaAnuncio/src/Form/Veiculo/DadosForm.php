@@ -36,7 +36,7 @@ class DadosForm extends Form
                 'label' => 'Placa',
             ],
             'attributes' => [
-                'data-mask' => 'SSS0000',
+                'data-mask' => 'SSS0A00',
                 'placeholder' => 'abc1234',
                 'required' => true,
             ]

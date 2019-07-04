@@ -50,7 +50,7 @@ class DadosVeiculoController extends AbstractActionController
         $dadosForm->setTipoVeiculo($tipoVeiculo);
         $dadosForm->setCombustivel($tipoVeiculo);
 
-        $veiculoDados = $this->getVeiculo();
+        $veiculoDados = $this->getVeiculo(10);
         if ($veiculoDados) {
             $dadosForm->populateValues($veiculoDados);
             $dadosForm->setIsEdition(true);
@@ -78,8 +78,22 @@ class DadosVeiculoController extends AbstractActionController
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $data['observacoes'] = substr(utf8_decode($data['observacoes']), 0, 700);
+                $data['observacoes'] = substr($data['observacoes'], 0, 700);
             }
+
+            $keyRemap = [
+                'checkboxacessorios' => 'listaAcessorios',
+                'ocultarValorACombinar' => 'combinarPreco',
+            ];
+
+            foreach ($keyRemap as $from => $to) {
+                if (isset($data[$from])) {
+                    $data[$to] = $data[$from];
+                    unset($data[$from]);
+                }
+            }
+            // Se não for passado acessórios, envia "0" para apagar os existentes
+            $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
 
             if ($idVeiculo) {
                 // Atualiza
@@ -90,17 +104,6 @@ class DadosVeiculoController extends AbstractActionController
                     'total',
                     'termo'
                 ]));
-
-                $keyRemap = [
-                    'checkboxacessorios' => 'listaAcessorios',
-                    'ocultarValorACombinar' => 'combinarPreco',
-                ];
-                foreach ($keyRemap as $from => $to) {
-                    if (isset($data[$from])) {
-                        $data[$to] = $data[$from];
-                        unset($data[$from]);
-                    }
-                }
 
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
@@ -134,7 +137,7 @@ class DadosVeiculoController extends AbstractActionController
     public function precoAction()
     {
         $precoForm = new Veiculo\PrecoForm();
-        $data = $this->getVeiculo();
+        $data = $this->getVeiculo(10);
         $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
@@ -146,7 +149,7 @@ class DadosVeiculoController extends AbstractActionController
     public function maisInformacoesAction()
     {
         $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
-        $data = $this->getVeiculo();
+        $data = $this->getVeiculo(10);
         $maisInformacoesForm->populateValues($data);
 
         return new ViewModel([
@@ -210,7 +213,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($dataJson);
         }
         $fotos = [];
-        $dadosVeiculo = $this->getVeiculo(true);
+        $dadosVeiculo = $this->getVeiculo(10);
         if ($dadosVeiculo) {
             $fotos = $dadosVeiculo['fotos'];
         }
@@ -222,7 +225,7 @@ class DadosVeiculoController extends AbstractActionController
     public function videoAction()
     {
         $videoForm = new Veiculo\VideoForm();
-        $data = $this->getVeiculo(true);
+        $data = $this->getVeiculo(10);
         $videoForm->populateValues($data);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */

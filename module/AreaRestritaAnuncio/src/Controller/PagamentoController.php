@@ -24,9 +24,9 @@ class PagamentoController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'planos' => $planos,
-            'valorPlanoAtual' => (double) ($dadosVeiculo['valorPlano'] + 0.00),
-            'idStatus' => $dadosVeiculo['idStatus'],
-            'idPlano' => $dadosVeiculo['idPlano'],
+            'valorPlanoAtual' => (double) isset($dadosVeiculo['valorPlano']) ? ($dadosVeiculo['valorPlano'] + 0.00) : 0.00,
+            'idStatus' => isset($dadosVeiculo['idStatus']) ? $dadosVeiculo['idStatus'] : null,
+            'idPlano' => isset($dadosVeiculo['idPlano']) ? $dadosVeiculo['idPlano'] : null,
         ]);
         $viewModel->setTerminal(true);
         return $viewModel;
@@ -37,10 +37,16 @@ class PagamentoController extends AbstractActionController
         if ($idVeiculo == null) {
             $idVeiculo = (int) $this->params()->fromQuery('idVeiculo');
         }
-
-        return $this->getApiClient()->veiculosGet([
+        
+        $veiculo = $this->getApiClient()->veiculosGet([
             'ignorarCondicoesBasicas' => 1
-        ], $idVeiculo, true)->getData()[0];
+        ], $idVeiculo, 20);
+
+        if(isset($veiculo->getData()[0])){
+            return $veiculo->getData()[0];
+        }
+        
+        return false;
     }
 
     protected function getModelVeiculo()

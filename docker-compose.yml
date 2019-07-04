@@ -19,5 +19,3 @@ services:
     snbh-area-restrita-redis:
         image: redis:5.0.4
         container_name: snbh-area-restrita-redis
-        ports:
-        - "6380:6379"

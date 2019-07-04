@@ -11,10 +11,8 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-use Zend\Cache\Storage\Adapter\Filesystem;
+use Zend\Cache\Storage\Adapter\Redis;
 use Zend\Session\Storage\SessionArrayStorage;
-use Zend\Session\Validator\HttpUserAgent;
-use Zend\Session\Validator\RemoteAddr;
 
 return [
     'SnBH' => [
@@ -32,17 +30,20 @@ return [
                 'timeout' => 90
             ]
         ],
+        'cache' => [
+            'use_from_service_manager' => 'cache',
+        ],
     ],
     'dir' => [
         'temp' => 'data/temp',
         'upload' => 'data/temp/upload'
     ],
     'cache' => array(
-        'adapter' => Filesystem::class,
+        'adapter' => Redis::class,
         'options' => array(
-            'ttl' => 3600,
-            'cacheDir' => 'data/cache',
-            'namespace' => 'main-cache'
+            'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
+            'ttl' => 60 * 20, # 20 Minutos
+            'namespace' => 'AreaRestritaProd'
         ),
         'plugins' => array(
             'Serializer',
@@ -54,8 +55,6 @@ return [
     ],
     'session_manager' => [
         'validators' => [
-            #RemoteAddr::class,
-            #HttpUserAgent::class,
         ]
     ],
     // Session storage configuration.
