@@ -99,7 +99,7 @@ module.exports.callback = ($) => {
         $('.pager .finish a')[!state.finish ? 'addClass' : 'removeClass']('disabled');
     });
 
-    $('.table.table-condensed').on('change', function () {
+    $('.table-condensed').on('change', function () {
         var clickado = $('.tab-content').find("input[name='tempo_contrato']:checked").closest('tr');
         var resultado = $('#resultado');
         var pagamento = $('#tab-pagamento');

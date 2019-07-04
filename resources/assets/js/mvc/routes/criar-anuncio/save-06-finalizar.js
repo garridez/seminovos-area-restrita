@@ -38,7 +38,7 @@ module.exports.callback = ($) => {
                             + 'Você pode ativa-lo/publica-lo quando quiser através do menu "Meus Veículos"';
                     time = 15000;
                 }
-                Alerts.success(text, 'Muito bom!', time)
+                Alerts.info(text, 'Muito bom!', time)
                         .on('hide.bs.modal', function () {
                             window.location.href = '/';
                         });

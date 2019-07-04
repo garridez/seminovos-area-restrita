@@ -4,8 +4,10 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     var Alert = require('components/Alerts');
     var formsContainer = $('div.forms-group > div');
 
+    var ShowPassword = require('components/ShowPassword');
+    ShowPassword($("input[type='password']"));
+    
     formsContainer.filter('.hide').hide().removeClass('hide');
-
     $('form.tipo-cadastro-container input').change(function () {
         let seletectedForm = '.' + $(this).val();
         formsContainer
@@ -40,7 +42,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                Alert.success('Confira a caixa de entrada do email <b>' + email + '</b>', 'Email enviado');
+                Alert.info('Confira a caixa de entrada do email <b>' + email + '</b>', 'Email enviado');
             },
             error: function (e) {
                 if (e.responseJSON) {

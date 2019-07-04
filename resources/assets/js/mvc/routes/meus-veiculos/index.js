@@ -33,7 +33,7 @@ module.exports.callback = ($) => {
                         if (data.status !== 200) {
                             Alerts.error(data.detail, 'Houve um problema...', 10000);
                         } else {
-                            Alerts.success(successText);
+                            Alerts.info(successText);
                             reloadPageContent();
                         }
                     }).fail(function (jqXHR, textStatus, errorThrown) {

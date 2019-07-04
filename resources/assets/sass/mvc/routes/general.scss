@@ -206,3 +206,6 @@ input[type=checkbox]:checked{
     padding-left:$layout-sidepanel-pin-width !important; 
   }
 }
+.no-wrap {
+  white-space: nowrap;
+}

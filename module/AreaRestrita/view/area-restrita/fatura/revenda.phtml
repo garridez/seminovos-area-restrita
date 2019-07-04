@@ -32,66 +32,71 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
         </a>
     </div>
 </div>
-<div class=" container-fluid container-fixed-lg to-print">
-    <div class="card card-default m-t-20">
-        <div class="card-body">
-            <div class="invoice px-3 py-3 pl-print-0 pt-print-0">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <img width="135" height="47" alt="" class="invoice-logo"
-                             data-src-retina="assets/img/invoice/squarespace2x.png"
-                             data-src="assets/img/invoice/squarespace.png" src="/img/svg/snbh_logo.svg">
+<div class=" container-fluid to-print">
+    <div class="card card-default mt-1">
+        <div class="card-body pt-0 px-2 px-md-3">
+            <div class="invoice p-md-3 pl-print-0 pt-print-0">
+                <div class="row mx-0">
+                    <div class="col-12 col-md-6 d-none d-md-block">
+                        <img alt="" class="invoice-logo" data-src-retina="assets/img/invoice/squarespace2x.png"
+                            data-src="assets/img/invoice/squarespace.png" src="/img/svg/snbh_logo.svg">
+                    </div>
+                    <div class="col-12 col-md-6 p-2">
+                        <h3 class="font-montserrat all-caps hint-text">FATURA DE SERVIÇOS ELETRÔNICA</h3>
+                    </div>
+                </div>
+                <address class="pl-2 mt-0 d-block d-md-flex">
+                    <div class="mr-0 mr-md-1">
+                        Rua Níquel, 11-a, Serra - Belo Horizonte/MG -
                     </div>
                     <div class="">
-                        <h3 class="font-montserrat all-caps hint-text">FATURA DE SERVIÇOS ELETRÔNICA</h3>
-
+                        CEP: 30240-020 - (31) 3077-5888
                     </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="pull-left col-12">
-                        <address class="m-t-10">
-                            Rua Níquel, 11-a, Serra - Belo Horizonte/MG - CEP: 30240-020 - (31) 3077-5888
-                            <br>
-                        </address>
-                    </div>
-                </div>
+                </address>
             </div>
-            <div class="p-l-15 col-12 col-print-12 mt-4 mt-print-3">
-                <div class="row row-print">
-                    <div class="col-lg-9 col-sm-height sm-no-padding col-print-7">
-                        <p class="small no-margin">CNPJ</p>
-                        <h5 class="semi-bold m-t-0">08.030.680/0001-06</h5>
-                        <p class="small no-margin">Inscrição Municipal</p>
-                        <h5 class="semi-bold m-t-0">0919816/001-5</h5>
-                    </div>
-                    <div class="col-lg-3 sm-no-padding sm-p-b-20 d-flex align-items-end justify-content-between col-print-5">
-                        <div>
-                            <div class="font-montserrat bold all-caps">N° :</div>
-                            <div class="font-montserrat bold all-caps">Emitida em :</div>
-                            <div class="clearfix"></div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2">
+                <div class="row row-print mx-0">
+                    <div
+                        class="d-block d-md-block col-lg-9 p-0 p-md-2 col-print-7 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat">
+                            <p class="small no-margin bold">CNPJ:</p>
+                            <h5 class="small semi-bold mt-0">08.030.680/0001-06</h5>
                         </div>
-                        <div class="text-right">
+                        <div class="text-left font-montserrat mr-3">
+                            <p class="small no-margin bold">Inscrição Municipal:</p>
+                            <h5 class="small semi-bold my-0">0919816/001-5</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 sm-no-padding sm-p-b-20 mt-auto col-print-5">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2">N° :</div>
                             <div class=""><?= date('Y'); ?>
-                                /<?= str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?></div>
+                                /<?= str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2">Emitida em :</div>
                             <div class=""><?= date('d/m/Y'); ?> às <?= date('H:i:s'); ?></div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="p-l-15 col-12">
-                <div class="border-bottom pb-2 mt-3 mt-print-3">
+            <div class="pl-2 pl-md-3 col-12">
+                <div class="border-bottom pb-0 pb-md-1 mt-3 mt-print-3 ml-0 ml-md-2">
                     <span class="text-uppercase hint-text">
                         Tomador dos Serviços
                     </span>
                 </div>
-                <div class="row">
-
+                <div class="row mx-0 mt-2">
                     <div class="col-lg-9 col-sm-height sm-no-padding">
-                        <p class="small no-margin">&nbsp;</p>
                         <h5 class="semi-bold m-t-0"><?= $dadosCadastro['razaoSocial'] ?></h5>
                         <address>
+                            <?php 
+                            /*
+                             * @todo Arrumar essa exibição
+                             */                            
+                            ?>
                             <strong>CPF/CNPJ: <?= $dadosCadastro['cnpj'] ?> </strong>
                             <br>
                             <?= $dadosCadastro['logradouro'] . ' ' . $dadosCadastro['numero'] ?>
@@ -128,10 +133,10 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 </div>
             </div>
             <div class="invoice pt-4 mt-print-2 py-0 row-print pl-print-0">
-                <table class="table w-100">
+                <table class="table w-100 table-responsive-sm">
                     <thead>
                         <tr>
-                            <th class="">Serviço</th>
+                            <th class="pl-0 ">Serviço</th>
                             <th class="text-center">Pagamento</th>
                             <th class="text-center">Valor</th>
                             <th class="text-center">Desconto</th>
@@ -140,8 +145,9 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="">
-                                <p class="text-black description-print">HOSPEDAGEM DE LOJA VIRTUAL NO SITE SEMINOVOSBH
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <p class="text-black description-print no-wrap">HOSPEDAGEM DE LOJA VIRTUAL NO SITE
+                                    SEMINOVOSBH
                                     <br>PLANO: <?= $this->nomePlano ?>
                                     <?php
                                     switch ($dadosPagamento['tempoContrato']) :
@@ -164,38 +170,36 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                                     ?>
                                 </p>
                                 <p class="hint-text"><small>
-                                    Anúncio
-                                    <?php
+                                        Anúncio
+                                        <?php
                                     if (empty($dataPagamento)) :
                                         echo "(período de {$meses})";
                                     else :
                                         ?>
                                         período de <?= $dataPagamento; ?> até <?= $dataExpiracao; ?>
-                                    <?php
+                                        <?php
                                     endif;
                                     ?></small>
                                 </p>
                             </td>
                             <td class="text-center"><?= strtoupper($dadosPagamento['formaPagamento']) ?></td>
-                            <td class="text-center">
+                            <td class="text-center no-wrap">
                                 R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.'); ?>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center no-wrap">
                                 R$ <?= number_format($dadosPagamento['desconto'], 2, ',', '.'); ?>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center no-wrap">
                                 R$ <?= number_format($dadosPagamento['total'], 2, ',', '.'); ?>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <br>
-            <br>
-
-            <div class="invoice py-0 p-l-15 p-r-15 mt-3 mt-print-3 pl-print-0 col-print-12">
+            <div class="invoice py-0 px-2 mt-3 mt-print-3 pl-print-0 col-print-12">
                 <div class="row b-a b-grey">
-                    <div class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
+                    <div
+                        class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
                         <h5 class="font-montserrat all-caps small no-margin hint-text bold">Data de
                             Pagamento</h5>
                         <h3 class="no-margin h3-print">
@@ -221,42 +225,34 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                 <div class="col-12 description-print">
                     <div class="col-12 pl-0 pl-print-0">
                         <div>
-                            <small class=" ">
+                            <small class="">
                                 Operação não tributada pelo ISS, conforme veto do item 17.07 da lista de
                                 Serviços anexa a lei Complementar No. 116 de 31/01/2003 (DOU de 01/08/2003).
                             </small>
                         </div>
                         <div>
-                            <small class=" ">
+                            <small class="">
                                 <strong>Empresa dispensada de emissão de nota fiscal, conforme processo PBH Nº
                                     01-175.711/15-00, de 04/12/2015.</strong>
                             </small>
                         </div>
 
                         <div>
-                            <small class=" ">
-                                Não é permitida a veiculação de veículos de revendas ou lojistas fora da sua área
+                            <small class="">
+                                Não é permitida a veiculação de veículos de revendas ou lojistas fora da sua
+                                área
                                 específica.
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="invoice p-l-15 row mt-print-3 row-print pl-print-0 col-print-12">
-                <div class="col-12 border-top mt-5 pt-2 d-flex align-items-baseline justify-content-between">
-
-                    <div class="d-flex align-items-baseline">
-                        <img src="/img/svg/snbh_logo.svg" alt="logo" data-src="assets/img/logo.png"
-                             data-src-retina="assets/img/logo_2x.png" width="78" height="22">
-                        <span class="m-l-70 text-black">Seminovos, aqui tem negócio!</span>
-                    </div>
-                    <div>
-                        <a href="www.seminovos.com.br" class="m-l-40 text-black">www.seminovos.com.br</a>
-                    </div>
-                </div>
+            <div class="d-block d-md-flex align-items-baseline">
+                <img src="/img/svg/snbh_logo.svg" alt="logo" data-src="assets/img/logo.png"
+                    data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                <span class="text-black no-wrap">Seminovos, aqui tem negócio!</span>
+                <a href="www.seminovos.com.br" class="ml-auto text-right text-black">www.seminovos.com.br</a>
             </div>
-
-
         </div>
     </div>
 </div>
