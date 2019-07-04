@@ -13,8 +13,7 @@ $dadosFinanceiro = $this->financeiro;
 <div class=" container-fluid container-fixed-lg">
     <div id="rootwizard">
         <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm nav-main-financeiro"
-            role="tablist"
-            data-init-reponsive-tabs="dropdownfx">
+            role="tablist" data-init-reponsive-tabs="dropdownfx">
             <li class="nav-item">
                 <a class="active" data-toggle="tab" href="#tab-planos" data-target="#tab-planos" role="tab">
                     <i class="fa fa-shopping-cart tab-icon"></i> <span>Plano</span>
@@ -32,71 +31,69 @@ $dadosFinanceiro = $this->financeiro;
             </li>
         </ul>
         <div class="tab-content tab-content-main">
-            <div class="tab-pane padding-20 sm-no-padding active slide-left" id="tab-planos">
-                <div class="row row-same-height">
-                    <div class="col-md-5 b-r b-dashed b-grey sm-b-b">
-                        <div class="padding-30 sm-padding-5 sm-m-t-15 m-t-50">
+            <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
+                <div class="row">
+                    <div class="col-md-5 col-12 b-r b-dashed b-grey sm-b-b">
+                        <div class="sm-m-t-15 m-t-50">
                             <i class="fa fa-shopping-cart fa-2x hint-text"></i>
                             <h5>Valor mensal do plano atual: R$ <?= $dadosFinanceiro['valor'] ?></h5>
                             <p class="small hint-text">Escolha o tempo que deseja pagar.</p>
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <div class="">
-                            <form class="form-planos">
-                            <table class="table table-condensed">
+                    <div class="col-md-7 col-12">
+                        <form class="form-planos">
+                            <table class="table-condensed w-100">
                                 <?php
-                                $planos = [
-                                    [
-                                        'nome' => 'Plano Mensal',
-                                        'desconto' => $dadosFinanceiro['desconto_mensal'],
-                                        'economia' => $dadosFinanceiro['economia_mensal'],
-                                        'valor' => $dadosFinanceiro['valor_mensal'],
-                                        'value_checkbox' => $dadosFinanceiro['value_checkbox_mensal'],
-                                        'parcelas' => '1'
-                                    ],
-                                    [
-                                        'nome' => 'Plano Trimestral',
-                                        'desconto' => $dadosFinanceiro['desconto_trimestral'],
-                                        'economia' => $dadosFinanceiro['economia_trimestral'],
-                                        'valor' => $dadosFinanceiro['valor_trimestral'],
-                                        'value_checkbox' => $dadosFinanceiro['value_checbkox_trimestral'],
-                                        'parcelas' => '3'
-                                    ],
-                                    [
-                                        'nome' => 'Plano Semestral',
-                                        'desconto' => $dadosFinanceiro['desconto_semestral'],
-                                        'economia' => $dadosFinanceiro['economia_semestral'],
-                                        'valor' => $dadosFinanceiro['valor_semestral'],
-                                        'value_checkbox' => $dadosFinanceiro['value_checkbox_semestral'],
-                                        'parcelas' => '6'
-                                    ],
-                                    [
-                                        'nome' => 'Plano Anual',
-                                        'desconto' => $dadosFinanceiro['desconto_anual'],
-                                        'economia' => $dadosFinanceiro['economia_anual'],
-                                        'valor' => $dadosFinanceiro['valor_anual'],
-                                        'value_checkbox' => $dadosFinanceiro['value_checkbox_anual'],
-                                        'parcelas' => '8'
-                                    ],
-                                ];
+                            $planos = [
+                                [
+                                    'nome' => 'Plano Mensal',
+                                    'desconto' => $dadosFinanceiro['desconto_mensal'],
+                                    'economia' => $dadosFinanceiro['economia_mensal'],
+                                    'valor' => $dadosFinanceiro['valor_mensal'],
+                                    'value_checkbox' => $dadosFinanceiro['value_checkbox_mensal'],
+                                    'parcelas' => '1'
+                                ],
+                                [
+                                    'nome' => 'Plano Trimestral',
+                                    'desconto' => $dadosFinanceiro['desconto_trimestral'],
+                                    'economia' => $dadosFinanceiro['economia_trimestral'],
+                                    'valor' => $dadosFinanceiro['valor_trimestral'],
+                                    'value_checkbox' => $dadosFinanceiro['value_checbkox_trimestral'],
+                                    'parcelas' => '3'
+                                ],
+                                [
+                                    'nome' => 'Plano Semestral',
+                                    'desconto' => $dadosFinanceiro['desconto_semestral'],
+                                    'economia' => $dadosFinanceiro['economia_semestral'],
+                                    'valor' => $dadosFinanceiro['valor_semestral'],
+                                    'value_checkbox' => $dadosFinanceiro['value_checkbox_semestral'],
+                                    'parcelas' => '6'
+                                ],
+                                [
+                                    'nome' => 'Plano Anual',
+                                    'desconto' => $dadosFinanceiro['desconto_anual'],
+                                    'economia' => $dadosFinanceiro['economia_anual'],
+                                    'valor' => $dadosFinanceiro['valor_anual'],
+                                    'value_checkbox' => $dadosFinanceiro['value_checkbox_anual'],
+                                    'parcelas' => '8'
+                                ],
+                            ];
 
-                                foreach ($planos as $i => $plano):
-                                    ?>
-                                <tr>
-                                    <td class="radio radio-success col-lg-5 col-md-6 col-sm-7">
-                                        <input type="radio"
-                                               name="tempo_contrato"
-                                               id="tempo_contrato<?= $i ?>"
-                                               value="<?= $plano['value_checkbox'] ?>"
-                                               data-tempo_contrato="<?= $plano['parcelas'] ?>"
-                                               required
-                                        >
-                                        <label class="m-l-10 font-montserrat fs-11 all-caps" for="tempo_contrato<?= $i ?>">
-                                            <span id="plano"><?= $plano['nome'] ?></span>
-                                        </label>
+                            foreach ($planos as $i => $plano):
+                                ?>
+                                <tr class="border-bottom">
+                                    <td class="pl-0">
+                                        <div class="radio radio-success">
+                                            <input type="radio" name="tempo_contrato" id="tempo_contrato<?= $i ?>"
+                                                value="<?= $plano['value_checkbox'] ?>"
+                                                data-tempo_contrato="<?= $plano['parcelas'] ?>" required>
+                                            <label class="ml-0 ml-md-2 font-montserrat fs-11 all-caps"
+                                                for="tempo_contrato<?= $i ?>">
+                                                <span id="plano"><?= $plano['nome'] ?></span>
+                                            </label>
+                                        </div>
                                     </td>
-                                    <td class="col-lg-4 col-md-6 col-sm-6 text-left">
+                                    <td class="">
                                         <span>Desconto de
                                             <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
                                             </span>
@@ -105,63 +102,62 @@ $dadosFinanceiro = $this->financeiro;
                                             </small>
                                         </span>
                                     </td>
-                                    <td class="col-lg-3 col-md-3 col-sm-2 text-right">
-                                        <h4 class="text-orange no-margin font-montserrat">R$
+                                    <td class="">
+                                        <h4 class="text-orange font-montserrat">R$
                                             <span id="valor"><?= $plano['valor'] ?></span>
                                         </h4>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </table>
-                            </form>
-                            <div class="row  mt-3" id="resultado">
-                                <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
-                                    <div>
-                                        <h5 class="font-montserrat all-caps small no-margin hint-text bold">
-                                            Desconto </h5>
-                                        <p class="no-margin"><span id="desconto">-</span></p>
-                                    </div>
+                        </form>
+                        <div class="row  mt-3" id="resultado">
+                            <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
+                                <div>
+                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                        Desconto </h5>
+                                    <p class="no-margin"><span id="desconto">-</span></p>
                                 </div>
-                                <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
-                                    <div>
-                                        <h5 class="font-montserrat all-caps small no-margin hint-text bold">
-                                            Economia</h5>
-                                        <p class="no-margin">R$ <span id="economia">-</span></p>
-                                    </div>
+                            </div>
+                            <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
+                                <div>
+                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                        Economia</h5>
+                                    <p class="no-margin">R$ <span id="economia">-</span></p>
                                 </div>
-                                <div class="col-md-6 text-right bg-dark padding-10">
-                                    <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
-                                        Total</h5>
-                                    <h4 class="no-margin text-white">R$ <span id="total">-</span></h4>
-                                </div>
+                            </div>
+                            <div class="col-md-6 text-right bg-dark padding-10">
+                                <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
+                                    Total</h5>
+                                <h4 class="no-margin text-white">R$ <span id="total">-</span></h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-pagamento">
-                <div class="row row-same-height">
-                    <div class="col-md-6 b-r b-dashed b-grey ">
-                        <div class="padding-30 sm-padding-5">
+            <div class="tab-pane slide-left px-md-4 p-0" id="tab-pagamento">
+                <div class="row">
+                    <div class="col-md-6 col-12 b-r b-dashed b-grey ">
+                        <div class="">
                             <h2>Forma de pagamento</h2>
                             <p>Escolha ao lado a forma de pagamento desejda para finalizar a compra.</p>
                             <p class="small hint-text">Dados do plano contratado</p>
-                            <table class="table table-condensed">
+                            <table class="table-condensed">
                                 <tr>
-                                    <td class="col-md-6">
+                                    <td class="">
                                         <div class="align-items-center d-flex">
                                             <span class="m-l-10 font-montserrat fs-11 all-caps" id="plano">
                                                 Selecione Um Plano
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="align-items-center col-md-3 text-right">
+                                    <td class="align-items-center text-right">
                                         <div class="d-flex align-items-center">
                                             <span>Desconto </span>
                                             <span id="desconto">-</span>
                                         </div>
                                     </td>
-                                    <td class="align-items-center col-md-3 text-right">
+                                    <td class="align-items-center text-right">
                                         <span>Economia R$ </span>
                                         <a id="economia">-</a>
                                     </td>
@@ -181,33 +177,31 @@ $dadosFinanceiro = $this->financeiro;
                                 pagamento. <br>Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="padding-30 sm-padding-5">
-                            <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm"
-                                role="tablist" data-init-reponsive-tabs="dropdownfx">
-                                <li class="nav-item">
-                                    <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
-                                        <i class="fa fa-shopping-cart tab-icon"></i>
-                                        <span>Cartão de Crédito</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="" data-toggle="tab" href="#tab3" data-target="#boleto_tab" role="tab">
-                                        <i class="fa fa-credit-card tab-icon"></i>
-                                        <span>Boleto Bancŕio</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane padding-20 sm-no-padding active slide-left" id="cartao_tab">
-                                    <div class="row row-same-height">
-                                        <?= $this->partial('area-restrita/financeiro/form-cartao-credito.phtml') ?>
-                                    </div>
+                    <div class="col-md-6 col-12">
+                        <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
+                            data-init-reponsive-tabs="dropdownfx">
+                            <li class="nav-item">
+                                <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
+                                    <i class="fa fa-shopping-cart tab-icon"></i>
+                                    <span>Cartão de Crédito</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="" data-toggle="tab" href="#tab3" data-target="#boleto_tab" role="tab">
+                                    <i class="fa fa-credit-card tab-icon"></i>
+                                    <span>Boleto Bancŕio</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content p-0">
+                            <div class="tab-pane padding-20 sm-no-padding active slide-left" id="cartao_tab">
+                                <div class="row row-same-height">
+                                    <?= $this->partial('area-restrita/financeiro/form-cartao-credito.phtml') ?>
                                 </div>
-                                <div class="tab-pane padding-20 sm-no-padding slide-left" id="boleto_tab">
-                                    <div class="row row-same-height">
-                                        <?= $this->partial('area-restrita/financeiro/form-boleto.phtml') ?>
-                                    </div>
+                            </div>
+                            <div class="tab-pane padding-20 sm-no-padding slide-left" id="boleto_tab">
+                                <div class="row row-same-height">
+                                    <?= $this->partial('area-restrita/financeiro/form-boleto.phtml') ?>
                                 </div>
                             </div>
                         </div>
@@ -222,25 +216,25 @@ $dadosFinanceiro = $this->financeiro;
                     </h2>
                 </div>
             </div>
-            <div class="padding-20 sm-padding-5 sm-m-b-20 sm-m-t-20 bg-white clearfix">
-                <ul class="pager wizard no-style">
-                    <li class="finish">
-                        <a href="/" class="btn btn-success text-white btn-cons pull-right disabled" data-nav-dir="finish">
-                            <span>Finalizar</span>
-                        </a>
-                    </li>
-                    <li class="next">
-                        <a href="#" class="btn btn-laranja text-white btn-cons pull-right" data-nav-dir="next">
-                            <span>Próximo</span>
-                        </a>
-                    </li>
-                    <li class="previous">
-                        <a class="btn btn-default btn-cons pull-right disabled" data-nav-dir="prev">
-                            <span>Anterior</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <ul
+                class="pager wizard no-style d-flex bg-white justify-content-center justify-content-md-end ml-2 mt-2 mr-2">
+                <li class="">
+                    <a class="previous btn btn-default btn-cons pull-right disabled" data-nav-dir="prev">
+                        <span>Anterior</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="next btn btn-laranja text-white btn-cons " data-nav-dir="next">
+                        <span>Próximo</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/" class="finish btn btn-success text-white btn-cons pull-right disabled"
+                        data-nav-dir="finish">
+                        <span>Finalizar</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

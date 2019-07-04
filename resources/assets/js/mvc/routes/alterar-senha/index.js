@@ -10,7 +10,7 @@ module.exports.callback = ($) => {
     let confNovaSenha = $("input[name='confirmacaoSenha']");
     var Alert = require('components/Alerts');
     if($(atualSenha).hasClass("is-valid")){
-        Alert.success('Sua senha foi atualizada com sucesso', 'Sucesso');        
+        Alert.info('Sua senha foi atualizada com sucesso', 'Sucesso');        
     }
     $("input").change(function() {
         validForm();

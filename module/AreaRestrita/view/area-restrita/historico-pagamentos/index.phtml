@@ -8,90 +8,103 @@ $arrFormaPagamento = $this->arrayFormaPagamento;
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
 ?>
-<div class=" container-fluid   container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-12 text-left">
-            <h3 class="font-montserrat all-caps hint-text">HISTÓRICO DE PAGAMENTOS</h3>
-        </div>
+<div class="container-fluid">
+    <div class="d-flex pl-3">
+        <h3 class="font-montserrat all-caps hint-text">HISTÓRICO DE PAGAMENTOS</h3>
     </div>
 </div>
-<div class=" container-fluid   container-fixed-lg bg-white">
-    <!-- START card -->
-    <div class="card card-transparent">
-        <div class="card-header ">
-            <div class="pull-right">
-                <div class="col-xs-12">
-                    <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="card-body">
-            <!--            <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">-->
-            <table class="table table-hover table-responsive-block dataTable no-footer w-100" id="tableWithSearch">
-                <?php if ($this->tipoCadastro == 1) : ?>
-                    <thead>
-                    <tr>
-                        <th class="text-center">Tempo</th>
-                        <th class="text-center">Valor</th>
-                        <th class="text-center">Desconto</th>
-                        <th class="text-center">Total</th>
-                        <th class="text-center">Pagamento</th>
-                        <th class="text-center">Parcelas</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Faturas</th>
-                        <th class="text-center">Datas</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($pagamentos as $pagamento) : ?>
-                        <tr>
-                            <td class="v-align-middle text-center semi-bold"><?= $pagamento['tempoContrato'] ?> mês</td>
-                            <td class="v-align-middle text-center">R$ <?= $pagamento['valor'] ?></td>
-                            <td class="v-align-middle text-center">R$ <?= $pagamento['desconto'] ?></td>
-                            <td class="v-align-middle text-right">R$ <?= $pagamento['total'] ?></td>
-                            <td class="v-align-middle text-center"><?= $pagamento['formaPagamento'] ?></td>
-                            <td class="v-align-middle text-center"><?= $pagamento['parcelas'] ?></td>
-                            <td class="v-align-middle text-center"><?= $statusPagamento[$pagamento['status']] ?></td>
-                            <?php if($pagamento['status'] == 2): ?>
-                                <td class="v-align-middle text-center"><a class="btn btn-tag" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" role="button" target="">Ver Fatura</a></td>
-                            <?php else: ?>
-                                <td class="v-align-middle text-center"> - </td>
-                            <?php endif;?>
-                            <td class="v-align-middle text-center">Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?>
-                                <br>Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                <?php elseif ($this->tipoCadastro == 2) : ?>
-                    <thead>
-                    <tr>
-                        <th>Anúncio</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Data</th>
-                        <th>Faturas</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($pagamentos as $pagamento) : ?>
-                        <tr>
-                            <td class="v-align-middle semi-bold"><?= $pagamento['marca'] . ' ' . $pagamento['modelo'] . ' ' . $pagamento['caracteristica']; ?>
-                                <br><?= $pagamento['nomePlano'] ?></td>
-                            <td class="v-align-middle">R$ <?= $pagamento['total'] ?></td>
-                            <td class="v-align-middle"><?= $statusPagamento[$pagamento['status']] ?><br>Forma de pagamento: <?= $arrFormaPagamento[$pagamento['formaPagamento']] ?></td>
-                            <td class="v-align-middle"><?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?></td>
-                            <?php if($pagamento['status'] == 2): ?>
-                                <td class="v-align-middle"><a class="btn btn-tag" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" role="button" target="">Ver Fatura</a></td>
-                            <?php else: ?>
-                                <td class="v-align-middle"> - </td>
-                            <?php endif;?>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                <?php endif; ?>
-            </table>
-        </div>
+<div class="container-fluid bg-white pt-3">
+    <div class="row d-flex justify-content-end  pr-3">
+        <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
     </div>
-    <!-- END card -->
+    <div class="w-100 table-responsive ">
+        <table class="table dataTable table-hover w-100" id="tableWithSearch">
+            <?php if ($this->tipoCadastro == 1) : ?>
+            <thead>
+                <tr role="row">
+                    <th class="text-left d-none d-md-table-cell">Tempo</th>
+                    <th class="text-center text-success d-table-cell no-wrap d-md-table-cell">Valor R$</th>
+                    <th class="text-center d-none d-md-table-cell">Desconto</th>
+                    <th class="text-center d-none d-md-table-cell">Total</th>
+                    <th class="text-center d-none d-md-table-cell">Pagamento</th>
+                    <th class="text-center d-none d-md-table-cell">Parcelas</th>
+                    <th class="text-center text-laranja d-table-cell status-cell d-md-table-cell">Status</th>
+                    <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
+                    <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pagamentos as $pagamento) : ?>
+                <tr role="row">
+                    <td class="text-left d-none d-md-table-cell semi-bold"><?= $pagamento['tempoContrato'] ?> mês</td>
+                    <td class="text-center d-table-cell no-wrap d-md-table-cell"><?= $pagamento['valor'] ?></td>
+                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['desconto'] ?></td>
+                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
+                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
+                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['parcelas'] ?><small>x</small></td>
+                    <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
+                    </td>
+                    <td class="text-center d-table-cell d-md-table-cell">
+                        <?php if($pagamento['status'] == 2): ?>
+                        <a class="" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <?php else: ?>
+                        -
+                        <?php endif;?>
+                    </td>
+
+                    <td class="text-right d-table-cell no-wrap d-md-table-cell">
+                        Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>
+                        Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?><br>
+                        Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+            <?php elseif ($this->tipoCadastro == 2) : ?>
+            <thead>
+                <tr role="row">
+                    <th class="text-center text-success d-table-cell no-wrap d-md-table-cell">Valor R$</th>
+                    <th class="text-center d-none d-md-table-cell">Total</th>
+                    <th class="text-center d-none d-md-table-cell">Pagamento</th>
+                    <th class="text-center text-laranja d-table-cell status-cell d-md-table-cell">Status</th>
+                    <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
+                    <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pagamentos as $pagamento) : ?>
+                <tr role="row">
+                    <td class="text-center d-table-cell no-wrap d-md-table-cell"><?= $pagamento['valor'] ?></td>
+                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
+                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
+                    <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
+                    </td>
+                    <td class="text-center d-table-cell d-md-table-cell">
+                        <?php 
+                    /*
+                     * @todo melhorar a data tirando horas
+                     */
+                    ?>
+                        <?php if($pagamento['status'] == 2): ?>
+                        <a class="" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <?php else: ?>
+                        -
+                        <?php endif;?>
+                    </td>
+
+                    <td class="text-right d-table-cell no-wrap d-md-table-cell">
+                        Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>
+                        Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?><br>
+                        Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+            <?php endif; ?>
+        </table>
+    </div>
 </div>

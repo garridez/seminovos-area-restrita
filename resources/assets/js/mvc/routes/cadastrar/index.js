@@ -30,7 +30,7 @@ module.exports.callback = ($) => {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                var modal = Alert.success('Ótimo!<br>'
+                var modal = Alert.info('Ótimo!<br>'
                         + 'Sua conta foi criada<br> Agora acesse <a href="/">"Meus Anúncios"</a> para anunciar seu veículo',
                         'Conta Criada', 20000);
                 function redirectEntrar() {
