@@ -193,7 +193,10 @@ class MeusVeiculosController extends AbstractActionController
             $pagamentosVeiculos = $pagamentosModel->get();
             
             $statusPagamento = null;
-            $statusPagamento = $this->statusUltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo']);
+            $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            
+            $planoPagamento = null;
+            $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
 
             $frase = "";
             $temp_acoes = [
@@ -216,6 +219,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["enviar_comprovante"] = true;
+                    $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["realizar_pagamento"] = true;
                     }
@@ -241,6 +245,7 @@ class MeusVeiculosController extends AbstractActionController
                     }
                     if($statusPagamento == 1){
                         $temp_acoes["enviar_comprovante"] = true;
+                        $temp_acoes["plano_comprovante"] = $planoPagamento;
                     }
                     break;
                 case "3":
@@ -315,17 +320,17 @@ class MeusVeiculosController extends AbstractActionController
     }
     
     /*
-     * Verifica qual a ultima entrada de pagamento e captura o status desse
-     * @param array $pagamentosVeiculos, int $idVeiculo
-     * @return type $status    
+     * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
+     * @param array $pagamentosVeiculos, int $idVeiculo, string $variavel
+     * @return type $result    
      */
-    protected function statusUltimoPagamentoVeiculo($pagamentosVeiculos, $idVeiculo)
+    protected function getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $idVeiculo, $variavel)
     {
         if (!isset($pagamentosVeiculos['data'])) {
             return null;
         }
         
-        $statusPagamento = null;
+        $result = null;
         $auxData = null;//new \DateTime('1969-01-01');
         
         foreach ($pagamentosVeiculos['data'] AS $pagamento){
@@ -334,12 +339,12 @@ class MeusVeiculosController extends AbstractActionController
 
                 if($dataCadastro > $auxData){
                     $auxData = $dataCadastro;
-                    $statusPagamento = (int) $pagamento["status"];
+                    $result = (int) $pagamento[$variavel];
                 }
             }
         }
         
-        return $statusPagamento;
+        return $result;
         
     }
     

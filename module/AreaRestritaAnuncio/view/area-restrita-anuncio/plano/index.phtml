@@ -150,7 +150,7 @@ if ($isRevenda) {
                                 </div>
                             <?php endif; ?>
 
-                            <input type="radio" id="radio-idPlano-<?= $k + 1 ?>" name="idPlano"
+                            <input type="radio" id="radio-idPlano-<?= $plano['idPlano'] ?>" name="idPlano"
                                 value="<?= $plano['idPlano'] ?>" class="hidden"
                                 <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>

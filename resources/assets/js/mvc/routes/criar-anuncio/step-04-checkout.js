@@ -17,8 +17,8 @@ module.exports.callback = ($) => {
         }
         
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1 && location.hash.indexOf('planoNitroHome') !== -1) {
-            if(!$('#radio-idPlano-1').is(':checked') && idPlano==4){
-                $('#radio-idPlano-1').attr('checked',true);
+            if(!$('#radio-idPlano-4').is(':checked') && idPlano==4){
+                $('#radio-idPlano-4').attr('checked',true);
                 $("#idPlano").val(4);
             }
             $("#acao").val("trocarPlano");
