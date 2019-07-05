@@ -155,7 +155,7 @@ if ($isRevenda) {
                                 <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
-                            <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $k + 1 ?>"
+                                <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $plano['idPlano'] ?>"
                                 <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
                                 Selecione
                             </label>
