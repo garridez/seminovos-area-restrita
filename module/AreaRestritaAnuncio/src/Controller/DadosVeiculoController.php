@@ -152,8 +152,11 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(10);
         $maisInformacoesForm->populateValues($data);
 
+        $checkedTermo = (empty($data) ? false : true);
+
         return new ViewModel([
-            'formMaisInformacoesVeiculo' => $maisInformacoesForm
+            'formMaisInformacoesVeiculo' => $maisInformacoesForm,
+            'checkedTermo' => $checkedTermo
         ]);
     }
 
