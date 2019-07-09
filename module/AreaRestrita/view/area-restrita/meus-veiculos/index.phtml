@@ -62,7 +62,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </li>
                                 <li>
                                     Renovado:
-                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                    <?php if ($veiculo['dataRenovacao'] !== '') {
                                         echo $formatDate->converterDataBR($veiculo['dataRenovacao']);
                                     } else {
                                         echo '-';
