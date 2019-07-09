@@ -62,7 +62,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </li>
                                 <li>
                                     Renovado:
-                                    <?php if ($veiculo['dataCadastro'] !== '') {
+                                    <?php if ($veiculo['dataRenovacao'] !== '') {
                                         echo $formatDate->converterDataBR($veiculo['dataRenovacao']);
                                     } else {
                                         echo '-';
@@ -156,7 +156,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-3 h-100">
+                <div class="col-12 col-md-12 col-lg-3">
                     <div data-index="0" class="company-stat-box m-t-10 px-4 py-3 bg-master-lightest">
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="pull-left d-flex text-uppercase bold align-items-center mb-0">
@@ -213,7 +213,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div class="justify-content-end d-flex m-t-15 pb-2">
 
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#checkout&comprovante"
+                                <a href="<?=$urls['editarAnuncio']?>#plano&comprovante&<?=$veiculo["botoes"]["plano_comprovante"]?>"
                                    class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2">Enviar comprovante</a>
                                 <?php }?>
 

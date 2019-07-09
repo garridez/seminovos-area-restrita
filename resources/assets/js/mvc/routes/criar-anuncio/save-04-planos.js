@@ -11,6 +11,14 @@ module.exports.callback = ($) => {
 
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
+        
+         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
+            var idPlano = location.hash.match(/\d+/)[0];
+            $("#idPlano").val(idPlano);
+            $("#radio-idPlano-"+idPlano).click();
+            $('.step-container').stepPlugin('goTo', '.step-checkout');
+        }
+        
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
             $("#acao").val("trocarPlano");
         }

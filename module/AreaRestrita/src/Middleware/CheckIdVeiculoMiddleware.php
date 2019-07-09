@@ -56,6 +56,6 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         /**
          * @todo criar uma página melhor pra isso
          */
-        die('O veículo não existe');
+        die('O veículo não existe!');
     }
 }

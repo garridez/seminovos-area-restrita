@@ -1,3 +1,12 @@
+<?php
+$fotosNewKeys = [];
+
+foreach ($fotos as $k => $foto) {
+    $fotosNewKeys[(int) $foto['ordem']] = $foto;
+}
+$fotos = $fotosNewKeys;
+unset($foto, $fotosNewKeys);
+?>
 <div class="container container-fixed-lg">
     <div class="row">
         <div class="col-lg-12">
@@ -38,7 +47,7 @@
                 <div class=" container">
                     <div class="fotos-container">
                         <?php
-                        $count = -1;
+                        $count = 0;
                         $default = array(
                             'idFoto' => null,
                             'idVeiculo' => null,

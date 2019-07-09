@@ -40,7 +40,7 @@ class CriarAnuncioController extends AbstractActionController
                 /**
                  * @todo Redirecionar para algum lugar e informar o erro
                  */
-                die('O veículo não existe');
+                die('O veículo não existe!!');
             }
             $data = $data['data'][0];
             $data['total'] = $data['valorPlano'];

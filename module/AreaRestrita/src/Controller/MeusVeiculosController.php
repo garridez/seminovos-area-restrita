@@ -192,8 +192,11 @@ class MeusVeiculosController extends AbstractActionController
             // Busca os dados do pagamento
             $pagamentosVeiculos = $pagamentosModel->get();
             
-            $statusPagamento = $this->statusUltimoPagamentoVeiculo($pagamentosVeiculos);
-            //$statusPagamento = 
+            $statusPagamento = null;
+            $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            
+            $planoPagamento = null;
+            $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
 
             $frase = "";
             $temp_acoes = [
@@ -216,6 +219,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["enviar_comprovante"] = true;
+                    $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["realizar_pagamento"] = true;
                     }
@@ -236,11 +240,12 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {
                         $temp_acoes["renovar_plano"] = true;
                     }
-                    if ($intevaloData <= 2){
+                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2){
                         $temp_acoes["reativar"] = true;
                     }
                     if($statusPagamento == 1){
                         $temp_acoes["enviar_comprovante"] = true;
+                        $temp_acoes["plano_comprovante"] = $planoPagamento;
                     }
                     break;
                 case "3":
@@ -276,13 +281,13 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "7":
                     $frase = "";
-                    if ($veiculo['idPlano'] != 5 && $intervaloDataTrocaStatus <= 2) {
+                    if ($veiculo['idPlano'] != 1 && $intervaloDataTrocaStatus <= 2) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
                 case "8":
                     $frase = "Veículo vendido";
-                    if ($veiculo['idPlano'] != 5 && ($intervaloDataTrocaStatus <= 2)) {
+                    if ($veiculo['idPlano'] != 1 && ($intervaloDataTrocaStatus <= 2)) {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
@@ -315,30 +320,31 @@ class MeusVeiculosController extends AbstractActionController
     }
     
     /*
-     * Verifica qual a ultima entrada de pagamento e captura o status desse
-     * @param type $pagamentosVeiculos
-     * @return type $status    
+     * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
+     * @param array $pagamentosVeiculos, int $idVeiculo, string $variavel
+     * @return type $result    
      */
-    protected function statusUltimoPagamentoVeiculo($pagamentosVeiculos)
+    protected function getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $idVeiculo, $variavel)
     {
         if (!isset($pagamentosVeiculos['data'])) {
             return null;
         }
         
-        $statusPagamento = null;
+        $result = null;
         $auxData = null;//new \DateTime('1969-01-01');
         
         foreach ($pagamentosVeiculos['data'] AS $pagamento){
+            if($pagamento["idVeiculo"] == $idVeiculo){
+                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
 
-            $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
-            
-            if($dataCadastro > $auxData){
-                $auxData = $dataCadastro;
-                $statusPagamento = (int) $pagamento["status"];
+                if($dataCadastro > $auxData){
+                    $auxData = $dataCadastro;
+                    $result = (int) $pagamento[$variavel];
+                }
             }
         }
         
-        return $statusPagamento;
+        return $result;
         
     }
     

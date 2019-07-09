@@ -152,8 +152,11 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(10);
         $maisInformacoesForm->populateValues($data);
 
+        $checkedTermo = (empty($data) ? false : true);
+
         return new ViewModel([
-            'formMaisInformacoesVeiculo' => $maisInformacoesForm
+            'formMaisInformacoesVeiculo' => $maisInformacoesForm,
+            'checkedTermo' => $checkedTermo
         ]);
     }
 
@@ -177,29 +180,32 @@ class DadosVeiculoController extends AbstractActionController
                 'use_upload_name' => true,
                 'use_upload_extension' => true,
             ]);
-
-            $fotos = $request->getFiles()->fotos;
-            // Upload
-            if ($fotos) {
-                $data = [
-                    'idTipo' => $dataPost->tipoCadastro,
-                    'idVeiculo' => $dataPost->idVeiculo,
-                ];
-                $files = $moveUpload->move($request->getFiles()->fotos, true);
-                $data[$apiClient::KEY_FILES] = [
-                    'fotos' => $files
-                ];
-                $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
-                foreach ($files as $file) {
-                    unlink($file);
-                }
-            }
             // Delete
             if ($dataPost->fotosToDelete) {
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
                         'listaFotos' => $dataPost->fotosToDelete
                     ])->json();
             }
+            $fotos = $request->getFiles()->fotos;
+            // Upload
+            if ($fotos) {
+                $data = [
+                    'idTipo' => $dataPost->tipoCadastro,
+                    'idVeiculo' => $dataPost->idVeiculo,
+                    'ordem' => $dataPost->ordem,
+                ];
+
+                $files = $moveUpload->move($request->getFiles()->fotos, true);
+                $data[$apiClient::KEY_FILES] = [
+                    'fotos' => $files
+                ];
+
+                $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
+                foreach ($files as $file) {
+                    unlink($file);
+                }
+            }
+
             $dataJson = [
                 'status' => 200
             ];

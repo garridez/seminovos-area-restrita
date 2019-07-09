@@ -38,7 +38,8 @@ class Veiculos extends ApiModelVeiculos
         return parent::get([
                 'idCadastro' => $this->getIdentity(),
                 'ignorarCondicoesBasicas' => true,
-                'registrosPagina' => 100
+                'registrosPagina' => 100,
+                'cache' => $cache ? 1 : 0,
                 ], null, $cache)->json();
     }
 

@@ -30,6 +30,7 @@ return [
     'cache' => array(
         'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
         'options' => array(
+            'server' => new \Zend\Stdlib\ArrayUtils\MergeRemoveKey(),
             'ttl' => 10,
             'cacheDir' => 'data/cache',
             'namespace' => 'AreaRestritaDev',

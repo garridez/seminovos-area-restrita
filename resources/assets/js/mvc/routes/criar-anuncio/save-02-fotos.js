@@ -6,8 +6,13 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
     $('.step-container').on('step:pre-exit:fotos', function (e) {
+        var ordemCount = 0;
         // Busca as imgs que serão feitas o upload
         var imgs = $('.fotos-container .display-img')
+                .each(function () {
+                    ordemCount++;
+                    $(this).data('ordem', ordemCount);
+                })
                 // Filtra deixando só as tags que contém uma imagem
                 .filter(function () {
                     return !!$(this).data('file-data');
@@ -33,6 +38,7 @@ module.exports.callback = ($) => {
 
         var formData = new FormData();
         imgs.each(function () {
+            formData.append('ordem[]', $(this).data('ordem'));
             formData.append('fotos[]', $(this).data('file-data'));
         });
         imgsToDelete.each(function () {
