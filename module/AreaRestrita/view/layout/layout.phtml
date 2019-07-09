@@ -99,11 +99,15 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
               </div>
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end" style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-              <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item">
+                <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item" title="Meus dados de cadastro">
                 <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
               </a>
-              <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item">
+                <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item" title="Alterar minha senha">
                 <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
+              </a>
+              <a href="https://www.seminovosbh.com.br/meusanuncios" class="dropdown-item" title="Teve algum problema? Tente ir para versão clássica">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Ir para Versão Clássica
               </a>
               <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
                 <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
