@@ -94,7 +94,8 @@ class MeusDadosController extends AbstractActionController
         
         return new ViewModel([
             'tipoCadastro' => $tipoCadastro,
-            'formCadastro' => $dadosForm
+            'formCadastro' => $dadosForm,
+            'idCidade' => $dadosCadastro['idCidade']
         ]);
     }
 
