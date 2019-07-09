@@ -108,6 +108,7 @@ $tipoCadastro = $this->tipoCadastro;
                                 <div class="form-group form-group-default">
                                     <?= $this->formLabel($fields['idCidade']) ?>
                                     <?= $this->formSelect($fields['idCidade']) ?>
+                                    <input type="hidden" name="cidadeSelected" id="cidadeSelected" value="<?= $this->idCidade ?>">
                                 </div>
                             </div>
                         </div>

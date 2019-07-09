@@ -24,7 +24,12 @@ module.exports = function () {
                 $.each(data, function (i, e) {
                     addOption(e.idCidade, e.cidade);
                 });
+
+                var optionIdCidade = $('#cidadeSelected').val();
+                $('select[name="idCidade"] option[value="'+optionIdCidade+'"]').attr('selected','selected');
             }
         });
     });
+
+    $("[name='idEstado']").change();
 };
