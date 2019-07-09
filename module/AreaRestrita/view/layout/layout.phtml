@@ -113,13 +113,18 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
       </div>
     </div>
     <div class="page-content-wrapper">
-      <div class="content">
+      <div class="content pb-0">
         <?= $this->content ?>
       </div>
-      <div class=" container-fluid  container-fixed-lg footer">
-        <div class="copyright sm-text-center">
+      <div class="footer pt-1 position-absolute">
+        <div class="w-100 bg-laranja px-3 text-right">
+          <a href="https://www.seminovosbh.com.br/meusanuncios" class="btn btn-white">
+            Voltar para versão clássica
+          </a>
+        </div>
+        <div class="pl-0 pl-md-5 copyright sm-text-center">
           <p class="small no-margin pull-left sm-pull-reset">
-            <span class="hint-text">Copyright &copy; 2018 </span>
+            <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
             <span class="font-montserrat">SeminovosBH</span>.
             <span class="hint-text">Todos direitos reservados</span>
           </p>
