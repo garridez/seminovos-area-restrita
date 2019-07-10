@@ -7,8 +7,10 @@
 
 namespace AreaRestrita;
 
-use Zend\Mvc\MvcEvent;
 use Zend\Authentication\AuthenticationService as AuthService;
+use Zend\Log\Logger;
+use Zend\Mvc\MvcEvent;
+use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
@@ -23,6 +25,7 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError']);
+        $this->setLogger($e->getApplication()->getServiceManager());
     }
 
     public function onDispatchError(MvcEvent $e)
@@ -32,5 +35,14 @@ class Module
         if (!$authService->hasIdentity()) {
             $e->getViewModel()->setTemplate('layout/blank');
         }
+    }
+
+    public function setLogger(ServiceManager $sm)
+    {
+        $logger = $sm->get('logger');
+
+        Logger::registerErrorHandler($logger, true);
+        Logger::registerExceptionHandler($logger);
+        Logger::registerFatalErrorShutdownFunction($logger);
     }
 }

@@ -59,7 +59,7 @@ class HistoricoPagamentosController extends AbstractActionController
             foreach ($dadosHistoricoPagamentos['data'] as $key => $row) {
 
                 // Busca os dados do cadastro
-                $dadosVeiculo = $veiculosModel->get($row['idVeiculo']);
+                $dadosVeiculo = $veiculosModel->get($row['idVeiculo'], 120);
 
                 $dadosHistoricoPagamentos['data'][$key]['nomePlano'] = $dadosVeiculo['nomePlano'];
                 $dadosHistoricoPagamentos['data'][$key]['marca'] = $dadosVeiculo['marca'];

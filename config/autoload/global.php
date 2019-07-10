@@ -27,11 +27,31 @@ return [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ],
             'options' => [
-                'timeout' => 90
+                'timeout' => 60 * 3
             ]
         ],
         'cache' => [
             'use_from_service_manager' => 'cache',
+        ],
+    ],
+    'log' => [
+        'logger' => [
+            'writers' => [
+                's3' => [
+                    'name' => \AreaRestrita\Log\Writer\S3::class,
+                    'options' => [
+                        'formatter' => \Zend\Log\Formatter\Json::class,
+                    ],
+                ],
+            ],
+            'processors' => [
+                'Backtrace' => [
+                    'name' => Zend\Log\Processor\Backtrace::class,
+                ],
+                'UserRequest' => [
+                    'name' => \AreaRestrita\Log\Processors\UserRequest::class,
+                ],
+            ],
         ],
     ],
     'dir' => [
