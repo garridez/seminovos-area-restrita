@@ -39,6 +39,7 @@ class Veiculos extends AbstractModel
                     'idCadastro' => $idCadastro,
                     'ignorarCondicoesBasicas' => true,
                     'registrosPagina' => -1,
+                    'cache'=> 0,
                 ])->getData();
             $veiculos = array_map(function($item) {
                 return (int) $item['idVeiculo'];
