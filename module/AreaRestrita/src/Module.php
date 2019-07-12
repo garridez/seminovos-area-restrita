@@ -90,6 +90,10 @@ class Module
             if ($apiResponse->getTotalTime() > 1) {
                 $logger->info("Resposta lenta da API $timeRequest segundos para '{$requestParams->getMethod()} {$requestParams->getPath()}'", $extras);
             }
+
+            if ($apiResponse->status != 200) {
+                $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$requestParams->getMethod()} {$requestParams->getPath()}' retornado", $extras);
+            }
         });
     }
 }
