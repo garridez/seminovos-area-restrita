@@ -25,6 +25,9 @@ class Veiculos extends AbstractModel
 
         /** @var Filesystem $cache */
         $cache = $this->container->get('cache');
+        $cacheOptions = $cache->getOptions();
+        $ttlOriginal = $cacheOptions->getTtl();
+        $cacheOptions->setTtl(20);
         $cacheKey = $this->getCacheKey();
 
         $idVeiculo = (array) $idVeiculo;
@@ -42,7 +45,7 @@ class Veiculos extends AbstractModel
             }, $veiculos);
             $cache->setItem($cacheKey, $veiculos);
         }
-
+        $cacheOptions->setTtl($ttlOriginal);
         /**
          * Retorna true se todos os id de um continver no outro
          */

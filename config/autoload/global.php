@@ -62,7 +62,7 @@ return [
         'adapter' => Redis::class,
         'options' => array(
             'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
-            'ttl' => 60 * 20, # 20 Minutos
+            'ttl' => 300, # 5 Minutos
             'namespace' => 'AreaRestritaProd'
         ),
         'plugins' => array(
