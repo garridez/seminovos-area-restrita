@@ -43,8 +43,19 @@ class RevendaForm extends Form
                 'label' => 'Telefone 1',
             ],
             'attributes' => [
-                'class' => 'form-control'
-            ],
+                'class' => 'form-control',
+                'data-mask' => '(00) 0000-0000',
+                'placeholder' => '(__) ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) ____-____"
+                    ]
+                ]),
+            ]
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -84,7 +95,18 @@ class RevendaForm extends Form
                 'label' => 'Telefone 2',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
             ],
         ]);
         $this->add([
@@ -125,7 +147,18 @@ class RevendaForm extends Form
                 'label' => 'Telefone 3',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
             ],
         ]);
         $this->add([
@@ -166,7 +199,18 @@ class RevendaForm extends Form
                 'label' => 'Telefone 4',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
             ],
         ]);
         $this->add([
