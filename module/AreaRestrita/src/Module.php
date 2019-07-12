@@ -83,6 +83,7 @@ class Module
                 if (isset($traceLine['class']) && $traceLine['class'] == ApiClient::class && $traceLine['function'] == '__call') {
                     $realCallee[] = array_shift($trace);
                     $realCallee[] = array_shift($trace);
+                    $realCallee[] = array_shift($trace);
                     break;
                 }
             }
