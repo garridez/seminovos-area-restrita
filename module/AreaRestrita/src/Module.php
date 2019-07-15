@@ -67,13 +67,14 @@ class Module
             $requestParams = $apiResponse->getRequestParams();
             $timeRequest = $apiResponse->getTotalTime();
             $extras = [
+                'timeRequest' => $timeRequest,
                 'requestParams' => [
                     'method' => $requestParams->getMethod(),
                     'path' => $requestParams->getPath(),
                     'body' => $requestParams->getBody(),
                     'useCache' => $requestParams->getUseCache(),
                 ],
-                'timeRequest' => $timeRequest,
+                'requestResponse' => $apiResponse->getBody(),
             ];
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
             array_shift($trace); // ignore this clousure;
