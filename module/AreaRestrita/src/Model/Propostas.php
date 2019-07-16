@@ -31,13 +31,14 @@ class Propostas extends ApiModelVeiculos
      */
     public function getAll($idVeiculo)
     {
-        $data = parent::get([
+        $res = parent::get([
                 'idAnuncio' => $idVeiculo,
                 'sort' => 'idProposta', /* TODO - falta implementar na API */
                 'direction' => 'DESC'
-            ])->getData();
-
-        if ($data) {
+        ]);
+        $data = [];
+        if ($res->status == 200) {
+            $data = $res->getData();
             uasort($data, function($a, $b) {
                 return (int) $a['idProposta'] < (int) $b['idProposta'];
             });
