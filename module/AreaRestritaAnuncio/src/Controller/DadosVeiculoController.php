@@ -320,4 +320,28 @@ class DadosVeiculoController extends AbstractActionController
         }
 //        return new ViewModel();
     }
+
+    public function consultaPlacaAction()
+    {
+        $request = $this->request;
+
+        if ($request->isPost()) {
+
+            $post = $request->getPost();
+            $placa = $post['placa'];
+
+            /* @var $apiClient ApiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+
+            $veiculo = $apiClient->veiculosGet([], $placa, true)->getData();
+
+            if ($veiculo && isset($veiculo[0])) {
+                $existePlaca = ['status' => true];
+            } else {
+                $existePlaca = ['status' => false];
+            }
+            
+            return new JsonModel($existePlaca);
+        }
+    }
 }

@@ -23,6 +23,26 @@ module.exports.callback = ($) => {
     //($('#form_dadosVeiculo'))
     $('.anuncio-steps').on('steps-loaded', function () {
         marcaModelo($('#form_dadosVeiculo'));
+
+        $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
+            var placa = $("input[name='placa']").val();
+            $.ajax({
+                type: "POST",
+                url: "/carro/consulta-placa",
+                data: {
+                    placa: placa
+                },
+                dataType: "json",
+                success: function (msg) {
+                    alert('aaaaa' + msg);
+                },
+                error: function (e) {
+
+                }
+            });
+
+        });
+
         /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
         $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
             var checked = $(this).find('#completoCheckbox').is(':checked');
