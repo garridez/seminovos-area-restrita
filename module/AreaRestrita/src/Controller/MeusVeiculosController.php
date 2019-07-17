@@ -75,11 +75,8 @@ class MeusVeiculosController extends AbstractActionController
 
     protected function retornaQuantidadePropostasVeiculo($dadosVeiculos)
     {
-
         /* @var $propostasModel Propostas */
         $propostasModel = $this->getContainer()->get(Propostas::class);
-        #2571316
-
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
