@@ -26,6 +26,9 @@ module.exports.callback = ($) => {
 
         $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
             var placa = $("input[name='placa']").val();
+            if(!placa){
+                return;
+            }
             $.ajax({
                 type: "POST",
                 url: "/carro/consulta-placa",
@@ -33,8 +36,8 @@ module.exports.callback = ($) => {
                     placa: placa
                 },
                 dataType: "json",
-                success: function (msg) {
-                    alert('aaaaa' + msg);
+                success: function (response) {
+                    console.log(response);
                 },
                 error: function (e) {
 
