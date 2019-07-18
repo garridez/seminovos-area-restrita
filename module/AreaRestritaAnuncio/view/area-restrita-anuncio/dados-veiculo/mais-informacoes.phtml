@@ -15,6 +15,10 @@ if ($this->checkedTermo) {
     $fields['termo']->setChecked(true);
 }
 
+if ($this->checkedProposta !== '0') {
+    $fields['aceitaProposta']->setChecked(true);
+}
+
 ?>
 <div class="container container-fixed-lg">
     <div class="row">
@@ -40,6 +44,10 @@ if ($this->checkedTermo) {
                 <div class="form-group form-group-default">
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
+                </div>
+
+                <div class="checkbox form-group form-group-default">
+                    <?= $this->formCheckbox($fields['aceitaProposta']) ?>
                 </div>
 
                 <div class="checkbox form-group form-group-default required">

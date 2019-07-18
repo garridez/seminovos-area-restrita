@@ -27,11 +27,31 @@ return [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ],
             'options' => [
-                'timeout' => 90
+                'timeout' => 60 * 3
             ]
         ],
         'cache' => [
             'use_from_service_manager' => 'cache',
+        ],
+    ],
+    'log' => [
+        'logger' => [
+            'writers' => [
+                's3' => [
+                    'name' => \AreaRestrita\Log\Writer\S3::class,
+                    'options' => [
+                        'formatter' => \Zend\Log\Formatter\Json::class,
+                    ],
+                ],
+            ],
+            'processors' => [
+                'Backtrace' => [
+                    'name' => Zend\Log\Processor\Backtrace::class,
+                ],
+                'UserRequest' => [
+                    'name' => \AreaRestrita\Log\Processors\UserRequest::class,
+                ],
+            ],
         ],
     ],
     'dir' => [
@@ -42,7 +62,7 @@ return [
         'adapter' => Redis::class,
         'options' => array(
             'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
-            'ttl' => 60 * 20, # 20 Minutos
+            'ttl' => 300, # 5 Minutos
             'namespace' => 'AreaRestritaProd'
         ),
         'plugins' => array(

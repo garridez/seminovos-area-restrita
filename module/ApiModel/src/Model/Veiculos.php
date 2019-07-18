@@ -25,6 +25,9 @@ class Veiculos extends AbstractModel
 
         /** @var Filesystem $cache */
         $cache = $this->container->get('cache');
+        $cacheOptions = $cache->getOptions();
+        $ttlOriginal = $cacheOptions->getTtl();
+        $cacheOptions->setTtl(20);
         $cacheKey = $this->getCacheKey();
 
         $idVeiculo = (array) $idVeiculo;
@@ -36,13 +39,14 @@ class Veiculos extends AbstractModel
                     'idCadastro' => $idCadastro,
                     'ignorarCondicoesBasicas' => true,
                     'registrosPagina' => -1,
+                    'cache'=> 0,
                 ])->getData();
             $veiculos = array_map(function($item) {
                 return (int) $item['idVeiculo'];
             }, $veiculos);
             $cache->setItem($cacheKey, $veiculos);
         }
-
+        $cacheOptions->setTtl($ttlOriginal);
         /**
          * Retorna true se todos os id de um continver no outro
          */

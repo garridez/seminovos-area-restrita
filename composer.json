@@ -13,6 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^5.6 || ^7.0",
+        "aws/aws-sdk-php": "^3.106",
         "http-interop/http-middleware": "0.4.1",
         "neilime/zf2-twb-bundle": "^3.2",
         "snbh/api-client-module": "dev-master",
@@ -26,6 +27,7 @@
         "zendframework/zend-serializer": "^2.8",
         "zendframework/zend-session": "^2.7.1",
         "zendframework/zend-stratigility": "^2.0.1",
+        "zendframework/zendservice-amazon": "^2.3",
         "zfcampus/zf-development-mode": "^3.0"
     },
     "autoload": {

@@ -15,6 +15,8 @@
  * You may also create files matching the glob pattern `{,*.}{global,local}-development.php`.
  */
 
+$removeKey = new \Zend\Stdlib\ArrayUtils\MergeRemoveKey();
+
 return [
     'ApiClient' => [
         'credentials' => [
@@ -27,10 +29,33 @@ return [
             'use_from_service_manager' => 'cache'
         ],
     ],
+    'log' => [
+        'logger' => [
+            'writers' => [
+                's3' => $removeKey,
+                'local' => [
+                    'name' => Zend\Log\Writer\Stream::class,
+                    'options' => [
+                        'formatter' => \Zend\Log\Formatter\Json::class,
+                        'stream' => 'data/temp/logs/logger.txt',
+                        'chmod' => 0777,
+                    ],
+                ]
+            ],
+            'processors' => [
+                'Backtrace' => [
+                    'name' => Zend\Log\Processor\Backtrace::class,
+                ],
+                'UserRequest' => [
+                    'name' => \AreaRestrita\Log\Processors\UserRequest::class,
+                ],
+            ],
+        ],
+    ],
     'cache' => array(
         'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
         'options' => array(
-            'server' => new \Zend\Stdlib\ArrayUtils\MergeRemoveKey(),
+            'server' => $removeKey,
             'ttl' => 10,
             'cacheDir' => 'data/cache',
             'namespace' => 'AreaRestritaDev',

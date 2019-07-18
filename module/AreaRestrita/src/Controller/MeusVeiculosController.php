@@ -60,6 +60,8 @@ class MeusVeiculosController extends AbstractActionController
             $dadosVeiculos = self::retornaValidacaoParticular($dadosVeiculos);
         }
 
+        $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
+
         $viewModel = new ViewModel([
             'meusVeiculos' => $dadosVeiculos
         ]);
@@ -69,6 +71,24 @@ class MeusVeiculosController extends AbstractActionController
         $viewModel->setTerminal($request->isXmlHttpRequest());
 
         return $viewModel;
+    }
+
+    protected function retornaQuantidadePropostasVeiculo($dadosVeiculos)
+    {
+        /* @var $propostasModel Propostas */
+        $propostasModel = $this->getContainer()->get(Propostas::class);
+
+        foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+
+            $idVeiculo = $veiculo['idVeiculo'];
+
+            // Busca os dados das propostas
+            $dadosPropostas = $propostasModel->getAll($idVeiculo) ?? [];
+
+            $dadosVeiculos['data'][$key]['qdtPropostas'] = count($dadosPropostas);
+        }
+
+        return $dadosVeiculos;
     }
 
     protected function retornaValidacaoRevenda($dadosVeiculos)

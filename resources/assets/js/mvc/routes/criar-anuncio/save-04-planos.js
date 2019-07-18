@@ -40,7 +40,24 @@ module.exports.callback = ($) => {
 
         // Se for grátis
         if (idPlano === 1) {
-            window.location.href = '/carro/checkout/gratis';
+            // Salvar todo o formulario anterior as fotos aqui
+            var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
+            var dataSerialized = form.serialize();
+
+            $.ajax({
+                type: "POST",
+
+                /**
+                 * @TODO Corrigir o "/carro" para o valor correto
+                 */
+                url: "/carro/gratis",
+                data: dataSerialized,
+                dataType: "json",
+                success: function (data) {
+                    window.location.href = '/carro/checkout/gratis';
+                },
+            });
+
             return stopEvent(e);
         }
     });

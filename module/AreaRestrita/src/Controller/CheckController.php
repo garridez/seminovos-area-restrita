@@ -12,6 +12,8 @@ class CheckController extends AbstractActionController
 
     public function indexAction()
     {
+        // Já que essa rota sempre é chamada, então aproveito para subir o log para o S3
+        \AreaRestrita\Log\Writer\S3::uploadData();
         $data = [
             'status' => 'ok',
             'aplication_time' => round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 2),
