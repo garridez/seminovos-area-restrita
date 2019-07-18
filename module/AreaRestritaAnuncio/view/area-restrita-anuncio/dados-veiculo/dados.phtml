@@ -33,11 +33,15 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
             <!-- <? $this->form()->openTag($form); ?>
 
             <form class="" role="form"> -->
-            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20" role="form" id="form_dadosVeiculo">
+            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
                 <?= $this->formElement($fields['tipoVeiculo']) ?>
-                <div class="form-group form-group-default required ">
+                <div class="form-group form-group-default required">
                     <?= $this->formLabel($fields['placa']) ?>
                     <?= $this->formText($fields['placa']) ?>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">
+                        Esta placa já está cadastrada no nosso sistema.
+                    </div>
                 </div>
                 <div class="form-group form-group-default required ">
                     <?= $this->formLabel($fields['idMarca']) ?>
