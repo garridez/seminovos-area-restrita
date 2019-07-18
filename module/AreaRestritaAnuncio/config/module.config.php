@@ -139,6 +139,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'gratis' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/gratis',
+                                    'defaults' => [
+                                        'controller' => Controller\DadosVeiculoController::class,
+                                        'action' => 'gratis',
+                                    ],
+                                ],
+                            ],
                             'pagamento' => [
                                 'type' => Literal::class,
                                 'options' => [
