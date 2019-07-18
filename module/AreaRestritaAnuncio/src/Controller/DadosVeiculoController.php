@@ -320,4 +320,26 @@ class DadosVeiculoController extends AbstractActionController
         }
 //        return new ViewModel();
     }
+
+    public function gratisAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            /* @var $apiClient ApiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+
+            $post = $request->getPost();
+            $data['tipoCadastro'] = $post['tipoCadastro'];
+            $data['idPlano'] = $post['idPlano'];
+            $data['idStatus'] = 6;
+            $data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
+            $idVeiculo = $post['idVeiculo'];
+
+            $res = $apiClient->veiculosPut($data, $idVeiculo);
+
+            return new JsonModel($res->json());
+        }
+    }
 }
