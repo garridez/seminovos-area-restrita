@@ -231,12 +231,11 @@ class DadosForm extends Form
                 'portas'
             ],
         ];
-        if(isset($removerCamposPorTipo[$tipoVeiculo])){
-            foreach($removerCamposPorTipo[$tipoVeiculo] as $campo){
+        if (isset($removerCamposPorTipo[$tipoVeiculo])) {
+            foreach ($removerCamposPorTipo[$tipoVeiculo] as $campo) {
                 $this->remove($campo);
             }
         }
-        
     }
 
     /**
@@ -259,9 +258,11 @@ class DadosForm extends Form
             'combustivel',
         ];
         foreach ($readonly as $name) {
-            $this->get($name)
-                ->setAttribute('readonly', $isEdition)
-                ->setAttribute('disabled', $isEdition);
+            if ($this->has($name)) {
+                $this->get($name)
+                    ->setAttribute('readonly', $isEdition)
+                    ->setAttribute('disabled', $isEdition);
+            }
         }
     }
 
