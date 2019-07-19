@@ -38,7 +38,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['caracteristica']; ?>
                                 </span>
                                 <small class="small d-none d-md-block">
-                                    <?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?>
+                                    <?= $veiculo['motor'] . ' '?> <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'].'V': '' ?>
                                 </small>
                             </p>
                             <h4
