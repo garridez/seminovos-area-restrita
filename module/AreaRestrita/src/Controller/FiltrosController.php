@@ -12,7 +12,7 @@ class FiltrosController extends AbstractActionController
     {
 
         $data = $this->getApiClient()
-            ->veiculosFiltrosGet(['motor' => 1], null, !true)
+            ->veiculosFiltrosGet(['motor' => 1], null, true)
             ->getData();
 
         $expires = new Header\Expires();

@@ -10,6 +10,7 @@ namespace AreaRestritaAnuncio\Controller;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Planos;
 use Zend\View\Model\ViewModel;
+use SnBH\Common\Helper\MoveUpload;
 
 class PagamentoController extends AbstractActionController
 {
@@ -120,15 +121,31 @@ class PagamentoController extends AbstractActionController
             $dadosPagamento['tipo_pagamento'] = !empty($dados['tipo_pagamento']) ? $dados['tipo_pagamento'] : 'credito';
         }
         $controle = false;
+        $files = null;
+        $apiClient = $this->getApiClient();
+        
+        $tempDir = $this->getContainer()->get('config')['dir']['upload'];
+        $tempDir .= DIRECTORY_SEPARATOR . $idVeiculo;
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir);
+        }
+        $moveUpload = new MoveUpload([
+            'target' => $tempDir,
+            'overwrite' => true,
+            'randomize' => true,
+            'use_upload_name' => true,
+            'use_upload_extension' => true,
+        ]);
+        
         if (isset($_FILES) && $_FILES) {
-            $dadosPagamento['files'] = array();
+            $comprovanteAnexo[] =  $_FILES['comprovanteAnexo'];
+            $files = $moveUpload->move($comprovanteAnexo, true);
             $controle = true;
-            foreach ($_FILES as $keyFile => $file) {
 
-                $cFile = curl_file_create($file['tmp_name'], $file['type'], $file['name']);
-
-                $dadosPagamento[$keyFile] = $cFile;
-            }
+            $arquivo =  $files[0];
+                $dadosPagamento[$apiClient::KEY_FILES] = [
+                    'comprovanteAnexo' => $arquivo
+                ];
         }
 
         $routeParams = $this->params()->fromRoute();
@@ -139,11 +156,15 @@ class PagamentoController extends AbstractActionController
         };
 
 
-
         $response = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)
             ->json();
-
+        
+        if($files){
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
             if ($dados['metodo'] == 'deposito' && $controle) {

@@ -24,7 +24,7 @@ class SelectMarcaFactory extends AbstractElementFactory
         $marcas = $this->getApiClient($container)
             ->marcasGet([
                 'idTipo' => 1
-                ], null, 1)
+                ], null, true)
             ->getData();
 
         $options = [

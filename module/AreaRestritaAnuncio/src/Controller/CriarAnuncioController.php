@@ -31,11 +31,19 @@ class CriarAnuncioController extends AbstractActionController
         $idVeiculo = (int) $params->fromRoute('idVeiculo', false);
 
         if ($idVeiculo) {
+            // Busca os dados sem cache
             $data = $this->getApiClient()
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
                     ], (int) $idVeiculo, false)
                 ->json();
+            // Essa chamada serve para colocar em cache os dados do veículo
+            // Assim a busca dos próximos steps fica mais rápida
+            $this->getApiClient()
+                ->veiculosGet([
+                    'ignorarCondicoesBasicas' => true,
+                    ], (int) $idVeiculo, 20);
+            
             if ($data['status'] !== 200) {
                 /**
                  * @todo Redirecionar para algum lugar e informar o erro
