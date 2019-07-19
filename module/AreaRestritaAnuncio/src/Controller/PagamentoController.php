@@ -38,7 +38,10 @@ class PagamentoController extends AbstractActionController
         if ($idVeiculo == null) {
             $idVeiculo = (int) $this->params()->fromQuery('idVeiculo');
         }
-        
+        if (!$idVeiculo) {
+            return false;
+        }
+
         $veiculo = $this->getApiClient()->veiculosGet([
             'ignorarCondicoesBasicas' => 1
         ], $idVeiculo, 20);
@@ -46,7 +49,7 @@ class PagamentoController extends AbstractActionController
         if(isset($veiculo->getData()[0])){
             return $veiculo->getData()[0];
         }
-        
+
         return false;
     }
 
@@ -123,7 +126,7 @@ class PagamentoController extends AbstractActionController
         $controle = false;
         $files = null;
         $apiClient = $this->getApiClient();
-        
+
         $tempDir = $this->getContainer()->get('config')['dir']['upload'];
         $tempDir .= DIRECTORY_SEPARATOR . $idVeiculo;
         if (!file_exists($tempDir)) {
@@ -136,16 +139,16 @@ class PagamentoController extends AbstractActionController
             'use_upload_name' => true,
             'use_upload_extension' => true,
         ]);
-        
+
         if (isset($_FILES) && $_FILES) {
-            $comprovanteAnexo[] =  $_FILES['comprovanteAnexo'];
+            $comprovanteAnexo[] = $_FILES['comprovanteAnexo'];
             $files = $moveUpload->move($comprovanteAnexo, true);
             $controle = true;
 
-            $arquivo =  $files[0];
-                $dadosPagamento[$apiClient::KEY_FILES] = [
-                    'comprovanteAnexo' => $arquivo
-                ];
+            $arquivo = $files[0];
+            $dadosPagamento[$apiClient::KEY_FILES] = [
+                'comprovanteAnexo' => $arquivo
+            ];
         }
 
         $routeParams = $this->params()->fromRoute();
@@ -159,8 +162,8 @@ class PagamentoController extends AbstractActionController
         $response = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)
             ->json();
-        
-        if($files){
+
+        if ($files) {
             foreach ($files as $file) {
                 unlink($file);
             }
