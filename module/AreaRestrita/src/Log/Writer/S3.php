@@ -31,9 +31,7 @@ class S3 extends AbstractWriter
         $tmpDir = self::$tmpDir;
         $bucketName = 'log-area-restrita';
         $logs = glob($tmpDir . '/*.txt');
-        
-        
-        
+
         $s3 = new \ZendService\Amazon\S3\S3(getenv('AWS_ACCESS_KEY_ID'), getenv('AWS_SECRET_ACCESS_KEY'));
 
         foreach ($logs as $log) {
@@ -48,7 +46,9 @@ class S3 extends AbstractWriter
             } catch (\Exception $ex) {
                 
             }
-            unlink($log);
+            if (file_exists($log)) {
+                unlink($log);
+            }
         }
     }
 }
