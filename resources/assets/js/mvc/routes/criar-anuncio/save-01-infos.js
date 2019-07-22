@@ -25,25 +25,23 @@ module.exports.callback = ($) => {
         marcaModelo($('#form_dadosVeiculo'));
         /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
         $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
-            var placa = $("input[name='placa']");
-            if(!$(placa).val()){
+            var placaInput = $(this);
+            var placa = placaInput.val() || '';
+            if(!placa || placa.length < 7){
                 return;
             }
             $.ajax({
                 type: "POST",
                 url: "/carro/consulta-placa",
                 data: {
-                    placa: $(placa).val()
+                    placa: placa
                 },
                 dataType: "json",
                 success: function (response) {
-                    if(!response.status){
-                        $(placa).parent().removeClass("is-invalid");
-                        $(placa).parent().addClass("is-valid");
-                        return;
-                    }
-                    $(placa).removeClass("is-valid");
-                    $(placa).addClass("is-invalid");
+                    placaInput
+                            .parent()
+                            .removeClass('is-invalid is-valid')
+                            .addClass(response.status ? 'is-invalid' : 'is-valid');
                 },
                 error: function (e) {
 
