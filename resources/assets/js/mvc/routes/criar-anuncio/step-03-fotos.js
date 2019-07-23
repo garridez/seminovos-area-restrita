@@ -5,6 +5,17 @@ module.exports.callback = ($) => {
 };
 
 function init() {
+    var sortablejs = require('sortablejs');
+
+    new sortablejs.Sortable($('.fotos-container > div')[0], {
+        animation: 150,
+        swap: true,
+        handle: '.btn-move',
+        onChange: function(/**Event*/evt) {
+            $('.fotos-container').data('reordanado', true);
+        }
+    });
+
     var ctx = $('.step-fotos');
     var inputFoto = ctx.find('[name="foto"]');
 

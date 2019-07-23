@@ -209,6 +209,15 @@ class DadosVeiculoController extends AbstractActionController
                 }
             }
 
+            if ($dataPost->reordem) {
+                $resReordem = $this->getApiClient()->veiculosFotosPut([
+                    'reordem' => $dataPost->reordem,
+                    'metadata' => [
+                        'idVeiculo' => $dataPost->idVeiculo
+                    ],
+                ])->json();
+            }
+
             $dataJson = [
                 'status' => 200
             ];
@@ -217,6 +226,9 @@ class DadosVeiculoController extends AbstractActionController
             }
             if (isset($resDelete) && $resDelete['status'] !== 200) {
                 $dataJson = $resDelete;
+            }
+            if (isset($resReordem) && $resReordem['status'] !== 200) {
+                $dataJson = $resReordem;
             }
 
             return new JsonModel($dataJson);

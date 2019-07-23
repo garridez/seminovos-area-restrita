@@ -6,9 +6,11 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
     $('.step-container').on('step:pre-exit:fotos', function (e) {
+        var $fotosContainer = $('.fotos-container');
         var ordemCount = 0;
         // Busca as imgs que serão feitas o upload
-        var imgs = $('.fotos-container .display-img')
+        var imgs = $fotosContainer.find('.display-img')
+                // Seta a ordem como data
                 .each(function () {
                     ordemCount++;
                     $(this).data('ordem', ordemCount);
@@ -21,7 +23,7 @@ module.exports.callback = ($) => {
                 .filter(function () {
                     return $(this).data('uploaded') !== true;
                 });
-        var imgsToDelete = $('.fotos-container .display-img')
+        var imgsToDelete = $fotosContainer.find('.display-img')
                 // Filtra deixando só as tags que contém uma imagem
                 .filter(function () {
                     return !!$(this).data('delete');
@@ -31,19 +33,30 @@ module.exports.callback = ($) => {
                     return $(this).data('deleted') !== true;
                 });
 
+
+        var reordenar = $fotosContainer.data('reordanado') || false;
+        var imgReorder = $fotosContainer.find('.display-img').filter(function () {
+            return !!$(this).data('idfoto');
+        });
+
         // Se zero, não tem nenhuma foto pra subir ou excluir, então deixa passar pra próxima step
-        if (!imgs.length && !imgsToDelete.length) {
+        if (!imgs.length && !imgsToDelete.length && !reordenar) {
             return true;
         }
 
         var formData = new FormData();
         imgs.each(function () {
-            formData.append('ordem[]', $(this).data('ordem'));
+            formData.append('ordem[]', $(this).data('ordem')); // Ordem para o upload
             formData.append('fotos[]', $(this).data('file-data'));
         });
         imgsToDelete.each(function () {
             formData.append('fotosToDelete[]', $(this).data('idfoto'));
         });
+        imgReorder.each(function () {
+            var ordem = $(this).data('ordem');
+            formData.append('reordem[' + ordem + ']',  $(this).data('idfoto')); // Reordena tudo
+        });
+
         $('#dados-basicos form')
                 .serializeArray()
                 .forEach(function (e) {
