@@ -10,12 +10,13 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
 
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center">
-        <div class="<?= $this->userInfo('tipoCadastro') == 1 ? 'col-6' : 'col-12'?>">
+        <div class="col-sm-12 col-md-6">
             <h3>Meus Veículos</h3>
         </div>
-        <div class="col-3 <?= intval($this->userInfo('tipoCadastro')) == 2 ? 'd-none':''?>">
+        <?php if ($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
+        <div class="col-6 col-md-3">
             <div class="form-group">
-                <label for="plano">Planos</label>
+                <label for="plano">Filtrar por Planos</label>
                 <select id="plano" name="plano" class="form-control" aria-label="plano">
                     <option selected="" value="row">Selecione a plano</option>
                     <?php 
@@ -32,9 +33,9 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 </select>
             </div>
         </div>
-        <div class="col-3 <?= intval($this->userInfo('tipoCadastro')) == 2 ? 'd-none':''?>">
+        <div class="col-6 col-md-3 <?= intval($this->userInfo('tipoCadastro')) == 2 ? 'd-none':''?>">
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">Filtrar por Status</label>
                 <select id="status" name="status" class="form-control" aria-label="status">
                     <option selected="" value="row">Selecione a Status</option>
                     <?php 
@@ -56,6 +57,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 </select>
             </div>
         </div>
+        <?php endif; ?>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
             <?php foreach ($veiculos as $veiculo):
                 $urls = [
