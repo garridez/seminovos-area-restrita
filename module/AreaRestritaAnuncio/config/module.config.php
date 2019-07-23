@@ -129,6 +129,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'consulta-placa' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/consulta-placa',
+                                    'defaults' => [
+                                        'controller' => Controller\DadosVeiculoController::class,
+                                        'action' => 'consulta-placa',
+                                    ],
+                                ],
+                            ],
                             'gratis' => [
                                 'type' => Literal::class,
                                 'options' => [

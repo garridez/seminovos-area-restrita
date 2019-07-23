@@ -10,8 +10,51 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
 
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="<?= $this->userInfo('tipoCadastro') == 1 ? 'col-6' : 'col-12'?>">
             <h3>Meus Veículos</h3>
+        </div>
+        <div class="col-3 <?= intval($this->userInfo('tipoCadastro')) == 2 ? 'd-none':''?>">
+            <div class="form-group">
+                <label for="plano">Planos</label>
+                <select id="plano" name="plano" class="form-control" aria-label="plano">
+                    <option selected="" value="row">Selecione a plano</option>
+                    <?php 
+                        foreach (
+                            [
+                                // 1 => 'Simples',
+                                3 => 'Nitro',
+                                2 => 'Turbo',
+                                // 4 => 'Nitro + Home',
+                                5 => 'Básico',
+                            ] as $key => $plano) : ?>
+                    <option value="plano-<?= $key ?>"><?= $plano ?></option>
+                    <?php    endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-3 <?= intval($this->userInfo('tipoCadastro')) == 2 ? 'd-none':''?>">
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" class="form-control" aria-label="status">
+                    <option selected="" value="row">Selecione a Status</option>
+                    <?php 
+                        foreach (
+                            [
+                                // 1 =>'Aguardando pagamento',
+                                2 =>'Ativo',
+                                // 3 =>'Cadastrando',
+                                // 4 =>'Expirado',
+                                5 =>'Inativo',
+                                // 6 =>'Pendente',
+                                // 7 =>'Removido',
+                                // 8 =>'Vendido',
+                                // 9 =>'Fotos Alteradas',
+                                // 10 => 'Cadastrando Grátis',
+                            ] as $key => $status) : ?>
+                    <option value="status-<?= $key ?>"><?= $status ?></option>
+                    <?php    endforeach; ?>
+                </select>
+            </div>
         </div>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
             <?php foreach ($veiculos as $veiculo):
@@ -22,7 +65,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     ]),
                 ];
                            ?>
-            <div class="col-12 row mb-3 bg-white p-0 justify-content-center">
+            <div
+                class="col-12 row mb-3 bg-white p-0 justify-content-center plano-<?= $veiculo['idPlano'] ?> status-<?= $veiculo['idStatus'] ?>">
                 <div class="col-12 col-md-4 col-lg-2 d-flex pt-3 justify-content-center">
                     <a href="/meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
                         <img class="img-fluid" src="<?= $veiculo['imagem'] ?>" alt="" />
@@ -38,7 +82,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['caracteristica']; ?>
                                 </span>
                                 <small class="small d-none d-md-block">
-                                    <?= $veiculo['motor'] . ' '?> <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'].'V': '' ?>
+                                    <?= $veiculo['motor'] . ' '?>
+                                    <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'].'V': '' ?>
                                 </small>
                             </p>
                             <h4
@@ -117,18 +162,18 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </div>
                             </div> -->
                             <?php if($veiculo['combinarValor'] == 1) : ?>
-                                <div class="col-12 col-lg-12 ">
-                                    <div class="bg-master-lightest  mt-1 padding-15">
-                                        <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
-                                            <div class="row d-flex justify-content-between pl-3">
-                                                <div class="bold no-margin d-flex align-items-center link-danger">
-                                                    <span class="fa fa-circle text-warning fs-11 mr-1"></span>
-                                                    Valor a Combinar
-                                                </div>
+                            <div class="col-12 col-lg-12 ">
+                                <div class="bg-master-lightest  mt-1 padding-15">
+                                    <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
+                                        <div class="row d-flex justify-content-between pl-3">
+                                            <div class="bold no-margin d-flex align-items-center link-danger">
+                                                <span class="fa fa-circle text-warning fs-11 mr-1"></span>
+                                                Valor a Combinar
                                             </div>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
+                            </div>
                             <?php endif; ?>
                             <div class="col-12 col-lg-12 ">
                                 <div class="bg-master-lightest  mt-1 padding-15">
@@ -166,11 +211,13 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div>
                                 <?php if($veiculo["botoes"]["trocar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar
+                                    Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano&trocarPlano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar meu Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar
+                                    meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#checkout&trocarPlano&planoNitroHome"
@@ -198,35 +245,36 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <small class="hint-text"><?=$veiculo["frase"]?></small>
                             </div>
                             <?php if($veiculo['idStatus'] != 1): ?>
-                                <div class="d-flex mt-1">
-                                    <small class="hint-text mt-1">
-                                        <?php if ($veiculo["intervaloData"] == 0) { ?>
-                                        Expira Hoje
-                                        <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
-                                        Expira em <?= $veiculo["intervaloData"] ?> dias
-                                        <?php } else { ?>
-                                        Expirado em <?= $veiculo["dataExpiracao"] ?>
-                                        <?php } ?>
-                                    </small>
-                                </div>
+                            <div class="d-flex mt-1">
+                                <small class="hint-text mt-1">
+                                    <?php if ($veiculo["intervaloData"] == 0) { ?>
+                                    Expira Hoje
+                                    <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
+                                    Expira em <?= $veiculo["intervaloData"] ?> dias
+                                    <?php } else { ?>
+                                    Expirado em <?= $veiculo["dataExpiracao"] ?>
+                                    <?php } ?>
+                                </small>
+                            </div>
                             <?php endif; ?>
                             <div class="justify-content-end d-flex m-t-15 pb-2">
 
                                 <?php if($veiculo["botoes"]["enviar_comprovante"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>#plano&comprovante&<?=$veiculo["botoes"]["plano_comprovante"]?>"
-                                   class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2">Enviar comprovante</a>
+                                    class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2">Enviar
+                                    comprovante</a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["realizar_pagamento"]){?>
-                                    <a href="<?=$urls['editarAnuncio']?>#plano"
-                                       class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
+                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                    class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
                                 <?php }?>
 
                                 <?php if(isset($veiculo['botoes']['inativar']) && $veiculo['botoes']['inativar']){?>
                                 <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, inativar este veículo!" data-modal-success-msg="Veículo inativado!"
-                                    title="Desativar veículo">
+                                    data-modal-yes-text="Sim, inativar este veículo!"
+                                    data-modal-success-msg="Veículo inativado!" title="Desativar veículo">
                                     <button class="btn btn-sm btn-danger ml-2">Inativar</button>
                                 </a>
                                 <?php }?>
@@ -234,14 +282,14 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["vendido"]){?>
                                 <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, marcar como vendido!" data-modal-success-msg="Marcado como vendido!"
-                                    title="Marcar como vendido">
+                                    data-modal-yes-text="Sim, marcar como vendido!"
+                                    data-modal-success-msg="Marcado como vendido!" title="Marcar como vendido">
                                     <button class="btn btn-sm btn-complete ml-2">Vendido</button>
                                 </a>
                                 <?php }?>
 
 
-                                <?php if($veiculo["botoes"]["renovar"]){
+                                <?php if($veiculo["botoes"]["renovar"]??false){
                                     /**
                                      * @todo O renovar vai mesmo para o ativar?
                                      */
@@ -254,7 +302,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 </a>
                                 <?php }?>
 
-                                <?php if($veiculo["botoes"]["reativar"]){?>
+                                <?php if($veiculo["botoes"]["reativar"]??false){?>
                                 <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente reativar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, reativar" data-modal-success-msg="Veiculo Reativado"
@@ -262,7 +310,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
                                 </a>
                                 <?php }?>
-                                <?php if($veiculo["botoes"]["alerta"]){?>
+                                <?php if($veiculo["botoes"]["alerta"]??false){?>
 
                                 <a href="tel://(031) 3077-5888"
                                     class="btn btn-sm btn-laranja text-white d-flex align-items-center my-sm-2 w-100 justify-content-center">
