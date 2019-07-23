@@ -359,6 +359,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($existePlaca);
         }
     }
+
     public function gratisAction()
     {
         $request = $this->getRequest();
@@ -369,15 +370,26 @@ class DadosVeiculoController extends AbstractActionController
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
             $post = $request->getPost();
-            $data['tipoCadastro'] = $post['tipoCadastro'];
-            $data['idPlano'] = $post['idPlano'];
-            $data['idStatus'] = 6;
-            $data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
+
             $idVeiculo = $post['idVeiculo'];
 
-            $res = $apiClient->veiculosPut($data, $idVeiculo);
+            $result = $apiClient->veiculosGet([
+                'ignorarCondicoesBasicas' => true,
+            ], (int)$idVeiculo, 20);
 
-            return new JsonModel($res->json());
+            $veiculo = $result->getData();
+
+            $arrayStatusAltera = ['1', '3', '4', '6', '10'];
+
+            if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
+                $data['tipoCadastro'] = $post['tipoCadastro'];
+                $data['idPlano'] = $post['idPlano'];
+                $data['idStatus'] = 6;
+                $data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
+
+                $result = $apiClient->veiculosPut($data, $idVeiculo);
+            }
+            return new JsonModel($result->json());
         }
     }
 }
