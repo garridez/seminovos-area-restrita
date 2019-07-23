@@ -17,8 +17,7 @@ class PagamentoController extends AbstractActionController
 
     public function indexAction()
     {
-        $dadosVeiculo = $this->getVeiculo();
-
+        $dadosVeiculo = $this->getVeiculo(10);
         $planos = $this->getContainer()
             ->get(Planos::class)
             ->getCurrent();
