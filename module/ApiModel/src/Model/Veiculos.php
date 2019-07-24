@@ -36,11 +36,10 @@ class Veiculos extends AbstractModel
         $veiculos = $cache->getItem($cacheKey);
         if ($veiculos === null) {
             $veiculos = $this->get([
-                    'idCadastro' => $idCadastro,
-                    'ignorarCondicoesBasicas' => true,
-                    'registrosPagina' => -1,
-                    'cache'=> 0,
-                ])->getData();
+                'idCadastro' => $idCadastro,
+                'fastMode' => 1,
+                'fields' => ['idVeiculo']
+            ])->getData();
             $veiculos = array_map(function($item) {
                 return (int) $item['idVeiculo'];
             }, $veiculos);
