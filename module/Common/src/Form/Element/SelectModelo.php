@@ -31,7 +31,7 @@ class SelectModelo extends Select
         $apiClient = $container->get(ApiClient::class);
         $data = $apiClient->modelos([
                 'idMarca' => $idMarca
-                ], null, true)->getData();
+                ], null, 10000)->getData();
         $modelos = [];
         foreach ($data as $modelo) {
             $modelos[$modelo['idModelo']] = $modelo['modelo'];

@@ -111,19 +111,23 @@ function loadContentStepsAsync() {
     var loading = require('components/Loading');
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
-    loading.open();
+    loading.open(true);
     stepsUrl.each(function (i) {
         var ctx = $(this);
-        $.get(ctx.data('url'), function (data) {
-            ctx.html(data);
-            if (--totalSteps === 0) {
-                $('.anuncio-steps').trigger('steps-loaded');
-                loading.close();
-                setTimeout(function () {
-                    loading.close();
-                }, 200);
-            }
-        });
+        ctx.data('timeload', new Date);
+        setTimeout(function () {
+            $.get(ctx.data('url'), function (data) {
+                ctx.html(data);
+                if (--totalSteps === 0) {
+                    $('.anuncio-steps').trigger('steps-loaded');
+                    loading.close(true);
+                    setTimeout(function () {
+                        loading.close(true);
+                    }, 200);
+                }
+            });
+
+        }, (i * 200) + 10);
     });
 }
 

@@ -6,6 +6,7 @@ var $ = require('jquery');
 module.exports = {
     _instance: null,
     _showing: false,
+    _persistent: false,
     _getModal: function () {
         if (this._instance) {
             return this._instance;
@@ -36,7 +37,10 @@ module.exports = {
         });
         return this._instance = instance;
     },
-    open: function () {
+    open: function (persistent) {
+        if (persistent !== undefined) {
+            this._persistent = persistent;
+        }
         if (this._showing) {
             return this._instance;
         }
@@ -46,7 +50,13 @@ module.exports = {
         instance.modal('show');
         return instance;
     },
-    close: function () {
+    close: function (forceClose) {
+        if (forceClose) {
+            this._persistent = false;
+        }
+        if (this._persistent) {
+            return;
+        }
         if (!this._instance) {
             return;
         }

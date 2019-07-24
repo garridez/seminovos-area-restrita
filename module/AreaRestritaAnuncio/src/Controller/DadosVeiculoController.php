@@ -50,7 +50,7 @@ class DadosVeiculoController extends AbstractActionController
         $dadosForm->setTipoVeiculo($tipoVeiculo);
         $dadosForm->setCombustivel($tipoVeiculo);
 
-        $veiculoDados = $this->getVeiculo(10);
+        $veiculoDados = $this->getVeiculo(20);
         if ($veiculoDados) {
             $dadosForm->populateValues($veiculoDados);
             $dadosForm->setIsEdition(true);
@@ -137,7 +137,7 @@ class DadosVeiculoController extends AbstractActionController
     public function precoAction()
     {
         $precoForm = new Veiculo\PrecoForm();
-        $data = $this->getVeiculo(10);
+        $data = $this->getVeiculo(20);
         $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
@@ -149,7 +149,7 @@ class DadosVeiculoController extends AbstractActionController
     public function maisInformacoesAction()
     {
         $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
-        $data = $this->getVeiculo(10);
+        $data = $this->getVeiculo(20);
         $maisInformacoesForm->populateValues($data);
 
         $checkedTermo = (empty($data) ? false : true);
@@ -234,7 +234,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($dataJson);
         }
         $fotos = [];
-        $dadosVeiculo = $this->getVeiculo(10);
+        $dadosVeiculo = $this->getVeiculo(20);
         if ($dadosVeiculo) {
             $fotos = $dadosVeiculo['fotos'];
         }
@@ -246,7 +246,7 @@ class DadosVeiculoController extends AbstractActionController
     public function videoAction()
     {
         $videoForm = new Veiculo\VideoForm();
-        $data = $this->getVeiculo(10);
+        $data = $this->getVeiculo(20);
         $videoForm->populateValues($data);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
