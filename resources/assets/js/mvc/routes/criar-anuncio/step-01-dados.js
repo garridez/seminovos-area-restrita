@@ -7,6 +7,9 @@ module.exports.callback = ($) => {
 function init() {
     var ctx = $('.step-dados');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
+    var tipo = $('input[name="tipoCadastro"]');
+    var marca = ctx.find('[name="idMarca"]');
+    var modelo = ctx.find('[name="modeloCarro"]');
     var anoFabricacaoOptions = anoFabricacao.find('option');
     var anoModelo = ctx.find('[name="anoModelo"]');
     var anoModeloOptions = anoModelo.find('option');
@@ -34,5 +37,43 @@ function init() {
                 .prepend(anoModeloOptionsFiltred)
                 .val('');
 
+    });
+    
+    anoModelo.change(function(){
+       
+       $.ajax({
+                type: "POST",
+                url: "/carro/versao",
+                data: {
+                    idTipo: getValInt(tipo),
+                    idMarca: getValInt(marca),
+                    idModelo: getValInt(modelo),
+                    anoModelo: getValInt(this)
+                },
+                dataType: "json",
+                success: function (response) {
+                    $('[name="versao"]').empty();
+                    $('[name="versao"]').append('<option>Selecione a versao</option>');
+                    var dados = response.data;
+                    //$.each(response['data'], function(response->data['modelo'], modelName){
+                    for (var i = 0; i < dados.length; i++) {
+                        //Use the Option() constructor to create a new HTMLOptionElement.
+                        var option = new Option(dados[i].modelo, dados[i].modelo);
+                        //Convert the HTMLOptionElement into a JQuery object that can be used with the append method.
+                        $(option).html(dados[i].modelo);
+                        //Append the option to our Select element.
+                        $('[name="versao"]').append(option);
+                    }
+
+                },
+                error: function (e) {
+                    if (e.responseJSON) {
+                        HandleApiError(e.responseJSON);
+                    } else {
+                        HandleApiError(false);
+                    }
+                }
+            });
+       
     });
 }

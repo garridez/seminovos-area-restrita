@@ -347,6 +347,28 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($existePlaca);
         }
     }
+    
+    public function getVersaoAction()
+    {
+        $request = $this->request;
+
+        if ($request->isPost()) {
+
+            $post = $request->getPost()->toArray();;
+
+            /* @var $apiClient ApiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+            //var_dump(json_decode(json_encode($post), true)); exit;
+            $versao = $apiClient->versaoGet($post)->json();
+            
+            echo json_encode($versao);
+            
+            die;
+            
+            //return new JsonModel($existePlaca);
+        }
+    }
+    
     public function gratisAction()
     {
         $request = $this->getRequest();

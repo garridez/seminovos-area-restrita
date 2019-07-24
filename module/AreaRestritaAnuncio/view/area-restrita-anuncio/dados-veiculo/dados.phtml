@@ -43,13 +43,33 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                         Esta placa já está cadastrada no nosso sistema.
                     </div>
                 </div>
-                <div class="form-group form-group-default required ">
-                    <?= $this->formLabel($fields['idMarca']) ?>
-                    <?= $this->formSelect($fields['idMarca']) ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required ">
+                            <?= $this->formLabel($fields['idMarca']) ?>
+                            <?= $this->formSelect($fields['idMarca']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required ">
+                            <?= $this->formLabel($fields['modeloCarro']) ?>
+                            <?= $this->formSelect($fields['modeloCarro']) ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group form-group-default required ">
-                    <?= $this->formLabel($fields['modeloCarro']) ?>
-                    <?= $this->formSelect($fields['modeloCarro']) ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoFabricacao']) ?>
+                            <?= $this->formSelect($fields['anoFabricacao']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['anoModelo']) ?>
+                            <?= $this->formSelect($fields['anoModelo']) ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group form-group-default required ">
                     <?= $this->formLabel($fields['versao']) ?>
@@ -72,20 +92,6 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                             </div>
                         </div>
                     <?php endif; ?>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['anoFabricacao']) ?>
-                            <?= $this->formSelect($fields['anoFabricacao']) ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['anoModelo']) ?>
-                            <?= $this->formSelect($fields['anoModelo']) ?>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <?php if (isset($fields['portas'])): ?>

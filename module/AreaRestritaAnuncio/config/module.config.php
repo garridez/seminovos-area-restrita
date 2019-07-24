@@ -139,6 +139,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'versao' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/versao',
+                                    'defaults' => [
+                                        'controller' => Controller\DadosVeiculoController::class,
+                                        'action' => 'getVersao',
+                                    ],
+                                ],
+                            ],
                             'gratis' => [
                                 'type' => Literal::class,
                                 'options' => [
