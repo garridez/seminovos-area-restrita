@@ -55,7 +55,7 @@ function init() {
                     $('[name="versao"]').empty();
                     $('[name="versao"]').append('<option>Selecione a versao</option>');
                     var dados = response.data;
-                    //$.each(response['data'], function(response->data['modelo'], modelName){
+
                     for (var i = 0; i < dados.length; i++) {
                         //Use the Option() constructor to create a new HTMLOptionElement.
                         var option = new Option(dados[i].modelo, dados[i].modelo);

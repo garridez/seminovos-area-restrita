@@ -358,14 +358,13 @@ class DadosVeiculoController extends AbstractActionController
 
             /* @var $apiClient ApiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
-            //var_dump(json_decode(json_encode($post), true)); exit;
+
             $versao = $apiClient->versaoGet($post)->json();
             
             echo json_encode($versao);
             
             die;
             
-            //return new JsonModel($existePlaca);
         }
     }
     
