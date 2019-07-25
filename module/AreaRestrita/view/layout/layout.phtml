@@ -105,7 +105,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
                 <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item" title="Alterar minha senha">
                 <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
               </a>
-              <a href="https://www.seminovosbh.com.br/meusanuncios" class="dropdown-item" title="Teve algum problema? Tente ir para versão clássica">
+              <a href="https://www.seminovosbh.com.br/meusanuncios?beta=1&versao_classica=true" class="dropdown-item" title="Teve algum problema? Tente ir para versão clássica">
                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 Ir para Versão Clássica
               </a>
@@ -121,11 +121,6 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
         <?= $this->content ?>
       </div>
       <div class="footer pt-1 position-absolute">
-        <div class="w-100 bg-laranja px-3 text-right">
-          <a href="https://www.seminovosbh.com.br/meusanuncios" class="btn btn-white">
-            Voltar para versão clássica
-          </a>
-        </div>
         <div class="pl-0 pl-md-5 copyright sm-text-center">
           <p class="small no-margin pull-left sm-pull-reset">
             <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
