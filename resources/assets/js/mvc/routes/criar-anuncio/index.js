@@ -13,10 +13,12 @@ module.exports.callback = ($) => {
     require('components/StepPlugin');
     loadContentStepsAsync();
     var stepsContainer = $('.step-container');
+    var anuncioSteps = $('.anuncio-steps'); // Conjuto de steps principal
 
     // Troca o ícone ativo de acordo com o step ativo
     stepsContainer.on('step:change', setStepIconActive);
-    $('.anuncio-steps').on('steps-loaded', setStepIconActive);
+    stepsContainer.on('step:change', checkLastStep);
+    anuncioSteps.on('steps-loaded', setStepIconActive);
 
     stepsContainer
             .stepPlugin()
@@ -38,6 +40,13 @@ module.exports.callback = ($) => {
         form.find('[type="submit"]').first().click();
         if (form[0] && !form[0].checkValidity()) {
             return;
+        }
+
+        if ($('.anuncio-steps').stepPlugin('inLastStep')) {
+            var step = form.closest('[data-step-label]');
+            var stepLabel = step.data('step-label');
+            step.closest('.step-container').trigger('step:pre-exit:' + stepLabel);
+            console.log(step.closest('.step-container'))
         }
     });
 
@@ -130,11 +139,16 @@ function loadContentStepsAsync() {
         }, (i * 200) + 10);
     });
 }
-
+function checkLastStep(){
+    var text = 'Continuar';
+    if($('.anuncio-steps').stepPlugin('inLastStep')){
+        text = 'Finalizar';
+    }
+    $('.step-controls .btn-continuar').text(text).attr('title', text);
+    
+}
 function setStepIconActive() {
     var stepsIcons = $('.steps-list li');
-
-
     $('.anuncio-steps [class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {

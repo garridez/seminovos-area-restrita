@@ -56,6 +56,7 @@ class CriarAnuncioController extends AbstractActionController
             $data['idAnuncioVeiculo'] = $data['idAnuncio'] ?? null;
 
             $adicionalData = $data;
+            $adicionalData['veiculo'] = $data;
         }
 
         $viewModel = new ViewModel([

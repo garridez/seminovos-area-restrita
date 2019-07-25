@@ -1,6 +1,8 @@
 <?php
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
+$veiculo = $this->veiculo ?: false;
+
 $rotasAnuncio = [
     'veiculo' => [
         'dados' => 'dados',
@@ -16,6 +18,21 @@ $rotasAnuncio = [
 if ($this->userInfo('tipoCadastro') == 1) {
     unset($rotasAnuncio['checkout']);
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
+}
+
+if ($veiculo && $veiculo['idStatus'] == 2 && isset($_GET['editar'])) {
+    switch ($_GET['editar']) {
+        case 'fotos':
+            unset(
+                $rotasAnuncio['veiculo']['video'],
+                $rotasAnuncio['plano'],
+                $rotasAnuncio['checkout']
+            );
+            break;
+
+        default:
+            break;
+    }
 }
 
 foreach ($rotasAnuncio['veiculo'] as &$rota) {
@@ -46,8 +63,10 @@ if ($this->idVeiculo) {
             <?php
             $count = 0;
             unset($rota);
+            $firstStep = true;
             foreach ($rotasAnuncio['veiculo'] as $name => $rota) {
-                echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($name == 'dados' ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
+                echo '<div class="' . ('step-' . $count++) . ' step-' . $name . ($firstStep ? ' active' : '') . '" data-step-label="' . $name . '" data-url="' . $rota . '"></div>';
+                $firstStep = false;
             }
 
             ?>
@@ -64,12 +83,6 @@ if ($this->idVeiculo) {
         }
 
         ?>
-<!--        <div class="step-1 step-plano" data-step-label="plano" data-url="<?= $this->url('criar-anuncio/anuncio/planos', $routeParams) ?>">
-            Step Plano
-        </div>
-        <div class="step-2 step-checkout" data-step-label="checkout" data-url="<?= $this->url('criar-anuncio/anuncio/pagamento', $routeParams) ?>">
-            Step Checkout
-        </div>-->
     </div>
 </div>
 

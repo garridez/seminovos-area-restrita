@@ -5,6 +5,10 @@ module.exports.callback = ($) => {
 };
 
 function init() {
+    var ctx = $('.step-fotos');
+    if (!ctx.length) {
+        return;
+    }
     var sortablejs = require('sortablejs');
 
     new sortablejs.Sortable($('.fotos-container > div')[0], {
@@ -16,7 +20,6 @@ function init() {
         }
     });
 
-    var ctx = $('.step-fotos');
     var inputFoto = ctx.find('[name="foto"]');
 
 
