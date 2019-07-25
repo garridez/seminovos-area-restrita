@@ -8,110 +8,110 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta charset="utf-8" />
-  <?php echo $this->headTitle() ?>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="apple-touch-icon" href="pages/ico/60.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta content="" name="description" />
-  <meta content="" name="author" />
-  <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <?php echo $this->headTitle() ?>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <link rel="apple-touch-icon" href="pages/ico/60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
 </head>
 
 <body class="fixed--header l-criar-anuncio <?= $this->bodyClass() ?>">
-  <div class="page-container p-0 ">
-    <div class="hea-der">
+    <div class="page-container p-0 ">
+        <div class="hea-der">
 
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2 mt-2 m-3 text-center">
-            <a href="/meus-veiculos">
-              <svg viewBox="0 0 180 66" alt="logo" width="78" height="29" class="snbh-logo">
-                <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
-                <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-              </svg>
-            </a>
-          </div>
-          <div class="offset-md-1 col-md-6">
-            <ul class="steps-list p-0 text-justify">
-              <li title="Seu dados" data-step="usuario">
-                <svg viewBox="0 0 42 42" alt="usuário">
-                  <use xlink:href="/img/svg/icons/user.svg#icon"></use>
-                </svg>
-              </li>
-              <li title="Dados do seu veículo" data-step="dados,preco,mais-informacoes">
-                <svg viewBox="0 0 42 42" alt="veículo">
-                  <use xlink:href="/img/svg/icons/ad-car.svg#body"></use>
-                  <use xlink:href="/img/svg/icons/ad-car.svg#light-1" style="fill:#fff"></use>
-                  <use xlink:href="/img/svg/icons/ad-car.svg#light-2" style="fill:#fff"></use>
-                </svg>
-              </li>
-              <li title="Fotos do veículo" data-step="fotos,video">
-                <svg viewBox="0 0 16 16" alt="fotos">
-                  <use xlink:href="/img/svg/icons/photos.svg#cam"></use>
-                </svg>
-              </li>
-              <li title="Planos de Anúncio" data-step="plano">
-                <svg viewBox="0 0 100 100" alt="plano">
-                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-1"></use>
-                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-2"></use>
-                  <use xlink:href="/img/svg/icons/ad-plan.svg#item-3"></use>
-                </svg>
-              </li>
-              <li title="Pagamento" data-step="checkout">
-                <svg viewBox="0 0 42 42" alt="pagamento">
-                  <use xlink:href="/img/svg/icons/ad-payment.svg#icon"></use>
-                </svg>
-              </li>
-              <li title="Conclusão" data-step="finalizar">
-                <svg viewBox="0 0 42 42" alt="concluído">
-                  <use xlink:href="/img/svg/icons/check.svg#circle"></use>
-                  <use xlink:href="/img/svg/icons/check.svg#check" style="fill:#fff"></use>
-                </svg>
-              </li>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 mt-2 p-3 text-center">
+                        <a href="/meus-veiculos">
+                            <svg viewBox="0 0 180 66" alt="logo" width="78" height="29" class="snbh-logo">
+                                <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+                                <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col-lg-8  mt-3 px-0 px-md-5">
+                        <ul class="steps-list p-0 justify-content-center px-3 px-md-5">
+                            <li title="Seu dados" data-step="usuario">
+                                <svg viewBox="0 0 42 42" alt="usuário">
+                                    <use xlink:href="/img/svg/icons/user.svg#icon"></use>
+                                </svg>
+                            </li>
+                            <li title="Dados do seu veículo" data-step="dados,preco,mais-informacoes">
+                                <svg viewBox="0 0 42 42" alt="veículo">
+                                    <use xlink:href="/img/svg/icons/ad-car.svg#body"></use>
+                                    <use xlink:href="/img/svg/icons/ad-car.svg#light-1" style="fill:#fff"></use>
+                                    <use xlink:href="/img/svg/icons/ad-car.svg#light-2" style="fill:#fff"></use>
+                                </svg>
+                            </li>
+                            <li title="Fotos do veículo" data-step="fotos,video">
+                                <svg viewBox="0 0 16 16" alt="fotos">
+                                    <use xlink:href="/img/svg/icons/photos.svg#cam"></use>
+                                </svg>
+                            </li>
+                            <li title="Planos de Anúncio" data-step="plano">
+                                <svg viewBox="0 0 100 100" alt="plano">
+                                    <use xlink:href="/img/svg/icons/ad-plan.svg#item-1"></use>
+                                    <use xlink:href="/img/svg/icons/ad-plan.svg#item-2"></use>
+                                    <use xlink:href="/img/svg/icons/ad-plan.svg#item-3"></use>
+                                </svg>
+                            </li>
+                            <li title="Pagamento" data-step="checkout">
+                                <svg viewBox="0 0 42 42" alt="pagamento">
+                                    <use xlink:href="/img/svg/icons/ad-payment.svg#icon"></use>
+                                </svg>
+                            </li>
+                            <li title="Conclusão" data-step="finalizar">
+                                <svg viewBox="0 0 42 42" alt="concluído">
+                                    <use xlink:href="/img/svg/icons/check.svg#circle"></use>
+                                    <use xlink:href="/img/svg/icons/check.svg#check" style="fill:#fff"></use>
+                                </svg>
+                            </li>
+                        </ul>
 
-          </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
+        <div class="page-content-wrapper">
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <!-------->
 
-      </div>
+                    </div>
+                </div>
+                <div class="container-fluid container-fixed-lg">
+                    <?= $this->content ?>
+                </div>
+            </div>
 
-
-    </div>
-    <div class="page-content-wrapper">
-      <div class="content">
-        <div class="container">
-          <div class="row">
-            <!-------->
-
-          </div>
         </div>
-        <div class="container-fluid container-fixed-lg">
-          <?= $this->content ?>
+    </div>
+    <div class=" container-fluid  container-fixed-lg footer">
+        <div class="copyright sm-text-center">
+            <p class="small no-margin pull-left sm-pull-reset">
+                <span class="hint-text">Copyright &copy; 2018 </span>
+                <span class="font-montserrat">SeminovosBH</span>.
+                <span class="hint-text">Todos direitos reservados</span>
+            </p>
+            <div class="clearfix"></div>
         </div>
-      </div>
-
     </div>
-  </div>
-  <div class=" container-fluid  container-fixed-lg footer">
-    <div class="copyright sm-text-center">
-      <p class="small no-margin pull-left sm-pull-reset">
-        <span class="hint-text">Copyright &copy; 2018 </span>
-        <span class="font-montserrat">SeminovosBH</span>.
-        <span class="hint-text">Todos direitos reservados</span>
-      </p>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-  <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
+    <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 
 </html>
