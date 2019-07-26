@@ -58,13 +58,6 @@ function init() {
         img.data('delete', true);
         showPhoto(img);
     });
-    ctx.on('click', '.btn-restaurar-img', function (e) {
-        e.preventDefault();
-        // Seta o placeholder e limpa os metadados
-        var displayImg = $(this).closest('.foto').find('.display-img');
-        displayImg.removeData('delete');
-        showPhoto(displayImg, displayImg.data('original'));
-    });
     /**
      * Exibe a miniatura da imagem selecionada na tag img passada
      * Também adiciona metadados ao elemento img

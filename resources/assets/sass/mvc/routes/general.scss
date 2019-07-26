@@ -209,3 +209,15 @@ input[type=checkbox]:checked{
 .no-wrap {
   white-space: nowrap;
 }
+.dropdown {
+  line-height: 12px;
+  a.dropdown-item {
+    color: #444 !important;
+    opacity: 1;
+    &:hover {
+      color: #000 !important;
+      text-decoration: none;
+      background-color: $color-master-light !important;
+    }
+  }
+}
