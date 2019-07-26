@@ -64,10 +64,16 @@ class Module
         $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_RESPONSE, function(ZendEvent $e) use($logger) {
             /** @var ApiClientResponse $apiResponse */
             $apiResponse = $e->getTarget();
+            if ($apiResponse->getTotalTime() < 1 && $apiResponse->status == 200) {
+                return;
+            }
+            $headTimeApplication = $apiResponse->getHttpResponse()->getHeaders()->get('Time-Application');
+
             $requestParams = $apiResponse->getRequestParams();
             $timeRequest = $apiResponse->getTotalTime();
             $extras = [
                 'timeRequest' => $timeRequest,
+                'timeApplication' => false,
                 'requestParams' => [
                     'method' => $requestParams->getMethod(),
                     'path' => $requestParams->getPath(),
@@ -76,6 +82,10 @@ class Module
                 ],
                 'requestResponse' => $apiResponse->getBody(),
             ];
+            if ($headTimeApplication) {
+                $extras['timeApplication'] = (float) $headTimeApplication->getFieldValue();
+            }
+
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
             array_shift($trace); // ignore this clousure;
             array_shift($trace); // ignore Zend\EventManager\EventManager->tiggerListeners()
