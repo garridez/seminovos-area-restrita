@@ -250,7 +250,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             <div class=" d-flex mt-1">
                                 <small class="hint-text"><?=$veiculo["frase"]?></small>
                             </div>
-                            <?php if($veiculo['idStatus'] != 1): ?>
+                            <?php if($veiculo['idStatus'] == 2): ?>
                             <div class="d-flex mt-1">
                                 <small class="hint-text mt-1">
                                     <?php if ($veiculo["intervaloData"] == 0) { ?>
