@@ -8,6 +8,17 @@ $formCadastro->prepare();
 
 $fields = $formCadastro->getElements();
 
+$fields['telefone_1']->setAttribute('disabled', true);
+
+$fields['telefone_2']->setAttribute('disabled', true);
+$fields['operadora_2']->setAttribute('disabled', true);
+$fields['telefone_2_is_wpp']->setAttribute('disabled', true);
+
+$fields['telefone_3']->setAttribute('disabled', true);
+$fields['operadora_3']->setAttribute('disabled', true);
+$fields['telefone_3_is_wpp']->setAttribute('disabled', true);
+
+
 $tipoCadastro = $this->tipoCadastro;
 
 ?>
@@ -108,7 +119,8 @@ $tipoCadastro = $this->tipoCadastro;
                                 <div class="form-group form-group-default">
                                     <?= $this->formLabel($fields['idCidade']) ?>
                                     <?= $this->formSelect($fields['idCidade']) ?>
-                                    <input type="hidden" name="cidadeSelected" id="cidadeSelected" value="<?= $this->idCidade ?>">
+                                    <input type="hidden" name="cidadeSelected" id="cidadeSelected"
+                                        value="<?= $this->idCidade ?>">
                                 </div>
                             </div>
                         </div>
