@@ -5,7 +5,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
-    var Loading = require('components/HandleApiError');
+    var Loading = require('components/Loading');
     var checkAndRedirect = function () {
         // Verifica se é necesário redirecionar
         if ($('.anuncio-steps').stepPlugin('inLastStep')) {
