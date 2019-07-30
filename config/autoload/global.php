@@ -22,7 +22,7 @@ return [
     ],
     'ApiClient' => [
         'credentials' => [
-            'serverUrl' => 'http://api2.seminovosbh.com.br',
+            'serverUrl' => 'http://54.200.165.200',
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ],
