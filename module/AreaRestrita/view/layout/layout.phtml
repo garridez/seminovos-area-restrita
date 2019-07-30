@@ -8,35 +8,36 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta charset="utf-8" />
-  <?php echo $this->headTitle() ?>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="apple-touch-icon" href="pages/ico/60.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta content="" name="description" />
-  <meta content="" name="author" />
-  <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <?php echo $this->headTitle() ?>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <link rel="apple-touch-icon" href="pages/ico/60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
 </head>
 
-<body class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
-  <nav class="page-sidebar animated" data-pages="sidebar">
-    <div class="sidebar-header d-flex d-md-none justify-content-center mt-3">
-      <a href="/meus-veiculos">
-        <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-          <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
-          <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-        </svg>
-      </a>
-    </div>
-    <?php
+<body
+    class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
+    <nav class="page-sidebar animated" data-pages="sidebar">
+        <div class="sidebar-header d-flex d-md-none justify-content-center mt-3">
+            <a href="/meus-veiculos">
+                <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
+                    <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+                    <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                </svg>
+            </a>
+        </div>
+        <?php
       if ($this->userInfo('tipoCadastro') == 1) {
           $arrayPlanos = [
               1 => ['nitro',      'Nitro',      '12',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
@@ -57,28 +58,29 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
       }
 
       ?>
-  </nav>
+    </nav>
 
-  <div class="page-container">
-    <div class="header d-flex justify-content-around">
-      <a href="#" class="btn-link toggle-sidebar d-lg-none" data-toggle="sidebar">
-        <span class="thumbnail-wrapper d32 circular inline">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-        </span>
-      </a>
-      <div class="sidebar-header">
-        <a href="/meus-veiculos">
-          <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters"></use>
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-          </svg>
-        </a>
-      </div>
-      <div class="d-flex align-items-center ml-auto">
-        <div class="dropdown pull-right d-block">
-            <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="p-r-10 fs-14 font-heading hidden-md-down">
-                <?php
+    <div class="page-container">
+        <div class="header d-flex justify-content-around">
+            <a href="#" class="btn-link toggle-sidebar d-lg-none" data-toggle="sidebar">
+                <span class="thumbnail-wrapper d32 circular inline">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </span>
+            </a>
+            <div class="sidebar-header">
+                <a href="/meus-veiculos">
+                    <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_letters"></use>
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="d-flex align-items-center ml-auto">
+                <div class="dropdown pull-right d-block">
+                    <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="p-r-10 fs-14 font-heading hidden-md-down">
+                            <?php
                 if($this->userInfo('tipoCadastro')!== null){ 
                   if($this->userInfo('tipoCadastro') == 1) {
                     $new_nome = $this->userInfo('nomeFantasia');
@@ -92,47 +94,209 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
                   $new_nome = "Não informado";
                 }
                 ?>
-                <span class="semi-bold d-block">
-                  <?= $new_nome ?> 
-                  <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>
-                </span>
-              </div>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end" style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item" title="Meus dados de cadastro">
-                <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
-              </a>
-                <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item" title="Alterar minha senha">
-                <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
-              </a>
-              <a href="https://www.seminovosbh.com.br/meusanuncios?beta=1&versao_classica=true" class="dropdown-item" title="Teve algum problema? Tente ir para versão clássica">
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                Ir para Versão Clássica
-              </a>
-              <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
-                <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
-              </a>
+                            <span class="semi-bold d-block">
+                                <?= $new_nome ?>
+                                <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end"
+                        style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item"
+                            title="Meus dados de cadastro">
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
+                        </a>
+                        <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item"
+                            title="Alterar minha senha">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
+                        </a>
+                        <a href="https://www.seminovosbh.com.br/meusanuncios?beta=1&versao_classica=true"
+                            class="dropdown-item" title="Teve algum problema? Tente ir para versão clássica">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            Ir para Versão Clássica
+                        </a>
+                        <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-      </div>
-    </div>
-    <div class="page-content-wrapper">
-      <div class="content pb-0">
-        <?= $this->content ?>
-      </div>
-      <div class="footer pt-1 position-absolute">
-        <div class="pl-0 pl-md-5 copyright sm-text-center">
-          <p class="small no-margin pull-left sm-pull-reset">
-            <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
-            <span class="font-montserrat">SeminovosBH</span>.
-            <span class="hint-text">Todos direitos reservados</span>
-          </p>
-          <div class="clearfix"></div>
+            <a href="#" class="m-l-10 sm-no-margin d-inline-block" data-toggle="quickview"
+                data-toggle-element="#quickview">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+            </a>
         </div>
-      </div>
+        <div class="page-content-wrapper">
+            <div class="content pb-0">
+                <?= $this->content ?>
+            </div>
+            <div class="footer pt-1 position-absolute">
+                <div class="pl-0 pl-md-5 copyright sm-text-center">
+                    <p class="small no-margin pull-left sm-pull-reset">
+                        <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
+                        <span class="font-montserrat">SeminovosBH</span>.
+                        <span class="hint-text">Todos direitos reservados</span>
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
+    <div id="quickview" class="quickview-wrapper" data-pages="quickview">
+        <ul class="nav nav-tabs d-none" role="tablist"></ul>
+        <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+        <div class="tab-content">
+            <div class="tab-pane no-padding" id="quickview-notes"></div>
+            <div class="tab-pane active no-padding" id="quickview-chat">
+                <div class="view-port clearfix" id="chat">
+                    <div class="view bg-white">
+                        <div class="navbar navbar-default">
+                            <div class="navbar-inner">
+                                <a href="javascript:;" class="inline action p-l-10 link text-master"
+                                    data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                                <div class="view-heading">
+                                    Lista de Conversas
+                                    <div class="fs-11">Mostrar todos</div>
+                                </div>
+                                <a href="#" class="inline action p-r-10 pull-right link text-master">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
+                            <h2 class="list-view-fake-header">Fiat Palio</h2>
+                            <div class="scroll-wrapper list-view-wrapper" style="position: absolute;">
+                                <div class="list-view-wrapper scroll-content" data-ios="false"
+                                    style="height: 538px; margin-bottom: 0px; margin-right: 0px; max-height: none;">
+                                    <div class="list-view-group-container">
+                                        <div class="list-view-group-header text-uppercase">a</div>
+                                        <ul>
+                                            <li class="chat-user-list clearfix">
+                                                <a data-view-animation="push-parrallax" data-view-port="#chat"
+                                                    data-navigate="view" class="" href="#">
+                                                    <span class="thumbnail-wrapper d32 circular bg-success">
+                                                        <img width="34" height="34" alt=""
+                                                            data-src-retina="assets/img/profiles/1x.jpg"
+                                                            data-src="assets/img/profiles/1.jpg"
+                                                            src="assets/img/profiles/1.jpg" class="col-top">
+                                                    </span>
+                                                    <p class="p-l-10 ">
+                                                        <span class="text-master">Usuario qualquer</span>
+                                                        <span class="block text-master hint-text fs-12">Ultima
+                                                            mensagem</span>
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="scroll-element scroll-x" style="">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar" style="width: 96px;"></div>
+                                    </div>
+                                </div>
+                                <div class="scroll-element scroll-y" style="">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar" style="height: 96px; top: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view chat-view bg-white clearfix">
+                        <div class="navbar navbar-default">
+                            <div class="navbar-inner">
+                                <a href="javascript:;" class="link text-master inline action p-l-10 p-r-10"
+                                    data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                </a>
+                                <div class="view-heading">
+                                    Usuario qualquer
+                                    <div class="fs-11 hint-text">Status(Online)</div>
+                                </div>
+                                <a href="#" class="link text-master inline action p-r-10 pull-right ">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="chat-inner" id="my-conversation">
+                            <div class="message clearfix">
+                                <div class="chat-bubble from-me">
+                                    Hello there
+                                </div>
+                            </div>
+                            <div class="message clearfix">
+                                <div class="profile-img-wrapper m-t-5 inline">
+                                    <img class="col-top" width="30" height="30"
+                                        src="assets/img/profiles/avatar_small.jpg" alt=""
+                                        data-src="assets/img/profiles/avatar_small.jpg"
+                                        data-src-retina="assets/img/profiles/avatar_small2x.jpg">
+                                </div>
+                                <div class="chat-bubble from-them">
+                                    Hey
+                                </div>
+                            </div>
+                            <!-- END From Them Message  !-->
+                            <!-- BEGIN From Me Message  !-->
+                            <div class="message clearfix">
+                                <div class="chat-bubble from-me">
+                                    Did you check out Pages framework ?
+                                </div>
+                            </div>
+                            <!-- END From Me Message  !-->
+                            <!-- BEGIN From Me Message  !-->
+                            <div class="message clearfix">
+                                <div class="chat-bubble from-me">
+                                    Its an awesome chat
+                                </div>
+                            </div>
+                            <!-- END From Me Message  !-->
+                            <!-- BEGIN From Them Message  !-->
+                            <div class="message clearfix">
+                                <div class="profile-img-wrapper m-t-5 inline">
+                                    <img class="col-top" width="30" height="30"
+                                        src="assets/img/profiles/avatar_small.jpg" alt=""
+                                        data-src="assets/img/profiles/avatar_small.jpg"
+                                        data-src-retina="assets/img/profiles/avatar_small2x.jpg">
+                                </div>
+                                <div class="chat-bubble from-them">
+                                    Yea
+                                </div>
+                            </div>
+                            <!-- END From Them Message  !-->
+                        </div>
+                        <!-- BEGIN Conversation  !-->
+                        <!-- BEGIN Chat Input  !-->
+                        <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
+                            <div class="row">
+                                <div class="col-1 p-t-15">
+                                    <a href="#" class="link text-master"><i class="fa fa-plus-circle"></i></a>
+                                </div>
+                                <div class="col-8 no-padding">
+                                    <input type="text" class="form-control chat-input" data-chat-input=""
+                                        data-chat-conversation="#my-conversation" placeholder="Say something">
+                                </div>
+                                <div class="col-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
+                                    <a href="#" class="link text-master"><i class="pg-camera"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Chat Input  !-->
+                    </div>
+                    <!-- END Conversation View  !-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 
 </html>
