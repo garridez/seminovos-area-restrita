@@ -88,6 +88,7 @@ module.exports.callback = ($) => {
                 // Marca as imagens como "já carregadas"
                 imgs.data('uploaded', true);
                 imgsToDelete.data('deleted', true);
+                $fotosContainer.data('reordanado', false)
                 
                 checkAndRedirect();
 
