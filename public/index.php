@@ -1,5 +1,12 @@
 <?php
-
+ob_start();
+register_shutdown_function(function() {
+    // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
+    if (!headers_sent()) {
+        header('X-SnBH-Time-Application:' . round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 5));
+        header('X-SnBH-Instance-Hostname:' . gethostname());
+    }
+});
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
 
