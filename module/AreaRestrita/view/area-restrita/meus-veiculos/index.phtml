@@ -147,7 +147,15 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#fotos" class="btn bg-cinza text-white icon-2"
+                                <?php
+                                    $editarFotosUrl = $urls['editarAnuncio'];
+                                    if($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO){
+                                         $editarFotosUrl .= '?editar=fotos';
+                                    }
+                                    $editarFotosUrl .= '#fotos';
+                                
+                                ?>
+                                <a href="<?= $editarFotosUrl ?>" class="btn bg-cinza text-white icon-2"
                                     title="Editar Fotos">
                                     <i class=" fa fa-camera"></i>
                                 </a>
