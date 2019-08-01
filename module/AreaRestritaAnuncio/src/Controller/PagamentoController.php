@@ -43,7 +43,7 @@ class PagamentoController extends AbstractActionController
 
         $veiculo = $this->getApiClient()->veiculosGet([
             'ignorarCondicoesBasicas' => 1
-        ], $idVeiculo, 20);
+        ], $idVeiculo, 5);
 
         if(isset($veiculo->getData()[0])){
             return $veiculo->getData()[0];
