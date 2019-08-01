@@ -69,9 +69,9 @@ class DadosForm extends Form
             'type' => Element\Select::class,
             'name' => 'versao',
             'options' => [
-                'label' => 'versao',
+                'label' => 'Versão',
                 'value_options' => [
-                    '' => 'Selecione a versao',
+                    '' => 'Selecione a versão',
                 ],
             ],
             'attributes' => [

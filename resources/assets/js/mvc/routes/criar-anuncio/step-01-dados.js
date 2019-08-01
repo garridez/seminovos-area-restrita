@@ -12,6 +12,7 @@ function init() {
     var modelo = ctx.find('[name="modeloCarro"]');
     var anoFabricacaoOptions = anoFabricacao.find('option');
     var anoModelo = ctx.find('[name="anoModelo"]');
+    var versao = ctx.find('[name="versao"]');
     var anoModeloOptions = anoModelo.find('option');
     var getValInt = function (element) {
         var val = parseInt($(element).val(), 10);
@@ -39,6 +40,32 @@ function init() {
 
     });
     
+    versao.change(function () {
+        //console.log($(this).find('option:selected').data('itens'));
+        var itens = $(this).find('option:selected').data('itens');
+        
+        if(typeof itens['portas'] !== 'undefined'){
+            $('[name="portas"]').empty();
+            $('[name="portas"]').append('<option>Selecione</option>');
+
+            for (var i = 0; i < itens['portas'].length; i++) {
+
+                var option = $(new Option(itens['portas'][i].id, itens['portas'][i].id));
+
+                option.html(itens['portas'][i].portas);
+
+                $('[name="portas"]').append(option);
+                
+                if(itens['portas'].length == 1){
+                    $('[name="portas"]').val(itens['portas'][i].id);
+                }
+            }
+        }
+        
+        
+        
+    });
+    
     anoModelo.change(function(){
        
        $.ajax({
@@ -58,9 +85,12 @@ function init() {
 
                     for (var i = 0; i < dados.length; i++) {
                         //Use the Option() constructor to create a new HTMLOptionElement.
-                        var option = new Option(dados[i].modelo, dados[i].modelo);
+                        var option = $(new Option(dados[i].versao, dados[i].versao));
                         //Convert the HTMLOptionElement into a JQuery object that can be used with the append method.
-                        $(option).html(dados[i].modelo);
+                        option
+                                .html(dados[i].versao)
+                                .data('itens', dados[i].itens)
+                            ;
                         //Append the option to our Select element.
                         $('[name="versao"]').append(option);
                     }
