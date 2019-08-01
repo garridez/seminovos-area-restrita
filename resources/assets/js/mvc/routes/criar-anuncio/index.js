@@ -11,7 +11,8 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
-    loadContentStepsAsync();
+    require('./load-content-steps')();
+
     var stepsContainer = $('.step-container');
     var anuncioSteps = $('.anuncio-steps'); // Conjuto de steps principal
 
@@ -66,7 +67,7 @@ module.exports.callback = ($) => {
         if (!hash || hash === '#') {
             return;
         }
-        var hashArr = hash.replace('#','').split('&');
+        var hashArr = hash.replace('#', '').split('&');
         hash = '.step-' + hashArr[0];
 
         $('.step-container').each(function () {
@@ -87,65 +88,18 @@ module.exports.callback = ($) => {
         });
     });
     /**
-     * NÃO COMMIT O AUTOFILL COMO "true"
-     * Isso serve para agilizar o desenvolvimento
+     * 
+     * Descomentar o autofill apenas em dev!
      */
-    var autofill = false;
-    if (autofill) {
-        require('./autofill')({
-            autofill: true,
-            /**
-             * Serve para ir passando simulando click e parar num step específico
-             */
-//            pararNoStep: 'step-checkout',
-            /*
-             * Se true, é sempre gerado uma placa nova
-             * Útil para não gerar conflito com placa existe
-             * Mas cuidado pra não encher de cadastros diferentes
-             */
-            placaAleatoria: false,
-            //placaAleatoria: true,
-            // Valor fixo de placa
-            placa: 'LJL5173',
-            cartao: {
-                // Dados de validade do cartão
-                validade_cartao: '12/25',
-                // É possivel colocar uma data inválida para gerar error e ver as notificações
-                //validade_cartao: '19/25',
-            },
-        });
-    }
+    //require('./autofill').init();
 };
-function loadContentStepsAsync() {
-    var loading = require('components/Loading');
-    var stepsUrl = $('div.anuncio-steps [data-url]');
-    var totalSteps = stepsUrl.length;
-    loading.open(true);
-    stepsUrl.each(function (i) {
-        var ctx = $(this);
-        ctx.data('timeload', new Date);
-        setTimeout(function () {
-            $.get(ctx.data('url'), function (data) {
-                ctx.html(data);
-                if (--totalSteps === 0) {
-                    $('.anuncio-steps').trigger('steps-loaded');
-                    loading.close(true);
-                    setTimeout(function () {
-                        loading.close(true);
-                    }, 200);
-                }
-            });
-
-        }, (i * 200) + 10);
-    });
-}
-function checkLastStep(){
+function checkLastStep() {
     var text = 'Continuar';
-    if($('.anuncio-steps').stepPlugin('inLastStep')){
+    if ($('.anuncio-steps').stepPlugin('inLastStep')) {
         text = 'Finalizar';
     }
     $('.step-controls .btn-continuar').text(text).attr('title', text);
-    
+
 }
 function setStepIconActive() {
     var stepsIcons = $('.steps-list li');
