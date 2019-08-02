@@ -210,7 +210,7 @@ class MeusVeiculosController extends AbstractActionController
             /* @var $pagamentosModel Pagamentos */
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
-            $pagamentosVeiculos = $pagamentosModel->get();
+            $pagamentosVeiculos = $pagamentosModel->get(null, 60);
             
             $statusPagamento = null;
             $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
