@@ -33,7 +33,17 @@ module.exports.callback = $ => {
             if (data.status !== 200) {
               Alerts.error(data.detail, "Houve um problema...", 10000);
             } else {
-              Alerts.info(successText);
+              Alerts.info(successText)
+                .on('hide.bs.modal', function () {
+                  if(!$this.data("modal-adicional-title")) {
+                    return;
+                  }
+                  var msg = $this.data("modal-adicional-msg");
+                  var title = $this.data("modal-adicional-title");
+                  var alertType = $this.data("modal-adicional-type") || 'info';
+                  var alertTime = parseFloat($this.data("modal-adicional-time")) || 5000;
+                  Alerts[alertType](msg, title, alertTime);
+              });
               reloadPageContent();
             }
           })
