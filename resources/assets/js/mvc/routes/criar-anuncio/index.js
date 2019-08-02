@@ -33,21 +33,43 @@ module.exports.callback = ($) => {
         if ($('.step-dados').is('.active')) {
             window.location.href = '/';
         } else {
-            stepContainer.stepPlugin('prev');
+            stepContainer.stepPlugin('prev', false);
         }
+        checkLastStep();
     });
     $('.btn-continuar').on('click', function () {
+        var inLastStep = $(this).data('in-last-step');
         var form = stepsContainer.find('[class*="step-"].active:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
 
-        if ($('.anuncio-steps').stepPlugin('inLastStep')) {
-            var step = form.closest('[data-step-label]');
-            var stepLabel = step.data('step-label');
-            step.closest('.step-container').trigger('step:pre-exit:' + stepLabel);
-            console.log(step.closest('.step-container'))
+        if (inLastStep) {
+            var Loading = require('components/Loading');
+            var redirect = function () {
+                Loading.open();
+                window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();
+            };
+            // Se não tem ajax pendente, redireciona
+            if ($.active === 0) {
+                redirect();
+                return;
+            }
+            // Espera todos os ajax terminarem com sucesso para então redirecionar
+            $(document).ajaxComplete(function (ev, jqXHR) {
+                if (($.active - 1) !== 0) {
+                    return;
+                }
+                if (jqXHR.status > 399) {
+                    return;
+                }
+                if (jqXHR.responseJSON && jqXHR.responseJSON.status !== 200) {
+                    return;
+                }
+                redirect();
+
+            });
         }
     });
 
@@ -93,17 +115,51 @@ module.exports.callback = ($) => {
      */
     //require('./autofill').init();
 };
+function allStepsInlast() {
+
+    var inLastStep = true;
+
+    $('.step-container').each(function () {
+        if (!$(this).stepPlugin('inLastStep')) {
+            inLastStep = false;
+        }
+    });
+    return inLastStep;
+}
 function checkLastStep() {
+
     var text = 'Continuar';
-    if ($('.anuncio-steps').stepPlugin('inLastStep')) {
+    var inLast = allStepsInlast();
+    if (inLast) {
         text = 'Finalizar';
     }
-    $('.step-controls .btn-continuar').text(text).attr('title', text);
+    $('.step-controls .btn-continuar')
+            .text(text)
+            .attr('title', text)
+            .data('in-last-step', inLast);
 
 }
 function setStepIconActive() {
+    var $anuncioSteps = $('.anuncio-steps');
     var stepsIcons = $('.steps-list li');
-    $('.anuncio-steps [class*="step-"].active').each(function () {
+
+    // Remove os ícones que não tem steps
+    stepsIcons = stepsIcons.filter(function () {
+        var $this = $(this);
+        var stepLabel = $this.data('step').split(',');
+        var hasStep = false;
+        $.each(stepLabel, function () {
+            var seletor = '[data-step-label="' + this + '"]';
+            if ($anuncioSteps.find(seletor).length) {
+                hasStep = true;
+            }
+        });
+        if (!hasStep) {
+            $this.remove();
+        }
+        return hasStep;
+    });
+    $anuncioSteps.find('[class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
             stepsIcons.removeClass('active')

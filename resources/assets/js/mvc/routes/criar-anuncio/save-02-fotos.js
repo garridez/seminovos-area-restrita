@@ -5,16 +5,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
-    var Loading = require('components/Loading');
-    var checkAndRedirect = function () {
-        // Verifica se é necesário redirecionar
-        if ($('.anuncio-steps').stepPlugin('inLastStep')) {
-            Loading.open();
-            window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();
-            return true;
-        }
-        return false;
-    };
+
     $('.step-container').on('step:pre-exit:fotos', function (e) {
         var $fotosContainer = $('.fotos-container');
         var ordemCount = 0;
@@ -51,7 +42,6 @@ module.exports.callback = ($) => {
 
         // Se zero, não tem nenhuma foto pra subir ou excluir, então deixa passar pra próxima step
         if (!imgs.length && !imgsToDelete.length && !reordenar) {
-            checkAndRedirect();
             return true;
         }
 
@@ -65,7 +55,7 @@ module.exports.callback = ($) => {
         });
         imgReorder.each(function () {
             var ordem = $(this).data('ordem');
-            formData.append('reordem[' + ordem + ']',  $(this).data('idfoto')); // Reordena tudo
+            formData.append('reordem[' + ordem + ']', $(this).data('idfoto')); // Reordena tudo
         });
 
         $('#dados-basicos form')
@@ -89,8 +79,6 @@ module.exports.callback = ($) => {
                 imgs.data('uploaded', true);
                 imgsToDelete.data('deleted', true);
                 $fotosContainer.data('reordanado', false)
-                
-                checkAndRedirect();
 
                 $('.fotos-container')
                         .closest('.step-container')

@@ -21,7 +21,14 @@ module.exports.callback = ($) => {
     var formWithError;
 
     //($('#form_dadosVeiculo'))
-    $('.anuncio-steps').on('steps-loaded', function () {
+    $('.anuncio-steps')
+            .on('steps-loaded', function () {
+                // Para esperar as máscaras serem aplicadas
+                setTimeout(function () {
+                    lastSavedData = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes').serialize();
+                }, 500);
+            })
+            .on('steps-loaded', function () {
         marcaModelo($('#form_dadosVeiculo'));
         /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
         $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {

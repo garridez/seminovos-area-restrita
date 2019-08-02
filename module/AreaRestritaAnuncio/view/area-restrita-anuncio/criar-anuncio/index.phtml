@@ -1,4 +1,5 @@
 <?php
+use SnBH\ApiModel\Model\VeiculosStatus;
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $veiculo = $this->veiculo ?: false;
@@ -20,8 +21,8 @@ if ($this->userInfo('tipoCadastro') == 1) {
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
 }
 
-if ($veiculo && $veiculo['idStatus'] == 2 && isset($_GET['editar'])) {
-    switch ($_GET['editar']) {
+if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO) {
+    switch ($_GET['editar'] ?? null) {
         case 'fotos':
             unset(
                 $rotasAnuncio['veiculo']['video'],
@@ -31,6 +32,10 @@ if ($veiculo && $veiculo['idStatus'] == 2 && isset($_GET['editar'])) {
             break;
 
         default:
+            unset(
+                $rotasAnuncio['plano'],
+                $rotasAnuncio['checkout']
+            );
             break;
     }
 }
