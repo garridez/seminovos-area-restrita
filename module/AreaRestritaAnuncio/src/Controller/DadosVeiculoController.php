@@ -117,6 +117,10 @@ class DadosVeiculoController extends AbstractActionController
                 } else {
                     // Particular cria o anúncio por padrão no grátis
                     $data['idPlano'] = 1;
+                    
+                    if(!isset($data['motor'])){
+                        $data['motor'] = 0;
+                    }
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
