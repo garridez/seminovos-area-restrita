@@ -5,7 +5,7 @@ if [ ! -d node_modules ]; then
     npm install
 fi
 
-apt-update
+apt update
 apt-get install iputils-ping -y
 ping -c 1 docker.for.win.localhost &>/dev/null
 
