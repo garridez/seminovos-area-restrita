@@ -196,7 +196,7 @@ input[type=checkbox]:checked{
   width:$layout-sidepanel-pin-width !important;
 }
 .content{
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-up(990px) {
     padding-left:$layout-sidepanel-pin-width !important;
   }
 }
