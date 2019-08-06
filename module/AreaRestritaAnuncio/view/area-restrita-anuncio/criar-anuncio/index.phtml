@@ -1,5 +1,7 @@
 <?php
+
 use SnBH\ApiModel\Model\VeiculosStatus;
+
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $veiculo = $this->veiculo ?: false;
@@ -28,6 +30,15 @@ if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO) {
                 $rotasAnuncio['veiculo']['video'],
                 $rotasAnuncio['plano'],
                 $rotasAnuncio['checkout']
+            );
+            break;
+        case 'planos':
+            unset(
+                $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['preco'],
+                $rotasAnuncio['veiculo']['mais-informacoes'],
+                $rotasAnuncio['veiculo']['fotos'],
+                $rotasAnuncio['veiculo']['video']
             );
             break;
 

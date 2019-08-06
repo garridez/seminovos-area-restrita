@@ -128,12 +128,18 @@ function allStepsInlast() {
 }
 function checkLastStep() {
 
+    var btn = $('.step-controls .btn-continuar');
     var text = 'Continuar';
     var inLast = allStepsInlast();
     if (inLast) {
         text = 'Finalizar';
+    } else {
+        btn
+                .addClass('btn-laranja')
+                .attr('disabled', false);
+        console.log('?')
     }
-    $('.step-controls .btn-continuar')
+    btn
             .text(text)
             .attr('title', text)
             .data('in-last-step', inLast);
