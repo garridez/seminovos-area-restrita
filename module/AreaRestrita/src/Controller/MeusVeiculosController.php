@@ -200,21 +200,21 @@ class MeusVeiculosController extends AbstractActionController
             $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
-            
+
             $dataTrocaStatus = new \DateTime($veiculo["dataTrocaStatus"]);
             $dataAtual->format('Y-m-d H:i:s');
             $dataAtuall = new \DateTime(date('Y-m-d H:i:s'));
             $intervaloDataTrocaStatus = $dataTrocaStatus->diff($dataAtuall);
             $intervaloDataTrocaStatus = (int) $intervaloDataTrocaStatus->format('%R%a');
-            
+
             /* @var $pagamentosModel Pagamentos */
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
-            
+
             $statusPagamento = null;
             $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
-            
+
             $planoPagamento = null;
             $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
 
@@ -282,7 +282,7 @@ class MeusVeiculosController extends AbstractActionController
                         $temp_acoes["reativar"] = true;
                         //$temp_acoes["renovar"] = true;
                     } elseif ($veiculo['idPlano'] == 1) {
-                        $temp_acoes["renovar"] = true;
+                        $temp_acoes["upgrade_plano"] = true;
                     } else {
                         $temp_acoes["reativar"] = true;
                     }
@@ -336,21 +336,21 @@ class MeusVeiculosController extends AbstractActionController
 
         return $dadosVeiculos;
     }
-    
+
     /*
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
      * @param array $pagamentosVeiculos, int $idVeiculo, string $variavel
-     * @return type $result    
+     * @return type $result
      */
     protected function getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $idVeiculo, $variavel)
     {
         if (!isset($pagamentosVeiculos['data'])) {
             return null;
         }
-        
+
         $result = null;
         $auxData = null;//new \DateTime('1969-01-01');
-        
+
         foreach ($pagamentosVeiculos['data'] AS $pagamento){
             if($pagamento["idVeiculo"] == $idVeiculo){
                 $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
@@ -361,11 +361,11 @@ class MeusVeiculosController extends AbstractActionController
                 }
             }
         }
-        
+
         return $result;
-        
+
     }
-    
+
     /*
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular
