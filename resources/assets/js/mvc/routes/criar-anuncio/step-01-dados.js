@@ -47,7 +47,14 @@ function init() {
     });
     
     versao.change(function () {
-        //console.log($(this).find('option:selected').data('itens'));
+        //console.log($(this).find('option:selected').val());
+        
+        if($(this).find('option:selected').val() == 99){
+            $('#divOutraVersao').removeClass("hide");
+            return;
+        }else{
+            $('#divOutraVersao').addClass("hide");
+        }
         
         var itens = $(this).find('option:selected').data('itens');
         
@@ -153,6 +160,12 @@ function init() {
                         //Append the option to our Select element.
                         $('[name="versao"]').append(option);
                         
+                    }
+                    
+                    $('[name="versao"]').append("<option value='99'>Outra versão</option>")
+                    
+                    if(dados.length == 0){
+                        $('[name="versao"] option[value=99]').attr('selected','selected').change();
                     }
 
                 },
