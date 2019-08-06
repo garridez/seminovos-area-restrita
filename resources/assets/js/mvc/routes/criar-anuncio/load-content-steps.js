@@ -3,6 +3,13 @@ module.exports = function () {
     var loading = require('components/Loading');
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
+    if ($('#idVeiculo').val() !== '') {
+        loading.addFeedbackTexts([
+            'Carregando dados do seu veículo...',
+            'Carregando fotos...',
+            'Carregando video...',
+        ]);
+    }
     loading.open(true);
     stepsUrl.each(function (i) {
         var ctx = $(this);

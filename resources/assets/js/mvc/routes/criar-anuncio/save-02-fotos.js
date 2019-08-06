@@ -5,6 +5,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
+    var loading = require('components/Loading');
 
     $('.step-container').on('step:pre-exit:fotos', function (e) {
         var $fotosContainer = $('.fotos-container');
@@ -63,7 +64,11 @@ module.exports.callback = ($) => {
                 .forEach(function (e) {
                     formData.append(e.name, e.value);
                 });
-
+        loading.addFeedbackTexts([
+            'Compactando as fotos...',
+            'Guardando as fotos...',
+            'Salvando...',
+        ]);
         $.ajax({
             url: '/carro/fotos',
             data: formData,

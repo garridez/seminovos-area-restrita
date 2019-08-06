@@ -10,6 +10,7 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
+    var loading = require('components/Loading');
     var HandleApiError = require('components/HandleApiError');
     var marcaModelo = require('components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
@@ -105,7 +106,11 @@ module.exports.callback = ($) => {
             ajaxProcessing = false;
             return;
         }
-
+        loading.addFeedbackTexts([
+            'Salvando dados do veículo...',
+            'Salvando os acessórios...',
+            'Salvando...',
+        ]);
         $.ajax({
             type: "POST",
 

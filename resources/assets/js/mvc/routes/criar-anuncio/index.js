@@ -137,7 +137,6 @@ function checkLastStep() {
         btn
                 .addClass('btn-laranja')
                 .attr('disabled', false);
-        console.log('?')
     }
     btn
             .text(text)
