@@ -248,9 +248,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Anúncio ativo no site";
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
-                        $temp_acoes["editar_fotos"] = true;
-                    }
+                    $temp_acoes["editar_fotos"] = true;
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
