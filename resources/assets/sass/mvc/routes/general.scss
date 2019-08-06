@@ -196,13 +196,8 @@ input[type=checkbox]:checked{
   width:$layout-sidepanel-pin-width !important;
 }
 .content{
-<<<<<<< HEAD
   @media (min-width: 992px) {
       padding-left:$layout-sidepanel-pin-width !important;
-=======
-  @include media-breakpoint-up(990px) {
-    padding-left:$layout-sidepanel-pin-width !important;
->>>>>>> 835b02ed0c0cb570015b548b92f10989cd240099
   }
 }
 .footer{
