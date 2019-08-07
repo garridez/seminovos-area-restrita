@@ -140,7 +140,6 @@ class ParticularForm extends Form
                 'label' => 'Telefone Residencial',
             ],
             'attributes' => [
-                'required' => true,
                 'class' => 'form-control',
                 'data-mask' => '(00) 0000-0000',
                 'placeholder' => '(__) ____-____',

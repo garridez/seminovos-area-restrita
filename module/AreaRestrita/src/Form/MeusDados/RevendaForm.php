@@ -43,6 +43,7 @@ class RevendaForm extends Form
                 'label' => 'Telefone 1',
             ],
             'attributes' => [
+                'required' => true,
                 'class' => 'form-control',
                 'data-mask' => '(00) 90000-0000',
                 'placeholder' => '(__) _____-____',
