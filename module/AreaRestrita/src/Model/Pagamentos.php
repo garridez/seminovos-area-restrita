@@ -37,12 +37,12 @@ class Pagamentos extends ApiModelPagamentos
         return parent::put($data, $idCadastro);
     }
 
-    public function get($idPagamento = null)
+    public function get($idPagamento = null, $cache = false)
     {
         return parent::get([
                 'idCadastro' => $this->getIdentity(),
                 'sort' => 'idPagamento',
                 'direction' => 'DESC'
-                ], $idPagamento)->json();
+                ], $idPagamento, $cache)->json();
     }
 }

@@ -66,7 +66,8 @@ $.extend(Plugin.prototype, {
      * @param {int|string} index Seletor or index of step
      * @returns {boolean}
      */
-    goToIndex: function (index) {
+    goToIndex: function (index, withEvents) {
+        withEvents = withEvents === undefined ? true : withEvents
         if (typeof index !== 'number') {
             this._log(index, "!== 'number'");
             index = this.getStepIndex(index);
@@ -78,7 +79,7 @@ $.extend(Plugin.prototype, {
             this._log('Current step:', this.getCurrentStepIndex());
             this._log('Max steps:', this.getSteps().length);
             // Mesmo que não tenha um próximo step, dispara o evento
-            if (!this._triggerEvent('pre-exit', initialIndex)) {
+            if (withEvents && !this._triggerEvent('pre-exit', initialIndex)) {
                 return false;
             }
             if (!this.inLastStep()) {
@@ -88,10 +89,10 @@ $.extend(Plugin.prototype, {
             return true;
         }
 
-        if (!this._triggerEvent('pre-exit', initialIndex)) {
+        if (withEvents && !this._triggerEvent('pre-exit', initialIndex)) {
             return false;
         }
-        if (!this._triggerEvent('pre-change', index)) {
+        if (withEvents && !this._triggerEvent('pre-change', index)) {
             return false;
         }
 
@@ -105,16 +106,17 @@ $.extend(Plugin.prototype, {
                         scrollTop: $(this).offset().top - scrollOffset
                     }, 400);
                 });
-
-        this._triggerEvent('exit', initialIndex);
-        this._triggerEvent('change', this.getCurrentStepIndex());
+        if (withEvents) {
+            this._triggerEvent('exit', initialIndex);
+            this._triggerEvent('change', this.getCurrentStepIndex());
+        }
 
         return true;
     },
     goTo: function (index) {
         return this.goToIndex(index);
     },
-    next: function () {
+    next: function (withEvents) {
         if (this.opts.nestingPropagation && this.inLastStep()) {
             var currentIndex = this.getCurrentStepIndex() + 1;
             if (this.goToIndex(currentIndex) === false) {
@@ -125,10 +127,10 @@ $.extend(Plugin.prototype, {
                     .closest(this.opts.root)[pluginName]('next');
         }
 
-        this.goToIndex(this.getCurrentStepIndex() + 1);
+        this.goToIndex(this.getCurrentStepIndex() + 1, withEvents);
     },
-    prev: function () {
-        this.goToIndex(this.getCurrentStepIndex() - 1);
+    prev: function (withEvents) {
+        this.goToIndex(this.getCurrentStepIndex() - 1, withEvents);
     },
     _log: function () {
         if (this.opts.debug) {

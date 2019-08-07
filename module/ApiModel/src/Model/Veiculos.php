@@ -27,7 +27,7 @@ class Veiculos extends AbstractModel
         $cache = $this->container->get('cache');
         $cacheOptions = $cache->getOptions();
         $ttlOriginal = $cacheOptions->getTtl();
-        $cacheOptions->setTtl(20);
+        $cacheOptions->setTtl(5);
         $cacheKey = $this->getCacheKey();
 
         $idVeiculo = (array) $idVeiculo;

@@ -1,4 +1,7 @@
 <?php
+
+use SnBH\ApiModel\Model\VeiculosStatus;
+
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $veiculo = $this->veiculo ?: false;
@@ -20,8 +23,8 @@ if ($this->userInfo('tipoCadastro') == 1) {
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
 }
 
-if ($veiculo && $veiculo['idStatus'] == 2 && isset($_GET['editar'])) {
-    switch ($_GET['editar']) {
+if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO) {
+    switch ($_GET['editar'] ?? null) {
         case 'fotos':
             unset(
                 $rotasAnuncio['veiculo']['video'],
@@ -29,8 +32,21 @@ if ($veiculo && $veiculo['idStatus'] == 2 && isset($_GET['editar'])) {
                 $rotasAnuncio['checkout']
             );
             break;
+        case 'planos':
+            unset(
+                $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['preco'],
+                $rotasAnuncio['veiculo']['mais-informacoes'],
+                $rotasAnuncio['veiculo']['fotos'],
+                $rotasAnuncio['veiculo']['video']
+            );
+            break;
 
         default:
+            unset(
+                $rotasAnuncio['plano'],
+                $rotasAnuncio['checkout']
+            );
             break;
     }
 }
@@ -40,7 +56,7 @@ foreach ($rotasAnuncio['veiculo'] as &$rota) {
 }
 
 if ($this->idVeiculo) {
-    $this->headTitle()->append($this->placa . ' ' . $this->marca . ' ' . $this->modelo);
+    $this->headTitle()->append(strtoupper($this->placa) . ' ' . $this->marca . ' ' . $this->modelo);
 } else {
     $this->headTitle()->append('Novo anúncio');
 }

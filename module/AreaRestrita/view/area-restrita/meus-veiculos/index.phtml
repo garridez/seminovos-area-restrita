@@ -194,7 +194,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
                                         <div class="row d-flex justify-content-between pl-3">
                                             <div class="bold no-margin d-flex align-items-center link-danger">
-                                                <span class="fa fa-envelope fs-16 mr-1"></span>
+                                                <!-- <span class="fa fa-envelope fs-16 mr-1"></span> -->
                                                 Propostas: <?= $veiculo['qdtPropostas'] ?>
                                                 <?php
                                                 /** @todo
@@ -234,7 +234,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#checkout&trocarPlano&planoNitroHome"
+                                <a href="<?=$urls['editarAnuncio']?>?editar=planos#checkout&trocarPlano&planoNitroHome"
                                     class="btn btn-sm btn-info text-white d-flex align-items-center">Renovar Plano</a>
                                 <?php }?>
                                 <?php
@@ -306,11 +306,15 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["renovar"]??false){
                                     /**
                                      * @todo O renovar vai mesmo para o ativar?
+                                     * @todo Colocar o Modal de alerta de segurança no Reativar.
                                      */
                                     ?>
                                 <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente renovar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, renovar" data-modal-success-msg="Veiculo Renovado"
+                                    data-modal-adicional-type="error"
+                                    data-modal-adicional-msg='<?= $this->escapeHtmlAttr("<br>A SeminovosBH NÃO não entra em contato por telefone, WhatsApp ou mensagem solicitando a validação do seu anúncio. Não forneça nenhuma informação pessoal ou código enviado para o seu número para validar seu anúncio.                                    Fique atento para não ser vítima de golpes. Estamos á disposição para qualquer dúvida (31) 3077-5888")?>' 
+                                    data-modal-adicional-title="AVISO IMPORTANTE!"  data-modal-adicional-time = "180000"
                                     title="Renovar anúncio">
                                     <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
                                 </a>

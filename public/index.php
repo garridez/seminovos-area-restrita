@@ -1,5 +1,7 @@
 <?php
 ob_start();
+// @todo mover isso para o php.ini
+set_time_limit(180);
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {

@@ -10,12 +10,14 @@ function init() {
         return;
     }
     var sortablejs = require('sortablejs');
+    var Compress = require('compress.js');
+
 
     new sortablejs.Sortable($('.fotos-container > div')[0], {
         animation: 150,
         swap: true,
         handle: '.btn-move',
-        onChange: function(/**Event*/evt) {
+        onChange: function (/**Event*/evt) {
             $('.fotos-container').data('reordanado', true);
         }
     });
@@ -32,6 +34,7 @@ function init() {
     });
     inputFoto.change(function () {
         showPhoto($(this).data('img-element'), this.files[0]);
+        compressPhoto($(this).data('img-element'), this.files[0]);
     });
     ctx.find('[name="fotos"]') // Input de multiplos arquivos
             .change(function () {
@@ -42,6 +45,7 @@ function init() {
                 });
                 $(this.files).each(function (i, file) {
                     showPhoto(imgs.eq(i), file);
+                    compressPhoto(imgs.eq(i), file);
                 });
             });
 
@@ -68,7 +72,7 @@ function init() {
      * @return void
      */
     function showPhoto(imgElement, file) {
-        
+
         imgElement = $(imgElement);
         if (file === undefined) {
             file = imgElement.data('placeholder');
@@ -105,5 +109,41 @@ function init() {
                     .data('uploaded', false);
         };
         reader.readAsDataURL(file);
+    }
+    function compressPhoto(imgElement, imageFile) {
+
+        // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
+        try {
+            var compress = new Compress();
+
+            compress.compress([imageFile], {
+                size: 4, // the max size in MB, defaults to 2MB
+                quality: 0.8, // the quality of the image, max is 1,
+                maxWidth: 600, // the max width of the output image, defaults to 1920px
+                maxHeight: 600, // the max height of the output image, defaults to 1920px
+                resize: true // defaults to true, set false if you do not want to resize the image width and height
+            }).then(function (images) {
+                var img = images[0];
+                function dataURLtoFile(dataurl, filename) {
+                    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    return new File([u8arr], filename, {type: mime});
+                }
+
+                var file = dataURLtoFile(img.prefix + img.data, 'min.jpg');
+                showPhoto(imgElement, file);
+                /** Debug
+                 console.log(`<b>Start Size:</b> ${img.initialSizeInMb} MB <br/>`
+                 + `<b>End Size:</b> ${img.endSizeInMb} MB <br/>`
+                 + `<b>Compression Cycles:</b> ${img.iterations} <br/>`
+                 + `<b>Size Reduced:</b> ${img.sizeReducedInPercent} % <br/>`
+                 + `<b>File Name:</b> ${img.alt}`);*/
+            });
+        } catch (e) {
+
+        }
     }
 }
