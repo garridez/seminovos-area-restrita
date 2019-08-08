@@ -144,6 +144,15 @@ class ParticularForm extends Form
                 'class' => 'form-control',
                 'data-mask' => '(00) 0000-0000',
                 'placeholder' => '(__) ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) ____-____"
+                    ]
+                ]),
             ]
         ]);
         $this->add([
@@ -154,8 +163,17 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'data-mask' => '(00) 90000-0000',
-                'placeholder' => '(__) _____-____',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
             ],
         ]);
 
@@ -199,8 +217,18 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'data-mask' => '(00) 90000-0000',
-                'placeholder' => '(__) _____-____',
+                'data-mask' => '(00) ?0000-0000',
+                'placeholder' => '(__) _ ____-____',
+                'data-mask-options' => json_encode([
+                    'translation' => [
+                        '?' => [
+                            'pattern' => 'RegExp("[0-9]")',
+                            'optional' => true,
+                        ],
+                        'placeholder' => "(__) _ ____-____"
+                    ]
+                ]),
+
             ],
         ]);
         $this->add([
@@ -226,7 +254,7 @@ class ParticularForm extends Form
             'name' => 'telefone_3_is_wpp',
             'options' => [
                 'label' => 'Whatsapp',
-                'checked_value' => 1,
+//                'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
         ]);
