@@ -237,10 +237,10 @@ class MeusVeiculosController extends AbstractActionController
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["enviar_comprovante"] = true;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
                         $temp_acoes["realizar_pagamento"] = true;
                     }
                     break;
@@ -269,7 +269,9 @@ class MeusVeiculosController extends AbstractActionController
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
@@ -313,13 +315,17 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 case "10":
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 default:
                     $temp_acoes = [
