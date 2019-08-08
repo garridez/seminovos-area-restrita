@@ -56,6 +56,13 @@ return [
             'use_from_service_manager' => 'cache',
         ],
     ],
+    'UsersModuleApi' => [
+        'base_uri' => 'http://microservice-users.seminovos.com.br',
+        'support' => [
+            'user' => 'sara@seminovosbh.com.br',
+            'password' => '123',
+        ],
+    ],
     'log' => [
         'logger' => [
             'writers' => [

@@ -29,6 +29,13 @@ return [
             'use_from_service_manager' => 'cache'
         ],
     ],
+    'UsersModuleApi' => [
+        'base_uri' => 'http://34.213.61.95',
+        'support' => [
+            'user' => 'sara@seminovosbh.com.br',
+            'password' => '123',
+        ],
+    ],
     'log' => [
         'logger' => [
             'writers' => [

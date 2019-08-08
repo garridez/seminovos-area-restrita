@@ -1,81 +1,55 @@
 <?php
-
+declare (strict_types=1);
 namespace AreaRestrita\Service;
 
-use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService as AuthService;
 use Zend\Authentication\Result;
 use Zend\Session\SessionManager;
+use Interop\Container\ContainerInterface;
+use Zend\Authentication\AuthenticationService;
+use AreaRestrita\Service\AuthAdapter as Adapter;
 
+/**
+ * Class AuthManager
+ * @package AreaRestrita\Service
+ */
 class AuthManager
 {
-
+    /*** @var ContainerInterface $container */
+    private $container;
+    /*** @var mixed|AuthenticationService $authService */
     private $authService;
+    /*** @var mixed|SessionManager $sessionManager */
     private $sessionManager;
-    private $apiClient;
 
-    public function __construct(AuthService $authService, SessionManager $sessionManager, ApiClient $apiClient)
+    /**
+     * AuthManager constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
-        $this->authService = $authService;
-        $this->sessionManager = $sessionManager;
-        $this->apiClient = $apiClient;
+        $this->container = $container;
+        $this->authService = $container->get(AuthenticationService::class);
+        $this->sessionManager = $container->get(SessionManager::class);
     }
 
     /**
-     * O parametro $dados deve ser um array com as seguintes chaves:
-     *   emailOrCnpj  // Opcional - se não for passado, o campo idCadastro vira obrigatório
-     *   idCadastro   // Opcional - se não for passado, o campo emailOrCnpj vira obrigatório
-     *   usuarioSenha // Opcional
-     *   loginWithoutPassword // Opcional - Se true, será usado o idCadastro para realizar o login sem senha
-     *   tipoCadastro // Opcional
-     *   rememberMe   // Opcional - Mantém a sessão ativa por 30 dias
-     *
-     * @param array $options
+     * @param array $login
      * @return Result
-     * @throws \Exception
      */
-    public function login($options, $condicaoIdentity = true): Result
+    public function login(array $login): Result
     {
-        $optionsDefault = [
-            'emailOrCnpj' => '',
-            'idCadastro' => '',
-            'usuarioSenha' => '',
-            'loginWithoutPassword' => false,
-            'tipoCadastro' => '',
-            'rememberMe' => false,
-        ];
-
-        $options = array_merge($optionsDefault, $options);
-
-        if ($condicaoIdentity) {
-            if ($this->authService->getIdentity() != null) {
-                throw new \Exception('Already logged in');
-            }
-        }
-        if (!isset($options['emailOrCnpj']) && !isset($options['idCadastro'])) {
-            throw new \Exception('emailOrCnpj ou idCadastro não passados');
-        }
-        /* @var $authAdapter \AreaRestrita\Service\AuthAdapter */
+        /* @var Adapter $authAdapter */
         $authAdapter = $this->authService->getAdapter();
 
-        $authAdapter->setData([
-            'loginWithoutPassword' => $options['loginWithoutPassword'],
-            'idCadastro' => $options['idCadastro'],
-            'usuarioEmail' => $options['emailOrCnpj'],
-            'usuarioSenha' => $options['usuarioSenha'],
-            'tipoCadastro' => $options['tipoCadastro'],
-        ]);
+        $authAdapter->setData($login);
         $result = $this->authService->authenticate();
 
-        if ($result->getCode() == Result::SUCCESS) {
-            if ($options['rememberMe']) {
-                // Session cookie will expire in 1 month (30 days).
-                $this->sessionManager->rememberMe(60 * 60 * 24 * 30);
-            }
+        if ($result->getCode() == Result::SUCCESS && $login['rememberMe']) {
+            $this->sessionManager->rememberMe(60 * 60 * 24 * 30);
         }
-
         return $result;
     }
+
 
     public function logout()
     {
