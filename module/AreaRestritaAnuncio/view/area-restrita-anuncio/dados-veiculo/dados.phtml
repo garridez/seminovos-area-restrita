@@ -75,9 +75,9 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                     <?= $this->formLabel($fields['versao']) ?>
                     <?= $this->formElement($fields['versao']) ?>
                 </div>
-                <div id="divOutraVersao" class="form-group form-group-default required hide">
+                <div id="divOutraVersao" class="form-group form-group-default hide">
                     <label for="outraVersao">Versão</label>
-                    <input type="text" name="outraVersao" placeholder="Digite a versão" required="required" class="form-control" value="" autocomplete="off">
+                    <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off">
                 </div>
                 <div class="row">
                     <?php if (isset($fields['motor'])): ?>

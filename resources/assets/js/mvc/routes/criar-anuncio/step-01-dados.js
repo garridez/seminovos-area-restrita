@@ -48,9 +48,11 @@ function init() {
     
     versao.change(function () {
         //console.log($(this).find('option:selected').val());
+        $('[name="codFipe"]').val('');
         
         if($(this).find('option:selected').val() == 99){
             $('#divOutraVersao').removeClass("hide");
+            //$('[name="codFipe"]').empty();
             return;
         }else{
             $('#divOutraVersao').addClass("hide");

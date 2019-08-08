@@ -71,6 +71,10 @@ class DadosVeiculoController extends AbstractActionController
             ];
 
             $data += $request->getPost()->toArray();
+            
+            if(!empty($data['outraVersao'])){
+                $data['versao'] = $data['outraVersao'];
+            }
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
