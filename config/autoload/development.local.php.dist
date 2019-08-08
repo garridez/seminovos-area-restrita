@@ -34,7 +34,7 @@ return [
             'writers' => [
                 's3' => $removeKey,
                 'local' => [
-                    'name' => Zend\Log\Writer\Stream::class,
+                    'name' => \AreaRestrita\Log\Writer\Local::class,
                     'options' => [
                         'formatter' => \Zend\Log\Formatter\Json::class,
                         'stream' => 'data/temp/logs/logger.txt',
