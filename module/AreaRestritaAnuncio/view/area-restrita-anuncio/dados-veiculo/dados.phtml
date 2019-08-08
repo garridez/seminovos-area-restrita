@@ -96,6 +96,14 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                             </div>
                         </div>
                     <?php endif; ?>
+                    <?php if (isset($fields['cilindradas'])): ?>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <?= $this->formLabel($fields['cilindradas']) ?>
+                            <?= $this->formText($fields['cilindradas']) ?>
+                        </div>
+                    </div>
+                    <?php endif;?>
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <?= $this->formLabel($fields['cor']) ?>

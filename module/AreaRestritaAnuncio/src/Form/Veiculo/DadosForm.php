@@ -83,6 +83,16 @@ class DadosForm extends Form
             ]
         ]);
         $this->add([
+            'type' => Element\Text::class,
+            'name' => 'cilindradas',
+            'options' => [
+                'label' => 'Cilindradas',
+            ],
+            'attributes' => [
+                'required' => true,
+            ]
+        ]);
+        $this->add([
             'type' => SelectValvula::class,
             'name' => 'idValvula',
             'attributes' => [
@@ -178,6 +188,10 @@ class DadosForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
+            'name' => 'cilindradas',
+            'required' => true,
+        ]);
+        $inputFilter->add([
             'name' => 'idValvula',
             'required' => true,
         ]);
@@ -220,10 +234,14 @@ class DadosForm extends Form
         $this->get('tipoVeiculo')->setValue($tipoVeiculo);
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
         $removerCamposPorTipo = [
+            VeiculoTipo::TIPO_CARRO => [
+                'cilindradas'
+            ],
             VeiculoTipo::TIPO_CAMINHAO => [
                 'idValvula',
                 'motor',
-                'acessorios'
+                'acessorios',
+                'cilindradas'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
@@ -256,6 +274,7 @@ class DadosForm extends Form
             'cor',
             'portas',
             'combustivel',
+            'cilindradas',
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {
