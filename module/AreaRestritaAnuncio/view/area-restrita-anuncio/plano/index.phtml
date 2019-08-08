@@ -18,11 +18,11 @@ $prioridade = [
 ];
 
 $class = [
-    1 => 'nitro-home-value',
-    2 => 'nitro-value',
-    3 => 'turbo-value',
-    4 => 'basic-value',
-    5 => 'simple-value',
+    1 => 'nitro-home-value text-nitro-home',
+    2 => 'nitro-value text-nitro',
+    3 => 'turbo-value text-turbo',
+    4 => 'basic-value text-basico',
+    5 => 'simple-value text-simples',
 ];
 
 $boxes = [
@@ -136,7 +136,7 @@ if ($isRevenda) {
                                         exibição</span></li>
                             </ul>
                             <?php if (!$isRevenda): ?>
-                                <div class="nitro-home-label <?= $class[$plano['prioridade']] ?>">R$
+                                <div class="valor-label <?= $class[$plano['prioridade']] ?>">R$
                                     <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
                             <?php endif; ?>
 
@@ -150,12 +150,16 @@ if ($isRevenda) {
                                 </div>
                             <?php endif; ?>
 
-                            <input type="radio" id="radio-idPlano-<?= $plano['idPlano'] ?>" name="idPlano"
-                                value="<?= $plano['idPlano'] ?>" class="hidden"
+                            <input
+                                type="radio"
+                                id="radio-idPlano-<?= $plano['idPlano'] ?>"
+                                name="idPlano"
+                                required
+                                value="<?= $plano['idPlano'] ?>"
                                 <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                <label class="btn btn-block btn-sm bg-light text-dark" for="radio-idPlano-<?= $plano['idPlano'] ?>"
+                                <label class="btn btn-block btn-sm bg-light text-dark text-bold" for="radio-idPlano-<?= $plano['idPlano'] ?>"
                                 <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
                                 Selecione
                             </label>
