@@ -33,13 +33,14 @@ class CadastrarController extends AbstractActionController
      * CadastrarController constructor.
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container, Client $client)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->form = new ParticularForm();
-        $this->client = $client;
-        /** Seta nesse controlador o tipo de cadastro que está sendo realizado */
-        $this->client->setClientMode(2);
+        $this->client = new Client([
+            'base_uri' =>  $container->get('Config')['UsersModuleApi']['base_uri'],
+            'clientMode' => 2
+        ]);
     }
 
     /**

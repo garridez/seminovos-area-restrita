@@ -11,6 +11,7 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use AreaRestrita\Middleware\DispatchMiddleware;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use AreaRestrita\Controller\Factory\AbstractFactory;
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Controller\Factory\AbstractFactoryClient;
 
@@ -226,7 +227,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\CadastrarController::class => AbstractFactoryClient::class,
+            Controller\CadastrarController::class => AbstractFactory::class,
             Controller\CriarAnuncioController::class => InvokableFactory::class,
             Controller\DadosVeiculoController::class => InvokableFactory::class,
             Controller\FinalizarController::class => InvokableFactory::class,
