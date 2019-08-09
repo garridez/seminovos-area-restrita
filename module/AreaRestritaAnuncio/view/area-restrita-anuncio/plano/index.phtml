@@ -78,6 +78,7 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                         $planoJaEscolhido = false;
+                        $falsoMarcado = false;
                         foreach ($planos as $k => $plano) :
                             if ($plano['idPlano'] == $idPlanoAtual) {
                                 $planoJaEscolhido = true;
@@ -89,9 +90,12 @@ if ($isRevenda) {
                             if ($isRevenda) {
                                 $desabilitarPlano = false;
                             }
+                            if ($planoJaEscolhido && $idPlanoAtual == 1) {
+                                $desabilitarPlano = true;
+                                $falsoMarcado = true;
+                            }
                             $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
                             $nomePlano = mb_strtoupper($nomePlano);
-
                             ?>
                     <div class="col-12 col-sm col-md col-lg">
                         <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>"
@@ -156,12 +160,12 @@ if ($isRevenda) {
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?= $plano['idPlano'] == $idPlanoAtual ? 'checked' : '' ?>
+                                <?= $plano['idPlano'] == $idPlanoAtual && !$falsoMarcado ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                <label class="btn btn-block btn-sm bg-light text-dark text-bold" for="radio-idPlano-<?= $plano['idPlano'] ?>"
+                                <label class="btn btn-block btn-sm bg-light text-dark text-bold <?= $falsoMarcado ? 'falso-marcado':''?>" for="radio-idPlano-<?= $plano['idPlano'] ?>"
                                 <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
-                                Selecione
+                                <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
                             </label>
                         </div>
                     </div>

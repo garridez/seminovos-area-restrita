@@ -23,7 +23,7 @@
 
         }
         .step-plano{
-            input[type="radio"]:checked + label{
+            input[type="radio"]:checked + label, .falso-marcado{
                 color: #FFFFFF !important;
                 background-color: #C86325 !important;
             }
