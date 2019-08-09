@@ -39,7 +39,11 @@ class CadastrarController extends AbstractActionController
         $this->form = new ParticularForm();
         $this->client = new Client([
             'base_uri' =>  $container->get('Config')['UsersModuleApi']['base_uri'],
-            'clientMode' => 2
+            'clientMode' => 2,
+            'support' => [
+                'user' => $container->get('Config')['UsersModuleApi']['support']['user'],
+                'password' => $container->get('Config')['UsersModuleApi']['support']['password']
+            ]
         ]);
     }
 
