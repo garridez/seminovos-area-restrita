@@ -21,9 +21,9 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
 </head>
 
 <body class="fixed-header l-login <?= $this->bodyClass() ?>">
-  <div class="login-wrapper ">
+  <div class="login-wrapper d-flex justify-content-center bg-white">
+    <?php /*
     <div class="bg-pic bg-light">
-        <?php
         // Quando tiver uma imagem colocar nessa tag
         if (0):
             ?>
@@ -34,8 +34,9 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
       <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
       </div>
     </div>
+    */?>
     <div class="login-container bg-white">
-      <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-10 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+      <div class="px-4 px-md-5 mx-md-3 py-3 py-md-5">
         <?= $this->content ?>
       </div>
     </div>
