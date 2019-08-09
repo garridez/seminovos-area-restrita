@@ -399,5 +399,9 @@ class RevendaForm extends Form
             'name' => 'email_secundario',
             'required' => false,
         ]);
+        $inputFilter->add([
+            'name' => 'email_financeiro',
+            'required' => false,
+        ]);
     }
 }
