@@ -1,9 +1,6 @@
 <?php
-ob_start();
-// @todo mover isso para o php.ini
-set_time_limit(180);
-ini_set('session.cookie_domain', 'seminovos.com.br');
 
+ob_start();
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {
