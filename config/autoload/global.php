@@ -59,8 +59,8 @@ return [
     'UsersModuleApi' => [
         'base_uri' => 'http://microservice-users.seminovos.com.br',
         'support' => [
-            'user' => 'sara@seminovosbh.com.br',
-            'password' => '123',
+            'user' => 'micro_users',
+            'password' => 'microusersuibd8syhd8',
         ],
     ],
     'log' => [

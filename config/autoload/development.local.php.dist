@@ -32,8 +32,8 @@ return [
     'UsersModuleApi' => [
         'base_uri' => 'http://34.213.61.95',
         'support' => [
-            'user' => 'sara@seminovosbh.com.br',
-            'password' => '123',
+            'user' => 'micro_users',
+            'password' => 'microusersuibd8syhd8',
         ],
     ],
     'log' => [
