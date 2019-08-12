@@ -1,9 +1,5 @@
 FROM snbh-server-base:7.2-node
 
-RUN yes '' | pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
-
 arg SESSION_PHP_SAVE_HANDLER
 arg SESSION_SAVE_PATH
 
