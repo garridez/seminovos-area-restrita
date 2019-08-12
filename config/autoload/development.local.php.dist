@@ -34,7 +34,7 @@ return [
             'writers' => [
                 's3' => $removeKey,
                 'local' => [
-                    'name' => Zend\Log\Writer\Stream::class,
+                    'name' => \AreaRestrita\Log\Writer\Local::class,
                     'options' => [
                         'formatter' => \Zend\Log\Formatter\Json::class,
                         'stream' => 'data/temp/logs/logger.txt',
@@ -56,7 +56,7 @@ return [
         'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
         'options' => array(
             'server' => $removeKey,
-            'ttl' => 10,
+            'ttl' => 300, # 5 Minutos
             'cacheDir' => 'data/cache',
             'namespace' => 'AreaRestritaDev',
         ),

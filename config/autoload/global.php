@@ -22,7 +22,29 @@ return [
     ],
     'ApiClient' => [
         'credentials' => [
-            'serverUrl' => 'http://api2.seminovosbh.com.br',
+            'serverUrl' => 'http://54.200.165.200',
+            /**
+             * @todo Remover quando resolver o problema de rede
+             */
+            'serverUrl' => (function() {
+                    $ctx = stream_context_create(array('http' =>
+                        array(
+                            'timeout' => 1,
+                    )));
+                    $apiUrls = [
+                        0 => 'http://api2.seminovosbh.com.br',
+                        1 => 'http://54.200.165.200'
+                    ];
+                    $apiUrlsKey = rand(0, 1);
+                    $serverUrl = $apiUrls[$apiUrlsKey];
+
+                    if (!@file_get_contents($serverUrl, false, $ctx)) {
+                        unset($apiUrls[$apiUrlsKey]);
+                        reset($apiUrls);
+                        $serverUrl = current($apiUrls);
+                    }
+                    return $serverUrl;
+                })(),
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ],

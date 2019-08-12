@@ -50,7 +50,7 @@ class DadosVeiculoController extends AbstractActionController
         $dadosForm->setTipoVeiculo($tipoVeiculo);
         $dadosForm->setCombustivel($tipoVeiculo);
 
-        $veiculoDados = $this->getVeiculo(20);
+        $veiculoDados = $this->getVeiculo(5);
         if ($veiculoDados) {
             $dadosForm->populateValues($veiculoDados);
             $dadosForm->setIsEdition(true);
@@ -117,6 +117,10 @@ class DadosVeiculoController extends AbstractActionController
                 } else {
                     // Particular cria o anúncio por padrão no grátis
                     $data['idPlano'] = 1;
+                    
+                    if(!isset($data['motor'])){
+                        $data['motor'] = 0;
+                    }
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
@@ -137,7 +141,7 @@ class DadosVeiculoController extends AbstractActionController
     public function precoAction()
     {
         $precoForm = new Veiculo\PrecoForm();
-        $data = $this->getVeiculo(20);
+        $data = $this->getVeiculo(5);
         $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
@@ -149,7 +153,7 @@ class DadosVeiculoController extends AbstractActionController
     public function maisInformacoesAction()
     {
         $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
-        $data = $this->getVeiculo(20);
+        $data = $this->getVeiculo(5);
         $maisInformacoesForm->populateValues($data);
 
         $checkedTermo = (empty($data) ? false : true);
@@ -234,7 +238,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($dataJson);
         }
         $fotos = [];
-        $dadosVeiculo = $this->getVeiculo(20);
+        $dadosVeiculo = $this->getVeiculo(5);
         if ($dadosVeiculo) {
             $fotos = $dadosVeiculo['fotos'];
         }
@@ -246,7 +250,7 @@ class DadosVeiculoController extends AbstractActionController
     public function videoAction()
     {
         $videoForm = new Veiculo\VideoForm();
-        $data = $this->getVeiculo(20);
+        $data = $this->getVeiculo(5);
         $videoForm->populateValues($data);
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
@@ -375,7 +379,7 @@ class DadosVeiculoController extends AbstractActionController
 
             $result = $apiClient->veiculosGet([
                 'ignorarCondicoesBasicas' => true,
-            ], (int)$idVeiculo, 20);
+            ], (int)$idVeiculo, 5);
 
             $veiculo = $result->getData();
 

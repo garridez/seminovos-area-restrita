@@ -11,7 +11,8 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
-    loadContentStepsAsync();
+    require('./load-content-steps')();
+
     var stepsContainer = $('.step-container');
     var anuncioSteps = $('.anuncio-steps'); // Conjuto de steps principal
 
@@ -32,21 +33,43 @@ module.exports.callback = ($) => {
         if ($('.step-dados').is('.active')) {
             window.location.href = '/';
         } else {
-            stepContainer.stepPlugin('prev');
+            stepContainer.stepPlugin('prev', false);
         }
+        checkLastStep();
     });
     $('.btn-continuar').on('click', function () {
-        var form = stepsContainer.find('[class*="step-"].active:not(.step-container) form').first();
+        var inLastStep = $(this).data('in-last-step');
+        var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
         if (form[0] && !form[0].checkValidity()) {
             return;
         }
 
-        if ($('.anuncio-steps').stepPlugin('inLastStep')) {
-            var step = form.closest('[data-step-label]');
-            var stepLabel = step.data('step-label');
-            step.closest('.step-container').trigger('step:pre-exit:' + stepLabel);
-            console.log(step.closest('.step-container'))
+        if (inLastStep) {
+            var Loading = require('components/Loading');
+            var redirect = function () {
+                Loading.open();
+                window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();
+            };
+            // Se não tem ajax pendente, redireciona
+            if ($.active === 0) {
+                redirect();
+                return;
+            }
+            // Espera todos os ajax terminarem com sucesso para então redirecionar
+            $(document).ajaxComplete(function (ev, jqXHR) {
+                if (($.active - 1) !== 0) {
+                    return;
+                }
+                if (jqXHR.status > 399) {
+                    return;
+                }
+                if (jqXHR.responseJSON && jqXHR.responseJSON.status !== 200) {
+                    return;
+                }
+                redirect();
+
+            });
         }
     });
 
@@ -66,7 +89,7 @@ module.exports.callback = ($) => {
         if (!hash || hash === '#') {
             return;
         }
-        var hashArr = hash.replace('#','').split('&');
+        var hashArr = hash.replace('#', '').split('&');
         hash = '.step-' + hashArr[0];
 
         $('.step-container').each(function () {
@@ -87,69 +110,61 @@ module.exports.callback = ($) => {
         });
     });
     /**
-     * NÃO COMMIT O AUTOFILL COMO "true"
-     * Isso serve para agilizar o desenvolvimento
+     * 
+     * Descomentar o autofill apenas em dev!
      */
-    var autofill = false;
-    if (autofill) {
-        require('./autofill')({
-            autofill: true,
-            /**
-             * Serve para ir passando simulando click e parar num step específico
-             */
-//            pararNoStep: 'step-checkout',
-            /*
-             * Se true, é sempre gerado uma placa nova
-             * Útil para não gerar conflito com placa existe
-             * Mas cuidado pra não encher de cadastros diferentes
-             */
-            placaAleatoria: false,
-            //placaAleatoria: true,
-            // Valor fixo de placa
-            placa: 'LJL5173',
-            cartao: {
-                // Dados de validade do cartão
-                validade_cartao: '12/25',
-                // É possivel colocar uma data inválida para gerar error e ver as notificações
-                //validade_cartao: '19/25',
-            },
-        });
-    }
+    //require('./autofill').init();
 };
-function loadContentStepsAsync() {
-    var loading = require('components/Loading');
-    var stepsUrl = $('div.anuncio-steps [data-url]');
-    var totalSteps = stepsUrl.length;
-    loading.open(true);
-    stepsUrl.each(function (i) {
-        var ctx = $(this);
-        ctx.data('timeload', new Date);
-        setTimeout(function () {
-            $.get(ctx.data('url'), function (data) {
-                ctx.html(data);
-                if (--totalSteps === 0) {
-                    $('.anuncio-steps').trigger('steps-loaded');
-                    loading.close(true);
-                    setTimeout(function () {
-                        loading.close(true);
-                    }, 200);
-                }
-            });
+function allStepsInlast() {
 
-        }, (i * 200) + 10);
+    var inLastStep = true;
+
+    $('.step-container').each(function () {
+        if (!$(this).stepPlugin('inLastStep')) {
+            inLastStep = false;
+        }
     });
+    return inLastStep;
 }
-function checkLastStep(){
+function checkLastStep() {
+
+    var btn = $('.step-controls .btn-continuar');
     var text = 'Continuar';
-    if($('.anuncio-steps').stepPlugin('inLastStep')){
+    var inLast = allStepsInlast();
+    if (inLast) {
         text = 'Finalizar';
+    } else {
+        btn
+                .addClass('btn-laranja')
+                .attr('disabled', false);
     }
-    $('.step-controls .btn-continuar').text(text).attr('title', text);
-    
+    btn
+            .text(text)
+            .attr('title', text)
+            .data('in-last-step', inLast);
+
 }
 function setStepIconActive() {
+    var $anuncioSteps = $('.anuncio-steps');
     var stepsIcons = $('.steps-list li');
-    $('.anuncio-steps [class*="step-"].active').each(function () {
+
+    // Remove os ícones que não tem steps
+    stepsIcons = stepsIcons.filter(function () {
+        var $this = $(this);
+        var stepLabel = $this.data('step').split(',');
+        var hasStep = false;
+        $.each(stepLabel, function () {
+            var seletor = '[data-step-label="' + this + '"]';
+            if ($anuncioSteps.find(seletor).length) {
+                hasStep = true;
+            }
+        });
+        if (!hasStep) {
+            $this.remove();
+        }
+        return hasStep;
+    });
+    $anuncioSteps.find('[class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
             stepsIcons.removeClass('active')

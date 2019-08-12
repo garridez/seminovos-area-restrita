@@ -42,7 +42,7 @@ class CriarAnuncioController extends AbstractActionController
             $this->getApiClient()
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
-                    ], (int) $idVeiculo, 20);
+                    ], (int) $idVeiculo, 5);
             
             if ($data['status'] !== 200) {
                 /**

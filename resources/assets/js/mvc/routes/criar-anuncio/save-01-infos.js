@@ -10,6 +10,7 @@ function stopEvent(e) {
 }
 module.exports.callback = ($) => {
     require('components/StepPlugin');
+    var loading = require('components/Loading');
     var HandleApiError = require('components/HandleApiError');
     var marcaModelo = require('components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
@@ -21,7 +22,14 @@ module.exports.callback = ($) => {
     var formWithError;
 
     //($('#form_dadosVeiculo'))
-    $('.anuncio-steps').on('steps-loaded', function () {
+    $('.anuncio-steps')
+            .on('steps-loaded', function () {
+                // Para esperar as máscaras serem aplicadas
+                setTimeout(function () {
+                    lastSavedData = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes').serialize();
+                }, 500);
+            })
+            .on('steps-loaded', function () {
         marcaModelo($('#form_dadosVeiculo'));
         /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
         $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
@@ -98,7 +106,11 @@ module.exports.callback = ($) => {
             ajaxProcessing = false;
             return;
         }
-
+        loading.addFeedbackTexts([
+            'Salvando dados do veículo...',
+            'Salvando os acessórios...',
+            'Salvando...',
+        ]);
         $.ajax({
             type: "POST",
 
