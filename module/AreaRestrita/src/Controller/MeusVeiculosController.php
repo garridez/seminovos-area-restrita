@@ -280,6 +280,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] == 4) {
                         $temp_acoes["reativar"] = true;
                         //$temp_acoes["renovar"] = true;
+                        $temp_acoes["renovar_plano"] = true;
                     } elseif ($veiculo['idPlano'] == 1) {
                         $temp_acoes["upgrade_plano"] = true;
                     } else {
