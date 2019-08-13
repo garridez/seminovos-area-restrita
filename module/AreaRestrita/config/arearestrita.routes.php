@@ -231,6 +231,15 @@ return [
                     ],
                 ],
             ],
+            'chat' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/chat',
+                    'defaults' => [
+                        'action' => 'chat',
+                    ],
+                ],
+            ],
         ],
     ],
     'meu-site' => [

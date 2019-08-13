@@ -1,0 +1,92 @@
+section.section-chat {
+  .list-chats {
+    .chat {
+      .chat-img {
+        height: auto;
+        width: 90px;
+        img {
+          border-radius: 8px;
+        }
+      }
+      .chat-details {
+        .chat-title {
+          font-size: 0.8rem;
+        }
+        .chat-name {
+          font-size: 0.78rem;
+        }
+        .chat-last-msg {
+          font-size: 0.78rem;
+          color: #979797;
+        }
+      }
+      .chat-info {
+        .chat-date {
+          font-size: 0.7rem;
+          color: #979797;
+        }
+        .chat-status {
+          font-size: 0.55rem;
+          color: #ffffff;
+          background-color: #bbbbbb;
+          border-radius: 5px;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  .conversation-active {
+    .conversation-info {
+      .conversation-name {
+        font-size: 0.8rem;
+      }
+      .conversation-last-access {
+        font-size: 0.7rem;
+        color: #979797;
+      }
+    }
+    .conversation-menu {
+      .conversation-action {
+        a {
+          font-size: 0.9rem;
+          color: purple;
+        }
+      }
+    }
+    .conversation {
+      overflow-y: scroll;
+      height: 350px;
+      .message {
+        width: auto;
+        max-width: 45%;
+        .msg {
+          border-radius: 10px;
+        }
+        .info > .time {
+          width: 2rem;
+        }
+        &.from-interessado {
+          margin-left: auto;
+          .msg {
+            color: white;
+            background-color: purple;
+          }
+          .info > .time {
+            margin-left: auto;
+            margin-right: 1.4rem;
+          }
+        }
+        &.from-remetente {
+          margin-right: auto;
+          .msg {
+            background-color: lime;
+          }
+          .info > .time {
+            margin-right: auto;
+            margin-left: 0.2rem;
+          }
+        }
+      }
+    }
+  }
+}
