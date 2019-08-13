@@ -121,10 +121,10 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
                     </div>
                 </div>
             </div>
-            <a href="#" class="m-l-10 sm-no-margin d-inline-block" data-toggle="quickview"
+            <?php /* <a href="#" class="m-l-10 sm-no-margin d-inline-block" data-toggle="quickview"
                 data-toggle-element="#quickview">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
-            </a>
+            </a> */?>
         </div>
         <div class="page-content-wrapper">
             <div class="content pb-0">
@@ -142,7 +142,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
             </div>
         </div>
     </div>
-    <div id="quickview" class="quickview-wrapper" data-pages="quickview">
+    <?php /* <div id="quickview" class="quickview-wrapper" data-pages="quickview">
         <ul class="nav nav-tabs d-none" role="tablist"></ul>
         <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -295,7 +295,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
                 </div>
             </div>
         </div>
-    </div>
+    </div> */?>
     <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 

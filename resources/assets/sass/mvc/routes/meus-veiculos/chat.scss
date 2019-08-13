@@ -1,3 +1,15 @@
+/**
+ * NESCESSÁRIA A IMPORTAÇÃO DO CSS JÁ COMPILADO POIS O SASS DO PACOTE ESTÁ QUEBRADO.
+ */
+@import "~emojionearea/dist/emojionearea.min.css";
+body {
+  overflow-y: hidden;
+}
+.invisible {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
 section.section-chat {
   .list-chats {
     .chat {
@@ -55,7 +67,7 @@ section.section-chat {
     }
     .conversation {
       overflow-y: scroll;
-      height: 350px;
+      height: 320px;
       .message {
         width: auto;
         max-width: 45%;

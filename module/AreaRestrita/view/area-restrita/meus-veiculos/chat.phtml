@@ -8,7 +8,7 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
         <div class="row d-flex justify-content-center">
             <div class="col-12">
                 <div class="row">
-                    <div class="list-chats col-4 border-right p-0">
+                    <div class="list-chats col-12 col-md-4 border-right p-0">
                         <div class="chat bg-white d-flex py-2 px-2 border-bottom">
                             <div class="chat-img mr-2">
                                 <img src="<?= $img ?>" alt="" class="img-fluid">
@@ -66,8 +66,8 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
                             </div>
                         </div>
                     </div>
-                    <div class="col-8 h-100 bg-white conversation-active">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
+                    <div class="col-12 col-md-8 bg-white conversation-active invisible">
+                        <div class="d-flex d-md-flex w-100 align-items-center justify-content-between">
                             <div class="conversation-info py-2">
                                 <div class="conversation-name">
                                     <b>
@@ -78,8 +78,11 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
                                     último acesso 09/08/2019
                                 </div>
                             </div>
-                            <div class="d-flex conversation-menu pr-2">
-                                <div class="conversation-action mr-4">
+                            <div class="d-flex d-md-none chat-back">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </div>
+                            <div class="d-block d-md-flex conversation-menu pr-2">
+                                <div class="conversation-action mr-md-4 text-center">
                                     <a href="">Ver perfil</a>
                                 </div>
                                 <div class="conversation-action">
@@ -140,7 +143,7 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
                             </div>
                             <div class="message my-1 p-2 from-interessado">
                                 <div class="msg px-2 py-1">
-                                    Boa tarde.<br>🍔
+                                    Boa tarde.<br>:hamburger:
                                     Aceita cartão de crédito?Aceita cartão de crédito?Aceita cartão de crédito?Aceita
                                     cartão de crédito?Aceita cartão de crédito?Aceita cartão de crédito?Aceita cartão de
                                     crédito?Aceita cartão de crédito?
@@ -154,12 +157,9 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
                             </div>
 
                         </div>
-                        <div class="text-area bg-white border closed">
+                        <div class="text-area bg-white border closed py-2 pb-5">
                             <div class="d-flex justify-content-center w-100">
-                                <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
-                            </div>
-                            <div class="d-flex justify-content-center w-100">
-                                Não é possível continuar esta conversa porque o anúncio não está mais ativo.
+                                <textarea name="" id="text_area_chat" cols="30" rows="10"></textarea>
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+    "url": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "bootstrap": "^4.3.1",
     "compress.js": "^1.1.2",
     "cross-env": "^5.1.4",
+    "emojionearea": "^3.4.1",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "icon-font-generator": "^2.1.10",
@@ -36,7 +37,8 @@
     "modernizr": "^3.6.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
-    "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
+    "sass-loader": "^7.2.0",
+    "snbh-site": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git#master",
     "sortablejs": "^1.10.0-rc3"
   },
   "devDependencies": {
