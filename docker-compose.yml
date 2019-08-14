@@ -16,6 +16,3 @@ services:
             - APPLICATION_ENV=development
             - SNBH_API_HOST=http://api2homolog.seminovosbh.com.br
             - SNBH_URL_SITE=http://siteemdev.seminovosbh.com.br
-    snbh-area-restrita-redis:
-        image: redis:5.0.4
-        container_name: snbh-area-restrita-redis
