@@ -90,6 +90,11 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
+                'data-mask' => '0000cc',
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
+                'placeholder' => '500cc',
             ]
         ]);
         $this->add([
