@@ -84,7 +84,7 @@ class DadosForm extends Form
         ]);
         $this->add([
             'type' => Element\Text::class,
-            'name' => 'cilindradas',
+            'name' => 'motoCilindradas',
             'options' => [
                 'label' => 'Cilindradas',
             ],
