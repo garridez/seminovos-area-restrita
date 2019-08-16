@@ -10,12 +10,12 @@ module.exports = confirms = {
         if (title === null || title === undefined) {
             title = '';
         }
-        if(title === null || title === undefined){
+        if (title === null || title === undefined) {
             img = '';
         }
 
         var close = $('<button class="btn btn-danger" data-dismiss="modal">')
-                .html('<span class="text-close">Fechar</span> ');
+            .html('<span class="text-close">Fechar</span> ');
 
 
 
