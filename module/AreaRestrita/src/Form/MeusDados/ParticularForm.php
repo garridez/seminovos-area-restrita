@@ -21,7 +21,8 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'placeholder' => 'Ex: Nome Sobrenome'
             ]
         ]);
 
@@ -32,7 +33,8 @@ class ParticularForm extends Form
                 'label' => 'Data de Nascimento'
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'required' => true
             ]
         ]);
 
@@ -45,7 +47,8 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'placeholder' => 'seuemail@example.com.br',
             ]
         ]);
         $this->add([
@@ -56,7 +59,8 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'placeholder' => 'AA-00.000.000',
             ]
         ]);
         $this->add([
@@ -69,6 +73,7 @@ class ParticularForm extends Form
                 'required' => true,
                 'readonly' => true,
                 'class' => 'form-control',
+                'placeholder' => '000.000.000-00',
                 'data-mask' => '000.000.000-00',
             ]
         ]);
@@ -152,6 +157,7 @@ class ParticularForm extends Form
                 'label' => 'Celular',
             ],
             'attributes' => [
+                'required' => true,
                 'class' => 'form-control',
                 'data-mask' => '(00) 90000-0000',
                 'placeholder' => '(__) _____-____',
@@ -186,6 +192,7 @@ class ParticularForm extends Form
                 ],
             ],
             'attributes' => [
+                'required' => true,
                 'class' => 'form-control'
             ],
         ]);
@@ -225,7 +232,7 @@ class ParticularForm extends Form
             'name' => 'telefone_3_is_wpp',
             'options' => [
                 'label' => 'Whatsapp',
-//                'checked_value' => 1,
+                'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
         ]);
@@ -245,6 +252,19 @@ class ParticularForm extends Form
             'name' => 'confirmacaoSenha',
             'options' => [
                 'label' => 'Confirmar Senha',
+            ],
+            'attributes' => [
+                'required' => true,
+                'class' => 'form-control'
+            ]
+        ]);
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'termoResponsibilidade',
+            'options' => [
+                'label' => 'Li e aceito os <a href="https://seminovos.com.br/termo-de-responsabilidade" target="_blank">termo de responsibilidade</a>.',
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
             'attributes' => [
                 'required' => true,
