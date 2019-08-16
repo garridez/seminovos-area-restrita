@@ -1,6 +1,10 @@
 <?php
 
 ob_start();
+if (isset($_SERVER['HTTP_COOKIE']) && substr_count($_SERVER['HTTP_COOKIE'], 'PHPSESSID') >= 2) {
+    setcookie('PHPSESSID', '', time() - 1000);
+    setcookie('PHPSESSID', '', time() - 1000, '/');
+}
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {

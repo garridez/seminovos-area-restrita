@@ -63,7 +63,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
         </div>
         <?php endif; ?>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
-            <?php foreach ($veiculos as $veiculo):
+            <?php foreach ([$veiculos[0]] as $veiculo):
                 $urls = [
                     'editarAnuncio' => $this->url('criar-anuncio', [
                         'tipo' => strtolower($veiculo['tipo']),
@@ -306,15 +306,14 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php if($veiculo["botoes"]["renovar"]??false){
                                     /**
                                      * @todo O renovar vai mesmo para o ativar?
-                                     * @todo Colocar o Modal de alerta de segurança no Reativar.
                                      */
                                     ?>
                                 <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
                                     data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente renovar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
                                     data-modal-yes-text="Sim, renovar" data-modal-success-msg="Veiculo Renovado"
                                     data-modal-adicional-type="error"
-                                    data-modal-adicional-msg='<?= $this->escapeHtmlAttr("<br>A SeminovosBH NÃO não entra em contato por telefone, WhatsApp ou mensagem solicitando a validação do seu anúncio. Não forneça nenhuma informação pessoal ou código enviado para o seu número para validar seu anúncio.                                    Fique atento para não ser vítima de golpes. Estamos á disposição para qualquer dúvida (31) 3077-5888")?>' 
-                                    data-modal-adicional-title="AVISO IMPORTANTE!"  data-modal-adicional-time = "180000"
+                                    data-modal-adicional-msg='<?= $this->escapeHtmlAttr("<br>A SeminovosBH NÃO não entra em contato por telefone, WhatsApp ou mensagem solicitando a validação do seu anúncio. Não forneça nenhuma informação pessoal ou código enviado para o seu número para validar seu anúncio.                                    Fique atento para não ser vítima de golpes. Estamos á disposição para qualquer dúvida (31) 3077-5888")?>'
+                                    data-modal-adicional-title="AVISO IMPORTANTE!" data-modal-adicional-time="180000"
                                     title="Renovar anúncio">
                                     <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
                                 </a>
@@ -352,6 +351,30 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 </div>
             </div>
             <?php endforeach; ?>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalReativar">
+        Abrir modal de demonstração
+    </button>
+
+    <div class="modal fade" id="modalReativar" tabindex="-1" role="dialog" aria-labelledby="modalReativar"
+        aria-hidden="true">
+        <div class="modal-dialog alert-choose-good alert" role="document">
+            <div class="modal-content py-3 px-4">
+                <div class="modal-header mb-3">
+                    <div class="d-flex w-100 justify-content-center align-items-center">
+                        <img src="/img/svg/ico_reativar.svg" class="modal-img mr-3" alt="">
+                        <h5 class="modal-title ml-3" id="modalReativar">Reativar veículo</h5>
+                    </div>
+                </div>
+                <div class="modal-body text-center mb-3 px-3">
+                    <b>[NOME]</b>, você confirma que deseja reativar o anúncio <b>[Marca]</b> <b>[Modelo]</b> placa <b>[PLACA]</b>?
+                </div>
+                <div class="modal-footer d-flex  justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
