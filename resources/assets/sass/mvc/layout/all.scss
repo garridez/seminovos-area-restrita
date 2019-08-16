@@ -15,5 +15,16 @@ body{
     .text-size-theme{
         font-size: 10.5px;
     }
+    .form-group{
+        &.required:after {
+            color: $color-danger;
+            content:"*";
+            font-family: arial;
+            font-size: 20px;
+            position: absolute;
+            right: 15px;
+            top: 9px;
+        }
+    }
 }
 @import "layout";
