@@ -8,27 +8,6 @@ $formCadastro->prepare();
 
 $fields = $formCadastro->getElements();
 
-if(isset($fields['telefone_1']) && $fields['telefone_1']){
-    $fields['telefone_1']->setAttribute('disabled', true);
-}
-if(isset($fields['telefone_2']) && $fields['telefone_2']){
-    $fields['telefone_2']->setAttribute('disabled', true);
-    $fields['operadora_2']->setAttribute('disabled', true);
-    $fields['telefone_2_is_wpp']->setAttribute('disabled', true);
-}
-
-if(isset($fields['telefone_3']) && $fields['telefone_3']){
-    $fields['telefone_3']->setAttribute('disabled', true);
-    $fields['operadora_3']->setAttribute('disabled', true);
-    $fields['telefone_3_is_wpp']->setAttribute('disabled', true);
-}
-
-if(isset($fields['telefone_4']) && $fields['telefone_4']){
-    $fields['telefone_4']->setAttribute('disabled', true);
-    $fields['operadora_4']->setAttribute('disabled', true);
-    $fields['telefone_4_is_wpp']->setAttribute('disabled', true);
-}
-
 
 $tipoCadastro = $this->tipoCadastro;
 
@@ -185,6 +164,7 @@ $tipoCadastro = $this->tipoCadastro;
                                 <div class="form-group form-group-default ">
                                     <?= $this->formLabel($fields['telefone_2']) ?>
                                     <?= $this->formText($fields['telefone_2']) ?>
+                                    <?= $fields['telefone_2']->getValue() ?>
                                 </div>
                             </div>
                             <div class="col-md-5">
