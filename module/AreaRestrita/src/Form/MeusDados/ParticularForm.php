@@ -154,7 +154,7 @@ class ParticularForm extends Form
             'type' => Element\Text::class,
             'name' => 'telefone_2',
             'options' => [
-                'label' => 'Celular',
+                'label' => 'Telefone',
             ],
             'attributes' => [
                 'required' => true,
