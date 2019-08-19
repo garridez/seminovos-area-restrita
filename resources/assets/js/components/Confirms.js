@@ -5,44 +5,39 @@ var $ = require('jquery');
 var confirms;
 
 module.exports = confirms = {
-    options: {
+    optionsDefault: {
+        text:"",
         title: "",
         img: "",
         confirmText: "Salvar Alterações",
-        negateText: "Fechar"
+        negateText: "Fechar",
+        confirmCallback:function(){return},
+        negateCallback:function(){return}
     },
-    confirm: function (type, text, title, img, confirmText, negateText) {
+    confirm: function (type, options) {
+        options = $.extend({}, this.optionsDefault, options);
         /**
          * @todo Melhorar estes IFs
          */
-        if (title === null || title === undefined) {
-            title = this.options.title;
-        }
-        console.log(img);
-
-        if (img === null || img === undefined) {
-            img = this.options.img;
-        } else {
-            img = $(`<img class="modal-img" src="${img}">`);
-        }
-        if (confirmText === null || confirmText === undefined) {
-            confirmText = this.options.confirmText;
-        }
-        if (negateText === null || negateText === undefined) {
-            negateText = this.options.negateText;
+        if(options.img !== "") {
+            options.img = $(`<img class="modal-img" src="${options.img}">`);
         }
 
         var btnConfirm = $('<button type="button" class="btn btn-primary">')
-            .html(`<span>${confirmText}</span>`);
+            .html(`<span>${options.confirmText}</span>`).click(function () {
+                options.confirmCallback();
+            });
 
         var btnNegate = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">')
-            .html(`<span>${negateText}</span>`);
+            .html(`<span>${options.negateText}</span>`).click(function () {
+                options.negateCallback();
+            });
 
         var modal = $.jsBsModal({
             contents: {
                 'close': false,
-                'modal-title': [img, title],
-                'modal-body': text,
+                'modal-title': [options.img, options.title],
+                'modal-body': options.text,
                 'modal-footer': [
                     btnNegate, btnConfirm
                 ],
@@ -55,16 +50,16 @@ module.exports = confirms = {
 
         return modal;
     },
-    success: function (text, title, img) {
-        return confirms.confirm('success', text, title, img);
+    success: function (options) {
+        return confirms.confirm('success', options);
     },
-    info: function (text, title, img) {
-        return confirms.confirm('info', text, title, img);
+    info: function (options) {
+        return confirms.confirm('info', options);
     },
-    warning: function (text, title, img) {
-        return confirms.confirm('warning', text, title, img);
+    warning: function (options) {
+        return confirms.confirm('warning', options);
     },
-    error: function (text, title, img) {
-        return confirms.confirm('error', text, title, img);
+    error: function (options) {
+        return confirms.confirm('error', options);
     },
 };

@@ -4,20 +4,6 @@ module.exports.callback = $ => {
     require("components/JsBsModal");
     var Alerts = require("components/Alerts");
     var Confirms = require('components/confirms');
-    Confirms.success(
-        `<b>[NOME]</b>, você confirma que deseja reativar o anúncio <b> [Marca]</b > <b>[Modelo]</b> placa <b>[PLACA]</b>?`,
-        "REATIVAR VEÍCULO", "/img/svg/ico_reativar.svg"
-    );
-
-
-
-
-    $(".btn-primary").click(function (e) {
-        Confirms.success(
-            `<b>[NOME]</b>, você confirma que deseja reativar o anúncio <b> [Marca]</b > <b>[Modelo]</b> placa <b>[PLACA]</b>?`,
-            "REATIVAR VEÍCULO",
-        );
-    });
 
     /**
      * Baixa o conteúdo da página atualizado
@@ -41,7 +27,7 @@ module.exports.callback = $ => {
         var successText = $this.data("modal-success-msg");
         var yesText = $this.data("modal-yes-text") || "Sim";
 
-        var btnSuccess = $('<button class="btn btn-success">')
+        var btnSuccess = $('<button class="btn">')
             .html(yesText)
             .click(function () {
                 $(this).attr("disabled", true);

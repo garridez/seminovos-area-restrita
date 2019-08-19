@@ -1,18 +1,20 @@
+/**
+  * @todo Melhorar classes CSS
+  */
 .confirm{
     padding: 1rem 1.5rem;
-    .modal-header{
+    .modal-title{
         @extend .d-flex, .w-100, .justify-content-center, .align-items-center ;
         padding-left: 1rem;
         padding-right: 1rem;
         margin-bottom: 1rem;
+        color: #3C3C3C;
+        font-size: 25px;
+        font-weight: bold;
         .modal-img{
             width: 20%;
             height: auto;
-        }
-        .modal-title{
-            color: #3C3C3C;
-            font-size: 25px;
-            font-weight: bold;
+            margin-right: 1.5rem;
         }
     }
     .modal-body{
@@ -30,6 +32,12 @@
 
 
 .confirm-success{
+    .text-primary{
+        color :#47943c !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
     .btn-secondary{
         &:active,&:focus{
             color:#5d5d5d !important;
@@ -52,5 +60,98 @@
         color:white;
         background-color: #97D68F;
         border-color: #97D68F;
+    }
+}
+.confirm-error{
+    .text-primary{
+        color :#882929 !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-secondary{
+        &:active,&:focus{
+            color:#5d5d5d !important;
+            background-color: #a0a0a0 !important;
+            border-color: #a0a0a0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(214, 214, 214, 0.459) !important;
+        }
+        color:#7B7B7B;
+        background-color: #DADADA;
+        border-color: #DADADA;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #d64747 !important;
+            border-color: #d64747 !important;
+            box-shadow: 0 0 0 0.2rem rgba(214, 71, 71, 0.383)!important;
+
+        }
+        color:white;
+        background-color: #ff8585;
+        border-color: #ff8585;
+    }
+}
+.confirm-warning{
+    .text-primary{
+        color :#db9524 !important;
+    }
+        .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-secondary{
+        &:active,&:focus{
+            color:#5d5d5d !important;
+            background-color: #a0a0a0 !important;
+            border-color: #a0a0a0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(214, 214, 214, 0.459) !important;
+        }
+        color:#7B7B7B;
+        background-color: #DADADA;
+        border-color: #DADADA;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #db9524 !important;
+            border-color: #db9524 !important;
+            box-shadow: 0 0 0 0.2rem rgba(255, 173, 42, 0.589)!important;
+
+        }
+        color:white;
+        background-color: #ffaf2d;
+        border-color: #ffad2a;
+    }
+}
+.confirm-info{
+    .text-primary{
+        color :#2664b6 !important;
+    }
+        .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-secondary{
+        &:active,&:focus{
+            color:#5d5d5d !important;
+            background-color: #a0a0a0 !important;
+            border-color: #a0a0a0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(214, 214, 214, 0.459) !important;
+        }
+        color:#7B7B7B;
+        background-color: #DADADA;
+        border-color: #DADADA;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #2664b6 !important;
+            border-color: #2664b6 !important;
+            box-shadow: 0 0 0 0.2rem rgba(38, 100, 182, 0.513)!important;
+
+        }
+        color:white;
+        background-color: #358dff;
+        border-color: #358dff;
     }
 }
