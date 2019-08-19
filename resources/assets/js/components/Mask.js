@@ -29,12 +29,25 @@ function setMask($) {
             maskOptions = JSON.parse(maskOptions.trim());
             maskOptions = parseValueOfObject(maskOptions);
         }
-
         $this.mask(mask, maskOptions);
+        $this.keyup(function () {
+            var $this = $(this);
+            var name = $this.attr('name');
+            if (name.indexOf('telefone') !== -1 || name.indexOf('celular') !== -1) {
+                if ($this.val().length === 15) {
+                    $this.mask('(00) 90000-0000', maskOptions);
+                } else {
+                    $this.mask('(00) 0000-00009', maskOptions);
+                }
+            }
+        }).trigger('keyup');
     });
 }
 module.exports = function () {
     var $ = require('jquery');
+    $.jMaskGlobals =  $.jMaskGlobals || {}
+    $.jMaskGlobals.dataMask = false;
+
     require('jquery-mask-plugin');
 
     setMask($);

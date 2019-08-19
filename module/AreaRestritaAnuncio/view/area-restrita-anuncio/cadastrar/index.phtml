@@ -13,7 +13,8 @@ $fields['telefone_2_is_wpp']->setChecked(false);
 $fields['telefone_3_is_wpp']->setChecked(false);
 $fields['senha']->setAttribute('autocomplete', 'off');
 ?>
-<form method="POST" name="form_particularSite" class="form-group m-0 " role="form" id="form_particularSite" action="me-cadastrar">
+<form method="POST" name="form_particularSite" class="form-group m-0 " role="form" id="form_particularSite"
+    action="me-cadastrar">
     <div class="container-fluid container-fixed-lg">
         <div class="row">
             <div class="col-lg-4"></div>
@@ -22,21 +23,23 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                 <div class="card card-default m-0">
                     <div class="snbh-logo-container d-flex justify-content-center mt-3">
                         <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
-                        <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-                            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-                            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
-                        </svg>
+                        <a href="/" title="Voltar e fazer login">
+                            <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+                                <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                                <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+                            </svg>
+                        </a>
                     </div>
                     <div class="card-header ">
                         <div class="card-title"><span class="text-capitalize">SeminovosBH - Cadastro</span> <span
-                                    class="text-lowercase">de</span> <span class="text-capitalize">Usuário</span></div>
+                                class="text-lowercase">de</span> <span class="text-capitalize">Usuário</span></div>
                     </div>
                     <div class="card-body">
                         <p>
                             <small>Preencha os dados abaixo e clique no botão cadastrar para criar seu cadastro</small>
                         </p>
                         <div class="row">
-                            <div class="form-group col-8 col-md-6">
+                            <div class="form-group col-8 col-md-6 required">
                                 <?= $this->formLabel($fields['responsavelNome']) ?>
                                 <?= $this->formText($fields['responsavelNome']) ?>
                             </div>
@@ -46,47 +49,42 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-12 col-md-6">
+                            <div class="form-group col-12 col-md-6 required">
                                 <?= $this->formLabel($fields['email']) ?>
                                 <?= $this->formEmail($fields['email']) ?>
                             </div>
-                            <div class="form-group col-12 col-md-6">
+                            <div class="form-group col-12 col-md-6 required">
                                 <label>Confirme o e-mail</label>
-                                <input type="email" name="confirmacao-email" class="form-control" placeholder="seuemail@example.com.br" required>
+                                <input type="email" name="confirmacao-email" class="form-control"
+                                    placeholder="seuemail@example.com.br" required>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group col-6 required">
                                 <?= $this->formLabel($fields['cpfResponsavel']) ?>
                                 <?= $this->formText($fields['cpfResponsavel']) ?>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-6 required">
                                 <?= $this->formLabel($fields['rg']) ?>
                                 <?= $this->formText($fields['rg']) ?>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group col-6 required">
                                 <?= $this->formLabel($fields['idEstado']) ?>
                                 <?= $this->formSelect($fields['idEstado']) ?>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-6 required">
                                 <?= $this->formLabel($fields['idCidade']) ?>
                                 <?= $this->formSelect($fields['idCidade']) ?>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <?= $this->formLabel($fields['telefone_1']) ?>
-                                <?= $this->formText($fields['telefone_1']) ?>
-                            </div>
-                        </div>
                         <div class="row d-flex align-items-end">
-                            <div class="form-group col-4">
+                            <div class="form-group col-4 required">
                                 <?= $this->formLabel($fields['telefone_2']) ?>
                                 <?= $this->formText($fields['telefone_2']) ?>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="form-group col-4 required">
                                 <?= $this->formLabel($fields['operadora_2']) ?>
                                 <?= $this->formSelect($fields['operadora_2']) ?>
                             </div>
@@ -112,13 +110,38 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group col-12">
+                                <?= $this->formLabel($fields['telefone_1']) ?>
+                                <?= $this->formText($fields['telefone_1']) ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <small class="text-success ml-2">
+                                    sua senha deve conter no
+                                    mínimo 4 caractéres
+                                </small>
+                            </div>
+                            <div class="form-group required col-6">
                                 <?= $this->formLabel($fields['senha']) ?>
                                 <?= $this->formPassword($fields['senha']) ?>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group required col-6">
                                 <?= $this->formLabel($fields['confirmacaoSenha']) ?>
                                 <?= $this->formPassword($fields['confirmacaoSenha']) ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="checkbox check-success">
+                                    <input type="hidden" name="termo_responsabilidade" value="0">
+                                    <input type="checkbox" required name="termo_responsabilidade" value="1"
+                                        id="termo_responsabilidade">
+                                    <label for="termo_responsabilidade"> Li e aceito os <br class="d-block d-md-none"><a
+                                            href="https://seminovos.com.br/termo-de-responsabilidade"
+                                            target="_blank">termos de
+                                            responsibilidade</a>.</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -135,18 +158,27 @@ $fields['senha']->setAttribute('autocomplete', 'off');
 </form>
 <!-- Facebook Pixel Code -->
 <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '408763516364456');
-  fbq('track', 'cadastro');
+! function(f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function() {
+        n.callMethod ?
+            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = !0;
+    n.version = '2.0';
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = !0;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+}(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '408763516364456');
+fbq('track', 'cadastro');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=408763516364456&ev=PageView&noscript=1"
-/></noscript>
+        src="https://www.facebook.com/tr?id=408763516364456&ev=PageView&noscript=1" /></noscript>
 <!-- End Facebook Pixel Code -->
