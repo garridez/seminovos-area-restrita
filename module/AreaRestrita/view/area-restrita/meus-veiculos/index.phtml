@@ -5,7 +5,7 @@ $veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
-
+$nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? "Não informado"
 ?>
 
 <div class="container-fluid container-anuncios">
@@ -320,9 +320,13 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["reativar"]??false){?>
-                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente reativar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, reativar" data-modal-success-msg="Veiculo Reativado"
+                                <a href="#" class="reativar" data-confirm
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b>$nome</b>, você confirma que deseja reativar o anúncio <b> {$veiculo['marca']}</b > <b>{$veiculo['modelo']}</b> placa <b>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="Reativar anúncio"
+                                    data-confirm-img="/img/svg/ico_reativar.svg"
+                                    data-confirm-text="Sim, reativar"
+                                    data-negate-text="Não"
+                                    data-confirm-option-confirm="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                     title="Reativar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
                                 </a>
@@ -353,7 +357,8 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
             <?php endforeach; ?>
         </div>
     </div>
-    <button type="button" class="btn btn-primary">
+<!-- @todo REMOVER ISTo -->
+    <!-- <button type="button" class="btn btn-primary">
         Abrir modal de demonstração
     </button>
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReativar">
@@ -380,5 +385,5 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

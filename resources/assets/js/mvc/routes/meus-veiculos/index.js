@@ -18,6 +18,27 @@ module.exports.callback = $ => {
         });
     }
 
+    // $('a.reativar[data-confirm]').data('confirm-option-confirm', function(){
+    //     alert('here')
+    // });
+
+    $("body").on("click", ".anuncios [data-confirm]", function () {
+        var $this = $(this);
+        Confirms.success({
+            text: $this.data("confirm-body"),
+            title: $this.data("confirm-title"),
+            img: $this.data("confirm-img"),
+            confirmText: $this.data("confirm-text"),
+            negateText: $this.data("negate-text"),
+            confirmCallback: $this.data("confirm-option-confirm"),
+            negateCallback:function(){return}
+        });
+    });
+
+
+
+
+
 
     $("body").on("click", ".anuncios [data-modal]", function () {
         var modal;

@@ -1,31 +1,44 @@
 
 require('components/JsBsModal');
+var Alerts = require('components/Alerts');
 
 var $ = require('jquery');
 var confirms;
 
 module.exports = confirms = {
     optionsDefault: {
-        text:"",
+        text: "",
         title: "",
         img: "",
         confirmText: "Salvar Alterações",
         negateText: "Fechar",
-        confirmCallback:function(){return},
-        negateCallback:function(){return}
+        confirmCallback: function () { return },
+        negateCallback: function () { return }
     },
     confirm: function (type, options) {
         options = $.extend({}, this.optionsDefault, options);
         /**
          * @todo Melhorar estes IFs
          */
-        if(options.img !== "") {
+        if (options.img !== "") {
             options.img = $(`<img class="modal-img" src="${options.img}">`);
         }
 
         var btnConfirm = $('<button type="button" class="btn btn-primary">')
             .html(`<span>${options.confirmText}</span>`).click(function () {
-                options.confirmCallback();
+                $(this).attr("disabled", true);
+                if (typeof options.confirmCallback === 'function') {
+                    options.confirmCallback();
+                } else if (typeof options.confirmCallback === 'string') {
+                    $.getJSON(options.confirmCallback)
+                        .done(function (data, jqXHR, type) {
+                            if (data.status !== 200) {
+                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                            }
+                            modal.modal('hide');
+
+                        });
+                }
             });
 
         var btnNegate = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">')
