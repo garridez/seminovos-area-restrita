@@ -292,7 +292,7 @@ class DadosForm extends Form
             'cor',
             'portas',
             'combustivel',
-            'cilindradas',
+            'motoCilindradas',
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {
