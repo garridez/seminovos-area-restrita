@@ -10,7 +10,7 @@ module.exports = confirms = {
         if (title === null || title === undefined) {
             title = '';
         }
-        if (title === null || title === undefined) {
+        if (img === null || img === undefined) {
             img = '';
         }
 
