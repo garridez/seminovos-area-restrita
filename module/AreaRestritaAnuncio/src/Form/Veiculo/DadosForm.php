@@ -66,6 +66,19 @@ class DadosForm extends Form
             ]
         ]);
         $this->add([
+            'type' => Element\Select::class,
+            'name' => 'versao',
+            'options' => [
+                'label' => 'Versão',
+                'value_options' => [
+                    '' => 'Selecione a versão',
+                ],
+            ],
+            'attributes' => [
+                'required' => true,
+            ]
+        ]);
+        /*$this->add([
             'type' => Element\Text::class,
             'name' => 'versao',
             'options' => [
@@ -74,7 +87,7 @@ class DadosForm extends Form
             'attributes' => [
                 'required' => true,
             ]
-        ]);
+        ]);*/
         $this->add([
             'type' => SelectMotor::class,
             'name' => 'motor',
