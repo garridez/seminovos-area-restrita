@@ -4,8 +4,19 @@ module.exports.callback = $ => {
     require("components/JsBsModal");
     var Alerts = require("components/Alerts");
     var Confirms = require('components/confirms');
+    Confirms.success(
+        `<b>[NOME]</b>, você confirma que deseja reativar o anúncio <b> [Marca]</b > <b>[Modelo]</b> placa <b>[PLACA]</b>?`,
+        "REATIVAR VEÍCULO", "/img/svg/ico_reativar.svg"
+    );
+
+
+
+
     $(".btn-primary").click(function (e) {
-        Confirms.success("TESTE", "teste");
+        Confirms.success(
+            `<b>[NOME]</b>, você confirma que deseja reativar o anúncio <b> [Marca]</b > <b>[Modelo]</b> placa <b>[PLACA]</b>?`,
+            "REATIVAR VEÍCULO",
+        );
     });
 
     /**

@@ -5,47 +5,66 @@ var $ = require('jquery');
 var confirms;
 
 module.exports = confirms = {
-    options: {},
-    alert: function (type, text, title, img) {
+    options: {
+        title: "",
+        img: "",
+        confirmText: "Salvar Alterações",
+        negateText: "Fechar"
+    },
+    confirm: function (type, text, title, img, confirmText, negateText) {
+        /**
+         * @todo Melhorar estes IFs
+         */
         if (title === null || title === undefined) {
-            title = '';
+            title = this.options.title;
         }
+        console.log(img);
+
         if (img === null || img === undefined) {
-            img = '';
+            img = this.options.img;
+        } else {
+            img = $(`<img class="modal-img" src="${img}">`);
+        }
+        if (confirmText === null || confirmText === undefined) {
+            confirmText = this.options.confirmText;
+        }
+        if (negateText === null || negateText === undefined) {
+            negateText = this.options.negateText;
         }
 
-        var close = $('<button class="btn btn-danger" data-dismiss="modal">')
-            .html('<span class="text-close">Fechar</span> ');
+        var btnConfirm = $('<button type="button" class="btn btn-primary">')
+            .html(`<span>${confirmText}</span>`);
 
-
+        var btnNegate = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">')
+            .html(`<span>${negateText}</span>`);
 
         var modal = $.jsBsModal({
             contents: {
-                'close': '',
-                'modal-title': title,
+                'close': false,
+                'modal-title': [img, title],
                 'modal-body': text,
                 'modal-footer': [
-                    close
+                    btnNegate, btnConfirm
                 ],
             }
         }).on('hidden.bs.modal', function () {
             modal.modal('dispose').remove();
         });
 
-        modal.find('.modal-content').addClass('alert alert-' + type);
+        modal.find('.modal-content').addClass('confirm confirm-' + type);
 
         return modal;
     },
-    success: function (text, title) {
-        return alerts.alert('success', text, title);
+    success: function (text, title, img) {
+        return confirms.confirm('success', text, title, img);
     },
-    info: function (text, title) {
-        return alerts.alert('info', text, title);
+    info: function (text, title, img) {
+        return confirms.confirm('info', text, title, img);
     },
-    warning: function (text, title) {
-        return alerts.alert('warning', text, title);
+    warning: function (text, title, img) {
+        return confirms.confirm('warning', text, title, img);
     },
-    error: function (text, title) {
-        return alerts.alert('error', text, title);
+    error: function (text, title, img) {
+        return confirms.confirm('error', text, title, img);
     },
 };
