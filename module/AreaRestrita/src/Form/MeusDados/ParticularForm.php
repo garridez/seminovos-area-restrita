@@ -258,19 +258,7 @@ class ParticularForm extends Form
                 'class' => 'form-control'
             ]
         ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'termoResponsibilidade',
-            'options' => [
-                'label' => 'Li e aceito os <br class="d-block d-md-none"><a href="https://seminovos.com.br/termo-de-responsabilidade" target="_blank">termos de responsibilidade</a>.',
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-            'attributes' => [
-                'required' => true,
-                'class' => 'form-control'
-            ]
-        ]);
+
         $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
