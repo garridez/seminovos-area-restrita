@@ -206,7 +206,7 @@ class DadosForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'cilindradas',
+            'name' => 'motoCilindradas',
             'required' => true,
         ]);
         $inputFilter->add([
@@ -253,13 +253,13 @@ class DadosForm extends Form
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
         $removerCamposPorTipo = [
             VeiculoTipo::TIPO_CARRO => [
-                'cilindradas'
+                'motoCilindradas'
             ],
             VeiculoTipo::TIPO_CAMINHAO => [
                 'idValvula',
                 'motor',
                 'acessorios',
-                'cilindradas'
+                'motoCilindradas'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
