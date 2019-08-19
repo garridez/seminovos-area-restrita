@@ -97,12 +97,17 @@ class DadosForm extends Form
         ]);
         $this->add([
             'type' => Element\Text::class,
-            'name' => 'cilindradas',
+            'name' => 'motoCilindradas',
             'options' => [
                 'label' => 'Cilindradas',
             ],
             'attributes' => [
                 'required' => true,
+                'data-mask' => '0000cc',
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
+                'placeholder' => '500cc',
             ]
         ]);
         $this->add([
