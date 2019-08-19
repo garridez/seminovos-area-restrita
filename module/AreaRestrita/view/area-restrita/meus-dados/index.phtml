@@ -153,12 +153,7 @@ $tipoCadastro = $this->tipoCadastro;
                                 </div>
                             </div>
                         </div>
-                        <?php elseif ($tipoCadastro == 2) : ?>
-                        <div class="form-group form-group-default  ">
-                            <?= $this->formLabel($fields['telefone_1']) ?>
-                            <?= $this->formText($fields['telefone_1']) ?>
-                        </div>
-                        <?php endif; ?>
+                        <?php endif;?>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group form-group-default ">
@@ -177,7 +172,7 @@ $tipoCadastro = $this->tipoCadastro;
                                     <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group form-group-default ">
@@ -216,6 +211,11 @@ $tipoCadastro = $this->tipoCadastro;
                                     <?= $this->formCheckbox($fields['telefone_4_is_wpp']) ?>
                                 </div>
                             </div>
+                        </div>
+                        <?php elseif ($tipoCadastro == 2) : ?>
+                        <div class="form-group form-group-default  ">
+                            <?= $this->formLabel($fields['telefone_1']) ?>
+                            <?= $this->formText($fields['telefone_1']) ?>
                         </div>
                         <?php endif; ?>
                     </div>
