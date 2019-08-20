@@ -228,7 +228,7 @@ class MeusVeiculosController extends AbstractActionController
                 "excluir" => false,
                 "renovar" => false,
                 "trocar_plano" => false,
-                "reativar" => true,
+                "reativar" => false,
                 "enviar_comprovante" => false,
                 "renovar_plano" => false,
                 "alerta" => false,
