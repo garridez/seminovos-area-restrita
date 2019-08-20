@@ -35,10 +35,11 @@
     "jquery-validation": "^1.19.0",
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
+    "moment": "^2.24.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
     "sass-loader": "^7.2.0",
-    "snbh-site": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git#master",
+    "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
     "sortablejs": "^1.10.0-rc3"
   },
   "devDependencies": {

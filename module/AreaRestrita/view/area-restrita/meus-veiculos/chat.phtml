@@ -1,6 +1,7 @@
-<?php 
+<?php
 $img = "https://carros.seminovosbh.com.br/mitsubishi-l200-2009-2009-2582955-3230ca1e0101b7c9175267c342dc5f3f56c8.jpg";
-$img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735681b396dd10bf29b54a7f15106a26fd.jpg";
+$img2 = "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735681b396dd10bf29b54a7f15106a26fd.jpg";
+
 ?>
 <section class="section-chat">
     <!-- <h1>CHAT - Area restrita</h1> -->
@@ -9,62 +10,33 @@ $img2= "https://carros.seminovosbh.com.br/alfa-romeo-164-1995-1995-2584144-30735
             <div class="col-12">
                 <div class="row">
                     <div class="list-chats col-12 col-md-4 border-right p-0">
-                        <div class="chat bg-white d-flex py-2 px-2 border-bottom">
-                            <div class="chat-img mr-2">
-                                <img src="<?= $img ?>" alt="" class="img-fluid">
-                            </div>
-                            <div class="chat-details">
-                                <div class="chat-title">
-                                    <b>Banco Bateria Pearl...</b>
+                        <template class="template-chat-subject">
+                            <div class="chat-subject chat bg-white d-flex py-2 px-2 border-bottom">
+                                <div class="chat-img mr-2">
+                                    <img src="<?= $img ?>" alt="" class="img-fluid">
                                 </div>
-                                <div class="chat-name mt-1">
-                                    <span>
-                                        Marcos Júnio
-                                    </span>
+                                <div class="chat-details">
+                                    <div class="chat-title">
+                                        chat-title
+                                    </div>
+                                    <div class="chat-name mt-1">
+                                        chat-name
+                                    </div>
+                                    <div class="chat-last-msg mt-1 text-gray">
+                                        chat-last-msg
+                                    </div>
                                 </div>
-                                <div class="chat-last-msg mt-1">
-                                    <span class="text-gray">
-                                        Boa noite, não
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="chat-info ml-auto">
-                                <div class="chat-date d-flex justify-content-center">
-                                    Sex, 5 de Jul
-                                </div>
-                                <div class="chat-status px-2">
-                                    <span> anúncio intaivo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat bg-white d-flex py-2 px-2 py-1">
-                            <div class="chat-img mr-2">
-                                <img src="<?= $img2 ?>" alt="" class="img-fluid">
-                            </div>
-                            <div class="chat-details">
-                                <div class="chat-title">
-                                    <b>Chimbal aéreo Mapex</b>
-                                </div>
-                                <div class="chat-name mt-1">
-                                    <span>
-                                        Marcos Júnio
-                                    </span>
-                                </div>
-                                <div class="chat-last-msg mt-1">
-                                    <span class="text-gray">
-                                        Boa noite, não
-                                    </span>
+                                <div class="chat-info ml-auto">
+                                    <div class="chat-date d-flex justify-content-center">
+                                        <!--Sex, 5 de Jul-->
+                                        chat-date
+                                    </div>
+                                    <div class="chat-status px-2">
+                                        chat-status
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-info ml-auto">
-                                <div class="chat-date d-flex justify-content-center">
-                                    Sex, 5 de Jul
-                                </div>
-                                <div class="chat-status px-2">
-                                    <span> anúncio intaivo</span>
-                                </div>
-                            </div>
-                        </div>
+                        </template>
                     </div>
                     <div class="col-12 col-md-8 bg-white conversation-active invisible">
                         <div class="d-flex d-md-flex w-100 align-items-center justify-content-between">

@@ -1,6 +1,8 @@
 module.exports.seletor = ".c-meus-veiculos.a-chat";
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 module.exports.callback = $ => {
+    var Chat = require('components/Chat');
+    new Chat($('.section-chat'));
     var jQuery = require("jquery");
     window.jQuery = jQuery;
     require("emojionearea");

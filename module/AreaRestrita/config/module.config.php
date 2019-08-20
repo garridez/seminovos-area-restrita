@@ -122,6 +122,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\AuthController::class => InvokableFactory::class,
+            Controller\ChatController::class => InvokableFactory::class,
             Controller\CheckController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
             Controller\FaturaController::class => InvokableFactory::class,
