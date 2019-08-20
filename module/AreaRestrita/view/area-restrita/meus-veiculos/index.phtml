@@ -285,44 +285,47 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                     class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
                                 <?php }?>
 
-                                <?php if(isset($veiculo['botoes']['inativar']) && $veiculo['botoes']['inativar']){?>
-                                <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, inativar este veículo!"
-                                    data-modal-success-msg="Veículo inativado!" title="Desativar veículo">
-                                    <button class="btn btn-sm btn-danger ml-2">Inativar</button>
+                                <?php if($veiculo['botoes']['inativar']??false){?>
+                                <a href="#" class="btn btn-sm btn-danger ml-2 anuncios" data-confirm
+                                    data-confirm-type="error"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>inativar</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Inativar Anúncio</span>")?>"
+                                    data-confirm-text="Sim, Inativar o Anúncio"
+                                    data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>"
+                                    data-negate-text="Não">Inativar</a>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["vendido"]??false){?>
+                                <a href="#" class="anuncios" data-confirm data-confirm-type="info"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>")?>"
+                                    data-confirm-text="Sim, eu vendi"
+                                    data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
+                                    data-negate-text="Não" title="Marcar como vendido">
+                                    <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
                                 </a>
                                 <?php }?>
 
-                                <?php if($veiculo["botoes"]["vendido"]){?>
-                                <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, marcar como vendido!"
-                                    data-modal-success-msg="Marcado como vendido!" title="Marcar como vendido">
-                                    <button class="btn btn-sm btn-complete ml-2">Vendido</button>
-                                </a>
-                                <?php }?>
 
-
-                                <?php if($veiculo["botoes"]["renovar"]??false){
+                                <?php  if($veiculo["botoes"]["renovar"]??false){
                                     /**
                                      * @todo O renovar vai mesmo para o ativar?
                                      */
                                     ?>
-                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente renovar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, renovar" data-modal-success-msg="Veiculo Renovado"
-                                    data-modal-adicional-type="error"
-                                    data-modal-adicional-msg='<?= $this->escapeHtmlAttr("<br>A SeminovosBH NÃO não entra em contato por telefone, WhatsApp ou mensagem solicitando a validação do seu anúncio. Não forneça nenhuma informação pessoal ou código enviado para o seu número para validar seu anúncio.                                    Fique atento para não ser vítima de golpes. Estamos á disposição para qualquer dúvida (31) 3077-5888")?>'
-                                    data-modal-adicional-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>AVISO IMPORTANTE!</span>")?>"
-                                    data-modal-adicional-time="180000" title="Renovar anúncio">
-                                    <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
+                                <a href="#" class="renovar anuncios" data-confirm data-confirm-type="success"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>renovar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Renovar anúncio</span>")?>"
+                                    data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar"
+                                    data-negate-text="Não"
+                                    data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
+                                    title="Renovar anúncio">
+                                    <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
                                 </a>
-                                <?php }?>
+                                <?php  }?>
 
                                 <?php if($veiculo["botoes"]["reativar"]??false){?>
-                                <a href="#" class="reativar anuncios" data-confirm
-                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja reativar o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                <a href="#" class="reativar anuncios" data-confirm data-confirm-type="success"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>")?>"
                                     data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
                                     data-negate-text="Não"

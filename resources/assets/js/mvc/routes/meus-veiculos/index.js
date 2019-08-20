@@ -33,7 +33,51 @@ module.exports.callback = $ => {
                 text: text,
                 title: $("<span>").html(`<span class='text-primary'>Alerta </span>importante`),
                 time: false,
-                img: false,
+                img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
+                closeText: "ESTOU CIENTE",
+                closeCallback: function () {
+                    $.getJSON($this.data("confirm-url"))
+                        .done(function (data, jqXHR, type) {
+                            if (data.status !== 200) {
+                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                            } else {
+                                var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
+                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
+                                                            reativado com <b class="text-primary">sucesso.</b>`);
+                                advancedAlerts.success({
+                                    text: text,
+                                    title: $("<span class='text-primary'>").html("Sucesso")
+                                });
+                            }
+                            $(".modal").modal('hide');
+                        }).fail(function () {
+                            advancedAlerts.error({ title: "ERRO", text: "Não conseguimos processar sua requisição, tente novamente mais tarde" });
+                        })
+
+                    $(".modal").modal('hide');
+                }
+            });
+        })
+    });
+    /**
+     * @todo RENOVAR E REATIVAR ESTÃO IGUAIS
+     */
+    $("body").on("click", "a.renovar[data-confirm]", function () {
+        var $this = $(this);
+        var $veiculo = $this.closest(".veiculo");
+        $this.data("confirm-option-confirm", function () {
+            $(".modal").modal('hide');
+            var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
+            <b class='text-primary'>telefone </b> ou <b class='text-primary'>whatsapp </b>
+            solicitando código de verificação de anúncio ou similar.<br><br>
+            CUIDADO PARA NÃO CAIR EM GOLPES<br><br>
+            Estamos à disposição para esclarecer dúvidas<br>
+            (31)3077-5888`;
+            advancedAlerts.error({
+                text: text,
+                title: $("<span>").html(`<span class='text-primary'>Alerta </span>importante`),
+                time: false,
+                img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
                 closeText: "ESTOU CIENTE",
                 closeCallback: function () {
                     $.getJSON($this.data("confirm-url"))
@@ -64,7 +108,8 @@ module.exports.callback = $ => {
 
     $("body").on("click", "a.anuncios[data-confirm]", function () {
         var $this = $(this);
-        $this.data("confirm-modal", Confirms.success({
+        var type = $this.data("confirm-type") || success;
+        $this.data("confirm-modal", Confirms[type]({
             text: $this.data("confirm-body"),
             title: $this.data("confirm-title"),
             img: $this.data("confirm-img"),
