@@ -8,27 +8,6 @@ $formCadastro->prepare();
 
 $fields = $formCadastro->getElements();
 
-if(isset($fields['telefone_1']) && $fields['telefone_1']){
-    $fields['telefone_1']->setAttribute('disabled', true);
-}
-if(isset($fields['telefone_2']) && $fields['telefone_2']){
-    $fields['telefone_2']->setAttribute('disabled', true);
-    $fields['operadora_2']->setAttribute('disabled', true);
-    $fields['telefone_2_is_wpp']->setAttribute('disabled', true);
-}
-
-if(isset($fields['telefone_3']) && $fields['telefone_3']){
-    $fields['telefone_3']->setAttribute('disabled', true);
-    $fields['operadora_3']->setAttribute('disabled', true);
-    $fields['telefone_3_is_wpp']->setAttribute('disabled', true);
-}
-
-if(isset($fields['telefone_4']) && $fields['telefone_4']){
-    $fields['telefone_4']->setAttribute('disabled', true);
-    $fields['operadora_4']->setAttribute('disabled', true);
-    $fields['telefone_4_is_wpp']->setAttribute('disabled', true);
-}
-
 
 $tipoCadastro = $this->tipoCadastro;
 
@@ -115,7 +94,7 @@ $tipoCadastro = $this->tipoCadastro;
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-group-default">
+                                <div class="form-group form-group-default required">
                                     <?= $this->formLabel($fields['rg']) ?>
                                     <?= $this->formText($fields['rg']) ?>
                                 </div>
@@ -176,12 +155,7 @@ $tipoCadastro = $this->tipoCadastro;
                                 </div>
                             </div>
                         </div>
-                        <?php elseif ($tipoCadastro == 2) : ?>
-                        <div class="form-group form-group-default  ">
-                            <?= $this->formLabel($fields['telefone_1']) ?>
-                            <?= $this->formText($fields['telefone_1']) ?>
-                        </div>
-                        <?php endif; ?>
+                        <?php endif;?>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group form-group-default ">
@@ -239,6 +213,11 @@ $tipoCadastro = $this->tipoCadastro;
                                     <?= $this->formCheckbox($fields['telefone_4_is_wpp']) ?>
                                 </div>
                             </div>
+                        </div>
+                        <?php elseif ($tipoCadastro == 2) : ?>
+                        <div class="form-group form-group-default  ">
+                            <?= $this->formLabel($fields['telefone_1']) ?>
+                            <?= $this->formText($fields['telefone_1']) ?>
                         </div>
                         <?php endif; ?>
                     </div>

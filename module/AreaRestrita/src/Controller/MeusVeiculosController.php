@@ -255,9 +255,6 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["excluir"] = true;
                     }
-                    if ($veiculo['idPlano'] == 4 && $intervaloDataCadastro > 30) {
-                        $temp_acoes["renovar_plano"] = true;
-                    }
                     if ($veiculo['idPlano'] != 1 && $intevaloData <= 2){
                         $temp_acoes["reativar"] = true;
                     }
@@ -283,6 +280,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] == 4) {
                         $temp_acoes["reativar"] = true;
                         //$temp_acoes["renovar"] = true;
+                        $temp_acoes["renovar_plano"] = true;
                     } elseif ($veiculo['idPlano'] == 1) {
                         $temp_acoes["upgrade_plano"] = true;
                     } else {

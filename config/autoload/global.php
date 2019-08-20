@@ -92,16 +92,17 @@ return [
         )
     ),
     'session_config' => [
-        'cookie_lifetime' => 60 * 60 * 4,
-        'gc_maxlifetime' => 60 * 60 * 24 * 30,
+        'cookie_lifetime' => 60 * 60 * 24 * 31 * 12,
+        'gc_maxlifetime' => 60 * 60 * 24 * 5,
     ],
     'session_manager' => [
         'validators' => [
-        ]
+        ],
+        'options' => [
+            'attach_default_validators' => false
+        ],
     ],
-    // Session storage configuration.
     'session_storage' => [
         'type' => SessionArrayStorage::class
     ],
-    // ...
 ];

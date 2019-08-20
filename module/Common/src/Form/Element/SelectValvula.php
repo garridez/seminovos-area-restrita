@@ -9,6 +9,7 @@ class SelectValvula extends Select
 
     protected $valueOptions = [
         '' => 'Selecione',
+        "10" => 6,
         "3" => 8,
         "4" => 12,
         "1" => 16,
