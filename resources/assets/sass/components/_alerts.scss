@@ -23,6 +23,7 @@
             color: #3C3C3C;
             font-size: 25px;
             font-weight: bold;
+            text-align: center;
             .modal-img{
                 width: 20%;
                 height: auto;
@@ -39,5 +40,81 @@
         .modal-footer{
             @extend .d-flex, .justify-content-center ;
         }
+    }
+}
+.alert-success{
+    .text-primary{
+        color :#47943c !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #75a56f !important;
+            border-color: #75a56f !important;
+            box-shadow: 0 0 0 0.2rem rgba(151, 213, 143, 0.541)!important;
+        }
+        color:white;
+        background-color: #97D68F;
+        border-color: #97D68F;
+    }
+}
+.alert-error{
+    .text-primary{
+        color :#882929 !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #882929 !important;
+            border-color: #882929 !important;
+            box-shadow: 0 0 0 0.2rem rgba(214, 71, 71, 0.383)!important;
+        }
+        color:white;
+        background-color: #d64747;
+        border-color: #d64747;
+    }
+}
+.alert-warning{
+    .text-primary{
+        color :#db9524 !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #db9524 !important;
+            border-color: #db9524 !important;
+            box-shadow: 0 0 0 0.2rem rgba(255, 173, 42, 0.589)!important;
+        }
+        color:white;
+        background-color: #ffaf2d;
+        border-color: #ffad2a;
+    }
+}
+.alert-info{
+    .text-primary{
+        color :#2664b6 !important;
+    }
+    .text-secondary{
+        color :#5d5d5d !important;
+    }
+    .btn-primary{
+        &:active,&:focus{
+            color:white !important;
+            background-color: #2664b6 !important;
+            border-color: #2664b6 !important;
+            box-shadow: 0 0 0 0.2rem rgba(38, 100, 182, 0.513)!important;
+        }
+        color:white;
+        background-color: #358dff;
+        border-color: #358dff;
     }
 }

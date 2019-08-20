@@ -3,6 +3,7 @@ module.exports.seletor = ".c-meus-veiculos.a-index";
 module.exports.callback = $ => {
     require("components/JsBsModal");
     var Alerts = require("components/Alerts");
+    var advancedAlerts = require("components/advancedAlerts");
     var Confirms = require('components/confirms');
 
     /**
@@ -17,6 +18,12 @@ module.exports.callback = $ => {
             $(".qtd-anuncios-menu").html(data);
         });
     }
+    advancedAlerts.success({
+        text: "data.detail",
+        title: "Houve um problema...",
+        time: false,
+        img: "/img/svg/ico_reativar.svg"
+    });
 
     // $('a.reativar[data-confirm]').data('confirm-option-confirm', function(){
     //     alert('here')
@@ -31,7 +38,7 @@ module.exports.callback = $ => {
             confirmText: $this.data("confirm-text"),
             negateText: $this.data("negate-text"),
             confirmCallback: $this.data("confirm-option-confirm"),
-            negateCallback:function(){return}
+            negateCallback: function () { return }
         });
     });
 
