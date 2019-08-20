@@ -64,7 +64,7 @@ function init() {
         
         if(typeof itens['portas'] !== 'undefined'){
             $('[name="portas"]').empty();
-            $('[name="portas"]').append('<option>Selecione</option>');
+            $('[name="portas"]').append('<option value="">Selecione</option>');
 
             for (var i = 0; i < itens['portas'].length; i++) {
 
@@ -88,7 +88,7 @@ function init() {
         if(typeof itens['motor'] !== 'undefined'){
         
             $('[name="motor"]').empty();
-            $('[name="motor"]').append('<option>Selecione</option>');
+            $('[name="motor"]').append('<option value="">Selecione</option>');
 
             for (var i = 0; i < itens['motor'].length; i++) {
 
@@ -111,7 +111,7 @@ function init() {
         
         if(typeof itens["valvulas"] !== 'undefined'){
             $('[name="idValvula"]').empty();
-            $('[name="idValvula"]').append('<option>Selecione</option>');
+            $('[name="idValvula"]').append('<option value="">Selecione</option>');
 
             for (var i = 0; i < itens['valvulas'].length; i++) {
 
@@ -135,6 +135,17 @@ function init() {
     });
     
     anoModelo.change(function(){
+        $('#divOutraVersao').addClass("hide");
+        portasSelect.html('')
+                .prepend(portasOptions)
+                .val('');
+        motorSelect.html('')
+                .prepend(motorOptions)
+                .val('');
+        valvulasSelect.html('')
+                .prepend(valvulasOptions)
+                .val('');
+        
        
        $.ajax({
                 type: "POST",
@@ -148,7 +159,7 @@ function init() {
                 dataType: "json",
                 success: function (response) {
                     $('[name="versao"]').empty();
-                    $('[name="versao"]').append('<option>Selecione a versao</option>');
+                    $('[name="versao"]').append('<option value="">Selecione a versao</option>');
                     var dados = response.data;
 
                     for (var i = 0; i < dados.length; i++) {
