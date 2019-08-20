@@ -83,7 +83,10 @@ module.exports.callback = $ => {
                     $.getJSON($this.data("confirm-url"))
                         .done(function (data, jqXHR, type) {
                             if (data.status !== 200) {
-                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                                advancedAlerts.error({
+                                    text: data.detail,
+                                    title: "Houve um problema...",
+                                })
                             } else {
                                 var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
                                                             <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
@@ -114,7 +117,8 @@ module.exports.callback = $ => {
             title: $this.data("confirm-title"),
             img: $this.data("confirm-img"),
             confirmText: $this.data("confirm-text"),
-            negateText: $this.data("negate-text"),
+            negateText: $this.data("confirm-negate-text"),
+            successText: $this.data("confirm-success-text"),
             confirmCallback: $this.data("confirm-option-confirm"),
             negateCallback: $this.data("confirm-option-negate")
         }));

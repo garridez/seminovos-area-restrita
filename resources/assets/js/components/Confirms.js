@@ -1,6 +1,6 @@
 
 require('components/JsBsModal');
-var Alerts = require('components/Alerts');
+var advancedAlerts = require('components/advancedAlerts');
 
 var $ = require('jquery');
 var confirms;
@@ -10,8 +10,9 @@ module.exports = confirms = {
         text: "",
         title: "",
         img: "",
-        confirmText: "Salvar Alterações",
-        negateText: "Fechar",
+        confirmText: "Sim",
+        negateText: "Não",
+        successText: "Sucesso",
         confirmCallback: function () { return },
         negateCallback: function () { return }
     },
@@ -30,14 +31,24 @@ module.exports = confirms = {
                 if (typeof options.confirmCallback === 'function') {
                     options.confirmCallback();
                 } else if (typeof options.confirmCallback === 'string') {
+                    $(".modal").modal('hide');
                     $.getJSON(options.confirmCallback)
                         .done(function (data, jqXHR, type) {
                             if (data.status !== 200) {
-                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                                advancedAlerts.error({
+                                    text: data.detail,
+                                    title: "Houve um problema...",
+                                })
+                            } else {
+                                advancedAlerts.success({
+                                    text: options.successText,
+                                    title: $("<span class='text-primary'>").html("Sucesso")
+                                });
                             }
-                            modal.modal('hide');
-
-                        });
+                            $(".modal").modal('hide');
+                        }).fail(function () {
+                            advancedAlerts.error({ title: "ERRO", text: "Não conseguimos processar sua requisição, tente novamente mais tarde" });
+                        })
                 }
             });
 
