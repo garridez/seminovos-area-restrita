@@ -10,12 +10,13 @@ module.exports = advancedAlerts = {
         title: "",
         time: 5000,
         img: false,
+        closeText: "Fechar",
         closeCallback: function () { return }
     },
     alert: function (type, options) {
         options = $.extend({}, this.optionsDefault, options);
         var close = $('<button class="btn btn-primary" data-dismiss="modal">')
-            .html('<span class="text-close">Fechar</span> ').click(function () { closeCallback(); });
+            .html(`<span class="text-close">${options.closeText}</span>`).click(function () { options.closeCallback(); });
 
         if (typeof options.img === "string" && options.img !== "") {
             options.img = $(`<img src="${options.img}" class="modal-img">`)

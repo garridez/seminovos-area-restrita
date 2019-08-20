@@ -7,9 +7,9 @@ module.exports.callback = $ => {
     var Confirms = require('components/confirms');
 
     /**
-     * Baixa o conteúdo da página atualizado
-     * Baixa apenas o conteúdo dentro da div ".container-anuncios"
-     */
+    * Baixa o conteúdo da página atualizado
+    * Baixa apenas o conteúdo dentro da div ".container-anuncios"
+    */
     function reloadPageContent() {
         $.get("/", function (data) {
             $(".container-anuncios").replaceWith(data);
@@ -18,28 +18,61 @@ module.exports.callback = $ => {
             $(".qtd-anuncios-menu").html(data);
         });
     }
-    advancedAlerts.success({
-        text: "data.detail",
-        title: "Houve um problema...",
-        time: false,
-        img: "/img/svg/ico_reativar.svg"
+    $("body").on("click", "a.reativar[data-confirm]", function () {
+        var $this = $(this);
+        var $veiculo = $this.closest(".veiculo");
+        $this.data("confirm-option-confirm", function () {
+            $(".modal").modal('hide');
+            var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
+            <b class='text-primary'>telefone </b> ou <b class='text-primary'>whatsapp </b>
+            solicitando código de verificação de anúncio ou similar.<br><br>
+            CUIDADO PARA NÃO CAIR EM GOLPES<br><br>
+            Estamos à disposição para esclarecer dúvidas<br>
+            (31)3077-5888`;
+            advancedAlerts.error({
+                text: text,
+                title: $("<span>").html(`<span class='text-primary'>Alerta </span>importante`),
+                time: false,
+                img: false,
+                closeText: "ESTOU CIENTE",
+                closeCallback: function () {
+                    $.getJSON($this.data("confirm-url"))
+                        .done(function (data, jqXHR, type) {
+                            if (data.status !== 200) {
+                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                            } else {
+                                var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
+                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
+                                                            reativado com <b class="text-primary">sucesso.</b>`);
+                                advancedAlerts.success({
+                                    text: text,
+                                    title: $("<span class='text-primary'>").html("Sucesso")
+                                });
+                            }
+                            $(".modal").modal('hide');
+                        }).fail(function () {
+                            advancedAlerts.error({ title: "ERRO", text: "Não conseguimos processar sua requisição, tente novamente mais tarde" });
+                        })
+
+                    $(".modal").modal('hide');
+                }
+            });
+        })
     });
 
-    // $('a.reativar[data-confirm]').data('confirm-option-confirm', function(){
-    //     alert('here')
-    // });
 
-    $("body").on("click", ".anuncios [data-confirm]", function () {
+
+    $("body").on("click", "a.anuncios[data-confirm]", function () {
         var $this = $(this);
-        Confirms.success({
+        $this.data("confirm-modal", Confirms.success({
             text: $this.data("confirm-body"),
             title: $this.data("confirm-title"),
             img: $this.data("confirm-img"),
             confirmText: $this.data("confirm-text"),
             negateText: $this.data("negate-text"),
             confirmCallback: $this.data("confirm-option-confirm"),
-            negateCallback: function () { return }
-        });
+            negateCallback: $this.data("confirm-option-negate")
+        }));
     });
 
 
