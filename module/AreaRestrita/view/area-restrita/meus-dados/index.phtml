@@ -18,8 +18,7 @@ $tipoCadastro = $this->tipoCadastro;
         <div class="col-lg-2"></div>
         <div class="col-lg-10 text-left">
             <h3 class="font-montserrat all-caps hint-text">MEUS DADOS</h3>
-            <span class="d-none <?= $formularioSalvo ? 'formularioSalvo' : '' ?> "><?=$formularioSalvo?></span>
-
+            <span data-request-response="<?=$requestResponse? $requestResponse:'' ?>"></span>
         </div>
     </div>
 </div>

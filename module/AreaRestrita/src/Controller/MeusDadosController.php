@@ -42,7 +42,7 @@ class MeusDadosController extends AbstractActionController
 
     public function indexAction()
     {
-        $formularioSalvo = false;
+        $requestResponse = false;
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
@@ -87,10 +87,10 @@ class MeusDadosController extends AbstractActionController
                 unset($data['nomeFantasia']);
 
                 $resPut = $cadastrosModel->put($data);
+                $requestResponse = $resPut->status;
                 if ($resPut->status === 200) {
                     // Busca os dados do cadastro atualizado
                     $dadosCadastro = $cadastrosModel->getCurrent(false);
-                    $formularioSalvo = true;
                 }
             }
         }
@@ -101,7 +101,7 @@ class MeusDadosController extends AbstractActionController
             'tipoCadastro' => $tipoCadastro,
             'formCadastro' => $dadosForm,
             'idCidade' => $dadosCadastro['idCidade'],
-            'formularioSalvo' => $formularioSalvo
+            'requestResponse' => $requestResponse
         ]);
     }
 
