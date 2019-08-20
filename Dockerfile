@@ -4,7 +4,7 @@ arg SESSION_PHP_SAVE_HANDLER
 arg SESSION_SAVE_PATH
 
 # No local não salva a sessão no redis
-RUN echo "session.cookie_domain=localhost\n\
+RUN echo ";session.cookie_domain=localhost\n\
 ;session.save_handler=$SESSION_PHP_SAVE_HANDLER\n\
 ;session.save_path=\"$SESSION_SAVE_PATH\"" > /usr/local/etc/php/conf.d/snbh-session.ini
 
