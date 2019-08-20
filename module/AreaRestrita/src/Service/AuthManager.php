@@ -70,7 +70,7 @@ class AuthManager
         if ($result->getCode() == Result::SUCCESS) {
             if ($options['rememberMe']) {
                 // Session cookie will expire in 1 month (30 days).
-                $this->sessionManager->rememberMe(60 * 60 * 24 * 30);
+                //$this->sessionManager->rememberMe(60 * 60 * 24 * 30);
             }
         }
 
