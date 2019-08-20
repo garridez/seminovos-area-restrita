@@ -73,8 +73,6 @@ class MeusDadosController extends AbstractActionController
                 /* @var $apiClient \SnBH\ApiClient\Client */
                 $data = $dadosForm->getData();
 
-                // var_dump($data);
-                // die;
                 $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
 
                 #campos não existentes na tabela
@@ -97,8 +95,6 @@ class MeusDadosController extends AbstractActionController
             }
         }
 
-         //var_dump($dadosCadastro);
-         //die;
         $dadosForm->populateValues($dadosCadastro);
         
         return new ViewModel([
