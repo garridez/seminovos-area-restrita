@@ -132,11 +132,16 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
 
                             <div class="btn-group">
                                 <?php if($veiculo["botoes"]["excluir"]){?>
-                                <a href="#" data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, Excluir" data-modal-success-msg="Veiculo excluído"
-                                    title="Excluir anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
-                                    <i class=" fa fa-trash-o"></i>
+                                <a href="#" class="anuncios" data-confirm data-confirm-type="error"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> excluir</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Excluir Anúncio</span>")?>"
+                                    data-confirm-text="Sim, excluir"
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>excluído</b>")?>"
+                                    data-confirm-option-confirm="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"
+                                    title="Excluir anúncio">
+                                    <button class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                        <i class=" fa fa-trash-o"></i>
+                                    </button>
                                 </a>
                                 <?php }?>
 
@@ -291,17 +296,18 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                     data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>inativar</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Inativar Anúncio</span>")?>"
                                     data-confirm-text="Sim, Inativar o Anúncio"
-                                    data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>"
-                                    data-negate-text="Não">Inativar</a>
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>inativado</b>")?>"
+                                    data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["vendido"]??false){?>
                                 <a href="#" class="anuncios" data-confirm data-confirm-type="info"
                                     data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>")?>"
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>")?>"
                                     data-confirm-text="Sim, eu vendi"
                                     data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
-                                    data-negate-text="Não" title="Marcar como vendido">
+                                    title="Marcar como vendido">
                                     <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
                                 </a>
                                 <?php }?>
@@ -316,7 +322,6 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                     data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>renovar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Renovar anúncio</span>")?>"
                                     data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar"
-                                    data-negate-text="Não"
                                     data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                     title="Renovar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
@@ -328,7 +333,6 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                     data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>")?>"
                                     data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
-                                    data-negate-text="Não"
                                     data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                     title="Reativar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
