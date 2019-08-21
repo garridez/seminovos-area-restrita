@@ -5,9 +5,10 @@ module.exports.callback = $ => {
     new Chat($('.section-chat'));
     var jQuery = require("jquery");
     window.jQuery = jQuery;
+    /**
     require("emojionearea");
     window.el = $("#text_area_chat").emojioneArea({});
-    window.el[0].emojioneArea.saveEmojisAs = "shortname";
+    window.el[0].emojioneArea.saveEmojisAs = "shortname";*/
     if (!isMobile) {
         $(".conversation-active").removeClass("invisible");
         return;

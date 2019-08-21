@@ -4,7 +4,7 @@ var Chat = function ($chat) {
     this.$chat = $chat;
     this.listChats = $chat.find('.list-chats');
     moment = require('moment');
-    require('moment/locale/pt-br')
+    require('moment/locale/pt-br');
 
     this.templates.parent = this;
 
@@ -36,12 +36,19 @@ Chat.prototype = {
                 node = this.parent.setElementState(node, state);
             }
             return node;
+        },
+        conversation: function (state) {
+            var node = this.cloneTemplate('template.template-conversation-template');
+            if (state) {
+                node = this.parent.setElementState(node, state);
+            }
+            return node;
+
         }
     },
     formatters: {
         chatSubject: function (conversa) {
             var lastMsg = Object.values(conversa.mensagens)[0];
-            console.log(lastMsg);
             return {
                 '.chat-title': conversa.marca + conversa.modelo,
                 '.chat-name': conversa.responsavelNomeInteressado,
@@ -56,6 +63,9 @@ Chat.prototype = {
                 },
                 '.chat-status': 'status',
             };
+        },
+        conversation: function (obj) {
+
         }
     },
     init: function () {
@@ -73,23 +83,21 @@ Chat.prototype = {
         var self = this;
 
         var chatSubject = self.templates.chatSubject();
-        chatSubject.data('chat', conversa);
+        chatSubject.data('chat-data', conversa);
         var state = this.formatters.chatSubject(conversa);
         this.setElementState(chatSubject, state);
         this.listChats.prepend(chatSubject);
 
     },
     setSubjectState: function (chatSubject, conversa) {
-        chatSubject.data('chat', conversa);
+        chatSubject.data('chat-data', conversa);
     },
     sortChats: function () {
         this.listChats.find('> .chat').sort(function (a, b) {
-            console.log($(a).data('chat'));
-            a = $(a).data('chat').mensagens;
-            b = $(b).data('chat').mensagens;
+            a = $(a).data('chat-data').mensagens;
+            b = $(b).data('chat-data').mensagens;
             a = Object.values(a)[0].enviadoEm;
             b = Object.values(b)[0].enviadoEm;
-            console.log(a, b);
             return (a > b);
         });
     },
