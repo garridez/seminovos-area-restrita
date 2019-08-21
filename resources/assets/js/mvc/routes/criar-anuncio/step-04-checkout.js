@@ -1,7 +1,7 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
-    var Alerts = require('components/Alerts');
+    var advancedAlerts = require('components/advancedAlerts');
     var stepContainer = $('.step-container');
     var idPlano = $("#idPlano").val();
     stepContainer.on('step:change:checkout', function (e) {
@@ -39,9 +39,9 @@ module.exports.callback = ($) => {
                             return false;
                         }
                     });
-            Alerts.info('Você está no plano <b>SIMPLES</b>.<br>'
+                    advancedAlerts.info({text:'Você está no plano <b>SIMPLES</b>.<br>'
                     + 'Escolha um dos planos de acordo com a <b>prioridade</b> que deseja vender seu veículo<br>'
-                    + 'Lembrando que quanto mais <b>alto o plano</b>, mais seu veículo é <b>visto</b> ;)', 'Escolha um plano', 25000);
+                    + 'Lembrando que quanto mais <b>alto o plano</b>, mais seu veículo é <b>visto</b> ;)', title:'Escolha um plano', time:25000});
         }
 
 

@@ -2,7 +2,6 @@ module.exports.seletor = ".c-meus-veiculos.a-index";
 
 module.exports.callback = $ => {
     require("components/JsBsModal");
-    var Alerts = require("components/Alerts");
     var advancedAlerts = require("components/advancedAlerts");
     var Confirms = require('components/confirms');
 
@@ -39,7 +38,7 @@ module.exports.callback = $ => {
                     $.getJSON($this.data("confirm-url"))
                         .done(function (data, jqXHR, type) {
                             if (data.status !== 200) {
-                                Alerts.error(data.detail, "Houve um problema...", 10000);
+                                advancedAlerts.error({text:data.detail, title:"Houve um problema...", time:10000});
                             } else {
                                 var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
                                                             <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
@@ -144,9 +143,9 @@ module.exports.callback = $ => {
                 $.getJSON(url)
                     .done(function (data, jqXHR, type) {
                         if (data.status !== 200) {
-                            Alerts.error(data.detail, "Houve um problema...", 10000);
+                            advancedAlerts.error({text:data.detail, title:"Houve um problema...", time:10000});
                         } else {
-                            Alerts.info(successText)
+                            advancedAlerts.info({text:successText})
                                 .on('hide.bs.modal', function () {
                                     if (!$this.data("modal-adicional-title")) {
                                         return;
@@ -155,17 +154,17 @@ module.exports.callback = $ => {
                                     var title = $this.data("modal-adicional-title");
                                     var alertType = $this.data("modal-adicional-type") || 'info';
                                     var alertTime = parseFloat($this.data("modal-adicional-time")) || 5000;
-                                    Alerts[alertType](msg, title, alertTime);
+                                    advancedAlerts[alertType]({text:msg, title:title, time:alertTime});
                                 });
                             reloadPageContent();
                         }
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
-                        Alerts.error(
-                            "Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.",
-                            "Houve um problema...",
-                            10000
-                        );
+                        advancedAlerts.error({
+                            text:"Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.",
+                            title:"Houve um problema...",
+                            time:10000
+                        });
                     })
                     .always(function () {
                         modal.modal("hide");
