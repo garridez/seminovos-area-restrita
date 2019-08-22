@@ -3,7 +3,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
-    var advancedAlerts = require('components/advancedAlerts');
+    var advancedAlerts = require('components/AdvancedAlerts');
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
