@@ -5,6 +5,7 @@ module.exports.callback = ($) => {
 };
 
 function init() {
+    var Confirms = require("components/confirms")
     var ctx = $('.step-dados');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
@@ -192,4 +193,21 @@ function init() {
             });
        
     });
+    $(".combinar-valor").change(function(event){
+        event.preventDefault();
+        var $check = $(this).find("input[type='checkbox']");
+        if($check.is(":checked")){
+            Confirms.warning({
+                text:"Não exibindo o valor do anúncio os possíveis compradores não poderam ver o valor anunciado",
+                title:$("<span>").html("Deseja <span class='text-primary'>NÃO EXIBIR O VALOR</span> do anúncio?"),
+                confirmCallback: function(){
+                    $check.prop('checked', true);
+                    $(".modal").modal('hide');
+                },
+                negateCallback:function(){
+                    $check.prop('checked', false);
+                }
+            })
+        }
+    })
 }

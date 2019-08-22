@@ -1,5 +1,22 @@
 &{
     .foto{
+        &:first-of-type
+        .img-thumbnail::before{
+            justify-content: center;
+            opacity: 0.8;
+            content: "Foto Principal";
+            margin-left: -4px;
+            margin-top: 59%;
+            width: 106%;
+            height: 20px;
+            background-color: orange;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
+            display: flex;
+        }
         transition: outline 400ms;
         outline: #f0f0f0 dashed;
         .display-img{

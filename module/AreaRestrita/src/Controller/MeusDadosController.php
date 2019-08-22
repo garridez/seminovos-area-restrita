@@ -42,6 +42,7 @@ class MeusDadosController extends AbstractActionController
 
     public function indexAction()
     {
+        $requestResponse = false;
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
@@ -72,8 +73,6 @@ class MeusDadosController extends AbstractActionController
                 /* @var $apiClient \SnBH\ApiClient\Client */
                 $data = $dadosForm->getData();
 
-                // var_dump($data);
-                // die;
                 $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
 
                 #campos não existentes na tabela
@@ -88,6 +87,7 @@ class MeusDadosController extends AbstractActionController
                 unset($data['nomeFantasia']);
 
                 $resPut = $cadastrosModel->put($data);
+                $requestResponse = $resPut->status;
                 if ($resPut->status === 200) {
                     // Busca os dados do cadastro atualizado
                     $dadosCadastro = $cadastrosModel->getCurrent(false);
@@ -95,14 +95,13 @@ class MeusDadosController extends AbstractActionController
             }
         }
 
-         //var_dump($dadosCadastro);
-         //die;
         $dadosForm->populateValues($dadosCadastro);
         
         return new ViewModel([
             'tipoCadastro' => $tipoCadastro,
             'formCadastro' => $dadosForm,
-            'idCidade' => $dadosCadastro['idCidade']
+            'idCidade' => $dadosCadastro['idCidade'],
+            'requestResponse' => $requestResponse
         ]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 ob_start();
+
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {
