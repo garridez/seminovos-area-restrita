@@ -1,6 +1,6 @@
 
 require('components/JsBsModal');
-var advancedAlerts = require('components/advancedAlerts');
+var advancedAlerts = require('components/AdvancedAlerts');
 
 var $ = require('jquery');
 var confirms;

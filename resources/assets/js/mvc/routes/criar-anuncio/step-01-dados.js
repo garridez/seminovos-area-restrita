@@ -5,7 +5,7 @@ module.exports.callback = ($) => {
 };
 
 function init() {
-    var Confirms = require("components/confirms")
+    var Confirms = require("components/Confirms")
     var ctx = $('.step-dados');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');

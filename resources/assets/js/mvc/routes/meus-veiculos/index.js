@@ -2,8 +2,8 @@ module.exports.seletor = ".c-meus-veiculos.a-index";
 
 module.exports.callback = $ => {
     require("components/JsBsModal");
-    var advancedAlerts = require("components/advancedAlerts");
-    var Confirms = require('components/confirms');
+    var advancedAlerts = require("components/AdvancedAlerts");
+    var Confirms = require('components/Confirms');
 
     /**
     * Baixa o conteúdo da página atualizado

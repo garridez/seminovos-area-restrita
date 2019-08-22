@@ -1,7 +1,7 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
-    var advancedAlerts = require('components/advancedAlerts');
+    var advancedAlerts = require('components/AdvancedAlerts');
     var stepContainer = $('.step-container');
     var idPlano = $("#idPlano").val();
     stepContainer.on('step:change:checkout', function (e) {
