@@ -328,11 +328,6 @@ class ParticularForm extends Form
             'name' => 'idCidade',
             'required' => true,
         ]);
-        #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
-        $inputFilter->add([
-            'name' => 'telefone_1',
-            'required' => true,
-        ]);
         #campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_2',
