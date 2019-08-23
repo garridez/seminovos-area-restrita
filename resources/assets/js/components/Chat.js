@@ -3,6 +3,7 @@ var moment;
 var Chat = function ($chat) {
     this.$chat = $chat;
     this.listChats = $chat.find('.list-chats');
+    this.convCont = $chat.find('.conversation-container');
     moment = require('moment');
     require('moment/locale/pt-br');
 
@@ -43,7 +44,6 @@ Chat.prototype = {
                 node = this.parent.setElementState(node, state);
             }
             return node;
-
         }
     },
     formatters: {
@@ -64,8 +64,10 @@ Chat.prototype = {
                 '.chat-status': 'status',
             };
         },
-        conversation: function (obj) {
-
+        conversation: function (conversa) {
+            return {
+                '.conversation-name': conversa.responsavelNomeInteressado,  
+            };
         }
     },
     init: function () {
@@ -73,19 +75,34 @@ Chat.prototype = {
         $.getJSON('/chat/mensagens')
                 .then(function (data) {
                     $.each(data, function (idConversa, conversa) {
-                        console.log(conversa);
                         self.addSubject(conversa);
                     });
                     self.sortChats();
+                })
+                .then(function () {
+                    self.setEvents();
+                })
+                .then(function () {
+                    self.listChats.find(' > *').eq(0).click();
                 });
     },
     addSubject: function (conversa) {
         var self = this;
 
         var chatSubject = self.templates.chatSubject();
+        var conversation = self.templates.conversation();
+
         chatSubject.data('chat-data', conversa);
-        var state = this.formatters.chatSubject(conversa);
-        this.setElementState(chatSubject, state);
+        chatSubject.data('conversation', conversation);
+
+
+        var stateChatSubject = this.formatters.chatSubject(conversa);
+        this.setElementState(chatSubject, stateChatSubject);
+
+        var stateConversation = this.formatters.conversation(conversa);
+        this.setElementState(conversation, stateConversation);
+
+
         this.listChats.prepend(chatSubject);
 
     },
@@ -99,6 +116,12 @@ Chat.prototype = {
             a = Object.values(a)[0].enviadoEm;
             b = Object.values(b)[0].enviadoEm;
             return (a > b);
+        });
+    },
+    setEvents: function () {
+        var self = this;
+        this.listChats.on('click', '.chat-subject', function () {
+            self.convCont.prepend($(this).data('conversation'));
         });
     },
 
