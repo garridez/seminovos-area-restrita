@@ -66,6 +66,19 @@ class DadosForm extends Form
             ]
         ]);
         $this->add([
+            'type' => Element\Select::class,
+            'name' => 'versao',
+            'options' => [
+                'label' => 'Versão',
+                'value_options' => [
+                    '' => 'Selecione a versão',
+                ],
+            ],
+            'attributes' => [
+                'required' => true,
+            ]
+        ]);
+        /*$this->add([
             'type' => Element\Text::class,
             'name' => 'versao',
             'options' => [
@@ -74,7 +87,7 @@ class DadosForm extends Form
             'attributes' => [
                 'required' => true,
             ]
-        ]);
+        ]);*/
         $this->add([
             'type' => SelectMotor::class,
             'name' => 'motor',
@@ -84,12 +97,17 @@ class DadosForm extends Form
         ]);
         $this->add([
             'type' => Element\Text::class,
-            'name' => 'cilindradas',
+            'name' => 'motoCilindradas',
             'options' => [
                 'label' => 'Cilindradas',
             ],
             'attributes' => [
                 'required' => true,
+                'data-mask' => '0000cc',
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
+                'placeholder' => '500cc',
             ]
         ]);
         $this->add([
@@ -188,7 +206,7 @@ class DadosForm extends Form
             'required' => true,
         ]);
         $inputFilter->add([
-            'name' => 'cilindradas',
+            'name' => 'motoCilindradas',
             'required' => true,
         ]);
         $inputFilter->add([
@@ -235,13 +253,13 @@ class DadosForm extends Form
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
         $removerCamposPorTipo = [
             VeiculoTipo::TIPO_CARRO => [
-                'cilindradas'
+                'motoCilindradas'
             ],
             VeiculoTipo::TIPO_CAMINHAO => [
                 'idValvula',
                 'motor',
                 'acessorios',
-                'cilindradas'
+                'motoCilindradas'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
@@ -274,7 +292,7 @@ class DadosForm extends Form
             'cor',
             'portas',
             'combustivel',
-            'cilindradas',
+            'motoCilindradas',
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {

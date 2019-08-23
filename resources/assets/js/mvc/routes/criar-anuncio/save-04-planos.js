@@ -3,10 +3,13 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
-    var alerts = require('components/Alerts');
+    var advancedAlerts = require('components/AdvancedAlerts');
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
-        alerts.info('Não é possível diminuir o plano');
+        advancedAlerts.warning({
+            text:'Não é possível diminuir o plano',
+            title:$('<span class="text-primary">').html('Atenção!')
+        });
     });
 
     $('.step-container').on('step:change:plano', function () {

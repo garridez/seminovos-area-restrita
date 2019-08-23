@@ -16,21 +16,23 @@ class PrecoForm extends Form
             'type' => Element\Text::class,
             'name' => 'valor',
             'options' => [
-                'label' => 'Valor',
+                'label' => 'Valor :',
             ],
             'attributes' => [
                 'required' => true,
+                'id' => "valor",
                 'data-mask' => '000.000.000.000.000,00' ,
                 'data-mask-options' => json_encode([
                     'reverse' => true
                 ]),
+                'placeholder'=>'Ex: 48.000,00',
             ]
         ]);
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'combinarValor',
             'options' => [
-                'label' => 'Não exibir valor do veículo (não recomendado)',
+                'label' => 'Não exibir valor do veículo <b class="text-warning">(não recomendado)</b>',
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,

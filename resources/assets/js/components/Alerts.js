@@ -15,9 +15,9 @@ module.exports = alerts = {
         time = time || this.options.time;
         var count = Math.floor(time / 1000);
         var spanCount = $('<span class="text-count"></span>').text('(' + count + ')');
-        var close = $('<button class="btn btn-danger" data-dismiss="modal">')
-                .html('<span class="text-close">Fechar</span> ')
-                .append(spanCount);
+        var close = $('<button class="btn btn-primary" data-dismiss="modal">')
+            .html('<span class="text-close">Fechar</span> ')
+            .append(spanCount);
 
         var intervalID = setInterval(function () {
             spanCount.text('(' + count + ')');

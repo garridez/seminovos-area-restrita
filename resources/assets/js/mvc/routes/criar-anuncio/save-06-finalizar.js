@@ -3,7 +3,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
-    var Alerts = require('components/Alerts');
+    var advancedAlerts = require('components/AdvancedAlerts');
 
     $('.anuncio-steps').on('click', '.step-finalizar .btn-finalizar', function (e) {
         e.preventDefault();
@@ -38,7 +38,7 @@ module.exports.callback = ($) => {
                             + 'Você pode ativa-lo/publica-lo quando quiser através do menu "Meus Veículos"';
                     time = 15000;
                 }
-                Alerts.info(text, 'Muito bom!', time)
+                advancedAlerts.info({text:text, title:'Muito bom!', time:time})
                         .on('hide.bs.modal', function () {
                             window.location.href = '/';
                         });

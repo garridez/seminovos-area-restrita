@@ -71,6 +71,10 @@ class DadosVeiculoController extends AbstractActionController
             ];
 
             $data += $request->getPost()->toArray();
+            
+            if(!empty($data['outraVersao'])){
+                $data['versao'] = $data['outraVersao'];
+            }
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
@@ -361,6 +365,26 @@ class DadosVeiculoController extends AbstractActionController
             }
             
             return new JsonModel($existePlaca);
+        }
+    }
+
+    public function getVersaoAction()
+    {
+        $request = $this->request;
+
+        if ($request->isPost()) {
+
+            $post = $request->getPost()->toArray();;
+
+            /* @var $apiClient ApiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+
+            $versao = $apiClient->versaoGet($post)->json();
+            
+            echo json_encode($versao);
+            
+            die;
+            
         }
     }
 

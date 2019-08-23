@@ -5,7 +5,7 @@ $veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
-
+$nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? "Não informado"
 ?>
 
 <div class="container-fluid container-anuncios">
@@ -71,8 +71,9 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     ]),
                 ];
                            ?>
-            <div
-                class="col-12 row mb-3 bg-white p-0 justify-content-center plano-<?= $veiculo['idPlano'] ?> status-<?= $veiculo['idStatus'] ?>">
+            <div class="col-12 row mb-3 bg-white p-0 justify-content-center plano-<?= $veiculo['idPlano'] ?> status-<?= $veiculo['idStatus'] ?> veiculo"
+                data-veiculo-placa="<?= $veiculo['placa'] ?>" data-veiculo-marca="<?= $veiculo['marca'] ?>"
+                data-veiculo-modelo="<?= $veiculo['modelo'] ?>">
                 <div class="col-12 col-md-4 col-lg-2 d-flex pt-3 justify-content-center">
                     <a href="/meus-veiculos/<?= $veiculo['idVeiculo'] ?>">
                         <img class="img-fluid" src="<?= $veiculo['imagem'] ?>" alt="" />
@@ -131,11 +132,16 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
 
                             <div class="btn-group">
                                 <?php if($veiculo["botoes"]["excluir"]){?>
-                                <a href="#" data-url="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente excluir</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, Excluir" data-modal-success-msg="Veiculo excluído"
-                                    title="Excluir anúncio" class="btn btn-danger icon-2 btn-excluir-anuncio">
-                                    <i class=" fa fa-trash-o"></i>
+                                <a href="#" class="anuncios" data-confirm data-confirm-type="error"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> excluir</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Excluir Anúncio</span>")?>"
+                                    data-confirm-text="Sim, excluir"
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>excluído</b>")?>"
+                                    data-confirm-option-confirm="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"
+                                    title="Excluir anúncio">
+                                    <button class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                        <i class=" fa fa-trash-o"></i>
+                                    </button>
                                 </a>
                                 <?php }?>
 
@@ -284,46 +290,50 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                                     class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2">Pagar</a>
                                 <?php }?>
 
-                                <?php if(isset($veiculo['botoes']['inativar']) && $veiculo['botoes']['inativar']){?>
-                                <a href="#" data-url="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente <b>INATIVAR</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, inativar este veículo!"
-                                    data-modal-success-msg="Veículo inativado!" title="Desativar veículo">
-                                    <button class="btn btn-sm btn-danger ml-2">Inativar</button>
+                                <?php if($veiculo['botoes']['inativar']??false){?>
+                                <a href="#" class="btn btn-sm btn-danger ml-2 anuncios" data-confirm
+                                    data-confirm-type="error"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>inativar</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Inativar Anúncio</span>")?>"
+                                    data-confirm-text="Sim, Inativar o Anúncio"
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>inativado</b>")?>"
+                                    data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
+                                <?php }?>
+
+                                <?php if($veiculo["botoes"]["vendido"]??false){?>
+                                <a href="#" class="anuncios" data-confirm data-confirm-type="info"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>")?>"
+                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>")?>"
+                                    data-confirm-text="Sim, eu vendi"
+                                    data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
+                                    title="Marcar como vendido">
+                                    <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
                                 </a>
                                 <?php }?>
 
-                                <?php if($veiculo["botoes"]["vendido"]){?>
-                                <a href="#" data-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja realmente marcar como <b>VENDIDO</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, marcar como vendido!"
-                                    data-modal-success-msg="Marcado como vendido!" title="Marcar como vendido">
-                                    <button class="btn btn-sm btn-complete ml-2">Vendido</button>
-                                </a>
-                                <?php }?>
 
-
-                                <?php if($veiculo["botoes"]["renovar"]??false){
+                                <?php  if($veiculo["botoes"]["renovar"]??false){
                                     /**
                                      * @todo O renovar vai mesmo para o ativar?
-                                     * @todo Colocar o Modal de alerta de segurança no Reativar.
                                      */
                                     ?>
-                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente renovar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, renovar" data-modal-success-msg="Veiculo Renovado"
-                                    data-modal-adicional-type="error"
-                                    data-modal-adicional-msg='<?= $this->escapeHtmlAttr("<br>A SeminovosBH NÃO não entra em contato por telefone, WhatsApp ou mensagem solicitando a validação do seu anúncio. Não forneça nenhuma informação pessoal ou código enviado para o seu número para validar seu anúncio.                                    Fique atento para não ser vítima de golpes. Estamos á disposição para qualquer dúvida (31) 3077-5888")?>' 
-                                    data-modal-adicional-title="AVISO IMPORTANTE!"  data-modal-adicional-time = "180000"
+                                <a href="#" class="renovar anuncios" data-confirm data-confirm-type="success"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>renovar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Renovar anúncio</span>")?>"
+                                    data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar"
+                                    data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                     title="Renovar anúncio">
-                                    <button class="btn btn-sm btn-laranja ml-2 ">Renovar</button>
+                                    <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
                                 </a>
-                                <?php }?>
+                                <?php  }?>
 
                                 <?php if($veiculo["botoes"]["reativar"]??false){?>
-                                <a href="#" data-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" data-modal
-                                    data-modal-body="<?= $this->escapeHtmlAttr("Deseja <b>realmente reativar</b> o anúncio <b>{$veiculo['marca']} {$veiculo['modelo']}</b> com a placa <b>{$veiculo['placa']}</b>?") ?>"
-                                    data-modal-yes-text="Sim, reativar" data-modal-success-msg="Veiculo Reativado"
+                                <a href="#" class="reativar anuncios" data-confirm data-confirm-type="success"
+                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
+                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>")?>"
+                                    data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
+                                    data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                     title="Reativar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
                                 </a>
