@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99ef895f77881b352bf56608a2ba7366",
+    "content-hash": "2c7a7abfe16e407e1cacde14235f5847",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -362,16 +362,16 @@
         },
         {
             "name": "italodeveloper/client-users",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/seminovosbh/client-users.git",
-                "reference": "b7341d8c558c45ee9f6cac5585718e709ee11d48"
+                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/client-users/get/b7341d8c558c45ee9f6cac5585718e709ee11d48.zip",
-                "reference": "b7341d8c558c45ee9f6cac5585718e709ee11d48",
+                "url": "https://bitbucket.org/seminovosbh/client-users/get/46b94dddc131ce75de1945dcf11523f3d6aa281c.zip",
+                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c",
                 "shasum": ""
             },
             "require": {
@@ -395,9 +395,9 @@
             "description": "Cliente do modulo de usuarios",
             "homepage": "https://bitbucket.org/seminovosbh/client-users",
             "support": {
-                "source": "https://bitbucket.org/seminovosbh/client-users/src/b7341d8c558c45ee9f6cac5585718e709ee11d48/?at=master"
+                "source": "https://bitbucket.org/seminovosbh/client-users/src/46b94dddc131ce75de1945dcf11523f3d6aa281c/?at=1.0.3"
             },
-            "time": "2019-08-06T20:35:24+00:00"
+            "time": "2019-08-09T14:54:45+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
