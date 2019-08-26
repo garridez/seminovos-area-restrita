@@ -313,13 +313,17 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 case "10":
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 default:
                     $temp_acoes = [

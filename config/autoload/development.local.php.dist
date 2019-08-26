@@ -29,6 +29,13 @@ return [
             'use_from_service_manager' => 'cache'
         ],
     ],
+    'UsersModuleApi' => [
+        'base_uri' => 'http://34.213.61.95',
+        'support' => [
+            'user' => 'micro_users',
+            'password' => 'microusersuibd8syhd8',
+        ],
+    ],
     'log' => [
         'logger' => [
             'writers' => [
