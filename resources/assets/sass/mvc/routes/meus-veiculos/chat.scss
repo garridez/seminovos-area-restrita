@@ -13,6 +13,10 @@ body {
 section.section-chat {
     .list-chats {
         .chat {
+            cursor: pointer;
+            &.active{
+                background-color: #ececec !important;
+            }
             .chat-img {
                 height: auto;
                 width: 90px;
