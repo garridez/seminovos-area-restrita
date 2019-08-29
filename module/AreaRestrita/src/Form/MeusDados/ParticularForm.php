@@ -159,7 +159,7 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'class' => 'form-control',
-                'data-mask' => '(00) 90000-0000',
+                'data-mask' => '(00) 00000-0000',
                 'placeholder' => '(__) _____-____',
             ],
         ]);
