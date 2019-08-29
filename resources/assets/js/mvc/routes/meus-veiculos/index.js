@@ -40,12 +40,13 @@ module.exports.callback = $ => {
                             if (data.status !== 200) {
                                 advancedAlerts.error({text:data.detail, title:"Houve um problema...", time:10000});
                             } else {
+                                reloadPageContent();
                                 var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
                                                             <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
                                                             reativado com <b class="text-primary">sucesso.</b>`);
                                 advancedAlerts.success({
                                     text: text,
-                                    title: $("<span class='text-primary'>").html("Sucesso")
+                                    title: $("<span class='text-primary'>").html("Sucesso"),
                                 });
                             }
                             $(".modal").modal('hide');
