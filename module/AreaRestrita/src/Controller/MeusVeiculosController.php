@@ -80,7 +80,7 @@ class MeusVeiculosController extends AbstractActionController
         if(!isset($dadosVeiculos['data'])){
             return;
         }
-        //var_dump($dadosVeiculos); exit;
+
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
             $idVeiculo = $veiculo['idVeiculo'];
