@@ -77,6 +77,9 @@ class MeusVeiculosController extends AbstractActionController
     {
         /* @var $propostasModel Propostas */
         $propostasModel = $this->getContainer()->get(Propostas::class);
+        if(!isset($dadosVeiculos['data'])){
+            return;
+        }
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 

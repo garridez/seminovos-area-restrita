@@ -88,10 +88,12 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                 <span class="mr-2">
                                     <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['caracteristica']; ?>
                                 </span>
+                                <?php if($veiculo['codFipe'] == 0 || empty($veiculo['codFipe'])) : ?>
                                 <small class="small d-none d-md-block">
                                     <?= $veiculo['motor'] . ' '?>
                                     <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'].'V': '' ?>
                                 </small>
+                                <?php endif; ?>
                             </p>
                             <h4
                                 class="d-flex justify-content-start justify-content-md-end col-12 col-md-6 m-0 p-0 h4 text-cinza-escuro">

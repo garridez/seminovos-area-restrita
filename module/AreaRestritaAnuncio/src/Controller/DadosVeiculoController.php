@@ -196,6 +196,9 @@ class DadosVeiculoController extends AbstractActionController
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
                         'listaFotos' => $dataPost->fotosToDelete
                     ])->json();
+                
+                $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
+                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
             $fotos = $request->getFiles()->fotos;
             // Upload
