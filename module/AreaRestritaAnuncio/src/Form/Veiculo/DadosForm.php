@@ -16,6 +16,7 @@ use SnBH\Common\Form\Element\SelectPortas;
 use SnBH\Common\Form\Element\SelectValvula;
 use Zend\Form\Element;
 use Zend\Form\Form;
+use Zend\Validator;
 
 class DadosForm extends Form
 {
@@ -39,6 +40,7 @@ class DadosForm extends Form
                 'data-mask' => 'SSS0A00',
                 'placeholder' => 'abc1234',
                 'required' => true,
+                'minlength' => 7,
             ]
         ]);
 
