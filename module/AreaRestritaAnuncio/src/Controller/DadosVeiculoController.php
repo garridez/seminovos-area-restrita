@@ -78,7 +78,9 @@ class DadosVeiculoController extends AbstractActionController
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
-            $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+            if (isset($data['kilometragem'])) {
+                $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+            }
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
