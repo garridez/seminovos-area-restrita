@@ -17,6 +17,6 @@ module.exports.callback = ($) => {
     }
     advancedAlerts.success({
         text: $("<span>").html("Dados salvos com <b class='text-primary'>sucesso</b>"),
-        title: $("<span class='text-primary'>").html("Sucesso")
+        title: $("<span class='text-primary'>").html("Sucesso"),
     });
 };
