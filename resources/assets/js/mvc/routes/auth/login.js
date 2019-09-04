@@ -16,7 +16,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 .slideDown();
     });
     var url = window.location.href;
-    if (url.search('#erro') > 0) {
+    if ($('input[name=login-error]').val() === '1') {
         $('#modalErroSenha').modal('show');
         setTimeout(function () {
             $('#modalErroSenha').modal('hide');

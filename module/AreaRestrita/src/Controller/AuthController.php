@@ -4,12 +4,13 @@ declare (strict_types=1);
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
+use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Service\AuthManager;
 use Psr\Container\ContainerInterface;
 use SnBH\Common\Helper\Encrypter;
 use Zend\Authentication\AuthenticationService;
-use Zend\View\Model\ViewModel;
 use Zend\Http\Response;
+use Zend\View\Model\ViewModel;
 
 /**
  * Class AuthController
@@ -52,21 +53,19 @@ class AuthController extends AbstractActionController
         if ($this->authService->hasIdentity()) {
             return $this->redirect()->toRoute('restrito');
         }
+        $view = new ViewModel([
+            'particularForm' => $this->particularForm,
+            'revendaForm' => $this->revendaForm
+        ]);
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            return new ViewModel([
-                'particularForm' => $this->particularForm,
-                'revendaForm' => $this->revendaForm
-            ]);
+            return $view;
         }
         $postRequest = $request->getPost();
         $form = ($postRequest['type'] == 'login-revenda-form') ? $this->revendaForm : $this->particularForm;
         $form->setData($postRequest);
         if (!$form->isValid()) {
-            return new ViewModel([
-                'particularForm' => $this->particularForm,
-                'revendaForm' => $this->revendaForm
-            ]);
+            return $view;
         }
         $dataForm = $form->getData();
         $loginClient = [
@@ -78,6 +77,20 @@ class AuthController extends AbstractActionController
         if ($result->getCode() === $result::SUCCESS) {
             return $this->redirect()->toRoute('restrito');
         }
+        switch ($dataForm['tipoCadastro']) {
+            case Cadastros::TIPO_CADASTRO_PARTICULAR:
+                $this->particularForm
+                    ->get('usuarioEmail')
+                    ->setValue($dataForm['usuarioEmail']);
+                break;
+            case Cadastros::TIPO_CADASTRO_REVENDA:
+                break;
+
+            default:
+                break;
+        }
+        $view->setVariable('loginError', true);
+        return $view;
 
         return $this->redirect()->toUrl('../entrar#erro');
     }
