@@ -18,22 +18,20 @@ use Zend\View\Model\ViewModel;
  */
 class AuthController extends AbstractActionController
 {
-    /*     * * @var ContainerInterface $container */
-
+    /*** @var ContainerInterface $container ***/
     protected $container;
-    /*     * * @var mixed|AuthenticationService $authService */
+    /*** @var mixed|AuthenticationService $authService ***/
     protected $authService;
-    /*     * * @var AuthManager|mixed $authManager */
+    /*** @var AuthManager|mixed $authManager ***/
     protected $authManager;
-    /*     * * @var Login\ParticularForm $particularForm */
+    /*** @var Login\ParticularForm $particularForm ***/
     protected $particularForm;
-    /*     * * @var Login\RevendaForm $revendaForm */
+    /*** @var Login\RevendaForm $revendaForm ***/
     protected $revendaForm;
 
     /**
      * AuthController constructor.
      * @param ContainerInterface $container
-     * @author italodeveloper <italo.araujo@seminovosbh.com.br>
      */
     public function __construct(ContainerInterface $container)
     {
@@ -85,7 +83,6 @@ class AuthController extends AbstractActionController
                 break;
             case Cadastros::TIPO_CADASTRO_REVENDA:
                 break;
-
             default:
                 break;
         }
