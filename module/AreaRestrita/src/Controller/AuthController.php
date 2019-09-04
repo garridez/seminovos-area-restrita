@@ -1,5 +1,6 @@
 <?php
 declare (strict_types=1);
+
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
@@ -16,15 +17,16 @@ use Zend\Http\Response;
  */
 class AuthController extends AbstractActionController
 {
-    /*** @var ContainerInterface $container */
+    /*     * * @var ContainerInterface $container */
+
     protected $container;
-    /*** @var mixed|AuthenticationService $authService */
+    /*     * * @var mixed|AuthenticationService $authService */
     protected $authService;
-    /*** @var AuthManager|mixed $authManager */
+    /*     * * @var AuthManager|mixed $authManager */
     protected $authManager;
-    /*** @var Login\ParticularForm $particularForm */
+    /*     * * @var Login\ParticularForm $particularForm */
     protected $particularForm;
-    /*** @var Login\RevendaForm $revendaForm */
+    /*     * * @var Login\RevendaForm $revendaForm */
     protected $revendaForm;
 
     /**
@@ -47,11 +49,11 @@ class AuthController extends AbstractActionController
     public function loginAction()
     {
         $this->layout('layout/login.phtml');
-        if($this->authService->hasIdentity()) {
+        if ($this->authService->hasIdentity()) {
             return $this->redirect()->toRoute('restrito');
         }
         $request = $this->getRequest();
-        if(!$request->isPost()) {
+        if (!$request->isPost()) {
             return new ViewModel([
                 'particularForm' => $this->particularForm,
                 'revendaForm' => $this->revendaForm
@@ -60,7 +62,7 @@ class AuthController extends AbstractActionController
         $postRequest = $request->getPost();
         $form = ($postRequest['type'] == 'login-revenda-form') ? $this->revendaForm : $this->particularForm;
         $form->setData($postRequest);
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             return new ViewModel([
                 'particularForm' => $this->particularForm,
                 'revendaForm' => $this->revendaForm
@@ -73,9 +75,10 @@ class AuthController extends AbstractActionController
             'rememberMe' => true
         ];
         $result = $this->authManager->login($loginClient);
-        if($result->getCode() === $result::SUCCESS) {
+        if ($result->getCode() === $result::SUCCESS) {
             return $this->redirect()->toRoute('restrito');
         }
+
         return $this->redirect()->toUrl('../entrar#erro');
     }
 
@@ -97,7 +100,7 @@ class AuthController extends AbstractActionController
         $encryptedText = $this->params('dados');
         $decryptedText = Encrypter::decrypt($encryptedText);
         list($fusoHorario, $idCadastro, $idAnuncio, $dataValidade) = explode(";", $decryptedText);
-        if($dataValidade < date('Y-m-d')) {
+        if ($dataValidade < date('Y-m-d')) {
             return $this->redirect()->toRoute('auth');
         }
         $result = $this->authManager->login([
@@ -105,7 +108,7 @@ class AuthController extends AbstractActionController
             'idCadastro' => $idCadastro,
             'rememberMe' => true
         ]);
-        if($result->getCode() === $result::SUCCESS) {
+        if ($result->getCode() === $result::SUCCESS) {
             return $this->redirect()->toUrl('../meus-veiculos');
         }
         return $this->redirect()->toUrl('../entrar#erro');
