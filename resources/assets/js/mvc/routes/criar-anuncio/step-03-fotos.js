@@ -111,6 +111,13 @@ function init() {
         reader.readAsDataURL(file);
     }
     function compressPhoto(imgElement, imageFile) {
+        /**
+         * Se for o Safari, não comprime
+         * O Safari dá pau na hora de colocar a imagem gerada no FormData
+         */
+        if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+            return;
+        }
 
         // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
         try {
@@ -133,14 +140,14 @@ function init() {
                     return new File([u8arr], filename, {type: mime});
                 }
 
-                var file = dataURLtoFile(img.prefix + img.data, 'min.jpg');
+                var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
                 showPhoto(imgElement, file);
-                /** Debug
+                /** Debug * /
                  console.log(`<b>Start Size:</b> ${img.initialSizeInMb} MB <br/>`
                  + `<b>End Size:</b> ${img.endSizeInMb} MB <br/>`
                  + `<b>Compression Cycles:</b> ${img.iterations} <br/>`
                  + `<b>Size Reduced:</b> ${img.sizeReducedInPercent} % <br/>`
-                 + `<b>File Name:</b> ${img.alt}`);*/
+                 + `<b>File Name:</b> ${img.alt}`);/**/
             });
         } catch (e) {
 
