@@ -58,7 +58,7 @@ $dadosFinanceiro = $this->financeiro;
                                     'desconto' => $dadosFinanceiro['desconto_trimestral'],
                                     'economia' => $dadosFinanceiro['economia_trimestral'],
                                     'valor' => $dadosFinanceiro['valor_trimestral'],
-                                    'value_checkbox' => $dadosFinanceiro['value_checbkox_trimestral'],
+                                    'value_checkbox' => $dadosFinanceiro['value_checbkox_trimestral'] ?? null,
                                     'parcelas' => '3'
                                 ],
                                 [
@@ -75,7 +75,7 @@ $dadosFinanceiro = $this->financeiro;
                                     'economia' => $dadosFinanceiro['economia_anual'],
                                     'valor' => $dadosFinanceiro['valor_anual'],
                                     'value_checkbox' => $dadosFinanceiro['value_checkbox_anual'],
-                                    'parcelas' => '8'
+                                    'parcelas' => '12'
                                 ],
                             ];
 
@@ -238,3 +238,4 @@ $dadosFinanceiro = $this->financeiro;
         </div>
     </div>
 </div>
+<div class="retorno-boleto"></div>
