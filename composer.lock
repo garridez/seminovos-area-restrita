@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c7a7abfe16e407e1cacde14235f5847",
+    "content-hash": "7aada96dbdcdc856526ccce3ad67ee8b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -359,45 +359,6 @@
             ],
             "abandoned": "http-interop/http-server-middleware",
             "time": "2017-01-14T15:23:42+00:00"
-        },
-        {
-            "name": "italodeveloper/client-users",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://bitbucket.org/seminovosbh/client-users.git",
-                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/client-users/get/46b94dddc131ce75de1945dcf11523f3d6aa281c.zip",
-                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "UsersClient\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ítalo Araújo",
-                    "email": "italoaraujo788@gmail.com"
-                }
-            ],
-            "description": "Cliente do modulo de usuarios",
-            "homepage": "https://bitbucket.org/seminovosbh/client-users",
-            "support": {
-                "source": "https://bitbucket.org/seminovosbh/client-users/src/46b94dddc131ce75de1945dcf11523f3d6aa281c/?at=1.0.3"
-            },
-            "time": "2019-08-09T14:54:45+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",

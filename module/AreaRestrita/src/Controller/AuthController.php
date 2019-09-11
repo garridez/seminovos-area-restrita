@@ -1,126 +1,122 @@
 <?php
-declare (strict_types=1);
 
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
-use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Service\AuthManager;
-use Psr\Container\ContainerInterface;
 use SnBH\Common\Helper\Encrypter;
 use Zend\Authentication\AuthenticationService;
-use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 
-/**
- * Class AuthController
- * @package AreaRestrita\Controller
- */
 class AuthController extends AbstractActionController
 {
-    /*** @var ContainerInterface $container ***/
-    protected $container;
-    /*** @var mixed|AuthenticationService $authService ***/
-    protected $authService;
-    /*** @var AuthManager|mixed $authManager ***/
-    protected $authManager;
-    /*** @var Login\ParticularForm $particularForm ***/
-    protected $particularForm;
-    /*** @var Login\RevendaForm $revendaForm ***/
-    protected $revendaForm;
 
-    /**
-     * AuthController constructor.
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-        $this->authService = $container->get(AuthenticationService::class);
-        $this->authManager = $this->container->get(AuthManager::class);
-        $this->particularForm = new Login\ParticularForm();
-        $this->revendaForm = new Login\RevendaForm();
-    }
-
-    /**
-     * @return Response|ViewModel
-     */
     public function loginAction()
     {
+        /* @var $container ServiceLocatorInterface */
+        global $container;
+
+        $particularForm = new Login\ParticularForm();
+        $revendaForm = new Login\RevendaForm();
+
+        $viewModel = new ViewModel([
+            'particularForm' => $particularForm,
+            'revendaForm' => $revendaForm
+        ]);
         $this->layout('layout/login.phtml');
-        if ($this->authService->hasIdentity()) {
+
+        /* @var $authService AuthenticationService */
+        $authService = $container->get(AuthenticationService::class);
+
+        if ($authService->hasIdentity()) {
             return $this->redirect()->toRoute('restrito');
         }
-        $view = new ViewModel([
-            'particularForm' => $this->particularForm,
-            'revendaForm' => $this->revendaForm
-        ]);
+
+
+
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            return $view;
+            return $viewModel;
         }
-        $postRequest = $request->getPost();
-        $form = ($postRequest['type'] == 'login-revenda-form') ? $this->revendaForm : $this->particularForm;
-        $form->setData($postRequest);
-        if (!$form->isValid()) {
-            return $view;
-        }
-        $dataForm = $form->getData();
-        $loginClient = [
-            'login' => ($dataForm['tipoCadastro'] == 1) ? str_replace(['.', ',', '-', '/'], '', $dataForm['usuarioEmail']) : $dataForm['usuarioEmail'],
-            'password' => $dataForm['usuarioSenha'],
-            'rememberMe' => true
-        ];
-        $result = $this->authManager->login($loginClient);
-        if ($result->getCode() === $result::SUCCESS) {
-            return $this->redirect()->toRoute('restrito');
-        }
-        switch ($dataForm['tipoCadastro']) {
-            case Cadastros::TIPO_CADASTRO_PARTICULAR:
-                $this->particularForm
-                    ->get('usuarioEmail')
-                    ->setValue($dataForm['usuarioEmail']);
-                break;
-            case Cadastros::TIPO_CADASTRO_REVENDA:
-                break;
-            default:
-                break;
-        }
-        $view->setVariable('loginError', true);
-        return $view;
+        $post = $request->getPost();
 
-        return $this->redirect()->toUrl('../entrar#erro');
+        /* @var $form \Zend\Form\Form */
+        $form = null;
+        foreach ([$particularForm, $revendaForm] as $form) {
+            if ($form->getName() === $post['type']) {
+                break;
+            }
+        }
+
+        $form->setData($post);
+
+        if ($form->isValid()) {
+            /* @var $apiClient \SnBH\ApiClient\Client */
+            $data = $form->getData();
+
+            $rememberMe = true;
+
+            /* @var $authManager AuthManager  */
+            $authManager = $container->get(AuthManager::class);
+
+            $result = $authManager->login([
+                'emailOrCnpj' => $data['usuarioEmail'],
+                'usuarioSenha' => $data['usuarioSenha'],
+                'tipoCadastro' => $data['tipoCadastro'],
+                'rememberMe' => $rememberMe
+            ]);
+            if ($result->getCode() === $result::SUCCESS) {
+                return $this->redirect()->toRoute('restrito');
+            }
+        }
+
+        $viewModel->setVariable('loginError', true);
+
+
+        return $viewModel;
     }
 
-    /**
-     * @return Response
-     */
-    public function logoutAction(): Response
+    public function logoutAction()
     {
-        $this->authService->clearIdentity();
-        $url = $this->container->get('Config')['SnBH']['urls']['site'];
+        global $container;
+
+        /* @var $authService AuthenticationService */
+        $authService = $container->get(AuthenticationService::class);
+        $authService->clearIdentity();
+
+        $url = $container->get('Config')['SnBH']['urls']['site'];
+
         return $this->redirect()->toUrl($url);
     }
 
-    /**
-     * @return Response
-     */
-    public function loginAutomaticoAction(): Response
+    public function loginAutomaticoAction()
     {
+        /* @var $container ServiceLocatorInterface */
+        global $container;
+
         $encryptedText = $this->params('dados');
         $decryptedText = Encrypter::decrypt($encryptedText);
+
         list($fusoHorario, $idCadastro, $idAnuncio, $dataValidade) = explode(";", $decryptedText);
-        if ($dataValidade < date('Y-m-d')) {
+
+        if ($dataValidade >= date('Y-m-d')) {
+
+            /* @var $authManager AuthManager  */
+            $authManager = $container->get(AuthManager::class);
+
+            $result = $authManager->login([
+                'loginWithoutPassword' => true,
+                'idCadastro' => $idCadastro,
+                'rememberMe' => true
+            ]);
+
+            if ($result->getCode() === $result::SUCCESS) {
+                return $this->redirect()->toUrl('../meus-veiculos');
+            } else {
+                return $this->redirect()->toUrl('../entrar#erro');
+            }
+        } else {
             return $this->redirect()->toRoute('auth');
         }
-        $result = $this->authManager->login([
-            'loginWithoutPassword' => true,
-            'idCadastro' => $idCadastro,
-            'rememberMe' => true
-        ]);
-        if ($result->getCode() === $result::SUCCESS) {
-            return $this->redirect()->toUrl('../meus-veiculos');
-        }
-        return $this->redirect()->toUrl('../entrar#erro');
     }
 }

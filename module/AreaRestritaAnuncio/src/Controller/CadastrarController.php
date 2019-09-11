@@ -7,127 +7,129 @@
 
 namespace AreaRestritaAnuncio\Controller;
 
-use UsersClient\Client;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
-use AreaRestrita\Model\EnviarEmail;
-use Psr\Container\ContainerInterface;
-use UsersClient\Exceptions\ExceptionToModal;
-use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Form\MeusDados\ParticularForm;
+use AreaRestrita\Model\EnviarEmail;
+use Zend\View\Model\ViewModel;
+use AreaRestrita\Model\Cadastros;
 
-/**
- * Class CadastrarController
- * @package AreaRestritaAnuncio\Controller
- */
 class CadastrarController extends AbstractActionController
 {
-    /*** @var ContainerInterface $container */
-    protected $container;
-    /*** @var Client $client */
-    protected $client;
-    /*** @var ParticularForm $form */
-    protected $form;
 
-    /**
-     * CadastrarController constructor.
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-        $this->form = new ParticularForm();
-        $this->client = new Client([
-            'base_uri' =>  $container->get('Config')['UsersModuleApi']['base_uri'],
-            'clientMode' => 2,
-            'support' => [
-                'user' => $container->get('Config')['UsersModuleApi']['support']['user'],
-                'password' => $container->get('Config')['UsersModuleApi']['support']['password']
-            ]
-        ]);
-    }
-
-    /**
-     * @return JsonModel|ViewModel
-     */
     public function indexAction()
     {
+//        $dadosForm = new Cadastro\CadastroParticularForm();
+        $dadosForm = new ParticularForm();
+
         $request = $this->getRequest();
-        if($request->isPost()) {
-            $post = $request->getPost()->toArray();
-            $this->form->setData($post);
-            if($this->form->isValid()) {
-                try {
-                    $response = $this->client->create($post);
-                    return new JsonModel([
-                        'title' => 'Sucesso',
-                        'detail' => 'Cadastrado com sucesso',
-                        'messages' => $response['apiToken'],
-                        'status' => 200
-                    ]);
-                } catch (\Exception $exception) {
-                    return new JsonModel(ExceptionToModal::manipulate($exception, 'Verifique os dados enviados e tente novamente.'));
+
+        if ($request->isPost()) {
+
+            $post = $request->getPost();
+            $dadosForm->setData($post);
+
+            if ($dadosForm->isValid()) {
+                /* @var $cadastrosModel Cadastros */
+                $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+                $data = $dadosForm->getData();
+                if ($data['dataNascimento']) {
+                    $data['dataNascimento'] = date('d/m/Y', strtotime($data['dataNascimento']));
                 }
+
+                $data['tipoCadastro'] = 2;
+                $resPost = $cadastrosModel->post($data);
+                echo json_encode($resPost->json());
+                die;
             } else {
-                $email = $this->params('email');
-                $this->form->get('email')->setValue($email);
+                echo 'dados invalidos';
+                var_dump($dadosForm->getMessages());
+                die;
             }
+        } else {
+            $email = $this->params('email');
+            $dadosForm->get('email')->setValue($email);
+
+            $view = new ViewModel([
+                'formCadastro' => $dadosForm
+            ]);
+
+            $this->layout('layout/blank.phtml');
+
+            return $view;
         }
-        $this->layout('layout/blank.phtml');
-        return new ViewModel([
-            'formCadastro' => $this->form
-        ]);
     }
 
     public function rememberPassAction()
     {
         $request = $this->getRequest();
-        if(!$request->isPost()) {
-            return new JsonModel(['blank']);
-        }
-        $post = $request->getPost()->toArray();
-        $senhaGerada = str_replace('0', '', substr(md5(uniqid('')), 0, 7));
-        try {
-            $response = $this->client->resetPasswordMaster([
-                'email' =>  $post['emailLembrarSenha'],
-                'password' => $senhaGerada,
-            ]);
-        } catch(\Exception $exception){
-            /**
-             * @TODO, log de erro
-             */
-            return new JsonModel(['error' => $exception]);
-        }
 
-        try {
-            $this->client->auth([
-                'login' => $post['emailLembrarSenha'],
-                'password' => $senhaGerada
-            ]);
-        } catch(\Exception $exception){
+        if (!$request->isPost()) {
             return [];
         }
-        
-        $userData = $this->client->getUserData();
-        $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> ' . $userData->getResponsavelNome() . ', conforme solicitado, segue sua nova senha de acesso para o site <a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br /><strong>Foi gerada uma nova senha: </strong>' . $senhaGerada . '<br /><strong>Login: </strong>: ' . $userData->getEmail() . '<br /><strong>Nome do usuário: </strong>: ' . $userData->getResponsavelNome() . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+        $post = $request->getPost();
 
-        /** @var EnviarEmail $enviarEmailModel  */
-        $enviarEmailModel = $this->container->get(EnviarEmail::class);
-        $response = $enviarEmailModel->post([
-            'mensagem' => $mensagem,
-            'assunto' => 'Nova senha de acesso',
-            'email' => [
-                (string)$userData->getResponsavelNome() => $userData->getEmail(),
-                'senha' => 'senha@seminovosbh.com.br'
-            ],
-            'nome' =>  $userData->getResponsavelNome(),
-            'emailRemetente' => 'senha@seminovosbh.com.br',
-            'nomeRemetente' => 'SeminovosBH',
-            'tipoEmail' => 'personalizado'
+        $email = $post['emailLembrarSenha'];
+        $tipoCadastro = 2;
+
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        #verifica se o email informado já foi cadastrado no sistema
+        $dadosCadastro = $cadastrosModel->get([
+            'tipoCadastro' => $tipoCadastro,
+            'email' => $email,
+            'checkEmail' => true
         ]);
-        if($response instanceof \SnBH\ApiClient\Response) {
-            $response = json_decode($response->json(), true);
+
+        if (!$dadosCadastro || !$dadosCadastro[0]) {
+            echo json_encode([
+                'status' => 400,
+                'title' => 'Method Not Allowed',
+                'detail' => 'Email incorreto. Verifique e tente novamente',
+            ]);
+            die;
         }
-        return new JsonModel($response);
+
+        $dadosCadastro = $dadosCadastro[0];
+        // gerar uma nova senha
+        $senha = substr(md5(uniqid('')), 0, 7);
+        $senha = str_replace('0', '', $senha); // não inserir zeros
+        $novaSenha = $senha;
+
+
+        $retorno = $cadastrosModel->put([
+            'senha' => $novaSenha,
+            'tipoCadastro' => $tipoCadastro
+            ], $dadosCadastro['idCadastro'], null);
+
+
+        if ($retorno->status == 200) {
+            // Envia email pela nova api
+            $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> ' . $dadosCadastro['responsavelNome'] . ', conforme solicitado, segue sua nova senha de acesso para o site <a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br /><strong>Foi gerada uma nova senha: </strong>' . $senha . '<br /><strong>Login: </strong>: ' . $dadosCadastro['email'] . '<br /><strong>Nome do usuário: </strong>: ' . $dadosCadastro['responsavelNome'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+
+            $dadosEmail = [
+                'mensagem' => $mensagem,
+                'assunto' => 'Nova senha de acesso',
+                'email' => [
+                    $dadosCadastro['responsavelNome'] => $dadosCadastro['email'],
+                    'senha' => 'senha@seminovosbh.com.br'
+                ],
+                'nome' => $dadosCadastro['responsavelNome'],
+                'emailRemetente' => 'senha@seminovosbh.com.br',
+                'nomeRemetente' => 'SeminovosBH',
+                'tipoEmail' => 'personalizado'
+            ];
+
+            /* @var $enviarEmailModel EnviarEmail */
+            $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+
+            $retorno = $enviarEmailModel->post($dadosEmail);
+        }
+        if ($retorno instanceof \SnBH\ApiClient\Response) {
+            $retorno = $retorno->json();
+        }
+        echo json_encode($retorno);
+        die;
     }
 }
