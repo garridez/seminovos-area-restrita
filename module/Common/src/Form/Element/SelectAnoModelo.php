@@ -9,6 +9,7 @@ class SelectAnoModelo extends Select
 
     protected $valueOptions = [
         '' => 'Selecione',
+        2020 => 2020,
         2019 => 2019,
         2018 => 2018,
         2017 => 2017,
