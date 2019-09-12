@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7aada96dbdcdc856526ccce3ad67ee8b",
+    "content-hash": "684bb242ed17095bf3a2bf41240b2f01",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1842,6 +1842,52 @@
             "time": "2018-04-25T19:32:43+00:00"
         },
         {
+            "name": "zendframework/zend-i18n-resources",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-i18n-resources.git",
+                "reference": "3a2f5a246779f05d4fe0c47738d4d2271e484aee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-i18n-resources/zipball/3a2f5a246779f05d4fe0c47738d4d2271e484aee",
+                "reference": "3a2f5a246779f05d4fe0c47738d4d2271e484aee",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.5",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6.x-dev",
+                    "dev-develop": "2.7.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/Resources.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Provides validator translations for zend-i18n's Translator",
+            "keywords": [
+                "ZendFramework",
+                "resources",
+                "translations",
+                "zf"
+            ],
+            "time": "2019-06-25T01:21:12+00:00"
+        },
+        {
             "name": "zendframework/zend-inputfilter",
             "version": "2.8.1",
             "source": {
@@ -2284,6 +2330,69 @@
                 "zf2"
             ],
             "time": "2016-06-07T18:34:07+00:00"
+        },
+        {
+            "name": "zendframework/zend-mvc-i18n",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-mvc-i18n.git",
+                "reference": "90e64d1304385cfcf19447b6449514e8a720adfc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-mvc-i18n/zipball/90e64d1304385cfcf19447b6449514e8a720adfc",
+                "reference": "90e64d1304385cfcf19447b6449514e8a720adfc",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-i18n": "^2.7",
+                "zendframework/zend-router": "^3.0",
+                "zendframework/zend-servicemanager": "^2.7.10 || ^3.0.3",
+                "zendframework/zend-stdlib": "^2.7.6 || ^3.0",
+                "zendframework/zend-validator": "^2.6"
+            },
+            "conflict": {
+                "zendframework/zend-mvc": "<3.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.5",
+                "zendframework/zend-cache": "^2.6.1",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "suggest": {
+                "zendframework/zend-cache": "To enable caching of translation strings"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
+                },
+                "zf": {
+                    "component": "Zend\\Mvc\\I18n",
+                    "config-provider": "Zend\\Mvc\\I18n\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Mvc\\I18n\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Integration between zend-mvc and zend-i18n",
+            "keywords": [
+                "ZendFramework",
+                "i18n",
+                "mvc",
+                "zf"
+            ],
+            "time": "2018-05-01T15:48:40+00:00"
         },
         {
             "name": "zendframework/zend-mvc-plugin-fileprg",
@@ -4163,6 +4272,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-04-11T04:50:36+00:00"
         },
         {

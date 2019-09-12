@@ -7,14 +7,19 @@
 
 namespace AreaRestrita;
 
-use Zend\Authentication\AuthenticationService as AuthService;
-use Zend\Log\Logger;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Event as ApiClientEvents;
-use Zend\EventManager\Event as ZendEvent;
 use SnBH\ApiClient\Response as ApiClientResponse;
+use Zend\Authentication\AuthenticationService as AuthService;
+use Zend\EventManager\Event as ZendEvent;
+use Zend\I18n\Translator\Loader\PhpArray;
+use Zend\I18n\Translator\Resources as TranslatorResources;
+use Zend\I18n\Translator\Translator as I18nTranslator;
+use Zend\Log\Logger;
+use Zend\Mvc\I18n\Translator as MvcTranslator;
+use Zend\Mvc\MvcEvent;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Validator\AbstractValidator;
 
 class Module
 {
@@ -32,6 +37,7 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $this->setLogger($sm);
         $this->setMeasureApiResponseTime($sm);
+        $this->translatorConfig();
     }
 
     public function onDispatchError(MvcEvent $e)
@@ -107,5 +113,21 @@ class Module
                 $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$requestParams->getMethod()} {$requestParams->getPath()}' retornado", $extras);
             }
         });
+    /**
+     * Configura o translaro para os validadores de formulário
+     * É travado em português por motivos óbveis
+     */
+    public function translatorConfig()
+    {
+        $I18ntranslator = new I18nTranslator();
+        $translator = new MvcTranslator($I18ntranslator);
+
+        $translatorFileResource = sprintf(
+            TranslatorResources::getPatternForValidator(),
+            TranslatorResources::getBasePath() . 'pt_BR'
+        );
+        $translator->addTranslationFile(PhpArray::class, $translatorFileResource);
+
+        AbstractValidator::setDefaultTranslator($translator);
     }
 }

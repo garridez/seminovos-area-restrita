@@ -9,9 +9,10 @@ namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Form\MeusDados\ParticularForm;
-use AreaRestrita\Model\EnviarEmail;
-use Zend\View\Model\ViewModel;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\EnviarEmail;
+use SnBH\Common\Helper\ValidatorMessages;
+use Zend\View\Model\ViewModel;
 
 class CadastrarController extends AbstractActionController
 {
@@ -42,8 +43,11 @@ class CadastrarController extends AbstractActionController
                 echo json_encode($resPost->json());
                 die;
             } else {
-                echo 'dados invalidos';
-                var_dump($dadosForm->getMessages());
+                echo json_encode([
+                    'status' => 405,
+                    'title' => 'Revise as informações inseridas',
+                    'detail' => ValidatorMessages::toHTML($dadosForm->getMessages(), $dadosForm),
+                ]);
                 die;
             }
         } else {
