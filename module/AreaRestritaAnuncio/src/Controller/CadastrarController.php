@@ -35,7 +35,7 @@ class CadastrarController extends AbstractActionController
 
                 $data = $dadosForm->getData();
                 if ($data['dataNascimento']) {
-                    $data['dataNascimento'] = date('d/m/Y', strtotime($data['dataNascimento']));
+                    $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', $data['dataNascimento'])));
                 }
 
                 $data['tipoCadastro'] = 2;

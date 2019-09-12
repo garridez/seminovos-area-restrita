@@ -35,7 +35,9 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'required' => true
+                'required' => true,
+                'min' => date('Y-m-d', strtotime('-100 year')),
+                'max' => date('Y-m-d'),
             ]
         ]);
 
