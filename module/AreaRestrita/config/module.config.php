@@ -122,6 +122,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\AuthController::class => InvokableFactory::class,
+            Controller\AuthOldController::class => InvokableFactory::class,
             Controller\ChatController::class => InvokableFactory::class,
             Controller\CheckController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
@@ -132,7 +133,7 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\JsonController::class => InvokableFactory::class,
             Controller\MeuSiteController::class => InvokableFactory::class,
-            Controller\MeusDadosController::class => InvokableFactory::class,
+            Controller\MeusDadosController::class => Controller\Factory\AbstractFactoryClient::class,
             Controller\MeusVeiculosController::class => InvokableFactory::class,
             Controller\RotaExemploController::class => InvokableFactory::class,
             Controller\TermosController::class => InvokableFactory::class,
@@ -141,11 +142,12 @@ return [
     'service_manager' => [
         'factories' => [
             'cache' => StorageCacheFactory::class,
-            // Auth
-            AuthenticationService::class => AuthenticationServiceFactory::class,
-            Service\AuthManager::class => Service\AuthManagerFactory::class,
-            Service\Identity::class => Service\Factory\IdentityFactory::class,
-            // Middleware
+            //Auth
+            AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
+            Service\AuthManager::class => Service\Factory\AbstractFactory::class,
+            Service\Identity::class => Service\Factory\AbstractFactory::class,
+            
+            //Middleware
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
             Middleware\CheckIdVeiculoMiddleware::class => Middleware\Factory\CheckIdVeiculoMiddlewareFactory::class,

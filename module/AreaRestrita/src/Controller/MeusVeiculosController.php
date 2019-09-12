@@ -77,6 +77,9 @@ class MeusVeiculosController extends AbstractActionController
     {
         /* @var $propostasModel Propostas */
         $propostasModel = $this->getContainer()->get(Propostas::class);
+        if(!isset($dadosVeiculos['data'])){
+            return;
+        }
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
@@ -311,15 +314,19 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "9":
                     $frase = "";
-                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["upgrade_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 case "10":
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["editar_fotos"] = true;
+                    if ($veiculo['idPlano'] != 1) {
+                        $temp_acoes["editar_fotos"] = true;
+                    }
                     break;
                 default:
                     $temp_acoes = [

@@ -7,13 +7,13 @@
 
 namespace AreaRestritaAnuncio;
 
-use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
-use AreaRestrita\Middleware\DispatchMiddleware;
-use AreaRestrita\Middleware\LoginMiddleware;
-use AreaRestritaAnuncio\Controller\CadastrarController;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
+use AreaRestrita\Middleware\DispatchMiddleware;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use AreaRestrita\Controller\Factory\AbstractFactory;
+use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
+use AreaRestrita\Controller\Factory\AbstractFactoryClient;
 
 return [
     'session_containers' => [
@@ -237,7 +237,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\CadastrarController::class => InvokableFactory::class,
+            Controller\CadastrarController::class => AbstractFactory::class,
             Controller\CriarAnuncioController::class => InvokableFactory::class,
             Controller\DadosVeiculoController::class => InvokableFactory::class,
             Controller\FinalizarController::class => InvokableFactory::class,

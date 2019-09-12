@@ -42,6 +42,11 @@ module.exports.callback = ($) => {
             type: 'POST',
             dataType: 'json',
             success: function (httpResponse) {
+                
+                if (httpResponse.html) {
+                    $('.retorno-boleto').html(httpResponse.html);
+                    return;
+                }
                 if (httpResponse.type === 15002) {
                     /**
                      * @todo implementar essa função

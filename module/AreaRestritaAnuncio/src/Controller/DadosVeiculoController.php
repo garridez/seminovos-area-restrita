@@ -78,7 +78,9 @@ class DadosVeiculoController extends AbstractActionController
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
-            $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+            if (isset($data['kilometragem'])) {
+                $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+            }
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
@@ -196,6 +198,9 @@ class DadosVeiculoController extends AbstractActionController
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
                         'listaFotos' => $dataPost->fotosToDelete
                     ])->json();
+                
+                $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
+                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
             $fotos = $request->getFiles()->fotos;
             // Upload

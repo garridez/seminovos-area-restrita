@@ -154,12 +154,12 @@ class ParticularForm extends Form
             'type' => Element\Text::class,
             'name' => 'telefone_2',
             'options' => [
-                'label' => 'Telefone',
+                'label' => 'Celular',
             ],
             'attributes' => [
                 'required' => true,
                 'class' => 'form-control',
-                'data-mask' => '(00) 90000-0000',
+                'data-mask' => '(00) 00000-0000',
                 'placeholder' => '(__) _____-____',
             ],
         ]);

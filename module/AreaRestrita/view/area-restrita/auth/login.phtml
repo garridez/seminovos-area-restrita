@@ -87,17 +87,28 @@
             </div>
         </form>
     </div>
-
+    <?php if ($this->loginError) : ?>
+        <input type="hidden" name="login-error" value="1" />
+    <?php endif ?>
+    
 
     <?php
     $this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
     $this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
 
-    $this->particularForm->get('usuarioEmail')->setAttribute('class', 'form-control');
-    $this->particularForm->get('usuarioSenha')->setAttribute('class', 'form-control');
+    $this->particularForm->get('usuarioEmail')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('autocomplete', 'username');
+    $this->particularForm->get('usuarioSenha')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('autocomplete', 'username');
 
-    $this->revendaForm->get('usuarioEmail')->setAttribute('class', 'form-control');
-    $this->revendaForm->get('usuarioSenha')->setAttribute('class', 'form-control');
+    $this->revendaForm->get('usuarioEmail')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('autocomplete', 'current-password');
+    $this->revendaForm->get('usuarioSenha')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('autocomplete', 'current-password');
 
     ?>
     <div class="forms-group">

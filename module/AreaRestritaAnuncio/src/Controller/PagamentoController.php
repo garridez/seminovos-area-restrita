@@ -101,12 +101,13 @@ class PagamentoController extends AbstractActionController
         }
         $idVeiculo = isset($dados['idVeiculo']) ? $dados['idVeiculo'] : null;
         $dadosPagamento['metodo'] = $dados['metodo'];
-        $dadosPagamento['total'] = $dados['total'];
+        $dadosPagamento['areaRestrita'] = 'nova';
+        $dadosPagamento['total'] = $dados['total'] ?? null;
         $dadosPagamento['tempo_contrato'] = isset($dados['tempo_contrato']) ? $dados['tempo_contrato'] : null;
         $dadosPagamento['idVeiculo'] = $idVeiculo;
         $dadosPagamento['idAnuncioVeiculo'] = isset($dados['idAnuncioVeiculo']) ? $dados['idAnuncioVeiculo'] : null;
         $dadosPagamento['idCadastro'] = $cadastro['idCadastro'];
-        $dadosPagamento['idPlano'] = $dados['idPlano'];
+        $dadosPagamento['idPlano'] = $dados['idPlano'] ?? null;
         $dadosPagamento['parcelas'] = 1;
 
         // dados para pagamento Cielo
@@ -156,6 +157,17 @@ class PagamentoController extends AbstractActionController
             $routeParams['action'] = $action;
             return $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo;
         };
+        /**
+         * retorno quando é boleto da revenda feito pelo itau.
+         **/
+        if($cadastro['tipoCadastro'] == 1 && $dados['metodo'] == 'boleto'){
+            $response['html'] = $this->getApiClient()
+            ->pagamentosPost($dadosPagamento, null, false)
+            ->getBody();
+            echo json_encode($response);
+            die;
+            
+        }
 
 
         $response = $this->getApiClient()

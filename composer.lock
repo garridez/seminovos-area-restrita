@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b46f944785c68a89ade102d5413de2ee",
+    "content-hash": "2c7a7abfe16e407e1cacde14235f5847",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -359,6 +359,45 @@
             ],
             "abandoned": "http-interop/http-server-middleware",
             "time": "2017-01-14T15:23:42+00:00"
+        },
+        {
+            "name": "italodeveloper/client-users",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/seminovosbh/client-users.git",
+                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/seminovosbh/client-users/get/46b94dddc131ce75de1945dcf11523f3d6aa281c.zip",
+                "reference": "46b94dddc131ce75de1945dcf11523f3d6aa281c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UsersClient\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ítalo Araújo",
+                    "email": "italoaraujo788@gmail.com"
+                }
+            ],
+            "description": "Cliente do modulo de usuarios",
+            "homepage": "https://bitbucket.org/seminovosbh/client-users",
+            "support": {
+                "source": "https://bitbucket.org/seminovosbh/client-users/src/46b94dddc131ce75de1945dcf11523f3d6aa281c/?at=1.0.3"
+            },
+            "time": "2019-08-09T14:54:45+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -1579,21 +1618,21 @@
         },
         {
             "name": "zendframework/zend-form",
-            "version": "2.11.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-form.git",
-                "reference": "b68a9f07d93381613b68817091d0505ca94d3363"
+                "reference": "c713a12ccbd43148b71c9339e171ca11e3f8a1da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-form/zipball/b68a9f07d93381613b68817091d0505ca94d3363",
-                "reference": "b68a9f07d93381613b68817091d0505ca94d3363",
+                "url": "https://api.github.com/repos/zendframework/zend-form/zipball/c713a12ccbd43148b71c9339e171ca11e3f8a1da",
+                "reference": "c713a12ccbd43148b71c9339e171ca11e3f8a1da",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
-                "zendframework/zend-hydrator": "^1.1 || ^2.1",
+                "zendframework/zend-hydrator": "^1.1 || ^2.1 || ^3.0",
                 "zendframework/zend-inputfilter": "^2.8",
                 "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
@@ -1627,8 +1666,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.11.x-dev",
-                    "dev-develop": "2.12.x-dev"
+                    "dev-master": "2.13.x-dev",
+                    "dev-develop": "2.14.x-dev"
                 },
                 "zf": {
                     "component": "Zend\\Form",
@@ -1653,7 +1692,7 @@
                 "form",
                 "zf"
             ],
-            "time": "2017-12-06T21:09:08+00:00"
+            "time": "2018-12-11T22:51:29+00:00"
         },
         {
             "name": "zendframework/zend-http",
@@ -2251,6 +2290,12 @@
                 "url": "https://github.com/zendframework/zend-mvc-form.git",
                 "reference": "28bf47ce6661fd71f1b8d68f9b6bc8f841f6aeb0"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-mvc-form/zipball/28bf47ce6661fd71f1b8d68f9b6bc8f841f6aeb0",
+                "reference": "28bf47ce6661fd71f1b8d68f9b6bc8f841f6aeb0",
+                "shasum": ""
+            },
             "require": {
                 "php": "^5.6 || ^7.0",
                 "zendframework/zend-code": "^2.6.3 || ^3.0.2",
@@ -2509,6 +2554,12 @@
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mvc-plugins.git",
                 "reference": "b00cda46b0a95cbd32ea0743d6d7dc3fd2263f1b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-mvc-plugins/zipball/b00cda46b0a95cbd32ea0743d6d7dc3fd2263f1b",
+                "reference": "b00cda46b0a95cbd32ea0743d6d7dc3fd2263f1b",
+                "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -4151,7 +4202,6 @@
                 "mock",
                 "xunit"
             ],
-            "abandoned": true,
             "time": "2018-04-11T04:50:36+00:00"
         },
         {

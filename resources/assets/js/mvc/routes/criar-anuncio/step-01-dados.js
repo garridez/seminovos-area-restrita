@@ -179,7 +179,7 @@ function init() {
                     $('[name="versao"]').append("<option value='99'>Outra versão</option>")
                     
                     if(dados.length == 0){
-                        $('[name="versao"] option[value=99]').attr('selected','selected').change();
+                        $('[name="versao"]').val('99').change();
                     }
 
                 },
