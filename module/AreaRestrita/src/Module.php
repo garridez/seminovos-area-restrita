@@ -113,6 +113,8 @@ class Module
                 $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$requestParams->getMethod()} {$requestParams->getPath()}' retornado", $extras);
             }
         });
+    }
+
     /**
      * Configura o translaro para os validadores de formulário
      * É travado em português por motivos óbveis
