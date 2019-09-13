@@ -31,7 +31,13 @@ class ChatController extends AbstractActionController
             'idCadastro' => $idCadastro
         ], null, !true);
 
-        return new JsonModel($res->getData());
+        $data = $res->getData();
+
+        foreach ($data as &$cv) {
+            $cv['meuIdCadastro'] = $idCadastro;
+        }
+
+        return new JsonModel($data);
         $json = $res->json();
         if ($json) {
             echo '<pre>';
