@@ -35,6 +35,7 @@ class ChatController extends AbstractActionController
 
         foreach ($data as &$cv) {
             $cv['meuIdCadastro'] = $idCadastro;
+            $cv['idCadastro'] = (int) $cv['idCadastro'];
         }
 
         return new JsonModel($data);
