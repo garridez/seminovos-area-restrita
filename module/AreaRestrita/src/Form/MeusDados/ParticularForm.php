@@ -2,8 +2,9 @@
 
 namespace AreaRestrita\Form\MeusDados;
 
-use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\Form\Form;
+use Zend\Validator\ValidatorChain;
 
 class ParticularForm extends Form
 {
@@ -34,7 +35,9 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'required' => true
+                'required' => true,
+                'min' => date('Y-m-d', strtotime('-100 year')),
+                'max' => date('Y-m-d'),
             ]
         ]);
 
@@ -324,6 +327,8 @@ class ParticularForm extends Form
             'name' => 'idEstado',
             'required' => true,
         ]);
+        // Reseta o validador de idCidade
+        $inputFilter->get('idCidade')->setValidatorChain(new ValidatorChain());
         $inputFilter->add([
             'name' => 'idCidade',
             'required' => true,

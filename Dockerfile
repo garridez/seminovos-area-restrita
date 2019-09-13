@@ -4,6 +4,10 @@ RUN docker-php-ext-enable redis
 
 #COPY . .
 
+RUN apt-get install -y zlib1g-dev libicu-dev g++ \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
 ARG SESSION_PHP_SAVE_HANDLER
 ARG SESSION_SAVE_PATH
 # No local não salva a sessão no redis
