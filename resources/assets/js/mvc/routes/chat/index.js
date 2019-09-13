@@ -1,9 +1,17 @@
 module.exports.seletor = ".c-meus-veiculos.a-chat";
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 module.exports.callback = $ => {
+    import('components/Chat/init').then(function (initChat) {
+        console.log('init')
+        initChat.default();
+        console.log('init')
+    });
+    
+    return;
     import('components/Chat').then(function (Chat) {
+        console.log(Chat);
 
-        new Chat($('.section-chat'));
+        new Chat.default($('.section-chat'));
         var jQuery = require("jquery");
         window.jQuery = jQuery;
         /**

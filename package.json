@@ -1,5 +1,5 @@
 {
-  "name": "site",
+  "name": "area-restrita",
   "version": "1.0.0",
   "description": "## Introduction",
   "main": "index.js",
@@ -34,15 +34,19 @@
     "jquery-mask-plugin": "^1.14.15",
     "jquery-validation": "^1.19.0",
     "laravel-mix": "^4.1.2",
+    "lodash": "^4.17.15",
     "modernizr": "^3.6.0",
     "moment": "^2.24.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "sass-loader": "^7.2.0",
     "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
     "sortablejs": "^1.10.0-rc3"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
     "livereload": "^0.7.0"
   }
 }

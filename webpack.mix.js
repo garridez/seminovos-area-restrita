@@ -24,7 +24,7 @@ mix.webpackConfig({
     }
 });
 
-mix.js('resources/assets/js/Main.js', 'public/js/app.js');
+mix.react('resources/assets/js/Main.js', 'public/js/app.js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 mix.sourceMaps(true, 'source-map');
 mix.copy(basePath + '/img', 'public/img');
