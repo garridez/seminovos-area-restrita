@@ -1,29 +1,19 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
-window.React = React;
-window.ReactDOM = ReactDOM;
-//var chat = <section className="section-chat">
+import _ from 'lodash';
+import Message from './Message';
+
 export default class Conversation extends Component {
     constructor() {
         super()
-        this.state = {filter: ''}
     }
-
-//    handleFilterUpdate = (filter) => {;;
-//        this.setState({filter})
-//    }
-
     render() {
-//        const {username} = this.props.params
-//        const {filter} = this.state
-        // <Message/>
+        const {conversation, mensagens} = this.props;
         return (
-                <ul>
+                <ul className="conversation">
+                    {
+                        _.map(mensagens, (msg, id) => <Message key={id} data={msg} conversation={conversation}/>)
+                    }
                 </ul>
                 );
     }
 }
-
-
-
-//export default chat;

@@ -1,5 +1,4 @@
-import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
+import {Component} from 'react';
 import moment from 'moment';
 import _ from 'lodash';
 import 'moment/locale/pt-br';
@@ -7,9 +6,7 @@ import 'moment/locale/pt-br';
 export default class ChatSubject extends Component {
     constructor() {
         super()
-
         this.active = this.active.bind(this);
-
     }
     active() {
         var idConversa = this.props.data.idConversa;
@@ -17,13 +14,8 @@ export default class ChatSubject extends Component {
     }
     render() {
         const {data, isActive} = this.props
-
-//        console.log(data);
-        _.map(data, function (v, k) {
-//            console.log(k)
-        });
         var lastMsg = Object.values(data.mensagens)[0];
-        
+
         var classes = 'chat-subject chat bg-white d-flex py-2 px-2 border-bottom';
         if (isActive) {
             classes += ' active';
@@ -33,7 +25,7 @@ export default class ChatSubject extends Component {
                 <div className={classes} onClick={this.active}>
                     <div className="chat-img mr-2">
                 
-                        <img src={data.foto} width="25px" alt="" className="img-fluid"/>
+                        <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
                     <div className="chat-details">
                         <div className="chat-title">

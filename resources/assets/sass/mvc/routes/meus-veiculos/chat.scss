@@ -51,7 +51,7 @@ section.section-chat {
             }
         }
     }
-    .conversation-active {
+    .conversation-container {
         .conversation-info {
             .conversation-name {
                 font-size: 0.8rem;
@@ -72,16 +72,23 @@ section.section-chat {
         .conversation {
             overflow-y: scroll;
             height: 320px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
             .message {
                 width: auto;
                 max-width: 45%;
                 .msg {
+                    margin:0;
+                    padding: 0;
+                    text-indent: 0;
+                    list-style-type: 0;
                     border-radius: 10px;
                 }
                 .info > .time {
                     width: 2rem;
                 }
-                &.from-interessado {
+                &.send-from-interested {
                     margin-left: auto;
                     .msg {
                         color: white;
@@ -92,7 +99,7 @@ section.section-chat {
                         margin-right: 1.4rem;
                     }
                 }
-                &.from-remetente {
+                &.send-from-me {
                     margin-right: auto;
                     .msg {
                         background-color: lime;

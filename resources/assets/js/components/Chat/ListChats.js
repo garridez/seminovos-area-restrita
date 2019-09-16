@@ -1,5 +1,4 @@
-import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
+import {Component} from 'react';
 import _ from 'lodash';
 import ChatSubject from './ChatSubject';
 
@@ -29,10 +28,6 @@ export default class ListChats extends Component {
 function renderListChats(params) {
     var {listChats, onActive, conversationActive} = params;
 
-    if (conversationActive) {
-//        console.log(conversationActive);
-//        console.log(listChats);
-    }
     listChats = _.sortBy(listChats, function (v) {
         var {mensagens} = v;
         var lastKey = _.findLastKey(mensagens);

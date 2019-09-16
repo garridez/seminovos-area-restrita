@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import ListChats from './ListChats';
 import Conversation from './Conversation';
+import Editor from './Editor';
 import $ from 'jquery';
 import data from './data';
 
@@ -21,12 +22,6 @@ export default class Chat extends Component {
         this.activeConversation = this.activeConversation.bind(this);
 
     }
-
-    handleFilterUpdate(filter) {
-        ///this.setState({filter})
-//        console.log(filter)
-    }
-
     getUrl(type) {
         return this.props['baseUrl'] + (this.props[type] || '');
     }
@@ -49,21 +44,31 @@ export default class Chat extends Component {
         console.log('Ativar esse cara aqui: ', id);
         this.setState({
             conversationActive: id,
-        })
+            currentConversation: this.state.listChats[id],
+        });
+
     }
     render() {
         const {listChats} = this.state;
         const {conversationActive} = this.state;
+        var mensagens = {};
+        var conversation = {};
+        if (this.state.currentConversation) {
+            conversation = this.state.currentConversation || {mensagens: {}};
+            mensagens = conversation.mensagens;
+        }
+
         return (
-                <section className="section-chat">
-                    <div>
+                <section className="section-chat row">
+                    <div className="col-md-3">
                         <ListChats
                             listChats={listChats}
                             conversationActive={conversationActive}
                             onActive={this.activeConversation} />
                     </div>
-                    <div>
-                        <Conversation />
+                    <div className="conversation-container col-md-9" >
+                        <Conversation conversation={conversation} mensagens={mensagens}/>
+                        <Editor/>
                     </div>
                 </section>
                 );
