@@ -10,7 +10,7 @@ export default class Editor extends Component {
     render() {
         return (
                 <div className="editor">
-                    <input type="text" />
+                    <input type="text" placeholder="Digite uma mensagem" className="form-control"/>
                 </div>
                 );
     }

@@ -1,114 +1,159 @@
-/**
- * NESCESSÁRIA A IMPORTAÇÃO DO CSS JÁ COMPILADO POIS O SASS DO PACOTE ESTÁ QUEBRADO.
- */
-@import "~emojionearea/dist/emojionearea.min.css";
-body {
-    overflow-y: hidden;
-}
-.invisible {
-    visibility: hidden;
-    width: 0;
-    height: 0;
-}
+
 section.section-chat {
-    .list-chats {
-        .chat {
-            cursor: pointer;
-            &.active{
-                background-color: #ececec !important;
-            }
-            .chat-img {
-                height: auto;
-                width: 90px;
-                img {
-                    border-radius: 8px;
+    > [class*="col-"]{
+        max-height: 800px;
+    }
+    > [class*="col-"]:first-child {
+        padding-right: 0 !important;
+    }
+    > [class*="col-"]:last-child {
+        padding-left: 0 !important;
+        & > div{
+            padding-left: 10px !important;
+        }
+    }
+    max-width: 1000px;
+    .sidebar{
+        > .filter{
+            padding: 10px 0;
+            border-bottom: 1px solid #c4c4c4;
+        }
+        .list-chats {
+            overflow: auto;
+            background-color: #f8f8f8;
+            direction: rtl;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            .chat {
+                position: relative;
+                direction: ltr;
+                border-right: 1px solid #c4c4c4;
+                border-right: 1px solid #ed9902;
+                cursor: pointer;
+                border-bottom: 1px solid #c4c4c4;
+                margin: 0;
+                background-color: #ebebeb !important;
+                &.active{
+                    border-right: 1px solid #fff;
+                    background-color: #fff !important;
+                    border-bottom: 1px solid #ed9902;
+                    border-top: 1px solid #ed9902;
+                    margin-top: -1px;
                 }
-            }
-            .chat-details {
-                .chat-title {
-                    font-size: 0.8rem;
+                .chat-img {
+                    height: auto;
+                    width: 90px;
+                    img {
+                        border-radius: 8px;
+                    }
                 }
-                .chat-name {
-                    font-size: 0.78rem;
+                .chat-details {
+                    .chat-title {
+                        font-size: 0.8rem;
+                    }
+                    .chat-name {
+                        font-size: 0.78rem;
+                    }
+                    .chat-last-msg {
+                        font-size: 0.78rem;
+                        color: #989898;
+
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
                 }
-                .chat-last-msg {
-                    font-size: 0.78rem;
-                    color: #979797;
-                }
-            }
-            .chat-info {
-                .chat-date {
-                    font-size: 0.7rem;
-                    color: #979797;
-                }
-                .chat-status {
-                    font-size: 0.55rem;
-                    color: #ffffff;
-                    background-color: #bbbbbb;
-                    border-radius: 5px;
-                    white-space: nowrap;
+                .chat-info {
+                    position: absolute;
+                    right: 5px;
+                    .chat-date {
+                        font-size: 0.7rem;
+                        color: #979797;
+                    }
+                    .chat-status {
+                        display: none;
+                        font-size: 0.55rem;
+                        color: #ffffff;
+                        background-color: #bbbbbb;
+                        border-radius: 5px;
+                        white-space: nowrap;
+                    }
                 }
             }
         }
     }
-    .conversation-container {
-        .conversation-info {
-            .conversation-name {
-                font-size: 0.8rem;
-            }
-            .conversation-last-access {
-                font-size: 0.7rem;
-                color: #979797;
-            }
-        }
-        .conversation-menu {
-            .conversation-action {
-                a {
-                    font-size: 0.9rem;
-                    color: purple;
-                }
-            }
-        }
-        .conversation {
+    .main-chat{
+        .conversation-container {
+            margin-bottom: 10px;
+            background-color: #fff;
+            height: 100%;
             overflow-y: scroll;
-            height: 320px;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            .message {
-                width: auto;
-                max-width: 45%;
-                .msg {
-                    margin:0;
-                    padding: 0;
-                    text-indent: 0;
-                    list-style-type: 0;
-                    border-radius: 10px;
+
+            .conversation-info {
+                .conversation-name {
+                    font-size: 0.8rem;
                 }
-                .info > .time {
-                    width: 2rem;
+                .conversation-last-access {
+                    font-size: 0.7rem;
+                    color: #979797;
                 }
-                &.send-from-interested {
-                    margin-left: auto;
-                    .msg {
-                        color: white;
-                        background-color: purple;
+            }
+            .conversation-menu {
+                .conversation-action {
+                    a {
+                        font-size: 0.9rem;
+                        color: purple;
                     }
-                    .info > .time {
+                }
+            }
+            ul.conversation {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                padding-right: 10px;
+                li.message {
+                    width: auto;
+                    max-width: 45%;
+                    margin: 6px 0;
+                    border-radius: 8px;
+                    padding: 5px;
+                    line-height: 20px;
+                    .text {
+                        margin:0;
+                        padding: 0;
+                        text-indent: 0;
+                        list-style-type: 0;
+                        border-radius: 10px;
+                        padding-right: 20px;
+                    }
+                    .time {
+                        float: right;
+                        margin: -15px -1px;
+                        opacity: 0.5;
+                        font-size: 11px;
+                    }
+                    &.sent + .sent, &.received + .received {
+                        margin-top: -5px !important;
+                    }
+                    &.sent {
+                        color: #fff;
                         margin-left: auto;
-                        margin-right: 1.4rem;
+                        background-color: #05728f;
                     }
-                }
-                &.send-from-me {
-                    margin-right: auto;
-                    .msg {
-                        background-color: lime;
-                    }
-                    .info > .time {
+                    &.received {
+                        color: #646464;
                         margin-right: auto;
-                        margin-left: 0.2rem;
+                        background-color: #ebebeb;
                     }
                 }
+            }
+        }
+
+        .editor {  
+            input {
+                font-size: 15px;
             }
         }
     }

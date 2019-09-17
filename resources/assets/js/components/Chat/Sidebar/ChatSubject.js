@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import moment from 'moment';
 import _ from 'lodash';
 import 'moment/locale/pt-br';
@@ -16,37 +16,44 @@ export default class ChatSubject extends Component {
         const {data, isActive} = this.props
         var lastMsg = Object.values(data.mensagens)[0];
 
-        var classes = 'chat-subject chat bg-white d-flex py-2 px-2 border-bottom';
+        var classes = 'chat-subject chat row py-2 px-2';
         if (isActive) {
             classes += ' active';
         }
+        var chatDate = moment(lastMsg.enviadoEm);
+        var now = moment().diff(chatDate, 'days');
+        var absoluteDate = chatDate.format('LLLL');
+        if (now <= 1) {
+            chatDate = chatDate.format('LT');
+        } else if (now <= 2) {
+            chatDate = chatDate.calendar();
+        }else{
+            chatDate = chatDate.format('dddd');
+        }
 
         return (
-                <div className={classes} onClick={this.active}>
-                    <div className="chat-img mr-2">
-                
+                <li className={classes} onClick={this.active}>
+                    <div className="chat-img col-4">
                         <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
-                    <div className="chat-details">
+                    <div className="chat-details col-8">
                         <div className="chat-title">
                             <b>{data.marca} {data.modelo}</b>
                         </div>
                         <div className="chat-name mt-1">
                             {data.responsavelNomeInteressado}
                         </div>
-                        <div className="chat-last-msg mt-1 text-gray">
+                        <div className="chat-last-msg mt-1" title={lastMsg.mensagem}>
                             {lastMsg.mensagem}
                         </div>
                     </div>
-                    <div className="chat-info ml-auto">
-                        <div className="chat-date d-flex justify-content-center">
-                            {moment(lastMsg.enviadoEm).calendar()}
+                    <div className="chat-info">
+                        <div className="chat-date d-flex justify-content-center" title={absoluteDate}>
+                            {chatDate}
                         </div>
-                        <div className="chat-status px-2">
-                            status
-                        </div>
+                        <div className="chat-status px-2"></div>
                     </div>
-                </div>
+                </li>
                 );
     }
 }

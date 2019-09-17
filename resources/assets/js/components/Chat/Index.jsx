@@ -1,15 +1,15 @@
 
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import ListChats from './ListChats';
-import Conversation from './Conversation';
-import Editor from './Editor';
+import Profile from './Sidebar/Profile';
+import Filter from './Sidebar/Filter';
+import ListChats from './Sidebar/ListChats';
+import History from './Conversation/History';
+import Editor from './Conversation/Editor';
+import Contact from './Conversation/Contact';
 import $ from 'jquery';
 import data from './data';
 
-window.React = React;
-window.ReactDOM = ReactDOM;
-//var chat = <section className="section-chat">
 export default class Chat extends Component {
 
     constructor(props) {
@@ -60,15 +60,20 @@ export default class Chat extends Component {
 
         return (
                 <section className="section-chat row">
-                    <div className="col-md-3">
+                    <div className="sidebar col-md-5 d-flex flex-column">
+                        <Profile />
+                        <Filter />
                         <ListChats
                             listChats={listChats}
                             conversationActive={conversationActive}
                             onActive={this.activeConversation} />
                     </div>
-                    <div className="conversation-container col-md-9" >
-                        <Conversation conversation={conversation} mensagens={mensagens}/>
-                        <Editor/>
+                    <div className="main-chat col-md-7 d-flex flex-column">
+                        <Contact />
+                        <div className="conversation-container">
+                            <History conversation={conversation} mensagens={mensagens}/>
+                        </div>
+                        <Editor className=""/> 
                     </div>
                 </section>
                 );
