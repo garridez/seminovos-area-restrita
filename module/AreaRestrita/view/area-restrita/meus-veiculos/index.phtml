@@ -253,7 +253,17 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                             </p>
                             <div>
                                 <?php if($veiculo["botoes"]["trocar_plano"]){?>
-                                <a href="<?=$urls['editarAnuncio']?>#plano"
+                                
+                                <?php
+                                    $editarPlanosUrl = $urls['editarAnuncio'];
+                                    if($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO){
+                                         $editarPlanosUrl .= '?editar=planos';
+                                    }
+                                    $editarPlanosUrl .= '#plano';
+                                
+                                ?>
+                                
+                                <a href="<?=$editarPlanosUrl?>"
                                     class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar
                                     Plano</a>
                                 <?php }?>
