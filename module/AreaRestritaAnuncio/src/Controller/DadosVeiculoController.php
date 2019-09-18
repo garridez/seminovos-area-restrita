@@ -110,6 +110,10 @@ class DadosVeiculoController extends AbstractActionController
                     'total',
                     'termo'
                 ]));
+                
+                if(isset($data['acao']) && $data['acao'] == 'publicar'){
+                    unset($data['listaAcessorios']);  
+                }
 
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
