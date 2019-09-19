@@ -1,19 +1,23 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'lodash';
 import 'moment/locale/pt-br';
 
-export default class ChatSubject extends Component {
+class ChatSubject extends Component {
     constructor() {
-        super()
+        super();
         this.active = this.active.bind(this);
     }
     active() {
-        var idConversa = this.props.data.idConversa;
-        this.props.onActive(idConversa);
+        this.props.dispatch({
+            type: 'CHAT_ACTIVE',
+            data: this.props.data
+        });
+
     }
     render() {
-        const {data, isActive} = this.props
+        const {data, isActive} = this.props;
         var lastMsg = Object.values(data.mensagens)[0];
 
         var classes = 'chat-subject chat row py-2 px-2';
@@ -27,7 +31,7 @@ export default class ChatSubject extends Component {
             chatDate = chatDate.format('LT');
         } else if (now <= 2) {
             chatDate = chatDate.calendar();
-        }else{
+        } else {
             chatDate = chatDate.format('dddd');
         }
 
@@ -58,3 +62,10 @@ export default class ChatSubject extends Component {
     }
 }
 
+
+export default connect((state, ownProps) => {
+
+    return {
+        data: {...state.listChats[ownProps.idConversa]}
+    };
+})(ChatSubject);

@@ -18,7 +18,7 @@ export default class Filter extends Component {
         };
 
         return (
-                <div class="filter">
+                <div className="filter">
                     <input type="text" placeholder="Procurar uma conversa" className="form-control"/>
                 </div>
                 );

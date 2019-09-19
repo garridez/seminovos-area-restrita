@@ -18,7 +18,7 @@ export default class Profile extends Component {
         };
 
         return (
-                <div class="profile">Profile</div>
+                <div className="profile">Profile</div>
                 );
     }
 }
