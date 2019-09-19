@@ -11,7 +11,7 @@ export default class Message extends Component {
 
         var liClass = [
             'message',
-            conversation.meuIdCadastro === data.idCadastroRemetente ? 'sent' : 'received',
+            conversation.meuIdCadastro !== data.idCadastroRemetente ? 'received' : 'sent',
         ];
         var enviadoEm = moment(data.enviadoEm);
         return (
