@@ -10,15 +10,16 @@ module.exports.callback = ($) => {
         var idStatus = parseInt($(this).data('status'), 10);
         var dadosBasicos = $('#dados-basicos');
         var form = $('form', '#dados-basicos, .step-plano');
+        var acao = idStatus === 2 || idStatus === 5 ? 'publicar' : '';
+        var idVeiculo = dadosBasicos.find('#idVeiculo').val();
         var dataSerialized = form.serializeArray();
         dataSerialized.push({
             name: 'idStatus',
             value: idStatus
+        },{
+            name: 'acao',
+            value: acao
         });
-        console.log(dataSerialized);
-//return false;
-        var acao = idStatus === 2 ? 'ativar' : 'inativar';
-        var idVeiculo = dadosBasicos.find('#idVeiculo').val();
 
         $.ajax({
             type: 'POST',
