@@ -135,6 +135,7 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                         echo '-';
                                     } ?>
                                 </li>
+                                <?php if(intval($this->userInfo('tipoCadastro')) == 2): ?>
                                 <li>
                                     Renovado:
                                     <?php if ($veiculo['dataRenovacao'] !== '') {
@@ -143,6 +144,7 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                         echo '-';
                                     } ?>
                                 </li>
+                                <?php endif; ?>
                                 <li>
                                     Kilometragem:
                                     <?= $veiculo['kilometragemFormatada'] ?>
@@ -297,7 +299,7 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                             <div class=" d-flex mt-1">
                                 <small class="hint-text"><?=$veiculo["frase"]?></small>
                             </div>
-                            <?php if($veiculo['idStatus'] == 2): ?>
+                            <?php if($veiculo['idStatus'] == 2 && intval($this->userInfo('tipoCadastro')) == 2): ?>
                             <div class="d-flex mt-1">
                                 <small class="hint-text mt-1">
                                     <?php if ($veiculo["intervaloData"] == 0) { ?>
