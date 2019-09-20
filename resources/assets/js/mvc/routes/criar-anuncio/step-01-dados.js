@@ -53,6 +53,7 @@ function init() {
         
         if($(this).find('option:selected').val() == 99){
             $('#divOutraVersao').removeClass("hide");
+            $('[name="outraVersao"]').prop('required',true);
             //$('[name="codFipe"]').empty();
             return;
         }else{

@@ -88,7 +88,12 @@ if ($isRevenda) {
                                 $desabilitarPlano = true;
                             }
                             if ($isRevenda) {
-                                $desabilitarPlano = false;
+                                if($plano['qtd']['publicado'] == $plano['qtd']['total']){
+                                    $desabilitarPlano = true;
+                                } else {
+                                    $desabilitarPlano = false;
+                                }
+                                
                             }
                             if ($planoJaEscolhido && $idPlanoAtual == 1) {
                                 $desabilitarPlano = true;
@@ -160,11 +165,11 @@ if ($isRevenda) {
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?= $plano['idPlano'] == $idPlanoAtual && !$falsoMarcado ? 'checked' : '' ?>
+                                <?= $plano['idPlano'] == $idPlanoAtual && !$falsoMarcado && !$isRevenda ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
                                 <label class="btn btn-block btn-sm bg-light text-dark text-bold <?= $falsoMarcado ? 'falso-marcado':''?>" for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano ? 'data-plano-desativado' : '' ?>>
+                                <?= $desabilitarPlano && !$isRevenda ? 'data-plano-desativado' : '' ?><?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
                                 <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
                             </label>
                         </div>

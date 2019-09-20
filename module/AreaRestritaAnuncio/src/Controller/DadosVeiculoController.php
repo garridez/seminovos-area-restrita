@@ -110,6 +110,10 @@ class DadosVeiculoController extends AbstractActionController
                     'total',
                     'termo'
                 ]));
+                
+                if(isset($data['acao']) && $data['acao'] == 'publicar'){
+                    unset($data['listaAcessorios']);  
+                }
 
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
@@ -165,11 +169,14 @@ class DadosVeiculoController extends AbstractActionController
         $checkedTermo = (empty($data) ? false : true);
 
         $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
+        
+        $checkedLigacao = (empty($data) ?  false : $data['aceitaLigacao']);
 
         return new ViewModel([
             'formMaisInformacoesVeiculo' => $maisInformacoesForm,
             'checkedTermo' => $checkedTermo,
-            'checkedProposta' => $checkedProposta
+            'checkedProposta' => $checkedProposta,
+            'checkedLigacao' => $checkedLigacao
         ]);
     }
 

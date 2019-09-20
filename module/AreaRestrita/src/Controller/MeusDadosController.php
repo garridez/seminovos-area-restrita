@@ -7,123 +7,148 @@
 
 namespace AreaRestrita\Controller;
 
-use UsersClient\Client;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\View\Model\JsonModel;
+use AreaRestrita\Service\AuthManager;
 use Zend\View\Model\ViewModel;
+use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
-use Psr\Container\ContainerInterface;
+use Zend\Authentication\AuthenticationService;
 
-/**
- * Class MeusDadosController
- *
- * @package AreaRestrita\Controller
- * @author italodeveloper <italo.araujo@seminovosbh.com.br>
- * @version 1.0.0
- */
 class MeusDadosController extends AbstractActionController
 {
-    /*     * * @var ContainerInterface $container */
 
     protected $container;
-    /*     * * @var Client $client */
-    protected $client;
-    /*     * * @var array $routeParams */
     protected $routeParams;
-    /*     * * @var MeusDados\ParticularForm|MeusDados\RevendaForm $dataForm */
-    protected $dataForm;
-    /*     * * @var Bcrypt $bcrypt */
-    protected $bcrypt;
+    protected $routeName;
 
-    /**
-     * MeusDadosController constructor.
-     *
-     * @param ContainerInterface $container
-     * @param Client $client
-     */
-    public function __construct(ContainerInterface $container, Client $client)
+    public function __construct()
     {
+        global $container;
         $this->container = $container;
-        $this->client = $client;
-        /** @var \Zend\Router\Http\RouteMatch $routeMatch Apenas para mostrar na view a rota */
+
+        /**
+         * Apenas para mostrar na view a rota
+         */
+        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
             ->getRouteMatch();
+
         $this->routeParams = $routeMatch->getParams();
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
-        $this->dataForm = ((int) $this->client->getConfig()['clientMode'] == 1) ? (new MeusDados\RevendaForm()) : (new MeusDados\ParticularForm());
-        $this->bcrypt = new Bcrypt();
     }
 
-    /**
-     * @return ViewModel
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
     public function indexAction()
     {
-        $requestResponse = false;
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        $this->dataForm->get('senha')
-            ->setAttribute('required', false);
+        // Busca os dados do cadastro
+        $dadosCadastro = $cadastrosModel->getCurrent(false);
+        $tipoCadastro = 1;
 
-        $this->dataForm->get('confirmacaoSenha')
-            ->setAttribute('required', false);
+        if ($cadastrosModel->isRevenda()) {
+            $dadosForm = new MeusDados\RevendaForm();
+            $dadosForm->get('senha')->setAttribute('required', false);
+            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
+            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
+            $request = $this->getRequest();
+        } else {
+            $dadosForm = new MeusDados\ParticularForm();
+            $dadosForm->get('senha')->setAttribute('required', false);
+            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
+            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
+            $request = $this->getRequest();
+            $tipoCadastro = 2;
+        }
 
-        $this->dataForm->getInputFilter()
-            ->remove('senha')
-            ->remove('confirmacaoSenha');
-
-        $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
-            $this->dataForm->setData($post);
-            if ($this->dataForm->isValid()) {
-                $post = $post->toArray();
-                try {
-                    $this->client->update($post);
-                    $requestResponse = 200;
-                } catch (\Exception $exception) {
-                    $requestResponse = 405;
-                    /**
-                     * @TODO
-                     * Log de erro na API de Usuarios
-                     */
+            $dadosForm->setData($post);
+            if ($dadosForm->isValid()) {
+
+                /* @var $apiClient \SnBH\ApiClient\Client */
+                $data = $dadosForm->getData();
+
+                $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
+
+                #campos não existentes na tabela
+                unset($data['confirmacaoSenha']);
+                unset($data['submit']);
+
+                #campos que não podem ser alterados
+                unset($data['responsavelNome']);
+                unset($data['email']);
+                unset($data['dataNascimento']);
+                unset($data['cpf']);
+                unset($data['nomeFantasia']);
+
+                $resPut = $cadastrosModel->put($data);
+                if ($resPut->status === 200) {
+                    // Busca os dados do cadastro atualizado
+                    $dadosCadastro = $cadastrosModel->getCurrent(false);
                 }
             }
         }
 
-        $dadosCadastro = $this->client->get(true);
-        $this->dataForm->populateValues($dadosCadastro);
+        $dadosForm->populateValues($dadosCadastro);
+
         return new ViewModel([
-            'tipoCadastro' => (int) $this->client->getConfig()['clientMode'],
-            'formCadastro' => $this->dataForm,
-            'idCidade' => $dadosCadastro['idCidade'],
-            'requestResponse' => $requestResponse
+            'tipoCadastro' => $tipoCadastro,
+            'formCadastro' => $dadosForm,
+            'idCidade' => $dadosCadastro['idCidade']
         ]);
     }
 
-    /**
-     * @return ViewModel
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
     public function alterarSenhaAction()
     {
         $request = $this->getRequest();
+
         if ($request->isPost()) {
-            $post = $request->getPost()->toArray();
-            $dadosCadastro = $this->client->get(true);
-            if (!$this->bcrypt->verify($post['senhaAtual'], $dadosCadastro['userObject']['senha'])) {
-                return new ViewModel(['erroSenha' => 1]);
+
+            /* @var $cadastrosModel Cadastros */
+            $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+            /* @var $authManager AuthManager  */
+            $authManager = $this->container->get(AuthManager::class);
+
+            $post = $request->getPost();
+
+            // Busca os dados do cadastro
+            $dadosCadastro = $cadastrosModel->getCurrent(false);
+
+            $tipoCadastro = 2;
+            $login = $dadosCadastro['email'];
+
+            if ($cadastrosModel->isRevenda()) {
+                $tipoCadastro = 1;
+                $login = $dadosCadastro['cnpj'];
             }
-            try {
-                $this->client->resetPassword($post);
-                return new ViewModel(['sucesso' => 1]);
-            } catch (\Exception $exception) {
-                return new ViewModel(['erroSenha' => 1]);
+
+            #valida a senha atual do usuraio
+            $result = $authManager->login([
+                'emailOrCnpj' => $login,
+                'usuarioSenha' => $post['senhaAtual'],
+                'tipoCadastro' => $tipoCadastro,
+                'rememberMe' => false
+                ], false);
+
+            if ($result->getCode() !== $result::SUCCESS) {
+                return new ViewModel(["erroSenha" => 1]);
+            }
+
+            $data['senha'] = $post['senha'];
+            $data['tipoCadastro'] = $tipoCadastro;
+
+            $resPut = $cadastrosModel->put($data);
+            if ($resPut->status === 200) {
+                // Busca os dados do cadastro atualizado
+                $dadosCadastro = $cadastrosModel->getCurrent(false);
+                return new ViewModel(["sucesso" => 1]);
             }
         }
-        return new ViewModel();
+        return new ViewModel([]);
     }
 }

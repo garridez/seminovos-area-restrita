@@ -1,44 +1,28 @@
 <?php
-declare (strict_types=1);
+
 namespace AreaRestrita\Service;
 
-use Zend\Authentication\AuthenticationService;
-use Interop\Container\ContainerInterface;
+use AreaRestrita\Service;
+use SnBH\ApiClient\Client as ApiClient;
 
-/**
- * Class Identity
- * @package AreaRestrita\Service
- */
 class Identity
 {
-    /*** @var mixed|null $identity */
-    protected $identity;
-    /*** @var ContainerInterface $container */
-    protected $container;
 
-    /**
-     * Identity constructor.
-     *
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    protected $identity = false;
+    protected $apiclient;
+
+    public function __construct($identity, ApiClient $apiClient)
     {
-        $this->container = $container;
-        $this->identity = $container->get(AuthenticationService::class)->getIdentity();
+        $this->identity = $identity;
+        $this->apiclient = $apiClient;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIdentity(): bool
+    public function hasIdentity()
     {
-        return (bool)$this->identity;
+        return (bool) $this->identity;
     }
 
-    /**
-     * @return int
-     */
-    public function getIdentity(): int
+    public function getIdentity()
     {
         return $this->identity;
     }

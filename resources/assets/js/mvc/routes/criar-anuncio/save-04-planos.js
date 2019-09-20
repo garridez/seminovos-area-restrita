@@ -11,6 +11,13 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
+    
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function () {
+        advancedAlerts.warning({
+            text:'Você atingiu o limite de anúncio disponíveis para este plano',
+            title:$('<span class="text-primary">').html('Atenção!')
+        });
+    });
 
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
