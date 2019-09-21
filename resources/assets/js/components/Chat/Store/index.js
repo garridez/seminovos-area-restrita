@@ -4,12 +4,14 @@ import behaviors from './reducers/behaviors';
 import listChats from './reducers/listChats';
 import cadastro from './reducers/cadastro';
 import currentChat from './reducers/currentChat';
+import filter from './reducers/filter';
 
 const reducer = combineReducers({
     behaviors,
     listChats,
     cadastro,
-    currentChat
+    currentChat,
+    filter
 });
 
 const middle = (store) => {

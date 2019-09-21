@@ -1,14 +1,12 @@
-
+import _ from 'lodash';
 import {createNewMessage} from '../../utils/messages';
 
 const messages = (state = {}, action) => {
     switch (action.type) {
         case 'LIST_CHAT_NEW_MSG':
-            console.log('add new msg');
             const message = action.message.toObject();
             const {idConversa} = message;
 
-            console.log(message);
             var chatData = state[idConversa];
             chatData.mensagens.unshift(message);
             var totalMensagens = parseInt(chatData.totalMensagens);
@@ -21,9 +19,19 @@ const messages = (state = {}, action) => {
                 ...state,
             };
         case 'LIST_CHAT_LOAD':
+            
+            _.forEach(action.listChats, (chatData, idConversa) => {
+                if (state[idConversa]) {
+                    var prevChatData = state[idConversa];
+                    chatData.mensagens = chatData.mensagens.concat(prevChatData.mensagens);
+                    state[idConversa] = chatData;
+                } else {
+                    state[idConversa] = chatData;
+                }
+
+            });
             var listChats = {
-                ...state,
-                ...action.listChats
+                ...state
             };
             return listChats;
         default:

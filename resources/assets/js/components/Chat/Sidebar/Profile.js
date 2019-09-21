@@ -1,24 +1,31 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 
-export default class Profile extends Component {
+class Profile extends Component {
     constructor() {
-        super()
+        super();
     }
 
     render() {
-        const {listChats} = this.props
-        const {onActive} = this.props;
-        const {conversationActive} = this.props;
-        var params = {
-            listChats: listChats || {},
-            onActive,
-            conversationActive
-        };
+        var {data} = this.props;
+        if (!data) {
+            return '';
+        }
+        data = {...data};
 
         return (
-                <div className="profile">Profile</div>
+                <div className="profile">
+                <span className="h2">{data.responsavelNome}</span>
+                </div>
                 );
     }
 }
+
+export default connect((state) => {
+    const data = state.cadastro || false;
+    return {
+        data: data
+    };
+})(Profile);

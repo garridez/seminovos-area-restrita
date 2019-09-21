@@ -9,6 +9,7 @@ import ListChats from './Sidebar/ListChats';
 import History from './Conversation/History';
 import Editor from './Conversation/Editor';
 import Contact from './Conversation/Contact';
+import MsgLoader from './Controller/MsgLoader';
 import $ from 'jquery';
 import data from './data';
 
@@ -19,62 +20,42 @@ class Chat extends Component {
         this.state = {
             conversationActive: null
         };
-        this.loadConversations();
+        
         this.activeConversation = this.activeConversation.bind(this);
 
-
-        var cvsk = Object.keys(data);
-        var pt1 = {};
-        var pt2 = {};
-        _.map(cvsk.slice(0, 5), function (k) {
-            pt1[k] = data[k];
-        });
-        _.map(cvsk.slice(5), function (k) {
-            pt2[k] = data[k];
-        });
-
-
-        this.props.dispatch({
-            type: 'LIST_CHAT_LOAD',
-            listChats: pt1,
-        });
-
-        this.props.dispatch({
-            type: 'CADASTRO_SET_DATA',
-            data: Object.values(data)[0]
-        });
-
-        setTimeout(() => {
-//            console.log()
-            this.props.dispatch({
-                type: 'LIST_CHAT_LOAD',
-                listChats: pt2,
-            });
-        }, 2000);
+        /**
+         var cvsk = Object.keys(data);
+         var pt1 = {};
+         var pt2 = {};
+         _.map(cvsk.slice(0, 5), function (k) {
+         pt1[k] = data[k];
+         });
+         _.map(cvsk.slice(5), function (k) {
+         pt2[k] = data[k];
+         });
+         
+         
+         this.props.dispatch({
+         type: 'LIST_CHAT_LOAD',
+         listChats: pt1,
+         });
+         
+         this.props.dispatch({
+         type: 'CADASTRO_SET_DATA',
+         data: Object.values(data)[0]
+         });
+         
+         setTimeout(() => {
+         //            console.log()
+         this.props.dispatch({
+         type: 'LIST_CHAT_LOAD',
+         listChats: pt2,
+         });
+         }, 2000);*/
 
 
     }
-    getUrl(type) {
-        return this.props['baseUrl'] + (this.props[type] || '');
-    }
-    loadConversations() {
-        let url = this.getUrl('urlMensagens');
-        return;
-        $.getJSON(url, (listChats) => {
 
-            this.setState((prevState, props) => {
-
-                return {};
-                var newState = {};
-                newState.listChats = _.mergeWith(listChats, prevState.listChats, function (objValue, srcValue, key) {
-                    /**
-                     * @todo merge das msgs
-                     */
-                });
-                return newState;
-            })
-        })
-    }
     activeConversation(id) {
         console.log('NÃO É PRA EU RODAR');
         this.setState({
@@ -93,16 +74,21 @@ class Chat extends Component {
 
         return (
                 <section className="section-chat row">
+                    <MsgLoader/>
                     <div className="sidebar col-md-5 d-flex flex-column">
-                        <Profile />
-                        <Filter />
+                        <div className="top-header">
+                            <Profile />
+                            <Filter />
+                        </div>
                         <ListChats
                             listChats={listChats}
                             conversationActive={conversationActive}
                             onActive={this.activeConversation} />
                     </div>
                     <div className="main-chat col-md-7 d-flex flex-column">
-                        <Contact />
+                        <div className="top-header">
+                            <Contact />
+                        </div>
                         <History conversation={currentConversation} />
                         <Editor /> 
                     </div>
@@ -110,9 +96,6 @@ class Chat extends Component {
                 );
     }
 }
-Chat.defaultProps = {
-    urlMensagens: '/chat/mensagens'
-};
 
 export default connect((state, ownProps) => {
 
@@ -132,7 +115,6 @@ export default connect((state, ownProps) => {
         currentConversation = listChats[conversationActive];
         currentMessages = currentConversation.mensagens;
     }
-    //console.log(currentMessages);
 
     return {
         listChats,

@@ -24,19 +24,25 @@ class ChatController extends AbstractActionController
 
         /* @var $authService AuthenticationService */
         $idCadastro = $container->get(AuthenticationService::class)->getIdentity();
-
-
-        $apiClient = $this->getApiClient();
-        $res = $apiClient->mensagensGet([
+        $params = [
             'idCadastro' => $idCadastro
-        ], null, !true);
+        ];
+        $idLastMessage = $this->params()->fromQuery('idLastMessage', false);
+        if ($idLastMessage) {
+            $params['maiorQue'] = $idLastMessage;
+        }
+        $apiClient = $this->getApiClient();
 
+        $res = $apiClient->mensagensGet($params, null, !true);
+        
         $data = $res->getData();
+        $listChats = $data['listChats'];
 
-        foreach ($data as &$cv) {
+        foreach ($listChats as &$cv) {
             $cv['meuIdCadastro'] = (string) $idCadastro;
             $cv['idCadastro'] = (string) $cv['idCadastro'];
         }
+        $data['listChats'] = $listChats;
 
         return new JsonModel($data);
         $json = $res->json();

@@ -2,6 +2,7 @@
 section.section-chat {
     > [class*="col-"]{
         max-height: 800px;
+        max-height: 600px; 
     }
     > [class*="col-"]:first-child {
         padding-right: 0 !important;
@@ -12,19 +13,24 @@ section.section-chat {
             padding-left: 10px !important;
         }
     }
-    max-width: 1000px;
+    .top-header {
+        height: 80px;
+    }
     .sidebar{
-        > .filter{
+        .filter{
             padding: 10px 0;
             border-bottom: 1px solid #c4c4c4;
         }
         .list-chats {
-            overflow: auto;
+            overflow-y: scroll;
             background-color: #f8f8f8;
             direction: rtl;
             list-style: none;
             padding: 0;
             margin: 0;
+            padding-top: 1px;
+            margin-top: -1px;
+            height: 100%;
 
             .chat {
                 position: relative;
@@ -41,6 +47,7 @@ section.section-chat {
                     background-color: #fff !important;
                     border-bottom: 1px solid #ed9902;
                     border-top: 1px solid #ed9902;
+                    border-left: 1px solid #ed9902;
                     margin-top: -1px;
                 }
                 .chat-img {
@@ -107,7 +114,10 @@ section.section-chat {
         }
 
 
-
+        .contact{
+            height: 108px;
+            border-bottom: solid 1px #ed9902;
+        }
 
         ul.conversation {
             margin-bottom: 10px;
@@ -155,7 +165,7 @@ section.section-chat {
                     text-indent: 0;
                     list-style-type: 0;
                     border-radius: 10px;
-                    padding-right: 20px;
+                    padding-right: 30px;
                 }
                 .time {
                     float: right;

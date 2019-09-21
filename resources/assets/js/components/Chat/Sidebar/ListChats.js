@@ -11,12 +11,12 @@ class ListChats extends Component {
 
     render() {
         const {listChats} = this.props;
-        const {onActive} = this.props;
         const {conversationActive} = this.props;
+        const {filter} = this.props;
         var params = {
             listChats: listChats || {},
-            onActive,
-            conversationActive
+            conversationActive,
+            filter
         };
 
         return (
@@ -28,11 +28,30 @@ class ListChats extends Component {
 }
 
 function renderListChats(params) {
-    var {listChats, onActive, conversationActive} = params;
+    var {listChats, onActive, conversationActive, filter} = params;
 
     listChats = _.sortBy(listChats, function (v) {
         return v.mensagens[0].enviadoEm;
     }).reverse();
+
+    if (filter && filter.text) {
+        var text = filter.text.toLowerCase();
+        listChats = listChats.filter((e) => {
+            if (e.responsavelNomeInteressado.toLowerCase().indexOf(text) !== -1) {
+                return true;
+            }
+            if (e.marca.toLowerCase().indexOf(text) !== -1) {
+                return true;
+            }
+            if (e.modelo.toLowerCase().indexOf(text) !== -1) {
+                return true;
+            }
+            if (e.caracteristica.toLowerCase().indexOf(text) !== -1) {
+                return true;
+            }
+            return false;
+        });
+    }
 
     return  _.map(listChats, function (chatData, k) {
         return <ChatSubject
@@ -40,7 +59,7 @@ function renderListChats(params) {
             idConversa={chatData.idConversa}
         
             isActive={conversationActive === chatData.idConversa}
-            onActive={onActive}/>;
+            />;
     });
 }
 
@@ -51,9 +70,11 @@ export default connect((state) => {
 
     const listChats = {...state.listChats};
     const conversationActive = state.currentChat.conversationActive;
+    const filter = state.filter;
 
     return {
         listChats,
-        conversationActive
+        conversationActive,
+        filter
     };
 })(ListChats);
