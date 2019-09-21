@@ -5,6 +5,16 @@ class MsgLoader extends Component {
     constructor(props) {
         super(props);
         this.loadConversations(true);
+        /**
+         * Conta o número de carregamentos do chat sem dados
+         *  Se a quantidade passar de 10, então aumenta o tempo do interval
+         */
+        this.numLoadsEmpty = 0;
+        this.intervalMaxEmptyCount = 5;
+        this.intervalMax = 5000;
+        this.intervalIncrement = 1000;
+        this.intervalInitial = 1000;
+        this.intervalCurrent = this.intervalInitial;
     }
 
     getUrl(type) {
@@ -14,10 +24,8 @@ class MsgLoader extends Component {
         let url = this.getUrl('urlMensagens');
         var startTime = new Date();
         var params = {};
-        
-        
-        
-        if(this.props.idLastMessage){
+
+        if (this.props.idLastMessage) {
             params['idLastMessage'] = this.props.idLastMessage;
         }
         $.getJSON(url, params, (data) => {
@@ -35,10 +43,23 @@ class MsgLoader extends Component {
                 type: 'CHAT_LAST_ID_MESSAGE',
                 idLastMessage
             });
+            if (listChats && listChats.length === 0) {
+                this.numLoadsEmpty++;
+                if (this.numLoadsEmpty >= this.intervalMaxEmptyCount) {
+                    this.numLoadsEmpty = 0;
+                    if (this.intervalCurrent < this.intervalMax) {
+                        this.intervalCurrent += this.intervalIncrement;
+                    }
+                }
+            } else {
+                this.numLoadsEmpty = 0;
+                this.intervalCurrent = this.intervalInitial;
+            }
             if (loop) {
+                console.log(this.intervalCurrent)
                 setTimeout(() => {
                     this.loadConversations(true);
-                }, 1000);
+                }, this.intervalCurrent);
             }
         });
     }
