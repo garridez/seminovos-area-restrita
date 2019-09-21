@@ -55,8 +55,8 @@ class MsgLoader extends Component {
                 this.numLoadsEmpty = 0;
                 this.intervalCurrent = this.intervalInitial;
             }
+        }).always(() => {
             if (loop) {
-                console.log(this.intervalCurrent)
                 setTimeout(() => {
                     this.loadConversations(true);
                 }, this.intervalCurrent);
