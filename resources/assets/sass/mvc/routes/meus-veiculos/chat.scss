@@ -2,19 +2,25 @@
 section.section-chat {
     > [class*="col-"]{
         max-height: 800px;
-        max-height: 600px; 
+        height: 600px; 
+        position: relative;
     }
     > [class*="col-"]:first-child {
         padding-right: 0 !important;
+        z-index: 10;
     }
     > [class*="col-"]:last-child {
         padding-left: 0 !important;
+        z-index: 5;
         & > div{
             padding-left: 10px !important;
         }
     }
     .top-header {
         height: 80px;
+        min-height: 80px;
+        border-bottom: solid 1px #ed9902;
+        margin-left: -1px;
     }
     .sidebar{
         .filter{
@@ -23,7 +29,7 @@ section.section-chat {
         }
         .list-chats {
             overflow-y: scroll;
-            background-color: #f8f8f8;
+            background-color: #f0f0f0;
             direction: rtl;
             list-style: none;
             padding: 0;
@@ -31,17 +37,19 @@ section.section-chat {
             padding-top: 1px;
             margin-top: -1px;
             height: 100%;
+            overflow-y: visible;
 
             .chat {
                 position: relative;
                 direction: ltr;
-                border-right: 1px solid #c4c4c4;
-                border-right: 1px solid #ed9902;
+                border-right: none;
                 cursor: pointer;
                 border-bottom: 1px solid #c4c4c4;
                 margin: 0;
                 background-color: #ebebeb !important;
                 transition: background-color 400ms;
+                margin-right: -1px;
+                border-right: 1px solid #ed9902;
                 &.active{
                     border-right: 1px solid #fff;
                     background-color: #fff !important;
@@ -115,8 +123,8 @@ section.section-chat {
 
 
         .contact{
-            height: 108px;
-            border-bottom: solid 1px #ed9902;
+            /*height: 108px;*/
+            /*border-bottom: solid 1px #ed9902;*/
         }
 
         ul.conversation {
@@ -125,7 +133,7 @@ section.section-chat {
             height: 100%;
             overflow-y: scroll;
             position: relative;
-
+            border-left: 1px solid #ed9902;
 
             list-style: none;
             margin: 0;

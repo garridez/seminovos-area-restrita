@@ -20,6 +20,38 @@ class MsgLoader extends Component {
     getUrl(type) {
         return '/' + (this.props[type] || '').replace(/^\/+/, '');
     }
+    dispatchData(listChats, idLastMessage) {
+        if (listChats) {
+            this.props.dispatch({
+                type: 'CADASTRO_SET_DATA',
+                data: Object.values(listChats)[0]
+            });
+            this.props.dispatch({
+                type: 'LIST_CHAT_LOAD',
+                listChats
+            });
+        }
+        if (idLastMessage) {
+            this.props.dispatch({
+                type: 'CHAT_LAST_ID_MESSAGE',
+                idLastMessage
+            });
+        }
+    }
+    calculeInterval(listChats) {
+        if (listChats && listChats.length === 0) {
+            this.numLoadsEmpty++;
+            if (this.numLoadsEmpty >= this.intervalMaxEmptyCount) {
+                this.numLoadsEmpty = 0;
+                if (this.intervalCurrent < this.intervalMax) {
+                    this.intervalCurrent += this.intervalIncrement;
+                }
+            }
+        } else {
+            this.numLoadsEmpty = 0;
+            this.intervalCurrent = this.intervalInitial;
+        }
+    }
     loadConversations(loop) {
         let url = this.getUrl('urlMensagens');
         var startTime = new Date();
@@ -31,30 +63,9 @@ class MsgLoader extends Component {
         $.getJSON(url, params, (data) => {
             this.lastTimeLoad = new Date() - startTime;
             const {listChats, idLastMessage} = data;
-            this.props.dispatch({
-                type: 'CADASTRO_SET_DATA',
-                data: Object.values(listChats)[0]
-            });
-            this.props.dispatch({
-                type: 'LIST_CHAT_LOAD',
-                listChats
-            });
-            this.props.dispatch({
-                type: 'CHAT_LAST_ID_MESSAGE',
-                idLastMessage
-            });
-            if (listChats && listChats.length === 0) {
-                this.numLoadsEmpty++;
-                if (this.numLoadsEmpty >= this.intervalMaxEmptyCount) {
-                    this.numLoadsEmpty = 0;
-                    if (this.intervalCurrent < this.intervalMax) {
-                        this.intervalCurrent += this.intervalIncrement;
-                    }
-                }
-            } else {
-                this.numLoadsEmpty = 0;
-                this.intervalCurrent = this.intervalInitial;
-            }
+            this.dispatchData(listChats, idLastMessage);
+            this.calculeInterval();
+
         }).always(() => {
             if (loop) {
                 setTimeout(() => {

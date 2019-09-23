@@ -6,18 +6,45 @@ class Conversation extends Component {
     constructor() {
         super();
         this.ul = React.createRef();
-    }
 
+        // Rola o elemento scroll para baixo quando tem nova msg
+        this.enableAutoScroll = 1;
+        // Detecta se o auto scroll é pelo usuário ou automático
+        this.scrollIsAuto = true;
+    }
+    onScroll(e) {
+        // Se o usuário rolar as msgs, desabilita o auto scroll
+        if (!this.scrollIsAuto) {
+            this.enableAutoScroll = false;
+        }
+
+        // Pula a renderização inicial
+        if (this.enableAutoScroll === 1) {
+            this.enableAutoScroll = true;
+            return;
+        }
+        var ul = this.ul.current;
+        if (!ul) {
+            return;
+        }
+        if ((ul.scrollTop >> 0) === (ul.scrollHeight - ul.offsetHeight) >> 0) {
+            this.enableAutoScroll = true;
+        }
+    }
     componentDidUpdate() {
         var ul = this.ul.current;
-        if (ul) {
+        if (this.enableAutoScroll && ul) {
+            this.scrollIsAuto = true;
             ul.scrollTop = ul.scrollHeight;
+            setTimeout(() => {
+                this.scrollIsAuto = false;
+            });
         }
     }
     render() {
         const {conversation, mensagens} = this.props;
         return (
-                <ul className="conversation" ref={this.ul}>
+                <ul className="conversation" ref={this.ul} onScroll={this.onScroll.bind(this)}>
                     {renderMsgs(mensagens, conversation)}
                 </ul>
                 );

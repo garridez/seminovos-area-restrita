@@ -75,7 +75,7 @@ class Chat extends Component {
         return (
                 <section className="section-chat row">
                     <MsgLoader/>
-                    <div className="sidebar col-md-5 d-flex flex-column">
+                    <div className="sidebar col-sm-5 d-flex flex-column">
                         <div className="top-header">
                             <Profile />
                             <Filter />
@@ -85,7 +85,7 @@ class Chat extends Component {
                             conversationActive={conversationActive}
                             onActive={this.activeConversation} />
                     </div>
-                    <div className="main-chat col-md-7 d-flex flex-column">
+                    <div className="main-chat col-sm-7 d-flex flex-column">
                         <div className="top-header">
                             <Contact />
                         </div>
