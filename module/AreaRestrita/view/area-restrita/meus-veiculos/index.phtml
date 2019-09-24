@@ -7,7 +7,7 @@ $veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 $formatDate = new \AreaRestrita\View\Helper\Data();
 $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? "Não informado"
 ?>
-
+<input type="hidden" class="data-user-display-name" value="<?=$nome?>">
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center px-3 px-md-0">
         <?php if ($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
@@ -336,12 +336,12 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                 <?php }?>
 
                                 <?php if($veiculo["botoes"]["vendido"]??false){?>
-                                <a href="#" class="anuncios" data-confirm data-confirm-type="info"
+                                <a href="#" class="anuncios vendido" data-confirm data-confirm-type="info"
                                     data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
                                     data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>")?>"
                                     data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>")?>"
                                     data-confirm-text="Sim, eu vendi"
-                                    data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
+                                    data-confirm-option-confirm="/meus-veiculos/vendidox/<?= $veiculo['idVeiculo'] ?>"
                                     title="Marcar como vendido">
                                     <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
                                 </a>

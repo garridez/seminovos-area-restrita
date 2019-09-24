@@ -4,11 +4,13 @@ module.exports.callback = $ => {
     require("components/JsBsModal");
     var advancedAlerts = require("components/AdvancedAlerts");
     var Confirms = require('components/Confirms');
+    var FormAlerts = require('components/FormAlerts');
 
     /**
     * Baixa o conteúdo da página atualizado
     * Baixa apenas o conteúdo dentro da div ".container-anuncios"
     */
+
     function reloadPageContent() {
         $.get("/", function (data) {
             $(".container-anuncios").replaceWith(data);
@@ -17,6 +19,49 @@ module.exports.callback = $ => {
             $(".qtd-anuncios-menu").html(data);
         });
     }
+
+    $("body").on("click", "a.vendido[data-confirm]", function (e) {
+        var $this = $(this);
+        var displayName = $(".data-user-display-name").val();
+        var $veiculo = $this.closest(".veiculo");
+        var $form = $("<form>");
+        var $span = $("<span>").html(`Olá, <b class="text-primary">${displayName}</b> ! 
+            Como foi sua experiência em anunciar conosco?
+            Dê a sua opnião, é rapidinho!`
+        );
+        var $select = $("<select class='form-control'>")
+            .append('<option value="1">Vendi pela Seminovos BH</option>')
+            .append('<option value="2">Desisti de vender</option>')
+            .append('<option value="3">Vendi por outro meio</option>')
+            .append('<option value="4">Outro motivo</option>');
+
+        var $estrelas = $("<div class='rate'>")
+            .append(`<input type="radio" id="star5" name="rate" value="5" />`)
+            .append(`<label for="star5" title="text">5 stars</label>`)
+            .append(`<input type="radio" id="star4" name="rate" value="4" />`)
+            .append(`<label for="star4" title="text">4 stars</label>`)
+            .append(`<input type="radio" id="star3" name="rate" value="3" />`)
+            .append(`<label for="star3" title="text">3 stars</label>`)
+            .append(`<input type="radio" id="star2" name="rate" value="2" />`)
+            .append(`<label for="star2" title="text">2 stars</label>`)
+            .append(`<input type="radio" id="star1" name="rate" value="1" />`)
+            .append(`<label for="star1" title="text">1 star</label>`);
+        var $observacao = $("<textarea maxlength='255' class='form-control'></textarea>");
+        $form.append($span).append($select).append($estrelas).append($observacao);
+        $this.data("confirm-option-confirm", function () {
+            $(".modal").modal('hide');
+            FormAlerts.success({
+                form: $form,
+                title:"Pesquisa de satisfação",
+                submitText:"Confirmar",
+                closeCallback:function(){},
+                submitCallback: function () {
+                    $(".modal").modal('hide');
+                }
+            })
+        });
+    });
+
     $("body").on("click", "a.reativar[data-confirm]", function () {
         var $this = $(this);
         var $veiculo = $this.closest(".veiculo");
@@ -106,9 +151,6 @@ module.exports.callback = $ => {
             });
         })
     });
-
-
-
     $("body").on("click", "a.anuncios[data-confirm]", function () {
         var $this = $(this);
         var type = $this.data("confirm-type") || success;
