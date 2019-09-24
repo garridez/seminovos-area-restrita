@@ -7,6 +7,7 @@
 
 namespace AreaRestrita\Controller;
 
+use AreaRestrita\Model\Cadastros;
 use Zend\View\Model\JsonModel;
 use Zend\Authentication\AuthenticationService;
 
@@ -24,6 +25,26 @@ class ChatController extends AbstractActionController
 
         /* @var $authService AuthenticationService */
         $idCadastro = $container->get(AuthenticationService::class)->getIdentity();
+        if ($this->getRequest()->isPost()) {
+            return $this->sendMessages($idCadastro);
+        }
+        return $this->getMessages($idCadastro);
+    }
+
+    protected function sendMessages($idCadastro)
+    {
+        /**
+         * @todo verificar se o ID veículo é do cara mesmo
+         */
+        $data = $this->getRequest()->getPost()->toArray();
+        $data['idCadastroRemetente'] = $idCadastro;
+
+        $res = $this->getApiClient()->mensagensPost($data)->json();
+        return new JsonModel($res);
+    }
+
+    protected function getMessages($idCadastro)
+    {
         $params = [
             'idCadastro' => $idCadastro
         ];
@@ -31,32 +52,42 @@ class ChatController extends AbstractActionController
         if ($idLastMessage) {
             $params['maiorQue'] = $idLastMessage;
         }
-        $apiClient = $this->getApiClient();
 
+        $apiClient = $this->getApiClient();
         $res = $apiClient->mensagensGet($params, null, !true);
-        
+
         $data = $res->getData();
         $listChats = $data['listChats'];
 
         foreach ($listChats as &$cv) {
-            $cv['meuIdCadastro'] = (string) $idCadastro;
             $cv['idCadastro'] = (string) $cv['idCadastro'];
         }
+
+        $this->addUserData($listChats);
+
         $data['listChats'] = $listChats;
 
         return new JsonModel($data);
-        $json = $res->json();
-        if ($json) {
-            echo '<pre>';
-            var_export($json);
-        } else {
-            echo $res->getBody();
+    }
+
+    protected function addUserData(&$listChats)
+    {
+        if (!$listChats) {
+            return;
         }
-        echo '<hr>';
-        var_dump($res->getHttpResponse()->getHeaders()->get('time-application')->toString());
-        var_dump($res->getTotalTime());
-        die;
-        die;
+        reset($listChats);
+        $firstkey = key($listChats);
+
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        // Busca os dados do cadastro
+        $dadosCadastro = $cadastrosModel->getCurrent(true);
+
+        $listChats[$firstkey]['meusDados'] = [
+            'idCadastro' => $dadosCadastro['idCadastro'],
+            'responsavelNome' => $dadosCadastro['responsavelNome'],
+            'nomeFantasia' => $dadosCadastro['nomeFantasia'],
+        ];
     }
 
     public function mensagensVeiculoAction()

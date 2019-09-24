@@ -1,5 +1,11 @@
 import _ from 'lodash';
-import {createNewMessage} from '../../utils/messages';
+import {sendNewMessage} from '../../utils/messages';
+
+
+/**
+ * 
+ */
+const messagesSent = {};
 
 const messages = (state = {}, action) => {
     switch (action.type) {
@@ -15,14 +21,25 @@ const messages = (state = {}, action) => {
 
             state[idConversa] = chatData;
 
+            sendNewMessage(message, (data) => {
+                var idChatMensagem = data.idChatMensagem;
+                message.idChatMensagem = idChatMensagem;
+                message.delivered = true;
+            });
+
             return {
                 ...state,
             };
         case 'LIST_CHAT_LOAD':
-            
             _.forEach(action.listChats, (chatData, idConversa) => {
                 if (state[idConversa]) {
                     var prevChatData = state[idConversa];
+                    var ids = _.flatMap(prevChatData.mensagens, function (msg) {
+                        return msg.idChatMensagem + '';
+                    });
+                    chatData.mensagens = chatData.mensagens.filter(function (msg) {
+                        return ids.indexOf(msg.idChatMensagem + '') === -1;
+                    });
                     chatData.mensagens = chatData.mensagens.concat(prevChatData.mensagens);
                     state[idConversa] = chatData;
                 } else {

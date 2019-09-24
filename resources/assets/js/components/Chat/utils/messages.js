@@ -3,10 +3,10 @@ import moment from 'moment';
 
 
 export function createNewMessage(idConversa, idCadastroRemetente, mensagem) {
-
-    const idChatMensagem = null;
+    const idChatMensagem = Math.random().toString(36).substr(2, 9);
     const enviadoEm = moment().format('YYYY-MM-DD HH:mm:ss.SSSS');
     const lidoEm = null;
+    const delivered = false;
 
     return Map({
         idChatMensagem,
@@ -14,6 +14,31 @@ export function createNewMessage(idConversa, idCadastroRemetente, mensagem) {
         idCadastroRemetente,
         mensagem,
         enviadoEm,
-        lidoEm
+        lidoEm,
+        delivered
+    });
+}
+
+
+export function sendNewMessage(message, callback) {
+    var messageCopy = {...message};
+    var data = {
+        'idConversa': messageCopy.idConversa,
+        'idCadastroRemetente': messageCopy.idCadastroRemetente,
+        'mensagem': messageCopy.mensagem,
+    };
+    $.ajax({
+        url: '/chat/mensagens',
+        data: data,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
+            if (typeof callback === 'function') {
+                callback(data.data);
+            }
+        },
+        error: function (e) {
+            console.log('enviar msg');
+        }
     });
 }

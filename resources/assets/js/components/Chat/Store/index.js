@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import $ from 'jquery';
 
 import behaviors from './reducers/behaviors';
 import listChats from './reducers/listChats';

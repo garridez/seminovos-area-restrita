@@ -122,7 +122,7 @@ section.section-chat {
         }
 
 
-        .contact{
+        .contact { 
             /*height: 108px;*/
             /*border-bottom: solid 1px #ed9902;*/
         }
@@ -138,12 +138,12 @@ section.section-chat {
             list-style: none;
             margin: 0;
             padding: 0 10px;
-            li.start-chat, li.empty{
+            li.start-chat, li.empty {
                 color: #ededed;
                 text-align: center;
                 position: absolute;
             }
-            li.empty{
+            li.empty {
                 top: 100%;
                 bottom: 100%;
                 left: 0;
@@ -152,7 +152,7 @@ section.section-chat {
                 font-size: 30px;
 
             }
-            li.start-chat{
+            li.start-chat {
                 font-size: 20px;
                 /*height: 100%;*/
                 /*line-height: 100px;*/
@@ -167,6 +167,11 @@ section.section-chat {
                 border-radius: 8px;
                 padding: 5px;
                 line-height: 20px;
+                &.not-delivered {
+                    .time {
+                        opacity: 0.1;
+                    }
+                }
                 .text {
                     margin:0;
                     padding: 0;
@@ -174,12 +179,14 @@ section.section-chat {
                     list-style-type: 0;
                     border-radius: 10px;
                     padding-right: 30px;
+                    overflow-wrap: break-word;
                 }
                 .time {
                     float: right;
                     margin: -15px -1px;
                     opacity: 0.5;
                     font-size: 11px;
+                    transition: opacity 400ms;
                 }
                 &.sent + .sent, &.received + .received {
                     margin-top: -5px !important;

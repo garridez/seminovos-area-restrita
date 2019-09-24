@@ -20,40 +20,8 @@ class Chat extends Component {
         this.state = {
             conversationActive: null
         };
-        
+
         this.activeConversation = this.activeConversation.bind(this);
-
-        /**
-         var cvsk = Object.keys(data);
-         var pt1 = {};
-         var pt2 = {};
-         _.map(cvsk.slice(0, 5), function (k) {
-         pt1[k] = data[k];
-         });
-         _.map(cvsk.slice(5), function (k) {
-         pt2[k] = data[k];
-         });
-         
-         
-         this.props.dispatch({
-         type: 'LIST_CHAT_LOAD',
-         listChats: pt1,
-         });
-         
-         this.props.dispatch({
-         type: 'CADASTRO_SET_DATA',
-         data: Object.values(data)[0]
-         });
-         
-         setTimeout(() => {
-         //            console.log()
-         this.props.dispatch({
-         type: 'LIST_CHAT_LOAD',
-         listChats: pt2,
-         });
-         }, 2000);*/
-
-
     }
 
     activeConversation(id) {
@@ -68,8 +36,7 @@ class Chat extends Component {
         const {
             listChats,
             conversationActive,
-            currentConversation,
-            currentMessages
+            currentConversation
         } = this.props;
 
         return (
@@ -102,26 +69,15 @@ export default connect((state, ownProps) => {
     var listChats = state.listChats;
     var conversationActive = state.currentChat.conversationActive;
     var currentConversation = null;
-    var currentMessages = null;
-    var meuIdCadastro = null;
-    if (listChats) {
-        var firstKey = _.keys(listChats)[0];
-        if (firstKey) {
-            meuIdCadastro = listChats[firstKey].meuIdCadastro;
-        }
-    }
 
     if (conversationActive && listChats[conversationActive]) {
         currentConversation = listChats[conversationActive];
-        currentMessages = currentConversation.mensagens;
     }
 
     return {
         listChats,
         conversationActive,
-        currentConversation,
-        currentMessages,
-        meuIdCadastro
+        currentConversation
     };
 
 })(Chat);

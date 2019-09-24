@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
+
 class MsgLoader extends Component {
 
     constructor(props) {
@@ -22,10 +24,15 @@ class MsgLoader extends Component {
     }
     dispatchData(listChats, idLastMessage) {
         if (listChats) {
-            this.props.dispatch({
-                type: 'CADASTRO_SET_DATA',
-                data: Object.values(listChats)[0]
+            _.forEach(listChats, (listChat) => {
+                if (listChat.meusDados) {
+                    this.props.dispatch({
+                        type: 'CADASTRO_SET_DATA',
+                        data: listChat.meusDados
+                    });
+                }
             });
+
             this.props.dispatch({
                 type: 'LIST_CHAT_LOAD',
                 listChats

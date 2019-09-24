@@ -6,7 +6,7 @@ import ChatSubject from './ChatSubject';
 
 class ListChats extends Component {
     constructor() {
-        super()
+        super();
     }
 
     render() {

@@ -10,16 +10,13 @@ const dataProperties = [
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'CADASTRO_SET_DATA':
-            var data = {};
-            _.map(action.data, (v, k) => {
-                if (dataProperties.indexOf(k) === -1) {
-                    return;
-                }
-                data[k] = v;
-            });
+            if (!action.data) {
+                return state;
+            }
+            
             return {
                 ...state,
-                ...data
+                ...action.data
             };
 
         default:

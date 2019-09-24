@@ -6,7 +6,6 @@ class Conversation extends Component {
     constructor() {
         super();
         this.ul = React.createRef();
-
         // Rola o elemento scroll para baixo quando tem nova msg
         this.enableAutoScroll = 1;
         // Detecta se o auto scroll é pelo usuário ou automático
@@ -42,15 +41,15 @@ class Conversation extends Component {
         }
     }
     render() {
-        const {conversation, mensagens} = this.props;
+        const {conversation, mensagens, meusDados} = this.props;
         return (
                 <ul className="conversation" ref={this.ul} onScroll={this.onScroll.bind(this)}>
-                    {renderMsgs(mensagens, conversation)}
+                    {renderMsgs(mensagens, conversation, meusDados)}
                 </ul>
                 );
     }
 }
-function renderMsgs(mensagens, conversation) {
+function renderMsgs(mensagens, conversation, meusDados) {
     if (!mensagens || mensagens.length === 0) {
         return ([
             <li className="empty" key="1">Nenhuma mensagem</li>,
@@ -61,9 +60,12 @@ function renderMsgs(mensagens, conversation) {
         return <Message
         key={id + '-' + msg.idConversa}
         data={msg}
+        meusDados={meusDados}
         conversation={conversation} />;
     }).reverse();
 }
+// Previne renderição desnecessária
+var prevMsgCount = null;
 
 export default connect((state) => {
     const conversationActive = state.currentChat.conversationActive;
@@ -72,9 +74,17 @@ export default connect((state) => {
     }
 
     const chatData = state.listChats[conversationActive];
+    var mensagens = chatData.mensagens;
+    if (mensagens) {
+        if (mensagens.length !== prevMsgCount) {
+            mensagens = [...mensagens]; // Força o re-render
+        }
+        prevMsgCount = mensagens.length;
+    }
 
     return {
         conversation: chatData,
-        mensagens: [...chatData.mensagens],
+        mensagens,
+        meusDados: state.cadastro
     };
 })(Conversation);

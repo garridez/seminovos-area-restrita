@@ -7,13 +7,17 @@ export default class Message extends Component {
         this.state = {}
     }
     render() {
-        const {conversation, data} = this.props;
-
+        const {conversation, data, meusDados} = this.props;
         var liClass = [
             'message',
-            conversation.meuIdCadastro !== data.idCadastroRemetente ? 'received' : 'sent',
+            meusDados.idCadastro !== data.idCadastroRemetente ? 'received' : 'sent',
         ];
         var enviadoEm = moment(data.enviadoEm);
+
+        if (data.delivered !== undefined) {
+            liClass.push(data.delivered ? 'delivered' : 'not-delivered');
+        }
+
         return (
                 <li className={liClass.join(' ')}>
                     <div className="text">{data.mensagem}</div>
