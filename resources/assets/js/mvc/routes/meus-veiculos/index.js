@@ -25,15 +25,15 @@ module.exports.callback = $ => {
         var displayName = $(".data-user-display-name").val();
         var $veiculo = $this.closest(".veiculo");
         var $form = $("<form>");
-        var $span = $("<span>").html(`Olá, <b class="text-primary">${displayName}</b> ! 
-            Como foi sua experiência em anunciar conosco?
-            Dê a sua opnião, é rapidinho!`
-        );
+        var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
         var $select = $("<select class='form-control'>")
             .append('<option value="1">Vendi pela Seminovos BH</option>')
             .append('<option value="2">Desisti de vender</option>')
             .append('<option value="3">Vendi por outro meio</option>')
             .append('<option value="4">Outro motivo</option>');
+        var $conjuntoSlect = $("<div class='d-flex align-items-center mt-4'></div>")
+            .append($("<span class='no-wrap mr-3'>Sobre a <b class='text-primary'>venda do veículo</b>:</span>"))
+            .append($select);
 
         var $estrelas = $("<div class='rate'>")
             .append(`<input type="radio" id="star5" name="rate" value="5" />`)
@@ -46,8 +46,16 @@ module.exports.callback = $ => {
             .append(`<label for="star2" title="text">2 stars</label>`)
             .append(`<input type="radio" id="star1" name="rate" value="1" />`)
             .append(`<label for="star1" title="text">1 star</label>`);
+        var $conjuntoEstrelas = $("<div class='d-flex align-items-start mt-2'></div>")
+            .append($("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"))
+            .append($estrelas);
+        
         var $observacao = $("<textarea maxlength='255' class='form-control'></textarea>");
-        $form.append($span).append($select).append($estrelas).append($observacao);
+        var $conjuntoObservacoes = $("<div class='text-left mt-2'></div>")
+            .append($("<span class='no-wrap'>Observações:</span>"))
+            .append($observacao);
+
+        $form.append($span).append($conjuntoSlect).append($conjuntoEstrelas).append($conjuntoObservacoes);
         $this.data("confirm-option-confirm", function () {
             $(".modal").modal('hide');
             FormAlerts.success({

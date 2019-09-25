@@ -34,7 +34,7 @@ module.exports = formAlerts = {
             options.closeCallback();
             modal.modal('dispose').remove();
         });
-        modal.find('.modal-content').addClass('alert alert-' + type);
+        modal.find('.modal-content').addClass('alertForm alertForm-' + type);
         return modal;
     },
     success: function (options) {
