@@ -16,6 +16,12 @@ class AuthController extends AbstractActionController
         /* @var $container ServiceLocatorInterface */
         global $container;
 
+        $redirect = $this->getRequest()->getQuery('redirect', false);
+
+        if ($redirect) {
+            $redirect = base64_decode($redirect);
+        }
+
         $particularForm = new Login\ParticularForm();
         $revendaForm = new Login\RevendaForm();
 
@@ -29,6 +35,9 @@ class AuthController extends AbstractActionController
         $authService = $container->get(AuthenticationService::class);
 
         if ($authService->hasIdentity()) {
+            if ($redirect) {
+                return $this->redirect()->toUrl($redirect);
+            }
             return $this->redirect()->toRoute('restrito');
         }
 
@@ -66,6 +75,9 @@ class AuthController extends AbstractActionController
                 'rememberMe' => $rememberMe
             ]);
             if ($result->getCode() === $result::SUCCESS) {
+                if ($redirect) {
+                    return $this->redirect()->toUrl($redirect);
+                }
                 return $this->redirect()->toRoute('restrito');
             }
         }
