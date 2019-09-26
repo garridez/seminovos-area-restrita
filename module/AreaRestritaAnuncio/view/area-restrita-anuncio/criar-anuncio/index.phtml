@@ -23,7 +23,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
 }
 
-if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO) {
+if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_FOTOS_ALTERADAS) {
     switch ($_GET['editar'] ?? null) {
         case 'fotos':
             unset(
