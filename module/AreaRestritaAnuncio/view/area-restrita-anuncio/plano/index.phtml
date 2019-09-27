@@ -96,7 +96,9 @@ if ($isRevenda) {
                                 
                             }
                             if ($planoJaEscolhido && $idPlanoAtual == 1) {
-                                $desabilitarPlano = true;
+                                if($idStatusAnuncio == 6 ||$idStatusAnuncio == 10){
+                                    $desabilitarPlano = false;
+                                }
                                 $falsoMarcado = true;
                             }
                             $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
@@ -158,18 +160,17 @@ if ($isRevenda) {
                                     <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
                                 </div>
                             <?php endif; ?>
-
                             <input
                                 type="radio"
                                 id="radio-idPlano-<?= $plano['idPlano'] ?>"
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?= $plano['idPlano'] == $idPlanoAtual && !$falsoMarcado && !$isRevenda ? 'checked' : '' ?>
+                                <?= $plano['idPlano'] == $idPlanoAtual && !$isRevenda ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                <label class="btn btn-block btn-sm bg-light text-dark text-bold <?= $falsoMarcado ? 'falso-marcado':''?>" for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano && !$isRevenda ? 'data-plano-desativado' : '' ?><?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
+                                <label class="btn btn-block btn-sm bg-light text-dark text-bold " for="radio-idPlano-<?= $plano['idPlano'] ?>"
+                                <?= $desabilitarPlano && !$isRevenda && !($idStatusAnuncio == 6 || $idStatusAnuncio == 10) ? 'data-plano-desativado' : '' ?><?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
                                 <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
                             </label>
                         </div>
