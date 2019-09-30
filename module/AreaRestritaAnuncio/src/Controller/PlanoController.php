@@ -43,6 +43,7 @@ class PlanoController extends AbstractActionController
 
         if ($dadosVeiculo) {
             $data['idPlanoAtual'] = (int) $dadosVeiculo['idPlano'];
+            $data['idStatusAnuncio'] = (int) $dadosVeiculo['idStatus'];
         }
 
         $viewModel = new ViewModel($data);
