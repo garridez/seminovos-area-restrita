@@ -24,7 +24,7 @@ use Zend\Validator\AbstractValidator;
 class Module
 {
 
-    const SESSION_NAMESPACE = __CLASS__;
+    const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
     public function getConfig()
     {
