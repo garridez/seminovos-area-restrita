@@ -23,7 +23,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
 }
 
-if ($veiculo && $veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO) {
+if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veiculo['idStatus'] == VeiculosStatus::STATUS_FOTOS_ALTERADAS)) {
     switch ($_GET['editar'] ?? null) {
         case 'fotos':
             unset(
@@ -65,6 +65,7 @@ if ($this->idVeiculo) {
 <div id="dados-basicos" class="hide">
     <form>
         <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+        <input type="hidden" id="idStatus" name="idStatus" value="<?= $this->idStatus ?>" class="idStatus">
         <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
         <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
         <input type="hidden" id="idPlano" name="idPlano" value="<?= $this->idPlano ?>" class="idPlano">

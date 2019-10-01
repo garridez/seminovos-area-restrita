@@ -115,14 +115,12 @@ class CadastrarController extends AbstractActionController
             $dadosEmail = [
                 'mensagem' => $mensagem,
                 'assunto' => 'Nova senha de acesso',
-                'email' => [
-                    $dadosCadastro['responsavelNome'] => $dadosCadastro['email'],
-                    'senha' => 'senha@seminovosbh.com.br'
-                ],
+                'email' => $dadosCadastro['email'],
                 'nome' => $dadosCadastro['responsavelNome'],
                 'emailRemetente' => 'senha@seminovosbh.com.br',
                 'nomeRemetente' => 'SeminovosBH',
-                'tipoEmail' => 'personalizado'
+                'novaSenha' => $novaSenha,
+                'tipoEmail' => 'nova_senha'
             ];
 
             /* @var $enviarEmailModel EnviarEmail */

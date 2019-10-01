@@ -180,7 +180,7 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                 <?php if($veiculo["botoes"]["editar_fotos"]){?>
                                 <?php
                                     $editarFotosUrl = $urls['editarAnuncio'];
-                                    if($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO){
+                                    if($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO || $veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_FOTOS_ALTERADAS){
                                          $editarFotosUrl .= '?editar=fotos';
                                     }
                                     $editarFotosUrl .= '#fotos';

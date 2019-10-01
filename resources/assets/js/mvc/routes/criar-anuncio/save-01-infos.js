@@ -26,6 +26,10 @@ module.exports.callback = ($) => {
             .on('steps-loaded', function () {
                 // Para esperar as máscaras serem aplicadas
                 setTimeout(function () {
+                    let idStatus = $("input.idStatus").val();
+                    if(idStatus == 3 || idStatus == 6 || idStatus == 10){
+                        $("input[name='placa']").prop('readonly', false).prop('disabled',false);
+                    }
                     lastSavedData = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes').serialize();
                 }, 500);
             })
