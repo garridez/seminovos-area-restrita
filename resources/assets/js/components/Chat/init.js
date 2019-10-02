@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Chat from 'components/Chat';
+import Chat from '../Chat/Index';
 import store from './Store';
 
 window.setAjaxLoadding = false;

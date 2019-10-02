@@ -10,8 +10,6 @@ import History from './Conversation/History';
 import Editor from './Conversation/Editor';
 import Contact from './Conversation/Contact';
 import MsgLoader from './Controller/MsgLoader';
-import $ from 'jquery';
-import data from './data';
 
 class Chat extends Component {
 
