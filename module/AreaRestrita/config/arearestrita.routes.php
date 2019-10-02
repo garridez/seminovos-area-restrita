@@ -91,12 +91,21 @@ return [
         ],
         'may_terminate' => true,
         'child_routes' => [
+            'chat' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/chat',
+                    'defaults' => [
+                        'action' => 'chat',
+                    ],
+                ],
+            ],
             'mensagens' => [
                 'type' => Http\Segment::class,
                 'options' => [
                     'route' => '/mensagens',
                     'defaults' => [
-                        'action' => 'index',
+                        'action' => 'messages',
                     ],
                 ],
                 'may_terminate' => true,
@@ -262,15 +271,6 @@ return [
                     'route' => '/qtd-anuncios-menu',
                     'defaults' => [
                         'action' => 'qtdAnunciosMenu',
-                    ],
-                ],
-            ],
-            'chat' => [
-                'type' => Http\Literal::class,
-                'options' => [
-                    'route' => '/chat',
-                    'defaults' => [
-                        'action' => 'chat',
                     ],
                 ],
             ],
