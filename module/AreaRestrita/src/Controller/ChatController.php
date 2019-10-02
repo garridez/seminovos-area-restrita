@@ -9,20 +9,13 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
 use Zend\View\Model\JsonModel;
-use Zend\Authentication\AuthenticationService;
 
 class ChatController extends AbstractActionController
 {
 
-    /**
-     * 
-     * @global \Zend\ServiceManager\ServiceManager $container
-     */
     public function indexAction()
     {
-        /* @var $container \Zend\ServiceManager\ServiceLocatorInterface */
-        global $container;
-
+        
     }
 
     public function messagesAction()
