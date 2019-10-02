@@ -8,10 +8,11 @@ RUN apt-get install -y zlib1g-dev libicu-dev g++ \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
+ARG SESSION_PHP_COOKIE_DOMAIN
 ARG SESSION_PHP_SAVE_HANDLER
 ARG SESSION_SAVE_PATH
-# No local não salva a sessão no redis
-RUN echo ";session.cookie_domain=localhost\n\
+
+RUN echo "session.cookie_domain=$SESSION_PHP_COOKIE_DOMAIN\n\
 session.save_handler=$SESSION_PHP_SAVE_HANDLER\n\
 session.save_path=\"$SESSION_SAVE_PATH\"" > /usr/local/etc/php/conf.d/snbh-session.ini
 
