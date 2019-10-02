@@ -23,8 +23,12 @@ class ChatController extends AbstractActionController
         /* @var $container \Zend\ServiceManager\ServiceLocatorInterface */
         global $container;
 
-        /* @var $authService AuthenticationService */
-        $idCadastro = $container->get(AuthenticationService::class)->getIdentity();
+    }
+
+    public function messagesAction()
+    {
+        $idCadastro = $this->getCadastro('idCadastro');
+
         if ($this->getRequest()->isPost()) {
             return $this->sendMessages($idCadastro);
         }
