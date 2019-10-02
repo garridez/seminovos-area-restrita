@@ -4,30 +4,4 @@ module.exports.callback = $ => {
     import('components/Chat/init').then(function (initChat) {
         initChat.default();
     });
-    
-    return;
-    import('components/Chat').then(function (Chat) {
-        console.log(Chat);
-
-        new Chat.default($('.section-chat'));
-        var jQuery = require("jquery");
-        window.jQuery = jQuery;
-        /**
-         require("emojionearea");
-         window.el = $("#text_area_chat").emojioneArea({});
-         window.el[0].emojioneArea.saveEmojisAs = "shortname";*/
-        if (!isMobile) {
-            $(".conversation-active").removeClass("invisible");
-            return;
-        }
-        $(".chat").click(function (e) {
-            $(".conversation-active").removeClass("invisible");
-            $(".list-chats").addClass("invisible");
-        });
-        $(".chat-back").click(function (e) {
-            $(".conversation-active").addClass("invisible");
-            $(".list-chats").removeClass("invisible");
-        });
-    })
-
 };
