@@ -4,6 +4,8 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
     var advancedAlerts = require('components/AdvancedAlerts');
+    var BtnContinuar = require('./helpers/BtnContinuar');
+
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
@@ -24,20 +26,14 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-    $('.anuncio-steps').on('steps-loaded',function(){
-        $('.btn-continuar')
-            .removeClass('btn-laranja')
-            .attr('disabled', true);
-        $(".plano-box input[type='radio']").on("change",function(){
-            if($(this).is(":checked")){
-                $('.btn-continuar')
-                .addClass('btn-laranja')
-                .attr('disabled', false);
-            }
-        });
-    })
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
+        BtnContinuar.disable();
+        $(".plano-box input[type='radio']").on("change",function(){
+            if($(this).is(":checked")){
+                BtnContinuar.enable();
+            }
+        });
         
          if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
