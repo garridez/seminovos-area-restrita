@@ -11,6 +11,12 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function () {
+        advancedAlerts.warning({
+            text:'Plano já ativo, selecione um plano superior ou clicke em voltar',
+            title:$('<span class="text-primary">').html('Atenção!')
+        });
+    });
     
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function () {
         advancedAlerts.warning({
@@ -18,7 +24,18 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-
+    $('.anuncio-steps').on('steps-loaded',function(){
+        $('.btn-continuar')
+            .removeClass('btn-laranja')
+            .attr('disabled', true);
+        $(".plano-box input[type='radio']").on("change",function(){
+            if($(this).is(":checked")){
+                $('.btn-continuar')
+                .addClass('btn-laranja')
+                .attr('disabled', false);
+            }
+        });
+    })
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
         

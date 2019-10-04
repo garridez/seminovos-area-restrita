@@ -105,7 +105,8 @@ if ($isRevenda) {
                             $nomePlano = mb_strtoupper($nomePlano);
                             ?>
                     <div class="col-12 col-sm col-md col-lg">
-                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>"
+                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual':''?>
+                                <?= $desabilitarPlano ? 'plano-desabilitado':''?>"
                             <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
                             <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
                                 <div class="plano-number"><?= $k + 1 . 'º' ?></div>
@@ -166,16 +167,61 @@ if ($isRevenda) {
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?= $plano['idPlano'] == $idPlanoAtual && !$isRevenda ? 'checked' : '' ?>
+                                <?='' #$plano['idPlano'] == $idPlanoAtual && !$isRevenda && $idPlanoAtual != $plano['idPlano'] ? 'checked' : '' ?>
                                 <?= $desabilitarPlano ? 'disabled' : '' ?>
+                                <?= $idPlanoAtual == $plano['idPlano'] ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
                                 <label class="btn btn-block btn-sm bg-light text-dark text-bold " for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano && !$isRevenda && !($idStatusAnuncio == 6 || $idStatusAnuncio == 10) ? 'data-plano-desativado' : '' ?><?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
+                                <?= $desabilitarPlano && !$isRevenda && !($idStatusAnuncio == 6 || $idStatusAnuncio == 10) ||
+                                    $idPlanoAtual > $plano['idPlano'] ? 'data-plano-desativado' : '' ?>
+                                    <?= $idPlanoAtual == $plano['idPlano'] ? 'data-plano-atual':''?>
+                                <?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
                                 <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
                             </label>
                         </div>
                     </div>
                     <?php endforeach; ?>
+                </div>
+                <div class="alert-primary row-full">
+                    <div class="container">
+                        <div class=" row  justify-content-center text-justify p-4">
+                            <div class="d-none d-md-block col-md-1 align-self-center">
+                                <i class="icon icon-alert"></i>
+                            </div>
+                            <div class="col-12 col-md-6 align-baseline">
+                                <h5 class="text-left bold">Reativação dos anúncios</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Nos planos Nitro Home, Nitro, Turbo e Básico, para que seja mantida a condição de
+                                        exibição
+                                        do seu anúncio até a venda, é necessário a reativação do anúncio a cada 30 dias (sem
+                                        custo
+                                        adicional).
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-5 border-left border-primary border-sm-0">
+                                <h5 class="bold">Para veículos 0km</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Anúncios de veículos 0km terá o prazo de exibição no site limitado a 30 dias, sem
+                                        direito a
+                                        renovação gratuita.
+                                    </li>
+                                    <li>
+                                        A renovação do anúncio de veículos 0km, será cobrado novamente conforme plano
+                                        selecionado.
+                                    </li>
+                                    <li>
+                                        Anúncios de veículos 0km que não estiverem listados como tal, serão removidos
+                                        deliberadamente após o prazo de 30 dias e deverão pagar por um novo anúncio para
+                                        reativar o
+                                        mesmo.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group ">
                     <input type="submit">
