@@ -207,7 +207,7 @@ class DadosVeiculoController extends AbstractActionController
                     ])->json();
                 
                 $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
-                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
+                //$dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
             $fotos = $request->getFiles()->fotos;
             // Upload
@@ -227,7 +227,15 @@ class DadosVeiculoController extends AbstractActionController
                 foreach ($files as $file) {
                     unlink($file);
                 }
+                
+                for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
+                    $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
+                }
+
             }
+            
+            ksort($auxReordem);
+            $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
 
             if ($dataPost->reordem) {
                 $resReordem = $this->getApiClient()->veiculosFotosPut([
