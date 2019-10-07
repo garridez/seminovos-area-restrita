@@ -1,4 +1,8 @@
 &{
+    .icon-alert{
+        font-size: 4rem;
+        color: #ed9902;
+    }
     .valor-label{
         text-align: center;
         font-weight: bold;
@@ -6,5 +10,46 @@
     }
     input[name="idPlano"] {
         opacity: 0;
+    }.plano-box{
+        padding: 10px 5px 10px 10px;
+        .icon-plano{
+            margin-left: 6px;
+        }
+        h3{
+            font-size: 1.2rem;
+        }
+        span{
+            font-size: 0.80rem;
+        }
+        &.plano-desabilitado{
+            .icon-plano{
+                span[class^="bar-"]{
+                    background-color:#adadad !important;
+                }
+            }
+            .valor-label{
+                color: #adadad !important;
+            }
+            ul.list.list-styled{
+                li{
+                    color: #adadad !important;
+                }
+            }
+        }
+    }
+    .plano-atual{
+        border: 2px solid $orange;
+        &:after {
+            color: $orange;
+            content:"Plano Atual";
+            font-family: arial;
+            font-size: 20px;
+            position: absolute;
+            top: -8px;
+            padding-left:3px;
+            padding-right:3px;
+            right: 20px;
+            background-color: #f0f0f0;
+        }
     }
 }

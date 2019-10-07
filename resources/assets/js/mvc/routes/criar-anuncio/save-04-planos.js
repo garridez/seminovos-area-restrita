@@ -4,10 +4,18 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
     var advancedAlerts = require('components/AdvancedAlerts');
+    var BtnContinuar = require('./helpers/BtnContinuar');
+
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
             text:'Não é possível diminuir o plano',
+            title:$('<span class="text-primary">').html('Atenção!')
+        });
+    });
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function () {
+        advancedAlerts.warning({
+            text:'Plano já ativo, selecione um plano superior ou clicke em voltar',
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
@@ -18,9 +26,14 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
+        BtnContinuar.disable();
+        $(".plano-box input[type='radio']").on("change",function(){
+            if($(this).is(":checked")){
+                BtnContinuar.enable();
+            }
+        });
         
          if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
