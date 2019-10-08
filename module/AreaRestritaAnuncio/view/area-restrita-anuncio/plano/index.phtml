@@ -78,28 +78,31 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                         $planoJaEscolhido = false;
-                        $falsoMarcado = false;
-                        foreach ($planos as $k => $plano) :
-                            if ($plano['idPlano'] == $idPlanoAtual) {
-                                $planoJaEscolhido = true;
-                            }
-                            $desabilitarPlano = false;
+                        foreach ($planos as $k => $plano) :     
                             if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
                                 $desabilitarPlano = true;
                             }
-                            if ($isRevenda) {
-                                if($plano['qtd']['publicado'] == $plano['qtd']['total']){
-                                    $desabilitarPlano = true;
-                                } else {
-                                    $desabilitarPlano = false;
-                                }
-                                
+                            $desabilitarPlano = false;
+                            $desabilitarPlanoRenda = false;
+                            $planoAtual = false;
+                            $planoJaEscolhido = true;
+                            
+                            if($prioridadePlano >= $plano['prioridade']){
+                                $diminuirPlano = true;
+                            }else{
+                                $diminuirPlano = false;
                             }
-                            if ($planoJaEscolhido && $idPlanoAtual == 1) {
-                                if($idStatusAnuncio == 6 ||$idStatusAnuncio == 10){
-                                    $desabilitarPlano = false;
-                                }
-                                $falsoMarcado = true;
+                            if ($isRevenda && $plano['qtd']['publicado'] == $plano['qtd']['total']) {
+                                $desabilitarPlanoRenda = true;
+                            }
+                            if($idPlanoAtual == $plano['idPlano']){
+                                $planoAtual = true;
+                            }
+                            if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3){
+                                $diminuirPlano = true;
+                            }
+                            if($isRevenda){
+                                $diminuirPlano = true;
                             }
                             $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
                             $nomePlano = mb_strtoupper($nomePlano);
@@ -167,16 +170,14 @@ if ($isRevenda) {
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?='' #$plano['idPlano'] == $idPlanoAtual && !$isRevenda && $idPlanoAtual != $plano['idPlano'] ? 'checked' : '' ?>
-                                <?= $desabilitarPlano ? 'disabled' : '' ?>
-                                <?= $idPlanoAtual == $plano['idPlano'] ? 'disabled' : '' ?>
+                                <?= $desabilitarPlano ||$desabilitarPlanoRenda || !$diminuirPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
                                 <label class="btn btn-block btn-sm bg-light text-dark text-bold " for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano && !$isRevenda && !($idStatusAnuncio == 6 || $idStatusAnuncio == 10) ||
-                                    $idPlanoAtual > $plano['idPlano'] ? 'data-plano-desativado' : '' ?>
-                                    <?= $idPlanoAtual == $plano['idPlano'] ? 'data-plano-atual':''?>
-                                <?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
-                                <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
+                                    <?= !$diminuirPlano ? 'data-plano-desativado' : '' ?>
+                                    <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
+                                    <?= $planoAtual ? 'data-plano-atual':''?>
+                                >
+                                <?= $planoAtual?'PLANO ATUAL':'SELECIONE'?>
                             </label>
                         </div>
                     </div>
