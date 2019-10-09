@@ -78,6 +78,7 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                         $planoJaEscolhido = false;
+                        $prioridadePlano = $prioridadePlano ?? 0;
                         foreach ($planos as $k => $plano) :     
                             if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
                                 $desabilitarPlano = true;
@@ -98,9 +99,15 @@ if ($isRevenda) {
                             if($idPlanoAtual == $plano['idPlano']){
                                 $planoAtual = true;
                             }
-                            if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3){
+
+                            if($idStatusAnuncio ?? false){
+                                if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3 ){
+                                    $diminuirPlano = true;
+                                }
+                            }else{
                                 $diminuirPlano = true;
                             }
+
                             if($isRevenda){
                                 $diminuirPlano = true;
                             }
