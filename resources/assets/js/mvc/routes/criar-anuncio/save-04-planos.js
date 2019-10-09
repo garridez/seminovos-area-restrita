@@ -15,7 +15,7 @@ module.exports.callback = ($) => {
     });
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function () {
         advancedAlerts.warning({
-            text:`Plano já ativo, selecione outro plano ou clicke em voltar`,
+            text:`Plano já ativo, selecione outro plano ou clique em voltar`,
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
