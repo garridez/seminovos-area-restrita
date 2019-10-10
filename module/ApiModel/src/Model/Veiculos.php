@@ -11,7 +11,7 @@ class Veiculos extends AbstractModel
 
     protected function getCacheKey()
     {
-        return 'isOwner_cache_' . md5(__METHOD__ . 'Cache');
+        return 'isOwner_cache_' . $this->getIdentity() . md5(__METHOD__ . 'Cache');
     }
 
     /**
