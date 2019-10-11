@@ -30,6 +30,8 @@ class Chat extends Component {
         });
 
     }
+    
+    
     render() {
         const {
             listChats,
@@ -37,8 +39,10 @@ class Chat extends Component {
             currentConversation
         } = this.props;
 
+        var conversationActiveClass = conversationActive ? 'conversation-active' : '';
+
         return (
-                <section className="section-chat row">
+                <section className={'section-chat row ' + conversationActiveClass}>
                     <MsgLoader/>
                     <div className="sidebar col-sm-5 d-flex flex-column">
                         <div className="top-header">

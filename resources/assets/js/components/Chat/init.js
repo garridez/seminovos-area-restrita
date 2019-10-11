@@ -16,4 +16,11 @@ export default function () {
             document.querySelector('.chat-root')
             );
 }
+
+var onResize = function () {
+    $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
+};
+$(window).resize(onResize);
+onResize();
+
  
