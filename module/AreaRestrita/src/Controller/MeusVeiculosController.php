@@ -236,15 +236,28 @@ class MeusVeiculosController extends AbstractActionController
                 "renovar_plano" => false,
                 "alerta" => false,
             ];
+
+            $ultimaFormaPagamento = '';
+            if( isset($veiculo['pagamentos']['dados']) && count($veiculo['pagamentos']['dados']) > 0){
+                $arrayPagamentos = $veiculo['pagamentos']['dados'];
+                end($arrayPagamentos);
+                $ultimoIndice = key($arrayPagamentos);
+                $ultimoPagamento = $veiculo['pagamentos']['dados'][$ultimoIndice];
+                $ultimaFormaPagamento = $ultimoPagamento['formaPagamento'];
+            }
+
             switch ($veiculo['idStatus']) {
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["enviar_comprovante"] = true;
+                    $temp_acoes["enviar_comprovante"] = false;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                         $temp_acoes["realizar_pagamento"] = true;
+                    }
+                    if($ultimaFormaPagamento === "deposito") {
+                        $temp_acoes["enviar_comprovante"] = true;
                     }
                     break;
                 case "2":
