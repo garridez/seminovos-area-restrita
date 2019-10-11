@@ -80,6 +80,14 @@ class MeusVeiculosController extends AbstractActionController
         if(!isset($dadosVeiculos['data'])){
             return;
         }
+        /**
+         * Se for dev, não busca a propostas
+         * A API de dev não conecta no banco de propostas
+         * Então nem perde tempo procurando lá
+         */
+        if(IS_DEV){
+            return $dadosVeiculos;
+        }
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
