@@ -73,6 +73,9 @@ return [
                 'UserRequest' => [
                     'name' => \AreaRestrita\Log\Processors\UserRequest::class,
                 ],
+                'ApplicationNamespace' => [
+                    'name' => \AreaRestrita\Log\Processors\ApplicationNamespace::class,
+                ],
             ],
         ],
     ],
