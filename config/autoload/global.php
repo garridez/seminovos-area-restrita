@@ -22,29 +22,7 @@ return [
     ],
     'ApiClient' => [
         'credentials' => [
-            'serverUrl' => 'http://54.200.165.200',
-            /**
-             * @todo Remover quando resolver o problema de rede
-             */
-            'serverUrl' => (function() {
-                    $ctx = stream_context_create(array('http' =>
-                        array(
-                            'timeout' => 1,
-                    )));
-                    $apiUrls = [
-                        0 => 'http://api2.seminovosbh.com.br',
-                        1 => 'http://54.200.165.200'
-                    ];
-                    $apiUrlsKey = rand(0, 1);
-                    $serverUrl = $apiUrls[$apiUrlsKey];
-
-                    if (!@file_get_contents($serverUrl, false, $ctx)) {
-                        unset($apiUrls[$apiUrlsKey]);
-                        reset($apiUrls);
-                        $serverUrl = current($apiUrls);
-                    }
-                    return $serverUrl;
-                })(),
+            'serverUrl' => 'http://api2.seminovosbh.com.br',
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ],
@@ -83,17 +61,17 @@ return [
         'temp' => 'data/temp',
         'upload' => 'data/temp/upload'
     ],
-    'cache' => array(
+    'cache' => [
         'adapter' => Redis::class,
-        'options' => array(
+        'options' => [
             'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
             'ttl' => 300, # 5 Minutos
             'namespace' => 'AreaRestritaProd'
-        ),
-        'plugins' => array(
+        ],
+        'plugins' => [
             'Serializer',
-        )
-    ),
+        ]
+    ],
     'session_config' => [
         'cookie_lifetime' => 60 * 60 * 24 * 31 * 12,
         'gc_maxlifetime' => 60 * 60 * 24 * 5,

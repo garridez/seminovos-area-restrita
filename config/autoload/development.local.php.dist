@@ -52,18 +52,18 @@ return [
             ],
         ],
     ],
-    'cache' => array(
+    'cache' => [
         'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
-        'options' => array(
+        'options' => [
             'server' => $removeKey,
             'ttl' => 300, # 5 Minutos
             'cacheDir' => 'data/cache',
             'namespace' => 'AreaRestritaDev',
-        ),
-        'plugins' => array(
+        ],
+        'plugins' => [
             'Serializer',
-        )
-    ),
+        ]
+    ],
     'view_manager' => [
         'display_exceptions' => true,
     ],
