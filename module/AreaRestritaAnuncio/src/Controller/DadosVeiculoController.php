@@ -200,6 +200,7 @@ class DadosVeiculoController extends AbstractActionController
                 'use_upload_name' => true,
                 'use_upload_extension' => true,
             ]);
+            $auxReordem = [];
             // Delete
             if ($dataPost->fotosToDelete) {
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
