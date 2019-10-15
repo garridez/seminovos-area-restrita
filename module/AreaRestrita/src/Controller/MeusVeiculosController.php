@@ -86,9 +86,9 @@ class MeusVeiculosController extends AbstractActionController
             $idVeiculo = $veiculo['idVeiculo'];
 
             // Busca os dados das propostas
-            $dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
+            //$dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
 
-            $dadosVeiculos['data'][$key]['qdtPropostas'] = count($dadosPropostas);
+            $dadosVeiculos['data'][$key]['qdtPropostas'] = 0;//count($dadosPropostas);
         }
 
         return $dadosVeiculos;
@@ -216,10 +216,13 @@ class MeusVeiculosController extends AbstractActionController
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
 
             $statusPagamento = null;
-            $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
 
             $planoPagamento = null;
-            $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+
+            $formaPagamento = null;
+            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"formaPagamento");
 
             $frase = "";
             $temp_acoes = [
@@ -237,27 +240,15 @@ class MeusVeiculosController extends AbstractActionController
                 "alerta" => false,
             ];
 
-            $ultimaFormaPagamento = '';
-            if( isset($veiculo['pagamentos']['dados']) && count($veiculo['pagamentos']['dados']) > 0){
-                $arrayPagamentos = $veiculo['pagamentos']['dados'];
-                end($arrayPagamentos);
-                $ultimoIndice = key($arrayPagamentos);
-                $ultimoPagamento = $veiculo['pagamentos']['dados'][$ultimoIndice];
-                $ultimaFormaPagamento = $ultimoPagamento['formaPagamento'];
-            }
-
             switch ($veiculo['idStatus']) {
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["enviar_comprovante"] = false;
+                    $temp_acoes["enviar_comprovante"] = $formaPagamento === "deposito";
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                         $temp_acoes["realizar_pagamento"] = true;
-                    }
-                    if($ultimaFormaPagamento === "deposito") {
-                        $temp_acoes["enviar_comprovante"] = true;
                     }
                     break;
                 case "2":
@@ -379,7 +370,7 @@ class MeusVeiculosController extends AbstractActionController
 
                 if($dataCadastro > $auxData){
                     $auxData = $dataCadastro;
-                    $result = (int) $pagamento[$variavel];
+                    $result = $pagamento[$variavel];
                 }
             }
         }
