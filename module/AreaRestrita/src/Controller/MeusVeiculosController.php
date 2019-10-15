@@ -86,9 +86,9 @@ class MeusVeiculosController extends AbstractActionController
             $idVeiculo = $veiculo['idVeiculo'];
 
             // Busca os dados das propostas
-            //$dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
+            $dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
 
-            $dadosVeiculos['data'][$key]['qdtPropostas'] = 0;//count($dadosPropostas);
+            $dadosVeiculos['data'][$key]['qdtPropostas'] = count($dadosPropostas);
         }
 
         return $dadosVeiculos;
