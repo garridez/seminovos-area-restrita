@@ -50,6 +50,17 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
             break;
     }
 }
+    if($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_PENDENTE)){
+            echo 'Não tão rápido! Essa ação não é valida, estamos de olho.';
+            unset(
+                $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['preco'],
+                $rotasAnuncio['veiculo']['mais-informacoes'],
+                $rotasAnuncio['veiculo']['fotos'],
+                $rotasAnuncio['veiculo']['video']
+            );
+            die;
+    }
 
 foreach ($rotasAnuncio['veiculo'] as &$rota) {
     $rota = $this->url('criar-anuncio/anuncio/dados/pages', ['action' => $rota] + $routeParams);

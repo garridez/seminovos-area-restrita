@@ -317,9 +317,6 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "6":
                     $frase = "Aguardando liberação";
-                    if ($veiculo['idPlano'] != 4) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
                     break;
                 case "7":
                     $frase = "";
