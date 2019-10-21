@@ -107,7 +107,13 @@ module.exports.callback = $ => {
         })
     });
 
-
+    if($("div[data-veiculo-finalizar]").length){
+        advancedAlerts.warning({
+            title:"Você possuí anúncios não finalizados",
+            text:"Você possui anúncios para concluir,<br/> conclua os anúncios com status <br/>CADASTRANDO ou CADASTRANDO GRÁTIS.",
+            time:12000
+        })
+    }
 
     $("body").on("click", "a.anuncios[data-confirm]", function () {
         var $this = $(this);
