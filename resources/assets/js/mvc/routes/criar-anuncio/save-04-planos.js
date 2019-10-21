@@ -5,6 +5,7 @@ module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
     var advancedAlerts = require('components/AdvancedAlerts');
     var BtnContinuar = require('./helpers/BtnContinuar');
+    var HandleApiError = require('components/HandleApiError');
 
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
@@ -77,8 +78,18 @@ module.exports.callback = ($) => {
                 data: dataSerialized,
                 dataType: "json",
                 success: function (data) {
+                    if (!HandleApiError(data)) {
+                        return;
+                    }
                     window.location.href = '/carro/checkout/gratis';
                 },
+                error: function (e) {
+                    if (e.responseJSON) {
+                        HandleApiError(e.responseJSON);
+                    } else {
+                        HandleApiError(false);
+                    }
+                }
             });
 
             return stopEvent(e);

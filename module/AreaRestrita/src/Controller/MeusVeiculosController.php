@@ -80,6 +80,14 @@ class MeusVeiculosController extends AbstractActionController
         if(!isset($dadosVeiculos['data'])){
             return;
         }
+        /**
+         * Se for dev, não busca a propostas
+         * A API de dev não conecta no banco de propostas
+         * Então nem perde tempo procurando lá
+         */
+        if(IS_DEV){
+            return $dadosVeiculos;
+        }
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
@@ -245,6 +253,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["enviar_comprovante"] = $formaPagamento === "deposito";
+                    $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
@@ -300,9 +309,6 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "6":
                     $frase = "Aguardando liberação";
-                    if ($veiculo['idPlano'] != 4) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
                     break;
                 case "7":
                     $frase = "";

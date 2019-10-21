@@ -250,8 +250,10 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                     <div data-index="0" class="company-stat-box m-t-10 px-4 py-3 bg-master-lightest">
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="pull-left d-flex text-uppercase bold align-items-center mb-0">
-                                <span class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></span>
-                                <?= $veiculo['nomePlano'] ?>
+                                <?php if($veiculo["idStatus"] != SnBH\ApiModel\Model\VeiculosStatus::STATUS_CADASTRANDO){ ?>
+                                    <span class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></span>
+                                    <?= $veiculo['nomePlano'] ?>
+                                <?php }?>
                             </p>
                             <div>
                                 <?php if($veiculo["botoes"]["trocar_plano"]){?>
@@ -271,8 +273,8 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>?editar=planos#plano&trocarPlano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar
-                                    meu Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2"><?= $veiculo['idStatus'] == 3 ?'Escolha um plano' :'Melhorar
+                                    meu Plano' ?></a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>?editar=planos#checkout&trocarPlano&planoNitroHome"
