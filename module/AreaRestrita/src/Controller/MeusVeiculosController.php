@@ -259,6 +259,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["enviar_comprovante"] = false;
+                    $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
