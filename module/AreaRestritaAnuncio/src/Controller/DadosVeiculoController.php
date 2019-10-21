@@ -428,7 +428,11 @@ class DadosVeiculoController extends AbstractActionController
 
             $veiculo = $result->getData();
 
-            $arrayStatusAltera = ['1', '3', '4', '10'];
+            if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1){
+                return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
+            }
+
+            $arrayStatusAltera = ['1', '3', '10'];
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 $data['tipoCadastro'] = $post['tipoCadastro'];
