@@ -428,7 +428,7 @@ class DadosVeiculoController extends AbstractActionController
 
             $veiculo = $result->getData();
 
-            $arrayStatusAltera = ['1', '3', '4', '6', '10'];
+            $arrayStatusAltera = ['1', '3', '10'];
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 $data['tipoCadastro'] = $post['tipoCadastro'];
