@@ -226,7 +226,7 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                         <div class="row d-flex justify-content-between pl-3">
                                             <div class="bold no-margin d-flex align-items-center link-danger">
                                                 <!-- <span class="fa fa-envelope fs-16 mr-1"></span> -->
-                                                Propostas: <?= $veiculo['qdtPropostas'] ?>
+                                                Propostas: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
                                                 <?php
                                                 /** @todo
                                                 *  Trazer o numero de propostas
@@ -268,13 +268,13 @@ $nome = $this->userInfo('responsavelNome')?? $this->userInfo('nomeFantasia') ?? 
                                 ?>
                                 
                                 <a href="<?=$editarPlanosUrl?>"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center ml-2">Trocar
-                                    Plano</a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center ml-2"><?= $veiculo['idStatus'] == 3 ?'Escolha um plano':'Trocar
+                                    Plano' ?></a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["upgrade_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>?editar=planos#plano&trocarPlano"
-                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2"><?= $veiculo['idStatus'] == 3 ?'Escolha um plano' :'Melhorar
-                                    meu Plano' ?></a>
+                                    class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2">Melhorar
+                                    meu Plano</a>
                                 <?php }?>
                                 <?php if($veiculo["botoes"]["renovar_plano"]){?>
                                 <a href="<?=$urls['editarAnuncio']?>?editar=planos#checkout&trocarPlano&planoNitroHome"

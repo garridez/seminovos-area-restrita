@@ -282,12 +282,14 @@ class MeusVeiculosController extends AbstractActionController
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
+                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                   /* if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
-                    }
+                    }*/
                     break;
                 case "4":
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
