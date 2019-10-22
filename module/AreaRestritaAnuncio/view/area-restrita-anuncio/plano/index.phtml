@@ -78,32 +78,45 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                         $planoJaEscolhido = false;
-                        $falsoMarcado = false;
-                        foreach ($planos as $k => $plano) :
-                            if ($plano['idPlano'] == $idPlanoAtual) {
-                                $planoJaEscolhido = true;
-                            }
-                            $desabilitarPlano = false;
+                        $prioridadePlano = $prioridadePlano ?? 0;
+                        foreach ($planos as $k => $plano) :     
                             if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
                                 $desabilitarPlano = true;
                             }
-                            if ($isRevenda) {
-                                if($plano['qtd']['publicado'] == $plano['qtd']['total']){
-                                    $desabilitarPlano = true;
-                                } else {
-                                    $desabilitarPlano = false;
-                                }
-                                
+                            $desabilitarPlano = false;
+                            $desabilitarPlanoRenda = false;
+                            $planoAtual = false;
+                            $planoJaEscolhido = true;
+                            
+                            if($prioridadePlano >= $plano['prioridade']){
+                                $diminuirPlano = true;
+                            }else{
+                                $diminuirPlano = false;
                             }
-                            if ($planoJaEscolhido && $idPlanoAtual == 1) {
-                                $desabilitarPlano = true;
-                                $falsoMarcado = true;
+                            if ($isRevenda && $plano['qtd']['publicado'] == $plano['qtd']['total']) {
+                                $desabilitarPlanoRenda = true;
+                            }
+                            if($idPlanoAtual == $plano['idPlano']){
+                                $planoAtual = true;
+                            }
+
+                            if($idStatusAnuncio ?? false){
+                                if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3 ){
+                                    $diminuirPlano = true;
+                                }
+                            }else{
+                                $diminuirPlano = true;
+                            }
+
+                            if($isRevenda){
+                                $diminuirPlano = true;
                             }
                             $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
                             $nomePlano = mb_strtoupper($nomePlano);
                             ?>
                     <div class="col-12 col-sm col-md col-lg">
-                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?>"
+                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual':''?>
+                                <?= $desabilitarPlano ? 'plano-desabilitado':''?>"
                             <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
                             <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
                                 <div class="plano-number"><?= $k + 1 . 'º' ?></div>
@@ -158,23 +171,65 @@ if ($isRevenda) {
                                     <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
                                 </div>
                             <?php endif; ?>
-
                             <input
                                 type="radio"
                                 id="radio-idPlano-<?= $plano['idPlano'] ?>"
                                 name="idPlano"
                                 required
                                 value="<?= $plano['idPlano'] ?>"
-                                <?= $plano['idPlano'] == $idPlanoAtual && !$falsoMarcado && !$isRevenda ? 'checked' : '' ?>
-                                <?= $desabilitarPlano ? 'disabled' : '' ?>
+                                <?= $desabilitarPlano ||$desabilitarPlanoRenda || !$diminuirPlano ? 'disabled' : '' ?>
                                 data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                <label class="btn btn-block btn-sm bg-light text-dark text-bold <?= $falsoMarcado ? 'falso-marcado':''?>" for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano && !$isRevenda ? 'data-plano-desativado' : '' ?><?= $desabilitarPlano && $isRevenda ? 'data-plano-revenda-desativado' : '' ?>>
-                                <?= $falsoMarcado ? 'Seu Plano Atual' : 'Selecione' ?>
+                                <label class="btn btn-block btn-sm bg-light text-dark text-bold " for="radio-idPlano-<?= $plano['idPlano'] ?>"
+                                    <?= !$diminuirPlano ? 'data-plano-desativado' : '' ?>
+                                    <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
+                                    <?= $planoAtual ? 'data-plano-atual':''?>
+                                >
+                                <?= $planoAtual?'PLANO ATUAL':'SELECIONE'?>
                             </label>
                         </div>
                     </div>
                     <?php endforeach; ?>
+                </div>
+                <div class="alert-primary row-full">
+                    <div class="container">
+                        <div class=" row  justify-content-center text-justify p-4">
+                            <div class="d-none d-md-block col-md-1 align-self-center">
+                                <i class="icon icon-alert"></i>
+                            </div>
+                            <div class="col-12 col-md-6 align-baseline">
+                                <h5 class="text-left bold">Reativação dos anúncios</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Nos planos Nitro Home, Nitro, Turbo e Básico, para que seja mantida a condição de
+                                        exibição
+                                        do seu anúncio até a venda, é necessário a reativação do anúncio a cada 30 dias (sem
+                                        custo
+                                        adicional).
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-5 border-left border-primary border-sm-0">
+                                <h5 class="bold">Para veículos 0km</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Anúncios de veículos 0km terá o prazo de exibição no site limitado a 30 dias, sem
+                                        direito a
+                                        renovação gratuita.
+                                    </li>
+                                    <li>
+                                        A renovação do anúncio de veículos 0km, será cobrado novamente conforme plano
+                                        selecionado.
+                                    </li>
+                                    <li>
+                                        Anúncios de veículos 0km que não estiverem listados como tal, serão removidos
+                                        deliberadamente após o prazo de 30 dias e deverão pagar por um novo anúncio para
+                                        reativar o
+                                        mesmo.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group ">
                     <input type="submit">

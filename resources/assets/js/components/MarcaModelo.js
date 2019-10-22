@@ -23,7 +23,8 @@ metodos = {
     getModelos: function () {
         var marca = this.getInputVal('idMarca');
         var marcas = this.getMarcas();
-        return marcas[marca.value] ? marcas[marca.value].modelos : false;
+        var marcaSelecionada = marcas.find( n => n.id == marca.value);
+        return marcaSelecionada && marcaSelecionada.modelos ? marcaSelecionada.modelos : [];
     },
     getMotores: function () {
         var modelo = this.getInputVal('modelo');
@@ -129,7 +130,7 @@ metodos = {
             $.each(destaques, function (i, html) {
                 destaquesHtml += html;
             });
-            optionsString = destaquesHtml + '<option disabled>-</option>' + optionsString;
+            optionsString = destaquesHtml + optionsString;
         }
 
         return select.html(optionsString);

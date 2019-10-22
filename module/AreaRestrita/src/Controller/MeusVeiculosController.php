@@ -80,6 +80,14 @@ class MeusVeiculosController extends AbstractActionController
         if(!isset($dadosVeiculos['data'])){
             return;
         }
+        /**
+         * Se for dev, não busca a propostas
+         * A API de dev não conecta no banco de propostas
+         * Então nem perde tempo procurando lá
+         */
+        if(IS_DEV){
+            return $dadosVeiculos;
+        }
 
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
 
@@ -216,10 +224,13 @@ class MeusVeiculosController extends AbstractActionController
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
 
             $statusPagamento = null;
-            $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
 
             $planoPagamento = null;
-            $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+
+            $formaPagamento = null;
+            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"formaPagamento");
 
             $frase = "";
             $temp_acoes = [
@@ -236,11 +247,13 @@ class MeusVeiculosController extends AbstractActionController
                 "renovar_plano" => false,
                 "alerta" => false,
             ];
+
             switch ($veiculo['idStatus']) {
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["enviar_comprovante"] = true;
+                    $temp_acoes["enviar_comprovante"] = $formaPagamento === "deposito";
+                    $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
@@ -269,12 +282,14 @@ class MeusVeiculosController extends AbstractActionController
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
+                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                   /* if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
-                    }
+                    }*/
                     break;
                 case "4":
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
@@ -296,9 +311,6 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "6":
                     $frase = "Aguardando liberação";
-                    if ($veiculo['idPlano'] != 4) {
-                        $temp_acoes["trocar_plano"] = true;
-                    }
                     break;
                 case "7":
                     $frase = "";
@@ -314,7 +326,9 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "9":
                     $frase = "";
-                    $temp_acoes["upgrade_plano"] = true;
+                    if ($veiculo['idPlano'] != 4) {
+                        $temp_acoes["upgrade_plano"] = true;
+                    }
                     $temp_acoes["editar_dados"] = true;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
@@ -364,7 +378,7 @@ class MeusVeiculosController extends AbstractActionController
 
                 if($dataCadastro > $auxData){
                     $auxData = $dataCadastro;
-                    $result = (int) $pagamento[$variavel];
+                    $result = $pagamento[$variavel];
                 }
             }
         }

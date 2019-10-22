@@ -2,6 +2,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var advancedAlerts = require('components/AdvancedAlerts');
+    var Confirms = require('components/Confirms');
     var stepContainer = $('.step-container');
     var idPlano = $("#idPlano").val();
     stepContainer.on('step:change:checkout', function (e) {
@@ -33,11 +34,15 @@ module.exports.callback = ($) => {
             $('#form_Plano input[name="idPlano"][value="1"]')
                     .prop('checked', false)
                     .change(function (e) {
-                        if (!confirm('Quer realmente permanecer no plano grátis?')) {
-                            e.preventDefault();
-                            $(this).prop('checked', false);
-                            return false;
-                        }
+                        Confirms.info({
+                            title:"Quer realmente permanecer no plano grátis?",
+                            text: "O anúncio grátis não tem tanta visibilidade e não possui tantas fotos.",
+                            confirmCallback:()=>{
+                                e.preventDefault();
+                                $(this).prop('checked', false);
+                                return false;
+                            }
+                        })
                     });
                     advancedAlerts.info({text:'Você está no plano <b>SIMPLES</b>.<br>'
                     + 'Escolha um dos planos de acordo com a <b>prioridade</b> que deseja vender seu veículo<br>'

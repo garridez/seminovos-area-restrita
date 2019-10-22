@@ -4,10 +4,19 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     var stopEvent = require('helpers/StopEvent');
     var advancedAlerts = require('components/AdvancedAlerts');
+    var BtnContinuar = require('./helpers/BtnContinuar');
+    var HandleApiError = require('components/HandleApiError');
+
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
             text:'Não é possível diminuir o plano',
+            title:$('<span class="text-primary">').html('Atenção!')
+        });
+    });
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function () {
+        advancedAlerts.warning({
+            text:`Plano já ativo, selecione outro plano ou clique em voltar`,
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
@@ -18,9 +27,14 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
+        BtnContinuar.disable();
+        $(".plano-box input[type='radio']").on("change",function(){
+            if($(this).is(":checked")){
+                BtnContinuar.enable();
+            }
+        });
         
          if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
@@ -64,8 +78,18 @@ module.exports.callback = ($) => {
                 data: dataSerialized,
                 dataType: "json",
                 success: function (data) {
+                    if (!HandleApiError(data)) {
+                        return;
+                    }
                     window.location.href = '/carro/checkout/gratis';
                 },
+                error: function (e) {
+                    if (e.responseJSON) {
+                        HandleApiError(e.responseJSON);
+                    } else {
+                        HandleApiError(false);
+                    }
+                }
             });
 
             return stopEvent(e);

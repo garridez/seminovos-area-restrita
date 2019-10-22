@@ -200,6 +200,7 @@ class DadosVeiculoController extends AbstractActionController
                 'use_upload_name' => true,
                 'use_upload_extension' => true,
             ]);
+            $auxReordem = [];
             // Delete
             if ($dataPost->fotosToDelete) {
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
@@ -207,7 +208,7 @@ class DadosVeiculoController extends AbstractActionController
                     ])->json();
                 
                 $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
-                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
+                //$dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
             $fotos = $request->getFiles()->fotos;
             // Upload
@@ -227,7 +228,15 @@ class DadosVeiculoController extends AbstractActionController
                 foreach ($files as $file) {
                     unlink($file);
                 }
+                
+                for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
+                    $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
+                }
+
             }
+            
+            ksort($auxReordem);
+            $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
 
             if ($dataPost->reordem) {
                 $resReordem = $this->getApiClient()->veiculosFotosPut([
@@ -419,8 +428,12 @@ class DadosVeiculoController extends AbstractActionController
 
             $veiculo = $result->getData();
 
-            $arrayStatusAltera = ['1', '3', '4', '6', '10'];
+            $arrayStatusAltera = ['1', '3', '10'];
 
+            if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)){
+                return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
+            }
+            
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 $data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];
