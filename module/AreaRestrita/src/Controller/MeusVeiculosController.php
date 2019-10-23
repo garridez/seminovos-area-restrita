@@ -226,10 +226,13 @@ class MeusVeiculosController extends AbstractActionController
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
 
             $statusPagamento = null;
-            $statusPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
 
             $planoPagamento = null;
-            $planoPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+
+            $formaPagamento = null;
+            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"formaPagamento");
 
             $frase = "";
             $temp_acoes = [
@@ -247,27 +250,16 @@ class MeusVeiculosController extends AbstractActionController
                 "alerta" => false,
             ];
 
-            $ultimaFormaPagamento = '';
-            if( isset($veiculo['pagamentos']['dados']) && count($veiculo['pagamentos']['dados']) > 0){
-                $arrayPagamentos = $veiculo['pagamentos']['dados'];
-                end($arrayPagamentos);
-                $ultimoIndice = key($arrayPagamentos);
-                $ultimoPagamento = $veiculo['pagamentos']['dados'][$ultimoIndice];
-                $ultimaFormaPagamento = $ultimoPagamento['formaPagamento'];
-            }
-
             switch ($veiculo['idStatus']) {
                 case "1":
                     $frase = "Aguardando confirmação de pagamento";
                     $temp_acoes["editar_dados"] = true;
-                    $temp_acoes["enviar_comprovante"] = false;
+                    $temp_acoes["enviar_comprovante"] = $formaPagamento === "deposito";
+                    $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["plano_comprovante"] = $planoPagamento;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                         $temp_acoes["realizar_pagamento"] = true;
-                    }
-                    if($ultimaFormaPagamento === "deposito") {
-                        $temp_acoes["enviar_comprovante"] = true;
                     }
                     break;
                 case "2":
@@ -292,13 +284,15 @@ class MeusVeiculosController extends AbstractActionController
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
-                    if ($veiculo['idPlano'] != 1) {
+                   /* if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
-                    }
+                    }*/
                     break;
                 case "4":
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
@@ -388,7 +382,7 @@ class MeusVeiculosController extends AbstractActionController
 
                 if($dataCadastro > $auxData){
                     $auxData = $dataCadastro;
-                    $result = (int) $pagamento[$variavel];
+                    $result = $pagamento[$variavel];
                 }
             }
         }
