@@ -104,7 +104,7 @@ module.exports.callback = ($) => {
 
         if (formWithError && dataSerialized === dataWithError) {
             ajaxProcessing = false;
-            return;
+            return stopEvent(e);
         }
         if (!dataSerialized || dataSerialized === lastSavedData) {
             ajaxProcessing = false;
