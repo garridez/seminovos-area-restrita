@@ -333,9 +333,7 @@ class MeusVeiculosController extends AbstractActionController
                         $temp_acoes["upgrade_plano"] = true;
                     }
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
-                        $temp_acoes["editar_fotos"] = true;
-                    }
+                    $temp_acoes["editar_fotos"] = true;
                     break;
                 case "10":
                     $frase = "";
