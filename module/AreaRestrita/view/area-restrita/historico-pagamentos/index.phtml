@@ -45,7 +45,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
                     </td>
                     <td class="text-center d-table-cell d-md-table-cell">
-                        <?php if($pagamento['status'] == 2): ?>
+                        <?php if($pagamento['status'] != 3 ): ?>
                         <a class="" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
