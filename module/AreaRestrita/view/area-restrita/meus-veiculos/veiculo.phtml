@@ -22,8 +22,8 @@ $encryptedText = \SnBH\Common\Helper\Encrypter::base64_encode($textToEncrypt);
             <h3>Preview do Anúncio</h3>
         </div>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
-            <iframe src="<?= SNBH_URL_SITE . '/' . $idVeiculo . '/' . $encryptedText ?>"
-                style="width: 1400px; height: 1500px; pointer-events: none; border: none;"></iframe>
+            <iframe src="<?= SNBH_URL_SITE . '/' . $idVeiculo . '/' . $encryptedText ?>?preview=1"
+                style="width: 1400px; height: 1500px; border: none;"></iframe>
         </div>
     </div>
 </div>
