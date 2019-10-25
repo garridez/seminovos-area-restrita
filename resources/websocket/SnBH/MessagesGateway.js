@@ -1,0 +1,107 @@
+
+
+class MessagesGateway {
+    idCadastro;
+    socket;
+    apiClient;
+    socketId;
+    idLastMessage = 0;
+    messageLoaderTimeoutId = false;
+    constructor(idCadastro, socket, apiClient) {
+        console.log('Construct MessagesGateway');
+        this.idCadastro = idCadastro;
+        this.socket = socket;
+        this.apiClient = apiClient;
+        this.socketId = socket.id;
+        this.setEvents();
+        this.sendInitialMessages();
+    }
+    on(event, callback) {
+        this.socket.on(event, callback);
+    }
+    emit(event, data) {
+        this.socket.emit(event, data || null);
+    }
+    setEvents() {
+        for (let event in this.events) {
+            this.on(event, this.events[event].bind(this));
+        }
+    }
+    async getMessages(lastMessage = true) {
+        var params = {
+            idCadastro: this.idCadastro
+        };
+        if (lastMessage && this.idLastMessage) {
+            params.maiorQue = this.idLastMessage;
+        }
+
+        try {
+            var {data} = await this.apiClient.mensagensGet(params);
+            if (0) {
+                // Debugar as requisições
+                console.log(
+                        this.socketId,
+                        'Novas mensagens carregadas ',
+                        data.idLastMessage,
+                        Object.keys(data.listChats || {}).length,
+                        params
+                        );
+            }
+
+            this.idLastMessage = data.idLastMessage || 0;
+            return data.listChats;
+        } catch (e) {
+            console.log('pau no ajax');
+            console.log('mensagensGet', params);
+            console.log(e);
+            return [];
+    }
+
+    }
+    async messageSender(msg) {
+        var result = await this.apiClient.mensagensPost(msg);
+        this.idLastMessage = result.data.idChatMensagem;
+    }
+    async messagesLoader() {
+        try {
+            var listChats = await this.getMessages();
+        } catch (e) {
+            console.log('Messages loader error');
+            console.log(e);
+            return;
+        }
+
+        if (Object.keys(listChats || {}).length !== 0) {
+            console.log('Nova mensagem');
+            this.emit('mensagem', listChats);
+        }
+
+        if (!this.socket.connected) {
+            return;
+        }
+
+        setTimeout(() => {
+            this.messagesLoader();
+        }, 1000);
+    }
+}
+
+MessagesGateway.prototype.events = {
+    'initial-messages': async function () {
+        try {
+            var messages = await this.getMessages(false);
+            this.emit('initial-messages', messages);
+            this.messagesLoader();
+        } catch (e) {
+            console.log('pau no ajax');
+            console.log(e);
+        }
+    },
+    'mensagem': async function (msg) {
+        this.messageSender(msg);
+    }
+};
+MessagesGateway.prototype.sendInitialMessages = function () {
+    this.events['initial-messages'].call(this);
+};
+export default MessagesGateway;
