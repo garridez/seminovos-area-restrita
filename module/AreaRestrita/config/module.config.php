@@ -76,6 +76,16 @@ return [
                     ],
                 ],
             ],
+            'facebookLeads' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/facebook-leads',
+                    'defaults' => [
+                        'controller' => Controller\FacebookLeadsController::class,
+                        'action' => 'index'
+                    ]
+                ]
+            ],
             'filtros' => [
                 'type' => Literal::class,
                 'options' => [
@@ -135,6 +145,7 @@ return [
             Controller\MeusVeiculosController::class => InvokableFactory::class,
             Controller\RotaExemploController::class => InvokableFactory::class,
             Controller\TermosController::class => InvokableFactory::class,
+            Controller\FacebookLeadsController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
