@@ -497,14 +497,10 @@ class MeusVeiculosController extends AbstractActionController
 
         $serviceVeiculo = new ServiceVeiculo();
 
-        if ($serviceVeiculo->verificaCadastroVeiculo($idVeiculo)) {
-
-            /* @var $veiculosModel Veiculos */
-            $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
-            // Busca os dados do cadastro
-            $dadosVeiculo = $veiculosModel->get($idVeiculo);
-        }
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        // Busca os dados do cadastro
+        $dadosVeiculo = $veiculosModel->get($idVeiculo);
 
         return new ViewModel([
             'veiculo' => $dadosVeiculo
