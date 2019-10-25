@@ -495,8 +495,6 @@ class MeusVeiculosController extends AbstractActionController
         $idVeiculo = $this->params('idVeiculo');
         $dadosVeiculo = [];
 
-        $serviceVeiculo = new ServiceVeiculo();
-
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
         // Busca os dados do cadastro
