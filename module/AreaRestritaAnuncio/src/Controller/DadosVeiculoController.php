@@ -234,9 +234,11 @@ class DadosVeiculoController extends AbstractActionController
                 }
 
             }
-            
-            ksort($auxReordem);
-            $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
+
+            if ($dataPost->fotosToDelete) {
+                ksort($auxReordem);
+                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
+            }
 
             if ($dataPost->reordem) {
                 $resReordem = $this->getApiClient()->veiculosFotosPut([
@@ -428,12 +430,12 @@ class DadosVeiculoController extends AbstractActionController
 
             $veiculo = $result->getData();
 
-            if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1){
-                return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
-            }
-
             $arrayStatusAltera = ['1', '3', '10'];
 
+            if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)){
+                return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
+            }
+            
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 $data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];

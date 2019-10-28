@@ -148,6 +148,7 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "3":
                     $frase = "";
+                    $temp_acoes["excluir"] = true;
                     break;
                 case "4":
                     $frase = "";
@@ -176,6 +177,7 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "10":
                     $frase = "";
+                    $temp_acoes["excluir"] = true;
                     break;
                 default:
                     $temp_acoes = [
@@ -282,12 +284,15 @@ class MeusVeiculosController extends AbstractActionController
                 case "3":
                     $frase = "Conclua o cadastro do anúncio";
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
+                    $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
+                   /* if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
-                    }
+                    }*/
                     break;
                 case "4":
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
@@ -328,14 +333,13 @@ class MeusVeiculosController extends AbstractActionController
                         $temp_acoes["upgrade_plano"] = true;
                     }
                     $temp_acoes["editar_dados"] = true;
-                    if ($veiculo['idPlano'] != 1) {
-                        $temp_acoes["editar_fotos"] = true;
-                    }
+                    $temp_acoes["editar_fotos"] = true;
                     break;
                 case "10":
                     $frase = "";
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["excluir"] = true;
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
@@ -491,16 +495,10 @@ class MeusVeiculosController extends AbstractActionController
         $idVeiculo = $this->params('idVeiculo');
         $dadosVeiculo = [];
 
-        $serviceVeiculo = new ServiceVeiculo();
-
-        if ($serviceVeiculo->verificaCadastroVeiculo($idVeiculo)) {
-
-            /* @var $veiculosModel Veiculos */
-            $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
-            // Busca os dados do cadastro
-            $dadosVeiculo = $veiculosModel->get($idVeiculo);
-        }
+        /* @var $veiculosModel Veiculos */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        // Busca os dados do cadastro
+        $dadosVeiculo = $veiculosModel->get($idVeiculo);
 
         return new ViewModel([
             'veiculo' => $dadosVeiculo
