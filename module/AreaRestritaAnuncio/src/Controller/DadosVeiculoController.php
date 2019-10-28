@@ -270,7 +270,8 @@ class DadosVeiculoController extends AbstractActionController
             $fotos = $dadosVeiculo['fotos'];
         }
         return new ViewModel([
-            'fotos' => $fotos
+            'fotos' => $fotos,
+            'existeVeiculo' => isset($dadosVeiculo['idVeiculo']) &&  $dadosVeiculo['idVeiculo']
         ]);
     }
 
