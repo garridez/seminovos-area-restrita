@@ -377,14 +377,15 @@ class DadosVeiculoController extends AbstractActionController
             /* @var $apiClient ApiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
-            $veiculo = $apiClient->veiculosGet([], $placa, true)->getData();
-
+            $veiculo = $apiClient->veiculosGet([
+                "ignorarCodicoesBasicas" => 1
+                ], $placa, true)->getData();
+            $existePlaca = ['status' => false];
             if ($veiculo && isset($veiculo[0])) {
-                $existePlaca = ['status' => true];
-            } else {
-                $existePlaca = ['status' => false];
+                if($veiculo[0]['idStatus'] != 7 || $veiculo[0]['idStatus'] != 8){
+                    $existePlaca = ['status' => true];
+                }
             }
-            
             return new JsonModel($existePlaca);
         }
     }
