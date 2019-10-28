@@ -54,6 +54,7 @@ class ApiClient {
 
 
 var endpointMap = {
+    cadastros: 'cadastros',
     mensagens: 'mensagens',
     modelos: 'modelos',
     veiculos: 'veiculos',

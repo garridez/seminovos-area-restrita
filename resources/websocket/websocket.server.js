@@ -28,6 +28,17 @@ function initServer(apiClient) {
             var idCadastro = await helpers.getIdCadastroBySession(idCookie);
             if (idCadastro) {
                 messagesGateway = new MessagesGateway(idCadastro, socket, apiClient);
+                apiClient
+                        .cadastrosGet([], idCadastro)
+                        .then((response) => {
+                            let data = response.getData()[0];
+                            socket.emit('user-data', {
+                                idCadastro: data.idCadastro,
+                                responsavelNome: data.responsavelNome,
+                                nomeFantasia: data.nomeFantasia,
+                            });
+
+                        });
             } else {
                 console.log('idCadastro não encontrado');
             }
