@@ -16,6 +16,8 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var GetUrl = require('./helpers/GetUrl');
 
+    var advancedAlerts = require('components/AdvancedAlerts');
+
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
     var dataWithError;
@@ -23,56 +25,67 @@ module.exports.callback = ($) => {
 
     //($('#form_dadosVeiculo'))
     $('.anuncio-steps')
-            .on('steps-loaded', function () {
-                // Para esperar as máscaras serem aplicadas
-                setTimeout(function () {
-                    let idStatus = $("input.idStatus").val();
-                    if(idStatus == 3 || idStatus == 6 || idStatus == 10){
-                        $("input[name='placa']").prop('readonly', false).prop('disabled',false);
-                    }
-                    lastSavedData = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes').serialize();
-                }, 500);
-            })
-            .on('steps-loaded', function () {
-        marcaModelo($('#form_dadosVeiculo'));
-        /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
-        $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
-            var placaInput = $(this);
-            var placa = placaInput.val() || '';
-            if(!placa || placa.length < 7){
-                return;
-            }
-            $.ajax({
-                type: "POST",
-                url: "/carro/consulta-placa",
-                data: {
-                    placa: placa
-                },
-                dataType: "json",
-                success: function (response) {
-                    placaInput
+        .on('steps-loaded', function () {
+            // Para esperar as máscaras serem aplicadas
+            setTimeout(function () {
+                let idStatus = $("input.idStatus").val();
+                if (idStatus == 3 || idStatus == 6 || idStatus == 10) {
+                    $("input[name='placa']").prop('readonly', false).prop('disabled', false);
+                }
+                lastSavedData = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes').serialize();
+            }, 500);
+        })
+        .on('steps-loaded', function () {
+            marcaModelo($('#form_dadosVeiculo'));
+            /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
+            $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
+                var placaInput = $(this);
+                var placa = placaInput.val() || '';
+                if (!placa || placa.length < 7) {
+                    return;
+                }
+                BtnContinuar.disable();
+                $.ajax({
+                    type: "POST",
+                    url: "/carro/consulta-placa",
+                    data: {
+                        placa: placa.toLowerCase()
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        placaInput
                             .parent()
                             .removeClass('is-invalid is-valid')
                             .addClass(response.status ? 'is-invalid' : 'is-valid');
-                },
-                error: function (e) {
+                        if (response.status) {
+                            BtnContinuar.disable();
+                            advancedAlerts.error({
+                                title: "Placa já cadastrada",
+                                text: "Placa já cadastrada no sistema, confira a placa ou entre em cotato.",
+                                time: 10000
+                            })
+                            return;
+                        }
+                        BtnContinuar.enable();
+                    },
+                    error: function (e) {
 
-                }
+                    }
+                });
+
             });
 
-        });
-
-        /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
-        $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
-            var checked = $(this).find('#completoCheckbox').is(':checked');
-            let acessorios = [4, 6, 7, 17, 33, 35];
-            acessorios.forEach((element, index) => {
-                $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
+            /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
+            $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
+                var checked = $(this).find('#completoCheckbox').is(':checked');
+                let acessorios = [4, 6, 7, 17, 33, 35];
+                acessorios.forEach((element, index) => {
+                    $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
+                });
             });
+        }).on('change', function () {
+            BtnContinuar.enable();
         });
-    }).on('change', function () {
-        BtnContinuar.enable();
-    });
 
     var ajaxProcessing = false;
     stepsContainer.on('step:pre-change:mais-informacoes', function (e) {
