@@ -6,13 +6,15 @@ import listChats from './reducers/listChats';
 import cadastro from './reducers/cadastro';
 import currentChat from './reducers/currentChat';
 import filter from './reducers/filter';
+import websocket from './reducers/websocket';
 
 const reducer = combineReducers({
     behaviors,
     listChats,
     cadastro,
     currentChat,
-    filter
+    filter,
+    websocket
 });
 
 const middle = (store) => {
