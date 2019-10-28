@@ -9,7 +9,7 @@ import ListChats from './Sidebar/ListChats';
 import History from './Conversation/History';
 import Editor from './Conversation/Editor';
 import Contact from './Conversation/Contact';
-import MsgLoader from './Controller/MsgLoader';
+import MsgHandler from './Controller/MsgHandler';
 
 class Chat extends Component {
 
@@ -43,7 +43,7 @@ class Chat extends Component {
 
         return (
                 <section className={'section-chat row ' + conversationActiveClass}>
-                    <MsgLoader/>
+                    <MsgHandler/>
                     <div className="sidebar col-sm-5 d-flex flex-column">
                         <div className="top-header">
                             <Profile />

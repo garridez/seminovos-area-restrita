@@ -36,6 +36,8 @@ class Editor extends Component {
     }
 
     render() {
+        var attrDisable = this.props.conversationActive === null;
+
         return (
                 <div className="editor">
                     <form onSubmit={this.handleSubmit.bind(this)} className='d-flex flex-row'>
@@ -47,6 +49,7 @@ class Editor extends Component {
                             className="form-control"
                             autoComplete="off"
                             ref={this.input}
+                            disabled={attrDisable}
                             title="Digite uma mensagem" />
                         <button type="submit" title="Enivar mensagem">
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
