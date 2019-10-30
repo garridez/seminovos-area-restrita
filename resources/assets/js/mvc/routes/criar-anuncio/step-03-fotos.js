@@ -62,6 +62,30 @@ function init() {
         img.data('delete', true);
         showPhoto(img);
     });
+    ctx.on('click', '.btn-to-rotate', function (e) {
+        e.preventDefault();
+        var imagem = $(this).closest('.foto').find('.display-img');
+        var canvas = document.createElement('canvas');
+        var img = new Image();
+        var url = imagem.css('background-image').replace(/url\(|\)|"/g, '');
+        
+        img.crossorigin = "anonymous";
+        img.src = url;
+        img.onload = function() {
+            
+            canvas.width = img.height;
+            canvas.height = img.width;
+            canvas.style.position = "absolute";
+            var context = canvas.getContext("2d");
+            
+            context.translate(img.height, img.width / img.height);
+            context.rotate(Math.PI/2);
+            context.drawImage(img, 0, 0);
+            context.fill();
+            showPhoto(imagem, canvas.toDataURL());
+        }
+       
+    })
     /**
      * Exibe a miniatura da imagem selecionada na tag img passada
      * Também adiciona metadados ao elemento img
@@ -80,6 +104,10 @@ function init() {
 
         if (typeof file === 'string') {
             var background = 'url("' + file + '")';
+            
+            if(file.search('base64') === -1)
+                background = file;
+                
             if (imgElement.css('background-image') === background) {
                 return;
             }
