@@ -21,6 +21,7 @@ RUN set -eux; \
     git checkout data; \
     chmod -R 777 data; \
     echo -n "$(git describe)" > version; \
+    chmod 777 version; \
     #
     # Instala dependencias do compsoer e apaga o cache
     composer install \
