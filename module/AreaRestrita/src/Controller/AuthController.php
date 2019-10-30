@@ -4,7 +4,6 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
-use SnBH\Common\Helper\Encrypter;
 use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
 
@@ -89,33 +88,58 @@ class AuthController extends AbstractActionController
         return $this->redirect()->toUrl($url);
     }
 
+    /**
+     * Recebe por parametro na url a os dados de login criptografados
+     *  Se estiver tudo certo, faz o login sem usar senha
+     *  Isso acontece principalmente quando o usuário recebe um email
+     * 
+     * @return \Zend\Http\Response
+     */
     public function loginAutomaticoAction()
     {
-        /* @var $container ServiceLocatorInterface */
-        global $container;
-
         $encryptedText = $this->params('dados');
-        $decryptedText = Encrypter::decrypt($encryptedText);
 
-        list($fusoHorario, $idCadastro, $idAnuncio, $dataValidade) = explode(";", $decryptedText);
+        $dataRes = $this->getApiClient()->crypterGet([
+            'data' => $encryptedText
+        ]);
 
-        if ($dataValidade >= date('Y-m-d')) {
+        if ($dataRes->status !== 200) {
+            return $this->redirect()->toRoute('auth');
+        }
+        $data = json_decode($dataRes->getData(), true);
 
-            /* @var $authManager AuthManager  */
-            $authManager = $container->get(AuthManager::class);
+        /**
+         * É enviado o "time" de quando o encrypt é criado
+         *  Se tiver mais de 5 dias, então não loga
+         */
+        $maxDays = 60 * 60 * 24 * 5; // 5 dias em segundos
+        if ((time() - $data['time']) > $maxDays) {
+            return $this->redirect()->toRoute('auth');
+        }
 
-            $result = $authManager->login([
-                'loginWithoutPassword' => true,
-                'idCadastro' => $idCadastro,
-                'rememberMe' => true
-            ]);
+        /* @var $authService AuthenticationService */
+        $authService = $this->getContainer()->get(AuthenticationService::class);
 
-            if ($result->getCode() === $result::SUCCESS) {
-                return $this->redirect()->toUrl('../meus-veiculos');
-            } else {
-                return $this->redirect()->toUrl('../entrar#erro');
+        if ($authService->hasIdentity()) {
+            if (isset($data['url']) && $data['url']) {
+                return $this->redirect()->toUrl($data['url']);
             }
-        } else {
+            return $this->redirect()->toRoute('auth');
+        }
+
+        /* @var $authManager AuthManager  */
+        $authManager = $this->getContainer()->get(AuthManager::class);
+
+        $result = $authManager->login([
+            'loginWithoutPassword' => true,
+            'idCadastro' => $data['idCadastro'],
+            'rememberMe' => true,
+        ]);
+
+        if ($result->getCode() === $result::SUCCESS) {
+            if (isset($data['url']) && $data['url']) {
+                return $this->redirect()->toUrl($data['url']);
+            }
             return $this->redirect()->toRoute('auth');
         }
     }
