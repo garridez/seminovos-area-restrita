@@ -14,13 +14,35 @@ module.exports.callback = $ => {
         });
     }
 
-
     $("body")
             .on("click", "a.reativar[data-confirm]", reativarDataConfirm)
             .on("click", "a.renovar[data-confirm]", renovarDataConfirm)
             .on("click", "a.anuncios[data-confirm]", anuncioDataConfirm)
             // Configura os modais genericos
             .on("click", ".anuncios [data-modal]", anunciosModal);
+
+    if (location.hash !== '' && window.URLSearchParams) {
+        (function () {
+            var hashParams = new URLSearchParams(location.hash.replace('#', '?'));
+            if (!hashParams.has('idVeiculo')) {
+                return;
+            }
+            var veiculoDiv = $('[data-id-veiculo="' + hashParams.get('idVeiculo') + '"].veiculo');
+            var btnSeletor = false;
+            switch (hashParams.get('acao')) {
+                case 'vendido':
+                    btnSeletor = '.btn-acao-vendido';
+                    break;
+                case 'reativar':
+                    btnSeletor = '.btn-acao-reativar';
+                    break;
+            }
+
+            if (btnSeletor !== false) {
+                veiculoDiv.find(btnSeletor).click();
+            }
+        }());
+    }
     /**
      * Filtra a listagem de anúncios quando loggado como revenda
      * 
