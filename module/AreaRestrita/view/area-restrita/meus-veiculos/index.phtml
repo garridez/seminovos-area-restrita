@@ -207,6 +207,17 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <i class=" fa fa-camera"></i>
                                         </a>
                                     <?php } ?>
+                                    <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
+                                        <a href="#" class="anuncios btn-acao-vendido ml-4" data-confirm data-confirm-type="info"
+                                           data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
+                                           data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>") ?>"
+                                           data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>") ?>"
+                                           data-confirm-text="Sim, eu vendi"
+                                           data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
+                                           title="Marcar como vendido">
+                                            <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
+                                        </a>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3 mt-2  p-0 m-0 row justify-content-center">
@@ -355,17 +366,6 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
                                        <?php } ?>
 
-                                    <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
-                                        <a href="#" class="anuncios btn-acao-vendido" data-confirm data-confirm-type="info"
-                                           data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
-                                           data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>") ?>"
-                                           data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>") ?>"
-                                           data-confirm-text="Sim, eu vendi"
-                                           data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
-                                           title="Marcar como vendido">
-                                            <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
-                                        </a>
-                                    <?php } ?>
 
 
                                     <?php
