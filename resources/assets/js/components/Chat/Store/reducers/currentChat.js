@@ -8,10 +8,10 @@ export default (state = initalState, action) => {
                 ...state,
                 conversationActive: action.data.idConversa
             };
-        case 'CHAT_SEND_MESSAGE':
-            return {
-                ...state
-            };
+//        case 'CHAT_SEND_MESSAGE':
+//            return {
+//                ...state
+//            };
         default:
             return state;
 }

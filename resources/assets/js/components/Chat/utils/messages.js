@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import moment from 'moment';
 
 
@@ -8,7 +7,7 @@ export function createNewMessage(idConversa, idCadastroRemetente, mensagem) {
     const lidoEm = null;
     const delivered = false;
 
-    return Map({
+    return {
         idChatMensagem,
         idConversa,
         idCadastroRemetente,
@@ -16,7 +15,7 @@ export function createNewMessage(idConversa, idCadastroRemetente, mensagem) {
         enviadoEm,
         lidoEm,
         delivered
-    });
+    };
 }
 
 
@@ -27,6 +26,8 @@ export function sendNewMessage(message, callback) {
         'idCadastroRemetente': messageCopy.idCadastroRemetente,
         'mensagem': messageCopy.mensagem,
     };
+    console.log(data);
+    return;
     $.ajax({
         url: '/chat/mensagens',
         data: data,

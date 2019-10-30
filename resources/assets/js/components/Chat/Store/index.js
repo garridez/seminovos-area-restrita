@@ -25,7 +25,7 @@ const middle = (store) => {
             const returnValue = next(action);
             store.dispatch({
                 'type': 'LIST_CHAT_NEW_MSG',
-                message: returnValue.message
+                message: action.message
             });
 
             return returnValue;

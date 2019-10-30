@@ -27,6 +27,9 @@ class MsgLoader extends Component {
                 })
                 .on('mensagem', (listChats) => {
                     console.log('nova mensagem');
+                })
+                .on('msg-delivered', (data) => {
+                    console.log(data);
                 });
     }
 

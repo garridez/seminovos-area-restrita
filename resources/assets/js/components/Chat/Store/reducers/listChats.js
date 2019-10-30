@@ -9,9 +9,13 @@ const messagesSent = {};
 
 const messages = (state = {}, action) => {
     switch (action.type) {
+        case 'LIST_CHAT_REFRESH_STATE':
+            return {
+                ...state
+            };
         case 'LIST_CHAT_NEW_MSG':
-            const message = action.message.toObject();
-            const {idConversa} = message;
+            var message = action.message;
+            var {idConversa} = message;
 
             var chatData = state[idConversa];
             chatData.mensagens.unshift(message);
@@ -21,11 +25,11 @@ const messages = (state = {}, action) => {
 
             state[idConversa] = chatData;
 
-            sendNewMessage(message, (data) => {
-                var idChatMensagem = data.idChatMensagem;
-                message.idChatMensagem = idChatMensagem;
-                message.delivered = true;
-            });
+//            sendNewMessage(message, (data) => {
+//                var idChatMensagem = data.idChatMensagem;
+//                message.idChatMensagem = idChatMensagem;
+//                message.delivered = true;
+//            });
 
             return {
                 ...state,

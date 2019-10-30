@@ -61,6 +61,11 @@ class MessagesGateway {
     async messageSender(msg) {
         var result = await this.apiClient.mensagensPost(msg);
         this.idLastMessage = result.data.idChatMensagem;
+
+        var data = result.data;
+        data.idChatMensagemTemp = msg.idChatMensagem;
+
+        return data;
     }
     async messagesLoader() {
         try {
@@ -97,8 +102,10 @@ MessagesGateway.prototype.events = {
             console.log(e);
         }
     },
-    'mensagem': async function (msg) {
-        this.messageSender(msg);
+    'msg-send': async function (msg) {
+        var result = await this.messageSender(msg);
+        console.log(result);
+        this.emit('msg-delivered', result);
     }
 };
 MessagesGateway.prototype.sendInitialMessages = function () {
