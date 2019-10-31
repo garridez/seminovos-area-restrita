@@ -18,6 +18,7 @@ module.exports.callback = $ => {
             .on("click", "a.reativar[data-confirm]", reativarDataConfirm)
             .on("click", "a.renovar[data-confirm]", renovarDataConfirm)
             .on("click", "a.anuncios[data-confirm]", anuncioDataConfirm)
+            .on("click", "a.vendido[data-confirm]", vendidoDataConfirm)
             // Configura os modais genericos
             .on("click", ".anuncios [data-modal]", anunciosModal);
 
@@ -81,10 +82,7 @@ module.exports.callback = $ => {
         });
     }
 
-    $("body").on("click", "a.vendido[data-confirm]", function (e) {
-        var $this = $(this);
-        var displayName = $(".data-user-display-name").val();
-        var $veiculo = $this.closest(".veiculo");
+    function pesquisaSatisfacaoDataForm (veiculo) {
         var $form = $("<form>");
         var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
         var $select = $("<select class='form-control'>")
@@ -117,20 +115,73 @@ module.exports.callback = $ => {
             .append($observacao);
 
         $form.append($span).append($conjuntoSlect).append($conjuntoEstrelas).append($conjuntoObservacoes);
-        $this.data("confirm-option-confirm", function () {
-            $(".modal").modal('hide');
-            FormAlerts.success({
-                form: $form,
-                title:"Pesquisa de satisfação",
-                submitText:"Confirmar",
-                closeCallback:function(){},
-                submitCallback: function () {
-                    $(".modal").modal('hide');
-                }
-            })
-        });
-    });
+        FormAlerts.success({
+            form: $form,
+            title:"Pesquisa de satisfação",
+            submitText:"Confirmar",
+            closeCallback:function(){
 
+            },
+            submitCallback: function () {
+                $.post(`/meus-veiculos/vendido/${veiculo.idVeiculo}`, { name: "John", time: "2pm" })
+                    .done(function( data ) {
+                        alert( "Data Loaded: " + data );
+                    });
+            }
+        });
+    }
+    function vendidoDataConfirm(){
+        var $this = $(this);
+        var $veiculo = $this.closest(".veiculo");
+        let veiculo = {
+            idVeiculo : $veiculo.data("id-veiculo"),
+            placa : $veiculo.data("veiculo-placa"),
+            marca : $veiculo.data("veiculo-marca"),
+            modelo : $veiculo.data("veiculo-modelo"),
+        }
+
+        var displayName = $(".data-user-display-name").val();
+
+
+        Confirms.info({
+            title:$("<span class='text-primary'>Marcar como vendido</span>"),
+            text: $(`<span>
+                        <b class="text-primary">${displayName}</b>, você confirma que deseja
+                        <b class="text-primary">marcar como vendido</b> o anúncio
+                        <b class="text-primary">${veiculo.marca} ${veiculo.modelo}</b>
+                        <b> placa </b> <b class="text-primary"> ${veiculo.placa} </b>?
+                    </span>`),
+            confirmText: "Sim, eu vendi",
+            confirmCallback: function(){
+                $(".modal").modal('hide');
+                $.getJSON(`/meus-veiculos/vendido/${veiculo.idVeiculo}`)
+                .done(function (data, jqXHR, type) {
+                    if (data.status !== 200) {
+                        advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
+                    } else {
+                        advancedAlerts.success({
+                            text:`O veiculo ${veiculo.marca} ${veiculo.modelo} foi marcado como vendido`,
+                            closeCallback:function(){
+                                $(".modal").modal('hide');
+                                pesquisaSatisfacaoDataForm(veiculo) 
+                            }
+                    })
+                        reloadPageContent();
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    advancedAlerts.error({
+                        text: "Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.",
+                        title: "Houve um problema...",
+                        time: 10000
+                    });
+                })
+                .always(function () {
+                    modal.modal("hide");
+                });
+            }
+     });
+    }
     function anunciosModal() {
         var modal;
         var $this = $(this);
