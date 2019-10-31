@@ -123,6 +123,9 @@ module.exports.callback = $ => {
 
             },
             submitCallback: function () {
+                /**
+                 * POST PARA ONDE A PESQUISA DE SATISFAÇÃO VAI
+                 */
                 $.post(`/meus-veiculos/vendido/${veiculo.idVeiculo}`, { name: "John", time: "2pm" })
                     .done(function( data ) {
                         alert( "Data Loaded: " + data );
