@@ -35,16 +35,7 @@ RUN set -eux; \
     # Instala os pacotes de front e gera os assets 
     npm install; \
     npm run compile-icons; \
-    npm run prod; \
-    #
-    # Limpa os dados temporários de desinstala os pacotes
-    npm cache clean --force; \
-    apt-get purge gnupg nodejs libpng-dev python3 -y; \
-    apt-get clean; \
-    apt-get autoremove -y; \
-    rm -rf node_modules resources composer.phar; \
-    rm -rf /var/lib/apt/lists/*; \
-    mkdir -p /var/cache/apt/archives
+    npm run prod
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY server/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
