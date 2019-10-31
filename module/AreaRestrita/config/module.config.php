@@ -46,6 +46,19 @@ return [
                         'action' => 'login',
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'login-automatico' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/key/:dados',
+                            'defaults' => [
+                                'controller' => Controller\AuthController::class,
+                                'action' => 'login-automatico',
+                            ],
+                        ],
+                    ],
+                ]
             ],
             'logout' => [
                 'type' => Literal::class,
@@ -54,16 +67,6 @@ return [
                     'defaults' => [
                         'controller' => Controller\AuthController::class,
                         'action' => 'logout',
-                    ],
-                ],
-            ],
-            'login-automatico' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/login-automatico/:dados',
-                    'defaults' => [
-                        'controller' => Controller\AuthController::class,
-                        'action' => 'login-automatico',
                     ],
                 ],
             ],
