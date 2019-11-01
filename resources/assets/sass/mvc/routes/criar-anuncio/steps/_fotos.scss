@@ -29,5 +29,11 @@
         &.sortable-ghost{
             outline: #ccc dashed;
         }
+        .foto-container{
+            overflow: hidden;
+        }
+        .btn-to-rotate{
+            display: none;
+        }
     }
 }

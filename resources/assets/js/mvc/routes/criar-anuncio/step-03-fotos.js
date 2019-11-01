@@ -11,6 +11,12 @@ function init() {
     }
     var sortablejs = require('sortablejs');
     var Compress = require('compress.js');
+    var rotate = [
+        'rotate(0deg)',
+        'rotate(90deg)',
+        'rotate(180deg)',
+        'rotate(270deg)',
+    ];
 
 
     new sortablejs.Sortable($('.fotos-container > div')[0], {
@@ -59,32 +65,37 @@ function init() {
         e.preventDefault();
         // Seta o placeholder e limpa os metadados
         var img = $(this).closest('.foto').find('.display-img');
+
+        //oculta botao de rotacao
+        $(this).closest('.foto').find('.btn-to-rotate').hide();
+
         img.data('delete', true);
         showPhoto(img);
     });
     ctx.on('click', '.btn-to-rotate', function (e) {
         e.preventDefault();
         var imagem = $(this).closest('.foto').find('.display-img');
-        var canvas = document.createElement('canvas');
-        var img = new Image();
-        var url = imagem.css('background-image').replace(/url\(|\)|"/g, '');
-        
-        img.crossorigin = "anonymous";
-        img.src = url;
-        img.onload = function() {
-            
-            canvas.width = img.height;
-            canvas.height = img.width;
-            canvas.style.position = "absolute";
-            var context = canvas.getContext("2d");
-            
-            context.translate(img.height, img.width / img.height);
-            context.rotate(Math.PI/2);
-            context.drawImage(img, 0, 0);
-            context.fill();
-            showPhoto(imagem, canvas.toDataURL());
+        var posicaoRotacao = imagem.data('posicaoRotacao')
+
+        // Seta o numero de vezes que a imagem vai ser rotacionada em 90graus
+        if(posicaoRotacao === 3){
+            posicaoRotacao = 0
+            imagem.data('posicaoRotacao', 0);
+
+        }else {
+            posicaoRotacao = posicaoRotacao + 1;
+            imagem.data('posicaoRotacao', posicaoRotacao);
         }
-       
+
+        imagem.css({
+            'transition': 'all 0.7s ease',
+            '-webkit-transform': rotate[posicaoRotacao],
+            '-moz-transform': rotate[posicaoRotacao],
+            '-ms-transform': rotate[posicaoRotacao],
+            '-o-transform': rotate[posicaoRotacao],
+            'transform': rotate[posicaoRotacao],
+        })
+
     })
     /**
      * Exibe a miniatura da imagem selecionada na tag img passada
@@ -104,9 +115,6 @@ function init() {
 
         if (typeof file === 'string') {
             var background = 'url("' + file + '")';
-            
-            if(file.search('base64') === -1)
-                background = file;
                 
             if (imgElement.css('background-image') === background) {
                 return;
@@ -128,6 +136,9 @@ function init() {
 
         var reader = new FileReader();
         reader.onload = function (e) {
+
+            //exibe botao de rotacao ao ler imagem
+            imgElement.parents('.foto').find('.btn-to-rotate').show();
             showPhoto(imgElement, e.target.result);
             if (imgElement.data('idfoto')) {
                 imgElement.data('delete', true);
