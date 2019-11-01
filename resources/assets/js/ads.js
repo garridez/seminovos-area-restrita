@@ -166,7 +166,7 @@ module.exports = (function (window, document) {
             meus_anucios: {
                 topo: function () {
                     return {
-                        adUnitPath: '/131912127/MA/MEUS_ANUNCIOS',
+                        adUnitPath: '/131912127/MA/MEUS_VEICULOS',
                         size: getSizesByRange(0, 1000, 0, 100),
                         sizeMapping: [
                             [[975, 0], getSizesByRange(0, 970, 0, 100)],
