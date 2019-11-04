@@ -423,6 +423,13 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                     </div>
                 </div>
             <?php endforeach; ?>
+            <div class="col-md-12">
+                <?php
+                if ($veiculos) {
+                    echo $this->partial('partials/pagination.phtml', $this->paginationData);
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>

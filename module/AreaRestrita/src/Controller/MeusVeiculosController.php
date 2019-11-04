@@ -47,9 +47,14 @@ class MeusVeiculosController extends AbstractActionController
     {
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        $request = $this->request;
+        
+        $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
-        $dadosVeiculos = $veiculosModel->getAll();
+        $dadosVeiculos = $veiculosModel->getAll($page);
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -61,8 +66,23 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
+        
+        $routeName = str_replace("/meus-veiculos", "", $request->getRequestUri());
+
+        $routeParams = "/meus-veiculos";
+        
+        $paginationData = [
+            'pages' => $dadosVeiculos['pages'],
+            'total' => $dadosVeiculos['total'],
+            'current' => $page ?? 1,
+            'routeName' => $routeName,
+            'routeParams' => $routeParams,
+            'pagination' => true,
+            'paginationResultado' => true
+        ];
 
         $viewModel = new ViewModel([
+            'paginationData' => $paginationData,
             'meusVeiculos' => $dadosVeiculos
         ]);
 
