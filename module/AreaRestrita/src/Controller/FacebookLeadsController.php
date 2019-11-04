@@ -16,17 +16,16 @@ class FacebookLeadsController extends AbstractActionController
 {
     public function indexAction()
     {
+        $leads = "requisição get.";
 
         if($this->getRequest()->isPost()) {
-
             $leads = $this->getRequest()->getPost();
-            $nomeArquivo =  '/data/facebook-leads.txt';
-            $logger = new Logger();
-            $write = new Stream(getcwd() . $nomeArquivo);
-            $logger->addWriter($write);
-            $logger->info($leads);
         }
-
-
+        
+        $nomeArquivo =  '/data/facebook-leads.txt';
+        $logger = new Logger();
+        $write = new Stream(getcwd() . $nomeArquivo);
+        $logger->addWriter($write);
+        $logger->info($leads);
     }
 }
