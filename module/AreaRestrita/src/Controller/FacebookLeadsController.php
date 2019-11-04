@@ -27,5 +27,13 @@ class FacebookLeadsController extends AbstractActionController
         $write = new Stream(getcwd() . $nomeArquivo);
         $logger->addWriter($write);
         $logger->info($leads);
+        
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+        $response->setContent(1977358885);
+
+        return $response;
+
     }
+
 }
