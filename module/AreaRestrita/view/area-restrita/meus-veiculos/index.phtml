@@ -210,8 +210,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <i class=" fa fa-camera"></i>
                                         </a>
                                     <?php } ?>
-                                    <?php #if ($veiculo["botoes"]["vendido"] ?? false) { ?>
-                                    <?php if (true) { ?>
+                                    <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
                                         <a href="#" class="btn-acao-vendido ml-4 vendido" data-confirm
                                            data-confirm-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
                                            title="Marcar como vendido">
@@ -364,21 +363,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-text="Sim, Inativar o Anúncio"
                                            data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>inativado</b>") ?>"
                                            data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
-                                       <?php } ?>
-
-
-                                <?php if($veiculo["botoes"]["vendido"]??false){?>
-                                <a href="#" class="anuncios vendido" data-confirm data-confirm-type="info"
-                                    data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?")?>"
-                                    data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>")?>"
-                                    data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>")?>"
-                                    data-confirm-text="Sim, eu vendi"
-                                    data-confirm-option-confirm="/meus-veiculos/vendidox/<?= $veiculo['idVeiculo'] ?>"
-                                    title="Marcar como vendido">
-                                    <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
-                                </a>
-                                <?php }?>
-
+                                    <?php } ?>
                                     <?php
                                     if ($veiculo["botoes"]["renovar"] ?? false) {
                                         /**
