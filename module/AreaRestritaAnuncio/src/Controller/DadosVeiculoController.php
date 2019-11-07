@@ -270,7 +270,8 @@ class DadosVeiculoController extends AbstractActionController
             $fotos = $dadosVeiculo['fotos'];
         }
         return new ViewModel([
-            'fotos' => $fotos
+            'fotos' => $fotos,
+            'existeVeiculo' => isset($dadosVeiculo['idVeiculo']) &&  $dadosVeiculo['idVeiculo']
         ]);
     }
 
@@ -366,30 +367,40 @@ class DadosVeiculoController extends AbstractActionController
         }
 //        return new ViewModel();
     }
-
-    public function consultaPlacaAction()
-    {
-        $request = $this->request;
-
-        if ($request->isPost()) {
-
-            $post = $request->getPost();
-            $placa = $post['placa'];
-
-            /* @var $apiClient ApiClient */
-            $apiClient = $this->getContainer()->get(ApiClient::class);
-
-            $veiculo = $apiClient->veiculosGet([
-                "ignorarCodicoesBasicas" => 1
-                ], $placa, true)->getData();
-            $existePlaca = ['status' => false];
-            if ($veiculo && isset($veiculo[0])) {
-                if($veiculo[0]['idStatus'] != 7 || $veiculo[0]['idStatus'] != 8){
-                    $existePlaca = ['status' => true];
-                }
-            }
-            return new JsonModel($existePlaca);
+    /**
+     * Verifica se a placa está disponível para cadastro
+     * Retorna TRUE se a placa estiver disponível
+     * Retorna FALSE se a placa estiver indisponível
+     */
+    public function placaDisponivelAction(){
+        $statusPermitidos = [
+                            1, // aguardando pagamento
+                            3, // cadastrando
+                            7, // removido
+                            8, // vendido
+                        ]; 
+        $placa = $this->params()->fromRoute('placa',false);
+        if(!$placa){
+            return new JsonModel(['status'=> 405, 'detail'=> 'Placa não informada']); 
         }
+        /* @var $apiClient ApiClient */
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+        $veiculo = $apiClient->veiculosGet(
+        [
+            "ignorarCondicoesBasicas" => 1
+        ], $placa, false)->json();
+
+        $placaDisponivel = false;
+        if($veiculo['status']!= 200){
+            $placaDisponivel =  true;
+        }else{
+            $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
+        }
+
+        return new JsonModel( [
+            'status' => 200,
+            'placaDisponivel' => $placaDisponivel
+        ]);
     }
 
     public function getVersaoAction()

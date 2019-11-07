@@ -132,13 +132,13 @@ return [
                                     ],
                                 ],
                             ],
-                            'consulta-placa' => [
-                                'type' => Literal::class,
+                            'placa-disponivel' => [
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/consulta-placa',
+                                    'route' => '/placa-disponivel/:placa',
                                     'defaults' => [
                                         'controller' => Controller\DadosVeiculoController::class,
-                                        'action' => 'consulta-placa',
+                                        'action' => 'placa-disponivel',
                                     ],
                                 ],
                             ],

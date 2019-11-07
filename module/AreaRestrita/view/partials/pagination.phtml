@@ -1,0 +1,115 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+$current = (int) $current;
+$min = max([$current - 3, 1]);
+$max = min([$current + 4, $pages]);
+$min_mobile = max([$current - 1, 1]);
+$max_mobile = min([$current + 2, $pages]);
+
+$range = range($min, $max);
+$range_mobile = range($min_mobile, $max_mobile);
+
+//$paginationRevenda
+
+if ($pagination) {
+    
+    $toReplace = '&page=' . ($current);
+    $toReplaceNew = '&page=' . ($current + 1);
+    if (isset($paginationRevenda) && $paginationRevenda) {
+
+        if (isset($userNameRevenda)) {
+            if ($routeName != '') {
+                $url = $routeParams . '/' . $userNameRevenda . $routeName;
+            } else {
+                $url = $routeParams . $routeName . '/' . $userNameRevenda;
+            }
+            $url = str_replace($toReplace, '', $url);
+        } else {
+                var_dump($routeParams."-".$routeName);
+            $url = $routeParams . $routeName;
+            $url = str_replace($toReplace, '', $url);
+        }
+    } elseif ($paginationResultado) {
+        $url = $routeParams . ($userNameRevenda ?? '');
+    }
+
+    if (strpos($url, "&")) {
+
+        $prevUrl = $url . '&page=' . ($current - 1);
+        $nextUrl = $url . '&page=' . ($current + 1);
+        $caracter = '&';
+
+    } else {
+
+        $url = str_replace('?page=' . ($current), '', $url);
+        $prevUrl = $url . '?page=' . ($current - 1);
+        $nextUrl = $url . '?page=' . ($current + 1);
+        $caracter = '?';
+    }
+
+    $replaceInit = "&page=1";
+    $replacePag = "page=";
+
+} else {
+    $routeParams['page'] = 999999;
+
+// Dar um replace depois é mais rápido que chamar esse helper
+    $url = $this->url($routeName, $routeParams);
+    $toReplace = 'page-999999';
+
+    $prevUrl = str_replace($toReplace, 'page-' . ($current - 1), $url);
+    $nextUrl = str_replace($toReplace, 'page-' . ($current + 1), $url);
+
+    $replaceInit = "page-1";
+    $replacePag = "page-";
+}
+
+?>
+<nav class="pagination-container">
+    <div class="info">
+        Exibindo a página <b class="cor-laranja"><?= $current ?></b>
+        de um total de <b class="cor-laranja"><?= $pages ?></b>
+        paginas.
+    </div>
+    <ul class="pagination">
+        <li class="page-item<?= ($current - 1) < 1 ? ' disabled' : '' ?>">
+            <a class="page-link page-link-control-previous" href="<?= $prevUrl ?>" title="Página Anterior">Anterior</a>
+        </li>
+        <?php if ($current > 4): ?>
+            <li class="page-item">
+                <a class="page-link" rel="prev" href="<?= str_replace($toReplace, $replaceInit, $url) ?>"
+                   title="Ir para primeira página">1</a>
+            </li>
+            <?php if ($current > 5): ?>
+                <li class="page-item disabled">
+                    <span class="page-link separator ">...</span>
+                </li>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php foreach ($range as $index): ?>
+            <li class="d-none d-md-block page-item<?= $index == $current ? ' active' : '' ?>">
+                <?php if ($pagination) { ?>
+                    <a class="page-link" rel="prev" href="<?= $url . $caracter . "page=" . $index ?>"
+                       title="Página <?= $index ?>"><?= $index ?></a>
+                <?php } else { ?>
+                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, $url) ?>"
+                       title="Página <?= $index ?>"><?= $index ?></a>
+                <?php } ?>
+            </li>
+        <?php endforeach; ?>
+        <?php foreach ($range_mobile as $index): ?>
+            <li class="d-block d-md-none page-item<?= $index == $current ? ' active' : '' ?>">
+                <?php if ($pagination) { ?>
+                    <a class="page-link" rel="prev" href="<?= $url . $caracter . "page=" . $index ?>"
+                       title="Página <?= $index ?>"><?= $index ?></a>
+                <?php } else { ?>
+                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, $url) ?>"
+                       title="Página <?= $index ?>"><?= $index ?></a>
+                <?php } ?>
+            </li>
+        <?php endforeach; ?>
+        <li class="page-item<?= ($current + 1) > $pages ? ' disabled' : '' ?>">
+            <a class="page-link page-link-control-next" href="<?= $nextUrl ?>" title="Próxima página">Próximo</a>
+        </li>
+    </ul>
+</nav>

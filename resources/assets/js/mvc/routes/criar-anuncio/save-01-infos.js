@@ -46,18 +46,15 @@ module.exports.callback = ($) => {
                 }
                 BtnContinuar.disable();
                 $.ajax({
-                    type: "POST",
-                    url: "/carro/consulta-placa",
-                    data: {
-                        placa: placa.toLowerCase()
-                    },
+                    type: "GET",
+                    url: "/carro/placa-disponivel/"+placa.toLowerCase(),
                     dataType: "json",
                     success: function (response) {
                         placaInput
                             .parent()
                             .removeClass('is-invalid is-valid')
-                            .addClass(response.status ? 'is-invalid' : 'is-valid');
-                        if (response.status) {
+                            .addClass(response.placaDisponivel ? 'is-valid' : 'is-invalid');
+                        if (!response.placaDisponivel) {
                             BtnContinuar.disable();
                             advancedAlerts.error({
                                 title: "Placa já cadastrada",
