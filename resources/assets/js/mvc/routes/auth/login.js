@@ -23,12 +23,12 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 .slideDown();
     });
 
-    var match = document.cookie.match(/login-tipoCadastro=(?<tipoCadastro>[a-z]+)/)
-    var tipoCadastro = 'particular';
-    if (match && match.groups) {
-        tipoCadastro = match.groups.tipoCadastro || tipoCadastro;
-    }
-    $(`input.radioTipoCadastro[data-cookie='${tipoCadastro}']`).click()
+    // var match = document.cookie.match(/login-tipoCadastro=(?<tipoCadastro>[a-z]+)/)
+    // var tipoCadastro = 'particular';
+    // if (match && match.groups) {
+    //     tipoCadastro = match.groups.tipoCadastro || tipoCadastro;
+    // }
+    // $(`input.radioTipoCadastro[data-cookie='${tipoCadastro}']`).click()
     
     var url = window.location.href;
     if ($('input[name=login-error]').val() === '1') {
