@@ -85,7 +85,7 @@ module.exports.callback = $ => {
     function pesquisaSatisfacaoDataForm (veiculo) {
         var $form = $("<form>");
         var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
-        var $select = $("<select class='form-control'>")
+        var $select = $("<select name='vendaVeiculo' class='form-control'>")
             .append('<option value="1">Vendi pela Seminovos BH</option>')
             .append('<option value="2">Desisti de vender</option>')
             .append('<option value="3">Vendi por outro meio</option>')
@@ -109,7 +109,7 @@ module.exports.callback = $ => {
             .append($("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"))
             .append($estrelas);
         
-        var $observacao = $("<textarea maxlength='255' class='form-control'></textarea>");
+        var $observacao = $("<textarea maxlength='255' name='observacoes' class='form-control'></textarea>");
         var $conjuntoObservacoes = $("<div class='text-left mt-2'></div>")
             .append($("<span class='no-wrap'>Observações:</span>"))
             .append($observacao);
@@ -123,12 +123,22 @@ module.exports.callback = $ => {
 
             },
             submitCallback: function () {
-                /**
-                 * POST PARA ONDE A PESQUISA DE SATISFAÇÃO VAI
-                 */
-                $.post(`/meus-veiculos/vendido/${veiculo.idVeiculo}`, { name: "John", time: "2pm" })
+                $(".modal").modal('hide');
+                $.post(`/meus-veiculos/pesquisa/${veiculo.idVeiculo}`, $form.serialize())
                     .done(function( data ) {
-                        alert( "Data Loaded: " + data );
+                        data = JSON.parse(data);
+                        
+                        if (data.status !== 200) {
+                            advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
+                        } else {
+                            advancedAlerts.success({
+                                text:`Agradecemos a sua resposta!`,
+                                closeCallback:function(){
+                                    $(".modal").modal('hide');
+                                }
+                        })
+                            reloadPageContent();
+                        }
                     });
             }
         });
@@ -180,7 +190,7 @@ module.exports.callback = $ => {
                     });
                 })
                 .always(function () {
-                    modal.modal("hide");
+                   $(".modal").modal("hide");
                 });
             }
      });

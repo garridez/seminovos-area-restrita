@@ -11,12 +11,14 @@ use AreaRestrita\Model\Propostas;
 use SnBH\Common\ServiceVeiculo;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Service\Identity;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
+use AreaRestrita\Model\PesquisaSatisfacao;
 
 class MeusVeiculosController extends AbstractActionController
 {
@@ -463,6 +465,32 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
             ], $idVeiculo);
+        echo json_encode($dadosVeiculos);
+        die;
+    }
+    
+    public function pesquisaAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+        
+        $request = $this->request;
+        
+        /* @var $identity Identity */
+        $identity = $this->getContainer()->get(Identity::class);
+        
+        $data = [
+            'idCadastro' => $identity->getIdentity(),
+            'idVeiculo' => $idVeiculo
+        ];
+
+        $data += $request->getPost()->toArray();
+
+        /* @var $veiculosModel Veiculos */
+        $pesquisaModel = $this->getContainer()->get(PesquisaSatisfacao::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculos = $pesquisaModel->post($data);
+
         echo json_encode($dadosVeiculos);
         die;
     }
