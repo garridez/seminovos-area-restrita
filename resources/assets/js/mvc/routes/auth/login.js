@@ -7,6 +7,13 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     var ShowPassword = require('components/ShowPassword');
     ShowPassword($("input[type='password']"));
     
+    $("body").on("click", "input.radioTipoCadastro[data-cookie]", function(e){
+        let $this = $(this);
+        let cookieDate = new Date;
+        cookieDate.setFullYear(cookieDate.getFullYear() +1);
+        document.cookie = `login-tipoCadastro=${$this.data("cookie")}; expires=${cookieDate.toGMTString()};`;
+    });
+
     formsContainer.filter('.hide').hide().removeClass('hide');
     $('form.tipo-cadastro-container input').change(function () {
         let seletectedForm = '.' + $(this).val();
@@ -15,6 +22,14 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 .filter(seletectedForm)
                 .slideDown();
     });
+
+    // var match = document.cookie.match(/login-tipoCadastro=(?<tipoCadastro>[a-z]+)/)
+    // var tipoCadastro = 'particular';
+    // if (match && match.groups) {
+    //     tipoCadastro = match.groups.tipoCadastro || tipoCadastro;
+    // }
+    // $(`input.radioTipoCadastro[data-cookie='${tipoCadastro}']`).click()
+    
     var url = window.location.href;
     if ($('input[name=login-error]').val() === '1') {
         $('#modalErroSenha').modal('show');

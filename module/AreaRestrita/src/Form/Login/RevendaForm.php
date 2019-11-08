@@ -42,6 +42,8 @@ class RevendaForm extends Form
                                 'label' => 'CNPJ',
                             ],
                             'attributes' => [
+                                'required'=> true,
+                                'minlength' => 5,
                                 'data-mask' => '00.000.000/0000-00',
                             ]
                         ],
@@ -52,6 +54,10 @@ class RevendaForm extends Form
                             'name' => 'usuarioSenha',
                             'options' => [
                                 'label' => 'Senha',
+                            ],
+                            'attributes' => [
+                                'required'=> true,
+                                'minlength' => 4,
                             ]
                         ],
                     ],

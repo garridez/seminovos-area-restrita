@@ -18,23 +18,12 @@
 
     <form class="tipo-cadastro-container container">
         <div class="row">
-            <div class="col-6">
-                <div class="form-check form-check-inline" title="Entrar usando minha conta particular">
-                    <input type="radio" class="form-check-input" id="radioTipoCadastroParticular" name="tipoCadastro"
-                           value="container-form-particular" checked>
-                    <label class="form-check-label" for="radioTipoCadastroParticular">
-                        Particular
-                    </label>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="form-check form-check-inline" title="Entrar usando minha conta de revendedor">
-                    <input type="radio" class="form-check-input" id="radioTipoCadastroRevenda" name="tipoCadastro"
-                           value="container-form-revenda">
-                    <label class="form-check-label" for="radioTipoCadastroRevenda">
-                        Revenda
-                    </label>
-                </div>
+            <div class="switch-field">
+                <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular"/>
+                <label for="radioTipoCadastroParticular"  >Particular</label>
+
+                <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
+                <label for="radioTipoCadastroRevenda"  >Revenda</label>
             </div>
         </div>
     </form>
@@ -112,7 +101,6 @@
 
     ?>
     <div class="forms-group">
-        <!--      <br>-->
         <div class="container-form-particular">
             <?php
             $formLogin = $this->particularForm;
@@ -120,13 +108,12 @@
             $fields = $formLogin->getElements();
             ?>
             <form method="POST" name="login-particular-form" class="form-horizontal" role="form" id="login-particular-form">
-                <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
                 <div class="form-group">
                     <?= $this->formLabel($fields['usuarioEmail']) ?>
                     <div class="">
-                        <?= $this->formText($fields['usuarioEmail']) ?>
+                        <?= $this->formEmail($fields['usuarioEmail']) ?>
 
                     </div>
                 </div>
@@ -176,7 +163,6 @@
             ?>
             <form method="POST" name="login-revenda-form" class="form-horizontal" role="form"
                   id="login-revenda-form">
-                <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
                 <div class="form-group">
