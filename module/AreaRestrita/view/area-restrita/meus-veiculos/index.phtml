@@ -8,7 +8,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
 $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ?? "Não informado"
 
 ?>
-
+<input type="hidden" class="data-user-display-name" value="<?=$nome?>">
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center px-3 px-md-0">
         <?php if ($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
@@ -137,6 +137,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             <div class="col-12 col-lg-6 mt-2">
                                 <ul class="h-auto">
                                     <li>
+                                        Visualizações:
+                                        <span class="text-uppercase"><?= $veiculo['acessos'] ?></span>
+                                    </li>
+                                    <li>
                                         Placa:
                                         <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
                                     </li>
@@ -211,12 +215,8 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </a>
                                     <?php } ?>
                                     <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
-                                        <a href="#" class="anuncios btn-acao-vendido ml-4" data-confirm data-confirm-type="info"
-                                           data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> marcar como  vendido</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
-                                           data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Marcar como vendido</span>") ?>"
-                                           data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']} </b> foi <b class='text-primary'>marcado como vendido</b>") ?>"
-                                           data-confirm-text="Sim, eu vendi"
-                                           data-confirm-option-confirm="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
+                                        <a href="#" class="btn-acao-vendido ml-4 vendido" data-confirm
+                                           data-confirm-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
                                            title="Marcar como vendido">
                                             <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
                                         </a>
@@ -281,7 +281,8 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         <div data-index="0" class="company-stat-box m-t-10 px-4 py-3 bg-master-lightest">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="pull-left d-flex text-uppercase bold align-items-center mb-0">
-                                    <?php if ($veiculo["idStatus"] != SnBH\ApiModel\Model\VeiculosStatus::STATUS_CADASTRANDO) { ?>
+                                    <?php if ($veiculo["idStatus"] != SnBH\ApiModel\Model\VeiculosStatus::STATUS_CADASTRANDO
+                                                && $veiculo["idStatus"] != SnBH\ApiModel\Model\VeiculosStatus::STATUS_AGUARDANDO_PAGAMENTO) { ?>
                                         <span class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></span>
                                         <?= $veiculo['nomePlano'] ?>
                                     <?php } ?>
@@ -367,10 +368,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-text="Sim, Inativar o Anúncio"
                                            data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>inativado</b>") ?>"
                                            data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
-                                       <?php } ?>
-
-
-
+                                    <?php } ?>
                                     <?php
                                     if ($veiculo["botoes"]["renovar"] ?? false) {
                                         /**

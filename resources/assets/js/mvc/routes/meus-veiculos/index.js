@@ -4,8 +4,8 @@ module.exports.callback = $ => {
     require("components/JsBsModal");
     var advancedAlerts = require("components/AdvancedAlerts");
     var Confirms = require('components/Confirms');
-
-
+    var FormAlerts = require('components/FormAlerts');
+    
     if ($("div[data-veiculo-finalizar]").length) {
         advancedAlerts.warning({
             title: "Você possuí anúncios não finalizados",
@@ -18,6 +18,7 @@ module.exports.callback = $ => {
             .on("click", "a.reativar[data-confirm]", reativarDataConfirm)
             .on("click", "a.renovar[data-confirm]", renovarDataConfirm)
             .on("click", "a.anuncios[data-confirm]", anuncioDataConfirm)
+            .on("click", "a.vendido[data-confirm]", vendidoDataConfirm)
             // Configura os modais genericos
             .on("click", ".anuncios [data-modal]", anunciosModal);
 
@@ -68,9 +69,10 @@ module.exports.callback = $ => {
 
     ///////////////// CALLBACKS /////////////////
     /**
-     * Baixa o conteúdo da página atualizado
-     * Baixa apenas o conteúdo dentro da div ".container-anuncios"
-     */
+    * Baixa o conteúdo da página atualizado
+    * Baixa apenas o conteúdo dentro da div ".container-anuncios"
+    */
+
     function reloadPageContent() {
         $.get("/", function (data) {
             $(".container-anuncios").replaceWith(data);
@@ -78,6 +80,120 @@ module.exports.callback = $ => {
         $.get("/meus-veiculos/qtd-anuncios-menu", function (data) {
             $(".qtd-anuncios-menu").html(data);
         });
+    }
+
+    function pesquisaSatisfacaoDataForm (veiculo) {
+        var $form = $("<form>");
+        var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
+        var $select = $("<select name='vendaVeiculo' class='form-control'>")
+            .append('<option value="1">Vendi pela Seminovos BH</option>')
+            .append('<option value="2">Desisti de vender</option>')
+            .append('<option value="3">Vendi por outro meio</option>')
+            .append('<option value="4">Outro motivo</option>');
+        var $conjuntoSlect = $("<div class='d-flex align-items-center mt-4'></div>")
+            .append($("<span class='no-wrap mr-3'>Sobre a <b class='text-primary'>venda do veículo</b>:</span>"))
+            .append($select);
+
+        var $estrelas = $("<div class='rate'>")
+            .append(`<input type="radio" id="star5" name="rate" value="5" />`)
+            .append(`<label for="star5" title="text">5 stars</label>`)
+            .append(`<input type="radio" id="star4" name="rate" value="4" />`)
+            .append(`<label for="star4" title="text">4 stars</label>`)
+            .append(`<input type="radio" id="star3" name="rate" value="3" />`)
+            .append(`<label for="star3" title="text">3 stars</label>`)
+            .append(`<input type="radio" id="star2" name="rate" value="2" />`)
+            .append(`<label for="star2" title="text">2 stars</label>`)
+            .append(`<input type="radio" id="star1" name="rate" value="1" />`)
+            .append(`<label for="star1" title="text">1 star</label>`);
+        var $conjuntoEstrelas = $("<div class='d-flex align-items-start mt-2'></div>")
+            .append($("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"))
+            .append($estrelas);
+        
+        var $observacao = $("<textarea maxlength='255' name='observacoes' class='form-control'></textarea>");
+        var $conjuntoObservacoes = $("<div class='text-left mt-2'></div>")
+            .append($("<span class='no-wrap'>Observações:</span>"))
+            .append($observacao);
+
+        $form.append($span).append($conjuntoSlect).append($conjuntoEstrelas).append($conjuntoObservacoes);
+        FormAlerts.success({
+            form: $form,
+            title:"Pesquisa de satisfação",
+            submitText:"Confirmar",
+            closeCallback:function(){
+
+            },
+            submitCallback: function () {
+                $(".modal").modal('hide');
+                $.post(`/meus-veiculos/pesquisa/${veiculo.idVeiculo}`, $form.serialize())
+                    .done(function( data ) {
+                        data = JSON.parse(data);
+                        
+                        if (data.status !== 200) {
+                            advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
+                        } else {
+                            advancedAlerts.success({
+                                text:`Agradecemos a sua resposta!`,
+                                closeCallback:function(){
+                                    $(".modal").modal('hide');
+                                }
+                        })
+                            reloadPageContent();
+                        }
+                    });
+            }
+        });
+    }
+    function vendidoDataConfirm(){
+        var $this = $(this);
+        var $veiculo = $this.closest(".veiculo");
+        let veiculo = {
+            idVeiculo : $veiculo.data("id-veiculo"),
+            placa : $veiculo.data("veiculo-placa"),
+            marca : $veiculo.data("veiculo-marca"),
+            modelo : $veiculo.data("veiculo-modelo"),
+        }
+
+        var displayName = $(".data-user-display-name").val();
+
+
+        Confirms.info({
+            title:$("<span class='text-primary'>Marcar como vendido</span>"),
+            text: $(`<span>
+                        <b class="text-primary">${displayName}</b>, você confirma que deseja
+                        <b class="text-primary">marcar como vendido</b> o anúncio
+                        <b class="text-primary">${veiculo.marca} ${veiculo.modelo}</b>
+                        <b> placa </b> <b class="text-primary"> ${veiculo.placa} </b>?
+                    </span>`),
+            confirmText: "Sim, eu vendi",
+            confirmCallback: function(){
+                $(".modal").modal('hide');
+                $.getJSON(`/meus-veiculos/vendido/${veiculo.idVeiculo}`)
+                .done(function (data, jqXHR, type) {
+                    if (data.status !== 200) {
+                        advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
+                    } else {
+                        advancedAlerts.success({
+                            text:`O veiculo ${veiculo.marca} ${veiculo.modelo} foi marcado como vendido`,
+                            closeCallback:function(){
+                                $(".modal").modal('hide');
+                                pesquisaSatisfacaoDataForm(veiculo) 
+                            }
+                    })
+                        reloadPageContent();
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    advancedAlerts.error({
+                        text: "Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.",
+                        title: "Houve um problema...",
+                        time: 10000
+                    });
+                })
+                .always(function () {
+                   $(".modal").modal("hide");
+                });
+            }
+     });
     }
     function anunciosModal() {
         var modal;

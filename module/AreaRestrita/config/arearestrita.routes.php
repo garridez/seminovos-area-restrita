@@ -193,6 +193,15 @@ return [
                     ],
                 ],
             ],
+            'pesquisa' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/pesquisa/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'pesquisa',
+                    ],
+                ],
+            ],
             'vendido' => [
                 'type' => Http\Segment::class,
                 'options' => [

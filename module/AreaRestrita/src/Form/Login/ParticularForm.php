@@ -41,6 +41,10 @@ class ParticularForm extends Form
                             'options' => [
                                 'label' => 'Email',
                             ],
+                            'attributes' => [
+                                'required'=> true,
+                                'minlength'=> 5,
+                            ]
                         ],
                     ],
                     [
@@ -49,6 +53,10 @@ class ParticularForm extends Form
                             'name' => 'usuarioSenha',
                             'options' => [
                                 'label' => 'Senha',
+                            ],
+                            'attributes' => [
+                                'required' => true,
+                                'minlength' => 4,
                             ]
                         ],
                     ],
