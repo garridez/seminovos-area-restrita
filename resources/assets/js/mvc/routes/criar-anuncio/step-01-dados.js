@@ -7,6 +7,8 @@ module.exports.callback = ($) => {
 function init() {
     var Confirms = require("components/Confirms")
     var ctx = $('.step-dados');
+    var veiculoZeroKm = ctx.find('[name="veiculo_zero_km"]');
+    var placa = ctx.find('[name="placa"]');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
     var marca = ctx.find('[name="idMarca"]');
@@ -209,6 +211,14 @@ function init() {
                     $check.prop('checked', false);
                 }
             })
+        }
+    })
+    
+    veiculoZeroKm.click(function(){
+        if (this.checked) {
+            placa.removeAttr('required');
+        }else{
+            placa.attr('required', true);
         }
     })
 }
