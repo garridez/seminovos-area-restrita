@@ -127,7 +127,7 @@ class DadosForm extends Form
             'type' => SelectValvula::class,
             'name' => 'idValvula',
             'attributes' => [
-                'required' => true,
+                'required' => false,
                 'data-init-plugin' => 'select2',
             ]
         ]);
