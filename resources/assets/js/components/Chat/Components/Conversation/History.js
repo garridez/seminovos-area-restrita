@@ -41,15 +41,20 @@ class Conversation extends Component {
         }
     }
     render() {
-        const {conversation, mensagens, meusDados} = this.props;
+        const {conversation, mensagens, meusDados, conversationActive} = this.props;
         return (
                 <ul className="conversation" ref={this.ul} onScroll={this.onScroll.bind(this)}>
-                    {renderMsgs(mensagens, conversation, meusDados)}
+                    {renderMsgs(mensagens, conversation, meusDados, conversationActive)}
                 </ul>
                 );
     }
 }
-function renderMsgs(mensagens, conversation, meusDados) {
+function renderMsgs(mensagens, conversation, meusDados, conversationActive) {
+    if (conversationActive === false) {
+        return <li className="empty" key="2">
+            Selecione uma mensagem ao lado
+        </li>;
+    }
     if (!mensagens || mensagens.length === 0) {
         return ([
             <li className="empty" key="1">Nenhuma mensagem</li>,
@@ -70,7 +75,9 @@ var prevMsgCount = null;
 export default connect((state) => {
     const conversationActive = state.currentChat.conversationActive;
     if (!conversationActive) {
-        return {};
+        return {
+            conversationActive: false
+        };
     }
 
     const chatData = state.listChats[conversationActive];

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 // Components Sidebar
 import Filter from '../Components/Sidebar/Filter';
@@ -15,34 +14,12 @@ import History from '../Components/Conversation/History';
 
 class Chat extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            conversationActive: null
-        };
-
-        this.activeConversation = this.activeConversation.bind(this);
-    }
-
-    activeConversation(id) {
-        console.log('NÃO É PRA EU RODAR');
-        this.setState({
-            conversationActive: id,
-            currentConversation: this.props.listChats[id],
-        });
-
-    }
-    
-    
     render() {
         const {
-            listChats,
-            conversationActive,
-            currentConversation
+            conversationActive
         } = this.props;
 
-
-        var conversationActiveClass = conversationActive ? 'conversation-active' : '';
+        const conversationActiveClass = conversationActive ? 'conversation-active' : '';
 
         return (
                 <section className={'section-chat row ' + conversationActiveClass}>
@@ -51,16 +28,13 @@ class Chat extends Component {
                             <Profile />
                             <Filter />
                         </div>
-                        <ListChats
-                            listChats={listChats}
-                            conversationActive={conversationActive}
-                            onActive={this.activeConversation} />
+                        <ListChats conversationActive={conversationActive} />
                     </div>
                     <div className="main-chat col-sm-7 d-flex flex-column">
                         <div className="top-header">
                             <Contact />
                         </div>
-                        <History conversation={currentConversation} />
+                        <History/>
                         <Editor /> 
                     </div>
                 </section>
@@ -68,20 +42,8 @@ class Chat extends Component {
     }
 }
 
-export default connect((state, ownProps) => {
-
-    var listChats = state.listChats;
-    var conversationActive = state.currentChat.conversationActive;
-    var currentConversation = null;
-
-    if (conversationActive && listChats[conversationActive]) {
-        currentConversation = listChats[conversationActive];
-    }
-
+export default connect((state) => {
     return {
-        listChats,
-        conversationActive,
-        currentConversation
+        conversationActive: state.currentChat.conversationActive
     };
-
 })(Chat);
