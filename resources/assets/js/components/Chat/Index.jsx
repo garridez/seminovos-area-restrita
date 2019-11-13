@@ -4,59 +4,32 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Loading from './Containers/Loading';
-
+import ChatContainer from './Containers/Chat';
+import NoMsgs from './Containers/NoMsgs';
 
 class Chat extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            conversationActive: null
-        };
-
-        this.activeConversation = this.activeConversation.bind(this);
-    }
-
-    activeConversation(id) {
-        console.log('NÃO É PRA EU RODAR');
-        this.setState({
-            conversationActive: id,
-            currentConversation: this.props.listChats[id],
-        });
-    }
-
     render() {
-        const {
-            listChats,
-            conversationActive,
-            currentConversation
-        } = this.props;
+        const { numChats } = this.props;
 
-        if (listChats === false) {
-            console.log('Sem msgs');
-            return (<Loading />);
-        } else {
-            console.log('Com msgs');
+        if (numChats > 0) {
+            return <ChatContainer />;
         }
 
-        return (<div>render chat</div>);
+        if (numChats === false) {
+            return <Loading />;
+        }
+
+        return <NoMsgs />;
     }
 }
 
 export default connect((state, ownProps) => {
-
-    var listChats = state.listChats;
-    var conversationActive = state.currentChat.conversationActive;
-    var currentConversation = null;
-
-    if (conversationActive && listChats[conversationActive]) {
-        currentConversation = listChats[conversationActive];
+    var numChats = false;
+    if (state.listChats) {
+        numChats = Object.keys(state.listChats).length;
     }
-    console.log(listChats);
     return {
-        listChats,
-        conversationActive,
-        currentConversation
+        numChats
     };
-
 })(Chat);

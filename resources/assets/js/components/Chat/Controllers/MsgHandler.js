@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-
 class MsgLoader extends Component {
 
     constructor(props) {
@@ -23,7 +22,6 @@ class MsgLoader extends Component {
                         type: 'CADASTRO_SET_DATA',
                         data: userData
                     });
-
                 })
                 .on('mensagem', (listChats) => {
                     console.log('nova mensagem');
