@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import Profile from './Sidebar/Profile';
-import Filter from './Sidebar/Filter';
-import ListChats from './Sidebar/ListChats';
-import History from './Conversation/History';
-import Editor from './Conversation/Editor';
-import Contact from './Conversation/Contact';
+// Components Sidebar
+import Filter from './Components/Sidebar/Filter';
+import ListChats from './Components/Sidebar/ListChats';
+import Profile from './Components/Sidebar/Profile';
+
+// Components Conversation
+import Contact from './Components/Conversation/Contact';
+import Editor from './Components/Conversation/Editor';
+import History from './Components/Conversation/History';
+
+// Controllers
 import MsgHandler from './Controller/MsgHandler';
 
 class Chat extends Component {

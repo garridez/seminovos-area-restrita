@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {createNewMessage} from '../utils/messages';
+import {createNewMessage} from '../../utils/messages';
 
 class Editor extends Component {
     constructor(props) {
