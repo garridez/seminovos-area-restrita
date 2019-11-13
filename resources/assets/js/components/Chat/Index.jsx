@@ -3,18 +3,8 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-// Components Sidebar
-import Filter from './Components/Sidebar/Filter';
-import ListChats from './Components/Sidebar/ListChats';
-import Profile from './Components/Sidebar/Profile';
+import Loading from './Containers/Loading';
 
-// Components Conversation
-import Contact from './Components/Conversation/Contact';
-import Editor from './Components/Conversation/Editor';
-import History from './Components/Conversation/History';
-
-// Controllers
-import MsgHandler from './Controller/MsgHandler';
 
 class Chat extends Component {
 
@@ -33,10 +23,8 @@ class Chat extends Component {
             conversationActive: id,
             currentConversation: this.props.listChats[id],
         });
-
     }
-    
-    
+
     render() {
         const {
             listChats,
@@ -46,34 +34,12 @@ class Chat extends Component {
 
         if (listChats === false) {
             console.log('Sem msgs');
-        }else{
+            return (<Loading />);
+        } else {
             console.log('Com msgs');
         }
 
-        var conversationActiveClass = conversationActive ? 'conversation-active' : '';
-
-        return (
-                <section className={'section-chat row ' + conversationActiveClass}>
-                    <MsgHandler/>
-                    <div className="sidebar col-sm-5 d-flex flex-column">
-                        <div className="top-header">
-                            <Profile />
-                            <Filter />
-                        </div>
-                        <ListChats
-                            listChats={listChats}
-                            conversationActive={conversationActive}
-                            onActive={this.activeConversation} />
-                    </div>
-                    <div className="main-chat col-sm-7 d-flex flex-column">
-                        <div className="top-header">
-                            <Contact />
-                        </div>
-                        <History conversation={currentConversation} />
-                        <Editor /> 
-                    </div>
-                </section>
-                );
+        return (<div>render chat</div>);
     }
 }
 
@@ -86,7 +52,7 @@ export default connect((state, ownProps) => {
     if (conversationActive && listChats[conversationActive]) {
         currentConversation = listChats[conversationActive];
     }
-
+    console.log(listChats);
     return {
         listChats,
         conversationActive,
