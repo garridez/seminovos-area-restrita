@@ -8,13 +8,13 @@ import store from './Store';
 
 window.setAjaxLoadding = false;
 
-export default function () {
+export default function (chatRoot) {
     return ReactDOM.render(
             <Provider store={store}>
                 <Chat />
             </Provider>,
-            document.querySelector('.chat-root')
-            );
+            chatRoot.get(0)
+            )
 }
 
 var onResize = function () {

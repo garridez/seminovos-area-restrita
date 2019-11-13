@@ -7,7 +7,7 @@ import {sendNewMessage} from '../../utils/messages';
  */
 const messagesSent = {};
 
-const messages = (state = {}, action) => {
+const messages = (state = false, action) => {
     switch (action.type) {
         case 'LIST_CHAT_REFRESH_STATE':
             return {
@@ -35,6 +35,9 @@ const messages = (state = {}, action) => {
                 ...state,
             };
         case 'LIST_CHAT_LOAD':
+            if (state === false) {
+                state = {};
+            }
             _.forEach(action.listChats, (chatData, idConversa) => {
                 if (state[idConversa]) {
                     var prevChatData = state[idConversa];

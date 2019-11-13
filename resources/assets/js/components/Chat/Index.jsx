@@ -39,6 +39,12 @@ class Chat extends Component {
             currentConversation
         } = this.props;
 
+        if (listChats === false) {
+            console.log('Sem msgs');
+        }else{
+            console.log('Com msgs');
+        }
+
         var conversationActiveClass = conversationActive ? 'conversation-active' : '';
 
         return (
