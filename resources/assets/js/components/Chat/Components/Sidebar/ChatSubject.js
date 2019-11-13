@@ -37,10 +37,10 @@ class ChatSubject extends Component {
 
         return (
                 <li className={classes} onClick={this.active}>
-                    <div className="chat-img col-4">
+                    <div className="chat-img col-3">
                         <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
-                    <div className="chat-details col-8">
+                    <div className="chat-details col-9">
                         <div className="chat-title">
                             <b>{data.marca} {data.modelo}</b>
                         </div>

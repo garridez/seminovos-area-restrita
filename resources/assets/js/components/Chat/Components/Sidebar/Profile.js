@@ -14,10 +14,10 @@ class Profile extends Component {
             return '';
         }
         data = {...data};
-
+return '';
         return (
                 <div className="profile">
-                <span className="h2">{data.responsavelNome}</span>
+                    <span className="h2">{data.responsavelNome}</span>
                 </div>
                 );
     }

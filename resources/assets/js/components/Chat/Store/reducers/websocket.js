@@ -8,6 +8,7 @@ websocket.on('connect', function () {
 });
 websocket.on('initial-messages', function () {
     console.log('initial-messages');
+    return;
     setTimeout(function () {
         $('.chat-subject').eq(0).click();
         setTimeout(function () {

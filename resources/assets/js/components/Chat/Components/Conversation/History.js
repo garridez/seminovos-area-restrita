@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
+import _ from 'lodash';
+
 import Message from './Message';
+
 class Conversation extends Component {
     constructor() {
         super();

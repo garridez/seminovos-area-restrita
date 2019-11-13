@@ -24,13 +24,17 @@ class Contact extends Component {
         data = {...data};
 
         return (
-                <div>
-                    <button type="button" title="Fechar conversa" onClick={this.closeConversation.bind(this)}>
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                    <div className="contact">
+                <div className="row">
+                    <div className="contact col-11">
                         <span className="h2">{data.responsavelNomeInteressado}</span>
                     </div>
+                    <button
+                        type="button"
+                        title="Fechar conversa"
+                        onClick={this.closeConversation.bind(this)}
+                        className="col-1 close-conversation">
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                    </button>
                 </div>
                 );
     }
