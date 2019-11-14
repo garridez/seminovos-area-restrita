@@ -96,7 +96,7 @@ module.exports.callback = ($) => {
                 imgs.data('uploaded', true);
                 imgsToDelete.data('deleted', true);
                 $fotosContainer.data('reordanado', false)
-                $imgs.data('posicao-rotacao', 0);
+                imgs.data('posicao-rotacao', 0);
 
                 $('.fotos-container')
                         .closest('.step-container')
