@@ -47,8 +47,10 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="checkbox form-group form-group-default">
-                            <?= $this->formCheckbox($fields['veiculo_zero_km']) ?>
+                        <div class="form-group form-group-default">
+                            <div class="checkbox">
+                                <?= $this->formCheckbox($fields['veiculo_zero_km']) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
