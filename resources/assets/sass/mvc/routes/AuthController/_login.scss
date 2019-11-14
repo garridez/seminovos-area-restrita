@@ -8,4 +8,14 @@
         background-color: rgba(0,0,0,0);
         border:0;
     }
+    form {
+        > .form-group{
+            border: none;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .form-group label {
+            font-weight: bold !important;
+        }
+    }
 }
