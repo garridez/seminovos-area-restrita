@@ -182,6 +182,8 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "5":
                     $frase = "Anúncio inativo no site";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["reativar"] = true;
                     $temp_acoes["excluir"] = true;
                     break;
