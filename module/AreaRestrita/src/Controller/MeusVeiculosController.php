@@ -80,7 +80,7 @@ class MeusVeiculosController extends AbstractActionController
             $intevaloData = $dataAtual->diff($dataExpiracao);
             $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
-            
+
             $dadosVeiculos = self::retornaValidacaoRevenda($dadosVeiculos);
         } else {
             $dadosVeiculos = self::retornaValidacaoParticular($dadosVeiculos);
@@ -102,11 +102,12 @@ class MeusVeiculosController extends AbstractActionController
             'paginationResultado' => true
         ];
 
+        $this->layout()->dataExpiracaoRevenda = $dataExpiracao ?? null;
+        $this->layout()->diasParaExpirar = $intevaloData ?? null;
+
         $viewModel = new ViewModel([
             'paginationData' => $paginationData,
             'meusVeiculos' => $dadosVeiculos,
-            'dataExpiracaoRevenda' => $dataExpiracao ?? null,
-            'diasParaExpirar' => $intevaloData ?? null
         ]);
 
         $request = $this->getRequest();

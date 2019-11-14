@@ -1,4 +1,14 @@
-<?php /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */ ?>
+<?php /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */ 
+$fraseExpiracao = "Expira Hoje";
+$diasParaExpirar = 8;
+if($diasParaExpirar > 0){
+  $fraseExpiracao = "Expira em ".$diasParaExpirar." dias";
+}
+if($diasParaExpirar > 7){
+  $fraseExpiracao = "Expirará em ".$dataExpiracaoRevenda;
+}
+
+?>
 <div class="sidebar-menu mt-3">
   <!-- BEGIN SIDEBAR MENU ITEMS-->
   <ul class="menu-items mt-5">
@@ -65,7 +75,14 @@
 
         ?>
     </li>
-
+    <li class="text-white mb-4 pl-3 ml-2 ml-md-0 mb-md-0 d-flex align-items-center">
+      <h4 class="mr-2">
+          <i class="text-white fa fa-clock-o" aria-hidden="true"></i>
+      </h4>
+      <h5 class="text-white">
+        O seu plano <?= $fraseExpiracao ?>
+      </h5>
+    </li>
   </ul>
   <div class="clearfix"></div>
 </div>
