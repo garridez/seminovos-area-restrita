@@ -7,7 +7,7 @@ $form = $this->formDadosVeiculos;
 $fields = $form->getElements();
 
 foreach ($fields as $element) {
-    if ($element->getAttribute('name') != 'checkboxacessorios')
+    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km')
         $element->setAttribute('class', 'form-control');
 }
 
@@ -35,12 +35,23 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
             <form class="" role="form"> -->
             <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
                 <?= $this->formElement($fields['tipoVeiculo']) ?>
-                <div class="form-group form-group-default required">
-                    <?= $this->formLabel($fields['placa']) ?>
-                    <?= $this->formText($fields['placa']) ?>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback">
-                        Esta placa já está cadastrada no nosso sistema.
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default required">
+                            <?= $this->formLabel($fields['placa']) ?>
+                            <?= $this->formText($fields['placa']) ?>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">
+                                Esta placa já está cadastrada no nosso sistema.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <div class="checkbox">
+                                <?= $this->formCheckbox($fields['veiculo_zero_km']) ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -90,7 +101,7 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                     <?php endif; ?>
                     <?php if (isset($fields['idValvula'])): ?>
                         <div class="col-md-6">
-                            <div class="form-group form-group-default required">
+                            <div class="form-group form-group-default">
                                 <?= $this->formLabel($fields['idValvula']) ?>
                                 <?= $this->formSelect($fields['idValvula']) ?>
                             </div>
