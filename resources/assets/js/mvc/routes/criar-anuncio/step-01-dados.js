@@ -11,6 +11,7 @@ function init() {
     var placa = ctx.find('[name="placa"]');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
+    var tipoCadastro = $('input[name="tipoUsuarioCadastro"]');
     var marca = ctx.find('[name="idMarca"]');
     var modelo = ctx.find('[name="modeloCarro"]');
     var anoFabricacaoOptions = anoFabricacao.find('option');
@@ -190,6 +191,10 @@ function init() {
                         $('[name="versao"]').append("<option value='99' selected>Outra versão</option>")
                         $('[name="versao"]').trigger('change');
                         $('[name="outraVersao"]').val(caracteristica);
+                        if(tipoCadastro == '1')
+                            $('[name="outraVersao"]').prop('readonly', false);
+                        else
+                            $('[name="outraVersao"]').prop('readonly', true);
                     }else {
                         $('[name="versao"]').append("<option value='99'>Outra versão</option>")
                     }
