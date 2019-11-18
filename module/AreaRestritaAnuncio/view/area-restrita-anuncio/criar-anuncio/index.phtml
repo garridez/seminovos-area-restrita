@@ -76,6 +76,7 @@ if ($this->idVeiculo) {
 <div id="dados-basicos" class="hide">
     <form>
         <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+        <input type="hidden" id="tipoUsuarioCadastro" name="tipoUsuarioCadastro" value="<?= isset($veiculo['cadastro']['tipoCadastro']) ? $veiculo['cadastro']['tipoCadastro'] : 2 ?>" class="tipoCadastro">
         <input type="hidden" id="idStatus" name="idStatus" value="<?= $this->idStatus ?>" class="idStatus">
         <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
         <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
@@ -83,6 +84,8 @@ if ($this->idVeiculo) {
         <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total">
         <input type="hidden" id="acao" name="acao" value="" class="acao">
         <input type="hidden" id="codFipe" name="codFipe" value="<?= $this->codFipe ?>" class="codFipe">
+        <input type="hidden" id="placaVeiculo" name="placeVeiculo" value="<?= $this->placa ?>">
+        <input type="hidden" id="caracteristicaVeiculo" name="caracteristicaVeiculo" value="<?= $this->caracteristica ?>">
         <br>
     </form>
 </div>
