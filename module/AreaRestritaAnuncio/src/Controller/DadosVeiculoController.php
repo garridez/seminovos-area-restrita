@@ -56,6 +56,11 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(true);
         }
 
+        //libera edição para revendas
+        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+            $dadosForm->setIsEdition(false);
+        }
+
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
