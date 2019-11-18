@@ -48,7 +48,12 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
               2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
               3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
           ];
-          echo $this->partial('partials/menu-revenda.phtml',["arrayPlanos" => $arrayPlanos]);
+          $data = [
+            "arrayPlanos" => $arrayPlanos,
+            "dataExpiracaoRevenda" => $dataExpiracaoRevenda,
+            "diasParaExpirar" => $diasParaExpirar,
+          ];
+          echo $this->partial('partials/menu-revenda.phtml',$data);
       } else if ($this->userInfo('tipoCadastro') == 2) {
           $arrayPlanos = [
               1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
