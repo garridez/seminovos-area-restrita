@@ -1,5 +1,8 @@
 <?php /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */ 
 $fraseExpiracao = "Expira Hoje";
+if($diasParaExpirar < 0){
+  $fraseExpiracao = "Expirirou em ".$dataExpiracaoRevenda;
+}
 if($diasParaExpirar > 0){
   $fraseExpiracao = "Expira em ".$diasParaExpirar." dias";
 }
