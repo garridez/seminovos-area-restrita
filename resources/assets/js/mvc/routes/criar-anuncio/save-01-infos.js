@@ -45,7 +45,7 @@ module.exports.callback = ($) => {
                 if (!placa || placa.length < 7) {
                     return;
                 }
-                if(placaAtual == placa.toUpperCase()) {
+                if(placaAtual.toUpperCase() == placa.toUpperCase()) {
                     return;
                 }
                 BtnContinuar.disable();
