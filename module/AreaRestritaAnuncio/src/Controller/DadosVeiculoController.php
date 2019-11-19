@@ -56,6 +56,11 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(true);
         }
 
+        //libera edição para revendas
+        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+            $dadosForm->setIsEdition(false);
+        }
+
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
@@ -217,18 +222,19 @@ class DadosVeiculoController extends AbstractActionController
                     'idTipo' => $dataPost->tipoCadastro,
                     'idVeiculo' => $dataPost->idVeiculo,
                     'ordem' => $dataPost->ordem,
+                    'rotacionar' => $dataPost->rotacionarNovasFotos,
                 ];
 
                 $files = $moveUpload->move($request->getFiles()->fotos, true);
                 $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files
                 ];
-
+                
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
                 foreach ($files as $file) {
                     unlink($file);
                 }
-                
+
                 for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
                     $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
                 }
@@ -270,7 +276,8 @@ class DadosVeiculoController extends AbstractActionController
             $fotos = $dadosVeiculo['fotos'];
         }
         return new ViewModel([
-            'fotos' => $fotos
+            'fotos' => $fotos,
+            'existeVeiculo' => isset($dadosVeiculo['idVeiculo']) &&  $dadosVeiculo['idVeiculo']
         ]);
     }
 
@@ -366,29 +373,40 @@ class DadosVeiculoController extends AbstractActionController
         }
 //        return new ViewModel();
     }
-
-    public function consultaPlacaAction()
-    {
-        $request = $this->request;
-
-        if ($request->isPost()) {
-
-            $post = $request->getPost();
-            $placa = $post['placa'];
-
-            /* @var $apiClient ApiClient */
-            $apiClient = $this->getContainer()->get(ApiClient::class);
-
-            $veiculo = $apiClient->veiculosGet([], $placa, true)->getData();
-
-            if ($veiculo && isset($veiculo[0])) {
-                $existePlaca = ['status' => true];
-            } else {
-                $existePlaca = ['status' => false];
-            }
-            
-            return new JsonModel($existePlaca);
+    /**
+     * Verifica se a placa está disponível para cadastro
+     * Retorna TRUE se a placa estiver disponível
+     * Retorna FALSE se a placa estiver indisponível
+     */
+    public function placaDisponivelAction(){
+        $statusPermitidos = [
+                            1, // aguardando pagamento
+                            3, // cadastrando
+                            7, // removido
+                            8, // vendido
+                        ]; 
+        $placa = $this->params()->fromRoute('placa',false);
+        if(!$placa){
+            return new JsonModel(['status'=> 405, 'detail'=> 'Placa não informada']); 
         }
+        /* @var $apiClient ApiClient */
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+        $veiculo = $apiClient->veiculosGet(
+        [
+            "ignorarCondicoesBasicas" => 1
+        ], $placa, false)->json();
+
+        $placaDisponivel = false;
+        if($veiculo['status']!= 200){
+            $placaDisponivel =  true;
+        }else{
+            $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
+        }
+
+        return new JsonModel( [
+            'status' => 200,
+            'placaDisponivel' => $placaDisponivel
+        ]);
     }
 
     public function getVersaoAction()

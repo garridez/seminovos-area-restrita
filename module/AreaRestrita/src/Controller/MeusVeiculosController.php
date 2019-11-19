@@ -11,12 +11,14 @@ use AreaRestrita\Model\Propostas;
 use SnBH\Common\ServiceVeiculo;
 use Zend\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Service\Identity;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
+use AreaRestrita\Model\PesquisaSatisfacao;
 
 class MeusVeiculosController extends AbstractActionController
 {
@@ -47,23 +49,65 @@ class MeusVeiculosController extends AbstractActionController
     {
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        $request = $this->request;
+        
+        $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
-        $dadosVeiculos = $veiculosModel->getAll();
+        $dadosVeiculos = $veiculosModel->getAll($page);
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        
+        $dataAtual = new \DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
+            /* @var $identity Identity */
+            $identity = $this->getContainer()->get(Identity::class);
+            $idCadastro = $identity->getIdentity();
+            
+            //pegar data de expiração do ultimo pagamento da revenda
+            /* @var $pagamentosModel Pagamentos */
+            $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
+            // Busca os dados do pagamento
+            $pagamentosVeiculos = $pagamentosModel->get(null, 6000);
+            //var_dump($pagamentosVeiculos);
+            $dataExpiracaoPlano = null;
+            $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos,$idCadastro,"dataExpiracao");
+            $dataExpiracao = new \DateTime($dataExpiracaoPlano);
+            $intevaloData = $dataAtual->diff($dataExpiracao);
+            $intevaloData = (int) $intevaloData->format('%R%a');
+            $dataExpiracao = $dataExpiracao->format('d/m/Y');
+
             $dadosVeiculos = self::retornaValidacaoRevenda($dadosVeiculos);
         } else {
             $dadosVeiculos = self::retornaValidacaoParticular($dadosVeiculos);
         }
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
+        
+        $routeName = str_replace("/meus-veiculos", "", $request->getRequestUri());
+
+        $routeParams = "/meus-veiculos";
+        
+        $paginationData = [
+            'pages' => $dadosVeiculos['pages'],
+            'total' => $dadosVeiculos['total'],
+            'current' => $page ?? 1,
+            'routeName' => $routeName,
+            'routeParams' => $routeParams,
+            'pagination' => true,
+            'paginationResultado' => true
+        ];
+
+        $this->layout()->dataExpiracaoRevenda = $dataExpiracao ?? null;
+        $this->layout()->diasParaExpirar = $intevaloData ?? null;
 
         $viewModel = new ViewModel([
-            'meusVeiculos' => $dadosVeiculos
+            'paginationData' => $paginationData,
+            'meusVeiculos' => $dadosVeiculos,
         ]);
 
         $request = $this->getRequest();
@@ -160,6 +204,8 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "5":
                     $frase = "Anúncio inativo no site";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["reativar"] = true;
                     $temp_acoes["excluir"] = true;
                     break;
@@ -388,6 +434,35 @@ class MeusVeiculosController extends AbstractActionController
         return $result;
 
     }
+    
+        /*
+     * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
+     * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
+     * @return type $result
+     */
+    protected function getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, $variavel)
+    {
+        if (!isset($pagamentosVeiculos['data'])) {
+            return null;
+        }
+
+        $result = null;
+        $auxData = null;//new \DateTime('1969-01-01');
+
+        foreach ($pagamentosVeiculos['data'] AS $pagamento){
+            if($pagamento["idCadastro"] == $idCadastro){
+                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+
+                if($dataCadastro > $auxData){
+                    $auxData = $dataCadastro;
+                    $result = $pagamento[$variavel];
+                }
+            }
+        }
+
+        return $result;
+
+    }
 
     /*
      * Função generica que faz as seguintes ações
@@ -443,6 +518,32 @@ class MeusVeiculosController extends AbstractActionController
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
             ], $idVeiculo);
+        echo json_encode($dadosVeiculos);
+        die;
+    }
+    
+    public function pesquisaAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+        
+        $request = $this->request;
+        
+        /* @var $identity Identity */
+        $identity = $this->getContainer()->get(Identity::class);
+        
+        $data = [
+            'idCadastro' => $identity->getIdentity(),
+            'idVeiculo' => $idVeiculo
+        ];
+
+        $data += $request->getPost()->toArray();
+
+        /* @var $veiculosModel Veiculos */
+        $pesquisaModel = $this->getContainer()->get(PesquisaSatisfacao::class);
+
+        // Busca os dados do cadastro
+        $dadosVeiculos = $pesquisaModel->post($data);
+
         echo json_encode($dadosVeiculos);
         die;
     }

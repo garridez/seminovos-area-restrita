@@ -5,36 +5,30 @@
 
 <div class="snbh-logo-container">
     <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
-    <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-        <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-        <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
-    </svg>
+    <a href="https://seminovos.com.br/">
+        <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+        </svg>
+    </a>
 </div>
 
 <div class="forms-container">
-    <p class="p-t-35">Preencha corretamente os campos abaixo e clique no botão entrar para acessar sua área restrita.</p>
+    <p class="p-t-35">Preencha os campos abaixo com seus dados de acesso e clique no botão entrar para acessar sua área restrita.</p>
     <br class="clearfix">
-
-
     <form class="tipo-cadastro-container container">
         <div class="row">
-            <div class="col-6">
-                <div class="form-check form-check-inline" title="Entrar usando minha conta particular">
-                    <input type="radio" class="form-check-input" id="radioTipoCadastroParticular" name="tipoCadastro"
-                           value="container-form-particular" checked>
-                    <label class="form-check-label" for="radioTipoCadastroParticular">
-                        Particular
-                    </label>
-                </div>
+            <div class="col-12 text-center m-b-10">
+                Escolha como deseja entrar
             </div>
-            <div class="col-6">
-                <div class="form-check form-check-inline" title="Entrar usando minha conta de revendedor">
-                    <input type="radio" class="form-check-input" id="radioTipoCadastroRevenda" name="tipoCadastro"
-                           value="container-form-revenda">
-                    <label class="form-check-label" for="radioTipoCadastroRevenda">
-                        Revenda
-                    </label>
-                </div>
+        </div>
+        <div class="row">
+            <div class="switch-field">
+                <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
+                <label for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
+
+                <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
+                <label for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
             </div>
         </div>
     </form>
@@ -112,7 +106,6 @@
 
     ?>
     <div class="forms-group">
-        <!--      <br>-->
         <div class="container-form-particular">
             <?php
             $formLogin = $this->particularForm;
@@ -120,13 +113,12 @@
             $fields = $formLogin->getElements();
             ?>
             <form method="POST" name="login-particular-form" class="form-horizontal" role="form" id="login-particular-form">
-                <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
                 <div class="form-group">
                     <?= $this->formLabel($fields['usuarioEmail']) ?>
                     <div class="">
-                        <?= $this->formText($fields['usuarioEmail']) ?>
+                        <?= $this->formEmail($fields['usuarioEmail']) ?>
 
                     </div>
                 </div>
@@ -146,25 +138,25 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-md-12 no-padding sm-p-l-10 text-right">
-                        <small class="semi-bold">Não tem cadastro?
-                            <a href="/me-cadastrar" class="text-info small">
-                                <small class="text-amarelo semi-bold"> Cadastre-se</small>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <span class="semi-bold">
+                            Esqueceu sua senha? <br>
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info btn-esqueci-minha-senha semi-bold">
+                                <span class="semi-bold"></span>
+                                Clique aqui
                             </a>
-                        </small>
+                        </span>
+                    </div>
+                    <div class="col-6 no-padding">
+                        <span class="semi-bold">
+                            Não tem cadastro? <br>
+                            <a href="/me-cadastrar" class="semi-bold text-amarelo">
+                                Cadastre-se
+                            </a>
+                        </span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 d-flex align-items-center justify-content-end">
-                        <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
-                                <small class="semi-bold"> Clique aqui</small>
-                            </a>
-                        </small>
-                    </div>
-                </div>
-                <!--                  --><? //= $this->form($this->particularForm) ?>
             </form>
         </div>
 
@@ -176,7 +168,6 @@
             ?>
             <form method="POST" name="login-revenda-form" class="form-horizontal" role="form"
                   id="login-revenda-form">
-                <br>
                 <?= $this->formHidden($fields['type']) ?>
                 <?= $this->formHidden($fields['tipoCadastro']) ?>
                 <div class="form-group">

@@ -7,8 +7,11 @@ module.exports.callback = ($) => {
 function init() {
     var Confirms = require("components/Confirms")
     var ctx = $('.step-dados');
+    var veiculoZeroKm = ctx.find('[name="veiculo_zero_km"]');
+    var placa = ctx.find('[name="placa"]');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
+    var tipoCadastro = $('input[name="tipoUsuarioCadastro"]').val();
     var marca = ctx.find('[name="idMarca"]');
     var modelo = ctx.find('[name="modeloCarro"]');
     var anoFabricacaoOptions = anoFabricacao.find('option');
@@ -58,6 +61,8 @@ function init() {
             return;
         }else{
             $('#divOutraVersao').addClass("hide");
+            $('[name="outraVersao"]').val('');
+            $('[name="outraVersao"]').prop('required',false);
         }
         
         var itens = $(this).find('option:selected').data('itens');
@@ -136,19 +141,21 @@ function init() {
         
     });
     
-    anoModelo.change(function(){
+    anoModelo.change(function(event, limparCampos = true, caracteristica = ''){
         $('#divOutraVersao').addClass("hide");
-        portasSelect.html('')
-                .prepend(portasOptions)
-                .val('');
-        motorSelect.html('')
-                .prepend(motorOptions)
-                .val('');
-        valvulasSelect.html('')
-                .prepend(valvulasOptions)
-                .val('');
-        
-       
+
+        if(limparCampos) {
+            portasSelect.html('')
+                    .prepend(portasOptions)
+                    .val('');
+            motorSelect.html('')
+                    .prepend(motorOptions)
+                    .val('');
+            valvulasSelect.html('')
+                    .prepend(valvulasOptions)
+                    .val('');
+        }
+
        $.ajax({
                 type: "POST",
                 url: "/carro/versao",
@@ -163,6 +170,7 @@ function init() {
                     $('[name="versao"]').empty();
                     $('[name="versao"]').append('<option value="">Selecione a versao</option>');
                     var dados = response.data;
+                    var selecionadoVersao = false
 
                     for (var i = 0; i < dados.length; i++) {
                         //Use the Option() constructor to create a new HTMLOptionElement.
@@ -172,12 +180,28 @@ function init() {
                                 .html(dados[i].versao)
                                 .data('itens', dados[i].itens)
                             ;
-                        //Append the option to our Select element.
-                        $('[name="versao"]').append(option);
+                        if(caracteristica == dados[i].considerada) {
+                            selecionadoVersao = true
+                             $('[name="versao"]').append($(option).attr('selected', 'selected'));
+                        }else{
+                            //Append the option to our Select element.
+                            $('[name="versao"]').append(option);
+                        }
                         
                     }
                     
-                    $('[name="versao"]').append("<option value='99'>Outra versão</option>")
+                    if(!selecionadoVersao && caracteristica != ''){
+                        $('[name="versao"]').append("<option value='99' selected>Outra versão</option>")
+                        $('[name="versao"]').trigger('change');
+                        $('[name="outraVersao"]').val(caracteristica);
+                        if(tipoCadastro == '1')
+                            $('[name="outraVersao"]').prop('readonly', false);
+                        else
+                            $('[name="outraVersao"]').prop('readonly', true);
+                    }else {
+                        $('[name="versao"]').append("<option value='99'>Outra versão</option>")
+                    }
+
                     
                     if(dados.length == 0){
                         $('[name="versao"]').val('99').change();
@@ -194,6 +218,11 @@ function init() {
             });
        
     });
+
+    // executa comando para preencher versao e envia as caracteristicas 
+    // que usuario selecionou no cadastro
+        anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"').val() ]);
+
     $(".combinar-valor").change(function(event){
         event.preventDefault();
         var $check = $(this).find("input[type='checkbox']");
@@ -209,6 +238,14 @@ function init() {
                     $check.prop('checked', false);
                 }
             })
+        }
+    })
+    
+    veiculoZeroKm.click(function(){
+        if (this.checked) {
+            placa.removeAttr('required');
+        }else{
+            placa.attr('required', true);
         }
     })
 }
