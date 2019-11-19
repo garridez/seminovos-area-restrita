@@ -11,7 +11,7 @@ function init() {
     var placa = ctx.find('[name="placa"]');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
-    var tipoCadastro = $('input[name="tipoUsuarioCadastro"]');
+    var tipoCadastro = $('input[name="tipoUsuarioCadastro"]').val();
     var marca = ctx.find('[name="idMarca"]');
     var modelo = ctx.find('[name="modeloCarro"]');
     var anoFabricacaoOptions = anoFabricacao.find('option');
@@ -56,11 +56,13 @@ function init() {
         
         if($(this).find('option:selected').val() == 99){
             $('#divOutraVersao').removeClass("hide");
-            //$('[name="outraVersao"]').prop('required',true);
+            $('[name="outraVersao"]').prop('required',true);
             //$('[name="codFipe"]').empty();
             return;
         }else{
             $('#divOutraVersao').addClass("hide");
+            $('[name="outraVersao"]').val('');
+            $('[name="outraVersao"]').prop('required',false);
         }
         
         var itens = $(this).find('option:selected').data('itens');
@@ -178,12 +180,13 @@ function init() {
                                 .html(dados[i].versao)
                                 .data('itens', dados[i].itens)
                             ;
-                        if(caracteristica == dados[i].versao) {
-                            option.select(true);
+                        if(caracteristica == dados[i].considerada) {
                             selecionadoVersao = true
+                             $('[name="versao"]').append($(option).attr('selected', 'selected'));
+                        }else{
+                            //Append the option to our Select element.
+                            $('[name="versao"]').append(option);
                         }
-                        //Append the option to our Select element.
-                        $('[name="versao"]').append(option);
                         
                     }
                     
@@ -218,7 +221,7 @@ function init() {
 
     // executa comando para preencher versao e envia as caracteristicas 
     // que usuario selecionou no cadastro
-    anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"').val() ]);
+        anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"').val() ]);
 
     $(".combinar-valor").change(function(event){
         event.preventDefault();
