@@ -1,13 +1,17 @@
 <?php /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */ 
-$fraseExpiracao = "Expira Hoje";
+$fraseExpiracao = "Expira <b>Hoje</b>";
+$bgExpiracao = "plano-expira-semana";
 if($diasParaExpirar < 0){
-  $fraseExpiracao = "Expirirou em ".$dataExpiracaoRevenda;
+  $fraseExpiracao = "Expirirou em <br/><b>".$dataExpiracaoRevenda."</b>";
+  $bgExpiracao = "plano-expirou";
 }
 if($diasParaExpirar > 0){
-  $fraseExpiracao = "Expira em ".$diasParaExpirar." dias";
+  $fraseExpiracao = "Expira em <br/><b>".$diasParaExpirar." dias</b>";
+  $bgExpiracao = "plano-expira-semana";
 }
 if($diasParaExpirar > 7){
-  $fraseExpiracao = "Expirará em ".$dataExpiracaoRevenda;
+  $fraseExpiracao = "Expirará em <br/><b>".$dataExpiracaoRevenda."</b>";
+  $bgExpiracao = "plano-expira-mes";
 }
 
 ?>
@@ -77,11 +81,11 @@ if($diasParaExpirar > 7){
 
         ?>
     </li>
-    <li class="text-white mb-4 pl-3 ml-2 ml-md-0 mb-md-0 d-flex align-items-center">
-      <h4 class="mr-2">
-          <i class="text-white fa fa-clock-o" aria-hidden="true"></i>
-      </h4>
-      <h5 class="text-white">
+    <li class="mb-4 mb-md-0 <?= $bgExpiracao ?> aviso-expiracao">
+      <div class="icone d-flex justify-content-center mt-2">
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+      </div>
+      <h5 class="text-center">
         O seu plano <?= $fraseExpiracao ?>
       </h5>
     </li>
