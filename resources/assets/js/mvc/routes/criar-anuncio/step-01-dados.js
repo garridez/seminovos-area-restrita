@@ -56,7 +56,7 @@ function init() {
         
         if($(this).find('option:selected').val() == 99){
             $('#divOutraVersao').removeClass("hide");
-            $('[name="outraVersao"]').prop('required',true);
+            //$('[name="outraVersao"]').prop('required',true); // Esse campo não pode ser obrigatório
             //$('[name="codFipe"]').empty();
             return;
         }else{
