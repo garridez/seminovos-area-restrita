@@ -51,12 +51,11 @@ unset($foto, $fotosNewKeys);
                     <div class="form-group-lg form-group form-text-center">
                         <label class="form-control-lg btn btn-lg btn-laranja btn-block text-white" for="fotos">
                             Clique aqui para escolher <b>várias fotos</b>:
-                            <input type="file" id="fotos" name="fotos" multiple accept="image/jpg, image/jpeg"
-                                   class="hidden" />
+                            <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
                         </label>
                     </div>
                 <?php endif; ?>
-                <input type="file" name="foto" accept="image/jpg, image/jpeg" class="hidden" />
+                <input type="file" name="foto" accept="image/*" class="hidden" />
                 <div class=" container">
                     <div class="fotos-container">
                         <div class="row">
