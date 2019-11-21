@@ -41,6 +41,7 @@
     "lodash": "^4.17.15",
     "modernizr": "^3.6.0",
     "moment": "^2.24.0",
+    "node-sass": "^4.13.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
     "react": "^16.9.0",
