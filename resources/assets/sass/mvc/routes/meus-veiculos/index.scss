@@ -62,3 +62,31 @@
     font-weight: bold;
   }
 }
+.aviso-expiracao{
+  &.plano-expirou{
+    background-color: $vermelho;
+    i,h5{
+      color:$white;
+    }
+  }
+  &.plano-expira-mes{
+    background-color: $verde;
+    i,h5{
+      color:$white;
+    }
+  }
+  &.plano-expira-semana{
+    background-color: $amarelo;
+    i,h5{
+      color:$black;
+    }
+  }
+  i{
+    font-weight: 700;
+    font-size:2rem;
+  }
+  h5{
+    font-weight: 400;
+    font-size:1.2rem;
+  }
+}
