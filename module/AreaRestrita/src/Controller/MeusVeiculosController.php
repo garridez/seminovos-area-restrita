@@ -319,7 +319,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["excluir"] = true;
                     }
-                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2){
+                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] !=1){
                         $temp_acoes["reativar"] = true;
                     }
                     if($statusPagamento == 1){
@@ -350,7 +350,9 @@ class MeusVeiculosController extends AbstractActionController
                         $temp_acoes["renovar_plano"] = true;
                     } elseif ($veiculo['idPlano'] == 1) {
                         $temp_acoes["upgrade_plano"] = true;
-                    } else {
+                    } elseif ($veiculo["veiculo_zero_km"] == 1) {
+                        $temp_acoes["trocar_plano"] = true;
+                    }else{
                         $temp_acoes["reativar"] = true;
                     }
                     break;
