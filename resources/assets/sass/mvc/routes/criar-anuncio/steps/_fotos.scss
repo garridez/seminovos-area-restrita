@@ -23,8 +23,9 @@
             $proportion: 3;
             width: #{58*$proportion}px;
             height: #{38.7*$proportion}px;
-            background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
         }
         &.sortable-ghost{
             outline: #ccc dashed;

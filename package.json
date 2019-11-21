@@ -34,6 +34,7 @@
     "jquery-validation": "^1.19.0",
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
+    "node-sass": "^4.13.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
     "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
