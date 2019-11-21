@@ -60,8 +60,27 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        
+        $dataAtual = new \DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
+            /* @var $identity Identity */
+            $identity = $this->getContainer()->get(Identity::class);
+            $idCadastro = $identity->getIdentity();
+            
+            //pegar data de expiração do ultimo pagamento da revenda
+            /* @var $pagamentosModel Pagamentos */
+            $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
+            // Busca os dados do pagamento
+            $pagamentosVeiculos = $pagamentosModel->get(null, 6000);
+            //var_dump($pagamentosVeiculos);
+            $dataExpiracaoPlano = null;
+            $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos,$idCadastro,"dataExpiracao");
+            $dataExpiracao = new \DateTime($dataExpiracaoPlano);
+            $intevaloData = $dataAtual->diff($dataExpiracao);
+            $intevaloData = (int) $intevaloData->format('%R%a');
+            $dataExpiracao = $dataExpiracao->format('d/m/Y');
+
             $dadosVeiculos = self::retornaValidacaoRevenda($dadosVeiculos);
         } else {
             $dadosVeiculos = self::retornaValidacaoParticular($dadosVeiculos);
@@ -83,9 +102,12 @@ class MeusVeiculosController extends AbstractActionController
             'paginationResultado' => true
         ];
 
+        $this->layout()->dataExpiracaoRevenda = $dataExpiracao ?? null;
+        $this->layout()->diasParaExpirar = $intevaloData ?? null;
+
         $viewModel = new ViewModel([
             'paginationData' => $paginationData,
-            'meusVeiculos' => $dadosVeiculos
+            'meusVeiculos' => $dadosVeiculos,
         ]);
 
         $request = $this->getRequest();
@@ -182,6 +204,8 @@ class MeusVeiculosController extends AbstractActionController
                     break;
                 case "5":
                     $frase = "Anúncio inativo no site";
+                    $temp_acoes["editar_dados"] = true;
+                    $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["reativar"] = true;
                     $temp_acoes["excluir"] = true;
                     break;
@@ -398,6 +422,35 @@ class MeusVeiculosController extends AbstractActionController
 
         foreach ($pagamentosVeiculos['data'] AS $pagamento){
             if($pagamento["idVeiculo"] == $idVeiculo){
+                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+
+                if($dataCadastro > $auxData){
+                    $auxData = $dataCadastro;
+                    $result = $pagamento[$variavel];
+                }
+            }
+        }
+
+        return $result;
+
+    }
+    
+        /*
+     * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
+     * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
+     * @return type $result
+     */
+    protected function getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, $variavel)
+    {
+        if (!isset($pagamentosVeiculos['data'])) {
+            return null;
+        }
+
+        $result = null;
+        $auxData = null;//new \DateTime('1969-01-01');
+
+        foreach ($pagamentosVeiculos['data'] AS $pagamento){
+            if($pagamento["idCadastro"] == $idCadastro){
                 $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
 
                 if($dataCadastro > $auxData){

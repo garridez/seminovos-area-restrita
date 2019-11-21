@@ -56,6 +56,11 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(true);
         }
 
+        //libera edição para revendas
+        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+            $dadosForm->setIsEdition(false);
+        }
+
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
@@ -217,18 +222,19 @@ class DadosVeiculoController extends AbstractActionController
                     'idTipo' => $dataPost->tipoCadastro,
                     'idVeiculo' => $dataPost->idVeiculo,
                     'ordem' => $dataPost->ordem,
+                    'rotacionar' => $dataPost->rotacionarNovasFotos,
                 ];
 
                 $files = $moveUpload->move($request->getFiles()->fotos, true);
                 $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files
                 ];
-
+                
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
                 foreach ($files as $file) {
                     unlink($file);
                 }
-                
+
                 for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
                     $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
                 }

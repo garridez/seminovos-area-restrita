@@ -37,11 +37,15 @@ module.exports.callback = ($) => {
         })
         .on('steps-loaded', function () {
             marcaModelo($('#form_dadosVeiculo'));
+            var placaAtual = $('#placaVeiculo').val();
             /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
             $("form[name='form_dadosVeiculo']").find("input[name='placa']").blur(function (event) {
                 var placaInput = $(this);
                 var placa = placaInput.val() || '';
                 if (!placa || placa.length < 7) {
+                    return;
+                }
+                if(placaAtual.toUpperCase() == placa.toUpperCase()) {
                     return;
                 }
                 BtnContinuar.disable();

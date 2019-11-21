@@ -43,6 +43,17 @@ class DadosForm extends Form
                 'minlength' => 7,
             ]
         ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'veiculo_zero_km',
+            'options' => [
+                'label' => 'Seu Veiculo é Zero km?',
+            ],
+            'attributes' => [
+                'value' => 'yes',
+            ],
+        ]);
 
         global $container;
         /**
@@ -116,7 +127,7 @@ class DadosForm extends Form
             'type' => SelectValvula::class,
             'name' => 'idValvula',
             'attributes' => [
-                'required' => true,
+                'required' => false,
                 'data-init-plugin' => 'select2',
             ]
         ]);
@@ -211,10 +222,10 @@ class DadosForm extends Form
             'name' => 'motoCilindradas',
             'required' => true,
         ]);
-        $inputFilter->add([
+        /*$inputFilter->add([
             'name' => 'idValvula',
             'required' => true,
-        ]);
+        ]);*/
         $inputFilter->add([
             'name' => 'anoFabricacao',
             'required' => true,

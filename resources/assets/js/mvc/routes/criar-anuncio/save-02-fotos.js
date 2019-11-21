@@ -41,6 +41,16 @@ module.exports.callback = ($) => {
             return !!$(this).data('idfoto');
         });
 
+        var existeImgRotacionada = false
+        //controla se alguma imagem foi rotacionada
+        $fotosContainer
+            .find('.display-img')
+            .each(function(k, v) {
+                if($(v).data('posicao-rotacao') > 0){
+                    existeImgRotacionada = true
+                    return false
+                }
+            });
         // Se zero, não tem nenhuma foto pra subir ou excluir, então deixa passar pra próxima step
         if (!imgs.length && !imgsToDelete.length && !reordenar) {
             return true;
@@ -50,6 +60,8 @@ module.exports.callback = ($) => {
         imgs.each(function () {
             formData.append('ordem[]', $(this).data('ordem')); // Ordem para o upload
             formData.append('fotos[]', $(this).data('file-data'));
+            // marca se imagens de upload serão rotacionadas
+            formData.append('rotacionarNovasFotos[]',  $(this).data('posicao-rotacao'));
         });
         imgsToDelete.each(function () {
             formData.append('fotosToDelete[]', $(this).data('idfoto'));
@@ -84,6 +96,7 @@ module.exports.callback = ($) => {
                 imgs.data('uploaded', true);
                 imgsToDelete.data('deleted', true);
                 $fotosContainer.data('reordanado', false)
+                imgs.data('posicao-rotacao', 0);
 
                 $('.fotos-container')
                         .closest('.step-container')
