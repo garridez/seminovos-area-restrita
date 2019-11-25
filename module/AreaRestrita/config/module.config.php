@@ -158,6 +158,7 @@ return [
             View\Helper\UserInfo::class => View\Helper\Factory\UserInfoFactory::class,
             View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
             View\Helper\QtdAnuncios::class => View\Helper\Factory\QtdAnunciosFactory::class,
+            View\Helper\ExpiracaoRevenda::class => View\Helper\Factory\ExpiracaoRevendaFactory::class,
             Form\View\Helper\FormCheckbox::class => InvokableFactory::class,
             Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class
         ],
@@ -165,6 +166,7 @@ return [
             'userInfo' => View\Helper\UserInfo::class,
             'bodyClass' => View\Helper\BodyClass::class,
             'qtdAnuncios' => View\Helper\QtdAnuncios::class,
+            'expiracaoRevenda' => View\Helper\ExpiracaoRevenda::class,
             'formcheckbox' => Form\View\Helper\FormCheckbox::class,
             'form_checkbox' => Form\View\Helper\FormCheckbox::class,
             'formCheckbox' => Form\View\Helper\FormCheckbox::class,

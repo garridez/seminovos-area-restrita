@@ -67,19 +67,6 @@ class MeusVeiculosController extends AbstractActionController
             /* @var $identity Identity */
             $identity = $this->getContainer()->get(Identity::class);
             $idCadastro = $identity->getIdentity();
-            
-            //pegar data de expiração do ultimo pagamento da revenda
-            /* @var $pagamentosModel Pagamentos */
-            $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
-            // Busca os dados do pagamento
-            $pagamentosVeiculos = $pagamentosModel->get(null, 6000);
-            //var_dump($pagamentosVeiculos);
-            $dataExpiracaoPlano = null;
-            $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos,$idCadastro,"dataExpiracao");
-            $dataExpiracao = new \DateTime($dataExpiracaoPlano);
-            $intevaloData = $dataAtual->diff($dataExpiracao);
-            $intevaloData = (int) $intevaloData->format('%R%a');
-            $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
             $dadosVeiculos = self::retornaValidacaoRevenda($dadosVeiculos);
         } else {
@@ -101,9 +88,6 @@ class MeusVeiculosController extends AbstractActionController
             'pagination' => true,
             'paginationResultado' => true
         ];
-
-        $this->layout()->dataExpiracaoRevenda = $dataExpiracao ?? null;
-        $this->layout()->diasParaExpirar = $intevaloData ?? null;
 
         $viewModel = new ViewModel([
             'paginationData' => $paginationData,
@@ -437,7 +421,7 @@ class MeusVeiculosController extends AbstractActionController
 
     }
     
-        /*
+    /*
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
      * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
      * @return type $result
