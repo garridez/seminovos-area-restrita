@@ -50,8 +50,8 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
           ];
           $data = [
             "arrayPlanos" => $arrayPlanos,
-            "dataExpiracaoRevenda" => $dataExpiracaoRevenda,
-            "diasParaExpirar" => $diasParaExpirar,
+            "dataExpiracaoRevenda" => $this->expiracaoRevenda()->dataExpiracaoRevenda,
+            "diasParaExpirar" => $this->expiracaoRevenda()->diasParaExpirar,
           ];
           echo $this->partial('partials/menu-revenda.phtml',$data);
       } else if ($this->userInfo('tipoCadastro') == 2) {
