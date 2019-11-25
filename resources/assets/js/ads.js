@@ -144,9 +144,9 @@ module.exports = (function (window, document) {
                 var w = size[0];
                 var h = size[1];
                 if (
-                        w <= maxW && w >= minW &&
-                        h <= maxH && h >= minH
-                        ) {
+                    w <= maxW && w >= minW &&
+                    h <= maxH && h >= minH
+                ) {
                     sizes.push(size);
                 }
             });
@@ -158,10 +158,10 @@ module.exports = (function (window, document) {
                 return a[0] <= b[0] ? 1 : -1;
             };
             return sizes
-                    .sort(orderByW ? hFirst : wFirst)
-                    .sort(orderByW ? wFirst : hFirst);
+                .sort(orderByW ? hFirst : wFirst)
+                .sort(orderByW ? wFirst : hFirst);
         };
-
+        
         return {
             meus_anucios: {
                 topo: function () {
@@ -174,6 +174,18 @@ module.exports = (function (window, document) {
                             [[494, 0], getSizesByRange(0, 470, 0, 100)],
                             [[328, 0], getSizesByRange(0, 300, 0, 100)],
                             [[0, 0], getSizesByRange(0, 300, 0, 200)]
+                        ]
+                    };
+                }
+            },
+            login: {
+                lateral: function () {
+                    return {
+                        adUnitPath: '/131912127/MA/LOGIN',
+                        size: getSizesByRange(0, 1000, 0, 100),
+                        sizeMapping: [
+                            [[994, 0], getSizesByRange(0, 160, 300, 600)],
+                            [[0, 0], []]
                         ]
                     };
                 }
