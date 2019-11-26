@@ -328,7 +328,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["excluir"] = true;
-                    if ($veiculo['idPlano'] == 4) {
+                    if ($veiculo['idPlano'] == 4 && $veiculo['veiculo_zero_km'] !=1) {
                         $temp_acoes["reativar"] = true;
                         //$temp_acoes["renovar"] = true;
                         $temp_acoes["renovar_plano"] = true;
