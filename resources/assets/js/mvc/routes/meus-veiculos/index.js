@@ -85,36 +85,62 @@ module.exports.callback = $ => {
     function pesquisaSatisfacaoDataForm (veiculo) {
         var $form = $("<form>");
         var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
-        var $select = $("<select name='vendaVeiculo' class='form-control'>")
-            .append('<option value="1">Vendi pela Seminovos BH</option>')
-            .append('<option value="2">Desisti de vender</option>')
-            .append('<option value="3">Vendi por outro meio</option>')
-            .append('<option value="4">Outro motivo</option>');
-        var $conjuntoSlect = $("<div class='d-flex align-items-center mt-4'></div>")
+        var $select = $("<select name='vendaVeiculo' class='form-control' required>");
+        var selectOptions = [
+            {value:"",text:"Selecione"},
+            {value:"1",text:"Vendi pela Seminovos BH"},
+            {value:"2",text:"Desisti de vender"},
+            {value:"3",text:"Vendi por outro meio"},
+            {value:"4",text:"Outro motivo"},
+        ];
+        selectOptions.forEach(function(e,i){
+            $select.append($(`<option value="${e.value}">${e.text}</option>`))
+        });
+
+        var $conjuntoSelect = $("<div class='form-group d-flex align-items-center mt-4 required'></div>")
             .append($("<span class='no-wrap mr-3'>Sobre a <b class='text-primary'>venda do veículo</b>:</span>"))
             .append($select);
 
-        var $estrelas = $("<div class='rate'>")
-            .append(`<input type="radio" id="star5" name="rate" value="5" />`)
-            .append(`<label for="star5" title="text">5 stars</label>`)
-            .append(`<input type="radio" id="star4" name="rate" value="4" />`)
-            .append(`<label for="star4" title="text">4 stars</label>`)
-            .append(`<input type="radio" id="star3" name="rate" value="3" />`)
-            .append(`<label for="star3" title="text">3 stars</label>`)
-            .append(`<input type="radio" id="star2" name="rate" value="2" />`)
-            .append(`<label for="star2" title="text">2 stars</label>`)
-            .append(`<input type="radio" id="star1" name="rate" value="1" />`)
-            .append(`<label for="star1" title="text">1 star</label>`);
-        var $conjuntoEstrelas = $("<div class='d-flex align-items-start mt-2'></div>")
+        var $rowColSelect = $(`
+            <div class="row">
+                <div class="col-12">
+                    <div class="conjunto-select"/>
+                </div>
+            </div>`);
+
+        $rowColSelect.find('.conjunto-select').replaceWith($conjuntoSelect)
+
+        var estrelas = [
+            {value:5,text:"Ótimo"},
+            {value:4,text:"Bom"},
+            {value:3,text:"Razoável"},
+            {value:2,text:"Ruim"},
+            {value:1,text:"Péssimo"},
+        ];
+        var $estrelas = $("<div class='rate'>");
+        estrelas.forEach(function(e,i){
+            $estrelas.append($(`<input type="radio" id="star${e.value}" name="rate value="${e.value}" required>`))
+                     .append($(`<label for="star${e.value}" title="${e.text}"></label>`));
+        });
+
+        var $conjuntoEstrelas = $("<div class='position-relative form-group d-flex align-items-start mt-2 required'></div>")
             .append($("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"))
             .append($estrelas);
         
+        var $rowColEstrelas = $(`
+            <div class="row">
+                <div class="col-12">
+                    <div class="estrelas"/>
+                </div>
+            </div>`);
+        $rowColEstrelas.find('.estrelas').replaceWith($conjuntoEstrelas);        
+        
         var $observacao = $("<textarea maxlength='255' name='observacoes' class='form-control'></textarea>");
-        var $conjuntoObservacoes = $("<div class='text-left mt-2'></div>")
+        var $conjuntoObservacoes = $("<div class='form-group text-left mt-2'></div>")
             .append($("<span class='no-wrap'>Observações:</span>"))
             .append($observacao);
 
-        $form.append($span).append($conjuntoSlect).append($conjuntoEstrelas).append($conjuntoObservacoes);
+        $form.append($span).append($rowColSelect).append($rowColEstrelas).append($conjuntoObservacoes);
         FormAlerts.success({
             form: $form,
             title:"Pesquisa de satisfação",
