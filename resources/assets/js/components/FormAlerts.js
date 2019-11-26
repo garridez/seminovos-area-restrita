@@ -15,9 +15,13 @@ module.exports = formAlerts = {
     },
     alert: function (type, options) {
         options = $.extend({}, this.optionsDefault, options);
-        var submit = $(`<button class="btn bg-verde text-white">`)
-                    .html(`<span class="text-submit">${options.submitText}</span>`)
-                    .click(function () {options.submitCallback()});
+        options.form.submit(function(e){
+            options.submitCallback();   
+            e.preventDefault();
+        })
+        var submit = $(`<button class="btn bg-verde text-white mt-3" type="submit">`)
+            .html(`<span class="text-submit">${options.submitText}</span>`);
+        options.form.append(submit);
         if (typeof options.img === "string" && options.img !== "") {
             options.img = $(`<img src="${options.img}" class="modal-img">`)
         }
@@ -26,9 +30,6 @@ module.exports = formAlerts = {
                 'close': '',
                 'modal-title': [options.img, options.title],
                 'modal-body': options.form,
-                'modal-footer': [
-                    submit
-                ],
             }
         }).on('hidden.bs.modal', function () {
             options.closeCallback();
