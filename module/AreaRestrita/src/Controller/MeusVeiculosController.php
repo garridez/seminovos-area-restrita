@@ -468,6 +468,7 @@ class MeusVeiculosController extends AbstractActionController
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 2,
+            'flagReativar' => 1,
             ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
