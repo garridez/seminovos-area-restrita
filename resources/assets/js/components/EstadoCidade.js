@@ -26,7 +26,7 @@ module.exports = function () {
                 });
 
                 var optionIdCidade = $('#cidadeSelected').val();
-                $('select[name="idCidade"] option[value="'+optionIdCidade+'"]').attr('selected','selected');
+                $(`select[name="idCidade"] option[value="${optionIdCidade}"]`).prop('selected',true);
             }
         });
     });
