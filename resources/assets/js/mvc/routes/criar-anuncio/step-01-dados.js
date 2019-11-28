@@ -221,7 +221,7 @@ function init() {
 
     // executa comando para preencher versao e envia as caracteristicas 
     // que usuario selecionou no cadastro
-        anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"').val() ]);
+        anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"]').val() ]);
 
     $(".combinar-valor").change(function(event){
         event.preventDefault();
