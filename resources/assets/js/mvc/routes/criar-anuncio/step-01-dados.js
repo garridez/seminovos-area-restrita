@@ -54,7 +54,7 @@ function init() {
         //console.log($(this).find('option:selected').val());
         $('[name="codFipe"]').val('');
         
-        if($(this).find('option:selected').val() == 99){
+        if($(this).find('option:selected').val() == -1){
             $('#divOutraVersao').removeClass("hide");
             //$('[name="outraVersao"]').prop('required',true); // Esse campo não pode ser obrigatório
             //$('[name="codFipe"]').empty();
@@ -191,7 +191,7 @@ function init() {
                     }
                     
                     if(!selecionadoVersao && caracteristica != ''){
-                        $('[name="versao"]').append("<option value='99' selected>Outra versão</option>")
+                        $('[name="versao"]').append("<option value='-1' selected>Outra versão</option>")
                         $('[name="versao"]').trigger('change');
                         $('[name="outraVersao"]').val(caracteristica);
                         if(tipoCadastro == '1')
@@ -199,12 +199,12 @@ function init() {
                         else
                             $('[name="outraVersao"]').prop('readonly', true);
                     }else {
-                        $('[name="versao"]').append("<option value='99'>Outra versão</option>")
+                        $('[name="versao"]').append("<option value='-1'>Outra versão</option>")
                     }
 
                     
                     if(dados.length == 0){
-                        $('[name="versao"]').val('99').change();
+                        $('[name="versao"]').val('-1').change();
                     }
 
                 },

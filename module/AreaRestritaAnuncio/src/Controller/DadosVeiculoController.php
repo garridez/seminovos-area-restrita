@@ -81,6 +81,10 @@ class DadosVeiculoController extends AbstractActionController
                 $data['versao'] = $data['outraVersao'];
             }
 
+            if($data['versao'] == '-1'){
+                $data['versao'] = '';
+            }
+
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
             if (isset($data['kilometragem'])) {
