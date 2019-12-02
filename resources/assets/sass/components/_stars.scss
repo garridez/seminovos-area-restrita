@@ -2,8 +2,9 @@
     padding: 0 10px;
 }
 .rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0;
 }
 .rate:not(:checked) > label {
     float:right;

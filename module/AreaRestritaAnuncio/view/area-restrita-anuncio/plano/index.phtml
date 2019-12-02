@@ -101,12 +101,16 @@ if ($isRevenda) {
                             }
 
                             if($idStatusAnuncio ?? false){
-                                if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3 ){
+                                if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3 || ($idStatusAnuncio == 4 && $zeroKm)){
                                     $diminuirPlano = true;
                                     $planoAtual = false;
                                 }
                             }else{
                                 $diminuirPlano = true;
+                            }
+                            
+                            if($plano['idPlano'] == 1 && $idStatusAnuncio == 4 && $zeroKm){
+                                $desabilitarPlano = true;
                             }
 
                             if($isRevenda){

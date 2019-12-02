@@ -25,8 +25,20 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
 </head>
 
-<body class="fixed-header l-login <?= $this->bodyClass() ?>">
-  <div class="login-wrapper d-flex justify-content-center bg-white">
+<body class="fixed-header l-login <?= $this->bodyClass() ?> bg-white container-fluid">
+  <div class="login-wrapper bg-white d-block d-md-flex">
+    <div class="col-md-4">
+      <div class="ad-login d-flex justify-content-end mt-3">
+        <div data-ad-path="login.lateral"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="login-container bg-white">
+        <div class="px-4 px-md-5 mx-md-3 py-3 py-md-5">
+          <?= $this->content ?>
+        </div>
+      </div>
+    </div>
     <?php /*
     <div class="bg-pic bg-light">
         // Quando tiver uma imagem colocar nessa tag
@@ -40,12 +52,8 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
       </div>
     </div>
     */?>
-    <div class="login-container bg-white">
-      <div class="px-4 px-md-5 mx-md-3 py-3 py-md-5">
-        <?= $this->content ?>
-      </div>
-    </div>
   </div>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
   <script src="/js/app.js?<?= $assetSufix ?>" async></script>
 </body>
 </html>
