@@ -88,8 +88,7 @@ metodos = {
             }
             metodos
                     .makeOptions(modeloInput.input, modelos, 'nome', 'id')
-                    .prepend('<option selected value="">Selecione o modelo</option>');
-
+                    .prepend($('<option>Selecione o modelo</option>').prop('selected', true));
             var value = modeloInput.value;
             if (value) {
                 modeloInput.input
@@ -117,8 +116,13 @@ metodos = {
         var optionsString = '';
         var destaques = false;
 
-        $.each(options, function (i, v) {
-            var option = '<option value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
+        $.each(options, function (i, v) {            
+            var disabled = "";
+            //Teste para ver se a string do campo é inváilda tipo "-" ou "   "
+            if(!/\w/.test(v[keyHtml])){
+                disabled = "disabled";
+            }
+            var option = '<option '+ disabled +' value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
             if (v.destaque !== undefined && v.destaque !== false) {
                 destaques = destaques || {};
                 destaques[v.destaque] = option;
