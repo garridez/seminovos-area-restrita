@@ -18,11 +18,12 @@ class Editor extends Component {
         if (!msg || !msg.trim()) {
             return false;
         }
-
+        console.log(this.props.lastIdMessage);
         const message = createNewMessage(
                 this.props.conversationActive,
                 this.props.idCadastro,
-                msg.trim());
+                msg.trim(),
+                (this.props.lastIdMessage + 1) + '-');
 
         this.props.dispatch({
             type: 'CHAT_SEND_MESSAGE',
@@ -60,8 +61,15 @@ class Editor extends Component {
     }
 }
 export default connect(state => {
+    const conversationActive = state.currentChat.conversationActive;
+    var lastIdMessage = 0;
+    if (conversationActive) {
+        const msgs = state.listMensagens[conversationActive];
+        lastIdMessage = parseInt((Object.keys(msgs).slice(-1)[0] || 0), 10);
+    }
     return {
-        conversationActive: state.currentChat.conversationActive,
-        idCadastro: state.cadastro.idCadastro
+        conversationActive,
+        idCadastro: state.cadastro.idCadastro,
+        lastIdMessage
     };
 })(Editor);

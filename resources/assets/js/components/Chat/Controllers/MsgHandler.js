@@ -35,13 +35,17 @@ class MsgLoader extends Component {
                         data: userData
                     });
                 })
-                .on('mensagem', (listChats) => {
-                    console.log('nova mensagem');
-                    console.log(listChats);
+                .on('mensagem', (listMensagens) => {
+                    this.props.dispatch({
+                        type: 'LIST_MENSAGENS',
+                        listMensagens
+                    });
                 })
                 .on('msg-delivered', (data) => {
-                    console.log('msg-delivered');
-                    console.log(data);
+                    this.props.dispatch({
+                        type: 'LIST_MENSAGENS_DELIVERED',
+                        data
+                    });
                 });
     }
 

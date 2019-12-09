@@ -20,7 +20,7 @@ export default class Message extends Component {
 
         return (
                 <li className={liClass.join(' ')}>
-                    <div className="text">{data.mensagem} - {data.idChatMensagem}</div>
+                    <div className="text">{data.mensagem}</div>
                     <div className="time" title={enviadoEm.format('LLLL')}>
                         {enviadoEm.format('h:mm')}
                     </div>

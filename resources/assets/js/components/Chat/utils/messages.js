@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 
-export function createNewMessage(idConversa, idCadastroRemetente, mensagem) {
-    const idChatMensagem = Math.random().toString(36).substr(2, 9);
+export function createNewMessage(idConversa, idCadastroRemetente, mensagem, prependId) {
+    const idChatMensagem = (prependId || '') + Math.random().toString(36).substr(2, 9);
     const enviadoEm = moment().format('YYYY-MM-DD HH:mm:ss.SSSS');
     const lidoEm = null;
     const delivered = false;

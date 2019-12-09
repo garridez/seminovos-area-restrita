@@ -18,7 +18,6 @@ const messages = (state = false, action) => {
             var {idConversa} = message;
 
             var chatData = state[idConversa];
-            chatData.mensagens.unshift(message);
             var totalMensagens = parseInt(chatData.totalMensagens);
             totalMensagens++;
             chatData.totalMensagens = '' + totalMensagens;

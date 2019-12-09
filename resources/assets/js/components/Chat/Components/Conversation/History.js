@@ -69,7 +69,7 @@ function renderMsgs(mensagens, conversation, meusDados, conversationActive) {
         data={msg}
         meusDados={meusDados}
         conversation={conversation} />;
-    }).reverse();
+    });
 }
 // Previne renderição desnecessária
 var prevMsgCount = null;
@@ -88,9 +88,9 @@ export default connect((state) => {
 
     if (mensagens) {
         if (mensagens.length !== prevMsgCount) {
-            mensagens = [...mensagens]; // Força o re-render
+            mensagens = {...mensagens}; // Força o re-render
         }
-        prevMsgCount = mensagens.length;
+        prevMsgCount = _.size(mensagens);
     }
 
     return {

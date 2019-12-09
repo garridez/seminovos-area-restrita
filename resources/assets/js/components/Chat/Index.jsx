@@ -27,7 +27,7 @@ class Chat extends Component {
 export default connect((state, ownProps) => {
     var numChats = false;
     if (state.listChats) {
-        numChats = Object.keys(state.listChats).length;
+        numChats = _.size(state.listChats);
     }
     return {
         numChats
