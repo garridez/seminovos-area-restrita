@@ -38,26 +38,14 @@ const messages = (state = false, action) => {
             if (state === false) {
                 state = {};
             }
-            _.forEach(action.listChats, (chatData, idConversa) => {
-                if (state[idConversa]) {
-                    var prevChatData = state[idConversa];
-                    var ids = _.flatMap(prevChatData.mensagens, function (msg) {
-                        return msg.idChatMensagem + '';
-                    });
-                    chatData.mensagens = chatData.mensagens.filter(function (msg) {
-                        return ids.indexOf(msg.idChatMensagem + '') === -1;
-                    });
-                    chatData.mensagens = chatData.mensagens.concat(prevChatData.mensagens);
-                    state[idConversa] = chatData;
-                } else {
-                    state[idConversa] = chatData;
-                }
 
+            _.forEach(action.listChats, (chatData, idConversa) => {
+                state[idConversa] = chatData;
             });
-            var listChats = {
+
+            return {
                 ...state
             };
-            return listChats;
         default:
             return state;
 }

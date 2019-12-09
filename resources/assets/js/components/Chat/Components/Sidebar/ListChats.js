@@ -31,7 +31,7 @@ function renderListChats(params) {
     var {listChats, onActive, conversationActive, filter} = params;
 
     listChats = _.sortBy(listChats, function (v) {
-        return v.mensagens[0].enviadoEm;
+        return v.lastMessage.enviadoEm;
     }).reverse();
 
     if (filter && filter.text) {

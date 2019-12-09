@@ -11,6 +11,18 @@ class MsgLoader extends Component {
 
     websocketEvents() {
         this.props.websocket
+                .on('list-chats', (listChats) => {
+                    this.props.dispatch({
+                        type: 'LIST_CHAT_LOAD',
+                        listChats
+                    });
+                })
+                .on('list-mensagens', (listMensagens) => {
+                    this.props.dispatch({
+                        type: 'LIST_MENSAGENS',
+                        listMensagens
+                    });
+                })
                 .on('initial-messages', (listChats) => {
                     this.props.dispatch({
                         type: 'LIST_CHAT_LOAD',

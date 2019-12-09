@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import behaviors from './reducers/behaviors';
 import listChats from './reducers/listChats';
+import listMensagens from './reducers/listMensagens';
 import cadastro from './reducers/cadastro';
 import currentChat from './reducers/currentChat';
 import filter from './reducers/filter';
@@ -11,6 +12,7 @@ import websocket from './reducers/websocket';
 const reducer = combineReducers({
     behaviors,
     listChats,
+    listMensagens,
     cadastro,
     currentChat,
     filter,

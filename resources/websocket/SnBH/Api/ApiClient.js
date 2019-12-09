@@ -58,7 +58,8 @@ var endpointMap = {
     mensagens: 'mensagens',
     modelos: 'modelos',
     veiculos: 'veiculos',
-    version: 'version'
+    version: 'version',
+    conversas: 'conversas',
 };
 
 var methods = [

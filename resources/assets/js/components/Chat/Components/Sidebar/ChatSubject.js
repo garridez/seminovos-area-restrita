@@ -18,7 +18,7 @@ class ChatSubject extends Component {
     }
     render() {
         const {data, isActive} = this.props;
-        var lastMsg = Object.values(data.mensagens)[0];
+        var lastMsg = data.lastMessage;
 
         var classes = 'chat-subject chat row py-2 px-2';
         if (isActive) {

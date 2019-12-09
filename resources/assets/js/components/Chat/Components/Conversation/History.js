@@ -83,7 +83,9 @@ export default connect((state) => {
     }
 
     const chatData = state.listChats[conversationActive];
-    var mensagens = chatData.mensagens;
+
+    var mensagens = state.listMensagens[conversationActive];
+
     if (mensagens) {
         if (mensagens.length !== prevMsgCount) {
             mensagens = [...mensagens]; // Força o re-render

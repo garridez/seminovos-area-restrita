@@ -27,6 +27,26 @@ class MessagesGateway {
             this.on(event, this.events[event].bind(this));
         }
     }
+    async getConversas() {
+        try {
+            var {data} = await this.apiClient.conversasGet(null, this.idCadastro);
+            if (0) {
+                // Debugar as requisições
+                console.log(
+                        this.socketId,
+                        'Novas mensagens carregadas ',
+                        data.idLastMessage,
+                        Object.keys(data.listChats || {}).length
+                        );
+            }
+
+            return data;
+        } catch (e) {
+            console.log('pau no ajax');
+            console.log(e);
+            return [];
+        }
+    }
     async getMessages(lastMessage = true) {
         var params = {
             idCadastro: this.idCadastro
@@ -43,13 +63,13 @@ class MessagesGateway {
                         this.socketId,
                         'Novas mensagens carregadas ',
                         data.idLastMessage,
-                        Object.keys(data.listChats || {}).length,
+                        Object.keys(data.listMensagens || {}).length,
                         params
                         );
             }
 
             this.idLastMessage = data.idLastMessage || 0;
-            return data.listChats;
+            return data.listMensagens;
         } catch (e) {
             console.log('pau no ajax');
             console.log('mensagensGet', params);
@@ -92,6 +112,26 @@ class MessagesGateway {
 }
 
 MessagesGateway.prototype.events = {
+    'list-chats': async function () {
+        try {
+            var conversas = await this.getConversas();
+            this.emit('list-chats', conversas);
+            this.messagesLoader(); // Interval
+        } catch (e) {
+            console.log('pau no ajax');
+            console.log(e);
+        }
+    },
+    'list-mensagens': async function () {
+        try {
+            var messages = await this.getMessages(false);
+            this.emit('list-mensagens', messages);
+            this.messagesLoader();
+        } catch (e) {
+            console.log('pau no ajax');
+            console.log(e);
+        }
+    },
     'initial-messages': async function () {
         try {
             var messages = await this.getMessages(false);
@@ -109,6 +149,8 @@ MessagesGateway.prototype.events = {
     }
 };
 MessagesGateway.prototype.sendInitialMessages = function () {
-    this.events['initial-messages'].call(this);
+    this.events['list-chats'].call(this);
+    this.events['list-mensagens'].call(this);
+    //this.events['initial-messages'].call(this);
 };
 export default MessagesGateway;
