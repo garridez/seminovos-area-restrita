@@ -33,6 +33,28 @@ const messages = (state = false, action) => {
             return {
                 ...state,
             };
+        case 'LIST_CHAT_UPDATE_LAST_MSG':
+            var hasChange = false;
+            const {listChats, listMensagens} = action;
+            // Atualiza a referência de última msg enviada
+            _.forEach(action.listChats, (chatData, idConversa) => {
+                const listMsgs = listMensagens[idConversa];
+                if (listMsgs) {
+                    let lastMsgId = _.findLastKey(listMsgs);
+                    if (lastMsgId !== chatData.lastMessage.idChatMensagem) {
+                        chatData.lastMessage = listMsgs[lastMsgId];
+                        hasChange = true;
+                    }
+                }
+
+                state[idConversa] = chatData;
+            });
+            if (!hasChange) {
+                return state;
+            }
+            return {
+                ...state
+            };
         case 'LIST_CHAT_LOAD':
             if (state === false) {
                 state = {};

@@ -21,6 +21,7 @@ const reducer = combineReducers({
 
 const middle = (store) => {
     return next => action => {
+            
             if (action.type !== 'CHAT_SEND_MESSAGE') {
                 return next(action);
             }
@@ -28,6 +29,12 @@ const middle = (store) => {
             store.dispatch({
                 'type': 'LIST_CHAT_NEW_MSG',
                 message: action.message
+            });
+            const {listChats, listMensagens} = store.getState();
+            store.dispatch({
+                'type': 'LIST_CHAT_UPDATE_LAST_MSG',
+                listChats,
+                listMensagens
             });
 
             return returnValue;
