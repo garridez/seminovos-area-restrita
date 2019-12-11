@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Message from './Message';
 
-class Conversation extends Component {
+class History extends Component {
     constructor() {
         super();
         this.ul = React.createRef();
@@ -98,4 +98,4 @@ export default connect((state) => {
         mensagens,
         meusDados: state.cadastro
     };
-})(Conversation);
+})(History);
