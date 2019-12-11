@@ -262,4 +262,15 @@ return [
             ],
         ],
     ],
+
+    'painel' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'painel',
+            'defaults' => [
+                'controller' => Ctrl\PainelController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
 ];
