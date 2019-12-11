@@ -2,6 +2,7 @@
 
 namespace AreaRestrita\Controller;
 
+use AreaRestrita\Model\Cadastros;
 use Zend\View\Model\ViewModel;
 use Aws\Athena\AthenaClient;
 use Aws\Athena\Exception\AthenaException;
@@ -16,22 +17,27 @@ class PainelController extends AbstractActionController
 
     private function retornarQueryAcessoPorDia($idCadastro)
     {
-        return <<< "sql"
+        return <<< sql
         SELECT idcadastro,
-             idveiculo,
-             DATE(from_unixtime(time)) AS date,
-             count(1) AS contador
+            idveiculo,
+            DATE(from_unixtime(time)) AS date,
+            count(1) AS contador
         FROM acesso
         WHERE idcadastro = $idCadastro
-        GROUP BY  idCadastro, idVeiculo, DATE(from_unixtime(time)) limit 5
-sql; 
+        GROUP BY  idCadastro, idVeiculo, DATE(from_unixtime(time)) limit 1
+sql;
     }
 
     public function indexAction()
     {
-        ini_set('xdebug.var_display_max_depth', '-1');
-        ini_set('xdebug.var_display_max_children', '-1');
-        ini_set('xdebug.var_display_max_data', '-1');
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        $cadastro = $cadastrosModel->getCurrent();
+        
+        //echo $this->retornarQueryAcessoPorDia($cadastro['idCadastro']);
+        //die;
+        ini_set('xdebug.var_display_max_depth', '10');
+        ini_set('xdebug.var_display_max_children', '256');
+        ini_set('xdebug.var_display_max_data', '1024');
 
         try {
             $this->athenaClient = AthenaClient::factory([
@@ -45,7 +51,7 @@ sql;
 
             $result = $this->athenaClient->startQueryExecution([
                 'QueryExecutionContext' => ['Database' => 'contador'],
-                'QueryString' => 'select * from acesso limit 1',
+                'QueryString' => $this->retornarQueryAcessoPorDia($cadastro['idCadastro']),
                 'ResultConfiguration' => [
                     //'EncryptionOption' => 'SSE_S3',
                     'OutputLocation' => "s3://aws-athena-query-results-041122835851-us-west-2/Unsaved/"
@@ -86,9 +92,10 @@ sql;
                 ;
             }
             
-        $acessosPorDia = $this->processResultRows($res);
-        
-        return new ViewModel(compact($acessosPorDia));
+        $acessosVeiculosPorDia = $this->processResultRows($res);
+        var_dump($acessosVeiculosPorDia);die;
+
+        //return new ViewModel(compact('acessosVeiculosPorDia'));
     }
 
     private function esperarCompletarQuery($QueryExecutionId)
