@@ -78,6 +78,15 @@ class MessagesGateway {
     }
 
     }
+    async messageReaded(msg) {
+        try {
+            await this.apiClient.mensagensPatch({
+                lido: 1
+            }, msg.idChatMensagem);
+        } catch (e) {
+            console.log(e);
+        }
+    }
     async messageSender(msg) {
         var result = await this.apiClient.mensagensPost(msg);
         this.idLastMessage = result.data.idChatMensagem;
@@ -107,7 +116,7 @@ class MessagesGateway {
 
         setTimeout(() => {
             this.messagesLoader();
-        }, 1000);
+        }, 2000);
     }
 }
 

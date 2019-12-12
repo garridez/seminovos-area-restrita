@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import {isSendedForMe} from '../../utils/messages';
 import Message from './Message';
 
 class History extends Component {
@@ -42,8 +43,26 @@ class History extends Component {
             });
         }
     }
+    msgLida(message) {
+        this.props.dispatch({
+            type: 'CHAT_MESSAGE_READED',
+            message
+        });
+    }
     render() {
         const {conversation, mensagens, meusDados, conversationActive} = this.props;
+
+        _.forEachRight(mensagens, (msg, key) => {
+            if (!isSendedForMe(meusDados, msg)) {
+                if (!msg.lidoEm) {
+                    this.msgLida({
+                        idConversa: conversation.idConversa,
+                        idChatMensagem: msg.idChatMensagem
+                    });
+                    return false;
+                }
+            }
+        });
         return (
                 <ul className="conversation" ref={this.ul} onScroll={this.onScroll.bind(this)}>
                     {renderMsgs(mensagens, conversation, meusDados, conversationActive)}

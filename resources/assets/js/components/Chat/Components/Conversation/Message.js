@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import {isSendedForMe} from '../../utils/messages';
 
 export default class Message extends Component {
     constructor() {
@@ -8,9 +9,10 @@ export default class Message extends Component {
     }
     render() {
         const {conversation, data, meusDados} = this.props;
+        var isSendedForMeBool = isSendedForMe(meusDados, data);
         var liClass = [
             'message',
-            meusDados.idCadastro !== data.idCadastroRemetente ? 'received' : 'sent',
+            isSendedForMeBool ? 'sent' : 'received',
         ];
         var enviadoEm = moment(data.enviadoEm);
 

@@ -22,6 +22,10 @@ websocket.on('initial-messages', function () {
 export default (state = websocket, action) => {
 
     switch (action.type) {
+        case 'CHAT_MESSAGE_READED':
+            websocket.emit('msg-readed', action.message);
+            return state;
+            break;
         case 'CHAT_SEND_MESSAGE':
             console.log('.');
             
