@@ -1,4 +1,7 @@
 <?php
+$currentUrl = $this->serverUrl(true);
+$isRedirect = preg_match('/redirect=/', $currentUrl);
+
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-development' : APPLICATION_VERSION;
@@ -25,7 +28,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
 </head>
 
-<body class="fixed-header l-login <?= $this->bodyClass() ?> bg-white container-fluid">
+<body class="fixed-header l-login <?= $this->bodyClass() ?> bg-white container-fluid <?= $isRedirect ? 'intro-off' : '' ?>">
   <div class="login-wrapper bg-white d-block d-md-flex">
     <div class="col-md-4">
       <div class="ad-login d-flex justify-content-end mt-3">

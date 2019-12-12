@@ -6,6 +6,7 @@ use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
 use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
+use Zend\Session\SessionManager;
 
 class AuthController extends AbstractActionController
 {
@@ -16,9 +17,15 @@ class AuthController extends AbstractActionController
         global $container;
 
         $redirect = $this->getRequest()->getQuery('redirect', false);
-
+        /** @var SessionManager $sessionManager */
+        $sessionManager = $container->get(SessionManager::class);
+        $sessionStorage = $sessionManager->getStorage();
         if ($redirect) {
             $redirect = base64_decode($redirect);
+            $sessionStorage->redirect = $redirect;
+        }
+        if ($sessionStorage->redirect) {
+            $redirect = $sessionStorage->redirect;
         }
 
         $particularForm = new Login\ParticularForm();
@@ -35,6 +42,7 @@ class AuthController extends AbstractActionController
 
         if ($authService->hasIdentity()) {
             if ($redirect) {
+                $sessionStorage->redirect = null;
                 return $this->redirect()->toUrl($redirect);
             }
             return $this->redirect()->toRoute('restrito');
@@ -75,6 +83,7 @@ class AuthController extends AbstractActionController
             ]);
             if ($result->getCode() === $result::SUCCESS) {
                 if ($redirect) {
+                    $sessionStorage->redirect = null;
                     return $this->redirect()->toUrl($redirect);
                 }
                 return $this->redirect()->toRoute('restrito');
