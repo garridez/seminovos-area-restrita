@@ -8,7 +8,6 @@ class MessagesGateway {
     idLastMessage = 0;
     messageLoaderTimeoutId = false;
     constructor(idCadastro, socket, apiClient) {
-        console.log('Construct MessagesGateway');
         this.idCadastro = idCadastro;
         this.socket = socket;
         this.apiClient = apiClient;
@@ -153,9 +152,11 @@ MessagesGateway.prototype.events = {
     },
     'msg-send': async function (msg) {
         var result = await this.messageSender(msg);
-        console.log(result);
         this.emit('msg-delivered', result);
-    }
+    },
+    'msg-readed': async function (msg) {
+        this.messageReaded(msg);
+    },
 };
 MessagesGateway.prototype.sendInitialMessages = function () {
     this.events['list-chats'].call(this);
