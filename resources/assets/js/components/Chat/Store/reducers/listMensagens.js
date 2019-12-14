@@ -3,6 +3,25 @@ import {sendNewMessage} from '../../utils/messages';
 
 const messages = (state = {}, action) => {
     switch (action.type) {
+        case 'MSG_LIDAS':
+            const {mgsLidas} = action;
+            if (!mgsLidas) {
+                return state;
+            }
+            var hasChange = false;
+            _.each(mgsLidas, (idChatMensagem, idConversa) => {
+                _.each(state[idConversa], (msg, idChatMsg) => {
+                    if (idChatMsg <= idChatMensagem && msg.lidoEm === null) {
+                        hasChange = true;
+                        msg.lidoEm = true;
+                    }
+                });
+            });
+            if (!hasChange) {
+                return state;
+            }
+
+            return {...state};
         case 'LIST_MENSAGENS':
             _.each(action.listMensagens, (msgs, key) => {
                 state[key] = state[key] || {};

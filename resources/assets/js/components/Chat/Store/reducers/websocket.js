@@ -6,17 +6,8 @@ const websocket = io('/', {
 websocket.on('connect', function () {
     console.log('connected');
 });
-websocket.on('initial-messages', function () {
-    console.log('initial-messages');
+websocket.on('list-mensagens', function () {
     $(window).resize();
-    return;
-    setTimeout(function () {
-        $('.chat-subject').eq(0).click();
-        setTimeout(function () {
-            $('.editor form input').val(Math.random().toString(36).substr(2, 9));
-            $('.editor form button').click();
-        }, 100);
-    }, 500);
 });
 
 export default (state = websocket, action) => {

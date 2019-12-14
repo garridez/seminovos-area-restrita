@@ -176,9 +176,12 @@ section.section-chat {
                 border-radius: 8px;
                 padding: 5px;
                 line-height: 20px;
-                &.not-delivered {
-                    .time {
-                        opacity: 0.1;
+
+                &.lida {
+                    .infos {
+                        .status {
+                            opacity: 0.5;
+                        }
                     }
                 }
                 .text {
@@ -190,12 +193,21 @@ section.section-chat {
                     padding-right: 30px;
                     overflow-wrap: break-word;
                 }
-                .time {
+                .infos {
                     float: right;
                     margin: -15px -1px;
-                    opacity: 0.5;
-                    font-size: 11px;
-                    transition: opacity 400ms;
+                    * {
+                        display: inline;
+                    }
+                    .time {
+                        opacity: 0.5;
+                        font-size: 11px;
+                        transition: opacity 400ms;
+                    }
+                    .status {
+                        opacity: 0.1;
+                        font-size: 11px;
+                    }
                 }
                 &.sent + .sent, &.received + .received {
                     margin-top: -5px !important;

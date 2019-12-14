@@ -9,22 +9,44 @@ export default class Message extends Component {
     }
     render() {
         const {conversation, data, meusDados} = this.props;
-        var isSendedForMeBool = isSendedForMe(meusDados, data);
+        const isSendedForMeBool = isSendedForMe(meusDados, data);
+        const enviadoEm = moment(data.enviadoEm);
+
         var liClass = [
             'message',
             isSendedForMeBool ? 'sent' : 'received',
         ];
-        var enviadoEm = moment(data.enviadoEm);
+
+        var statusTitle = '';
+        var statusIcon = '';
 
         if (data.delivered !== undefined) {
             liClass.push(data.delivered ? 'delivered' : 'not-delivered');
+            statusTitle = data.delivered ? 'Entregue' : 'Enviando...';
+            statusIcon = data.delivered ? 'check' : 'clock-o';
         }
+
+        if (isSendedForMeBool) {
+            statusIcon = statusIcon || 'check';
+            if (data.lidoEm) {
+                liClass.push('lida');
+                statusTitle = 'Lida';
+            }
+        }
+
+
+        statusIcon = 'fa fa-' + statusIcon;
 
         return (
                 <li className={liClass.join(' ')}>
                     <div className="text">{data.mensagem}</div>
-                    <div className="time" title={enviadoEm.format('LLLL')}>
-                        {enviadoEm.format('h:mm')}
+                    <div className="infos">
+                        <div className="time" title={enviadoEm.format('LLLL')}>
+                            {enviadoEm.format('h:mm')}
+                        </div>
+                        <div className="status" title={statusTitle}>
+                            <i className={statusIcon} aria-hidden="true"></i>
+                        </div>
                     </div>
                 </li>
                 );

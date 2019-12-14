@@ -48,7 +48,8 @@ class MessagesGateway {
     }
     async getMessages(lastMessage = true) {
         var params = {
-            idCadastro: this.idCadastro
+            idCadastro: this.idCadastro,
+            method: ['listMensagens', 'listLidas']
         };
         if (lastMessage && this.idLastMessage) {
             params.maiorQue = this.idLastMessage;
@@ -68,7 +69,7 @@ class MessagesGateway {
             }
 
             this.idLastMessage = data.idLastMessage || 0;
-            return data.listMensagens;
+            return data;
         } catch (e) {
             console.log('pau no ajax');
             console.log('mensagensGet', params);
@@ -97,16 +98,21 @@ class MessagesGateway {
     }
     async messagesLoader() {
         try {
-            var listChats = await this.getMessages();
+            var data = await this.getMessages();
+            var {listMensagens, listLidas} = data;
         } catch (e) {
             console.log('Messages loader error');
             console.log(e);
             return;
         }
 
-        if (Object.keys(listChats || {}).length !== 0) {
+        if (Object.keys(listMensagens || {}).length !== 0) {
             console.log('Nova mensagem');
-            this.emit('mensagem', listChats);
+            this.emit('mensagem', listMensagens);
+        }
+        
+        if (Object.keys(listLidas || {}).length !== 0) {
+            this.emit('mgs-lidas', listLidas);
         }
 
         if (!this.socket.connected) {
@@ -132,8 +138,8 @@ MessagesGateway.prototype.events = {
     },
     'list-mensagens': async function () {
         try {
-            var messages = await this.getMessages(false);
-            this.emit('list-mensagens', messages);
+            var data = await this.getMessages(false);
+            this.emit('list-mensagens', data.listMensagens);
             this.messagesLoader();
         } catch (e) {
             console.log('pau no ajax');
@@ -142,8 +148,8 @@ MessagesGateway.prototype.events = {
     },
     'initial-messages': async function () {
         try {
-            var messages = await this.getMessages(false);
-            this.emit('initial-messages', messages);
+            var data = await this.getMessages(false);
+            this.emit('initial-messages', data.listMensagens);
             this.messagesLoader();
         } catch (e) {
             console.log('pau no ajax');

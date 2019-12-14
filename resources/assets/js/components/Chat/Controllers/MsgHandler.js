@@ -23,6 +23,12 @@ class MsgLoader extends Component {
                         listMensagens
                     });
                 })
+                .on('mgs-lidas', (mgsLidas) => {
+                    this.props.dispatch({
+                        type: 'MSG_LIDAS',
+                        mgsLidas
+                    });
+                })
                 .on('initial-messages', (listChats) => {
                     this.props.dispatch({
                         type: 'LIST_CHAT_LOAD',
