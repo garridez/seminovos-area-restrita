@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            (function () {
+                var host = window.location.host;
+                var isDev = false;
+                if (host.indexOf('localhost') !== -1) {
+                    isDev = true;
+                }
+                if (host.indexOf('192') !== -1) {
+                    isDev = true;
+                }
+                if (host.indexOf('172') !== -1) {
+                    isDev = true;
+                }
+
+                if (!isDev) {
+                    return;
+                }
+                var script = document.createElement('script');
+
+                script.src = 'http://' + window.location.hostname + ':35729/livereload.js?ext=Chrome&extver=2.1.0';
+                document.head.appendChild(script);
+            })()
+
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            var applicationServerKey = 'BOrxrGQN-UvyXHJxKwwnvZcS8PWwV3c8OyFcuZQKLfBV03xpfGFWdpJ2dhp3SBiLEHhEMrItIiq13lrG3ocWmwM';
+            var privateKey = 'BQ59M3Siu1YG_QR1S4wfsfbr2tRNT8x3L6mdKeZbv7c';
+            
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                console.log('Service Worker and Push are supported');
+                navigator.serviceWorker.register('sw.js')
+                        .then(function (swReg) {
+                            var pushManager = swReg.pushManager;
+                            
+                            pushManager.subscribe({
+                                userVisibleOnly: true,
+                                applicationServerKey: applicationServerKey,
+                            }).then(function (pushSubscription) {
+                                console.log(pushSubscription);
+                                $.post('/push-subscription.php', {
+                                    'subscription': JSON.stringify(pushSubscription)
+                                }, function(){
+                                    alert('Obrigado');
+                                });
+
+                            });
+                            return;
+                            //console.log('Service Worker is registered', swReg);
+                            console.log(pushManager);
+                            pushManager.getSubscription().then(function () {
+                                console.log(arguments);
+                            });
+                        })
+                        .catch(function (error) {
+                            console.error('Service Worker Error', error);
+                        });
+            } else {
+                console.warn('Push messaging is not supported');
+                alert('Seu navegador não suporta as notificações push :(')
+            }
+
+        </script>
+    </head>
+    <body>
+        <div>Aceita as notificações aí por favor.</div>
+    </body>
+</html>
