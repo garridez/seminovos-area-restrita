@@ -11,6 +11,7 @@ services:
         container_name: snbh-area-restrita
         ports:
             - "8093:80"
+            - "2052:80"
         volumes:
             - .:/home/www-data
         environment:
