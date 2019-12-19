@@ -1,0 +1,346 @@
+<?php 
+$DEMO_veiculos = [
+                    [   "modelo"=>"Uno Way",
+                        "ano_modelo"=>"16",
+                        "ano_fabricacao"=>"16",
+                        "data_cadastro"=>"21/02/19",
+                        "placa"=>"GOP-2789",
+                        "cliques"=>"120",
+                        "num_propostas"=>"24",
+                        "cliques_telefone"=>"24",
+                        "compartilhamentos"=>"24",
+                        "visualizar"=> true,
+                        "editar"=> true,
+                        "status"=> 5,
+                    ],
+                    [   "modelo"=>"Uno Way",
+                        "ano_modelo"=>"16",
+                        "ano_fabricacao"=>"16",
+                        "data_cadastro"=>"21/02/19",
+                        "placa"=>"GOP-2789",
+                        "cliques"=>"120",
+                        "num_propostas"=>"24",
+                        "cliques_telefone"=>"24",
+                        "compartilhamentos"=>"24",
+                        "visualizar"=> true,
+                        "editar"=> true,
+                        "status"=> 5,
+                    ],
+                    [   "modelo"=>"Uno Way",
+                        "ano_modelo"=>"16",
+                        "ano_fabricacao"=>"16",
+                        "data_cadastro"=>"21/02/19",
+                        "placa"=>"GOP-2789",
+                        "cliques"=>"120",
+                        "num_propostas"=>"24",
+                        "cliques_telefone"=>"24",
+                        "compartilhamentos"=>"24",
+                        "visualizar"=> true,
+                        "editar"=> true,
+                        "status"=> 2,
+                    ],
+                    [   "modelo"=>"Uno Way",
+                        "ano_modelo"=>"16",
+                        "ano_fabricacao"=>"16",
+                        "data_cadastro"=>"21/02/19",
+                        "placa"=>"GOP-2789",
+                        "cliques"=>"120",
+                        "num_propostas"=>"24",
+                        "cliques_telefone"=>"24",
+                        "compartilhamentos"=>"24",
+                        "visualizar"=> true,
+                        "editar"=> true,
+                        "status"=> 2,
+                    ]                    
+                ];
+?>
+<div class="container-fluid painel-revenda">
+    <div class="row step step-plano">
+        <div class="col-12 d-flex justify-content-center align-items-center ">
+            <div class="mr-2">
+                <b>SEU PLANO VENCERA DIA 31/12/2019</b>
+            </div>
+            <a href="" class="btn btn-invert"> ver faturas </a>
+        </div>
+    </div>
+    <div class="row step step-seminovos">
+        <div class="col-12 col-md-8">
+            <h5>
+                Informações portal SEMINOVOSBH
+            </h5>
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-end pr-md-0">
+            <div class="form-group mt-2">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control input" />
+                    <span class="input-group-addon text-black">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <a href="#" class="btn btn-laranja">ok</a>
+        </div>
+        <div class="col-12 col-md-4 list list-marcas">
+            <div class="list-header">
+                MARCA
+            </div>
+            <?php foreach ([
+                            ["marca"=>"Fiat",       "num_buscas"=>"123.654"],
+                            ["marca"=>"Volkswagen", "num_buscas"=>"123.654"],
+                            ["marca"=>"Chevrolet",  "num_buscas"=>"123.654"],
+                            ["marca"=>"BMW",        "num_buscas"=>"123.654"],
+                            ["marca"=>"Mercedes",   "num_buscas"=>"123.654"],
+                ] as $key => $busca) : ?>
+            <div class="py-1">
+                <div class="d-flex justify-content-between align-items-center">
+                    <img src="/img/exemplo/wireframe1.png" <?= /*$busca['marca']*/ "" ?> alt="">
+                    <div class="busca">
+                        <span class="num-busca">
+                            <?=$busca['num_buscas']?>
+                        </span>
+                        <span class="texto-busca">
+                            buscas feitas
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach ?>
+        </div>
+        <div class="col-12 col-md-4 list list-modelos">
+            <div class="list-header">
+                Modelo
+            </div>
+            <?php foreach ([
+                            ["modelo"=>"Palio",   "num_buscas"=>"123.654"],
+                            ["modelo"=>"Gol",     "num_buscas"=>"123.654"],
+                            ["modelo"=>"Fusion",  "num_buscas"=>"123.654"],
+                            ["modelo"=>"Onix",    "num_buscas"=>"123.654"],
+                            ["modelo"=>"C-180",   "num_buscas"=>"123.654"],
+                ] as $key => $busca) : ?>
+            <div class="py-1">
+                <div class="d-flex justify-content-between align-items-center">
+                    <b><?= $busca['modelo'] ?></b>
+                    <div class="busca">
+                        <span class="num-busca">
+                            <?=$busca['num_buscas']?>
+                        </span>
+                        <span class="texto-busca">
+                            buscas feitas
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach ?>
+        </div>
+        <div class="col-12 col-md-4 list list-categorias">
+            <div class="list-header">
+                Categoria
+            </div>
+            <?php foreach ([
+                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
+                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
+                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
+                ] as $key => $busca) : ?>
+            <div class="py-1">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-block">
+                        <img src="/img/exemplo/wireframe2.png" alt="">
+                    </div>
+                    <div class="busca">
+                        <span class="num-busca">
+                            <?=$busca['num_buscas']?>
+                        </span>
+                        <span class="texto-busca">
+                            buscas feitas
+                        </span>
+                    </div>
+                </div>
+                <small><?=$busca['categoria']?></small>
+            </div>
+            <?php endforeach ?>
+        </div>
+    </div>
+    <div class="row step step-geral">
+        <div class="col-12">
+            <h5>
+                Geral
+            </h5>
+        </div>
+        <div class="col-12 col-md-4 card">
+            <div class="card-header">
+                <span>
+                    Planos
+                </span>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 card">
+            <div class="card-header">
+                <span>
+                    Veículos Cadastrados
+                </span>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="qtd">
+                        86
+                    </div>
+                    <div class="prct text-success">
+                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        <span>
+                            5,5%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 card">
+            <div class="card-header">
+                <span>
+                    Veículos Ativos
+                </span>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="qtd">
+                        86
+                    </div>
+                    <div class="prct text-danger">
+                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                        <span>
+                            5,5%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 card">
+            <div class="card-header">
+                <span>
+                    Propostas Recebidas
+                </span>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="qtd">
+                        86
+                    </div>
+                    <div class="prct text-danger">
+                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                        <span>
+                            5,5%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 card">
+            <div class="card-header">
+                <span>
+                    E-mails Respondidos
+                </span>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="qtd">
+                        86
+                    </div>
+                    <div class="prct text-success">
+                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        <span>
+                            5,5%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row step step-meus-veiculos">
+        <div class="col-12 col-md-8">
+            <h5>
+                Meus Veículos
+            </h5>
+        </div>
+        <div class="col-12 col-md-4 pr-md-0">
+            <div class="form-group d-flex justify-content-end">
+                <select name="ordenacao" class="form-control">
+                    <option value="Ordenar por">Ordenar por</option>
+                    <option value="Mais recentes">Mais recentes</option>
+                    <option value="Mais antigos">Mais antigos</option>
+                    <option value="Mais clicados">Mais clicados</option>
+                    <option value="Menos clicados">Menos clicados</option>
+                </select>
+                <select name="status" class="form-control">
+                    <option value="Status">Status</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+                <button class="btn btn-laranja">ok</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <table class="table table-responsive tableveiculos">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Veículos</th>
+                        <th class="d-none d-md-table-cell">Data de cadastro</th>
+                        <th>Placa</th>
+                        <th>Cliques</th>
+                        <th>Propostas Recebidas</th>
+                        <th class="d-none d-md-table-cell">Cliques Telefone</th>
+                        <th class="d-none d-md-table-cell">Compartilhamentos</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php   foreach ($DEMO_veiculos as $key => $veiculo) :?>
+                    <tr>
+                        <td class="d-table-cell">
+                            <div class="<?=$veiculo['status']==2 ? 'text-success' : 'text-danger'?>">
+                                <i class="fa fa-circle" aria-hidden="true"></i>
+                            </div>
+                        </td>
+                        <td class="d-table-cell">
+                            <?= $veiculo['modelo'] ?> <?= $veiculo['ano_fabricacao'] ?>/<?= $veiculo['ano_modelo'] ?>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            <?= $veiculo['data_cadastro'] ?>
+                        </td>
+                        <td class="d-table-cell px-0">
+                            <?= $veiculo['placa'] ?>
+                        </td>
+                        <td class="d-table-cell">
+                            <?= $veiculo['cliques'] ?>
+                        </td>
+                        <td class="d-table-cell">
+                            <?= $veiculo['num_propostas'] ?>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            <?= $veiculo['cliques_telefone'] ?>
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            <?= $veiculo['compartilhamentos'] ?>
+                        </td>
+                        <td class="d-table-cell">
+                            <div class="icon-1-5x <?= $veiculo['visualizar']?'text-success':'text-danger' ?>">
+                                <i class="fa <?= $veiculo['visualizar']?'fa-eye':'fa-eye-slash' ?>"
+                                    aria-hidden="true"></i>
+                            </div>
+                        </td>
+                        <td class="d-table-cell">
+                            <div class="icon-1-5x <?= $veiculo['editar']?'text-success':'text-danger' ?>">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </div>
+                        </td>
+
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

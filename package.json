@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+    "url": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
   "dependencies": {
     "animate-sass": "^0.8.2",
     "bootstrap": "^4.3.1",
+    "chart.js": "^2.9.3",
     "compress.js": "^1.1.2",
     "cross-env": "^5.1.4",
     "font-awesome": "^4.7.0",
@@ -32,12 +33,13 @@
     "jquery": "^3.3.1",
     "jquery-mask-plugin": "^1.14.15",
     "jquery-validation": "^1.19.0",
+    "js-datepicker": "^5.2.1",
     "laravel-mix": "^2.1.11",
     "modernizr": "^3.6.0",
     "node-sass": "^4.13.0",
     "popper.js": "^1.14.3",
     "printthis": "^0.1.5",
-    "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
+    "snbh-site": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git",
     "sortablejs": "^1.10.0-rc3"
   },
   "devDependencies": {
