@@ -12,6 +12,7 @@ use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
 use SnBH\Common\Helper\ValidatorMessages;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class CadastrarController extends AbstractActionController
@@ -133,5 +134,38 @@ class CadastrarController extends AbstractActionController
         }
         echo json_encode($retorno);
         die;
+    }
+    
+    /**
+     * Verifica se a email está disponível para cadastro
+     * Retorna TRUE se a email estiver disponível
+     * Retorna FALSE se a email estiver indisponível
+     */
+    public function emailDisponivelAction()
+    {
+        $email = $this->params()->fromRoute('email',false);
+        if(!$email){
+            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']); 
+        }
+
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        #verifica se o email informado já foi cadastrado no sistema
+        $dadosCadastro = $cadastrosModel->get([
+            'email' => $email,
+            'checkEmail' => true,
+            'considerarInativo' => 1
+        ]);
+
+        $emailDisponivel = false;
+        if(!sizeof($dadosCadastro)){
+            $emailDisponivel =  true;
+        }
+
+        return new JsonModel( [
+            'status' => 200,
+            'emailDisponivel' => $emailDisponivel
+        ]);
     }
 }
