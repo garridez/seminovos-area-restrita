@@ -94,6 +94,16 @@ return [
                             ],
                         ],
                     ],
+                    'email-disponivel' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/email-disponivel/:email',
+                            'defaults' => [
+                                'controller' => Controller\CadastrarController::class,
+                                'action' => 'email-disponivel',
+                            ],
+                        ],
+                    ],
                     'anuncio' => [
                         'type' => Segment::class,
                         'options' => [
