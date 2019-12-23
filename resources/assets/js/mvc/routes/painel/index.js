@@ -4,7 +4,7 @@ module.exports.seletor = '.c-painel.a-index';
 module.exports.callback = ($) => {
     let datepicker = require('js-datepicker');
     $(".input").mask("00/00/0000");
-    let picker = datepicker(".input", {
+    let picker = datepicker(".input.date-timer-picker", {
         customDays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
         customMonths: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         overlayButton: "Enviar",
@@ -15,7 +15,7 @@ module.exports.callback = ($) => {
         }
     });
     var Chart = require('chart.js');
-    var ctx = document.getElementById('myChart');
+    var ctx = $(".graficoAnuncios");
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -37,6 +37,7 @@ module.exports.callback = ($) => {
             }]
         },
         options: {
+            aspectRatio: 1,
             legend: {
                 position: "right",
             }

@@ -1,0 +1,108 @@
+<?php
+    $veiculo = [
+        "marca"=>"Fiat",
+        "modelo"=>"uno way",
+        "ano_fabricacao"=>2016,
+        "ano_modelo"=>2017,
+        "placa"=>"GUP2665",
+        "data_cadastro"=>"12/03/2019",
+        "cliques"=>"537",
+        "propostas"=>"1283",
+        "cliques_telefone"=>"126",
+        "compartilhamentos"=>"9",
+        "status"=>"Ativo",
+        "plano"=>"Nitro"
+    ];
+?>
+<div class="container-fluid painel-anuncio">
+    <div class="row step step-titulo">
+        <div class="col-9 col-md-9">
+            <div class="title">
+                <h1><?= $veiculo['marca'] ?> <?= $veiculo['modelo'] ?>
+                    <?= $veiculo['ano_fabricacao'] ?>/<?= $veiculo['ano_modelo'] ?>
+                </h1>
+            </div>
+            <div class="details">
+                <div>
+                    <span>
+                        Placa <?= $veiculo['placa'] ?>
+                    </span>
+                </div>
+                <div>
+                    <b>Cadastrado desde:</b>
+                    <span>
+                        <?= $veiculo['data_cadastro'] ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 col-md-3">
+            <div class="box">
+                STATUS: <?= $veiculo['status'] ?>
+            </div>
+            <div class="box">
+                PLANO: <?= $veiculo['plano'] ?>
+            </div>
+        </div>
+    </div>
+    <div class="row step step-resumo">
+        <div class="col-12 col-md-6 d-none d-md-block">
+            <div class="title">
+                <span>
+                    Resumo
+                </span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end pr-md-0">
+            <div class="form-group mt-2">
+                <div class='input-group date'>
+                    <input type='text' class="form-control input date-timer-picker" />
+                    <span class="input-group-addon text-black">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <a href="#" class="btn btn-laranja">ok</a>
+        </div>
+        <div class="col-6 col-md-3 card">
+            <div class="card-header">Cliques</div>
+            <div class="card-body">537</div>
+        </div>
+        <div class="col-6 col-md-3 card">
+            <div class="card-header">Propostas por e-mail</div>
+            <div class="card-body">1283</div>
+        </div>
+        <div class="col-6 col-md-3 card">
+            <div class="card-header">Cliques em ver telefone</div>
+            <div class="card-body">126</div>
+        </div>
+        <div class="col-6 col-md-3 card">
+            <div class="card-header">Compartilhamentos</div>
+            <div class="card-body">69</div>
+        </div>
+    </div>
+    <div class="row step step-grafico-clique">
+        <div class="col-12">
+            <h5>Cliques</h5>
+            <div class="grafico">
+                <canvas class="grafCliques"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row step step-grafico-proposta">
+        <div class="col-12">
+            <h5>Propostas por e-mail</h5>
+            <div class="grafico">
+                <canvas class="grafPropostas"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row step step-grafico-telefone">
+        <div class="col-12">
+            <h5>Cliques em ver telefone</h5>
+            <div class="grafico">
+                <canvas class="grafCliquesTelefone"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
