@@ -16,13 +16,15 @@ module.exports.callback = ($) => {
     });
     var Chart = require('chart.js');
     var ctx = $(".graficoAnuncios");
+
+    var dadosPlanos = ctx.closest('div')
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ['Nitro', 'Turbo', 'Básico'],
             datasets: [{
                 label: 'Planos',
-                data: [12, 19, 3],
+                data: [dadosPlanos.data('nitro'),dadosPlanos.data('turbo'),dadosPlanos.data('basico')],
                 backgroundColor: [
                     'rgba(167, 39, 18, 1)',
                     'rgba(237, 153, 2, 1)',
@@ -43,4 +45,17 @@ module.exports.callback = ($) => {
             }
         }
     });
+
+
+    $.ajax({
+        'type': 'GET',
+        'dataType': 'json',
+        'url': '/painel/contador-por-marca',
+        success: function(contador){
+
+            console.log(contador);
+
+        }
+    })
+
 };

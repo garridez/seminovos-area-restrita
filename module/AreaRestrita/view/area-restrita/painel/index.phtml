@@ -1,4 +1,27 @@
 <?php 
+
+$diasParaExpirar = $this->expiracaoRevenda()->diasParaExpirar;
+
+$fraseExpiracao = "Seu Plano Expira <b>Hoje</b>";
+$bgExpiracao = "plano-expira-semana";
+if($diasParaExpirar < 0){
+  $fraseExpiracao = "Seu Plano  Expirirou em <br/><b>".$dataExpiracaoRevenda."</b>";
+  $bgExpiracao = "plano-expirou";
+}
+if($diasParaExpirar > 0){
+  $fraseExpiracao = "Seu Plano  Expira em <br/><b>".$diasParaExpirar." dias</b>";
+  $bgExpiracao = "plano-expira-semana";
+}
+if($diasParaExpirar > 7){
+  $fraseExpiracao = "Seu Plano  Expirará em <br/><b>".$dataExpiracaoRevenda."</b>";
+  $bgExpiracao = "plano-expira-mes";
+}
+
+$formatDate = new \AreaRestrita\View\Helper\Data();
+
+
+;
+
 $DEMO_veiculos = [
                     [   "modelo"=>"Uno Way",
                         "ano_modelo"=>"16",
@@ -58,7 +81,7 @@ $DEMO_veiculos = [
     <div class="row step step-plano">
         <div class="col-12 d-flex justify-content-center align-items-center ">
             <div class="mr-2">
-                <b>SEU PLANO VENCERA DIA 31/12/2019</b>
+                <b><?= $fraseExpiracao ?></b>
             </div>
             <a href="" class="btn btn-invert"> ver faturas </a>
         </div>
@@ -172,7 +195,11 @@ $DEMO_veiculos = [
                     Planos
                 </span>
             </div>
-            <div class="card-body">
+            <div class="card-body" 
+            data-nitro="<?= $this->qtdAnuncios()->totalNitro ?>"
+            data-turbo="<?= $this->qtdAnuncios()->totalTurbo ?>"
+            data-basico="<?= $this->qtdAnuncios()->totalBasico ?>"
+            >
                 <canvas class="graficoAnuncios"></canvas>
             </div>
         </div>
@@ -185,7 +212,7 @@ $DEMO_veiculos = [
             <div class="card-body">
                 <div>
                     <div class="qtd">
-                        86
+                        <?= $this->totalVeiculos ?>
                     </div>
                     <div class="prct text-success">
                         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -205,7 +232,7 @@ $DEMO_veiculos = [
             <div class="card-body">
                 <div>
                     <div class="qtd">
-                        86
+                        <?= $this->totalVeiculosAtivos ?>
                     </div>
                     <div class="prct text-danger">
                         <i class="fa fa-arrow-down" aria-hidden="true"></i>
@@ -297,42 +324,42 @@ $DEMO_veiculos = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php   foreach ($DEMO_veiculos as $key => $veiculo) :?>
+                    <?php   foreach ($this->veiculos['data'] as $key => $veiculo) :?>
                     <tr>
                         <td class="d-table-cell">
-                            <div class="<?=$veiculo['status']==2 ? 'text-success' : 'text-danger'?>">
+                            <div class="<?=$veiculo['idStatus']==2 ? 'text-success' : 'text-danger'?>">
                                 <i class="fa fa-circle" aria-hidden="true"></i>
                             </div>
                         </td>
                         <td class="d-table-cell">
-                            <?= $veiculo['modelo'] ?> <?= $veiculo['ano_fabricacao'] ?>/<?= $veiculo['ano_modelo'] ?>
+                            <?= $veiculo['modelo'] ?> <?= $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
                         </td>
                         <td class="d-none d-md-table-cell">
-                            <?= $veiculo['data_cadastro'] ?>
+                            <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
                         </td>
                         <td class="d-table-cell px-0">
-                            <?= $veiculo['placa'] ?>
+                            <?= $veiculo['placa']??'' ?>
                         </td>
                         <td class="d-table-cell">
-                            <?= $veiculo['cliques'] ?>
+                            <?= $veiculo['contador']?? 0 ?>
                         </td>
                         <td class="d-table-cell">
-                            <?= $veiculo['num_propostas'] ?>
+                            <?= $veiculo['num_propostas']??'' ?>
                         </td>
                         <td class="d-none d-md-table-cell">
-                            <?= $veiculo['cliques_telefone'] ?>
+                            <?= $veiculo['cliques_telefone']??'' ?>
                         </td>
                         <td class="d-none d-md-table-cell">
-                            <?= $veiculo['compartilhamentos'] ?>
+                            <?= $veiculo['compartilhamentos']??'' ?>
                         </td>
                         <td class="d-table-cell">
-                            <div class="icon-1-5x <?= $veiculo['visualizar']?'text-success':'text-danger' ?>">
-                                <i class="fa <?= $veiculo['visualizar']?'fa-eye':'fa-eye-slash' ?>"
+                            <div class="icon-1-5x <?= isset($veiculo['visualizar']) && $veiculo['visualizar']?'text-success':'text-danger' ?>">
+                                <i class="fa <?= isset($veiculo['visualizar']) && $veiculo['visualizar']?'fa-eye':'fa-eye-slash' ?>"
                                     aria-hidden="true"></i>
                             </div>
                         </td>
                         <td class="d-table-cell">
-                            <div class="icon-1-5x <?= $veiculo['editar']?'text-success':'text-danger' ?>">
+                            <div class="icon-1-5x <?= isset($veiculo['editar']) && $veiculo['editar']?'text-success':'text-danger' ?>">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </div>
                         </td>

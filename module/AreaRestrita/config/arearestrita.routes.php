@@ -272,5 +272,47 @@ return [
                 'action' => 'index'
             ],
         ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'idAnuncio' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/:idAnuncio',
+                    'constraints' => [
+                            'idAnuncio' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'action' => 'detalhe-anuncio'
+                    ]
+                ],
+            ],
+            'contadorPorMarca' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-marca',
+                    'defaults' => [
+                        'action' => 'contador-por-marca'
+                    ]
+                ],
+            ],
+            'contadorPorModelo' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-modelo',
+                    'defaults' => [
+                        'action' => 'contador-por-modelo'
+                    ]
+                ],
+            ],
+            'contadorPorCategoria' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-categoria',
+                    'defaults' => [
+                        'action' => 'contador-por-categoria'
+                    ]
+                ],
+            ],
+        ],
     ],
 ];

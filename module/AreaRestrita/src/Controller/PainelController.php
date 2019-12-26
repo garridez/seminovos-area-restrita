@@ -3,140 +3,129 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\Contador;
+use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
-use Aws\Athena\AthenaClient;
-use Aws\Athena\Exception\AthenaException;
-use Aws\Exception\AwsException;
-use Exception;
+use Zend\View\Model\JsonModel;
+
+abstract class GranularidadeAcesso {
+    const Dia = 'DATE(time)';
+    const Semana = 'WEEK(DATE(time))';
+    const Mes = 'MONTH(DATE(time))';
+    const Ano = 'YEAR(DATE(time))';
+}
 
 class PainelController extends AbstractActionController
 {
     private $athenaClient;
-    static private $ACCESS_KEY = 'AKIAQTEY4VWFXSY66MHD';
-    static private $SECRET_KEY = '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';   
-
-    private function retornarQueryAcessoPorDia($idCadastro)
-    {
-        return <<< sql
-        SELECT idcadastro,
-            idveiculo,
-            DATE(from_unixtime(time)) AS date,
-            count(1) AS contador
-        FROM acesso
-        WHERE idcadastro = $idCadastro
-        GROUP BY  idCadastro, idVeiculo, DATE(from_unixtime(time)) limit 1
-sql;
-    }
+    private $dadosContador;
+    private $veiculos;
+    private $idCadastro;
+    private $contador;
 
     public function indexAction()
     {
+
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();
+        $idCadastro = $cadastro['idCadastro']; 
         
-        //echo $this->retornarQueryAcessoPorDia($cadastro['idCadastro']);
-        //die;
-        ini_set('xdebug.var_display_max_depth', '10');
-        ini_set('xdebug.var_display_max_children', '256');
-        ini_set('xdebug.var_display_max_data', '1024');
+        $veiculosModel = $this->getContainer()->get(Veiculos::class); 
 
-        try {
-            $this->athenaClient = AthenaClient::factory([
-                'version' => '2017-05-18',
-                'region' => 'us-west-2',
-                'credentials' => [
-                    'key' => $this::$ACCESS_KEY,
-                    'secret' => $this::$SECRET_KEY
-                ]
-            ]);
+        $veiculos = $veiculosModel->getAll(compact('idCadastro'));
+        
+        $totalVeiculos = $veiculos['total'];
 
-            $result = $this->athenaClient->startQueryExecution([
-                'QueryExecutionContext' => ['Database' => 'contador'],
-                'QueryString' => $this->retornarQueryAcessoPorDia($cadastro['idCadastro']),
-                'ResultConfiguration' => [
-                    //'EncryptionOption' => 'SSE_S3',
-                    'OutputLocation' => "s3://aws-athena-query-results-041122835851-us-west-2/Unsaved/"
-                ]
-            ]);
-        } catch (AthenaException $e) {
-            echo $e->getMessage();die;
-        } catch (AwsException $e) {
-            echo $e->getMessage();die;
+        $ignorarCondicoesBasicas = 0;
+
+        $veiculosAtivos = $veiculosModel->getAll(compact('idCadastro', 'ignorarCondicoesBasicas'));
+
+        $totalVeiculosAtivos = $veiculosAtivos['total'];
+
+        $idsVeiculos = [];
+
+        foreach($veiculos['data'] as $veiculo) {
+            $idsVeiculos[] = $veiculo['idVeiculo'];
         }
 
-        $QueryExecutionId = $result->get('QueryExecutionId');
+        $this->contador = new Contador();
+        $this->contador->gerarQueryAcesso(['idVeiculo'], $idCadastro, null, $idsVeiculos);
 
-        $this->esperarCompletarQuery($QueryExecutionId);
+        $contadorPorVeiculo = $this->contador->getDados();
 
-        $result1 = $this->athenaClient->GetQueryResults(array(
-            'QueryExecutionId' => $QueryExecutionId, // REQUIRED
-            'MaxResults' => 500
-        ));
-
-        $data = $result1->get('ResultSet');
-            $res  = $data['Rows'];
-            
-            while (true) {
-                
-                if ($result1->get('NextToken') == null) {
+        //mescla as informações dos contadores, com os dados dos veículos
+        //var_dump($contadorPorVeiculo);die;
+        foreach($contadorPorVeiculo as $contador) {
+            foreach($veiculos['data'] as  $k => $veiculo) {
+                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
+                    $veiculos['data'][$k]['contador'] = $contador['contador'];
                     break;
                 }
-                
-                $result1 = $this->Client->GetQueryResults(array(
-                    'QueryExecutionId' => $QueryExecutionId, // REQUIRED
-                    'NextToken' => $result1->get('NextToken'),
-                    'MaxResults' => 500
-                ));
-                
-                $data = $result1->get('ResultSet');
-                $res  = array_merge($res, $data['Rows']);
-                ;
             }
-            
-        $acessosVeiculosPorDia = $this->processResultRows($res);
-        var_dump($acessosVeiculosPorDia);die;
+        }
 
-        //return new ViewModel(compact('acessosVeiculosPorDia'));
+        
+
+
+        return new ViewModel(compact('totalVeiculos', 'totalVeiculosAtivos', 'veiculos'));
+
     }
 
-    private function esperarCompletarQuery($QueryExecutionId)
+    public function contadorPorMarcaAction()
     {
-        while (1) {
-            $result = $this->athenaClient->getQueryExecution(array(
-                'QueryExecutionId' => $QueryExecutionId
-            ));
-            $res = $result->toArray();
-            
-            //echo $res['QueryExecution']['Status']['State'].'<br/>';
-            if ($res['QueryExecution']['Status']['State'] == 'FAILED') {
-                echo "Query Failed";
-                die;
-            } else if ($res['QueryExecution']['Status']['State'] == 'CANCELED') {
-                echo "Query was cancelled";
-                die;
-            } else if ($res['QueryExecution']['Status']['State'] == 'SUCCEEDED') {
-                break; // break while loop
-            }
-        }
-    }   
+        //return $this->contadorPor(['marca']);
+    }
 
-    function processResultRows($res)
+    public function contadorPorModeloAction()
     {
-        $result = array();
-        $resul_array = array();
-        
-        // echo '@@@Count: '.count($res).'<br/>';
-        
-        for ($i = 0; $i < count($res); $i++) {
-            for ($n = 0; $n < count($res[$i]['Data']); $n++) {
-                if ($i == 0)
-                    $result[] = $res[$i]['Data'][$n]['VarCharValue'];
-                else {
-                    $resul_array[$i][$result[$n]] = $res[$i]['Data'][$n]['VarCharValue'];
-                }
-            }
+        //return $this->contadorPor(['modelo']);
+    }
+
+    public function contadorPorCategoriaAction()
+    {
+        //return $this->contadorPor(['categoria']);
+    }
+
+
+    private function contadorPor($campos, $granularidade = GranularidadeAcesso::Dia)
+    {
+        try{
+            $this->contador =  new Contador();
+            $this->contador->gerarQueryAcesso($campos, null, $granularidade, null);
+            $contador =  $this->contador->getDados();    
+            
+            return new JsonModel([
+                'success' => 'SUCCESS',
+                'data' =>  $contador,
+            ]);
+
+        }catch(\Error $e) {
+
+            return new JsonModel([
+                'success' => 'ERROR',
+                'data' =>  $e->getMessage(),
+            ]);
         }
-        
-        // echo 'resul_array_cnt: '.count($resul_array).'<br/>';
-        return $resul_array;
+
+    } 
+
+    public function sumarioVeiculosAction()
+    {
+    }
+
+    public function sumarioPropostasAction()
+    {
+    }
+
+    public function sumarioEmailsRespondidosAction()
+    {
+    }
+
+    public function meusVeiculosAction()
+    {
+    }
+
+    public function detalheAnuncioAction()
+    {
     }
 }
