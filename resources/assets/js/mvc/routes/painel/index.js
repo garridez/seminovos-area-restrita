@@ -51,11 +51,51 @@ module.exports.callback = ($) => {
         'type': 'GET',
         'dataType': 'json',
         'url': '/painel/contador-por-marca',
+        success: function(retorno){
+            if(!retorno.data) {
+                return false
+            }
+            contador = Object.values(retorno.data);
+
+            contador.map(cnt => {
+
+                let div1 = $("<div></div>").addClass("py-1");
+                let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
+                let img = $(`<img>`);
+                let div3 = $("<div></div>").addClass('busca');
+                let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                let span2 = $('<span></span>').addClass('text-busca').html('&nbsp;buscas');
+                
+                div3.append(span1).append(span2);
+                div2.append(img).append(div3);
+                div1.append(div2);
+
+                $('.list-marcas').append(div1);
+            });
+
+        }
+    })
+
+    /* $.ajax({
+        'type': 'GET',
+        'dataType': 'json',
+        'url': '/painel/contador-por-modelo',
         success: function(contador){
 
             console.log(contador);
 
         }
     })
+
+    $.ajax({
+        'type': 'GET',
+        'dataType': 'json',
+        'url': '/painel/contador-por-categoria',
+        success: function(contador){
+
+            console.log(contador);
+
+        }
+    }) */
 
 };

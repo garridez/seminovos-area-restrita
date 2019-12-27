@@ -107,27 +107,7 @@ $DEMO_veiculos = [
             <div class="list-header">
                 MARCA
             </div>
-            <?php foreach ([
-                            ["marca"=>"Fiat",       "num_buscas"=>"123.654"],
-                            ["marca"=>"Volkswagen", "num_buscas"=>"123.654"],
-                            ["marca"=>"Chevrolet",  "num_buscas"=>"123.654"],
-                            ["marca"=>"BMW",        "num_buscas"=>"123.654"],
-                            ["marca"=>"Mercedes",   "num_buscas"=>"123.654"],
-                ] as $key => $busca) : ?>
-            <div class="py-1">
-                <div class="d-flex justify-content-between align-items-center">
-                    <img src="/img/exemplo/wireframe1.png" <?= /*$busca['marca']*/ "" ?> alt="">
-                    <div class="busca">
-                        <span class="num-busca">
-                            <?=$busca['num_buscas']?>
-                        </span>
-                        <span class="texto-busca">
-                            buscas feitas
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach ?>
+           <!--  -->
         </div>
         <div class="col-12 col-md-4 list list-modelos">
             <div class="list-header">
@@ -148,7 +128,7 @@ $DEMO_veiculos = [
                             <?=$busca['num_buscas']?>
                         </span>
                         <span class="texto-busca">
-                            buscas feitas
+                            buscas
                         </span>
                     </div>
                 </div>
@@ -174,7 +154,7 @@ $DEMO_veiculos = [
                             <?=$busca['num_buscas']?>
                         </span>
                         <span class="texto-busca">
-                            buscas feitas
+                            buscas
                         </span>
                     </div>
                 </div>
@@ -353,14 +333,19 @@ $DEMO_veiculos = [
                             <?= $veiculo['compartilhamentos']??'' ?>
                         </td>
                         <td class="d-table-cell">
-                            <div class="icon-1-5x <?= isset($veiculo['visualizar']) && $veiculo['visualizar']?'text-success':'text-danger' ?>">
-                                <i class="fa <?= isset($veiculo['visualizar']) && $veiculo['visualizar']?'fa-eye':'fa-eye-slash' ?>"
-                                    aria-hidden="true"></i>
+                            <div class="icon-1-5x text-success">
+                                <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
+                                    <i class="fa fa-eye" aria-hidden="true">
+                                    </i>
+                                </a>
                             </div>
                         </td>
                         <td class="d-table-cell">
-                            <div class="icon-1-5x <?= isset($veiculo['editar']) && $veiculo['editar']?'text-success':'text-danger' ?>">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            <div class="icon-1-5x text-success">
+                                <a href="<?= strtolower($veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                    
                             </div>
                         </td>
 

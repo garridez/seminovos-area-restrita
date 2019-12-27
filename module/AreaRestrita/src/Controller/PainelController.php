@@ -17,10 +17,6 @@ abstract class GranularidadeAcesso {
 
 class PainelController extends AbstractActionController
 {
-    private $athenaClient;
-    private $dadosContador;
-    private $veiculos;
-    private $idCadastro;
     private $contador;
 
     public function indexAction()
@@ -36,15 +32,14 @@ class PainelController extends AbstractActionController
         
         $totalVeiculos = $veiculos['total'];
 
-        $ignorarCondicoesBasicas = 0;
-
-        $veiculosAtivos = $veiculosModel->getAll(compact('idCadastro', 'ignorarCondicoesBasicas'));
-
-        $totalVeiculosAtivos = $veiculosAtivos['total'];
-
         $idsVeiculos = [];
 
+        $totalVeiculosAtivos= 0;
+
         foreach($veiculos['data'] as $veiculo) {
+            if(in_array($veiculo['idStatus'], [2, 8, 9])) {
+                $totalVeiculosAtivos ++;
+            }
             $idsVeiculos[] = $veiculo['idVeiculo'];
         }
 
@@ -64,28 +59,24 @@ class PainelController extends AbstractActionController
             }
         }
 
-        
-
-
         return new ViewModel(compact('totalVeiculos', 'totalVeiculosAtivos', 'veiculos'));
 
     }
 
     public function contadorPorMarcaAction()
     {
-        //return $this->contadorPor(['marca']);
+        return $this->contadorPor(['marca']);
     }
 
     public function contadorPorModeloAction()
     {
-        //return $this->contadorPor(['modelo']);
+        return $this->contadorPor(['modelo']);
     }
 
     public function contadorPorCategoriaAction()
     {
-        //return $this->contadorPor(['categoria']);
+        return $this->contadorPor(['categoria']);
     }
-
 
     private function contadorPor($campos, $granularidade = GranularidadeAcesso::Dia)
     {
@@ -102,30 +93,49 @@ class PainelController extends AbstractActionController
         }catch(\Error $e) {
 
             return new JsonModel([
-                'success' => 'ERROR',
+                'success' => '500',
                 'data' =>  $e->getMessage(),
             ]);
         }
-
-    } 
-
-    public function sumarioVeiculosAction()
-    {
-    }
-
-    public function sumarioPropostasAction()
-    {
-    }
-
-    public function sumarioEmailsRespondidosAction()
-    {
-    }
-
-    public function meusVeiculosAction()
-    {
     }
 
     public function detalheAnuncioAction()
     {
+        $idVeiculo = $this->params('idVeiculo');
+        
+        $veiculoModel = $this->getContainer()->get(Veiculos::class);
+
+        $veiculo = $veiculoModel->get($idVeiculo);
+
+        $contador = new Contador();
+
+        $contador->gerarQueryAcesso(['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
+
+        $cliques = $contador->getDados();
+
+        $cliques = $cliques[1]['contador'] ?? 0;   
+
+        return new ViewModel(compact('veiculo', 'cliques'));        
+    }
+
+    public function cliquesAction()
+    {
+        $idVeiculo = $this->params('idVeiculo');
+        
+        $veiculoModel = $this->getContainer()->get(Veiculos::class);
+
+        $veiculo = $veiculoModel->get($idVeiculo);
+        
+        $contador = new Contador();
+
+        $contador->gerarQueryAcesso(['idVeiculo'], $veiculo['idCadastro'], GranularidadeAcesso::Dia, [$idVeiculo]);
+
+        $cliques = $contador->getDados();
+
+        return new JsonModel( [
+            'success' => '200',
+            'data' =>  $cliques,
+        ]);
+
     }
 }

@@ -274,17 +274,30 @@ return [
         ],
         'may_terminate' => true,
         'child_routes' => [
-            'idAnuncio' => [
+            'detalhes' => [
                 'type' => Http\Segment::class,
                 'options' => [
-                    'route' => '/:idAnuncio',
+                    'route' => '/:idVeiculo',
                     'constraints' => [
-                            'idAnuncio' => '[0-9]+',
+                            'idVeiculo' => '[0-9]+',
                     ],
                     'defaults' => [
                         'action' => 'detalhe-anuncio'
                     ]
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'cliques' => [
+                        'type' => Http\Literal::class,
+                        'options' => [
+                            'route' => '/cliques',
+                            'defaults' => [
+                                'action' => 'cliques'
+                            ],
+                        ]
+                    ]
+                ]
+
             ],
             'contadorPorMarca' => [
                 'type' => Http\Literal::class,

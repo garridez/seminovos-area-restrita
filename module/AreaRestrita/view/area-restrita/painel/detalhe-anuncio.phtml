@@ -1,25 +1,12 @@
 <?php
-    $veiculo = [
-        "marca"=>"Fiat",
-        "modelo"=>"uno way",
-        "ano_fabricacao"=>2016,
-        "ano_modelo"=>2017,
-        "placa"=>"GUP2665",
-        "data_cadastro"=>"12/03/2019",
-        "cliques"=>"537",
-        "propostas"=>"1283",
-        "cliques_telefone"=>"126",
-        "compartilhamentos"=>"9",
-        "status"=>"Ativo",
-        "plano"=>"Nitro"
-    ];
+    $formatDate = new \AreaRestrita\View\Helper\Data();
 ?>
 <div class="container-fluid painel-anuncio">
     <div class="row step step-titulo">
         <div class="col-9 col-md-9">
             <div class="title">
                 <h1><?= $veiculo['marca'] ?> <?= $veiculo['modelo'] ?>
-                    <?= $veiculo['ano_fabricacao'] ?>/<?= $veiculo['ano_modelo'] ?>
+                    <?= $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
                 </h1>
             </div>
             <div class="details">
@@ -31,17 +18,17 @@
                 <div>
                     <b>Cadastrado desde:</b>
                     <span>
-                        <?= $veiculo['data_cadastro'] ?>
+                        <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
                     </span>
                 </div>
             </div>
         </div>
         <div class="col-3 col-md-3">
             <div class="box">
-                STATUS: <?= $veiculo['status'] ?>
+                STATUS: <?= $veiculo['tituloStatus'] ?>
             </div>
             <div class="box">
-                PLANO: <?= $veiculo['plano'] ?>
+                PLANO: <?= $veiculo['nomePlano'] ?>
             </div>
         </div>
     </div>
@@ -66,7 +53,7 @@
         </div>
         <div class="col-6 col-md-3 card">
             <div class="card-header">Cliques</div>
-            <div class="card-body">537</div>
+            <div class="card-body"><?= $this->cliques ?></div>
         </div>
         <div class="col-6 col-md-3 card">
             <div class="card-header">Propostas por e-mail</div>

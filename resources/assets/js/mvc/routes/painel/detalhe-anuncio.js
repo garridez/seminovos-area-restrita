@@ -55,7 +55,39 @@ module.exports.callback = ($) => {
         ],
         label: "Cliques no anúnico"
     }
-    $(".grafCliques").length ? renderGraph(dataGraph, $(".grafCliques")) : false;
+    
     $(".grafPropostas").length ? renderGraph(dataGraph, $(".grafPropostas")) : false;
-    $(".grafCliquesTelefone").length ? renderGraph(dataGraph, $(".grafCliquesTelefone")) : false;
+   
+    $.ajax({
+        'url': location.href + '/cliques',
+        'type': 'GET',
+        'dataType': 'JSON',
+        'success': function(retorno){
+
+            if(!retorno.data) {
+                return false;
+            }
+
+            cliques = Object.values(retorno.data);
+
+            let labels = Array()
+            let values = Array()
+            cliques.forEach(click => {
+                labels.push( new Date(click.data).toLocaleDateString());
+                values.push( parseInt(click.contador).toLocaleString());
+            })
+
+            label = "Cliques no anúncio";
+
+            let dataGraph = {
+                labels,
+                values,
+                label
+            }
+
+            $(".grafCliques").length ? renderGraph(dataGraph, $(".grafCliques")) : false;
+
+        }
+    })
+
 };
