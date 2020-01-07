@@ -24,7 +24,7 @@ use Zend\Validator\AbstractValidator;
 class Module
 {
 
-    const SESSION_NAMESPACE = __CLASS__;
+    const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
     public function getConfig()
     {
@@ -33,11 +33,32 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
+        global $container;
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError']);
-        $sm = $e->getApplication()->getServiceManager();
+        $container = $sm = $e->getApplication()->getServiceManager();
         $this->setLogger($sm);
         $this->setMeasureApiResponseTime($sm);
         $this->translatorConfig();
+        $this->showChat($sm);
+    }
+
+    public function showChat($sm)
+    {
+        $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
+
+        if (!$cadastro) {
+            define('SHOW_CHAT', 0);
+            return;
+        }
+        $idCadastrosPermitidos = [
+            62, // bonjardim@me.com
+            210195, //sara@seminovosbh.com.br
+            248584, //felipe@seminovosbh.com.br
+            321321, //raul@seminovosbh.com.br  
+            327312, //wesley@seminovosbh.com.br
+            335671, //joao@seminovosbh.com.br
+        ];
+        define('SHOW_CHAT', in_array($cadastro['idCadastro'], $idCadastrosPermitidos));
     }
 
     public function onDispatchError(MvcEvent $e)

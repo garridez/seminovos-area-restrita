@@ -24,7 +24,7 @@ class ModelAbstractFactory implements AbstractFactoryInterface
         $can = false;
 
         foreach ($this->getPrefix($container) as $prefix) {
-            if (strpos($requestedName, $prefix) === 0) {
+            if ($requestedName[0] === $prefix[0] && strpos($requestedName, $prefix) === 0) {
                 $can = true;
                 break;
             }

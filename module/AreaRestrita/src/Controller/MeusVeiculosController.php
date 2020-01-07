@@ -621,4 +621,8 @@ class MeusVeiculosController extends AbstractActionController
         $viewModel->setTerminal(true);
         return $viewModel;
     }
+    public function chatAction(){
+        $viewModel = new ViewModel();
+        return $viewModel;
+    }
 }

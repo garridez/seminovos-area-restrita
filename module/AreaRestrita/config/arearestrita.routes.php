@@ -80,6 +80,49 @@ return [
             ],
         ],
     ],
+    'chat' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'chat',
+            'defaults' => [
+                'controller' => Ctrl\ChatController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'chat' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/chat',
+                    'defaults' => [
+                        'action' => 'chat',
+                    ],
+                ],
+            ],
+            'mensagens' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/mensagens',
+                    'defaults' => [
+                        'action' => 'messages',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'mensagens' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/:idVeiculo',
+                            'defaults' => [
+                                'action' => 'mensagensVeiculo',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
     'contrato-revenda' => [
         'type' => Http\Segment::class,
         'options' => [

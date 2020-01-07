@@ -1,22 +1,26 @@
 $namespace:_login-;
+&:not(.intro-off){
+    .snbh-logo-container {
+        .snbh-logo {
+            animation: $namespace + snbh-logo-container-presentation 3s none;
+        }
+    }
+
+    .forms-container {
+        animation: $namespace + forms-container-presentation 9s none;
+    }
+
+    .snbh-logo {
+        .layer-car {
+            animation: #{$namespace}snbh-logo-layer-car 1s ease-in-out;
+        }
+        .layer-letters {
+            animation: #{$namespace}snbh-logo-layer-letters 2s ease-in-out;
+        }
+    }
+}
 .snbh-logo-container {
     text-align: center;
-    .snbh-logo {
-        animation: $namespace + snbh-logo-container-presentation 3s none;
-    }
-}
-
-.forms-container {
-    animation: $namespace + forms-container-presentation 3s none;
-}
-
-.snbh-logo {
-    .layer-car {
-        animation: #{$namespace}snbh-logo-layer-car 1s ease-in-out;
-    }
-    .layer-letters {
-        animation: #{$namespace}snbh-logo-layer-letters 2s ease-in-out;
-    }
 }
 
 @import "imports/login_animations";
