@@ -8,11 +8,17 @@ use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-abstract class GranularidadeAcesso {
+abstract class GranularidadeContator {
     const Dia = 'DATE(time)';
     const Semana = 'WEEK(DATE(time))';
     const Mes = 'MONTH(DATE(time))';
     const Ano = 'YEAR(DATE(time))';
+}
+
+abstract class TabelasContador{
+    const Acesso = 'acesso';
+    const Impressao = 'impressao';
+    const Contato = 'contato';
 }
 
 class PainelController extends AbstractActionController
@@ -44,7 +50,22 @@ class PainelController extends AbstractActionController
         }
 
         $this->contador = new Contador();
-        $this->contador->gerarQueryAcesso(['idVeiculo'], $idCadastro, null, $idsVeiculos);
+        $this->contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
+
+        $contadorPorVeiculo = $this->contador->getDados();
+
+        //mescla as informações dos acessos, com os dados dos veículos
+        //var_dump($contadorPorVeiculo);die;
+        foreach($contadorPorVeiculo as $contador) {
+            foreach($veiculos['data'] as  $k => $veiculo) {
+                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
+                    $veiculos['data'][$k]['acesso'] = $contador['contador'];
+                    break;
+                }
+            }
+        }
+
+        $this->contador->gerarQueryAcesso(TabelasContador::Impressao, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
 
         $contadorPorVeiculo = $this->contador->getDados();
 
@@ -53,7 +74,22 @@ class PainelController extends AbstractActionController
         foreach($contadorPorVeiculo as $contador) {
             foreach($veiculos['data'] as  $k => $veiculo) {
                 if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
-                    $veiculos['data'][$k]['contador'] = $contador['contador'];
+                    $veiculos['data'][$k]['impressao'] = $contador['contador'];
+                    break;
+                }
+            }
+        }
+
+        $this->contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
+
+        $contadorPorVeiculo = $this->contador->getDados();
+
+        //mescla as informações dos contadores, com os dados dos veículos
+        //var_dump($contadorPorVeiculo);die;
+        foreach($contadorPorVeiculo as $contador) {
+            foreach($veiculos['data'] as  $k => $veiculo) {
+                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
+                    $veiculos['data'][$k]['contato'] = $contador['contador'];
                     break;
                 }
             }
@@ -78,11 +114,11 @@ class PainelController extends AbstractActionController
         return $this->contadorPor(['categoria']);
     }
 
-    private function contadorPor($campos, $granularidade = GranularidadeAcesso::Dia)
+    private function contadorPor($campos, $granularidade = GranularidadeContator::Mes)
     {
         try{
             $this->contador =  new Contador();
-            $this->contador->gerarQueryAcesso($campos, null, $granularidade, null);
+            $this->contador->gerarQueryAcesso(TabelasContador::Acesso, $campos, null, $granularidade, null);
             $contador =  $this->contador->getDados();    
             
             return new JsonModel([
@@ -109,7 +145,7 @@ class PainelController extends AbstractActionController
 
         $contador = new Contador();
 
-        $contador->gerarQueryAcesso(['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
+        $contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
 
         $cliques = $contador->getDados();
 
@@ -128,7 +164,7 @@ class PainelController extends AbstractActionController
         
         $contador = new Contador();
 
-        $contador->gerarQueryAcesso(['idVeiculo'], $veiculo['idCadastro'], GranularidadeAcesso::Dia, [$idVeiculo]);
+        $contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo]);
 
         $cliques = $contador->getDados();
 

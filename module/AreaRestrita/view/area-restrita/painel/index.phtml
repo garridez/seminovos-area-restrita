@@ -1,4 +1,11 @@
-<?php 
+<?php
+$arrayPlanos = [
+    1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
+    2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+    3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+    4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+    5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
+];
 
 $diasParaExpirar = $this->expiracaoRevenda()->diasParaExpirar;
 
@@ -113,54 +120,11 @@ $DEMO_veiculos = [
             <div class="list-header">
                 Modelo
             </div>
-            <?php foreach ([
-                            ["modelo"=>"Palio",   "num_buscas"=>"123.654"],
-                            ["modelo"=>"Gol",     "num_buscas"=>"123.654"],
-                            ["modelo"=>"Fusion",  "num_buscas"=>"123.654"],
-                            ["modelo"=>"Onix",    "num_buscas"=>"123.654"],
-                            ["modelo"=>"C-180",   "num_buscas"=>"123.654"],
-                ] as $key => $busca) : ?>
-            <div class="py-1">
-                <div class="d-flex justify-content-between align-items-center">
-                    <b><?= $busca['modelo'] ?></b>
-                    <div class="busca">
-                        <span class="num-busca">
-                            <?=$busca['num_buscas']?>
-                        </span>
-                        <span class="texto-busca">
-                            buscas
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach ?>
         </div>
         <div class="col-12 col-md-4 list list-categorias">
             <div class="list-header">
                 Categoria
             </div>
-            <?php foreach ([
-                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
-                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
-                            ["categoria"=>"Hatch Compacto",  "num_buscas"=>"123.654"],
-                ] as $key => $busca) : ?>
-            <div class="py-1">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-block">
-                        <img src="/img/exemplo/wireframe2.png" alt="">
-                    </div>
-                    <div class="busca">
-                        <span class="num-busca">
-                            <?=$busca['num_buscas']?>
-                        </span>
-                        <span class="texto-busca">
-                            buscas
-                        </span>
-                    </div>
-                </div>
-                <small><?=$busca['categoria']?></small>
-            </div>
-            <?php endforeach ?>
         </div>
     </div>
     <div class="row step step-geral">
@@ -175,13 +139,15 @@ $DEMO_veiculos = [
                     Planos
                 </span>
             </div>
-            <div class="card-body" 
-            data-nitro="<?= $this->qtdAnuncios()->totalNitro ?>"
-            data-turbo="<?= $this->qtdAnuncios()->totalTurbo ?>"
-            data-basico="<?= $this->qtdAnuncios()->totalBasico ?>"
-            >
-                <canvas class="graficoAnuncios"></canvas>
-            </div>
+            <ul>
+                <li class="qtd-anuncios-menu">
+                    <?= ''
+                        /* $this->partial('partial/qtd-anuncios-menu.phtml', 'AreaRestrita', [
+                            'arrayPlanos' => $arrayPlanos
+                        ]) */
+                    ?>
+                </li>
+            </ul>
         </div>
         <div class="col-6 col-md-2 card">
             <div class="card-header">
@@ -296,6 +262,7 @@ $DEMO_veiculos = [
                         <th class="d-none d-md-table-cell">Data de cadastro</th>
                         <th>Placa</th>
                         <th>Cliques</th>
+                        <th>Impressões</th>
                         <th>Propostas Recebidas</th>
                         <th class="d-none d-md-table-cell">Cliques Telefone</th>
                         <th class="d-none d-md-table-cell">Compartilhamentos</th>
@@ -321,13 +288,16 @@ $DEMO_veiculos = [
                             <?= $veiculo['placa']??'' ?>
                         </td>
                         <td class="d-table-cell">
-                            <?= $veiculo['contador']?? 0 ?>
+                            <?= $veiculo['acesso']?? 0 ?>
+                        </td>
+                        <td class="d-table-cell">
+                            <?= $veiculo['impressao']?? 0 ?>
                         </td>
                         <td class="d-table-cell">
                             <?= $veiculo['num_propostas']??'' ?>
                         </td>
                         <td class="d-none d-md-table-cell">
-                            <?= $veiculo['cliques_telefone']??'' ?>
+                            <?= $veiculo['contato']?? 0 ?>
                         </td>
                         <td class="d-none d-md-table-cell">
                             <?= $veiculo['compartilhamentos']??'' ?>

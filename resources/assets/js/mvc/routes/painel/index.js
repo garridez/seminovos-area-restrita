@@ -61,10 +61,10 @@ module.exports.callback = ($) => {
 
                 let div1 = $("<div></div>").addClass("py-1");
                 let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
-                let img = $(`<img>`);
+                let img = $(`<img class="img-responsive" style="height:30px" src='/img/brands/${cnt.marca.toLowerCase()}.svg'>`);
                 let div3 = $("<div></div>").addClass('busca');
                 let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
-                let span2 = $('<span></span>').addClass('text-busca').html('&nbsp;buscas');
+                let span2 = $('<span></span>').addClass('text-busca').html('&nbsp;cliques');
                 
                 div3.append(span1).append(span2);
                 div2.append(img).append(div3);
@@ -76,13 +76,32 @@ module.exports.callback = ($) => {
         }
     })
 
-    /* $.ajax({
+    $.ajax({
         'type': 'GET',
         'dataType': 'json',
         'url': '/painel/contador-por-modelo',
-        success: function(contador){
+        success: function(retorno){
 
-            console.log(contador);
+            if(!retorno.data) {
+                return false
+            }
+            contador = Object.values(retorno.data);
+
+            contador.map(cnt => {
+
+                let div1 = $("<div></div>").addClass("py-1");
+                let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
+                let b = $("<b></b>").html(cnt.modelo);
+                let div3 = $("<div></div>").addClass('busca');
+                let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                let span2 = $('<span></span>').addClass('text-busca').html('&nbsp;cliques');
+                
+                div3.append(span1).append(span2);
+                div2.append(b).append(div3);
+                div1.append(div2);
+
+                $('.list-modelos').append(div1);
+            });
 
         }
     })
@@ -91,11 +110,30 @@ module.exports.callback = ($) => {
         'type': 'GET',
         'dataType': 'json',
         'url': '/painel/contador-por-categoria',
-        success: function(contador){
+        success: function(retorno){
 
-            console.log(contador);
+            if(!retorno.data) {
+                return false
+            }
+            contador = Object.values(retorno.data);
+
+            contador.map(cnt => {
+
+                let div1 = $("<div></div>").addClass("py-1");
+                let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
+                let small = $('<small></small>').html(cnt.categoria);
+                let div3 = $("<div></div>").addClass('busca');
+                let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                let span2 = $('<span></span>').addClass('text-busca').html('&nbsp;cliques');
+                
+                div3.append(span1).append(span2);
+                div2.append(small).append(div3);
+                div1.append(div2);
+
+                $('.list-categorias').append(div1);
+            });
 
         }
-    }) */
+    }) 
 
 };

@@ -30,7 +30,7 @@ class Contador
     }
 
 
-    public function gerarQueryAcesso($campos, $idCadastro= null, $granularidade= null, $idsVeiculos =[])
+    public function gerarQueryAcesso($tabela, $campos, $idCadastro= null, $granularidade= null, $idsVeiculos =[])
     {
         $campos = (count($campos) != 0) ? $campos : [
             'idVeiculo',
@@ -72,7 +72,7 @@ class Contador
         SELECT 
             $stringCampos,
             count(1) AS contador
-        FROM acesso
+        FROM $tabela
             $where
         GROUP BY  $groupBy
         ORDER BY contador desc
