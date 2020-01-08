@@ -1741,7 +1741,7 @@ body {
                             position: absolute;
                             height: 1px;
                             top: $navbar-width + 7px;
-                            width: calc(100% - $menu-padding * 2);
+                            width: calc(100% - 25px * 2);
                             background-color: $form-control-border-color;
                         }
                         & > li{

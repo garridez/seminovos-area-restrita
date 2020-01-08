@@ -1,9 +1,13 @@
 let mix = require('laravel-mix');
+let webpack = require('webpack');
 let path = require('path');
 
 let basePath = 'resources/assets';
 
 mix.webpackConfig({
+    plugins: [
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    ],
     resolve: {
         modules: [path.resolve(__dirname, 'resources/assets/js'), 'node_modules'],
         alias: {
