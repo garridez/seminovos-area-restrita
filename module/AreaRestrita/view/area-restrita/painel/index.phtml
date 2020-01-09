@@ -26,64 +26,8 @@ if($diasParaExpirar > 7){
 
 $formatDate = new \AreaRestrita\View\Helper\Data();
 
-
-;
-
-$DEMO_veiculos = [
-                    [   "modelo"=>"Uno Way",
-                        "ano_modelo"=>"16",
-                        "ano_fabricacao"=>"16",
-                        "data_cadastro"=>"21/02/19",
-                        "placa"=>"GOP-2789",
-                        "cliques"=>"120",
-                        "num_propostas"=>"24",
-                        "cliques_telefone"=>"24",
-                        "compartilhamentos"=>"24",
-                        "visualizar"=> true,
-                        "editar"=> true,
-                        "status"=> 5,
-                    ],
-                    [   "modelo"=>"Uno Way",
-                        "ano_modelo"=>"16",
-                        "ano_fabricacao"=>"16",
-                        "data_cadastro"=>"21/02/19",
-                        "placa"=>"GOP-2789",
-                        "cliques"=>"120",
-                        "num_propostas"=>"24",
-                        "cliques_telefone"=>"24",
-                        "compartilhamentos"=>"24",
-                        "visualizar"=> true,
-                        "editar"=> true,
-                        "status"=> 5,
-                    ],
-                    [   "modelo"=>"Uno Way",
-                        "ano_modelo"=>"16",
-                        "ano_fabricacao"=>"16",
-                        "data_cadastro"=>"21/02/19",
-                        "placa"=>"GOP-2789",
-                        "cliques"=>"120",
-                        "num_propostas"=>"24",
-                        "cliques_telefone"=>"24",
-                        "compartilhamentos"=>"24",
-                        "visualizar"=> true,
-                        "editar"=> true,
-                        "status"=> 2,
-                    ],
-                    [   "modelo"=>"Uno Way",
-                        "ano_modelo"=>"16",
-                        "ano_fabricacao"=>"16",
-                        "data_cadastro"=>"21/02/19",
-                        "placa"=>"GOP-2789",
-                        "cliques"=>"120",
-                        "num_propostas"=>"24",
-                        "cliques_telefone"=>"24",
-                        "compartilhamentos"=>"24",
-                        "visualizar"=> true,
-                        "editar"=> true,
-                        "status"=> 2,
-                    ]                    
-                ];
 ?>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <div class="container-fluid painel-revenda">
     <div class="row step step-plano">
         <div class="col-12 d-flex justify-content-center align-items-center ">
@@ -102,13 +46,14 @@ $DEMO_veiculos = [
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-end pr-md-0">
             <div class="form-group mt-2">
                 <div class='input-group date'>
-                    <input type='text' class="form-control input date-timer-picker" />
+                    <!-- <input type='text' class="form-control input date-timer-picker" />
                     <span class="input-group-addon text-black">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span>
+                    </span> -->
+                    Janeiro de 2020
                 </div>
             </div>
-            <a href="#" class="btn btn-laranja">ok</a>
+            <!-- <a href="#" class="btn btn-laranja">ok</a> -->
         </div>
         <div class="col-12 col-md-4 list list-marcas">
             <div class="list-header">
@@ -149,7 +94,7 @@ $DEMO_veiculos = [
                 </li>
             </ul>
         </div>
-        <div class="col-6 col-md-2 card">
+        <div class="col-6 col-md-4 card">
             <div class="card-header">
                 <span>
                     Veículos Cadastrados
@@ -169,7 +114,7 @@ $DEMO_veiculos = [
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-2 card">
+        <div class="col-6 col-md-4 card">
             <div class="card-header">
                 <span>
                     Veículos Ativos
@@ -182,46 +127,6 @@ $DEMO_veiculos = [
                     </div>
                     <div class="prct text-danger">
                         <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                        <span>
-                            5,5%
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-2 card">
-            <div class="card-header">
-                <span>
-                    Propostas Recebidas
-                </span>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="qtd">
-                        86
-                    </div>
-                    <div class="prct text-danger">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                        <span>
-                            5,5%
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-2 card">
-            <div class="card-header">
-                <span>
-                    E-mails Respondidos
-                </span>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="qtd">
-                        86
-                    </div>
-                    <div class="prct text-success">
-                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
                         <span>
                             5,5%
                         </span>
@@ -254,7 +159,7 @@ $DEMO_veiculos = [
             </div>
         </div>
         <div class="col-12">
-            <table class="table table-responsive tableveiculos">
+            <table class="table tableveiculos">
                 <thead>
                     <tr>
                         <th></th>
@@ -263,9 +168,7 @@ $DEMO_veiculos = [
                         <th>Placa</th>
                         <th>Cliques</th>
                         <th>Impressões</th>
-                        <th>Propostas Recebidas</th>
                         <th class="d-none d-md-table-cell">Cliques Telefone</th>
-                        <th class="d-none d-md-table-cell">Compartilhamentos</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -293,14 +196,8 @@ $DEMO_veiculos = [
                         <td class="d-table-cell">
                             <?= $veiculo['impressao']?? 0 ?>
                         </td>
-                        <td class="d-table-cell">
-                            <?= $veiculo['num_propostas']??'' ?>
-                        </td>
                         <td class="d-none d-md-table-cell">
                             <?= $veiculo['contato']?? 0 ?>
-                        </td>
-                        <td class="d-none d-md-table-cell">
-                            <?= $veiculo['compartilhamentos']??'' ?>
                         </td>
                         <td class="d-table-cell">
                             <div class="icon-1-5x text-success">

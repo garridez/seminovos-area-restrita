@@ -2,7 +2,7 @@
 
 module.exports.seletor = '.c-painel.a-detalhe-anuncio';
 module.exports.callback = ($) => {
-    let datepicker = require('js-datepicker');
+    /* let datepicker = require('js-datepicker');
     $(".input").mask("00/00/0000");
     let picker = datepicker(".input.date-timer-picker", {
         customDays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
@@ -13,7 +13,7 @@ module.exports.callback = ($) => {
             const value = date.toLocaleDateString()
             input.value = value // => '1/1/2099'
         }
-    });
+    }); */
     var Chart = require('chart.js');
     function renderGraph(dataGraph = { labels: [], values: [], label }, target) {
         target.height(50).width(50);
@@ -27,7 +27,7 @@ module.exports.callback = ($) => {
                     borderColor: "rgb(75, 192, 192)",
                     lineTension: 0.1,
                     label: dataGraph.label,
-                    pointHitRadius: 25
+                    pointHitRadius: 1
                 }]
             },
             options: {
@@ -38,56 +38,47 @@ module.exports.callback = ($) => {
             }
         });
     }
-    let dataGraph = {
-        labels: [
-            "10/12",
-            "11/12",
-            "12/12",
-            "13/12",
-            "14/12",
-        ],
-        values: [
-            18,
-            19,
-            16,
-            21,
-            45,
-        ],
-        label: "Cliques no anúnico"
+
+    var labels = {
+        'acesso': 'Cliques no anúncio',
+        'contato': 'Cliques em ver telefone',
+        'impressao': 'Impressões do veiculo'
     }
-    
-    $(".grafPropostas").length ? renderGraph(dataGraph, $(".grafPropostas")) : false;
    
-    $.ajax({
-        'url': location.href + '/cliques',
-        'type': 'GET',
-        'dataType': 'JSON',
-        'success': function(retorno){
+    Array('acesso', 'contato', 'impressao').map( tipo => {
+        
+        $.ajax({
+            'url': location.href + '/grafico-contagem-diaria/'+tipo,
+            'type': 'GET',
+            'dataType': 'JSON',
+            'success': function(retorno){
+    
+                if(!retorno.data) {
+                    return false;
+                }
+    
+                contador = Object.values(retorno.data);
+    
+                let labels = Array();
+                let values = Array();
+                contador.forEach(cnt => {
+                    labels.push( new Date(cnt.data).toLocaleDateString());
+                    values.push( parseInt(cnt.contador));
+                })
+                
 
-            if(!retorno.data) {
-                return false;
+                label = labels[tipo];
+    
+                let dataGraph = {
+                    labels,
+                    values,
+                    label
+                }
+    
+                $(".graf" + tipo).length ? renderGraph(dataGraph, $(".graf" + tipo)) : false;
+    
             }
-
-            cliques = Object.values(retorno.data);
-
-            let labels = Array()
-            let values = Array()
-            cliques.forEach(click => {
-                labels.push( new Date(click.data).toLocaleDateString());
-                values.push( parseInt(click.contador).toLocaleString());
-            })
-
-            label = "Cliques no anúncio";
-
-            let dataGraph = {
-                labels,
-                values,
-                label
-            }
-
-            $(".grafCliques").length ? renderGraph(dataGraph, $(".grafCliques")) : false;
-
-        }
+        })
+        
     })
-
 };

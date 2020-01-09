@@ -288,16 +288,18 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'cliques' => [
-                        'type' => Http\Literal::class,
+                        'type' => Http\Segment::class,
                         'options' => [
-                            'route' => '/cliques',
+                            'route' => '/grafico-contagem-diaria/:tipo',
+                            'constraints' => [
+                                'tipo' => 'acesso|contato|impressao'
+                            ],
                             'defaults' => [
-                                'action' => 'cliques'
+                                'action' => 'grafico-contagem-diaria'
                             ],
                         ]
                     ]
-                ]
-
+                ],
             ],
             'contadorPorMarca' => [
                 'type' => Http\Literal::class,

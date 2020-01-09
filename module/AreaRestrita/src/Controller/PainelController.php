@@ -118,7 +118,7 @@ class PainelController extends AbstractActionController
     {
         try{
             $this->contador =  new Contador();
-            $this->contador->gerarQueryAcesso(TabelasContador::Acesso, $campos, null, $granularidade, null);
+            $this->contador->gerarQueryAcesso(TabelasContador::Acesso, $campos, null, $granularidade, null, 'contador', 5);
             $contador =  $this->contador->getDados();    
             
             return new JsonModel([
@@ -149,12 +149,49 @@ class PainelController extends AbstractActionController
 
         $cliques = $contador->getDados();
 
-        $cliques = $cliques[1]['contador'] ?? 0;   
+        $cliques = $cliques[1]['contador'] ?? 0;  
+        
 
-        return new ViewModel(compact('veiculo', 'cliques'));        
+        $contador->gerarQueryAcesso(TabelasContador::Impressao, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
+
+        $impressoes = $contador->getDados();
+
+        $impressoes = $impressoes[1]['contador'] ?? 0;
+        
+        
+        $contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
+
+        $contato = $contador->getDados();
+
+        $contato = $contato[1]['contador'] ?? 0;
+
+        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato'));        
     }
 
-    public function cliquesAction()
+    public function graficoContagemDiariaAction()
+    {
+        $tipo = $this->params('tipo');
+        
+        $idVeiculo = $this->params('idVeiculo');
+
+        $veiculoModel = $this->getContainer()->get(Veiculos::class);
+
+        $veiculo = $veiculoModel->get($idVeiculo);
+        
+        $contador = new Contador();
+
+        $contador->gerarQueryAcesso($tipo, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo], 'data');
+
+        $contador = $contador->getDados();
+
+        return new JsonModel( [
+            'success' => '200',
+            'data' =>  $contador,
+        ]);
+
+    }
+
+    public function contatoAction()
     {
         $idVeiculo = $this->params('idVeiculo');
         
@@ -164,13 +201,13 @@ class PainelController extends AbstractActionController
         
         $contador = new Contador();
 
-        $contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo]);
+        $contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo]);
 
-        $cliques = $contador->getDados();
+        $contato = $contador->getDados();
 
         return new JsonModel( [
             'success' => '200',
-            'data' =>  $cliques,
+            'data' =>  $contato,
         ]);
 
     }

@@ -30,7 +30,7 @@ class Contador
     }
 
 
-    public function gerarQueryAcesso($tabela, $campos, $idCadastro= null, $granularidade= null, $idsVeiculos =[])
+    public function gerarQueryAcesso($tabela, $campos, $idCadastro= null, $granularidade= null, $idsVeiculos =[], $orderBy = 'contador', $limit= null )
     {
         $campos = (count($campos) != 0) ? $campos : [
             'idVeiculo',
@@ -68,6 +68,10 @@ class Contador
             $groupBy .= ", $granularidade";
         }
 
+        if($limit) {
+            $limit = 'limit ' . $limit;
+        }
+
         $this->query =  <<< "sql"
         SELECT 
             $stringCampos,
@@ -75,8 +79,8 @@ class Contador
         FROM $tabela
             $where
         GROUP BY  $groupBy
-        ORDER BY contador desc
-        LIMIT 5
+        ORDER BY $orderBy desc
+        $limit
 sql;
     }
 
