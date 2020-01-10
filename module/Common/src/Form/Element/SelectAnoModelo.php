@@ -21,7 +21,15 @@ class SelectAnoModelo extends Select
         $listaAnos = $this->getAnoDe();
         $proximoAno = date('Y') + 1;
 
-        return ['' => 'Selecione', $proximoAno => $proximoAno] + $listaAnos;
+        $mes = intval(date('m'));
+
+        if($mes > 6) {
+
+            return ['' => 'Selecione', $proximoAno => $proximoAno] + $listaAnos;
+        }
+
+        return ['' => 'Selecione'] + $listaAnos;
+
     }
 
     protected $valueOptions = [];
