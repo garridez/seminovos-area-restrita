@@ -406,10 +406,11 @@ class DadosVeiculoController extends AbstractActionController
         }else{
             $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
         }
-
+$placaDisponivel = true;
         return new JsonModel( [
             'status' => 200,
-            'placaDisponivel' => $placaDisponivel
+            'placaDisponivel' => $placaDisponivel,
+            'historicoCarro' => $veiculo['data'][0]['historicoCarro']
         ]);
     }
 
