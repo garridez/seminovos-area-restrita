@@ -7,36 +7,12 @@ $arrayPlanos = [
     5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
 ];
 
-$diasParaExpirar = $this->expiracaoRevenda()->diasParaExpirar;
-
-$fraseExpiracao = "Seu Plano Expira <b>Hoje</b>";
-$bgExpiracao = "plano-expira-semana";
-if($diasParaExpirar < 0){
-  $fraseExpiracao = "Seu Plano  Expirirou em <br/><b>".$dataExpiracaoRevenda."</b>";
-  $bgExpiracao = "plano-expirou";
-}
-if($diasParaExpirar > 0){
-  $fraseExpiracao = "Seu Plano  Expira em <br/><b>".$diasParaExpirar." dias</b>";
-  $bgExpiracao = "plano-expira-semana";
-}
-if($diasParaExpirar > 7){
-  $fraseExpiracao = "Seu Plano  Expirará em <br/><b>".$dataExpiracaoRevenda."</b>";
-  $bgExpiracao = "plano-expira-mes";
-}
-
 $formatDate = new \AreaRestrita\View\Helper\Data();
 
 ?>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <div class="container-fluid painel-revenda">
-    <div class="row step step-plano">
-        <div class="col-12 d-flex justify-content-center align-items-center ">
-            <div class="mr-2">
-                <b><?= $fraseExpiracao ?></b>
-            </div>
-            <a href="" class="btn btn-invert"> ver faturas </a>
-        </div>
-    </div>
+
     <div class="row step step-seminovos">
         <div class="col-12 col-md-8">
             <h5>
@@ -55,13 +31,13 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
             </div>
             <!-- <a href="#" class="btn btn-laranja">ok</a> -->
         </div>
-        <div class="col-12 col-md-4 list list-marcas">
+        <div class="col-12 col-md-4 list list-marcas border-right border-dark">
             <div class="list-header">
                 MARCA
             </div>
            <!--  -->
         </div>
-        <div class="col-12 col-md-4 list list-modelos">
+        <div class="col-12 col-md-4 list list-modelos border-right border-dark">
             <div class="list-header">
                 Modelo
             </div>
@@ -78,23 +54,58 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 Geral
             </h5>
         </div>
-        <div class="col-12 col-md-4 card">
+        <div class="col-12 col-md-6 card">
             <div class="card-header">
                 <span>
                     Planos
                 </span>
             </div>
-            <ul>
-                <li class="qtd-anuncios-menu">
-                    <?= ''
-                        /* $this->partial('partial/qtd-anuncios-menu.phtml', 'AreaRestrita', [
-                            'arrayPlanos' => $arrayPlanos
-                        ]) */
-                    ?>
-                </li>
-            </ul>
+                <div class="qtd-anuncios-menu d-flex">
+                <?php
+if ($this->userInfo('tipoCadastro') == 1) {
+    $arrayPlanos = [
+        1 => ['nitro', 'Nitro', '12', 'alta', '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+        2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+        3 => ['basico', 'Básico', '06', 'baixa', '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+    ];
+} else if ($this->userInfo('tipoCadastro') == 2) {
+    $arrayPlanos = [
+        1 => ['nitro-home', 'Nitro Home', '12', 'máxima', '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
+        2 => ['nitro', 'Nitro', '12', 'alta', '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+        3 => ['turbo', 'Turbo', '09', 'média', '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+        4 => ['basico', 'Básico', '06', 'baixa', '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+        5 => ['simples', 'Simples', '03', 'mínima', '', 'Grátis', 'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
+    ];
+}
+
+foreach ($arrayPlanos as $i => $plano):
+    list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano;
+
+    ?>
+    <div class="mx-3 justify-content-start d-flex align-items-center my-1 p-2">
+        <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+            <div class="icon-plano m-0">
+                <span class="bar-1"></span>
+                <span class="bar-2"></span>
+                <span class="bar-3"></span>
+                <span class="bar-4"></span>
+                <span class="bar-4"></span>
+            </div>
         </div>
-        <div class="col-6 col-md-4 card">
+        <div class="text-left ml-2">
+            <div>
+                <b><?= $plano ?></b>
+            </div>
+            <div>
+                <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
+            </div>
+        </div>
+    </div>
+    <?php
+endforeach; ?>
+                </div>
+        </div>
+        <div class="col-6 col-md-3 card">
             <div class="card-header">
                 <span>
                     Veículos Cadastrados
@@ -105,16 +116,10 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     <div class="qtd">
                         <?= $this->totalVeiculos ?>
                     </div>
-                    <div class="prct text-success">
-                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                        <span>
-                            5,5%
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-4 card">
+        <div class="col-6 col-md-3 card">
             <div class="card-header">
                 <span>
                     Veículos Ativos
@@ -124,12 +129,6 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 <div>
                     <div class="qtd">
                         <?= $this->totalVeiculosAtivos ?>
-                    </div>
-                    <div class="prct text-danger">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                        <span>
-                            5,5%
-                        </span>
                     </div>
                 </div>
             </div>
@@ -142,7 +141,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
             </h5>
         </div>
         <div class="col-12 col-md-4 pr-md-0">
-            <div class="form-group d-flex justify-content-end">
+            <!-- <div class="form-group d-flex justify-content-end">
                 <select name="ordenacao" class="form-control">
                     <option value="Ordenar por">Ordenar por</option>
                     <option value="Mais recentes">Mais recentes</option>
@@ -156,7 +155,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                     <option value="Inativo">Inativo</option>
                 </select>
                 <button class="btn btn-laranja">ok</button>
-            </div>
+            </div> -->
         </div>
         <div class="col-12">
             <table class="table tableveiculos">
