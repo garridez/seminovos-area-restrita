@@ -8,40 +8,41 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta charset="utf-8" />
-  <?php echo $this->headTitle() ?>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="apple-touch-icon" href="pages/ico/60.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta content="" name="description" />
-  <meta content="" name="author" />
-  <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <?php echo $this->headTitle() ?>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <link rel="apple-touch-icon" href="pages/ico/60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
 </head>
 
-<body class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
-  <nav class="page-sidebar animated" data-pages="sidebar">
-    <div class="sidebar-header d-flex d-md-none justify-content-center mt-3">
-      <a href="/meus-veiculos">
-        <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-          <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
-          <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-        </svg>
-      </a>
-    </div>
-    <?php
+<body
+    class="fixed-header desktop pace-done menu-behind pace-done menu-unpinned menu-pin l-layout <?= $this->bodyClass() ?>">
+    <nav class="page-sidebar animated" data-pages="sidebar">
+        <div class="sidebar-header d-flex d-md-none justify-content-center mt-3">
+            <a href="/meus-veiculos">
+                <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
+                    <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+                    <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                </svg>
+            </a>
+        </div>
+        <?php
       if ($this->userInfo('tipoCadastro') == 1) {
           $arrayPlanos = [
               1 => ['nitro',      'Nitro',      '12',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
@@ -67,28 +68,29 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
       }
 
       ?>
-  </nav>
+    </nav>
 
-  <div class="page-container">
-    <div class="header d-flex justify-content-around">
-      <a href="#" class="btn-link toggle-sidebar d-lg-none" data-toggle="sidebar">
-        <span class="thumbnail-wrapper d32 circular inline">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-        </span>
-      </a>
-      <div class="sidebar-header">
-        <a href="/meus-veiculos">
-          <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters"></use>
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-          </svg>
-        </a>
-      </div>
-      <div class="d-flex align-items-center ml-auto">
-        <div class="dropdown pull-right d-block">
-            <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="p-r-10 fs-14 font-heading hidden-md-down">
-                <?php
+    <div class="page-container">
+        <div class="header d-flex justify-content-around">
+            <a href="#" class="btn-link toggle-sidebar d-lg-none" data-toggle="sidebar">
+                <span class="thumbnail-wrapper d32 circular inline">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </span>
+            </a>
+            <div class="sidebar-header">
+                <a href="/meus-veiculos">
+                    <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_letters"></use>
+                        <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="d-flex align-items-center ml-auto">
+                <div class="dropdown pull-right d-block">
+                    <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="p-r-10 fs-14 font-heading hidden-md-down">
+                            <?php
                 if($this->userInfo('tipoCadastro')!== null){ 
                   if($this->userInfo('tipoCadastro') == 1) {
                     $new_nome = $this->userInfo('nomeFantasia');
@@ -102,41 +104,46 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
                   $new_nome = "Não informado";
                 }
                 ?>
-                <span class="semi-bold d-block">
-                  <?= $new_nome ?> 
-                  <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>
-                </span>
-              </div>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end" style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item" title="Meus dados de cadastro">
-                <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
-              </a>
-                <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item" title="Alterar minha senha">
-                <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
-              </a>
-              <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
-                <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
-              </a>
+                            <span class="semi-bold d-block">
+                                <?= $new_nome ?>
+                                <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end"
+                        style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item"
+                            title="Meus dados de cadastro">
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
+                        </a>
+                        <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item"
+                            title="Alterar minha senha">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
+                        </a>
+                        <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-      </div>
-    </div>
-    <div class="page-content-wrapper">
-      <div class="content pb-0">
-        <?= $this->content ?>
-      </div>
-      <div class="footer pt-1 position-absolute">
-        <div class="pl-0 pl-md-5 copyright sm-text-center">
-          <p class="small no-margin pull-left sm-pull-reset">
-            <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
-            <span class="font-montserrat">SeminovosBH</span>.
-            <span class="hint-text">Todos direitos reservados</span>
-          </p>
-          <div class="clearfix"></div>
         </div>
-      </div>
+        <div class="page-content-wrapper">
+            <div class="content pb-0">
+                <?= $this->content ?>
+            </div>
+            <div class="footer pt-1 position-absolute">
+                <div class="pl-0 pl-md-5 copyright sm-text-center">
+                    <p class="small no-margin pull-left sm-pull-reset">
+                        <span class="hint-text">Copyright &copy; <?= date("Y") ?> </span>
+                        <span class="font-montserrat">SeminovosBH</span>.
+                        <span class="hint-text">Todos direitos reservados</span>
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
   </div>
   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
   <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>

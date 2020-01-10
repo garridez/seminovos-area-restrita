@@ -6,6 +6,7 @@ use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
 use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
+use Zend\Session\SessionManager;
 
 class AuthController extends AbstractActionController
 {
@@ -14,6 +15,18 @@ class AuthController extends AbstractActionController
     {
         /* @var $container ServiceLocatorInterface */
         global $container;
+
+        $redirect = $this->getRequest()->getQuery('redirect', false);
+        /** @var SessionManager $sessionManager */
+        $sessionManager = $container->get(SessionManager::class);
+        $sessionStorage = $sessionManager->getStorage();
+        if ($redirect) {
+            $redirect = base64_decode($redirect);
+            $sessionStorage->redirect = $redirect;
+        }
+        if ($sessionStorage->redirect) {
+            $redirect = $sessionStorage->redirect;
+        }
 
         $particularForm = new Login\ParticularForm();
         $revendaForm = new Login\RevendaForm();
@@ -28,6 +41,10 @@ class AuthController extends AbstractActionController
         $authService = $container->get(AuthenticationService::class);
 
         if ($authService->hasIdentity()) {
+            if ($redirect) {
+                $sessionStorage->redirect = null;
+                return $this->redirect()->toUrl($redirect);
+            }
             return $this->redirect()->toRoute('restrito');
         }
 
@@ -65,6 +82,10 @@ class AuthController extends AbstractActionController
                 'rememberMe' => $rememberMe
             ]);
             if ($result->getCode() === $result::SUCCESS) {
+                if ($redirect) {
+                    $sessionStorage->redirect = null;
+                    return $this->redirect()->toUrl($redirect);
+                }
                 return $this->redirect()->toRoute('restrito');
             }
         }
