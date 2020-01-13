@@ -397,16 +397,19 @@ class DadosVeiculoController extends AbstractActionController
         $apiClient = $this->getContainer()->get(ApiClient::class);
         $veiculo = $apiClient->veiculosGet(
         [
-            "ignorarCondicoesBasicas" => 1
+            "ignorarCondicoesBasicas" => 1,
+            "flagPlaca" => 1
         ], $placa, false)->json();
 
         $placaDisponivel = false;
         if($veiculo['status']!= 200){
             $placaDisponivel =  true;
+        }else if(!isset($veiculo['data'][0]['idVeiculo'])){
+            $placaDisponivel =  true;
         }else{
             $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
         }
-$placaDisponivel = true;
+//$placaDisponivel = true;
         return new JsonModel( [
             'status' => 200,
             'placaDisponivel' => $placaDisponivel,
