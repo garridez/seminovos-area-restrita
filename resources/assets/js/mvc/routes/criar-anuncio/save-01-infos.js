@@ -73,7 +73,7 @@ module.exports.callback = ($) => {
                             
                             let historico = response.historicoCarro
                             
-                            //seta ano de Fabricacao
+                            //seta ano de fabricacao
                             $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
                             
                             //seta ano do modelo
@@ -92,7 +92,7 @@ module.exports.callback = ($) => {
                                 }
                             });
 
-                            //seta cobustivel
+                            //seta cobustivel -- precisa ser verificado
                             $("select[name='combustivel'] option:selected").removeAttr('selected');
                             let combustivelSelecionado = historico.dados_veiculo.combustivel;
                             options = $("select[name='combustivel'] option");
@@ -106,36 +106,34 @@ module.exports.callback = ($) => {
                             });
 
 
-                            //seta marca
+                            //seta marca -- precisa ser verificado
                             $("select[name='idMarca'] option:selected").removeAttr('selected');
                             options = $("select[name='idMarca'] option"); 
                             let marcaSelecionada = historico.dados_veiculo.marca.toLowerCase();
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let marca = option.html().trim().toLowerCase();
-                                if( marca == marcaSelecionada) {
+                                if( marca == marcaSelecionada || marca == 'chevrolet') {
                                     option.attr('selected', 'selected');
                                     $("select[name='idMarca']").trigger('change');
                                     return false;
                                 }
                             });
 
-                            //seta o modelo  ---- precisa ser verificado
-                            setTimeout(function(){
-                                
-                                let modeloSelecionado = historico.dados_veiculo.modelo.toLowerCase();
-                                $("select[name='modeloCarro'] option:selected").removeAttr('selected');
-                                options = $("select[name='modeloCarro'] option"); 
-                                options.each(function(k, v) {
-                                    let option = $(v);
-                                    let modelo = option.html().trim().toLowerCase(); 
-                                    if( modelo == modeloSelecionado) {
-                                        option.attr('selected', 'selected');
-                                        return false;
-                                    }
-                                });
+                            //seta o modelo
+                            let modeloSelecionado = historico.dados_veiculo.modelo;
+                            $("select[name='modeloCarro'] option:selected").removeAttr('selected');
+                            options = $("select[name='modeloCarro'] option"); 
+                            options.each(function(k, v) {
+                                let option = $(v);
+                                let modelo = option.html().trim();
+                                let regex = RegExp(modelo, 'i'); 
+                                if(regex.test(modeloSelecionado) && modelo != '') {
+                                    option.attr('selected', 'selected');
+                                    return false;
+                                }
+                            });
 
-                            },0)
                             
 
                         }
