@@ -39,13 +39,15 @@ if ($this->checkedLigacao !== '0') {
             <form method="POST" name="form_maisInformacoesVeiculo" class="form-group" role="form" id="form_maisInformacoesVeiculo">
                 <div class="row text-center">
                     <div class="form-group form-group-default input-shadow">
-                        <?= $this->formLabel($fields['observacoes']) ?>
+                        <span>
+                            <?= $this->formLabel($fields['observacoes']) ?>
+                        </span>
                         <?= $this->formTextarea($fields['observacoes']) ?>
                     </div>
                 </div>
                 <div class="wordcount float-right mb-3">(<span class="count"><?= strlen($fields['observacoes']->getValue())?></span>/700)</div>
 
-                <div class="form-group form-group-default">
+                <div class="form-group form-group-default form-troca">
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
                 </div>
