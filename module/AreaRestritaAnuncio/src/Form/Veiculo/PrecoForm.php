@@ -95,4 +95,10 @@ class PrecoForm extends Form
             'required' => true,
         ]);
     }
+
+    public function setIsEdition(){
+        $this->get('flagLeilao')
+            ->setAttribute('readonly', true)
+            ->setAttribute('disabled', true);
+    }
 }
