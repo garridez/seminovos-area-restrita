@@ -59,6 +59,16 @@ class PrecoForm extends Form
             ],
         ]);
         $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flagLeilao',
+            'options' => [
+                'label' => 'Carro proveniente de leilão?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
+        $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
             'attributes' => [
