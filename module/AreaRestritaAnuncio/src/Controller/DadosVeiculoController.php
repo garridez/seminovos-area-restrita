@@ -164,6 +164,11 @@ class DadosVeiculoController extends AbstractActionController
         $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
+
+        if($data['idVeiculo'] ?? false) {
+            $precoForm->setIsEdition();
+        }
+
         return new ViewModel([
             'formPrecoVeiculo' => $precoForm
         ]);
