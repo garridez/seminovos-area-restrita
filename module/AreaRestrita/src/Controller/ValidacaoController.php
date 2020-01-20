@@ -29,6 +29,8 @@ class ValidacaoController extends AbstractActionController
         $cadastros = $this->getApiClient()->cadastrosGet([
             'considerarInativo' => 1], $data['idCadastro'], true)->getData()[0];
 
+        $sucesso = false;
+
         if($cadastros['idStatus'] == 2){
             $dados = [
                 'considerarInativo' => 1,
@@ -37,12 +39,9 @@ class ValidacaoController extends AbstractActionController
                 ];
             $resPut = $this->getApiClient()->cadastrosPut($dados, $data['idCadastro']);
             if ($resPut->status === 200) {
-                return new ViewModel(["sucesso" => 1]);
+                $sucesso = true;
             }
         }
-        
-        return new ViewModel();
+        return new ViewModel(["sucesso" => $sucesso]);        
     }
-
-    
 }
