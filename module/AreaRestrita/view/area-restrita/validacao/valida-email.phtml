@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <?php if(isset($sucesso) && $sucesso): ?>
+        <div class="col-12 text-center mb-5">
+            <div>
+                <h1 class="text-success mb-5">E-mail confirmado com sucesso</h1>
+            </div>
+            <div>
+                <a href="/entrar" class="btn btn-lg btn-laranja"> Voltar ao login </a>
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="col-12 text-center mb-5">
+            <div>
+                <h1 class="text-danger mb-5">Houve um problema com a confirmação do email <br> tente novamente ou entre em contato</h1>
+            </div>
+            <div>
+                <a href="/entrar" class="btn btn-lg btn-laranja"> Voltar ao login </a>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
