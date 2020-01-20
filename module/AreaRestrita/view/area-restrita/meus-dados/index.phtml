@@ -9,6 +9,14 @@ $formCadastro->prepare();
 $fields = $formCadastro->getElements();
 $tipoCadastro = $this->tipoCadastro;
 
+$currentIdCadastro = $this->userInfo('idCadastro');
+if($currentIdCadastro && $currentIdCadastro == 290948){
+    foreach ($fields as $key => $campo) {
+        if((strpos($key,'tel') === 0) || (strpos($key,'ope') === 0) || (strpos($key,'cel') === 0)){          
+            $fields[$key]->setAttribute("disabled",true);
+        }
+    }
+}
 ?>
 
 <div class=" container-fluid   container-fixed-lg">
