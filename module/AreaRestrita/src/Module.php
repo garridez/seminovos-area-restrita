@@ -44,8 +44,8 @@ class Module
 
     public function showChat($sm)
     {
-        define('SHOW_CHAT', 1);
-        return;
+        //define('SHOW_CHAT', 1);
+        //return;
         $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
 
         if (!$cadastro) {
