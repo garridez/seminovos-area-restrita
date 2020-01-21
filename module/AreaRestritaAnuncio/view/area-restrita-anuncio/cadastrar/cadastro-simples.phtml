@@ -1,0 +1,80 @@
+<?php
+$this->headTitle("Cadastro Área Restrita");
+
+$dadosForm = $formCadastro;
+$dadosForm->prepare();
+$fields = $dadosForm->getElements();
+?>
+
+<?= $this->form()->openTag($dadosForm) ?>
+<div class="container d-flex justify-content-center">
+    <div class="row col-12 col-md-6 pt-3 bg-white">
+        <div class="col-12">
+            <h1>
+                Cadastre-se
+            </h1>
+        </div>
+        <div class="col-12">
+            <div class="form-group required">
+                <?= $this->formLabel($fields['email'])  ?>
+                <?= $this->formEmail($fields['email'])  ?>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group required">
+                <?= $this->formLabel($fields['confirmacaoEmail'])  ?>
+                <?= $this->formEmail($fields['confirmacaoEmail'])  ?>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group required">
+                <?= $this->formLabel($fields['responsavelNome'])  ?>
+                <?= $this->formText($fields['responsavelNome'])  ?>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group required">
+                <?= $this->formLabel($fields['cpfResponsavel'])  ?>
+                <?= $this->formText($fields['cpfResponsavel'])  ?>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group required mb-0">
+                <?= $this->formLabel($fields['senha'])  ?>
+                <?= $this->formPassword($fields['senha'])  ?>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group required mb-0">
+                <?= $this->formLabel($fields['confirmacaoSenha'])  ?>
+                <?= $this->formPassword($fields['confirmacaoSenha'])  ?>
+            </div>
+        </div>
+        <div class="col-12 mb-2">
+            <small>(Recomendamos que a senha tenha no mínimo <b>4 caracteres</b> incluindo letras e números)</small>
+        </div>
+        <div class="col-12">
+            <div class="row d-flex align-items-end">
+                <div class="form-group required col-12 col-md-4 required">
+                    <?= $this->formLabel($fields['telefone_2']) ?>
+                    <?= $this->formText($fields['telefone_2']) ?>
+                </div>
+                <div class="form-group col-6 col-md-4">
+                    <?= $this->formLabel($fields['operadora_2']) ?>
+                    <?= $this->formSelect($fields['operadora_2']) ?>
+                </div>
+                <div class="form-group col-6 col-md-4">
+                    <div class="checkbox check-success m-0">
+                        <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <?= $this->formSubmit($fields['submit'])  ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag() ?>

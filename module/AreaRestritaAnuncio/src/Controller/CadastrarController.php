@@ -14,6 +14,7 @@ use AreaRestrita\Model\EnviarEmail;
 use SnBH\Common\Helper\ValidatorMessages;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
 
 class CadastrarController extends AbstractActionController
 {
@@ -167,5 +168,15 @@ class CadastrarController extends AbstractActionController
             'status' => 200,
             'emailDisponivel' => $emailDisponivel
         ]);
+    }
+    public function cadastroSimplesAction()
+    {
+        $view = new ViewModel([
+            'formCadastro' => new CadastroSimplesForm()
+        ]);
+
+        $this->layout('layout/blank.phtml');
+
+        return $view;
     }
 }
