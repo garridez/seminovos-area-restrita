@@ -171,12 +171,49 @@ class CadastrarController extends AbstractActionController
     }
     public function cadastroSimplesAction()
     {
-        $view = new ViewModel([
-            'formCadastro' => new CadastroSimplesForm()
-        ]);
+        
+        $dadosForm = new CadastroSimplesForm();
 
-        $this->layout('layout/blank.phtml');
+        $request = $this->getRequest();
 
-        return $view;
+        if ($request->isPost()) {
+            //var_dump($request);
+            $post = $request->getPost();
+
+            $dadosForm->setData($post);
+
+            if ($dadosForm->isValid()) {
+                //var_dump('aqui');
+                /* @var $cadastrosModel Cadastros */
+                $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+                $data = $dadosForm->getData();
+                /*if ($data['dataNascimento']) {
+                    $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', $data['dataNascimento'])));
+                }*/
+
+                $data['tipoCadastro'] = 2;
+                $resPost = $cadastrosModel->post($data);
+                echo json_encode($resPost->json());
+                die;
+            } else {
+                echo json_encode([
+                    'status' => 405,
+                    'title' => 'Revise as informações inseridas',
+                    'detail' => ValidatorMessages::toHTML($dadosForm->getMessages(), $dadosForm),
+                ]);
+                die;
+            }
+        } else {
+        
+            $view = new ViewModel([
+                'formCadastro' => $dadosForm
+            ]);
+
+            $this->layout('layout/blank.phtml');
+
+            return $view;
+        
+        }
     }
 }

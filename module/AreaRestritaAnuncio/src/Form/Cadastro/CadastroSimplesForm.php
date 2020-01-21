@@ -167,9 +167,13 @@ class CadastroSimplesForm extends Form
                 ],
             ],
         ]);
+        $inputFilter->add([
+            'name' => 'cpfResponsavel',
+            'required' => true,
+        ]);
         #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
-            'name' => 'telefone_1',
+            'name' => 'telefone_2',
             'required' => true,
         ]);
         $inputFilter->add([
