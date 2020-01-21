@@ -371,6 +371,15 @@ return [
                     ]
                 ],
             ],
+            'tabela-fipe' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/tabela-fipe',
+                    'defaults' => [
+                        'action' =>'tabela-fipe'
+                    ]
+                ]
+            ],
         ],
     ],
 ];

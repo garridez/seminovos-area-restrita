@@ -7,6 +7,7 @@ use AreaRestrita\Model\Contador;
 use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use SnBH\ApiClient\Client as ApiClient;
 
 abstract class GranularidadeContator {
     const Dia = 'DATE(time)';
@@ -165,7 +166,84 @@ class PainelController extends AbstractActionController
 
         $contato = $contato[1]['contador'] ?? 0;
 
-        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato'));        
+        $frase = "";
+
+        $temp_acoes = [
+            "realizar_pagamento" => false,
+            "editar_dados" => false,
+            "editar_fotos" => false,
+            "vendido" => false,
+            "upgrade_plano" => false,
+            "excluir" => false,
+            "renovar" => false,
+            "trocar_plano" => false,
+            "reativar" => false,
+            "enviar_comprovante" => false,
+            "renovar_plano" => false,
+            "inativar" => false,
+        ];
+
+        switch ($veiculo['idStatus']) {
+            case "1":
+                $frase = "";
+                break;
+            case "2":
+                $frase = "Anúncio ativo no site";
+                $temp_acoes["editar_dados"] = true;
+                $temp_acoes["editar_fotos"] = true;
+                $temp_acoes["excluir"] = true;
+                $temp_acoes["inativar"] = true;
+                $temp_acoes["trocar_plano"] = true;
+                break;
+            case "3":
+                $frase = "";
+                $temp_acoes["excluir"] = true;
+                break;
+            case "4":
+                $frase = "";
+                $temp_acoes["excluir"] = true;
+                $temp_acoes["inativar"] = true;
+                if ($veiculo['idPlano'] == 1) {
+                    $temp_acoes["trocar_plano"] = true;
+                }
+                break;
+            case "5":
+                $frase = "Anúncio inativo no site";
+                $temp_acoes["editar_dados"] = true;
+                $temp_acoes["editar_fotos"] = true;
+                $temp_acoes["reativar"] = true;
+                $temp_acoes["excluir"] = true;
+                break;
+            case "6":
+                $frase = "";
+                break;
+            case "7":
+                $frase = "";
+                break;
+            case "8":
+                $frase = "";
+                break;
+            case "9":
+                $frase = "";
+                break;
+            case "10":
+                $frase = "";
+                $temp_acoes["excluir"] = true;
+                break;
+            default:
+                $temp_acoes = [
+                    "<h5>Huston we have a problem!!(Entre em contato com nosso suporte)</h5>",
+                ];
+                break;
+        }
+
+        $veiculo['botoes'] = $temp_acoes;
+        $veiculo['dataExpiracao'] = '';
+        $veiculo['intervaloData'] = '';
+        $veiculo['frase'] = $frase;
+
+
+        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato', 'frase'));        
     }
 
     public function graficoContagemDiariaAction()
@@ -208,6 +286,24 @@ class PainelController extends AbstractActionController
         return new JsonModel( [
             'success' => '200',
             'data' =>  $contato,
+        ]);
+
+    }
+
+    public function tabelaFipeAction(){
+
+        $params = $this->params()->fromPost();
+
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+        $data = $apiClient->versaoGet([
+            'idModelo' => $params['modeloCarro'], 
+            'ano' => $params['ano'], 
+            'idMarca' => $params['idMarca'] 
+        ])->getData();
+
+        return new JsonModel([
+            'success' => '200',
+            'data' => $data
         ]);
 
     }

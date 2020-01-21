@@ -15,21 +15,12 @@ module.exports.callback = ($) => {
         }
     }); */
     var Chart = require('chart.js');
-    function renderGraph(dataGraph = { labels: [], values: [], label }, target) {
+    var graficos = [];
+    function renderGraph(dataGraph = { labels: [], values: [], label }, target, tipo) {
         target.height(50).width(50);
-        new Chart(target, {
+        graficos[tipo] = new Chart(target, {
             type: 'line',
-            data: {
-                labels: dataGraph.labels,
-                datasets: [{
-                    data: dataGraph.values,
-                    fill: false,
-                    borderColor: "rgb(75, 192, 192)",
-                    lineTension: 0.1,
-                    label: dataGraph.label,
-                    pointHitRadius: 1
-                }]
-            },
+            data: null,
             options: {
                 maintainAspectRatio: false,
                 legend: {
@@ -39,14 +30,20 @@ module.exports.callback = ($) => {
         });
     }
 
-    var labels = {
+    var labelsTxt = {
         'acesso': 'Cliques no anúncio',
         'contato': 'Cliques em ver telefone',
         'impressao': 'Impressões do veiculo'
     }
+
+    var cor = {
+        'acesso': "rgb(0, 196, 0)",
+        'contato': "rgb(196, 0, 0)",
+        'impressao': "rgb(0, 0, 196)",
+    }
    
     Array('acesso', 'contato', 'impressao').map( tipo => {
-        
+        $(".graf"+tipo).length ? renderGraph({}, $(".graf"+tipo), tipo) : false;
         $.ajax({
             'url': location.href + '/grafico-contagem-diaria/'+tipo,
             'type': 'GET',
@@ -67,15 +64,28 @@ module.exports.callback = ($) => {
                 })
                 
 
-                label = labels[tipo];
+                label = labelsTxt[tipo];
     
                 let dataGraph = {
                     labels,
                     values,
                     label
                 }
-    
-                $(".graf" + tipo).length ? renderGraph(dataGraph, $(".graf" + tipo)) : false;
+
+
+                    graficos[tipo].data.labels = labels;
+                    graficos[tipo].data.datasets.push({
+                        
+                        data: values,
+                        fill: false,
+                        borderColor: cor[tipo],
+                        lineTension: 0.1,
+                        label: label,
+                        pointHitRadius: 1
+                        
+                    }) 
+                    graficos[tipo].update();
+                
     
             }
         })

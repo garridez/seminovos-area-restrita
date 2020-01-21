@@ -18,6 +18,14 @@ if($diasParaExpirar > 7){
 <div class="sidebar-menu mt-3">
   <!-- BEGIN SIDEBAR MENU ITEMS-->
   <ul class="menu-items mt-5">
+    <li class="m-t-12 pt-3 <?= $bgExpiracao ?> aviso-expiracao">
+      <div class="icone d-flex justify-content-center mt-2">
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+      </div>
+      <h5 class="text-center">
+        O seu plano <?= $fraseExpiracao ?>
+      </h5>
+    </li>
     <li class="m-t-30 m-b-20">
       <div class="p-l-10 p-r-10">
         <a class="btn-block btn btn-laranja text-capitalize" data-toggle="collapse" href="#cirarAnuncio" role="button"
@@ -81,12 +89,12 @@ if($diasParaExpirar > 7){
       <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
     </li>
     <?php if($this->userInfo('idCadastro') == 295204): ?>
-    <li class="">
+<!--     <li class="">
       <a href="<?= $this->url('restrito/painel') ?>">
         <span class="title">Relatórios</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </li>
+    </li> -->
     <?php endif; ?>
     <li class="qtd-anuncios-menu">
         <?=
@@ -95,14 +103,6 @@ if($diasParaExpirar > 7){
         ])
 
         ?>
-    </li>
-    <li class="mb-4 mb-md-0 <?= $bgExpiracao ?> aviso-expiracao">
-      <div class="icone d-flex justify-content-center mt-2">
-          <i class="fa fa-clock-o" aria-hidden="true"></i>
-      </div>
-      <h5 class="text-center">
-        O seu plano <?= $fraseExpiracao ?>
-      </h5>
     </li>
   </ul>
   <div class="clearfix"></div>

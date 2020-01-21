@@ -1,17 +1,103 @@
 <?php
-$arrayPlanos = [
-    1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
-    2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
-    3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
-    4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
-    5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
-];
+if ($this->userInfo('tipoCadastro') == 1) {
+    $arrayPlanos = [
+        1 => ['nitro', 'Nitro', '12', 'alta', '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+        2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+        3 => ['basico', 'Básico', '06', 'baixa', '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+    ];
+} else if ($this->userInfo('tipoCadastro') == 2) {
+    $arrayPlanos = [
+        1 => ['nitro-home', 'Nitro Home', '12', 'máxima', '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
+        2 => ['nitro', 'Nitro', '12', 'alta', '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+        3 => ['turbo', 'Turbo', '09', 'média', '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+        4 => ['basico', 'Básico', '06', 'baixa', '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+        5 => ['simples', 'Simples', '03', 'mínima', '', 'Grátis', 'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
+    ];
+}
 
 $formatDate = new \AreaRestrita\View\Helper\Data();
 
 ?>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <div class="container-fluid painel-revenda">
+
+    <div class="row step step-geral">
+        <div class="col-12">
+            <h5>
+                Meus Planos
+            </h5>
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 card bg-dark text-white m-2">
+            <div class="card-header row">
+                <strong> <small>PLANOS</small> </strong>      
+            </div>
+            <div class="card-body row">
+                <h1 class="col-5 text-white"><?= $this->totalVeiculos ?></h1>
+                <div class="col-7 text-left">
+                    <span>Veiculos</span><br>
+                    R$ 136,00
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 card bg-dark text-white m-2">
+            <div class="card-header row">
+                <strong> <small>QUANTIDADE BÁSICOS</small> </strong>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6 text-center border-right-c border-s-2">
+                        Possui
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalBasico ?></h3>
+                </div>
+                <div class="col-6  text-center">
+                        Faltam
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalBasico - $this->qtdAnuncios()->totalBasicoPublicado ?></h3>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 card bg-dark text-white m-2">
+            <div class="card-header row">
+                <strong> <small>QUANTIDADE TURBO</small> </strong>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6 text-center border-right-c border-s-2">
+                        Possui
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalTurbo ?></h3>
+                </div>
+                <div class="col-6  text-center">
+                        Faltam
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalTurbo - $this->qtdAnuncios()->totalTurboPublicados ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2 card bg-dark text-white m-2">
+            <div class="card-header row">
+                <strong> <small>QUANTIDADE NITRO</small> </strong>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6 text-center border-right-c border-s-2">
+                        Possui
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalNitro ?></h3>
+                </div>
+                <div class="col-6  text-center">
+                        Faltam
+                        <h3 class="text-white"><?= $this->qtdAnuncios()->totalNitro - $this->qtdAnuncios()->totalNitroPublicados ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2 card bg-dark text-white m-2">
+            <div class="card-header row">
+                <strong> <small>VEÍCULOS ATIVOS</small> </strong>      
+            </div>
+            <div class="card-body row">
+                <h1 class="col-12 text-white"><?= $this->totalVeiculosAtivos ?></h1>
+            </div>
+        </div>
+
+
+    </div>
 
     <div class="row step step-seminovos">
         <div class="col-12 col-md-8">
@@ -33,106 +119,149 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
         </div>
         <div class="col-12 col-md-4 list list-marcas border-right border-dark">
             <div class="list-header">
-                MARCA
+                Marcas mais clicadas
             </div>
-           <!--  -->
+            <!--  -->
         </div>
         <div class="col-12 col-md-4 list list-modelos border-right border-dark">
             <div class="list-header">
-                Modelo
+                Modelos mais clicados
             </div>
         </div>
         <div class="col-12 col-md-4 list list-categorias">
             <div class="list-header">
-                Categoria
+                Categorias mais clicadas
             </div>
         </div>
     </div>
-    <div class="row step step-geral">
-        <div class="col-12">
+    <div class="row step step-tabela-fipe">
+        <div class="col-12 col-md-8">
             <h5>
-                Geral
+                Tabela Fipe
             </h5>
         </div>
-        <div class="col-12 col-md-6 card">
-            <div class="card-header">
-                <span>
-                    Planos
-                </span>
-            </div>
-                <div class="qtd-anuncios-menu d-flex">
-                <?php
-if ($this->userInfo('tipoCadastro') == 1) {
-    $arrayPlanos = [
-        1 => ['nitro', 'Nitro', '12', 'alta', '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
-        2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
-        3 => ['basico', 'Básico', '06', 'baixa', '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
-    ];
-} else if ($this->userInfo('tipoCadastro') == 2) {
-    $arrayPlanos = [
-        1 => ['nitro-home', 'Nitro Home', '12', 'máxima', '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
-        2 => ['nitro', 'Nitro', '12', 'alta', '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
-        3 => ['turbo', 'Turbo', '09', 'média', '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
-        4 => ['basico', 'Básico', '06', 'baixa', '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
-        5 => ['simples', 'Simples', '03', 'mínima', '', 'Grátis', 'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
-    ];
-}
+        <div class="col-12">
+            <form class="row form-tabela-fipe">
+                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 mt-md-2 mt-xl-0 mt-2">
+                    <select name="tipoVeiculo" placeholder="Selecione Marca" class="form-control" required>
+                        <option value="1">Carro</option>
+                        <option value="2">Caminhão</option>
+                        <option value="3">Moto</option>
+                    </select>
+                </div>
 
-foreach ($arrayPlanos as $i => $plano):
-    list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano;
+                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 mt-md-2 mt-xl-0 mt-2">
+                    <select name="idMarca" placeholder="Selecione Marca" class="form-control" required></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3 mt-md-2 mt-xl-0 mt-2">
+                    <select name="modeloCarro" placeholder="Selecione Modelo" class="form-control" required></select>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2  mt-xl-0 mt-md-2 mt-2">
+                    <select type="text" name="ano" placeholder="Selecione Ano" class="form-control" require>
+                        <option value="">Selecione</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                        <option value="2008">2008</option>
+                        <option value="2007">2007</option>
+                        <option value="2006">2006</option>
+                        <option value="2005">2005</option>
+                        <option value="2004">2004</option>
+                        <option value="2003">2003</option>
+                        <option value="2002">2002</option>
+                        <option value="2001">2001</option>
+                        <option value="2000">2000</option>
+                        <option value="1999">1999</option>
+                        <option value="1998">1998</option>
+                        <option value="1997">1997</option>
+                        <option value="1996">1996</option>
+                        <option value="1995">1995</option>
+                        <option value="1994">1994</option>
+                        <option value="1993">1993</option>
+                        <option value="1992">1992</option>
+                        <option value="1991">1991</option>
+                        <option value="1990">1990</option>
+                        <option value="1989">1989</option>
+                        <option value="1988">1988</option>
+                        <option value="1987">1987</option>
+                        <option value="1986">1986</option>
+                        <option value="1985">1985</option>
+                        <option value="1984">1984</option>
+                        <option value="1983">1983</option>
+                        <option value="1982">1982</option>
+                        <option value="1981">1981</option>
+                        <option value="1980">1980</option>
+                        <option value="1979">1979</option>
+                        <option value="1978">1978</option>
+                        <option value="1977">1977</option>
+                        <option value="1976">1976</option>
+                        <option value="1975">1975</option>
+                        <option value="1974">1974</option>
+                        <option value="1973">1973</option>
+                        <option value="1972">1972</option>
+                        <option value="1971">1971</option>
+                        <option value="1970">1970</option>
+                        <option value="1969">1969</option>
+                        <option value="1968">1968</option>
+                        <option value="1967">1967</option>
+                        <option value="1966">1966</option>
+                        <option value="1965">1965</option>
+                        <option value="1964">1964</option>
+                        <option value="1963">1963</option>
+                        <option value="1962">1962</option>
+                        <option value="1961">1961</option>
+                        <option value="1960">1960</option>
+                        <option value="1959">1959</option>
+                        <option value="1958">1958</option>
+                        <option value="1957">1957</option>
+                        <option value="1956">1956</option>
+                        <option value="1955">1955</option>
+                        <option value="1954">1954</option>
+                        <option value="1953">1953</option>
+                        <option value="1952">1952</option>
+                        <option value="1951">1951</option>
+                        <option value="1950">1950</option>
+                        <option value="1949">1949</option>
+                        <option value="1948">1948</option>
+                        <option value="1947">1947</option>
+                        <option value="1946">1946</option>
+                        <option value="1945">1945</option>
+                        <option value="1944">1944</option>
+                        <option value="1943">1943</option>
+                        <option value="1942">1942</option>
+                        <option value="1941">1941</option>
+                        <option value="1940">1940</option>
+                        <option value="1939">1939</option>
+                        <option value="1938">1938</option>
+                        <option value="1937">1937</option>
+                        <option value="1936">1936</option>
+                        <option value="1935">1935</option>
+                        <option value="1934">1934</option>
+                        <option value="1933">1933</option>
+                        <option value="1932">1932</option>
+                        <option value="1931">1931</option>
+                    </select>
+                </div>
 
-    ?>
-    <div class="mx-3 justify-content-start d-flex align-items-center my-1 p-2">
-        <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
-            <div class="icon-plano m-0">
-                <span class="bar-1"></span>
-                <span class="bar-2"></span>
-                <span class="bar-3"></span>
-                <span class="bar-4"></span>
-                <span class="bar-4"></span>
-            </div>
-        </div>
-        <div class="text-left ml-2">
-            <div>
-                <b><?= $plano ?></b>
-            </div>
-            <div>
-                <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
-            </div>
-        </div>
-    </div>
-    <?php
-endforeach; ?>
+                <div class="col-sm-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 mt-xl-0 mt-md-2 mt-2">
+                    <button class="btn btn-success">Buscar</button>
                 </div>
-        </div>
-        <div class="col-6 col-md-3 card">
-            <div class="card-header">
-                <span>
-                    Veículos Cadastrados
-                </span>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="qtd">
-                        <?= $this->totalVeiculos ?>
-                    </div>
+
+                <div class="col-12 mt-2 preco-fipe row">
+
                 </div>
-            </div>
+            </form>
         </div>
-        <div class="col-6 col-md-3 card">
-            <div class="card-header">
-                <span>
-                    Veículos Ativos
-                </span>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="qtd">
-                        <?= $this->totalVeiculosAtivos ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="row step step-meus-veiculos">
         <div class="col-12 col-md-8">
@@ -141,7 +270,7 @@ endforeach; ?>
             </h5>
         </div>
         <div class="col-12 col-md-4 pr-md-0">
-            <!-- <div class="form-group d-flex justify-content-end">
+            <div class="form-group d-flex justify-content-end">
                 <select name="ordenacao" class="form-control">
                     <option value="Ordenar por">Ordenar por</option>
                     <option value="Mais recentes">Mais recentes</option>
@@ -154,13 +283,14 @@ endforeach; ?>
                     <option value="Ativo">Ativo</option>
                     <option value="Inativo">Inativo</option>
                 </select>
-                <button class="btn btn-laranja">ok</button>
-            </div> -->
+                <button class="btn btn-laranja filtrar-veiculos">ok</button>
+            </div>
         </div>
         <div class="col-12">
             <table class="table tableveiculos">
                 <thead>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th>Veículos</th>
                         <th class="d-none d-md-table-cell">Data de cadastro</th>
@@ -173,49 +303,52 @@ endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php   foreach ($this->veiculos['data'] as $key => $veiculo) :?>
-                    <tr>
-                        <td class="d-table-cell">
-                            <div class="<?=$veiculo['idStatus']==2 ? 'text-success' : 'text-danger'?>">
-                                <i class="fa fa-circle" aria-hidden="true"></i>
-                            </div>
-                        </td>
-                        <td class="d-table-cell">
-                            <?= $veiculo['modelo'] ?> <?= $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
-                        </td>
-                        <td class="d-none d-md-table-cell">
-                            <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
-                        </td>
-                        <td class="d-table-cell px-0">
-                            <?= $veiculo['placa']??'' ?>
-                        </td>
-                        <td class="d-table-cell">
-                            <?= $veiculo['acesso']?? 0 ?>
-                        </td>
-                        <td class="d-table-cell">
-                            <?= $veiculo['impressao']?? 0 ?>
-                        </td>
-                        <td class="d-none d-md-table-cell">
-                            <?= $veiculo['contato']?? 0 ?>
-                        </td>
-                        <td class="d-table-cell">
-                            <div class="icon-1-5x text-success">
-                                <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
-                                    <i class="fa fa-eye" aria-hidden="true">
-                                    </i>
-                                </a>
-                            </div>
-                        </td>
-                        <td class="d-table-cell">
-                            <div class="icon-1-5x text-success">
-                                <a href="<?= strtolower($veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
-                                    
-                            </div>
-                        </td>
+                    <?php foreach ($this->veiculos['data'] as $key => $veiculo) : ?>
+                        <tr>
+                            <td class="d-table-cell status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
+                                <div class="<?= $veiculo['idStatus'] == 2 ? 'text-success' : 'text-danger' ?>">
+                                    <i class="fa fa-circle" aria-hidden="true"></i>
+                                </div>
+                            </td>
+                            <td class="d-table-cell status-veiculo">
+                                <img class="img-fluid" style="width: 80px;height: 60px;" src="https://carros.seminovosbh.com.br/<?= $veiculo['foto'] ?>">
+                            </td>
+                            <td class="d-table-cell">
+                                <?= $veiculo['modelo'] ?> <?= $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
+                            </td>
+                            <td class="d-none d-md-table-cell data-cadastro">
+                                <?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?>
+                            </td>
+                            <td class="d-table-cell px-0">
+                                <?= $veiculo['placa'] ?? '' ?>
+                            </td>
+                            <td class="d-table-cell">
+                                <?= $veiculo['acesso'] ?? 0 ?>
+                            </td>
+                            <td class="d-table-cell">
+                                <?= $veiculo['impressao'] ?? 0 ?>
+                            </td>
+                            <td class="d-none d-md-table-cell cliques">
+                                <?= $veiculo['contato'] ?? 0 ?>
+                            </td>
+                            <td class="d-table-cell">
+                                <div class="icon-1-5x text-success">
+                                    <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
+                                        <i class="fa fa-eye" aria-hidden="true">
+                                        </i>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="d-table-cell">
+                                <div class="icon-1-5x text-success">
+                                    <a href="<?= strtolower($veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
 
-                    </tr>
+                                </div>
+                            </td>
+
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
