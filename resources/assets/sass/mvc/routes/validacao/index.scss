@@ -1,0 +1,17 @@
+&.c-validacao.a-valida-email{
+    .header {
+        display:none !important;
+    }
+    .page-sidebar{
+        display: none !important;
+    }
+    .page-content-wrapper>.content {
+        padding-left: 0!important;
+    }
+    .footer{
+        padding-left: 0!important;
+        p{
+            text-align: center;
+        }
+    }
+}

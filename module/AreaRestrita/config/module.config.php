@@ -79,6 +79,27 @@ return [
                     ],
                 ],
             ],
+            'validacao' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/validacao',
+                    'defaults' => [
+                        'controller' => Controller\ValidacaoController::class,
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'valida-email' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/email/:dados',
+                            'defaults' => [
+                                'action' => 'valida-email',
+                            ],
+                        ],
+                    ],
+                ]
+            ],
             'filtros' => [
                 'type' => Literal::class,
                 'options' => [
@@ -141,6 +162,7 @@ return [
             Controller\RotaExemploController::class => InvokableFactory::class,
             Controller\TermosController::class => InvokableFactory::class,
             Controller\PainelController::class => InvokableFactory::class,
+            Controller\ValidacaoController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [

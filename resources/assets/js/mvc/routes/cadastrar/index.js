@@ -31,9 +31,8 @@ module.exports.callback = ($) => {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                var modal = Alert.info('Ótimo!<br>'
-                        + 'Sua conta foi criada<br> Agora acesse <a href="/">"Meus Anúncios"</a> para anunciar seu veículo',
-                        'Conta Criada', 20000);
+                var modal = Alert.info('Sua conta foi criada!<br> Você recebera um e-mail para liberação do seu cadastro',
+                        'Falta pouco', 20000);
                 function redirectEntrar() {
                     window.location.href = '/';
                 }
