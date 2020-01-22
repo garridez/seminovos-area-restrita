@@ -148,14 +148,25 @@
                             </a>
                         </span>
                     </div>
-                    <div class="col-6 no-padding">
-                        <span class="semi-bold">
-                            Não tem cadastro? <br>
-                            <a href="/me-cadastrar" class="semi-bold text-amarelo">
-                                Cadastre-se
-                            </a>
-                        </span>
-                    </div>
+                    <?php if ($this->cadastroSimples): ?>
+                        <div class="col-6 no-padding">
+                            <span class="semi-bold">
+                                Não tem cadastro? <br>
+                                <a href="/cadastro-simples" class="semi-bold text-amarelo">
+                                    Cadastre-se
+                                </a>
+                            </span>
+                        </div>
+                    <?php else: ?>
+                        <div class="col-6 no-padding">
+                            <span class="semi-bold">
+                                Não tem cadastro? <br>
+                                <a href="/me-cadastrar" class="semi-bold text-amarelo">
+                                    Cadastre-se
+                                </a>
+                            </span>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
