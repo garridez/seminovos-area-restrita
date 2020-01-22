@@ -26,6 +26,7 @@
     "animate-sass": "^0.8.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "chart.js": "^2.9.3",
     "compress.js": "^1.1.2",
     "cross-env": "^5.1.4",
     "emojionearea": "^3.4.1",

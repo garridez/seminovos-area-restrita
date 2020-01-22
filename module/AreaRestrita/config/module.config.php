@@ -161,6 +161,7 @@ return [
             Controller\MeusVeiculosController::class => InvokableFactory::class,
             Controller\RotaExemploController::class => InvokableFactory::class,
             Controller\TermosController::class => InvokableFactory::class,
+            Controller\PainelController::class => InvokableFactory::class,
             Controller\ValidacaoController::class => InvokableFactory::class,
         ],
     ],

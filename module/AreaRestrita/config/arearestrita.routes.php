@@ -305,4 +305,81 @@ return [
             ],
         ],
     ],
+
+    'painel' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'painel',
+            'defaults' => [
+                'controller' => Ctrl\PainelController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'detalhes' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/:idVeiculo',
+                    'constraints' => [
+                            'idVeiculo' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'action' => 'detalhe-anuncio'
+                    ]
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'cliques' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/grafico-contagem-diaria/:tipo',
+                            'constraints' => [
+                                'tipo' => 'acesso|contato|impressao'
+                            ],
+                            'defaults' => [
+                                'action' => 'grafico-contagem-diaria'
+                            ],
+                        ]
+                    ]
+                ],
+            ],
+            'contadorPorMarca' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-marca',
+                    'defaults' => [
+                        'action' => 'contador-por-marca'
+                    ]
+                ],
+            ],
+            'contadorPorModelo' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-modelo',
+                    'defaults' => [
+                        'action' => 'contador-por-modelo'
+                    ]
+                ],
+            ],
+            'contadorPorCategoria' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/contador-por-categoria',
+                    'defaults' => [
+                        'action' => 'contador-por-categoria'
+                    ]
+                ],
+            ],
+            'tabela-fipe' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/tabela-fipe',
+                    'defaults' => [
+                        'action' =>'tabela-fipe'
+                    ]
+                ]
+            ],
+        ],
+    ],
 ];
