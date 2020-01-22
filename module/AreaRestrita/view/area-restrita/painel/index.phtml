@@ -31,10 +31,10 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 <strong> <small>PLANOS</small> </strong>      
             </div>
             <div class="card-body row">
-                <h1 class="col-5 text-white"><?= $this->totalVeiculos ?></h1>
+                <h1 class="col-5 text-white"><?= $this->qtdAnuncios()->totalAnuncios ?></h1>
                 <div class="col-7 text-left">
                     <span>Veiculos</span><br>
-                    R$ 136,00
+                    R$ <?=  str_replace('.', ',', $this->valorPlanoRevenda) ?>
                 </div>
             </div>
         </div>

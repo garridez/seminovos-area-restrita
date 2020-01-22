@@ -8,6 +8,7 @@ use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Model\Planos;
 
 abstract class GranularidadeContator {
     const Dia = 'DATE(time)';
@@ -32,6 +33,20 @@ class PainelController extends AbstractActionController
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();
         $idCadastro = $cadastro['idCadastro']; 
+
+
+        /* @var $planosModel Planos */
+        $planosModel = $this->getContainer()->get(Planos::class);
+
+        $dadosPlanos = $planosModel->get('revenda');
+       
+        $key  = array_search( $cadastro['idPlano'], array_column($dadosPlanos, 'idPlanoRevenda'));
+        $valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
+
+        
+
+        // Busca os planos de acordo com o tipo
+        $dadosPlanos = $planosModel->get('revenda');
         
         $veiculosModel = $this->getContainer()->get(Veiculos::class); 
 
@@ -96,7 +111,7 @@ class PainelController extends AbstractActionController
             }
         }
 
-        return new ViewModel(compact('totalVeiculos', 'totalVeiculosAtivos', 'veiculos'));
+        return new ViewModel(compact('totalVeiculos', 'totalVeiculosAtivos', 'veiculos', 'valorPlanoRevenda'));
 
     }
 
