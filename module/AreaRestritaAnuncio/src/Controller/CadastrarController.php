@@ -7,14 +7,16 @@
 
 namespace AreaRestritaAnuncio\Controller;
 
+use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Controller\AuthController;
 use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
 use SnBH\Common\Helper\ValidatorMessages;
+use Zend\Stdlib\Parameters;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
 
 class CadastrarController extends AbstractActionController
 {
@@ -183,19 +185,41 @@ class CadastrarController extends AbstractActionController
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-                //var_dump('aqui');
                 /* @var $cadastrosModel Cadastros */
                 $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
                 $data = $dadosForm->getData();
-                /*if ($data['dataNascimento']) {
-                    $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', $data['dataNascimento'])));
-                }*/
 
                 $data['tipoCadastro'] = 2;
+                $data['idCidade'] = 2700;
+                $data['idEstado'] = 11;
+                $data['cpfResponsavel'] = $data['cpfResponsavel'] ?? false;
+                $data['cadastroSimplificado'] = 1;
+
+                if (!$data['cpfResponsavel']) {
+                     unset($data['cpfResponsavel']);
+                 }
+                 
                 $resPost = $cadastrosModel->post($data);
-                echo json_encode($resPost->json());
-                die;
+                if ($resPost->status === 200) {
+                    // Redireciona internamente para o login
+                    $this->request->setPost(new Parameters([
+                        'type' => 'login-particular-form',
+                        'usuarioEmail' => $data['email'],
+                        'usuarioSenha' => $data['senha'],
+                        'tipoCadastro' => '2',
+                    ]));
+                    return $this->forward()
+                        ->dispatch(AuthController::class, [
+                        'action' => 'login',
+                    ]);
+
+                }
+                $this->layout('layout/blank.phtml');
+                return new ViewModel([
+                    'formCadastro' => $dadosForm,
+                    'erro' => $resPost->json()['detail'],
+                ]);
             } else {
                 echo json_encode([
                     'status' => 405,

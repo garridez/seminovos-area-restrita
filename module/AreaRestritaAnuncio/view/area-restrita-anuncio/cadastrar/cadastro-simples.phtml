@@ -15,6 +15,13 @@ $fields = $dadosForm->getElements();
             </h1>
         </div>
         <div class="col-12">
+            <?php if ($this->erro): ?>
+                <div class="alert alert-danger" role="alert">
+                <?= $this->erro ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
             <div class="form-group required">
                 <?= $this->formLabel($fields['email'])  ?>
                 <?= $this->formEmail($fields['email'])  ?>
@@ -33,7 +40,7 @@ $fields = $dadosForm->getElements();
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="form-group required">
+            <div class="form-group">
                 <?= $this->formLabel($fields['cpfResponsavel'])  ?>
                 <?= $this->formText($fields['cpfResponsavel'])  ?>
             </div>
@@ -59,7 +66,7 @@ $fields = $dadosForm->getElements();
                     <?= $this->formLabel($fields['telefone_2']) ?>
                     <?= $this->formText($fields['telefone_2']) ?>
                 </div>
-                <div class="form-group col-6 col-md-4">
+                <div class="form-group col-6 col-md-4 required">
                     <?= $this->formLabel($fields['operadora_2']) ?>
                     <?= $this->formSelect($fields['operadora_2']) ?>
                 </div>
@@ -72,8 +79,11 @@ $fields = $dadosForm->getElements();
         </div>
         <div class="col-12">
             <div class="form-group">
-                <?= $this->formSubmit($fields['submit'])  ?>
+                <button type="submit" name="submit" class="btn btn-block btn-laranja text-white" value="Cadastrar">Cadastrar</button>
             </div>
+        </div>
+        <div class="col mt-3 mb-3">
+            <span class="text-danger h3">*</span> Esses campos são obrigatórios
         </div>
     </div>
 </div>

@@ -15,6 +15,10 @@ class AuthController extends AbstractActionController
     {
         /* @var $container ServiceLocatorInterface */
         global $container;
+        
+         /* @var $authService AuthenticationService */
+        $authService = $container->get(AuthenticationService::class);
+        $authService->clearIdentity();
 
         $redirect = $this->getRequest()->getQuery('redirect', false);
         /** @var SessionManager $sessionManager */
@@ -33,7 +37,8 @@ class AuthController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'particularForm' => $particularForm,
-            'revendaForm' => $revendaForm
+            'revendaForm' => $revendaForm,
+            'cadastroSimples' => $this->params()->fromQuery('cadastro-simples', false),
         ]);
         $this->layout('layout/login.phtml');
 

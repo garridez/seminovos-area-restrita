@@ -43,7 +43,7 @@ class CadastroSimplesForm extends Form
                 'label' => 'CPF',
             ],
             'attributes' => [
-                'required' => true,
+                'required' => false,
                 'class' => 'form-control',
                 'placeholder' => '000.000.000-00',
                 'data-mask' => '000.000.000-00',
@@ -77,7 +77,7 @@ class CadastroSimplesForm extends Form
                 ],
             ],
             'attributes' => [
-                'required' => false,
+                'required' => true,
                 'class' => 'form-control'
             ],
         ]);
@@ -91,7 +91,7 @@ class CadastroSimplesForm extends Form
                 'unchecked_value' => 0,
             ],
             'attributes' => [
-                'value' => 1,
+                'value' => 0,
             ],
         ]);
         $this->add([
@@ -104,6 +104,8 @@ class CadastroSimplesForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'Nome Sobrenome',
+                'autocomplete' => 'name',
+                'autocapitalize' => 'sentences',
             ]
         ]);
         $this->add([
@@ -116,7 +118,7 @@ class CadastroSimplesForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => '******',
-
+                'autocomplete' => 'off',
             ]
         ]);
         $this->add([
@@ -129,6 +131,7 @@ class CadastroSimplesForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => '******',
+                'autocomplete' => 'off',
             ]
         ]);
         $this->add([
@@ -169,7 +172,7 @@ class CadastroSimplesForm extends Form
         ]);
         $inputFilter->add([
             'name' => 'cpfResponsavel',
-            'required' => true,
+            'required' => false,
         ]);
         #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
