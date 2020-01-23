@@ -83,7 +83,7 @@ class PainelController extends AbstractActionController
 
         $this->contador->gerarQueryAcesso(TabelasContador::Impressao, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
         
-        sleep(0.2);
+        usleep(250000);
         $contadorPorVeiculo = $this->contador->getDados();
 
         //mescla as informações dos contadores, com os dados dos veículos
@@ -99,7 +99,7 @@ class PainelController extends AbstractActionController
 
         $this->contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
 
-        sleep(0.2);
+        usleep(250000);
         $contadorPorVeiculo = $this->contador->getDados();
 
         //mescla as informações dos contadores, com os dados dos veículos
