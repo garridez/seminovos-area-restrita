@@ -121,6 +121,15 @@ return [
                     ],
                 ],
             ],
+            'nao-lidas' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/nao-lidas',
+                    'defaults' => [
+                        'action' => 'nao-lidas',
+                    ],
+                ],
+            ],
         ],
     ],
     'contrato-revenda' => [

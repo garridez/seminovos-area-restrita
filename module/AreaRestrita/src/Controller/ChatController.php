@@ -27,7 +27,21 @@ class ChatController extends AbstractActionController
         }
         return $this->getMessages($idCadastro);
     }
+    public function naoLidasAction()
+    {
+        $idCadastro = $this->getCadastro('idCadastro');
 
+        if (!$idCadastro) {
+            return new JsonModel();
+        }
+
+        $res = $this->getApiClient()->apiChatMensagensGet([
+            'method' => 'countNaoLidas',
+            'idCadastro' => $idCadastro,
+        ]);
+
+        return new JsonModel($res->getData());
+    }
     protected function sendMessages($idCadastro)
     {
         /**
