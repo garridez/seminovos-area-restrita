@@ -1,0 +1,56 @@
+// &.c-painel.a-detalhe-anuncio{
+.painel-anuncio{
+    canvas{
+        // height: 250px;
+    }
+    h5{
+        font-size:1.2rem;
+        font-weight: 700;
+    }
+    .step-titulo{
+        margin-bottom: 1rem;
+            @include media-breakpoint-down(sm) {
+                padding: 0 0.5rem;
+            }
+        .box{
+            text-align: center;
+            padding: 0.5rem 0;
+            background-color: aqua;
+            margin: 0.5rem 0;
+        }
+        .details{
+            font-size: 1rem;
+        }
+    }
+    .step-resumo{
+        .title{
+            background-color: $white;
+            border-bottom: 4px solid $primary;
+            padding: 0.5rem;
+            span{
+                font-size:  0.9rem;
+                font-weight: 500;
+            }
+        }
+        .card{
+            .card-body{
+                font-size:2rem;
+                font-weight: 500;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+            }
+            margin: 0;
+            box-shadow: inset 1px -1px 1px $black;
+            &:last-of-type{
+                padding-right: 0;
+            }
+        }
+    }
+    .step{
+        .grafico{
+            height: 200px !important;
+        }
+    }
+}
+// }

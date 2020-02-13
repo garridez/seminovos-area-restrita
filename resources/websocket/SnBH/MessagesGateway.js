@@ -41,7 +41,7 @@ class MessagesGateway {
 
             return data;
         } catch (e) {
-            console.log('pau no ajax');
+            console.log('pau no ajax getConversas');
             console.log(e);
             return [];
         }
@@ -71,7 +71,7 @@ class MessagesGateway {
             this.idLastMessage = data.idLastMessage || 0;
             return data;
         } catch (e) {
-            console.log('pau no ajax');
+            console.log('pau no ajax getMessages');
             console.log('mensagensGet', params);
             console.log(e);
             return [];
@@ -132,7 +132,7 @@ MessagesGateway.prototype.events = {
             this.emit('list-chats', conversas);
             this.messagesLoader(); // Interval
         } catch (e) {
-            console.log('pau no ajax');
+            console.log('pau no ajax list-chats');
             console.log(e);
         }
     },
@@ -142,7 +142,7 @@ MessagesGateway.prototype.events = {
             this.emit('list-mensagens', data.listMensagens);
             this.messagesLoader();
         } catch (e) {
-            console.log('pau no ajax');
+            console.log('pau no ajax list-mensagens');
             console.log(e);
         }
     },
@@ -152,7 +152,7 @@ MessagesGateway.prototype.events = {
             this.emit('initial-messages', data.listMensagens);
             this.messagesLoader();
         } catch (e) {
-            console.log('pau no ajax');
+            console.log('pau no ajax initial-messages');
             console.log(e);
         }
     },

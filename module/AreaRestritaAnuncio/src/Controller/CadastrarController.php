@@ -7,11 +7,14 @@
 
 namespace AreaRestritaAnuncio\Controller;
 
+use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
 use AreaRestrita\Controller\AbstractActionController;
+use AreaRestrita\Controller\AuthController;
 use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
 use SnBH\Common\Helper\ValidatorMessages;
+use Zend\Stdlib\Parameters;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
@@ -167,5 +170,74 @@ class CadastrarController extends AbstractActionController
             'status' => 200,
             'emailDisponivel' => $emailDisponivel
         ]);
+    }
+    public function cadastroSimplesAction()
+    {
+        
+        $dadosForm = new CadastroSimplesForm();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            //var_dump($request);
+            $post = $request->getPost();
+
+            $dadosForm->setData($post);
+
+            if ($dadosForm->isValid()) {
+                /* @var $cadastrosModel Cadastros */
+                $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+                $data = $dadosForm->getData();
+
+                $data['tipoCadastro'] = 2;
+                $data['idCidade'] = 2700;
+                $data['idEstado'] = 11;
+                $data['cpfResponsavel'] = $data['cpfResponsavel'] ?? false;
+                $data['cadastroSimplificado'] = 1;
+
+                if (!$data['cpfResponsavel']) {
+                     unset($data['cpfResponsavel']);
+                 }
+                 
+                $resPost = $cadastrosModel->post($data);
+                if ($resPost->status === 200) {
+                    // Redireciona internamente para o login
+                    $this->request->setPost(new Parameters([
+                        'type' => 'login-particular-form',
+                        'usuarioEmail' => $data['email'],
+                        'usuarioSenha' => $data['senha'],
+                        'tipoCadastro' => '2',
+                    ]));
+                    return $this->forward()
+                        ->dispatch(AuthController::class, [
+                        'action' => 'login',
+                    ]);
+
+                }
+                $this->layout('layout/blank.phtml');
+                return new ViewModel([
+                    'formCadastro' => $dadosForm,
+                    'erro' => $resPost->json()['detail'],
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 405,
+                    'title' => 'Revise as informações inseridas',
+                    'detail' => ValidatorMessages::toHTML($dadosForm->getMessages(), $dadosForm),
+                ]);
+                die;
+            }
+        } else {
+        
+            $view = new ViewModel([
+                'formCadastro' => $dadosForm
+            ]);
+
+            $this->layout('layout/blank.phtml');
+
+            return $view;
+        
+        }
     }
 }

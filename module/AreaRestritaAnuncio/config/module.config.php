@@ -236,6 +236,16 @@ return [
                     ],
                 ],
             ],
+            'cadastro-simples' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/cadastro-simples',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'cadastro-simples',
+                    ],
+                ],
+            ],
             'remember-pass' => [
                 'type' => Segment::class,
                 'options' => [

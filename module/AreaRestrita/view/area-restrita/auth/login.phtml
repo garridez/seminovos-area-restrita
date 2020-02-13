@@ -1,14 +1,15 @@
 <?php
 /* @var $this Zend\View\Renderer\PhpRenderer */
-
+global $container;
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
 ?>
 
 <div class="snbh-logo-container">
     <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
-    <a href="https://seminovos.com.br/">
+    <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
         <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_car" class="layer-car"></use>
-            <use xlink:href="/img/svg/snbh_logo.svg#layer_letters" class="layer-letters"></use>
+            <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+            <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
         </svg>
     </a>
 </div>
@@ -148,14 +149,25 @@
                             </a>
                         </span>
                     </div>
-                    <div class="col-6 no-padding">
-                        <span class="semi-bold">
-                            Não tem cadastro? <br>
-                            <a href="/me-cadastrar" class="semi-bold text-amarelo">
-                                Cadastre-se
-                            </a>
-                        </span>
-                    </div>
+                    <?php if ($this->cadastroSimples): ?>
+                        <div class="col-6 no-padding">
+                            <span class="semi-bold">
+                                Não tem cadastro? <br>
+                                <a href="/cadastro-simples" class="semi-bold text-amarelo">
+                                    Cadastre-se
+                                </a>
+                            </span>
+                        </div>
+                    <?php else: ?>
+                        <div class="col-6 no-padding">
+                            <span class="semi-bold">
+                                Não tem cadastro? <br>
+                                <a href="/me-cadastrar" class="semi-bold text-amarelo">
+                                    Cadastre-se
+                                </a>
+                            </span>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
