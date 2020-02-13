@@ -3,7 +3,6 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
-use AreaRestrita\Model\Contador;
 use AreaRestrita\Model\Veiculos;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -25,7 +24,6 @@ abstract class TabelasContador{
 
 class PainelController extends AbstractActionController
 {
-    private $contador;
 
     public function indexAction()
     {
@@ -65,49 +63,18 @@ class PainelController extends AbstractActionController
             $idsVeiculos[] = $veiculo['idVeiculo'];
         }
 
-        $this->contador = new Contador();
-        $this->contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
+        $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        $contadorPorVeiculo = $this->contador->getDados();
+        $contadorPorVeiculo = $apiClient->contadorGet(['idVeiculo' => $idsVeiculos])->getData();
 
         //mescla as informações dos acessos, com os dados dos veículos
         //var_dump($contadorPorVeiculo);die;
         foreach($contadorPorVeiculo as $contador) {
             foreach($veiculos['data'] as  $k => $veiculo) {
                 if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
-                    $veiculos['data'][$k]['acesso'] = $contador['contador'];
-                    break;
-                }
-            }
-        }
-
-        $this->contador->gerarQueryAcesso(TabelasContador::Impressao, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
-        
-        usleep(250000);
-        $contadorPorVeiculo = $this->contador->getDados();
-
-        //mescla as informações dos contadores, com os dados dos veículos
-        //var_dump($contadorPorVeiculo);die;
-        foreach($contadorPorVeiculo as $contador) {
-            foreach($veiculos['data'] as  $k => $veiculo) {
-                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
-                    $veiculos['data'][$k]['impressao'] = $contador['contador'];
-                    break;
-                }
-            }
-        }
-
-        $this->contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $idCadastro, null, $idsVeiculos);
-
-        usleep(250000);
-        $contadorPorVeiculo = $this->contador->getDados();
-
-        //mescla as informações dos contadores, com os dados dos veículos
-        //var_dump($contadorPorVeiculo);die;
-        foreach($contadorPorVeiculo as $contador) {
-            foreach($veiculos['data'] as  $k => $veiculo) {
-                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
-                    $veiculos['data'][$k]['contato'] = $contador['contador'];
+                    $veiculos['data'][$k]['acesso'] = $contador['acesso'];
+                    $veiculos['data'][$k]['contato'] = $contador['contato'];
+                    $veiculos['data'][$k]['impressao'] = $contador['impressao'];
                     break;
                 }
             }
@@ -119,38 +86,38 @@ class PainelController extends AbstractActionController
 
     public function contadorPorMarcaAction()
     {
-        return $this->contadorPor(['marca']);
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+
+        $contador = $apiClient->contadorGet(['marca' => true])->getData();
+
+        return new JsonModel([
+            'success' => 'SUCCESS',
+            'data' =>  $contador,
+        ]);
     }
 
     public function contadorPorModeloAction()
     {
-        return $this->contadorPor(['modelo']);
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+
+        $contador =  $apiClient->contadorGet(['modelo' => true])->getData();
+
+        return new JsonModel([
+            'success' => 'SUCCESS',
+            'data' =>  $contador,
+        ]);
     }
 
     public function contadorPorCategoriaAction()
     {
-        return $this->contadorPor(['categoria']);
-    }
+        $apiClient = $this->getContainer()->get(ApiClient::class);
 
-    private function contadorPor($campos, $granularidade = GranularidadeContator::Mes)
-    {
-        try{
-            $this->contador =  new Contador();
-            $this->contador->gerarQueryAcesso(TabelasContador::Acesso, $campos, null, $granularidade, null, 'contador', 5);
-            $contador =  $this->contador->getDados();    
-            
-            return new JsonModel([
-                'success' => 'SUCCESS',
-                'data' =>  $contador,
-            ]);
+        $contador = $apiClient->contadorGet(['categoria' => true])->getData();
 
-        }catch(\Error $e) {
-
-            return new JsonModel([
-                'success' => '500',
-                'data' =>  $e->getMessage(),
-            ]);
-        }
+        return new JsonModel([
+            'success' => 'SUCCESS',
+            'data' =>  $contador,
+        ]);
     }
 
     public function detalheAnuncioAction()
@@ -161,27 +128,20 @@ class PainelController extends AbstractActionController
 
         $veiculo = $veiculoModel->get($idVeiculo);
 
-        $contador = new Contador();
+        $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        $contador->gerarQueryAcesso(TabelasContador::Acesso, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
+        $contador = $apiClient->contadorGet(['idVeiculo' => $idVeiculo])->getData();
 
-        $cliques = $contador->getDados();
+        $cliques = 0;
+        $impressoes = 0;
+        $contato = 0;
 
-        $cliques = $cliques[1]['contador'] ?? 0;  
-        
+        foreach($contador as $cnt) {
 
-        $contador->gerarQueryAcesso(TabelasContador::Impressao, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
-
-        $impressoes = $contador->getDados();
-
-        $impressoes = $impressoes[1]['contador'] ?? 0;
-        
-        
-        $contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $veiculo['idCadastro'], null, [$idVeiculo]);
-
-        $contato = $contador->getDados();
-
-        $contato = $contato[1]['contador'] ?? 0;
+            $cliques += $cnt['acesso'];
+            $impressoes += $cnt['impressao'];
+            $contato += $cnt['contato'];
+        }   
 
         $frase = "";
 
@@ -259,52 +219,7 @@ class PainelController extends AbstractActionController
         $veiculo['intervaloData'] = '';
         $veiculo['frase'] = $frase;
 
-
-        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato', 'frase'));        
-    }
-
-    public function graficoContagemDiariaAction()
-    {
-        $tipo = $this->params('tipo');
-        
-        $idVeiculo = $this->params('idVeiculo');
-
-        $veiculoModel = $this->getContainer()->get(Veiculos::class);
-
-        $veiculo = $veiculoModel->get($idVeiculo);
-        
-        $contador = new Contador();
-
-        $contador->gerarQueryAcesso($tipo, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo], 'data');
-
-        $contador = $contador->getDados();
-
-        return new JsonModel( [
-            'success' => '200',
-            'data' =>  $contador,
-        ]);
-
-    }
-
-    public function contatoAction()
-    {
-        $idVeiculo = $this->params('idVeiculo');
-        
-        $veiculoModel = $this->getContainer()->get(Veiculos::class);
-
-        $veiculo = $veiculoModel->get($idVeiculo);
-        
-        $contador = new Contador();
-
-        $contador->gerarQueryAcesso(TabelasContador::Contato, ['idVeiculo'], $veiculo['idCadastro'], GranularidadeContator::Dia, [$idVeiculo]);
-
-        $contato = $contador->getDados();
-
-        return new JsonModel( [
-            'success' => '200',
-            'data' =>  $contato,
-        ]);
-
+        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato', 'frase', 'contador'));        
     }
 
     public function tabelaFipeAction(){

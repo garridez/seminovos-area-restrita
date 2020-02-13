@@ -37,7 +37,7 @@ module.exports.callback = ($) => {
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let img = $(`<img class="img-responsive" style="height:30px" src='/img/brands/${cnt.marca.toLowerCase()}.svg'>`);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
                     
                     div3.append(span1).append(span2);
@@ -69,7 +69,7 @@ module.exports.callback = ($) => {
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let b = $("<b></b>").html(cnt.modelo);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
                     
                     div3.append(span1).append(span2);
@@ -101,7 +101,7 @@ module.exports.callback = ($) => {
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let small = $('<small></small>').html(cnt.categoria);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.contador).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
                     
                     div3.append(span1).append(span2);

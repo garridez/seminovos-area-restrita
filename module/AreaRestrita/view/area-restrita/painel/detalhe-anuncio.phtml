@@ -319,30 +319,33 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
         </div>
     </div>
 
-    <div class="row step step-grafico-clique">
-        <div class="col-12">
-            <h5>Vizualizações dos dados do veículo</h5>
-            <div class="grafico">
-                <canvas class="grafacesso"></canvas>
+    <div class="conteudo" data-contador='<?= json_encode($this->contador) ?>'>
+        <div class="row step step-grafico-clique">
+            <div class="col-12">
+                <h5>Vizualizações dos dados do veículo</h5>
+                <div class="grafico">
+                    <canvas class="grafacesso"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row step step-grafico-clique">
-        <div class="col-12">
-            <h5>Quantidade de vezes que este veiculo foi mostrado em resultados de busca</h5>
-            <div class="grafico">
-                <canvas class="grafimpressao"></canvas>
+    
+        <div class="row step step-grafico-clique">
+            <div class="col-12">
+                <h5>Quantidade de vezes que este veiculo foi mostrado em resultados de busca</h5>
+                <div class="grafico">
+                    <canvas class="grafimpressao"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row step step-grafico-clique">
-        <div class="col-12">
-            <h5>Cliques em Ver Telefone</h5>
-            <div class="grafico">
-                <canvas class="grafcontato"></canvas>
+    
+        <div class="row step step-grafico-clique">
+            <div class="col-12">
+                <h5>Cliques em Ver Telefone</h5>
+                <div class="grafico">
+                    <canvas class="grafcontato"></canvas>
+                </div>
             </div>
         </div>
+    
     </div>
 </div>

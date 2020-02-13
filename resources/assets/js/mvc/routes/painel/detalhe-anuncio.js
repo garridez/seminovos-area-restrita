@@ -41,54 +41,43 @@ module.exports.callback = ($) => {
         'contato': "rgb(196, 0, 0)",
         'impressao': "rgb(0, 0, 196)",
     }
-   
-    Array('acesso', 'contato', 'impressao').map( tipo => {
-        $(".graf"+tipo).length ? renderGraph({}, $(".graf"+tipo), tipo) : false;
-        $.ajax({
-            'url': location.href + '/grafico-contagem-diaria/'+tipo,
-            'type': 'GET',
-            'dataType': 'JSON',
-            'success': function(retorno){
-    
-                if(!retorno.data) {
-                    return false;
-                }
-    
-                contador = Object.values(retorno.data);
-    
-                let labels = Array();
-                let values = Array();
-                contador.forEach(cnt => {
-                    labels.push( new Date(cnt.data).toLocaleDateString());
-                    values.push( parseInt(cnt.contador));
-                })
-                
 
-                label = labelsTxt[tipo];
+    var contador = $('.conteudo').data('contador')
     
-                let dataGraph = {
-                    labels,
-                    values,
-                    label
-                }
-
-
-                    graficos[tipo].data.labels = labels;
-                    graficos[tipo].data.datasets.push({
-                        
-                        data: values,
-                        fill: false,
-                        borderColor: cor[tipo],
-                        lineTension: 0.1,
-                        label: label,
-                        pointHitRadius: 1
-                        
-                    }) 
-                    graficos[tipo].update();
-                
-    
-            }
-        })
+    Array('acesso', 'contato', 'impressao').map(tipo => {
+        $(".graf" + tipo).length ? renderGraph({}, $(".graf" + tipo), tipo) : false;
         
-    })
+        let labels = Array();
+        let values = Array();
+        contador.forEach(cnt => {
+            labels.push(new Date(cnt.data).toLocaleDateString());
+            values.push(parseInt(cnt[tipo]));
+        })
+
+
+        label = labelsTxt[tipo];
+
+        let dataGraph = {
+            labels,
+            values,
+            label
+        }
+
+
+        graficos[tipo].data.labels = labels;
+        graficos[tipo].data.datasets.push({
+
+            data: values,
+            fill: false,
+            borderColor: cor[tipo],
+            lineTension: 0.1,
+            label: label,
+            pointHitRadius: 1
+
+        })
+        graficos[tipo].update();
+
+
+    });
+
 };
