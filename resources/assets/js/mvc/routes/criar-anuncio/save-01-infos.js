@@ -113,7 +113,7 @@ module.exports.callback = ($) => {
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let marca = option.html().trim().toLowerCase();
-                                if( marca == marcaSelecionada || marca == 'chevrolet') {
+                                if( marca == marcaSelecionada) {
                                     option.attr('selected', 'selected');
                                     $("select[name='idMarca']").trigger('change');
                                     return false;
