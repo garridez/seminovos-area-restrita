@@ -7,7 +7,7 @@ $form = $this->formDadosVeiculos;
 $fields = $form->getElements();
 
 foreach ($fields as $element) {
-    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km')
+    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'flag_km')
         $element->setAttribute('class', 'form-control');
 }
 
@@ -139,10 +139,19 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                             <?= $this->formSelect($fields['combustivel']) ?>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default">
-                            <?= $this->formLabel($fields['kilometragem']) ?>
-                            <?= $this->formText($fields['kilometragem']) ?>
+                    <div class="col-md-6 row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <?= $this->formLabel($fields['kilometragem']) ?>
+                                <?= $this->formText($fields['kilometragem']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <div class="checkbox">
+                                    <?= $this->formCheckbox($fields['flag_km']) ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
