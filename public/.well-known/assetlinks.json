@@ -1,0 +1,25 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "seminovos.twa.app",
+    "sha256_cert_fingerprints":
+    ["0E:B3:CF:23:1E:03:55:E6:F3:45:06:9C:81:35:63:C5:2C:DE:E7:B2:AA:D7:CD:E7:5C:57:94:FC:73:95:0A:45"]
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "web",
+    "site": "https://seminovos.com.br"
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "seminovos.twa.app",
+    "sha256_cert_fingerprints":
+    ["0E:B3:CF:23:1E:03:55:E6:F3:45:06:9C:81:35:63:C5:2C:DE:E7:B2:AA:D7:CD:E7:5C:57:94:FC:73:95:0A:45"]
+  }
+}]
