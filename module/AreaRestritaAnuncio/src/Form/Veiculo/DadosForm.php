@@ -54,6 +54,17 @@ class DadosForm extends Form
                 'value' => 'yes',
             ],
         ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flag_km',
+            'options' => [
+                'label' => 'Não exibir Km?',
+            ],
+            'attributes' => [
+                'value' => 'no',
+            ],
+        ]);
 
         global $container;
         /**
@@ -173,7 +184,7 @@ class DadosForm extends Form
                 'label' => 'Kilometragem',
             ],
             'attributes' => [
-                'required' => true,
+                'required' => false,
                 'data-mask' => '000.000.000.000.000',
                 'data-mask-options' => json_encode([
                     'reverse' => true
