@@ -271,10 +271,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                     </a>
                                 <?php } ?>
                                 <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
-                                    <a href="#" class="btn-acao-vendido ml-4 vendido" data-confirm
+                                    <a href="#" class="btn-acao-vendido ml-0 ml-md-4 vendido" data-confirm
                                         data-confirm-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
                                         title="Marcar como vendido">
-                                        <button class="btn btn-sm btn-complete ml-2 ">Vendido</button>
+                                        <button class="btn btn-sm btn-complete ml-0 ml-md-2 ">Vendido</button>
                                     </a>
                                 <?php } ?>
                             </div>
