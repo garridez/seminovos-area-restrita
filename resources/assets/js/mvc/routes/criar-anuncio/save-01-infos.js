@@ -86,40 +86,40 @@ module.exports.callback = ($) => {
 
                             //seta cor do veiculo
                             let corSelecionada = historico.dados_veiculo.cor.toLowerCase().slice(0, -1);
-                            $("select[name='cor'] option:selected").removeAttr('selected');
+                            $("select[name='cor'] option:selected").prop('selected', false);
                             let options = $("select[name='cor'] option");
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let cor = option.val().toLowerCase().slice(0, -1); 
                                 if(corSelecionada == cor) {
-                                    option.attr('selected', 'selected');
+                                    option.prop('selected', true);
                                     return false;
                                 }
                             });
 
                             //seta cobustivel -- precisa ser verificado
-                            $("select[name='combustivel'] option:selected").removeAttr('selected');
+                            $("select[name='combustivel'] option:selected").prop('selected', false);
                             let combustivelSelecionado = historico.dados_veiculo.combustivel;
                             options = $("select[name='combustivel'] option");
                             options.each(function(k, v) {
                                 let option = $(v);
                                 combustivel = option.html().trim();
                                 if(combustivel == combustivelSelecionado) {
-                                    option.attr('selected', 'selected');
+                                    option.prop('selected', true);
                                     return false;
                                 }
                             });
 
 
                             //seta marca -- precisa ser verificado
-                            $("select[name='idMarca'] option:selected").removeAttr('selected');
+                            $("select[name='idMarca'] option:selected").prop('selected', false);
                             options = $("select[name='idMarca'] option"); 
                             let marcaSelecionada = historico.dados_veiculo.marca.toLowerCase();
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let marca = option.html().trim().toLowerCase();
                                 if( marca == marcaSelecionada) {
-                                    option.attr('selected', 'selected');
+                                    option.prop('selected', true);
                                     $("select[name='idMarca']").trigger('change');
                                     return false;
                                 }
@@ -127,14 +127,14 @@ module.exports.callback = ($) => {
 
                             //seta o modelo
                             let modeloSelecionado = historico.dados_veiculo.modelo;
-                            $("select[name='modeloCarro'] option:selected").removeAttr('selected');
+                            $("select[name='modeloCarro'] option:selected").prop('selected', false);
                             options = $("select[name='modeloCarro'] option"); 
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let modelo = option.html().trim();
                                 let regex = RegExp(modelo, 'i'); 
                                 if(regex.test(modeloSelecionado) && modelo != '') {
-                                    option.attr('selected', 'selected');
+                                    option.prop('selected', true);
                                     return false;
                                 }
                             });
