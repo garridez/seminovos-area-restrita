@@ -79,6 +79,11 @@ module.exports.callback = ($) => {
                             //seta ano do modelo
                             $("select[name='anoModelo']").val(historico.dados_veiculo.ano_modelo);
 
+                            //trigger para buscar versao
+                            setTimeout(() => {
+                                $("select[name='anoModelo']").trigger('change', [ false, $('[name="caracteristicaVeiculo"]').val() ]);
+                            },0); 
+
                             //seta cor do veiculo
                             let corSelecionada = historico.dados_veiculo.cor.toLowerCase().slice(0, -1);
                             $("select[name='cor'] option:selected").removeAttr('selected');
