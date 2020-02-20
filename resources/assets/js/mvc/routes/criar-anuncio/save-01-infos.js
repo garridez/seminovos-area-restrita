@@ -129,15 +129,25 @@ module.exports.callback = ($) => {
                             let modeloSelecionado = historico.dados_veiculo.modelo;
                             $("select[name='modeloCarro'] option:selected").prop('selected', false);
                             options = $("select[name='modeloCarro'] option"); 
+                            var matchRegex = -1;
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let modelo = option.html().trim();
                                 let regex = RegExp(modelo, 'i'); 
                                 if(regex.test(modeloSelecionado) && modelo != '') {
-                                    option.prop('selected', true);
-                                    return false;
+                                    
+                                    if(matchRegex > -1) {
+                                        previosOption = $(options[matchRegex]).html().trim();
+                                        matchRegex =  previosOption.length > modelo.length ? matchRegex : k;
+                                    }else {
+                                        matchRegex = k
+                                    }
                                 }
                             });
+                            if(matchRegex > -1) {
+                                $(options[matchRegex]).prop('selected', true);
+                            }
+
 
                             
 
