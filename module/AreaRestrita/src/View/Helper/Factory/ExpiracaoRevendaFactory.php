@@ -23,7 +23,7 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         /* @var $pagamentosModel Pagamentos */
         $pagamentosModel = $container->get(Pagamentos::class);
         // Busca os dados do pagamento
-        $pagamentosVeiculos = $pagamentosModel->get(null, 6000);
+        $pagamentosVeiculos = $pagamentosModel->get(null, 2000);
         //var_dump($pagamentosVeiculos);
         $dataAtual = new \DateTime(date('Y-m-d'));
 
