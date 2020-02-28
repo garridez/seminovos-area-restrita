@@ -23,7 +23,7 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         /* @var $pagamentosModel Pagamentos */
         $pagamentosModel = $container->get(Pagamentos::class);
         // Busca os dados do pagamento
-        $pagamentosVeiculos = $pagamentosModel->get(null, 2000);
+        $pagamentosVeiculos = $pagamentosModel->get(null, true);
         //var_dump($pagamentosVeiculos);
         $dataAtual = new \DateTime(date('Y-m-d'));
 
@@ -31,7 +31,7 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, "dataExpiracao");
         $dataExpiracao = new \DateTime($dataExpiracaoPlano);
         $intevaloData = $dataAtual->diff($dataExpiracao);
-        $intevaloData = (int) $intevaloData->format('%R%a');
+        $intevaloData = (int) ($intevaloData->format('%R%a') === '-0' ? -1 : $intevaloData->format('%R%a'));
         $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
         $data = ['diasParaExpirar' => $intevaloData, 'dataExpiracaoRevenda' => $dataExpiracao];
