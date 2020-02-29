@@ -42,7 +42,7 @@ export default class Message extends Component {
                     <div className="text">{data.mensagem}</div>
                     <div className="infos">
                         <div className="time" title={enviadoEm.format('LLLL')}>
-                            {enviadoEm.format('h:mm')}
+                            {enviadoEm.format('LT')} &nbsp;
                         </div>
                         <div className="status" title={statusTitle}>
                             <i className={statusIcon} aria-hidden="true"></i>

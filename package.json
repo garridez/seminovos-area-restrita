@@ -58,6 +58,6 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
-    "livereload": "^0.7.0"
+    "livereload": "^0.9.1"
   }
 }

@@ -19,6 +19,7 @@ class MessagesGateway {
         this.socket.on(event, callback);
     }
     emit(event, data) {
+        console.log('Emit event', event)
         this.socket.emit(event, data || null);
     }
     setEvents() {
@@ -26,9 +27,20 @@ class MessagesGateway {
             this.on(event, this.events[event].bind(this));
         }
     }
+    time(label) {
+        return; // Remover só para debuggar em dev
+        console.log(this.idCadastro + this.socketId + label + ' --- START');
+
+    }
+    timeEnd(label) {
+        return; // Remover só para debuggar em dev
+        console.log(this.idCadastro + this.socketId + label + ' --- END');
+    }
     async getConversas() {
         try {
+            this.time('MessagesGateway:getConversas');
             var {data} = await this.apiClient.conversasGet(null, this.idCadastro);
+            this.timeEnd('MessagesGateway:getConversas');
             if (0) {
                 // Debugar as requisições
                 console.log(
@@ -96,10 +108,15 @@ class MessagesGateway {
 
         return data;
     }
+
+    messagesLoaderTimeoutId;
+
     async messagesLoader() {
         try {
+            this.time('MessagesGateway:messagesLoader');
             var data = await this.getMessages();
             var {listMensagens, listLidas} = data;
+            this.timeEnd('MessagesGateway:messagesLoader');
         } catch (e) {
             console.log('Messages loader error');
             console.log(e);
@@ -110,7 +127,7 @@ class MessagesGateway {
             console.log('Nova mensagem');
             this.emit('mensagem', listMensagens);
         }
-        
+
         if (Object.keys(listLidas || {}).length !== 0) {
             this.emit('mgs-lidas', listLidas);
         }
@@ -118,8 +135,12 @@ class MessagesGateway {
         if (!this.socket.connected) {
             return;
         }
+        if (this.messagesLoaderTimeoutId) {
+            return;
+        }
 
-        setTimeout(() => {
+        this.messagesLoaderTimeoutId = setTimeout(() => {
+            this.messagesLoaderTimeoutId = false;
             this.messagesLoader();
         }, 2000);
     }
@@ -128,9 +149,11 @@ class MessagesGateway {
 MessagesGateway.prototype.events = {
     'list-chats': async function () {
         try {
+            this.time('MessagesGateway:list-chats');
             var conversas = await this.getConversas();
             this.emit('list-chats', conversas);
             this.messagesLoader(); // Interval
+            this.timeEnd('MessagesGateway:list-chats');
         } catch (e) {
             console.log('pau no ajax list-chats');
             console.log(e);
@@ -138,9 +161,10 @@ MessagesGateway.prototype.events = {
     },
     'list-mensagens': async function () {
         try {
+            this.time('MessagesGateway:list-mensagens');
             var data = await this.getMessages(false);
             this.emit('list-mensagens', data.listMensagens);
-            this.messagesLoader();
+            this.timeEnd('MessagesGateway:list-mensagens');
         } catch (e) {
             console.log('pau no ajax list-mensagens');
             console.log(e);
@@ -157,15 +181,17 @@ MessagesGateway.prototype.events = {
         }
     },
     'msg-send': async function (msg) {
+        this.time('MessagesGateway:msg-send');
         var result = await this.messageSender(msg);
+        this.timeEnd('MessagesGateway:msg-send');
         this.emit('msg-delivered', result);
     },
     'msg-readed': async function (msg) {
         this.messageReaded(msg);
-    },
+    }
 };
-MessagesGateway.prototype.sendInitialMessages = function () {
-    this.events['list-chats'].call(this);
+MessagesGateway.prototype.sendInitialMessages = async function () {
+    await this.events['list-chats'].call(this);
     this.events['list-mensagens'].call(this);
     //this.events['initial-messages'].call(this);
 };

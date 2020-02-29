@@ -1,7 +1,10 @@
 import moment from 'moment';
 
-export function isSendedForMe(meusDados, msg) {
-    return meusDados.idCadastro === msg.idCadastroRemetente;
+export function isSendedForMe(meusDadosOrIdCadastro, msg) {
+    if (typeof meusDadosOrIdCadastro === 'object') {
+        meusDadosOrIdCadastro = meusDadosOrIdCadastro.idCadastro;
+    }
+    return meusDadosOrIdCadastro === msg.idCadastroRemetente;
 }
 export function createNewMessage(idConversa, idCadastroRemetente, mensagem, prependId) {
     const idChatMensagem = (prependId || '') + Math.random().toString(36).substr(2, 9);

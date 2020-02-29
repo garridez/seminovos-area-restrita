@@ -18,9 +18,13 @@ section.section-chat {
     .top-header {
         height: 50px;
         min-height: 50px;
+        line-height: 50px;
         border-bottom: solid 1px #ed9902;
         margin-left: -1px;
         position: relative;
+        .h4, button {
+            color: $body-color;
+        }
     }
     .sidebar{
         .filter{
@@ -72,6 +76,17 @@ section.section-chat {
                     }
                     .chat-name {
                         font-size: 0.78rem;
+                        .user-status {
+                            background-color: #ccc;
+                            display: inline-block;
+                            width: 7px;
+                            height: 7px;
+                            border-radius: 100%;
+                            &.online {
+                                background-color: #4CAF50;
+                            }
+                            
+                        }
                     }
                     .chat-last-msg {
                         font-size: 0.78rem;
@@ -80,6 +95,9 @@ section.section-chat {
                         white-space: nowrap;
                         text-overflow: ellipsis;
                         overflow: hidden;
+                        &.nao-lida {
+                            font-weight: bold;
+                        }
                     }
                 }
                 .chat-info {

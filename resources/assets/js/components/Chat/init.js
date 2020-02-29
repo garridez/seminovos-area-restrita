@@ -19,9 +19,7 @@ export default function (chatRoot) {
             )
 }
 
-var onResize = function () {
+$(window).resize(function () {
     $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
-};
-$(window).resize(onResize);
-setTimeout(onResize, 1000);
+});
  

@@ -4,6 +4,9 @@ import moment from 'moment';
 import _ from 'lodash';
 import 'moment/locale/pt-br';
 
+import { isSendedForMe } from '../../utils/messages';
+import { filterUser, isOnline } from '../../utils/user';
+
 class ChatSubject extends Component {
     constructor() {
         super();
@@ -16,15 +19,8 @@ class ChatSubject extends Component {
         });
 
     }
-    render() {
-        const {data, isActive} = this.props;
-        var lastMsg = data.lastMessage;
-
-        var classes = 'chat-subject chat row py-2 px-2';
-        if (isActive) {
-            classes += ' active';
-        }
-        var chatDate = moment(lastMsg.enviadoEm);
+    formatDate(enviadoEm) {
+        var chatDate = moment(enviadoEm);
         var now = moment().diff(chatDate, 'days');
         var absoluteDate = chatDate.format('LLLL');
         if (now <= 1) {
@@ -33,6 +29,29 @@ class ChatSubject extends Component {
             chatDate = chatDate.calendar();
         } else {
             chatDate = chatDate.format('dddd');
+        }
+        return {
+            chatDate,
+            absoluteDate
+        };
+    }
+    render() {
+        const {data, isActive, meusDados} = this.props;
+
+        var lastMsg = data.lastMessage;
+        var dates = this.formatDate(lastMsg.enviadoEm);
+        var status = isOnline(data) ? 'user-status online' : 'user-status offline';
+        var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
+
+        var classes = 'chat-subject chat row py-2 px-2';
+        if (isActive) {
+            classes += ' active';
+        }
+
+        var classLastMsg = 'chat-last-msg mt-1';
+
+        if (lastMsg.lidoEm === null && !isSendedForMe(meusDados, lastMsg)) {
+            classLastMsg += ' nao-lida';
         }
 
         return (
@@ -45,15 +64,15 @@ class ChatSubject extends Component {
                             <b>{data.marca} {data.modelo}</b>
                         </div>
                         <div className="chat-name mt-1">
-                            {data.responsavelNomeInteressado}
+                            <span className={status}></span> {outroContato}
                         </div>
-                        <div className="chat-last-msg mt-1" title={lastMsg.mensagem}>
+                        <div className={classLastMsg} title={lastMsg.mensagem}>
                             {lastMsg.mensagem}
                         </div>
                     </div>
                     <div className="chat-info">
-                        <div className="chat-date d-flex justify-content-center" title={absoluteDate}>
-                            {chatDate}
+                        <div className="chat-date d-flex justify-content-center" title={dates.absoluteDate}>
+                            {dates.chatDate}
                         </div>
                         <div className="chat-status px-2"></div>
                     </div>
@@ -66,6 +85,7 @@ class ChatSubject extends Component {
 export default connect((state, ownProps) => {
 
     return {
-        data: {...state.listChats[ownProps.idConversa]}
+        data: {...state.listChats[ownProps.idConversa]},
+        meusDados: state.cadastro
     };
 })(ChatSubject);
