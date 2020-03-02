@@ -6,13 +6,13 @@ var methods = {
     disable: function () {
         return methods.get()
                 .addClass('disabled')
-                .attr('disabled', true)
+                .prop('disabled', 'disabled')
                 .attr('title', 'Verifique os dados antes de continuar');
     },
     enable: function () {
         return methods.get()
                 .removeClass('disabled')
-                .attr('disabled', false)
+                .prop('disabled', false)
                 .attr('title', 'Continuar');
     }
 };
