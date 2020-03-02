@@ -5,11 +5,13 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('components/HandleApiError');
+    var BtnContinuar = require('./helpers/BtnContinuar');
     var loading = require('components/Loading');
 
     $('.step-container').on('step:pre-exit:fotos', function (e) {
         var $fotosContainer = $('.fotos-container');
         var ordemCount = 0;
+        BtnContinuar.disable();
         // Busca as imgs que serão feitas o upload
         var imgs = $fotosContainer.find('.display-img')
                 // Seta a ordem como data

@@ -15,9 +15,11 @@ module.exports.callback = ($) => {
 
     var stepsContainer = $('.step-container');
     var anuncioSteps = $('.anuncio-steps'); // Conjuto de steps principal
+    var BtnContinuar = require('./helpers/BtnContinuar');
 
     // Troca o ícone ativo de acordo com o step ativo
     stepsContainer.on('step:change', setStepIconActive);
+    stepsContainer.on('step:change', BtnContinuar.enable);
     stepsContainer.on('step:change', checkLastStep);
     anuncioSteps.on('steps-loaded', setStepIconActive);
 
@@ -38,6 +40,7 @@ module.exports.callback = ($) => {
         checkLastStep();
     });
     $('.btn-continuar').on('click', function () {
+        BtnContinuar.disable();
         var inLastStep = $(this).data('in-last-step');
         var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
@@ -75,14 +78,10 @@ module.exports.callback = ($) => {
 
     stepsContainer
             .on('step:change:checkout step:change:finalizar', function (e) {
-                $('.btn-continuar')
-                        .removeClass('btn-laranja')
-                        .attr('disabled', true);
+                BtnContinuar.disable();
             })
             .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
-                $('.btn-continuar')
-                        .addClass('btn-laranja')
-                        .attr('disabled', false);
+                BtnContinuar.enable();
             });
     $('.anuncio-steps').on('steps-loaded', function () {
         var hash = window.location.hash;
@@ -134,14 +133,9 @@ function checkLastStep() {
     if (inLast) {
         text = 'Finalizar';
     } else {
-        btn
-                .addClass('btn-laranja')
-                .attr('disabled', false);
+        btn.addClass('btn-laranja').attr('disabled', false);
     }
-    btn
-            .text(text)
-            .attr('title', text)
-            .data('in-last-step', inLast);
+    btn.text(text).attr('title', text).data('in-last-step', inLast);
 
 }
 function setStepIconActive() {
