@@ -8,7 +8,8 @@ const activeConnections = [];
 
 function initServer(apiClient) {
     const io = SocketIO({
-        path: '/chat/websocket/'
+        path: '/chat/websocket/',
+        transports: ['websocket', 'polling']
     });
 
     io.sockets.on('connection', async function (socket) {

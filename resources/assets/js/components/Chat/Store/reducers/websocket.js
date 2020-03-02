@@ -1,7 +1,8 @@
 import io from 'socket.io-client';
 
 const websocket = io('/', {
-    path: '/chat/websocket/'
+    path: '/chat/websocket/',
+    transports: ['websocket', 'polling']
 });
 websocket.on('connect', function () {
     console.log('connected');
