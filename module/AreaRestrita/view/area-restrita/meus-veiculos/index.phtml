@@ -172,6 +172,9 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         <li>
                                             Kilometragem:
                                             <?= ($veiculo['flag_km'] == 'S') ? $veiculo['kilometragemFormatada'] : 'Não informada' ?>
+                                            <? if ($veiculo['veiculoZeroKm'] || $veiculo['kilometragem'] < 500 ): ?>
+                                                <i class="icon icon-check text-success"></i>
+                                            <? endif ?>
                                         </li>
                                         <li>
                                             Código:
