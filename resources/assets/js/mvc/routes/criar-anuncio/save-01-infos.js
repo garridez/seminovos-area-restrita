@@ -75,9 +75,11 @@ module.exports.callback = ($) => {
                             
                             //seta ano de fabricacao
                             $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
-                            
+                            $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true);
+
                             //seta ano do modelo
                             $("select[name='anoModelo']").val(historico.dados_veiculo.ano_modelo);
+                            $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true);
 
                             //trigger para buscar versao
                             setTimeout(() => {
@@ -124,6 +126,7 @@ module.exports.callback = ($) => {
                                     return false;
                                 }
                             });
+                            $("select[name='idMarca'] option:not(:selected)").prop('disabled', true);
 
                             //seta o modelo
                             let modeloSelecionado = historico.dados_veiculo.modelo;
