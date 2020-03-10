@@ -17,6 +17,8 @@ module.exports.callback = ($) => {
     var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
     var formCC = $('.pagamento-cc-form');
 
+    var advancedAlerts = require('components/AdvancedAlerts');
+
     formCC.find('[name="validade_cartao"]').mask("00/00");
     formCC.find('[name="cvc_cartao"]').mask("999?", optional);
     formCC.find('[name="numero_cartao"]')
@@ -68,6 +70,20 @@ module.exports.callback = ($) => {
                 if (httpResponse.data && httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
                     window.location = httpResponse.data.url;
                 } else {
+                    var title = "Pagamento aprovado!";
+                    var text = $(`  <div>
+                                        <div>É nescessário aguardar a atualização do site, <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
+                                    </div>
+                                `);
+                    var closeText = "Li e concordo";
+                    var time = 0;
+                    advancedAlerts.success({
+                        title,
+                        text,
+                        closeText,
+                        time   
+                    });
+
                     $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
                 }
             },
