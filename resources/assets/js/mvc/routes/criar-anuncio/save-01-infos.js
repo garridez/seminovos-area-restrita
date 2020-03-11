@@ -71,15 +71,21 @@ module.exports.callback = ($) => {
 
                         if(response.historicoCarro) {
                             
-                            let historico = response.historicoCarro
+                            let historico = response.historicoCarro;
+                            let anoModelo = historico.dados_veiculo.ano_modelo;
                             
                             //seta ano de fabricacao
                             $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
-                            $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true);
+                            $("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
+                            $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                             //seta ano do modelo
-                            $("select[name='anoModelo']").val(historico.dados_veiculo.ano_modelo);
-                            $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true);
+                            if(anoModelo === '0'){
+                                anoModelo = historico.dados_veiculo.ano_fabricacao;
+                            }
+                            $("select[name='anoModelo']").val(anoModelo);
+                            $("select[name='anoModelo'] option:selected").prop('disabled', false).removeClass("hide");
+                            $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                             //trigger para buscar versao
                             setTimeout(() => {
@@ -126,7 +132,8 @@ module.exports.callback = ($) => {
                                     return false;
                                 }
                             });
-                            $("select[name='idMarca'] option:not(:selected)").prop('disabled', true);
+                            $("select[name='idMarca'] option:selected").prop('disabled', false).removeClass("hide");
+                            $("select[name='idMarca'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                             //seta o modelo
                             let modeloSelecionado = historico.dados_veiculo.modelo;
@@ -150,9 +157,6 @@ module.exports.callback = ($) => {
                             if(matchRegex > -1) {
                                 $(options[matchRegex]).prop('selected', true);
                             }
-
-
-                            
 
                         }
 
