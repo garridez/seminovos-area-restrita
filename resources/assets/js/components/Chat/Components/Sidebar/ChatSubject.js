@@ -48,10 +48,8 @@ class ChatSubject extends Component {
             classes += ' active';
         }
 
-        var classLastMsg = 'chat-last-msg mt-1';
-
         if (lastMsg.lidoEm === null && !isSendedForMe(meusDados, lastMsg)) {
-            classLastMsg += ' nao-lida';
+            classes += ' nao-lida';
         }
 
         return (
@@ -60,14 +58,11 @@ class ChatSubject extends Component {
                         <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
                     <div className="chat-details col-9">
-                        <div className="chat-title">
-                            <b>{data.marca} {data.modelo}</b>
-                        </div>
                         <div className="chat-name mt-1">
                             <span className={status}></span> {outroContato}
                         </div>
-                        <div className={classLastMsg} title={lastMsg.mensagem}>
-                            {lastMsg.mensagem}
+                        <div className="chat-title">
+                            <span>{data.marca} {data.modelo}</span>
                         </div>
                     </div>
                     <div className="chat-info">
@@ -75,6 +70,7 @@ class ChatSubject extends Component {
                             {dates.chatDate}
                         </div>
                         <div className="chat-status px-2"></div>
+                        <i className="fa fa-circle icon-nao-lida" title="Você tem mensagnes não lidas"></i>
                     </div>
                 </li>
                 );

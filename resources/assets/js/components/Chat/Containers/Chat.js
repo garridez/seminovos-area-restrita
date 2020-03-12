@@ -23,14 +23,14 @@ class Chat extends Component {
 
         return (
                 <section className={'section-chat row ' + conversationActiveClass}>
-                    <div className="sidebar col-sm-5 d-flex flex-column">
+                    <div className="sidebar col-sm-4 d-flex flex-wrap">
                         <div className="top-header">
                             <Profile />
                             <Filter />
                         </div>
                         <ListChats conversationActive={conversationActive} />
                     </div>
-                    <div className="main-chat col-sm-7 d-flex flex-column">
+                    <div className="main-chat col-sm-8 d-flex flex-wrap">
                         <div className="top-header">
                             <Contact />
                         </div>

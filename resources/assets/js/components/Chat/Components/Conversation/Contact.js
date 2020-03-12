@@ -1,6 +1,9 @@
+import moment from 'moment';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { filterUser, isOnline } from '../../utils/user';
+
 
 class Contact extends Component {
 
@@ -22,24 +25,46 @@ class Contact extends Component {
         if (!data) {
             return '';
         }
+        
+       var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
+       var outroContatoMobile = outroContato.split(" ");
+       outroContatoMobile = outroContatoMobile[0] + ' ' + outroContatoMobile[1] || '';
+       
+       var anuncioUrl = 'https://seminovos.com.br/' + data.idVeiculo;
+       var anuncioTitle  = `${data.marca} ${data.modelo} ${data.caracteristica}`;
+       var anuncioTitleMobile  = `${data.marca} ${data.modelo}`;
 
-        var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
-
-        var anuncioUrl = 'https://seminovos.com.br/' + data.idVeiculo;
+       
+       var ultimaVezVistoStr = isOnline(data) ? 'online' : 'visto ' + moment(data.ultimaVezVisto).fromNow();
 
         return (
-                <div className="row">
-                    <div className="contact col-8">
-                        <span className="h4">{outroContato}</span>
-                    </div>
-                    <div className="contact col-3">
-                        <a href={anuncioUrl} target="_BLANK">Ver anúncio</a>
+                <div className="contact-row d-flex justify-content-between">
+                    <div className="contact d-flex justify-content-between">
+                        <div className="anuncio-data d-flex">
+                            <a href={anuncioUrl} target="_BLANK" className="mr-2" title="Ver o anúncio">
+                                <img src={data.foto} alt="" className="img-fluid"/>
+                            </a>
+                            <div className="title d-flex flex-wrap">
+                                <div className="contact-name h4 d-none d-md-flex align-items-center">{outroContato}</div>
+                                <div className="contact-name h4 d-flex d-md-none align-items-center">{outroContatoMobile}</div>
+                                <div className="anuncio-title d-none d-md-flex align-items-center"><span>{anuncioTitle}</span></div>
+                                <div className="anuncio-title d-flex d-md-none align-items-center justify-content-between">
+                                    <span>{anuncioTitleMobile}</span>
+                                    <div className="last-seen align-self-end mr-2">
+                                        {ultimaVezVistoStr}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="last-seen d-none d-mb-block align-self-end mr-2">
+                            {ultimaVezVistoStr}
+                        </div>
                     </div>
                     <button
                         type="button"
                         title="Fechar conversa"
                         onClick={this.closeConversation.bind(this)}
-                        className="col-1 close-conversation">
+                        className="close-conversation">
                         <i className="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>

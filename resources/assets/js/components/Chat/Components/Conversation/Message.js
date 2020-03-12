@@ -12,16 +12,17 @@ export default class Message extends Component {
         const isSendedForMeBool = isSendedForMe(meusDados, data);
         const enviadoEm = moment(data.enviadoEm);
 
-        var liClass = [
-            'message',
-            isSendedForMeBool ? 'sent' : 'received',
+        var messageDelivery = isSendedForMeBool ? 'sent' : 'received';
+        var messageStatusClass = [
+            'message-container',
+            isSendedForMeBool ? 'sent' : 'received'
         ];
 
         var statusTitle = '';
         var statusIcon = '';
 
         if (data.delivered !== undefined) {
-            liClass.push(data.delivered ? 'delivered' : 'not-delivered');
+            messageStatusClass.push(data.delivered ? 'delivered' : 'not-delivered');
             statusTitle = data.delivered ? 'Entregue' : 'Enviando...';
             statusIcon = data.delivered ? 'check' : 'clock-o';
         }
@@ -29,7 +30,7 @@ export default class Message extends Component {
         if (isSendedForMeBool) {
             statusIcon = statusIcon || 'check';
             if (data.lidoEm) {
-                liClass.push('lida');
+                messageStatusClass.push('lida');
                 statusTitle = 'Lida';
             }
         }
@@ -38,14 +39,16 @@ export default class Message extends Component {
         statusIcon = 'fa fa-' + statusIcon;
 
         return (
-                <li className={liClass.join(' ')}>
-                    <div className="text">{data.mensagem}</div>
-                    <div className="infos">
-                        <div className="time" title={enviadoEm.format('LLLL')}>
-                            {enviadoEm.format('LT')} &nbsp;
-                        </div>
-                        <div className="status" title={statusTitle}>
-                            <i className={statusIcon} aria-hidden="true"></i>
+                <li className={"message " + messageDelivery}>
+                    <div className={messageStatusClass.join(' ')}>
+                        <div className="text">{data.mensagem}</div>
+                        <div className="infos">
+                            <div className="time" title={enviadoEm.format('LLLL')}>
+                                {enviadoEm.format('LT')} &nbsp;
+                            </div>
+                            <div className="status" title={statusTitle}>
+                                <i className={statusIcon} aria-hidden="true"></i>
+                            </div>
                         </div>
                     </div>
                 </li>
