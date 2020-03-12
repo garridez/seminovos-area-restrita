@@ -20,6 +20,6 @@ export default function (chatRoot) {
 }
 
 $(window).resize(function () {
-    $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
+    // $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
 });
  
