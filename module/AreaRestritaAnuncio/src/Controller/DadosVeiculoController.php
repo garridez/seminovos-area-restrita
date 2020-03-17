@@ -50,10 +50,12 @@ class DadosVeiculoController extends AbstractActionController
         $dadosForm->setTipoVeiculo($tipoVeiculo);
         $dadosForm->setCombustivel($tipoVeiculo);
 
+        $cambio = null;
         $veiculoDados = $this->getVeiculo(5);
         if ($veiculoDados) {
             $dadosForm->populateValues($veiculoDados);
             $dadosForm->setIsEdition(true);
+            $cambio = (int) $veiculoDados['idAcessorio'];
         }
 
         //libera edição para revendas
@@ -153,7 +155,8 @@ class DadosVeiculoController extends AbstractActionController
         }
 
         return new ViewModel([
-            'formDadosVeiculos' => $dadosForm
+            'formDadosVeiculos' => $dadosForm,
+            'cambio' => $cambio
         ]);
     }
 
