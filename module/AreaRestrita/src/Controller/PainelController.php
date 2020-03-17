@@ -71,7 +71,7 @@ class PainelController extends AbstractActionController
         //var_dump($contadorPorVeiculo);die;
         foreach($contadorPorVeiculo as $contador) {
             foreach($veiculos['data'] as  $k => $veiculo) {
-                if($veiculo['idVeiculo'] == $contador['idVeiculo']) {
+                if((isset($veiculo['idVeiculo']) && isset($contador['idVeiculo'])) && $veiculo['idVeiculo'] == $contador['idVeiculo']) {
                     $veiculos['data'][$k]['acesso'] = $contador['acesso'];
                     $veiculos['data'][$k]['contato'] = $contador['contato'];
                     $veiculos['data'][$k]['impressao'] = $contador['impressao'];

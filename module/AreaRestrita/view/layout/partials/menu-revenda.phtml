@@ -90,13 +90,13 @@ if($diasParaExpirar > 7){
       </a>
       <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
     </li>
-    <?php if($this->userInfo('idCadastro') == 295204): ?>
-<!--     <li class="">
+    <?php if($this->userInfo('idPlano') >= 20): ?>
+    <li class="">
       <a href="<?= $this->url('restrito/painel') ?>">
         <span class="title">Relatórios</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </li> -->
+    </li>
     <?php endif; ?>
     <li class="qtd-anuncios-menu">
         <?=
