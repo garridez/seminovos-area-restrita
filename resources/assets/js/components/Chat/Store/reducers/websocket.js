@@ -8,7 +8,7 @@ websocket.on('connect', function () {
     console.log('connected');
 });
 websocket.on('list-mensagens', function () {
-    $(window).resize();
+    // $(window).resize();
 });
 
 export default (state = websocket, action) => {
