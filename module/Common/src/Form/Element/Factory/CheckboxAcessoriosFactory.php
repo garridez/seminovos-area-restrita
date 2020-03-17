@@ -27,6 +27,8 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
         $acessoriosTipos = [
             $idCaminhao => []
         ];
+        
+        $cambios = [11,60,78];
 
         foreach (VeiculoTipo::$idTipos as $idTipo => $tipoNome) {
             // Caminhão não tem acessórios
@@ -39,7 +41,9 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
                     ], null, true)->getData();
             $acessorios = [];
             foreach ($acessoriosData as $ac) {
-                $acessorios[$ac['idAcessorio']] = $ac['acessorio'];
+                if(!in_array($ac['idAcessorio'], $cambios)){
+                    $acessorios[$ac['idAcessorio']] = $ac['acessorio'];
+                }
             }
             $acessoriosTipos[$idTipo] = $acessorios;
         }
