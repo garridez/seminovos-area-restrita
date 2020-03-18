@@ -1,5 +1,5 @@
 window.$ = require('jquery');
-require('./ads.js');
+//require('./ads.js');
 
 
 require('jquery')(function () {
