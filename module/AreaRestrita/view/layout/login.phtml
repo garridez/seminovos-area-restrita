@@ -32,7 +32,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   <div class="login-wrapper bg-white d-block d-md-flex">
     <div class="col-md-4">
       <div class="ad-login d-flex justify-content-end mt-3">
-        <div data-ad-path="login.lateral"></div>
+        <!-- <div data-ad-path="login.lateral"></div> -->
       </div>
     </div>
     <div class="col-12 col-md-4">
@@ -56,7 +56,7 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
     </div>
     */?>
   </div>
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-  <script src="/js/app.js?<?= $assetSufix ?>" async></script>
+  <?php /*<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script> */ ?>
+  <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 </html>
