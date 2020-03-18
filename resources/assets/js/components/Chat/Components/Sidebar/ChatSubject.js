@@ -25,10 +25,10 @@ class ChatSubject extends Component {
         var absoluteDate = chatDate.format('LLLL');
         if (now <= 1) {
             chatDate = chatDate.format('LT');
-        } else if (now <= 2) {
-            chatDate = chatDate.calendar();
-        } else {
+        } else if (now <= 5) {
             chatDate = chatDate.format('dddd');
+        } else {
+            chatDate = chatDate.format('l');
         }
         return {
             chatDate,
@@ -51,7 +51,6 @@ class ChatSubject extends Component {
         if (lastMsg.lidoEm === null && !isSendedForMe(meusDados, lastMsg)) {
             classes += ' nao-lida';
         }
-
         return (
                 <li className={classes} onClick={this.active}>
                     <div className="chat-img col-3">
@@ -66,11 +65,11 @@ class ChatSubject extends Component {
                         </div>
                     </div>
                     <div className="chat-info">
-                        <div className="chat-date d-flex justify-content-center" title={dates.absoluteDate}>
-                            {dates.chatDate}
-                        </div>
                         <div className="chat-status px-2"></div>
                         <i className="fa fa-circle icon-nao-lida" title="Você tem mensagnes não lidas"></i>
+                        <div className="chat-date" title={dates.absoluteDate}>
+                            {dates.chatDate}
+                        </div>
                     </div>
                 </li>
                 );
