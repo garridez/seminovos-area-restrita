@@ -42,7 +42,7 @@ class Contact extends Component {
                     <div className="contact d-flex justify-content-between">
                         <div className="anuncio-data d-flex">
                             <a href={anuncioUrl} target="_BLANK" className="mr-2" title="Ver o anúncio">
-                                <img src={data.foto} alt="" className="img-fluid"/>
+                                <img src={data.foto} alt=""/>
                             </a>
                             <div className="title d-flex flex-wrap">
                                 <div className="contact-name h4 d-none d-md-flex align-items-center">{outroContato}</div>
