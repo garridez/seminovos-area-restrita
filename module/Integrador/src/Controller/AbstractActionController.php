@@ -41,9 +41,9 @@ class AbstractActionController extends ZendAbstractActionController
             case 'POST':
                 return $this->create();
             case 'PUT':
-                return $this->replace();
+                return $this->update();
             case 'PATCH':
-                return $this->modify();
+                return $this->patch();
             case 'DELETE':
                 return $this->delete();
             case 'GET':
@@ -83,7 +83,7 @@ class AbstractActionController extends ZendAbstractActionController
      * PUT
      * @return JsonModel
      */
-    public function replace()
+    public function update()
     {
         return $this->methodNotAllowed();
     }
@@ -92,7 +92,7 @@ class AbstractActionController extends ZendAbstractActionController
      * PATCH
      * @return JsonModel
      */
-    public function modify()
+    public function patch()
     {
         return $this->methodNotAllowed();
     }
