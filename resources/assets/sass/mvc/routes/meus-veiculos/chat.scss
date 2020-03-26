@@ -209,6 +209,21 @@ section.section-chat {
                 align-self: flex-end;
             } */
         }
+        .conversation-options-dropdown > a:hover,
+        .close-conversation:hover{
+            color: #212121;
+        }
+        .conversation-options-dropdown {
+            align-self: center;
+            padding: 0 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            .conversation-options {
+                padding: 0 10px;
+                font-size: 30px;
+            }
+        }
+
         .close-conversation {
             display: none;
             @include media-breakpoint-down(sm){
