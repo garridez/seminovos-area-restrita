@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { filterUser, isOnline } from '../../utils/user';
 
+import Confirms from '../../../Confirms';
 
 class Contact extends Component {
 
@@ -20,22 +21,46 @@ class Contact extends Component {
         });
     }
 
+    deleteConversation() {
+        //console.log('Deletar')
+
+        var confirm = Confirms.error({
+            text: 'A conversa será apagada definitivamente',
+            title: 'Deseja mesmo apagar essa conversa?',
+            confirmText: 'Sim, apagar',
+            negateText: 'Não apagar',
+            successText: "Sucesso",
+            confirmCallback: () => {
+                console.log('Confirm!');
+                console.log(this);
+                const {idConversa} = this.props.data;
+                this.props.dispatch({
+                    type: 'CHAT_DELETE_CONVERSA',
+                    data: {
+                        idConversa,
+                        modal: confirm,
+                    }
+                });
+            }
+        });
+    }
+
     render() {
         var {data, meusDados} = this.props;
         if (!data) {
             return '';
         }
-        
-       var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
-       var outroContatoMobile = outroContato.split(" ");
-       outroContatoMobile = outroContatoMobile[0] + ' ' + outroContatoMobile[1] || '';
-       
-       var anuncioUrl = 'https://seminovos.com.br/' + data.idVeiculo;
-       var anuncioTitle  = `${data.marca} ${data.modelo} ${data.caracteristica}`;
-       var anuncioTitleMobile  = `${data.marca} ${data.modelo}`;
 
-       
-       var ultimaVezVistoStr = isOnline(data) ? 'online' : 'visto ' + moment(data.ultimaVezVisto).fromNow();
+        var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
+        var outroContatoMobile = outroContato.split(" ");
+        outroContatoMobile = outroContatoMobile[0] + ' ' + outroContatoMobile[1] || '';
+
+        var anuncioUrl = 'https://seminovos.com.br/' + data.idVeiculo;
+        var anuncioTitle = `${data.marca} ${data.modelo} ${data.caracteristica}`;
+        var anuncioTitleMobile = `${data.marca} ${data.modelo}`;
+
+
+        var ultimaVezVistoStr = isOnline(data) ? 'online' : 'visto ' + moment(data.ultimaVezVisto).fromNow();
 
         return (
                 <div className="contact-row d-flex justify-content-between">
@@ -67,6 +92,30 @@ class Contact extends Component {
                         className="close-conversation">
                         <i className="fa fa-times" aria-hidden="true"></i>
                     </button>
+                
+                
+                
+                
+                    <div className="conversation-options-dropdown">
+                        <a
+                            title="Opções"
+                            className="conversation-options dropdown--toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div className="dropdown-menu">
+                            <a
+                                className="dropdown-item"
+                                href="#"
+                                onClick={this.deleteConversation.bind(this)}>Excluir conversa</a>
+                            <a
+                                className="dropdown-item"
+                                href="#"
+                                onClick={this.closeConversation.bind(this)}>Fechar</a>
+                        </div>
+                    </div>
                 </div>
                 );
     }

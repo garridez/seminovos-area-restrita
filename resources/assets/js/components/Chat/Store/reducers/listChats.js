@@ -33,6 +33,12 @@ const messages = (state = false, action) => {
             return {
                 ...state,
             };
+        case 'LIST_CHAT_DELETE':
+            var idConversa = action.data.idConversa;
+            delete state[idConversa];
+            return {
+                ...state
+            };
         case 'LIST_CHAT_UPDATE_LAST_MSG':
             var hasChange = false;
             const {listChats, listMensagens} = action;

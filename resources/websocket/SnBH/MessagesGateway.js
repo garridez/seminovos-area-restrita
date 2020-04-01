@@ -58,6 +58,13 @@ class MessagesGateway {
             return [];
         }
     }
+    async deleteConversa(idConversa) {
+        console.log(idConversa);
+        var idCadastro = this.idCadastro;
+        console.log('Deletando conversa:', idConversa);
+        await this.apiClient.conversasDelete({}, idConversa + '?idCadastro=' + idCadastro);
+        console.log('Deletado conversa :', idConversa);
+    }
     async getMessages(lastMessage = true) {
         var params = {
             idCadastro: this.idCadastro,
@@ -188,6 +195,9 @@ MessagesGateway.prototype.events = {
     },
     'msg-readed': async function (msg) {
         this.messageReaded(msg);
+    },
+    'msg-delete-conversa': async function (idConversa) {
+        this.deleteConversa(idConversa);
     }
 };
 MessagesGateway.prototype.sendInitialMessages = async function () {
