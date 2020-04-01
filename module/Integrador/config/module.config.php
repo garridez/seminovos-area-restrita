@@ -35,6 +35,20 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'veiculo' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/veiculo-fotos[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\VeiculoFotosController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
                 ]
             ],
         ],
@@ -43,6 +57,7 @@ return [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\VeiculoController::class => InvokableFactory::class,
+            Controller\VeiculoFotosController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
