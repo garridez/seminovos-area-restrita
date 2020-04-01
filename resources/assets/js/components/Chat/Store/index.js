@@ -22,8 +22,29 @@ const reducer = combineReducers({
 const middle = (store) => {
     return next => action => {
             switch (action.type) {
+                case 'CHAT_DELETE_CONVERSA':
+                    var returnValue = next(action);
+                    var {idConversa, modal} = action.data;
+
+                    modal.modal('hide');
+
+                    store.dispatch({
+                        type: 'LIST_CHAT_DELETE',
+                        data: {
+                            idConversa
+                        }
+                    });
+                    store.dispatch({
+                        type: 'CHAT_ACTIVE',
+                        data: {
+                            idConversa: null,
+                        }
+                    });
+                    return returnValue;
+
+                    break;
                 case 'CHAT_SEND_MESSAGE':
-                    const returnValue = next(action);
+                    var returnValue = next(action);
                     store.dispatch({
                         'type': 'LIST_CHAT_NEW_MSG',
                         message: action.message

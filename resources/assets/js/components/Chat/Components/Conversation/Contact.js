@@ -24,15 +24,23 @@ class Contact extends Component {
     deleteConversation() {
         //console.log('Deletar')
 
-        Confirms.error({
+        var confirm = Confirms.error({
             text: 'A conversa será apagada definitivamente',
             title: 'Deseja mesmo apagar essa conversa?',
             confirmText: 'Sim, apagar',
             negateText: 'Não apagar',
             successText: "Sucesso",
-            confirmCallback: ()=> {
+            confirmCallback: () => {
                 console.log('Confirm!');
                 console.log(this);
+                const {idConversa} = this.props.data;
+                this.props.dispatch({
+                    type: 'CHAT_DELETE_CONVERSA',
+                    data: {
+                        idConversa,
+                        modal: confirm,
+                    }
+                });
             }
         });
     }
