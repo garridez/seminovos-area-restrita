@@ -93,31 +93,6 @@ class VeiculoController extends AbstractActionController {
         /* @var $apiClient ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        /**
-         * @TODO
-         * Criar um único lugar para recuperar o idTipo pelo nome
-         */
-        /*$tipos = [
-            'carro' => 1,
-            'caminhao' => 2,
-            'moto' => 3
-        ];
-        $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
-        if ($tipoVeiculo === 0) {
-            $tipoVeiculo = $tipos[strtolower($this->params()->fromPost('tipoVeiculo'))];
-        }*/
-
-        /*$data = [
-            'tipoVeiculo' => $tipoVeiculo,
-            'tipoCadastro' => 1,
-            'idCadastro' => 256337,
-            'video' => '',
-            'troca' => 4,
-            'idPlano' => 5,
-        ];*/
-
-
-
         if (!isset($data['flagIpva'])) {
             $data['flagIpva'] = 0;
         }

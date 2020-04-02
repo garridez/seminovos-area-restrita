@@ -19,7 +19,7 @@ class VeiculoFotosController extends AbstractActionController {
         $request = $this->request;
         if ($request->isPost()) {
             $dataPost = $request->getPost();
-            var_dump($dataPost); exit;
+            //var_dump($dataPost); exit;
             $apiClient = $this->getApiClient();
             $tempDir = $this->getContainer()->get('config')['dir']['upload'];
             $tempDir .= DIRECTORY_SEPARATOR . $dataPost->idVeiculo;
@@ -33,7 +33,8 @@ class VeiculoFotosController extends AbstractActionController {
                 'use_upload_name' => true,
                 'use_upload_extension' => true,
             ]);
-
+            
+            $fotos = $request->getFiles()->fotos;
             // Upload
             if ($fotos) {
                 $data = [
@@ -41,14 +42,16 @@ class VeiculoFotosController extends AbstractActionController {
                     'idVeiculo' => $dataPost->idVeiculo,
                         /* 'ordem' => $dataPost->ordem,
                           'rotacionar' => $dataPost->rotacionarNovasFotos, */
-                ];
+                ];                
 
                 $files = $moveUpload->move($fotos, true);
                 $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files
                 ];
-
+                var_dump($data); //exit;
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
+                echo $resUpload;
+                var_dump($resUpload); exit;
                 foreach ($files as $file) {
                     unlink($file);
                 }
