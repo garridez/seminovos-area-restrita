@@ -332,6 +332,9 @@ class DadosForm extends Form
         if (isset($data['idMarca']) && $data['idMarca']) {
             $this->get('modeloCarro')->setModelosFromMarca($data['idMarca']);
         }
+        if (isset($data['idTipo']) && $data['idTipo']) {
+            $this->get('idMarca')->setMarcaFromTipo($data['idTipo']);
+        }
         if (isset($data['acessorios']) && $data['acessorios']) {
             $data['checkboxacessorios'] = $data['acessorios'];
         }
