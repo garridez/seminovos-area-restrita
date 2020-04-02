@@ -21,23 +21,50 @@ const reducer = combineReducers({
 
 const middle = (store) => {
     return next => action => {
-            
-            if (action.type !== 'CHAT_SEND_MESSAGE') {
-                return next(action);
-            }
-            const returnValue = next(action);
-            store.dispatch({
-                'type': 'LIST_CHAT_NEW_MSG',
-                message: action.message
-            });
-            const {listChats, listMensagens} = store.getState();
-            store.dispatch({
-                'type': 'LIST_CHAT_UPDATE_LAST_MSG',
-                listChats,
-                listMensagens
-            });
+            switch (action.type) {
+                case 'CHAT_DELETE_CONVERSA':
+                    var returnValue = next(action);
+                    var {idConversa, modal} = action.data;
 
-            return returnValue;
+                    modal.modal('hide');
+
+                    store.dispatch({
+                        type: 'LIST_CHAT_DELETE',
+                        data: {
+                            idConversa
+                        }
+                    });
+                    store.dispatch({
+                        type: 'CHAT_ACTIVE',
+                        data: {
+                            idConversa: null,
+                        }
+                    });
+                    return returnValue;
+
+                    break;
+                case 'CHAT_SEND_MESSAGE':
+                    var returnValue = next(action);
+                    store.dispatch({
+                        'type': 'LIST_CHAT_NEW_MSG',
+                        message: action.message
+                    });
+                    const {listChats, listMensagens} = store.getState();
+                    store.dispatch({
+                        'type': 'LIST_CHAT_UPDATE_LAST_MSG',
+                        listChats,
+                        listMensagens
+                    });
+
+                    return returnValue;
+                    break;
+
+                default:
+                    return next(action);
+                    break;
+            }
+
+
         };
 };
 

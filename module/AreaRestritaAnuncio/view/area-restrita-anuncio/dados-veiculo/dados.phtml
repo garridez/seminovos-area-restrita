@@ -158,6 +158,7 @@ $versao = $form->get('versao')->getValue();
                     <h5 class="text-center">
                         Acessórios
                     </h5>
+                    <?php if ($tipoVeiculo === \SnBH\ApiModel\Model\VeiculoTipo::TIPO_CARRO) : ?>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group form-group-default form-troca required">
@@ -179,6 +180,7 @@ $versao = $form->get('versao')->getValue();
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                     <div class="form-group form-group-default" id="dadosAcessorios">
                         <div class="d-flex justify-content-between">
                             <?= $this->formLabel($fields['checkboxacessorios']) ?>
