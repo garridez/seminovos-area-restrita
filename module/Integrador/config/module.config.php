@@ -35,10 +35,7 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
-                ],
-                'may_terminate' => true,
-                'child_routes' => [
-                    'veiculo' => [
+                    'veiculo-fotos' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/veiculo-fotos[/:id]',
@@ -49,7 +46,7 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
-                ]
+                ],
             ],
         ],
     ],
