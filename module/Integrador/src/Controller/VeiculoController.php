@@ -69,12 +69,8 @@ class VeiculoController extends AbstractActionController {
             return new JsonModel($res);
         }
 
-        //var_dump($res);
         $idVeiculo = $res['data'][0]['idVeiculo'];
 
-        //$fotoUp = $this->fotos($request->getFiles()->fotos, $idVeiculo);
-        //var_dump($idVeiculo);
-        //exit();
         return new JsonModel([
             'status' => 200,
             'detail' => 'Veículo inserido com sucesso!',
@@ -114,7 +110,7 @@ class VeiculoController extends AbstractActionController {
         $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
 
         $res = $apiClient->veiculosPut($data, $idVeiculo)->json();
-        var_dump($res);        exit();
+
         if ($res['status'] != 200) {
             return new JsonModel($res);
         }
@@ -123,55 +119,6 @@ class VeiculoController extends AbstractActionController {
             'status' => 200,
             'detail' => 'Veículo atualizado com sucesso!',
         ]);
-    }
-
-    public function fotos($fotos, $idVeiculo) {
-
-        $apiClient = $this->getApiClient();
-        $tempDir = $this->getContainer()->get('config')['dir']['upload'];
-        $tempDir .= DIRECTORY_SEPARATOR . $idVeiculo;
-        if (!file_exists($tempDir)) {
-            mkdir($tempDir);
-        }
-        $moveUpload = new MoveUpload([
-            'target' => $tempDir,
-            'overwrite' => true,
-            'randomize' => true,
-            'use_upload_name' => true,
-            'use_upload_extension' => true,
-        ]);
-
-        // Upload
-        if ($fotos) {
-            $data = [
-                'idTipo' => 1,
-                'idVeiculo' => $idVeiculo,
-                    /* 'ordem' => $dataPost->ordem,
-                      'rotacionar' => $dataPost->rotacionarNovasFotos, */
-            ];
-
-            $files = $moveUpload->move($fotos, true);
-            $data[$apiClient::KEY_FILES] = [
-                'fotos' => $files
-            ];
-
-            $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            /* for ($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++) {
-              $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
-              } */
-        }
-        var_dump($resUpload);
-        exit;
-
-        $dataJson = [
-            'status' => 200
-        ];
-
-        return new JsonModel($dataJson);
     }
 
     public function delete() {
