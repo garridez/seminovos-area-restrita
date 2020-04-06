@@ -192,6 +192,19 @@ module.exports.callback = ($) => {
         }
     });
     stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
+        var aceitaProposta = $('input[name="aceitaProposta"]').is(':checked');
+        var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
+        var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
+        var tipoCadastro = $('input[name="tipoUsuarioCadastro"]').val();
+        
+        if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCadastro == 2){
+            advancedAlerts.warning({
+                text:'Você precisa selecionar pelo menos um meio para contato',
+                title:$('<span class="text-primary">').html('Atenção!')
+            });
+            return stopEvent(e);
+        }
+
         BtnContinuar.enable();
         if (ajaxProcessing) {
             return stopEvent(e);
