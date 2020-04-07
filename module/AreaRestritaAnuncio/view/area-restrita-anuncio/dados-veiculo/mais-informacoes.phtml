@@ -23,6 +23,10 @@ if ($this->checkedLigacao !== '0') {
     $fields['aceitaLigacao']->setChecked(true);
 }
 
+if ($this->checkedLigacao !== '0') {
+    $fields['aceitaChat']->setChecked(true);
+}
+
 ?>
 <div class="container container-fixed-lg">
     <div class="row">
@@ -51,7 +55,7 @@ if ($this->checkedLigacao !== '0') {
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
                 </div>
-
+                <?php if($this->userInfo('tipoCadastro') != 1): ?>
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaProposta']) ?>
                 </div>
@@ -59,6 +63,11 @@ if ($this->checkedLigacao !== '0') {
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaLigacao']) ?>
                 </div>
+
+                <div class="checkbox form-group form-group-default">
+                    <?= $this->formCheckbox($fields['aceitaChat']) ?>
+                </div>
+                <?php endif; ?>
 
                 <div class="checkbox form-group form-group-default required">
                     <?= $this->formCheckbox($fields['termo'])?>

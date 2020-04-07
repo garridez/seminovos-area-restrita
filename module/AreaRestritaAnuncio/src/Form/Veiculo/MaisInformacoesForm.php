@@ -58,6 +58,16 @@ class MaisInformacoesForm extends Form
         ]);
         $this->add([
             'type' => Element\Checkbox::class,
+            'name' => 'aceitaChat',
+            'options' => [
+                'label' => 'Aceitar contato por chat.',
+            ],
+            'attributes' => [
+                'value' => 'yes',
+            ],
+        ]);
+        $this->add([
+            'type' => Element\Checkbox::class,
             'name' => 'termo',
             'options' => [
                 'label' => 'Li e aceito os termos de responsabilidade e a política de privacidade.',
