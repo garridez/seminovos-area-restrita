@@ -195,7 +195,7 @@ module.exports.callback = ($) => {
         var aceitaProposta = $('input[name="aceitaProposta"]').is(':checked');
         var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
-        var tipoCadastro = $('input[name="tipoUsuarioCadastro"]').val();
+        var tipoCadastro = $('input[name="tipoCadastro"]').val();
         
         if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCadastro == 2){
             advancedAlerts.warning({
