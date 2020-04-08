@@ -10,6 +10,16 @@ use Zend\View\Model\JsonModel;
 
 class AbstractActionController extends ZendAbstractActionController
 {
+    /**
+     * Retorna o idCadastro que foi passado por header
+     * @return int
+     */
+    public function getIdCadastro()
+    {
+        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        $request = $this->request;
+        return (int) $request->getHeader('X-SnBH-IdCadastro')->getFieldValue();
+    }
 
     public function getContainer(): ServiceManager
     {

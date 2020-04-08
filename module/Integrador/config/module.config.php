@@ -20,6 +20,10 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'index',
+                        'middleware' => [
+                            Middleware\TokenMiddleware::class,
+                            Middleware\DispatchMiddleware::class,
+                        ]
                     ],
                 ],
                 'may_terminate' => true,
@@ -58,6 +62,10 @@ return [
         ],
     ],
     'service_manager' => [
-        'factories' => []
+        'factories' => [
+            // Middleware
+            Middleware\TokenMiddleware::class => Middleware\Factory\TokenMiddlewareFactory::class,
+            Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
+        ]
     ],
 ];

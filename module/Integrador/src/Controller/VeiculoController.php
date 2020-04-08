@@ -15,6 +15,10 @@ class VeiculoController extends AbstractActionController {
     public function create() {
 
         $request = $this->request;
+        $idCadastro = $this->getIdCadastro();
+        var_dump($idCadastro);
+        die;
+       
         /* @var $apiClient ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
