@@ -16,8 +16,6 @@ class VeiculoController extends AbstractActionController {
 
         $request = $this->request;
         $idCadastro = $this->getIdCadastro();
-        var_dump($idCadastro);
-        die;
        
         /* @var $apiClient ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
@@ -39,7 +37,7 @@ class VeiculoController extends AbstractActionController {
         $data = [
             'tipoVeiculo' => $tipoVeiculo,
             'tipoCadastro' => 1,
-            'idCadastro' => 256337,
+            'idCadastro' => $idCadastro,
             'video' => '',
             'troca' => 4,
             'idPlano' => 5,

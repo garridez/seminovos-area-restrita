@@ -71,7 +71,10 @@ class VeiculoFotosController extends AbstractActionController {
                 foreach ($files as $file) {
                     unlink($file);
                 }
-
+                
+                if($resUpload['status'] !== 200){
+                    return new JsonModel($resUpload);
+                }
 
             }
 
