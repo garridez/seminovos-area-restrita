@@ -34,10 +34,11 @@
     },
     "autoload": {
         "psr-4": {
-            "AreaRestrita\\": "module/AreaRestrita/src/",
             "AreaRestritaAnuncio\\": "module/AreaRestritaAnuncio/src/",
+            "AreaRestrita\\": "module/AreaRestrita/src/",
             "SnBH\\ApiModel\\": "module/ApiModel/src/",
-            "SnBH\\Common\\": "module/Common/src/"
+            "SnBH\\Common\\": "module/Common/src/",
+            "SnBH\\Integrador\\": "module/Integrador/src/"
         }
     },
     "autoload-dev": {

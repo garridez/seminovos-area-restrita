@@ -27,4 +27,5 @@ return [
     'SnBH\Common',
     'AreaRestrita',
     'AreaRestritaAnuncio',
+    'SnBH\Integrador',
 ];
