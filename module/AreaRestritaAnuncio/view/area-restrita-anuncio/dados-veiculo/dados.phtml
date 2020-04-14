@@ -87,7 +87,7 @@ $versao = $form->get('versao')->getValue();
                     <?= $this->formLabel($fields['versao']) ?>
                     <?= $this->formElement($fields['versao']) ?>
                 </div>
-                <div id="divOutraVersao" class="form-group form-group-default hide">
+                <div id="divOutraVersao" class="form-group form-group-default hide required">
                     <label for="outraVersao">Versão</label>
                     <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off">
                 </div>
@@ -120,7 +120,7 @@ $versao = $form->get('versao')->getValue();
                     <?php endif; ?>
                     <?php if (isset($fields['motoCilindradas'])): ?>
                     <div class="col-md-6">
-                        <div class="form-group form-group-default">
+                        <div class="form-group form-group-default required">
                             <?= $this->formLabel($fields['motoCilindradas']) ?>
                             <?= $this->formText($fields['motoCilindradas']) ?>
                         </div>

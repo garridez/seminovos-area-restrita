@@ -12,9 +12,9 @@ use Zend\Form\View\Helper\FormRow;
 
 class FormRadio extends TwbBundleFormRadio
 {
-    protected $separator = '</div><div class="radio mt-0 mb-0">';
+    protected $separator = '</div><div class="radio radio-success mt-0 mb-0">';
     
-    protected static $checkboxFormat = '<div class="radio mt-0 mb-0">%s</div>';
+    protected static $checkboxFormat = '<div class="radio radio-success mt-0 mb-0">%s</div>';
 
     public function render(ElementInterface $oElement)
     {
