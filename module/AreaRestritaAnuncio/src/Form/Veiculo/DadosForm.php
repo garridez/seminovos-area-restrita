@@ -131,7 +131,7 @@ class DadosForm extends Form
                 'data-mask-options' => json_encode([
                     'reverse' => true
                 ]),
-                'placeholder' => '500cc',
+                'placeholder' => 'ex: 500cc',
             ]
         ]);
         $this->add([
