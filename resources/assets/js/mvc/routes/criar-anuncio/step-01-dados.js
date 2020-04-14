@@ -1,4 +1,10 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
+function stopEvent(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    return false;
+}
 
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
@@ -143,6 +149,10 @@ function init() {
     
     anoModelo.change(function(event, limparCampos = true, caracteristica = ''){
         $('#divOutraVersao').addClass("hide");
+        
+        if (!getValInt(this)){
+            return stopEvent(event);
+        }
 
         if(limparCampos) {
             portasSelect.html('')

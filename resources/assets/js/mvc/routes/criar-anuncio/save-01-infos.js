@@ -197,7 +197,7 @@ module.exports.callback = ($) => {
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
         var tipoCadastro = $('input[name="tipoCadastro"]').val();
         
-        if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCadastro == 2){
+        if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCad == 2){
             advancedAlerts.warning({
                 text:'Você precisa selecionar pelo menos um meio para contato',
                 title:$('<span class="text-primary">').html('Atenção!')
