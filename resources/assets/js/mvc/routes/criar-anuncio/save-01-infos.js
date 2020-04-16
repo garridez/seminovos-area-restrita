@@ -120,6 +120,7 @@ module.exports.callback = ($) => {
 
 
                             //seta marca -- precisa ser verificado
+                            $("select[name='idMarca'] option:not(:selected)").prop('disabled', false).removeClass("hide");
                             $("select[name='idMarca'] option:selected").prop('selected', false);
                             options = $("select[name='idMarca'] option"); 
                             let marcaSelecionada = historico.dados_veiculo.marca.toLowerCase();
@@ -129,11 +130,11 @@ module.exports.callback = ($) => {
                                 if( marca == marcaSelecionada) {
                                     option.prop('selected', true);
                                     $("select[name='idMarca']").trigger('change');
+                                    $("select[name='idMarca'] option:selected").prop('disabled', false).removeClass("hide");
+                                    $("select[name='idMarca'] option:not(:selected)").prop('disabled', true).addClass("hide");
                                     return false;
                                 }
                             });
-                            $("select[name='idMarca'] option:selected").prop('disabled', false).removeClass("hide");
-                            $("select[name='idMarca'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                             //seta o modelo
                             let modeloSelecionado = historico.dados_veiculo.modelo;
