@@ -17,6 +17,9 @@ section.section-chat {
     }
     .top-header {
         // height: 50px;
+        @include media-breakpoint-down(sm){
+            height: 15%;
+        }
         height: 10%;
         min-height: 50px;
         border-bottom: solid 1px #ed9902;
@@ -181,6 +184,9 @@ section.section-chat {
                     width: auto;
                     max-width: 17%;
                     img {
+                        @include media-breakpoint-down(sm){
+                            padding: 50% 0;
+                        }
                         width: 100%;
                     }
                     .img-fluid{

@@ -73,8 +73,10 @@ class Contact extends Component {
                                 <div className="contact-name h4 d-none d-md-flex align-items-center">{outroContato}</div>
                                 <div className="contact-name h4 d-flex d-md-none align-items-center">{outroContatoMobile}</div>
                                 <div className="anuncio-title d-none d-md-flex align-items-center"><span>{anuncioTitle}</span></div>
-                                <div className="anuncio-title d-flex d-md-none align-items-center justify-content-between">
-                                    <span>{anuncioTitleMobile}</span>
+                                <div className="anuncio-title d-block d-md-none align-items-center justify-content-between">
+                                    <div>
+                                        <span>{anuncioTitleMobile}</span>
+                                    </div>
                                     <div className="last-seen align-self-end mr-2">
                                         {ultimaVezVistoStr}
                                     </div>
