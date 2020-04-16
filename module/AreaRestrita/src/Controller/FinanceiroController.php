@@ -86,6 +86,22 @@ class FinanceiroController extends AbstractActionController
         $maisSite = sizeof($dadosSiteHospedado) > 0 ? ' <i title="+ R$ ' . number_format($valorAdicional, 2, ',', '.') . '"> + Site</i>' : '';
 
         $valorPlanoAtual = (float) ($valorPlano + $valorAdicional);
+        
+        // Percentuais de descontos
+        $descTrime = 5.0;
+        $descSemes = 10.0;
+        $descAnual = 15.0;
+        
+        $idCadastrosComDescondoCOVID = [
+            207703,
+        ];
+
+        if (in_array($dadosCadastro['idCadastro'], $idCadastrosComDescondoCOVID)) {
+            $descTrime = 10.0;
+            $descSemes = 15.0;
+            $descAnual = 20.0;
+        }
+        
 
         $dadosFinanceiro['valor'] = number_format($valorPlanoAtual, 2, ',', '.');
         $dadosFinanceiro['valorAdicionalString'] = $valorAdicionalString;
@@ -98,22 +114,25 @@ class FinanceiroController extends AbstractActionController
         $dadosFinanceiro['desconto_mensal'] = '0%';
 
         $dadosFinanceiro['adicional_trimestral'] = $valorAdicional * 3;
-        $dadosFinanceiro['valor_trimestral'] = number_format(($valorPlano * 3 - ((5.0 / 100.0) * $valor * 3)) + $dadosFinanceiro['adicional_trimestral'], 2, ',', '.');
-        $dadosFinanceiro['value_checkbox_trimestral'] = ($valorPlano * 3 - ((5.0 / 100.0) * $valor * 3)) + $dadosFinanceiro['adicional_trimestral'];
-        $dadosFinanceiro['economia_trimestral'] = number_format((5.0 / 100.0) * $valorPlano * 3, 2, ',', '.');
-        $dadosFinanceiro['desconto_trimestral'] = '5%';
+        $dadosFinanceiro['valor_trimestral'] = number_format(($valorPlano * 3 - (($descTrime / 100.0) * $valor * 3)) + $dadosFinanceiro['adicional_trimestral'], 2, ',', '.');
+        $dadosFinanceiro['value_checkbox_trimestral'] = ($valorPlano * 3 - (($descTrime / 100.0) * $valor * 3)) + $dadosFinanceiro['adicional_trimestral'];
+        $dadosFinanceiro['economia_trimestral'] = number_format(($descTrime / 100.0) * $valorPlano * 3, 2, ',', '.');
+        $dadosFinanceiro['desconto_trimestral'] = $descTrime . '%';
 
         $dadosFinanceiro['adicional_semestral'] = $valorAdicional * 6;
-        $dadosFinanceiro['valor_semestral'] = number_format(($valorPlano * 6 - ((10.0 / 100.0) * $valor * 6)) + $dadosFinanceiro['adicional_semestral'], 2, ',', '.');
-        $dadosFinanceiro['value_checkbox_semestral'] = ($valorPlano * 6 - ((10.0 / 100.0) * $valor * 6)) + $dadosFinanceiro['adicional_semestral'];
-        $dadosFinanceiro['economia_semestral'] = number_format((10.0 / 100.0) * $valorPlano * 6, 2, ',', '.');
-        $dadosFinanceiro['desconto_semestral'] = '10%';
+        $dadosFinanceiro['valor_semestral'] = number_format(($valorPlano * 6 - (($descSemes / 100.0) * $valor * 6)) + $dadosFinanceiro['adicional_semestral'], 2, ',', '.');
+        $dadosFinanceiro['value_checkbox_semestral'] = ($valorPlano * 6 - (($descSemes / 100.0) * $valor * 6)) + $dadosFinanceiro['adicional_semestral'];
+        $dadosFinanceiro['economia_semestral'] = number_format(($descSemes / 100.0) * $valorPlano * 6, 2, ',', '.');
+        $dadosFinanceiro['desconto_semestral'] = $descSemes . '%';
 
         $dadosFinanceiro['adicional_anual'] = $valorAdicional * 12;
-        $dadosFinanceiro['valor_anual'] = number_format(($valorPlano * 12 - ((15.0 / 100.0) * $valor * 12)) + $dadosFinanceiro['adicional_anual'], 2, ',', '.');
-        $dadosFinanceiro['value_checkbox_anual'] = ($valorPlano * 12 - ((15.0 / 100.0) * $valor * 12)) + $dadosFinanceiro['adicional_anual'];
-        $dadosFinanceiro['economia_anual'] = number_format((15.0 / 100.0) * $valorPlano * 12, 2, ',', '.');
-        $dadosFinanceiro['desconto_anual'] = '15%';
+        $dadosFinanceiro['valor_anual'] = number_format(($valorPlano * 12 - (($descAnual / 100.0) * $valor * 12)) + $dadosFinanceiro['adicional_anual'], 2, ',', '.');
+        $dadosFinanceiro['value_checkbox_anual'] = ($valorPlano * 12 - (($descAnual / 100.0) * $valor * 12)) + $dadosFinanceiro['adicional_anual'];
+        $dadosFinanceiro['economia_anual'] = number_format(($descAnual / 100.0) * $valorPlano * 12, 2, ',', '.');
+        $dadosFinanceiro['desconto_anual'] = $descAnual . '%';
+        
+//        var_dump($dadosFinanceiro);
+//        die;
 
         return new ViewModel([
             'financeiro' => $dadosFinanceiro
