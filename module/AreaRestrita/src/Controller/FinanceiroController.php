@@ -93,7 +93,8 @@ class FinanceiroController extends AbstractActionController
         $descAnual = 15.0;
         
         $idCadastrosComDescondoCOVID = [
-            207703,
+            207703, # Golaço Automóveis
+            342744, # RC EMPREENDIMENTOS AUTOMOTIVOS
         ];
 
         if (in_array($dadosCadastro['idCadastro'], $idCadastrosComDescondoCOVID)) {
