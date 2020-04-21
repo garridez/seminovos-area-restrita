@@ -55,6 +55,21 @@ if ($this->checkedLigacao !== '0') {
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
                 </div>
+                <?php
+                    if($this->userInfo()->isRevenda()):
+                        /** @var \Zend\Form\Element\Radio $deliveryRadio */
+                        $deliveryRadio = $fields['delivery'];
+                        $deliveryRadio->setAttribute('required', true);
+                ?>
+                    <div class="form-group form-group-default form-troca required">
+                        <?= $this->formLabel($deliveryRadio) ?>
+                        <?= $this->formRadio($deliveryRadio) ?>
+                        <br>
+                        <a href="#">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> Clique aqui para saber mais
+                        </a>
+                    </div>
+                <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaProposta']) ?>
