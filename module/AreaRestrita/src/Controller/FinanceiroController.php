@@ -95,6 +95,7 @@ class FinanceiroController extends AbstractActionController
         $idCadastrosComDescondoCOVID = [
             207703, # Golaço Automóveis
             342744, # RC EMPREENDIMENTOS AUTOMOTIVOS
+            271547, # Guariba Veículos
         ];
 
         if (in_array($dadosCadastro['idCadastro'], $idCadastrosComDescondoCOVID)) {
