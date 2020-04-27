@@ -40,7 +40,7 @@ module.exports.callback = ($) => {
         checkLastStep();
     });
     $('.btn-continuar').on('click', function () {
-        BtnContinuar.disable();
+        // BtnContinuar.disable();
         var inLastStep = $(this).data('in-last-step');
         var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
@@ -109,7 +109,7 @@ module.exports.callback = ($) => {
         });
     });
     /**
-     * 
+     *
      * Descomentar o autofill apenas em dev!
      */
     //require('./autofill').init();
