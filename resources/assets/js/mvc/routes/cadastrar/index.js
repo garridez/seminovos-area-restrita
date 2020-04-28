@@ -7,12 +7,27 @@ module.exports.callback = ($) => {
     var Alert = require('components/Alerts');
     var advancedAlerts = require('components/AdvancedAlerts');
 
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1) {
+      console.log('Disable date input on safari');
+      $inpuDataNasc = $('input[name="dataNascimento"]');
+      $inpuDataNasc.attr('type', 'text');
+      $inpuDataNasc.mask("00/00/0000");
+    }
+
     $('form#form_particularSite').submit(function (e) {
         e.preventDefault();
         var $this = $(this);
         var emailConfInput = $this.find('[name="confirmacao-email"]');
         var email = $this.find('[name="email"]').val().trim();
         var emailConf = emailConfInput.val().trim();
+
+        if (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1) {
+          var $inpuDataNasc = $('input[name="dataNascimento"]');
+          var date = $inpuDataNasc.val().split('/');
+          $inpuDataNasc.unmask();
+          $inpuDataNasc.val(date[2] + "-" + date[1] + "-" + date[0]);
+        }
 
         if (email !== emailConf) {
             Alert.info('Os emails não são iguais!', 'Atenção')
@@ -52,7 +67,7 @@ module.exports.callback = ($) => {
             }
         });
     });
-    
+
     $("form[name='form_particularSite']").find("input[name='email']").blur(function (event) {
         var emailInput = $(this);
         var email = emailInput.val() || '';
