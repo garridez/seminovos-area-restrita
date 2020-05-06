@@ -15,7 +15,7 @@ use Zend\Stdlib\ArrayUtils;
 chdir(dirname(__DIR__));
 
 // Composer autoloading
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 $appConfig = require 'config/application.config.php';
 

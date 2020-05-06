@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59feb3580f993382ba31e8dc2d0b8df3",
+    "content-hash": "1c3d02231ba6e9a66baaf68ce46ccca4",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -120,6 +120,65 @@
             "homepage": "https://github.com/container-interop/container-interop",
             "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "fxp/composer-asset-plugin",
+            "version": "v1.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fxpio/composer-asset-plugin.git",
+                "reference": "886ece037849d3935c5a34cdcd984e46f2de5fae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/886ece037849d3935c5a34cdcd984e46f2de5fae",
+                "reference": "886ece037849d3935c5a34cdcd984e46f2de5fae",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "composer/composer": "^1.6.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Fxp\\Composer\\AssetPlugin\\FxpAssetPlugin",
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fxp\\Composer\\AssetPlugin\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Pluchino",
+                    "email": "francois.pluchino@gmail.com"
+                }
+            ],
+            "description": "NPM/Bower Dependency Manager for Composer",
+            "homepage": "https://github.com/fxpio/composer-asset-plugin",
+            "keywords": [
+                "asset",
+                "bower",
+                "composer",
+                "dependency manager",
+                "nodejs",
+                "npm",
+                "package"
+            ],
+            "time": "2019-08-08T18:36:07+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1063,6 +1122,7 @@
                 "ZendFramework",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-authentication",
             "time": "2019-05-14T18:06:07+00:00"
         },
         {
@@ -1146,6 +1206,7 @@
                 "psr-6",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-cache",
             "time": "2019-08-29T18:30:41+00:00"
         },
         {
@@ -1199,6 +1260,7 @@
                 "code",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2019-10-05T23:18:22+00:00"
         },
         {
@@ -1251,6 +1313,7 @@
                 "plugin",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-component-installer",
             "time": "2018-01-11T15:03:06+00:00"
         },
         {
@@ -1311,6 +1374,7 @@
                 "config",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-config",
             "time": "2019-06-08T18:58:54+00:00"
         },
         {
@@ -1363,6 +1427,7 @@
                 "crypt",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-crypt",
             "time": "2019-05-14T20:19:53+00:00"
         },
         {
@@ -1415,6 +1480,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2018-02-26T15:44:50+00:00"
         },
         {
@@ -1460,6 +1526,7 @@
                 "escaper",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-escaper",
             "time": "2019-09-05T20:03:20+00:00"
         },
         {
@@ -1514,6 +1581,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         },
         {
@@ -1579,6 +1647,7 @@
                 "filter",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-filter",
             "time": "2019-08-19T07:08:04+00:00"
         },
         {
@@ -1657,6 +1726,7 @@
                 "form",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-form",
             "time": "2019-10-04T10:46:36+00:00"
         },
         {
@@ -1712,6 +1782,7 @@
                 "zend",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-http",
             "time": "2019-02-19T18:58:14+00:00"
         },
         {
@@ -1775,6 +1846,7 @@
                 "hydrator",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-hydrator",
             "time": "2018-04-30T21:22:14+00:00"
         },
         {
@@ -1843,6 +1915,7 @@
                 "i18n",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-i18n",
             "time": "2019-09-30T12:04:37+00:00"
         },
         {
@@ -1889,6 +1962,7 @@
                 "translations",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-i18n-resources",
             "time": "2019-06-25T01:21:12+00:00"
         },
         {
@@ -1946,6 +2020,7 @@
                 "inputfilter",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-inputfilter",
             "time": "2019-08-28T19:45:32+00:00"
         },
         {
@@ -1996,6 +2071,7 @@
                 "json",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-json",
             "time": "2019-10-09T13:56:13+00:00"
         },
         {
@@ -2041,6 +2117,7 @@
                 "loader",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-loader",
             "time": "2019-09-04T19:38:14+00:00"
         },
         {
@@ -2111,6 +2188,7 @@
                 "logging",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-log",
             "time": "2019-08-23T21:28:18+00:00"
         },
         {
@@ -2162,6 +2240,7 @@
                 "math",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-math",
             "time": "2018-12-04T15:45:09+00:00"
         },
         {
@@ -2222,6 +2301,7 @@
                 "modulemanager",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-modulemanager",
             "time": "2017-12-02T06:11:18+00:00"
         },
         {
@@ -2294,6 +2374,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc",
             "time": "2017-11-24T06:32:07+00:00"
         },
         {
@@ -2336,6 +2417,7 @@
                 "mvc",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mvc-form",
             "time": "2016-06-07T18:34:07+00:00"
         },
         {
@@ -2400,6 +2482,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc-i18n",
             "time": "2019-09-03T20:50:53+00:00"
         },
         {
@@ -2458,6 +2541,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc-plugin-fileprg",
             "time": "2018-04-30T20:02:13+00:00"
         },
         {
@@ -2514,6 +2598,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc-plugin-flashmessenger",
             "time": "2018-04-30T18:47:56+00:00"
         },
         {
@@ -2569,6 +2654,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc-plugin-identity",
             "time": "2018-04-30T19:50:13+00:00"
         },
         {
@@ -2623,6 +2709,7 @@
                 "mvc",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mvc-plugin-prg",
             "time": "2018-04-30T19:54:38+00:00"
         },
         {
@@ -2671,6 +2758,7 @@
                 "plugins",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mvc-plugins",
             "time": "2016-06-02T18:41:26+00:00"
         },
         {
@@ -2739,6 +2827,7 @@
                 "navigation",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-navigation",
             "time": "2019-08-21T08:28:20+00:00"
         },
         {
@@ -2788,6 +2877,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-psr7bridge",
             "time": "2016-05-10T21:44:39+00:00"
         },
         {
@@ -2850,6 +2940,7 @@
                 "zend",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-router",
             "time": "2019-02-26T20:24:12+00:00"
         },
         {
@@ -2907,6 +2998,7 @@
                 "serializer",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-serializer",
             "time": "2018-05-14T18:45:18+00:00"
         },
         {
@@ -2975,6 +3067,7 @@
                 "servicemanager",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-servicemanager",
             "time": "2018-12-22T06:05:09+00:00"
         },
         {
@@ -3042,6 +3135,7 @@
                 "session",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-session",
             "time": "2019-09-20T12:50:51+00:00"
         },
         {
@@ -3088,6 +3182,7 @@
                 "stdlib",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2018-08-28T21:34:05+00:00"
         },
         {
@@ -3149,6 +3244,7 @@
                 "psr-7",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-stratigility",
             "time": "2018-04-16T18:22:03+00:00"
         },
         {
@@ -3196,6 +3292,7 @@
                 "uri",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-uri",
             "time": "2019-10-07T13:35:33+00:00"
         },
         {
@@ -3269,6 +3366,7 @@
                 "validator",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2019-10-12T12:17:57+00:00"
         },
         {
@@ -3356,6 +3454,7 @@
                 "view",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-view",
             "time": "2019-10-11T21:10:04+00:00"
         },
         {
@@ -3500,6 +3599,7 @@
                 "xml",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-xml",
             "time": "2019-01-22T19:42:14+00:00"
         },
         {
@@ -3549,6 +3649,7 @@
                 "framework",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-development-mode",
             "time": "2018-05-07T15:44:42+00:00"
         }
     ],
@@ -5172,6 +5273,7 @@
                 "console",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-console",
             "time": "2019-02-04T19:48:22+00:00"
         },
         {
@@ -5221,6 +5323,7 @@
                 "debug",
                 "zf"
             ],
+            "abandoned": true,
             "time": "2018-04-30T20:10:31+00:00"
         },
         {
@@ -5298,6 +5401,7 @@
                 "module",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-developer-tools",
             "time": "2019-03-28T13:32:41+00:00"
         },
         {
@@ -5343,6 +5447,7 @@
                 "dom",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-dom",
             "time": "2019-06-18T10:36:49+00:00"
         },
         {
@@ -5414,6 +5519,7 @@
                 "test",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-test",
             "time": "2019-06-11T19:33:38+00:00"
         }
     ],
@@ -5428,5 +5534,6 @@
     "platform": {
         "php": "^5.6 || ^7.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
