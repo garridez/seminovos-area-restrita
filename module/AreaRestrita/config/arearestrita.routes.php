@@ -314,7 +314,16 @@ return [
             ],
         ],
     ],
-
+    'central-informacoes' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'central-informacoes',
+            'defaults' => [
+                'controller' => Ctrl\PagesController::class,
+                'action' => 'central-informacoes'
+            ],
+        ],
+    ],
     'painel' => [
         'type' => Http\Literal::class,
         'options' => [
