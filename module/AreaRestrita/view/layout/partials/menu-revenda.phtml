@@ -90,6 +90,12 @@ if($diasParaExpirar > 7){
       </a>
       <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
     </li>
+    <li class="">
+      <a href="<?= $this->url('restrito/central-informacoes') ?>">
+        <span class="title">Central de Informações</span>
+      </a>
+      <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
+    </li>
     <?php if($this->userInfo('idPlano') >= 20): ?>
     <li class="">
       <a href="<?= $this->url('restrito/painel') ?>">
