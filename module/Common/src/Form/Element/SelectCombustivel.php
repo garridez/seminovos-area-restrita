@@ -29,9 +29,11 @@ class SelectCombustivel extends Select
                 $valueOptions = [
                     '' => 'Selecione',
                     1 => 'Álcool',
+                    9 => 'Álcool + Kit Gás',
                     2 => 'Bi-Combustível',
                     3 => 'Diesel',
                     4 => 'Gasolina',
+                    8 => 'Gasolina e Elétrico',
                     5 => 'Gasolina + Kit Gás',
                     6 => 'Kit Gás',
                     7 => 'Tetra Fuel',

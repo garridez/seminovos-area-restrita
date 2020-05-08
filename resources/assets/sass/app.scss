@@ -12,7 +12,7 @@ $font-weight-bolder: bolder !default;
  */
 
 $use-pulse: true;
-
+@import "~bootstrap/scss/functions";
 @import "~snbh-site/resources/assets/sass/variables";
 @import "~snbh-site/resources/assets/sass/bootstrap";
 @import "~snbh-site/resources/assets/sass/components/all";
