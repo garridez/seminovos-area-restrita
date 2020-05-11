@@ -96,6 +96,7 @@ class FinanceiroController extends AbstractActionController
             207703, # Golaço Automóveis
             342744, # RC EMPREENDIMENTOS AUTOMOTIVOS
             271547, # Guariba Veículos
+            26126,
         ];
 
         if (in_array($dadosCadastro['idCadastro'], $idCadastrosComDescondoCOVID)) {
