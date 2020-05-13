@@ -3,5 +3,8 @@
     "delivery": "\\f102",
     "endereco": "\\f103",
     "funil": "\\f104",
-    "megafone": "\\f105"
+    "megafone": "\\f105",
+    "type-car": "\\f106",
+    "type-moto": "\\f107",
+    "type-truck": "\\f108"
 }

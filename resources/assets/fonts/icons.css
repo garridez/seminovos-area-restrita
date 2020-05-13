@@ -1,10 +1,10 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.eot?f53a0fa7dba7ae9be37ef0c3324a0dcb?#iefix") format("embedded-opentype"),
-url("./icons.woff2?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("woff2"),
-url("./icons.woff?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("woff"),
-url("./icons.ttf?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("truetype"),
-url("./icons.svg?f53a0fa7dba7ae9be37ef0c3324a0dcb#icons") format("svg");
+    src: url("./icons.eot?bf17aa9be76ba6eeb729c747c6626dd9?#iefix") format("embedded-opentype"),
+url("./icons.woff2?bf17aa9be76ba6eeb729c747c6626dd9") format("woff2"),
+url("./icons.woff?bf17aa9be76ba6eeb729c747c6626dd9") format("woff"),
+url("./icons.ttf?bf17aa9be76ba6eeb729c747c6626dd9") format("truetype"),
+url("./icons.svg?bf17aa9be76ba6eeb729c747c6626dd9#icons") format("svg");
 }
 
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -32,4 +32,13 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 }
 .icon-megafone:before {
     content: "\f105";
+}
+.icon-type-car:before {
+    content: "\f106";
+}
+.icon-type-moto:before {
+    content: "\f107";
+}
+.icon-type-truck:before {
+    content: "\f108";
 }

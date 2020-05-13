@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Webfont2";
-    src: url("../fonts/icons.eot?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("embedded-opentype"),
-        url("../fonts/icons.woff2?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("woff2"),
-        url("../fonts/icons.woff?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("woff"),
-        url("../fonts/icons.ttf?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("truetype"),
-        url("../fonts/icons.svg?1c0bfa89f9045c04eccb91a87701cdd8ffggcx#icons") format("svg");
+    src: url("../fonts/icons.eot?1c0bfa89f9045c04eccb91a87701cdd8ffggcxz") format("embedded-opentype"),
+        url("../fonts/icons.woff2?1c0bfa89f9045c04eccb91a87701cdd8ffggcxz") format("woff2"),
+        url("../fonts/icons.woff?1c0bfa89f9045c04eccb91a87701cdd8ffggcxz") format("woff"),
+        url("../fonts/icons.ttf?1c0bfa89f9045c04eccb91a87701cdd8ffggcxz") format("truetype"),
+        url("../fonts/icons.svg?1c0bfa89f9045c04eccb91a87701cdd8ffggcxz#icons") format("svg");
 }
 
 i[class^="icon-"],
@@ -35,4 +35,13 @@ i[class*=" icon-"] {
 }
 .icon-megafone:before {
     content: "\f105";
+}
+.icon-type-car-2:before {
+    content: "\f106";
+}
+.icon-type-moto-2:before {
+    content: "\f107";
+}
+.icon-type-truck-2:before {
+    content: "\f108";
 }
