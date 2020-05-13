@@ -1,6 +1,7 @@
 {
-    "cuidado": "\\f101",
+    "danger": "\\f101",
     "delivery": "\\f102",
     "endereco": "\\f103",
-    "funil": "\\f104"
+    "funil": "\\f104",
+    "megafone": "\\f105"
 }

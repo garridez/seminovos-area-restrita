@@ -1,10 +1,10 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.eot?d6fe68b8fada4527117ab6ad6f9662e2?#iefix") format("embedded-opentype"),
-url("./icons.woff2?d6fe68b8fada4527117ab6ad6f9662e2") format("woff2"),
-url("./icons.woff?d6fe68b8fada4527117ab6ad6f9662e2") format("woff"),
-url("./icons.ttf?d6fe68b8fada4527117ab6ad6f9662e2") format("truetype"),
-url("./icons.svg?d6fe68b8fada4527117ab6ad6f9662e2#icons") format("svg");
+    src: url("./icons.eot?f53a0fa7dba7ae9be37ef0c3324a0dcb?#iefix") format("embedded-opentype"),
+url("./icons.woff2?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("woff2"),
+url("./icons.woff?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("woff"),
+url("./icons.ttf?f53a0fa7dba7ae9be37ef0c3324a0dcb") format("truetype"),
+url("./icons.svg?f53a0fa7dba7ae9be37ef0c3324a0dcb#icons") format("svg");
 }
 
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -18,7 +18,7 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-cuidado:before {
+.icon-danger:before {
     content: "\f101";
 }
 .icon-delivery:before {
@@ -29,4 +29,7 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 }
 .icon-funil:before {
     content: "\f104";
+}
+.icon-megafone:before {
+    content: "\f105";
 }

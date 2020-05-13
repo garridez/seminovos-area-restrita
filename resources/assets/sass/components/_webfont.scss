@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Webfont2";
-    src: url("../fonts/icons.eot?1c0bfa89f9045c04eccb91a87701cdd8ffggc") format("embedded-opentype"),
-        url("../fonts/icons.woff2?1c0bfa89f9045c04eccb91a87701cdd8ffggc") format("woff2"),
-        url("../fonts/icons.woff?1c0bfa89f9045c04eccb91a87701cdd8ffggc") format("woff"),
-        url("../fonts/icons.ttf?1c0bfa89f9045c04eccb91a87701cdd8ffggc") format("truetype"),
-        url("../fonts/icons.svg?1c0bfa89f9045c04eccb91a87701cdd8ffggc#icons") format("svg");
+    src: url("../fonts/icons.eot?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("embedded-opentype"),
+        url("../fonts/icons.woff2?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("woff2"),
+        url("../fonts/icons.woff?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("woff"),
+        url("../fonts/icons.ttf?1c0bfa89f9045c04eccb91a87701cdd8ffggcx") format("truetype"),
+        url("../fonts/icons.svg?1c0bfa89f9045c04eccb91a87701cdd8ffggcx#icons") format("svg");
 }
 
 i[class^="icon-"],
@@ -21,7 +21,7 @@ i[class*=" icon-"] {
     }
 }
 
-.icon-cuidado:before {
+.icon-danger:before {
     content: "\f101";
 }
 .icon-delivery:before {
@@ -32,4 +32,7 @@ i[class*=" icon-"] {
 }
 .icon-funil:before {
     content: "\f104";
+}
+.icon-megafone:before {
+    content: "\f105";
 }
