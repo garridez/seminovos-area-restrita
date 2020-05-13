@@ -17,6 +17,12 @@ module.exports.callback = ($) => {
     if(action == 'close'){
       $target.removeClass('collapsed');
       $target.slideDown(animationTime);
+
+      window.setTimeout(() => {
+        $("html, body").animate({
+          scrollTop: $(target).offset().top - 50
+        }, 200);
+      }, animationTime);
       return;
     }
 
