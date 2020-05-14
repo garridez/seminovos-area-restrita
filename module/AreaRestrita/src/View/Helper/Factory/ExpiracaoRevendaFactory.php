@@ -52,13 +52,16 @@ class ExpiracaoRevendaFactory implements FactoryInterface
 
         $result = null;
         $auxData = null; //new \DateTime('1969-01-01');
+        $auxDataExpiracao = null;
 
         foreach ($pagamentosVeiculos['data'] AS $pagamento) {
             if ($pagamento["idCadastro"] == $idCadastro) {
                 $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+                $dataExpiracao = new \DateTime($pagamento["dataExpiracao"]);
 
-                if ($dataCadastro > $auxData) {
+                if (($dataCadastro > $auxData) || ($dataExpiracao > $auxDataExpiracao)) {
                     $auxData = $dataCadastro;
+                    $auxDataExpiracao = $dataExpiracao;
                     $result = $pagamento[$variavel];
                 }
             }
