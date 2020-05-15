@@ -55,6 +55,31 @@ if ($this->checkedLigacao !== '0') {
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
                 </div>
+                <?php
+                    if($this->userInfo()->isRevenda()):
+                        /** @var \Zend\Form\Element\Radio $deliveryRadio */
+                        $deliveryRadio = $fields['delivery'];
+                        $deliveryRadio->setAttribute('required', true);
+                ?>
+                    <div class="form-group form-group-default form-troca required">
+                        <?= $this->formLabel($deliveryRadio) ?>
+                        <?= $this->formRadio($deliveryRadio) ?>
+                        <br>
+                        <small class="font-theme text-uppercase smallest">
+                            <a href="#" data-toggle="collapse" data-target="#delivery-detalhes-collapse">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> Clique aqui para saber mais
+                            </a>
+                        </small>
+                        <div class="collapse" id="delivery-detalhes-collapse">
+                            <div class="card card-body">
+                                <span>Ao marcar como <b>"SIM"</b> esta opção, é adicionada ao anúncio do veículo a seguinte mensagem:</span>
+                                <span><b>Este veículo pode ser levado até você</b></span>
+                                <span>Dessa forma, sua revenda e o cliente podem acordar um local e horário.</span>
+                                <span>Assim, sua revenda poderá <b>continuar a atender seus clientes</b> sem desrespeitar os decretos contra o <b>COVID-19</b>.</span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaProposta']) ?>

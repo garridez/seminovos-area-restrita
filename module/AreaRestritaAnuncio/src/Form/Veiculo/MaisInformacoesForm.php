@@ -28,12 +28,51 @@ class MaisInformacoesForm extends Form
             'options' => [
                 'label' => 'Aceita Troca?',
                 'value_options' => [
-                    '4' => 'SIM',
-                    '1' => 'NÃO',
+                    [
+                        'label' => 'SIM',
+                        'value' => '4',
+                        'attributes' => [
+                            'id' => 'idTroca_radio_sim',
+                        ]
+                    ],
+                    [
+                        'label' => 'NÃO',
+                        'value' => '1',
+                        'attributes' => [
+                            'id' => 'idTroca_radio_nao',
+                        ]
+                    ],
                 ],
             ],
             'attributes' => [
                 'required' => true,
+            ]
+        ]);
+        $this->add([
+            'type' => Element\Radio::class,
+            'name' => 'delivery',
+            'options' => [
+                'label' => 'Este veículo pode ser levado até o cliente?',
+                'value_options' => [
+                    [
+                        'label' => 'SIM',
+                        'value' => 1,
+                        'attributes' => [
+                            'id' => 'delivery_radio_sim',
+                        ],
+                    ],
+                    [
+                        'label' => 'NÃO',
+                        'value' => 0,
+                        'attributes' => [
+                            'id' => 'delivery_radio_nao',
+                        ],
+                    ],
+                ],
+            ],
+            'attributes' => [
+                'id' => 'delivery_radio',
+                'required' => false,
             ]
         ]);
         $this->add([
