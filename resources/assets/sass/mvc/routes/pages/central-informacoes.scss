@@ -1,0 +1,110 @@
+.opcoes {
+    width: 75%;
+    margin-top: 1rem;
+    @include media-breakpoint-down(sm) {
+        width: 100%;
+    }
+    .opcao {
+        @include media-breakpoint-up(md) {
+            min-width: 160px;
+        }
+        @include media-breakpoint-down(sm) {
+            width: 49%;
+            min-width: initial;
+            margin-bottom: 0.2rem;
+        }
+        width: 22%;
+        min-width: 160px;
+        background-color: #e4e4e4;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 1rem 0.8rem;
+        color: $black;
+        .texto {
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .icone {
+            margin-top: 2rem;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: flex-end;
+            .icon-funil {
+                font-size: 4rem;
+            }
+            .icon-danger {
+                font-size: 4rem;
+            }
+            .icon-endereco {
+                font-size: 3rem;
+            }
+        }
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+.conteudo {
+    padding: 0 1rem;
+    @include media-breakpoint-down(sm) {
+        padding: 0 0.25rem;
+    }
+    > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        .titulo {
+            width: 100%;
+        }
+        > .texto {
+            width: 100%;
+        }
+        .container-video {
+            margin-top: 2rem;
+            width: 62%;
+            display: block;
+            position: relative;
+            padding-bottom: 35%;
+            justify-self: center;
+
+            @include media-breakpoint-down(sm) {
+                margin-top: 1.2rem;
+                margin-bottom: 1.2rem;
+                width: 100%;
+                padding-bottom: 55%;
+                justify-self: center;
+            }
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+    .selo {
+        > .texto {
+            p {
+                margin-bottom: 0;
+                &:last-of-type {
+                    margin-top: 1rem;
+                }
+            }
+        }
+        .infos {
+            > div {
+                margin-bottom: 1rem;
+                b {
+                    font-size: 1.5rem;
+                }
+            }
+            img {
+                width: 90%;
+                height: auto;
+            }
+            width: 100%;
+            display: block;
+        }
+    }
+}

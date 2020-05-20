@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+    <defs>
+        <style>.a{fill:none;}.b{fill:#3c3c3c;}</style>
+    </defs>
+    <g transform="translate(-466 -273)">
+        <g transform="translate(466 282)">
+            <ellipse class="b" cx="2.97" cy="3.068" rx="2.97" ry="3.068" transform="translate(28.007 12.864)"/>
+            <ellipse class="b" cx="2.97" cy="3.068" rx="2.97" ry="3.068" transform="translate(5.483 12.864)"/>
+            <rect class="b" width="24.349" height="12.021"/>
+            <path class="b" d="M0,17.888H15.139V8l7.789.613s1.708,4.369,2.318,5.908v5.662a.763.763,0,0,1-.75.775H23.98a3.76,3.76,0,1,0-7.517,0H1.456A3.922,3.922,0,0,0,0,17.888Zm18.141-4.056,6,.779L22.4,9.965l-4.264-.336v4.2Z" transform="translate(10.755 -5.024)"/>
+            <path class="b" d="M82.925,34.587h6.13A3.922,3.922,0,0,0,87.6,37.655H85.165l-2.248-.822Z" transform="translate(-82.904 -21.723)"/>
+        </g>
+    </g>
+</svg>
