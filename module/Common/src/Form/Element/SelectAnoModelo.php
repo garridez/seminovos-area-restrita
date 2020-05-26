@@ -23,7 +23,7 @@ class SelectAnoModelo extends Select
 
         $mes = intval(date('m'));
 
-        if($mes > 6) {
+        if($mes > 5) {
 
             return ['' => 'Selecione', $proximoAno => $proximoAno] + $listaAnos;
         }
