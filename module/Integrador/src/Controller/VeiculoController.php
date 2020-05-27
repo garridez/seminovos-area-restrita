@@ -8,6 +8,8 @@ use Zend\Mvc\MvcEvent;
 use SnBH\Common\ServiceVeiculo;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
+use SnBH\ApiModel\Model\PlanosRevenda;
+use SnBH\Integrador\Controller\PlanoController;
 use Zend\View\Model\JsonModel;
 
 class VeiculoController extends AbstractActionController {
@@ -19,6 +21,12 @@ class VeiculoController extends AbstractActionController {
        
         /* @var $apiClient ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
+        
+        $plano = $this->getApiClient()->planosGet([
+                    'idCadastro' => $idCadastro,
+                    'tipoCadastro' => 1,
+                        ], 'anuncios')
+                ->getData()[0];
 
         /**
          * @TODO
@@ -40,10 +48,20 @@ class VeiculoController extends AbstractActionController {
             'idCadastro' => $idCadastro,
             'video' => '',
             'troca' => 4,
-            'idPlano' => 5,
+            'idStatus' => 2
         ];
 
         $data += $request->getPost()->toArray();
+        
+        $data['idPlano'] = $data['idPlano'] ?? 5;
+        
+        if($data['idPlano'] == 5 && $plano['totalBasico'] == $plano['totalBasicoPublicado']){
+            return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Básico']);
+        }elseif($data['idPlano'] == 2 && $plano['totalTurbo'] == $plano['totalTurboPublicados']){
+            return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Turbo']);
+        }elseif($data['idPlano'] == 3 && $plano['totalNitro'] == $plano['totalNitroPublicados']){
+            return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Nitro']);
+        }
 
         if (!isset($data['flagIpva'])) {
             $data['flagIpva'] = 0;

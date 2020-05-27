@@ -50,6 +50,17 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
+                    'planos' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/plano[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\PlanoController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -59,6 +70,7 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\VeiculoController::class => InvokableFactory::class,
             Controller\VeiculoFotosController::class => InvokableFactory::class,
+            Controller\PlanoController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
