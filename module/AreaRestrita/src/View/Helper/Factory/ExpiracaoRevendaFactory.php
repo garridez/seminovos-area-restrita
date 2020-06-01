@@ -55,7 +55,7 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         $auxDataExpiracao = null;
 
         foreach ($pagamentosVeiculos['data'] AS $pagamento) {
-            if ($pagamento["idCadastro"] == $idCadastro) {
+            if ($pagamento["idCadastro"] == $idCadastro && $pagamento["status"] == 2) {
                 $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
                 $dataExpiracao = new \DateTime($pagamento["dataExpiracao"]);
 
