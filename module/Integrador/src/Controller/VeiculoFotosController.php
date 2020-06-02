@@ -76,6 +76,11 @@ class VeiculoFotosController extends AbstractActionController {
                     return new JsonModel($resUpload);
                 }
 
+            }else{
+                return new JsonModel([
+                    'staus'=> 405,
+                    'detail' => 'Formato invalido para as fotos enviadas'
+                ]);
             }
 
             $dataJson = [
