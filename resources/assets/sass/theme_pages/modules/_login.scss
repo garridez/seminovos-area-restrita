@@ -19,10 +19,34 @@
         }
     }
     .login-container{
-        width: 496px;
-        display: block;
-        position: relative;
-        // float:right;
+        .forms-container{
+            display: block;
+            position: relative;
+            &:not(.alerta-anti-fraude){
+                width: 496px;
+                // float:right;
+            }
+            &.alerta-anti-fraude >div{
+                width: 50%;
+                @include media-breakpoint-down(sm){
+                    width: 100%;
+                }
+                &.border{
+                    border-width: 2px !important;
+                }
+                .conteudo >div{
+                    @include media-breakpoint-down(sm){
+                        width: 100% !important;
+                    }
+                    &.imagem{
+                        width: 15%;
+                    }
+                    &.texto{
+                        width: 85%;
+                    }
+                }
+            }
+        }
     }
     .bg-caption{
         width: 500px;

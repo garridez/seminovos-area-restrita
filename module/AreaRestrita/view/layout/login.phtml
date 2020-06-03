@@ -30,14 +30,14 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
 
 <body class="fixed-header l-login <?= $this->bodyClass() ?> bg-white container-fluid <?= $isRedirect ? 'intro-off' : '' ?>">
   <div class="login-wrapper bg-white d-block d-md-flex">
-    <div class="col-md-4">
+    <?php /*<div class="col-md-4">
       <div class="ad-login d-flex justify-content-end mt-3">
         <!-- <div data-ad-path="login.lateral"></div> -->
       </div>
-    </div>
-    <div class="col-12 col-md-4">
+    </div> */?>
+    <div class="col-12 col-md-12 d-flex justify-content-center">
       <div class="login-container bg-white">
-        <div class="px-4 px-md-5 mx-md-3 py-3 py-md-5">
+        <div class="d-flex flex-wrap justify-content-center">
           <?= $this->content ?>
         </div>
       </div>
