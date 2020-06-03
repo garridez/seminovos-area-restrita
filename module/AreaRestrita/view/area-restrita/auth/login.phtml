@@ -4,7 +4,7 @@ global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
 ?>
 
-<div class="snbh-logo-container">
+<div class="snbh-logo-container w-100 mt-2">
     <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
     <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
         <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
@@ -13,9 +13,30 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
         </svg>
     </a>
 </div>
-
-<div class="forms-container">
-    <p class="p-t-35">Preencha os campos abaixo com seus dados de acesso e clique no botão entrar para acessar sua área restrita.</p>
+<div class="forms-container alerta-anti-fraude w-100 d-flex justify-content-center mt-3">
+    <div class="text-center pb-3 mb-2 border border-danger">
+        <div class="d-flex align-items-center justify-content-center conteudo">
+            <div class="px-2 d-none d-md-block imagem">
+                <img src="/img/svg/ico_irregularidade.svg" class="img-fluid">
+            </div>
+            <div class="texto px-0 px-md-2">
+                <h3 class="text-danger"><b>ATENÇÃO!</b></h3>
+                <span>
+                    A Seminovos <b class='text-danger'>NÃO </b>faz contato por
+                    <b class='text-danger'>telefone </b> ou <b class='text-danger'>whatsapp </b>
+                    solicitando código de verificação de anúncio ou similar.<br>
+                    <span class="text-danger">
+                        CUIDADO PARA NÃO CAIR EM GOLPES<br>
+                    </span>
+                    Estamos à disposição para esclarecer 
+                    <a href="/central-informacoes" class="text-danger" title="Central de informações">dúvidas</a><br>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="forms-container px-4 px-md-5 mx-md-3 py-3 pb-md-2 pt-md-3">
+    <p class="">Preencha os campos abaixo com seus dados de acesso e clique no botão entrar para acessar sua área restrita.</p>
     <br class="clearfix">
     <form class="tipo-cadastro-container container">
         <div class="row">

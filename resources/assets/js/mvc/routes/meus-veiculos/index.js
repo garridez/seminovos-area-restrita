@@ -5,7 +5,7 @@ module.exports.callback = $ => {
     var advancedAlerts = require("components/AdvancedAlerts");
     var Confirms = require('components/Confirms');
     var FormAlerts = require('components/FormAlerts');
-    
+
     if ($("div[data-veiculo-finalizar]").length) {
         advancedAlerts.warning({
             title: "Você possuí anúncios não finalizados",
@@ -20,7 +20,26 @@ module.exports.callback = $ => {
             .on("click", "a.anuncios[data-confirm]", anuncioDataConfirm)
             .on("click", "a.vendido[data-confirm]", vendidoDataConfirm)
             // Configura os modais genericos
-            .on("click", ".anuncios [data-modal]", anunciosModal);
+            .on("click", ".anuncios [data-modal]", anunciosModal)
+            .on("click", ".sidebar-menu .menu-items >li:first-of-type #cirarAnuncio a",function(e){
+              e.preventDefault();
+              var link = $(this).attr('href');
+              var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
+                  <b class='text-primary'>telefone </b> ou <b class='text-primary'>whatsapp </b>
+                  solicitando código de verificação de anúncio ou similar.<br><br>
+                  CUIDADO PARA NÃO CAIR EM GOLPES<br><br>
+                  Estamos à disposição para esclarecer dúvidas<br>`;
+              advancedAlerts.error({
+                  text: text,
+                  title: $("<span>").html(`<span class='text-primary'>Alerta </span>importante`),
+                  time: false,
+                  img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
+                  closeText: "ESTOU CIENTE",
+              }).on('hide.bs.modal', function () {
+                  window.location = link;
+              });
+            })
+            ;
 
     if (location.hash !== '' && window.URLSearchParams) {
         (function () {
@@ -46,7 +65,7 @@ module.exports.callback = $ => {
     }
     /**
      * Filtra a listagem de anúncios quando loggado como revenda
-     * 
+     *
      */
     $("#plano, #staus").change(function () {
         $('.container-anuncios .anuncios .veiculo')
@@ -126,15 +145,15 @@ module.exports.callback = $ => {
         var $conjuntoEstrelas = $("<div class='position-relative form-group d-flex align-items-start mt-2 required'></div>")
             .append($("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"))
             .append($estrelas);
-        
+
         var $rowColEstrelas = $(`
             <div class="row">
                 <div class="col-12">
                     <div class="estrelas"/>
                 </div>
             </div>`);
-        $rowColEstrelas.find('.estrelas').replaceWith($conjuntoEstrelas);        
-        
+        $rowColEstrelas.find('.estrelas').replaceWith($conjuntoEstrelas);
+
         var $observacao = $("<textarea maxlength='255' name='observacoes' class='form-control'></textarea>");
         var $conjuntoObservacoes = $("<div class='form-group text-left mt-2'></div>")
             .append($("<span class='no-wrap'>Observações:</span>"))
@@ -153,7 +172,7 @@ module.exports.callback = $ => {
                 $.post(`/meus-veiculos/pesquisa/${veiculo.idVeiculo}`, $form.serialize())
                     .done(function( data ) {
                         data = JSON.parse(data);
-                        
+
                         if (data.status !== 200) {
                             advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
                         } else {
@@ -202,7 +221,7 @@ module.exports.callback = $ => {
                             text:`O veiculo ${veiculo.marca} ${veiculo.modelo} foi marcado como vendido`,
                             closeCallback:function(){
                                 $(".modal").modal('hide');
-                                pesquisaSatisfacaoDataForm(veiculo) 
+                                pesquisaSatisfacaoDataForm(veiculo)
                             }
                     })
                         reloadPageContent();
@@ -301,8 +320,8 @@ module.exports.callback = $ => {
                                     advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
                                 } else {
                                     reloadPageContent();
-                                    var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
-                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
+                                    var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>,
+                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b>
                                                             reativado com <b class="text-primary">sucesso.</b>`);
                                     advancedAlerts.success({
                                         text: text,
@@ -346,8 +365,8 @@ module.exports.callback = $ => {
                                         title: "Houve um problema...",
                                     })
                                 } else {
-                                    var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>, 
-                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b> 
+                                    var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>,
+                                                            <b class="text-primary">${$veiculo.data("veiculo-placa")}</b>
                                                             reativado com <b class="text-primary">sucesso.</b>`);
                                     advancedAlerts.success({
                                         text: text,
