@@ -9,7 +9,7 @@ class SelectAnoModelo extends Select
     public function getAnoDe()
     {
         $anoMaiorAtual = date('Y');
-        for ($ano = $anoMaiorAtual; $ano >= 1930; $ano--) {
+        for ($ano = $anoMaiorAtual; $ano >= 1925; $ano--) {
             $listaAnos[$ano] = $ano;
         }
 
