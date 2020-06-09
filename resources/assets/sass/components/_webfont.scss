@@ -25,7 +25,7 @@ i[class*=" icon-"] {
     content: "\f101";
 }
 .icon-delivery:before {
-    content: "\f102";
+    content: "\f102" !important;
 }
 .icon-endereco:before {
     content: "\f103";
