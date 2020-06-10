@@ -78,7 +78,7 @@ class DadosVeiculoController extends AbstractActionController
             ];
 
             $data += $request->getPost()->toArray();
-            
+
             if(!empty($data['outraVersao'])){
                 $data['versao'] = $data['outraVersao'];
             }
@@ -121,9 +121,9 @@ class DadosVeiculoController extends AbstractActionController
                     'total',
                     'termo'
                 ]));
-                
+
                 if(isset($data['acao']) && $data['acao'] == 'publicar'){
-                    unset($data['listaAcessorios']);  
+                    unset($data['listaAcessorios']);
                 }
 
                 // Essa opção está obsoleta na regra de negócio
@@ -138,7 +138,7 @@ class DadosVeiculoController extends AbstractActionController
                 } else {
                     // Particular cria o anúncio por padrão no grátis
                     $data['idPlano'] = 1;
-                    
+
                     if(!isset($data['motor'])){
                         $data['motor'] = 0;
                     }
@@ -186,14 +186,17 @@ class DadosVeiculoController extends AbstractActionController
         $checkedTermo = (empty($data) ? false : true);
 
         $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
-        
+
         $checkedLigacao = (empty($data) ?  false : $data['aceitaLigacao']);
+
+        $checkedContato = (empty($data) ?  false : $data['aceitaContato']);
 
         return new ViewModel([
             'formMaisInformacoesVeiculo' => $maisInformacoesForm,
             'checkedTermo' => $checkedTermo,
             'checkedProposta' => $checkedProposta,
-            'checkedLigacao' => $checkedLigacao
+            'checkedLigacao' => $checkedLigacao,
+            'checkedContato' => $checkedContato
         ]);
     }
 
@@ -223,7 +226,7 @@ class DadosVeiculoController extends AbstractActionController
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
                         'listaFotos' => $dataPost->fotosToDelete
                     ])->json();
-                
+
                 $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
                 //$dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
@@ -241,7 +244,7 @@ class DadosVeiculoController extends AbstractActionController
                 $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files
                 ];
-                
+
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
                 foreach ($files as $file) {
                     unlink($file);
@@ -396,10 +399,10 @@ class DadosVeiculoController extends AbstractActionController
                             3, // cadastrando
                             7, // removido
                             8, // vendido
-                        ]; 
+                        ];
         $placa = $this->params()->fromRoute('placa',false);
         if(!$placa){
-            return new JsonModel(['status'=> 405, 'detail'=> 'Placa não informada']); 
+            return new JsonModel(['status'=> 405, 'detail'=> 'Placa não informada']);
         }
         /* @var $apiClient ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
@@ -437,11 +440,11 @@ class DadosVeiculoController extends AbstractActionController
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
             $versao = $apiClient->versaoGet($post)->json();
-            
+
             echo json_encode($versao);
-            
+
             die;
-            
+
         }
     }
 
@@ -469,7 +472,7 @@ class DadosVeiculoController extends AbstractActionController
             if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)){
                 return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
             }
-            
+
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 $data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];

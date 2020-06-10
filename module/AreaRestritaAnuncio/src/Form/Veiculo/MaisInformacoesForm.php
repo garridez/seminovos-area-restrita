@@ -114,6 +114,7 @@ class MaisInformacoesForm extends Form
                     [
                         'label' => 'SIM',
                         'value' => '1',
+                        'selected' => false,
                         'attributes' => [
                             'id' => 'aceitaContato_radio_sim',
                         ]
@@ -121,9 +122,9 @@ class MaisInformacoesForm extends Form
                     [
                         'label' => 'NÃO',
                         'value' => '0',
+                        'selected' => true,
                         'attributes' => [
                             'id' => 'aceitaContato_radio_nao',
-                            'checked' => true,
                         ]
                     ],
                 ],
