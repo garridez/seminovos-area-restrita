@@ -106,14 +106,31 @@ class MaisInformacoesForm extends Form
             ],
         ]);
         $this->add([
-            'type' => Element\Checkbox::class,
+            'type' => Element\Radio::class,
             'name' => 'aceitaContato',
             'options' => [
-                'label' => 'Exibir meu(s) telefone(s).',
+                'label' => 'Exibir meu(s) telefone(s)?',
+                'value_options' => [
+                    [
+                        'label' => 'SIM',
+                        'value' => '1',
+                        'attributes' => [
+                            'id' => 'aceitaContato_radio_sim',
+                        ]
+                    ],
+                    [
+                        'label' => 'NÃO',
+                        'value' => '0',
+                        'attributes' => [
+                            'id' => 'aceitaContato_radio_nao',
+                            'checked' => true,
+                        ]
+                    ],
+                ],
             ],
             'attributes' => [
-                'value' => 'yes',
-            ],
+                'required' => true,
+            ]
         ]);
         $this->add([
             'type' => Element\Checkbox::class,

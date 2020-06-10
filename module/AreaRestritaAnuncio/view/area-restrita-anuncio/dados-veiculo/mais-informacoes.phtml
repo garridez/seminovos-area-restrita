@@ -96,8 +96,9 @@ if ($this->userInfo()->isRevenda()) {
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
                 <?php endif; ?>
-                <div class="checkbox  check-danger form-group form-group-default">
-                    <?= $this->formCheckbox($fields['aceitaContato']) ?>
+                <div class="form-group form-group-default form-troca required">
+                    <?= $this->formLabel($fields['aceitaContato']) ?>
+                    <?= $this->formRadio($fields['aceitaContato']->setAttribute('class', 'radio radio-danger mt-0 mb-0'));?>
                     <?php if ($this->userInfo()->isParticular()) : ?>
                     <div class="ml-4">
                         <b class="text-danger">
