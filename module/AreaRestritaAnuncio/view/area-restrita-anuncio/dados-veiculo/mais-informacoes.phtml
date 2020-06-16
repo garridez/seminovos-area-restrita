@@ -27,11 +27,11 @@ if ($this->checkedLigacao !== '0') {
     $fields['aceitaChat']->setChecked(true);
 }
 
-if ($this->userInfo()->isRevenda() || $this->checkedContato) {
-    $replace = $fields['aceitaContato']->getValueOptions();
+if ($this->userInfo()->isRevenda() || $this->checkedLigacao) {
+    $replace = $fields['aceitaLigacao']->getValueOptions();
     $replace[0]['selected'] = true;
     $replace[1]['selected'] = false;
-    $fields['aceitaContato']->setValueOptions($replace);
+    $fields['aceitaLigacao']->setValueOptions($replace);
 }
 
 ?>
@@ -62,6 +62,17 @@ if ($this->userInfo()->isRevenda() || $this->checkedContato) {
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
                 </div>
+                <div class="form-group form-group-default form-troca required">
+                    <?= $this->formLabel($fields['aceitaLigacao']) ?>
+                    <?php if (/*$this->userInfo()->isParticular()*/ true) : ?>
+                    <div class="">
+                        <b class="text-danger">
+                            <span>Por motivos de Segurança os contatos do anunciante foram ocultados. Tenho ciência da possibilidade do contato de possíveis golpistas, mesmo assim desejo exibir meu(s) telefone(s)</span>
+                        </b>
+                    </div>
+                    <?php endif; ?>
+                    <?= str_replace('radio-success', 'radio-danger', $this->formRadio($fields['aceitaLigacao']))?>
+                </div>
                 <?php
                     if($this->userInfo()->isRevenda()):
                         /** @var \Zend\Form\Element\Radio $deliveryRadio */
@@ -88,9 +99,6 @@ if ($this->userInfo()->isRevenda() || $this->checkedContato) {
                     </div>
                 <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
-                <div class="checkbox form-group form-group-default">
-                    <?= $this->formCheckbox($fields['aceitaProposta']) ?>
-                </div>
                 
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaLigacao']) ?>
@@ -100,17 +108,6 @@ if ($this->userInfo()->isRevenda() || $this->checkedContato) {
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
                 <?php endif; ?>
-                <div class="form-group form-group-default form-troca required">
-                    <?= $this->formLabel($fields['aceitaContato']) ?>
-                    <?php if ($this->userInfo()->isParticular()) : ?>
-                    <div class="">
-                        <b class="text-danger">
-                            <span>Por motivos de Segurança os contatos do anunciante foram ocultados. Tenho ciência da possibilidade do contato de possíveis golpistas, mesmo assim desejo exibir meu(s) telefone(s)</span>
-                        </b>
-                    </div>
-                    <?php endif; ?>
-                    <?= str_replace('radio-success', 'radio-danger', $this->formRadio($fields['aceitaContato']))?>
-                </div>
 
                 <div class="checkbox form-group form-group-default required">
                     <?= $this->formCheckbox($fields['termo'])?>

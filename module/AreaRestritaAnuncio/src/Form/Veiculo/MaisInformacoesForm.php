@@ -107,7 +107,7 @@ class MaisInformacoesForm extends Form
         ]);
         $this->add([
             'type' => Element\Radio::class,
-            'name' => 'aceitaContato',
+            'name' => 'aceitaLigacao',
             'options' => [
                 'label' => 'Exibir meu(s) telefone(s)?',
                 'value_options' => [
@@ -116,7 +116,7 @@ class MaisInformacoesForm extends Form
                         'value' => '1',
                         'selected' => false,
                         'attributes' => [
-                            'id' => 'aceitaContato_radio_sim',
+                            'id' => 'aceitaLigacao_radio_sim',
                         ]
                     ],
                     [
@@ -124,7 +124,7 @@ class MaisInformacoesForm extends Form
                         'value' => '0',
                         'selected' => true,
                         'attributes' => [
-                            'id' => 'aceitaContato_radio_nao',
+                            'id' => 'aceitaLigacao_radio_nao',
                         ]
                     ],
                 ],
