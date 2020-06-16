@@ -85,16 +85,16 @@ class MaisInformacoesForm extends Form
                 'value' => 'yes',
             ],
         ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'aceitaLigacao',
-            'options' => [
-                'label' => 'Aceitar contato por telefone.',
-            ],
-            'attributes' => [
-                'value' => 'yes',
-            ],
-        ]);
+        // $this->add([
+        //     'type' => Element\Checkbox::class,
+        //     'name' => 'aceitaLigacao',
+        //     'options' => [
+        //         'label' => 'Aceitar contato por telefone.',
+        //     ],
+        //     'attributes' => [
+        //         'value' => 'yes',
+        //     ],
+        // ]);
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'aceitaChat',
