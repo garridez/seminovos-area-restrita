@@ -99,11 +99,6 @@ if ($this->userInfo()->isRevenda() || $this->checkedLigacao) {
                     </div>
                 <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
-                
-                <div class="checkbox form-group form-group-default">
-                    <?= $this->formCheckbox($fields['aceitaLigacao']) ?>
-                </div>
-
                 <div class="checkbox form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
