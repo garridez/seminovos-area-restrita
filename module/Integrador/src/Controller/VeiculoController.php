@@ -46,7 +46,6 @@ class VeiculoController extends AbstractActionController {
             'tipoVeiculo' => $tipoVeiculo,
             'tipoCadastro' => 1,
             'idCadastro' => $idCadastro,
-            'video' => '',
             'troca' => 4,
             'idStatus' => 2
         ];
@@ -65,6 +64,10 @@ class VeiculoController extends AbstractActionController {
 
         if (!isset($data['flagIpva'])) {
             $data['flagIpva'] = 0;
+        }
+
+        if (!isset($data['video'])) {
+            $data['video'] = '';
         }
 
         if (isset($data['versao']) && $data['versao'] == '-1') {
