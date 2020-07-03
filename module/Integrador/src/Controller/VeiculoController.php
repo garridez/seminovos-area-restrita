@@ -66,7 +66,7 @@ class VeiculoController extends AbstractActionController {
             $data['flagIpva'] = 0;
         }
 
-        if (isset($data['video'])) {
+        if (!isset($data['video'])) {
             $data['video'] = '';
         }
 
