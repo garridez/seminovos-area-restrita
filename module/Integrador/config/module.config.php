@@ -61,6 +61,50 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
+                    'marcas' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/marcas',
+                            'defaults' => [
+                                'controller' => Controller\MarcasController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'modelos' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/modelos',
+                            'defaults' => [
+                                'controller' => Controller\ModelosController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'acessorios' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/acessorios',
+                            'defaults' => [
+                                'controller' => Controller\AcessoriosController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'motor' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/motor',
+                            'defaults' => [
+                                'controller' => Controller\MotorController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -71,6 +115,10 @@ return [
             Controller\VeiculoController::class => InvokableFactory::class,
             Controller\VeiculoFotosController::class => InvokableFactory::class,
             Controller\PlanoController::class => InvokableFactory::class,
+            Controller\MarcasController::class => InvokableFactory::class,
+            Controller\ModelosController::class => InvokableFactory::class,
+            Controller\AcessoriosController::class => InvokableFactory::class,
+            Controller\MotorController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
