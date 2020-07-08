@@ -109,7 +109,7 @@ if ($isRevenda) {
                                 $diminuirPlano = true;
                             }
                             
-                            if($plano['idPlano'] == 1 && $idStatusAnuncio == 4 && $zeroKm){
+                            if(($plano['idPlano'] ?? 0 ) == 1 && $idStatusAnuncio == 4 && $zeroKm){
                                 $desabilitarPlano = true;
                             }
 
