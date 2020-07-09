@@ -35,6 +35,15 @@ class VeiculoFotosController extends AbstractActionController {
             ]);
             
             $fotos = $request->getFiles()->fotos;
+
+            // Se existe $fotos['tmp_name'] quer dizer que não é um array de fotos
+            if (isset($fotos['tmp_name'])) {
+                return new JsonModel([
+                    'status'=> 405,
+                    'detail' => 'O campo fotos deve ser um array.'
+                ]);
+            }
+
             // Upload
             if ($fotos) {
 
@@ -45,7 +54,7 @@ class VeiculoFotosController extends AbstractActionController {
                 
                 if($ultimoOrdem == 12){
                     return new JsonModel([
-                        'staus'=> 405,
+                        'status'=> 405,
                         'detail' => 'Limite de fotos alcançado'
                         ]);
                 }
@@ -78,7 +87,7 @@ class VeiculoFotosController extends AbstractActionController {
 
             }else{
                 return new JsonModel([
-                    'staus'=> 405,
+                    'status'=> 405,
                     'detail' => 'Formato invalido para as fotos enviadas'
                 ]);
             }
