@@ -115,9 +115,9 @@ module.exports.callback = ($) => {
             },
         })[target];
 
-        $('.pager .next a')[!state.next ? 'addClass' : 'removeClass']('disabled');
-        $('.pager .previous a')[!state.prev ? 'addClass' : 'removeClass']('disabled');
-        $('.pager .finish a')[!state.finish ? 'addClass' : 'removeClass']('disabled');
+        $('.pager .next')[!state.next ? 'addClass' : 'removeClass']('hide');
+        $('.pager .previous')[!state.prev ? 'addClass' : 'removeClass']('hide');
+        $('.pager .finish')[!state.finish ? 'addClass' : 'removeClass']('hide');
     });
 
     $('.table-condensed').on('change', function () {
