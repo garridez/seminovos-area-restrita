@@ -1,0 +1,112 @@
+<?php
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+$this->headTitle('Banner');
+$banners = $this->banners;
+?>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Banners Cadastrados</h3>
+        </div>
+        <!-- <div class="col-md-3 pull-right" > -->
+            <a href="/banners/cadastrar" class="next btn btn-laranja text-white btn-cons " style="position:absolute; right: 10px; top: 80px;">
+                <span>Cadastrar Banner</span>
+            </a>
+        <!-- </div> -->
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div id="rootwizard">
+        <div class="tab-content tab-content-main">
+            <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
+                <div class="row mt-5">
+                    <div class="col-md-12 col-12">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Banner</th>
+                                        <th scope="col">Link</th>
+                                        <th scope="col">ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($banners['dados'] as $plano):
+                                    ?>
+                                    <tr class="border-bottom">
+                                        <td class="pl-0">
+                                            <div class="radio radio-success">
+                                                IMG
+                                            </div>
+                                        </td>
+                                        <td class="">
+                                            
+                                        </td>
+                                        <td class="">
+                                            <h4 class="text-orange font-montserrat">R$
+                                                <span id="valor"><?= $plano['valor'] ?></span>
+                                            </h4>
+                                        </td>
+                                    </tr>
+
+                                    <?php endforeach; ?>
+
+                                    <?php
+                                    if (count($banners['dados']) == 0) {
+                                    ?>
+                                        <tr>
+                                            <td colspan="3" align="center">Nenhum banner cadastrado ainda.</td>
+                                        </tr>
+
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        <!-- <div class="row  mt-3" id="resultado">
+                            <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
+                                <div>
+                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                        Desconto </h5>
+                                    <p class="no-margin"><span id="desconto">-</span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
+                                <div>
+                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                                        Economia</h5>
+                                    <p class="no-margin">R$ <span id="economia">-</span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right bg-dark padding-10">
+                                <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
+                                    Total</h5>
+                                <h4 class="no-margin text-white">R$ <span id="total">-</span></h4>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- <ul
+                class="pager wizard no-style d-flex bg-white justify-content-center justify-content-md-end ml-2 mt-2 mr-2">
+                <li class="">
+                    <a class="previous btn btn-default btn-cons pull-right disabled" data-nav-dir="prev">
+                        <span>Anterior</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="next btn btn-laranja text-white btn-cons " data-nav-dir="next">
+                        <span>Próximo</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/" class="finish btn btn-success text-white btn-cons pull-right disabled"
+                        data-nav-dir="finish">
+                        <span>Finalizar</span>
+                    </a>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+</div>
+<div class="retorno-boleto"></div>

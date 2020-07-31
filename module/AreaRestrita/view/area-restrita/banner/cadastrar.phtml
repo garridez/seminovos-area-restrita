@@ -1,0 +1,65 @@
+<?php
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+$this->headTitle('Banner');
+$banners = $this->banners;
+?>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Cadastro de banners</h3>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div id="rootwizard">
+        <div class="tab-content tab-content-main">
+            <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <form class="mt-5" action="/banners/salvar" method="post" enctype="multipart/form-data">
+
+                            <input type="hidden" name="idSiteHospedado" value="102">
+
+                            <div class="form-group">
+                                <label for="banner">Selecione a imagem</label>
+                                <input type="file" name="image" class="form-control" id="banner" required>
+                                <small id="emailHelp" class="form-text text-muted">As dimensões ideais para o seu banner são:</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="link">Link do banner</label>
+                                <input type="text" name="href" class="form-control" id="link" placeholder="Ex: http://seminovos.com.br">
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" name="target" class="form-check-input" value="_blank">
+                                <label class="form-check-label" for="exampleCheck1">Abrir em uma nova página</label>
+                            </div>
+                            <button type="submit" class="btn btn-laranja text-white btn-cons pull-right">Cadastrar banner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- <ul
+                class="pager wizard no-style d-flex bg-white justify-content-center justify-content-md-end ml-2 mt-2 mr-2">
+                <li class="">
+                    <a class="previous btn btn-default btn-cons pull-right disabled" data-nav-dir="prev">
+                        <span>Anterior</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="next btn btn-laranja text-white btn-cons " data-nav-dir="next">
+                        <span>Próximo</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/" class="finish btn btn-success text-white btn-cons pull-right disabled"
+                        data-nav-dir="finish">
+                        <span>Finalizar</span>
+                    </a>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+</div>
+<!-- <div class="retorno-boleto"></div> -->
