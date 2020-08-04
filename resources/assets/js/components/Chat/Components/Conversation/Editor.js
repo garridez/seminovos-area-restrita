@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import {createNewMessage} from '../../utils/messages';
+import  veiculoUtil from '../../utils/veiculo';
 
 class Editor extends Component {
     constructor(props) {
@@ -38,6 +39,13 @@ class Editor extends Component {
 
     render() {
         var attrDisable = this.props.conversationActive === null;
+        var title = 'Digite uma mensagem';
+        if (this.props.isAtivoVeiculo === false) {
+            attrDisable = true;
+            title = 'Conversa desabilitada. Este anúncio está inativo.'
+        } else if(this.props.isAtivoVeiculo === null){
+            title = '';
+        }
 
         return (
                 <div className="editor">
@@ -46,15 +54,15 @@ class Editor extends Component {
                             type="text"
                             autoFocus={true}
                             name="msg"
-                            placeholder="Digite uma mensagem"
+                            placeholder={title}
                             className="form-control"
                             autoComplete="off"
                             ref={this.input}
                             disabled={attrDisable}
                             onPasteCapture={(event) => event.preventDefault()}
                             onDropCapture={(event) => event.preventDefault()}
-                            title="Digite uma mensagem" />
-                        <button type="submit" title="Enivar mensagem">
+                            title={title} />
+                        <button type="submit" title="Enivar mensagem" disabled={attrDisable}>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </form>
@@ -65,13 +73,19 @@ class Editor extends Component {
 export default connect(state => {
     const conversationActive = state.currentChat.conversationActive;
     var lastIdMessage = 0;
+    var isAtivoVeiculo = null;
     if (conversationActive) {
         const msgs = state.listMensagens[conversationActive];
+        var chat = state.listChats[conversationActive];
+        if(chat !== null){
+            isAtivoVeiculo = veiculoUtil.isAtivo(chat.idStatus);
+        }
         lastIdMessage = parseInt((Object.keys(msgs).slice(-1)[0] || 0), 10);
     }
     return {
         conversationActive,
         idCadastro: state.cadastro.idCadastro,
-        lastIdMessage
+        lastIdMessage,
+        isAtivoVeiculo
     };
 })(Editor);
