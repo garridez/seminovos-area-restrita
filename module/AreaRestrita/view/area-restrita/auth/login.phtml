@@ -103,6 +103,38 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
             </div>
         </form>
     </div>
+    <div class="modal fade" id="modalLembrarSenhaRevenda" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaLabelRevenda"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h5 class="modal-title text-warning" id="modalLembrarSenhaLabel">Esqueci minha senha</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row pt-2">
+                            <div class="col-md-12 no-padding sm-p-l-10">
+                                <p>Não lembra sua senha? Digite o e-mail cadastrado do portal no campo abaixo, para
+                                    receber sua nova senha!</p>
+                            </div>
+                        </div>
+                        <div class="row border-top py-2">
+                            <div class="col-md-12 no-padding sm-p-l-10">
+                                <p class="text-justify">
+                                    Entre em contato com nosso atendimento para recuperar sua senha de acesso.<br>
+                                    Lembre-se de ter os dados da sua revenda em mãos.<br>
+                                    Telefone do nosso atendimento: <a href="tel:+553130775888">(31) 3077-5888</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php if ($this->loginError) : ?>
         <input type="hidden" name="login-error" value="1" />
     <?php endif ?>
@@ -222,7 +254,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
                     <div class="col-md-4 no-padding sm-p-l-10 text-center"></div>
                     <div class="col-md-8 d-flex align-items-center justify-content-end">
                         <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
+                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenhaRevenda" class="text-info small btn-esqueci-minha-senha">
                                 <small class="semi-bold"> Clique aqui</small>
                             </a></small>
                     </div>
