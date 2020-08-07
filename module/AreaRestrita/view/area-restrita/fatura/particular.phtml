@@ -138,7 +138,7 @@ $dadosPagamento = $this->dadosPagamento;
                                 <div class="hint-text">
                                     <small>
                                         Código do anúncio :
-                                        <?= isset($dadosCadastro['idCadastro']) && $dadosCadastro['idCadastro'] != ""  ? $dadosCadastro['idCadastro'] : "Não informado" ?>
+                                        <?= $dadosPagamento['idVeiculo'] ?: "Não informado" ?>
                                     </small>
                                 </div>
                                 <div class="hint-text">
