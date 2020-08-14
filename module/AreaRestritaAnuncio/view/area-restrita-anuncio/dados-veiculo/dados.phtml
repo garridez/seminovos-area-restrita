@@ -36,9 +36,16 @@ $versao = $form->get('versao')->getValue();
             <form class="" role="form"> -->
             <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
                 <?= $this->formElement($fields['tipoVeiculo']) ?>
+                <?php if (isset($fields['motoCilindradas'])): ?>
+                <div class="form-group form-group-default">
+                    <div class="checkbox">
+                        <?= $this->formCheckbox($fields['motoTrilha']) ?>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group form-group-default required">
+                        <div class="form-group form-group-default <?php $tipoVeiculo == 3 ? '' : 'required' ?>">
                             <?= $this->formLabel($fields['placa']) ?>
                             <?= $this->formText($fields['placa']) ?>
                             <div class="valid-feedback"></div>
