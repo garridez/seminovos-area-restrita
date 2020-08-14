@@ -125,7 +125,7 @@ metodos = {
             var option = '<option '+ disabled +' value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
             if (v.destaque !== undefined && v.destaque !== false) {
                 destaques = destaques || {};
-                destaques[v.destaque] = option;
+                destaques[v.destaque] = '<option '+ disabled +' data="destaque" value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
             }
             optionsString += option;
         });

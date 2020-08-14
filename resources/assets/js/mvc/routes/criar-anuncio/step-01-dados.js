@@ -14,6 +14,7 @@ function init() {
     var Confirms = require("components/Confirms")
     var ctx = $('.step-dados');
     var veiculoZeroKm = ctx.find('[name="veiculo_zero_km"]');
+    var motoTrilha = ctx.find('[name="motoTrilha"]');
     var placa = ctx.find('[name="placa"]');
     var anoFabricacao = ctx.find('[name="anoFabricacao"]');
     var tipo = $('input[name="tipoCadastro"]');
@@ -247,9 +248,9 @@ function init() {
                 negateCallback:function(){
                     $check.prop('checked', false);
                 }
-            })
+            });
         }
-    })
+    });
     
     veiculoZeroKm.click(function(){
         if (this.checked) {
@@ -257,5 +258,36 @@ function init() {
         }else{
             placa.attr('required', true);
         }
-    })
+    });
+    
+    motoTrilha.change(function(){
+        if ($(this).is(':checked')) {
+            placa.removeAttr('required');
+            
+            $("select[name='idMarca'] option").addClass("hide");
+            let marcasTrilha = [95,115,103,97,173];
+                marcasTrilha.forEach((element, index) => {
+                    marca.find(`option[value='${element}']:not([data='destaque'])`).removeClass("hide");
+                });
+            
+        }else{
+            placa.attr('required', true);
+            $("select[name='idMarca'] option").removeClass("hide");
+        }
+    });
+
+    $('body').on('change',$("select[name='modeloCarro']"), function(){
+        if($("select[name='idMarca'] option:selected").val() != ''){
+            if ($("input[name='motoTrilha']").is(':checked')) {
+                //honda 95 - yamaha 115 - ktm 103
+                if(marca.val()== 95 || marca.val()== 115 || marca.val() == 103){
+                    $("select[name='modeloCarro'] option").addClass("hide");
+                    let modelosTrilha = [673,1095,1507,653,2122,668,838,1945,1609,2241,912,1716,1402,2237,2051,2146];
+                        modelosTrilha.forEach((element, index) => {
+                            modelo.find(`option[value='${element}']`).removeClass("hide");
+                        });
+                }
+            }
+        }
+    });
 }
