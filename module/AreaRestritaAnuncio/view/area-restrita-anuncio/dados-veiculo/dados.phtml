@@ -7,7 +7,7 @@ $form = $this->formDadosVeiculos;
 $fields = $form->getElements();
 
 foreach ($fields as $element) {
-    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'flag_km')
+    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'motoTrilha' && $element->getAttribute('name') != 'flag_km')
         $element->setAttribute('class', 'form-control');
 }
 

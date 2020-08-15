@@ -253,10 +253,12 @@ function init() {
     });
     
     veiculoZeroKm.click(function(){
-        if (this.checked) {
+        if ($(this).is(':checked')) {
             placa.removeAttr('required');
         }else{
-            placa.attr('required', true);
+            if(!motoTrilha.is(':checked')){
+                placa.attr('required', true);
+            }
         }
     });
     
@@ -271,7 +273,9 @@ function init() {
                 });
             
         }else{
-            placa.attr('required', true);
+            if(!veiculoZeroKm.is(':checked')){
+                placa.attr('required', true);
+            }
             $("select[name='idMarca'] option").removeClass("hide");
         }
     });
