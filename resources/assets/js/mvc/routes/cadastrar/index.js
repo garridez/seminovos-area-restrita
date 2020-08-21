@@ -108,4 +108,45 @@ module.exports.callback = ($) => {
         });
 
     });
+    
+    $("form[name='form_particularSite']").find("input[name='cpfResponsavel']").blur(function (event) {
+        var cpfInput = $(this);
+        var cpf = cpfInput.val() || '';
+
+        $("form[name='form_particularSite']").find("button")
+                        .addClass('disabled')
+                        .attr('disabled', true)
+                        .attr('title', 'Verifique os dados antes de continuar');
+        $.ajax({
+            type: "GET",
+            url: "/carro/cpf-disponivel/"+cpf,
+            dataType: "json",
+            success: function (response) {
+                cpfInput
+                    .removeClass('is-invalid is-valid')
+                    .addClass(response.cpfDisponivel ? 'is-valid' : 'is-invalid');
+                if (!response.cpfDisponivel) {
+                    $("form[name='form_particularSite']").find("button")
+                        .addClass('disabled')
+                        .attr('disabled', true)
+                        .attr('title', 'Verifique os dados antes de continuar');
+
+                    advancedAlerts.error({
+                        title: "CPF já cadastrado",
+                        text: "CPF já cadastrado no sistema, confira o CPF ou entre em contato.",
+                        time: 10000
+                    })
+                    return;
+                }
+                $("form[name='form_particularSite']").find("button")
+                    .removeClass('disabled')
+                    .attr('disabled', false)
+                    .attr('title', 'Continuar');
+            },
+            error: function (e) {
+
+            }
+        });
+
+    });
 };
