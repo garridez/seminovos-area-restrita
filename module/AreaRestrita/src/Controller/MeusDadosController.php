@@ -48,22 +48,18 @@ class MeusDadosController extends AbstractActionController
 
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
-        $tipoCadastro = 1;
+        $tipoCadastro = $cadastrosModel->isRevenda() ? 1 : 2;
 
         if ($cadastrosModel->isRevenda()) {
             $dadosForm = new MeusDados\RevendaForm();
-            $dadosForm->get('senha')->setAttribute('required', false);
-            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
-            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
-            $request = $this->getRequest();
         } else {
             $dadosForm = new MeusDados\ParticularForm();
-            $dadosForm->get('senha')->setAttribute('required', false);
-            $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
-            $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
-            $request = $this->getRequest();
-            $tipoCadastro = 2;
         }
+
+        $dadosForm->get('senha')->setAttribute('required', false);
+        $dadosForm->get('confirmacaoSenha')->setAttribute('required', false);
+        $dadosForm->getInputFilter()->remove('senha')->remove('confirmacaoSenha');
+        $request = $this->getRequest();
 
         if ($request->isPost()) {
             $post = $request->getPost();
