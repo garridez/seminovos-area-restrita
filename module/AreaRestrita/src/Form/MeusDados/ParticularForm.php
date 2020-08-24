@@ -49,7 +49,6 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'readonly' => true,
                 'class' => 'form-control',
                 'placeholder' => 'seuemail@example.com.br',
             ]
