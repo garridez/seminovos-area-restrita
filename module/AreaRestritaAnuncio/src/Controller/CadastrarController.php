@@ -171,6 +171,39 @@ class CadastrarController extends AbstractActionController
             'emailDisponivel' => $emailDisponivel
         ]);
     }
+    /**
+     * Verifica se a cpf está disponível para cadastro
+     * Retorna TRUE se a cpf estiver disponível
+     * Retorna FALSE se a cpf estiver indisponível
+     */
+    public function cpfDisponivelAction()
+    {
+        $cpf = $this->params()->fromRoute('cpf',false);
+        if(!$cpf){
+            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']); 
+        }
+
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        #verifica se o email informado já foi cadastrado no sistema
+        $dadosCadastro = $cadastrosModel->get([
+            'cpfResponsavel' => preg_replace('/[^0-9]/', '', $cpf),
+            'checkEmail' => true, //variavél exclui os joins da CadastroDAO.class.php
+            'considerarInativo' => 1
+        ]);
+
+        $cpfDisponivel = false;
+        if(!sizeof($dadosCadastro)){
+            $cpfDisponivel =  true;
+        }
+
+        return new JsonModel( [
+            'status' => 200,
+            'cpfDisponivel' => $cpfDisponivel
+        ]);
+    }
+
     public function cadastroSimplesAction()
     {
         
