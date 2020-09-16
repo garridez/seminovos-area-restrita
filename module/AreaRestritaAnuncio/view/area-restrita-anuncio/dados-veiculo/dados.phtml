@@ -28,6 +28,7 @@ $versao = $form->get('versao')->getValue();
                 <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar
                     seu anúncio.
                     <br />Campos com * são de preenchimento obrigatório.
+                    <br />Em veículos 0Km não é necessário informar uma placa.
                 </small>
             </div>
 
@@ -45,7 +46,7 @@ $versao = $form->get('versao')->getValue();
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group form-group-default <?php $tipoVeiculo == 3 ? '' : 'required' ?>">
+                        <div class="form-group form-group-default required">
                             <?= $this->formLabel($fields['placa']) ?>
                             <?= $this->formText($fields['placa']) ?>
                             <div class="valid-feedback"></div>
