@@ -38,6 +38,11 @@ function init() {
         }
         return val;
     };
+    placa.change(function(){
+      anoModelo.html('')
+      .prepend(anoModeloOptions)
+      .val('');
+    })
     anoFabricacao.change(function () {
         var anoF = getValInt(this);
         var anoModeloOptionsFiltred = anoModeloOptions;
@@ -56,11 +61,11 @@ function init() {
                 .val('');
 
     });
-    
+
     versao.change(function () {
         //console.log($(this).find('option:selected').val());
         $('[name="codFipe"]').val('');
-        
+
         if($(this).find('option:selected').val() == -1){
             $('#divOutraVersao').removeClass("hide");
             //$('[name="outraVersao"]').prop('required',true); // Esse campo não pode ser obrigatório
@@ -71,11 +76,11 @@ function init() {
             $('[name="outraVersao"]').val('');
             $('[name="outraVersao"]').prop('required',false);
         }
-        
+
         var itens = $(this).find('option:selected').data('itens');
-        
+
         $('[name="codFipe"]').val(itens['codFipe']);
-        
+
         if(typeof itens['portas'] !== 'undefined'){
             $('[name="portas"]').empty();
             $('[name="portas"]').append('<option value="">Selecione</option>');
@@ -87,20 +92,20 @@ function init() {
                 option.html(itens['portas'][i].portas);
 
                 $('[name="portas"]').append(option);
-                
+
                 if(itens['portas'].length == 1){
                     $('[name="portas"]').val(itens['portas'][i].id);
                 }
             }
-            
+
         }else{
             portasSelect.html('')
                 .prepend(portasOptions)
                 .val('');
         }
-        
+
         if(typeof itens['motor'] !== 'undefined'){
-        
+
             $('[name="motor"]').empty();
             $('[name="motor"]').append('<option value="">Selecione</option>');
 
@@ -111,18 +116,18 @@ function init() {
                 option.html(itens['motor'][i].motor);
 
                 $('[name="motor"]').append(option);
-                
+
                 if(itens['motor'].length == 1){
                     $('[name="motor"]').val(itens['motor'][i].id);
                 }
             }
-            
+
         }else{
             motorSelect.html('')
                 .prepend(motorOptions)
                 .val('');
         }
-        
+
         if(typeof itens["valvulas"] !== 'undefined'){
             $('[name="idValvula"]').empty();
             $('[name="idValvula"]').append('<option value="">Selecione</option>');
@@ -134,23 +139,23 @@ function init() {
                 option.html(itens["valvulas"][i].valvulas);
 
                 $('[name="idValvula"]').append(option);
-                
+
                 if(itens['valvulas'].length == 1){
                     $('[name="idValvula"]').val(itens["valvulas"][i].id);
                 }
             }
-            
+
         }else{
             valvulasSelect.html('')
                 .prepend(valvulasOptions)
                 .val('');
         }
-        
+
     });
-    
+
     anoModelo.change(function(event, limparCampos = true, caracteristica = ''){
         $('#divOutraVersao').addClass("hide");
-        
+
         if (!getValInt(this)){
             return stopEvent(event);
         }
@@ -198,9 +203,9 @@ function init() {
                             //Append the option to our Select element.
                             $('[name="versao"]').append(option);
                         }
-                        
+
                     }
-                    
+
                     if(!selecionadoVersao && caracteristica != ''){
                         $('[name="versao"]').append("<option value='-1' selected>Outra versão</option>")
                         $('[name="versao"]').trigger('change');
@@ -213,7 +218,7 @@ function init() {
                         $('[name="versao"]').append("<option value='-1'>Outra versão</option>")
                     }
 
-                    
+
                     if(dados.length == 0){
                         $('[name="versao"]').val('-1').change();
                     }
@@ -227,10 +232,10 @@ function init() {
                     }
                 }
             });
-       
+
     });
 
-    // executa comando para preencher versao e envia as caracteristicas 
+    // executa comando para preencher versao e envia as caracteristicas
     // que usuario selecionou no cadastro
         anoModelo.trigger('change', [ false, $('[name="caracteristicaVeiculo"]').val() ]);
 
@@ -251,30 +256,34 @@ function init() {
             });
         }
     });
-    
+
     veiculoZeroKm.click(function(){
         if ($(this).is(':checked')) {
             placa.removeAttr('required');
+            placa.closest('.form-group').removeClass('required');
         }else{
             if(!motoTrilha.is(':checked')){
                 placa.attr('required', true);
+                placa.closest('.form-group').addClass('required');
             }
         }
     });
-    
+
     motoTrilha.change(function(){
         if ($(this).is(':checked')) {
             placa.removeAttr('required');
-            
+            placa.closest('.form-group').removeClass('required');
+
             $("select[name='idMarca'] option").addClass("hide");
             let marcasTrilha = [95,115,103,97,173,101];
                 marcasTrilha.forEach((element, index) => {
                     marca.find(`option[value='${element}']:not([data='destaque'])`).removeClass("hide");
                 });
-            
+
         }else{
             if(!veiculoZeroKm.is(':checked')){
                 placa.attr('required', true);
+                placa.closest('.form-group').addClass('required');
             }
             $("select[name='idMarca'] option").removeClass("hide");
         }
