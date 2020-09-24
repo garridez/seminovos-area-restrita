@@ -1,0 +1,62 @@
+<?php
+$fields = $formLogin->getElements();
+$formLogin->prepare();
+?>
+
+
+<form method="POST" name="login-particular-form" class="form-horizontal" role="form" id="login-particular-form">
+    <?= $this->formHidden($fields['type']) ?>
+    <?= $this->formHidden($fields['tipoCadastro']) ?>
+    <div class="form-group">
+        <?= $this->formLabel($fields['usuarioEmail']) ?>
+        <div>
+            <?= $this->formEmail($fields['usuarioEmail']) ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?= $this->formLabel($fields['usuarioSenha']) ?>
+        <div class="input-group">
+            <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <div class="">
+            <?= $this->formElement($formLogin->get('entrar')) ?>
+        </div>
+    </div>
+    <br>
+    <div class="row text-center">
+        <div class="col-6">
+            <span class="semi-bold">
+                Esqueceu sua senha? <br>
+                <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info btn-esqueci-minha-senha semi-bold">
+                    <span class="semi-bold"></span>
+                    Clique aqui
+                </a>
+            </span>
+        </div>
+        <?php if ($this->cadastroSimples): ?>
+            <div class="col-6 no-padding">
+                <span class="semi-bold">
+                    Não tem cadastro? <br>
+                    <a href="/cadastro-simples" class="semi-bold text-amarelo">
+                        Cadastre-se
+                    </a>
+                </span>
+            </div>
+        <?php else: ?>
+            <div class="col-6 no-padding">
+                <span class="semi-bold">
+                    Não tem cadastro? <br>
+                    <a href="/me-cadastrar" class="semi-bold text-amarelo">
+                        Cadastre-se
+                    </a>
+                </span>
+            </div>
+        <?php endif; ?>
+    </div>
+</form>

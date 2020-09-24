@@ -1,299 +1,110 @@
 <?php
 /* @var $this Zend\View\Renderer\PhpRenderer */
 global $container;
-$url = $container->get('Config')['SnBH']['urls']['site'] ?? "/";
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
+
+if ($this->loginError) {
+    echo '<input type="hidden" name="login-error" value="1" />';
+}
+$this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+$this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+
+$this->particularForm->get('usuarioEmail')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'username');
+$this->particularForm->get('usuarioSenha')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'username');
+
+$this->revendaForm->get('usuarioEmail')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'current-password');
+$this->revendaForm->get('usuarioSenha')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'current-password');
 ?>
 
-<div class="snbh-logo-container w-100 mt-2">
-    <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
-    <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
-        <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-            <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
-            <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
-        </svg>
-    </a>
-</div>
-<div class="forms-container alerta-anti-fraude w-100 d-flex justify-content-center mt-3">
-    <div class="text-center pb-3 mb-2 border border-danger">
-        <div class="d-flex align-items-center justify-content-center conteudo">
-            <div class="px-2 d-none d-md-block imagem">
-                <img src="/img/svg/ico_irregularidade.svg" class="img-fluid">
-            </div>
-            <div class="texto px-0 px-md-2">
-                <h3 class="text-danger"><b>ATENÇÃO!</b></h3>
-                <span>
-                    A Seminovos <b class='text-danger'>NÃO </b>faz contato por
-                    <b class='text-danger'>telefone </b> ou <b class='text-danger'>whatsapp </b>
-                    solicitando código de verificação de anúncio ou similar.<br>
-                    <span class="text-danger">
-                        CUIDADO PARA NÃO CAIR EM GOLPES<br>
-                    </span>
-                    Estamos à disposição para esclarecer 
-                    <a href="/central-informacoes" class="text-danger" title="Central de informações">dúvidas</a><br>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="forms-container px-4 px-md-5 mx-md-3 py-3 pb-md-2 pt-md-3">
-    <p class="">Preencha os campos abaixo com seus dados de acesso e clique no botão entrar para acessar sua área restrita.</p>
-    <br class="clearfix">
-    <form class="tipo-cadastro-container container">
-        <div class="row">
-            <div class="col-12 text-center m-b-10">
-                Escolha como deseja entrar
-            </div>
-        </div>
-        <div class="row">
-            <div class="switch-field">
-                <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
-                <label for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
-
-                <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
-                <label for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
-            </div>
-        </div>
-    </form>
-
-
-    <div class="modal fade" id="modalLembrarSenha" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaLabel"
-         aria-hidden="true">
-        <form method="POST" name="formLembrarSenha" id="formLembrarSenha" action="remember-pass">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header py-2">
-                        <h5 class="modal-title text-warning" id="modalLembrarSenhaLabel">Esqueci minha senha</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<div class="row login-container-root">
+    <div class="col-12">
+        <div class="forms-container login-container px-md-5 py-md-5">
+            <div class="row">
+                <div class="col-12 intro-1">
+                    <div class="snbh-logo-container pb-md-5">
+                        <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
+                            <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+                            <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                            <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
+                            </svg>
+                        </a>
                     </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row pt-2">
-                                <div class="col-md-12 no-padding sm-p-l-10">
-                                    <p>Não lembra sua senha? Digite o e-mail cadastrado do portal no campo abaixo, para
-                                        receber sua nova senha!</p>
-                                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 intro-2 order-1 order-md-0">
+                    <p class="">Preencha os campos abaixo com seus dados de acesso e clique no botão entrar para acessar sua área restrita.</p>
+                    <form class="tipo-cadastro-container container">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                Escolha como deseja entrar
                             </div>
-                            <div class="row pb-2">
-                                <div class="form-group col-12">
-                                    <div class="col-md-12 no-padding sm-p-l-10">
-                                       <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">@</div>
-                                            </div>
-                                            <input type="email" id="emailLembrarSenha" name="emailLembrarSenha" class="form-control" id="inlineFormInputGroup" placeholder="Email">
-                                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="switch-field">
+                                <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
+                                <label for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
+
+                                <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
+                                <label for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="forms-group container-forms">
+                        <div class="loading-container hide">
+                            <div class="spinner-border"></div>
+                            <div class="feedback-text"></div>
+                        </div>
+                        <div class="container-form-particular">
+                            <?=
+                            $this->partial('./partials/form-particular', [
+                                'formLogin' => $this->particularForm
+                            ])
+                            ?>
+                        </div>
+                        <div class="container-form-revenda hide">
+                            <?=
+                            $this->partial('./partials/form-revenda', [
+                                'formLogin' => $this->revendaForm
+                            ])
+                            ?>
+
+                        </div>
+
+                    </div>        
+                </div>
+                <div class="col-md-5 intro-2 banner-offset order-0 order-md-1">
+                    <div class="forms-container alerta-anti-fraude py-md-5 px-md-0 p-3">
+                        <div class="text-center">
+                            <div class="conteudo">
+                                <div class="texto px-0 px-md-2">
+                                    <h3><b>ATENÇÃO!</b></h3>
+                                    <div class="text-left">
+                                        <span>
+                                            A Seminovos <b>NÃO </b>faz contato por
+                                            <b>telefone </b> ou <b>whatsapp </b>
+                                            solicitando código de verificação de anúncio ou similar.<br>
+                                            <b>CUIDADO PARA NÃO CAIR EM GOLPES</b><br>
+                                            Estamos à disposição para esclarecer 
+                                            <a href="/central-informacoes" title="Central de informações">dúvidas</a><br>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row border-top py-2">
-                                <div class="col-md-12 no-padding sm-p-l-10">
-                                    <p class="text-justify">Ao solicitar uma nova senha o site enviará a nova senha para
-                                        o e-mail cadastrado, se não receber o e-mail na sua caixa de entrada verifique
-                                        na sua caixa de lixo eletrônico (spam).</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Enviar</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <?php if ($this->loginError) : ?>
-        <input type="hidden" name="login-error" value="1" />
-    <?php endif ?>
-    
-
-    <?php
-    $this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
-    $this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
-
-    $this->particularForm->get('usuarioEmail')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('autocomplete', 'username');
-    $this->particularForm->get('usuarioSenha')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('autocomplete', 'username');
-
-    $this->revendaForm->get('usuarioEmail')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('autocomplete', 'current-password');
-    $this->revendaForm->get('usuarioSenha')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('autocomplete', 'current-password');
-
-    ?>
-    <div class="forms-group">
-        <div class="container-form-particular">
-            <?php
-            $formLogin = $this->particularForm;
-            $formLogin->prepare();
-            $fields = $formLogin->getElements();
-            ?>
-            <form method="POST" name="login-particular-form" class="form-horizontal" role="form" id="login-particular-form">
-                <?= $this->formHidden($fields['type']) ?>
-                <?= $this->formHidden($fields['tipoCadastro']) ?>
-                <div class="form-group">
-                    <?= $this->formLabel($fields['usuarioEmail']) ?>
-                    <div class="">
-                        <?= $this->formEmail($fields['usuarioEmail']) ?>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <?= $this->formLabel($fields['usuarioSenha']) ?>
-                    <div class="input-group">
-                        <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-group">
-                    <div class="">
-                        <?= $this->formElement($formLogin->get('entrar')) ?>
-                    </div>
-                </div>
-                <br>
-                <div class="row text-center">
-                    <div class="col-6">
-                        <span class="semi-bold">
-                            Esqueceu sua senha? <br>
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info btn-esqueci-minha-senha semi-bold">
-                                <span class="semi-bold"></span>
-                                Clique aqui
-                            </a>
-                        </span>
-                    </div>
-                    <?php if ($this->cadastroSimples): ?>
-                        <div class="col-6 no-padding">
-                            <span class="semi-bold">
-                                Não tem cadastro? <br>
-                                <a href="/cadastro-simples" class="semi-bold text-amarelo">
-                                    Cadastre-se
-                                </a>
-                            </span>
-                        </div>
-                    <?php else: ?>
-                        <div class="col-6 no-padding">
-                            <span class="semi-bold">
-                                Não tem cadastro? <br>
-                                <a href="/me-cadastrar" class="semi-bold text-amarelo">
-                                    Cadastre-se
-                                </a>
-                            </span>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </form>
-        </div>
-
-        <div class="container-form-revenda hide">
-            <?php
-            $formLogin = $this->revendaForm;
-            $formLogin->prepare();
-            $fields = $formLogin->getElements();
-            ?>
-            <form method="POST" name="login-revenda-form" class="form-horizontal" role="form"
-                  id="login-revenda-form">
-                <?= $this->formHidden($fields['type']) ?>
-                <?= $this->formHidden($fields['tipoCadastro']) ?>
-                <div class="form-group">
-                    <?= $this->formLabel($fields['usuarioEmail']) ?>
-                    <div class="">
-                        <?= $this->formText($fields['usuarioEmail']) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <?= $this->formLabel($fields['usuarioSenha']) ?>
-                    <div class="input-group">
-                        <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 no-padding sm-p-l-10 text-center"></div>
-                    <div class="col-md-8 d-flex align-items-center justify-content-end">
-                        <small class="semi-bold">Esqueceu sua senha?
-                            <a href="#" data-toggle="modal" data-target="#modalLembrarSenha" class="text-info small btn-esqueci-minha-senha">
-                                <small class="semi-bold"> Clique aqui</small>
-                            </a></small>
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="">
-                        <?= $this->formElement($formLogin->get('entrar')) ?>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-12 no-padding sm-p-l-10 text-center">
-                        <small class="semi-bold">Não tem cadastro?<a href="https://seminovos.com.br/cadastrar-revenda"
-                                                                     class="text-info small" target="_blank">
-                                <small class="text-amarelo semi-bold"> Cadastre-se</small>
-                            </a></small>
-                    </div>
-                </div>
-
-                <!--      --><? //= $this->form($this->revendaForm) ?>
-            </form>
-        </div>
-    </div>
-    <!--    <div class="row">-->
-    <!--        <div class="col-md-6 no-padding sm-p-l-10"></div>-->
-    <!--        <div class="col-md-6 d-flex align-items-center justify-content-end">-->
-    <!--            <a href="#" class="text-info small"><small class="semi-bold">Esqueceu sua senha?</small></a>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalErroSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><b class="text-danger">Atenção</b></h5>
-                <div class="mt-4 text-left">
-                    <p>Usuário e/ou Senha estão incorretos</p>
-                    <p>Confira os campos de usuário e senha e tente novamente</p>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalCuidado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><b class="text-danger">Atenção!!</b></h5>
-                <div class="mt-4 text-left">
-                    <p>Detectamos Ações Maliciosas!!</p>
-                    <p>Sua sessão foi inválidada faça login novamente e tenha cuidado com o que tenta acessar!</p>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            </div>
-        </div>
-    </div>
-</div>
+
+<?= $this->partial('./partials/modais-login.phtml'); ?>

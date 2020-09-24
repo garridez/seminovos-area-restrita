@@ -2,6 +2,7 @@
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $dadosCadastro = $this->dadosCadastro;
 $dadosPagamento = $this->dadosPagamento;
+$dadosVeiculo = $this->dadosVeiculo;
 ?>
 
 <div class="d-flex justify-content-center bg-light">
@@ -129,16 +130,25 @@ $dadosPagamento = $this->dadosPagamento;
                     <tbody>
                         <tr>
                             <td class="no-wrap pl-2 pl-md-3">
-                                <p class="text-black description-print no-wrap">HOSPEDAGEM DE LOJA VIRTUAL NO SITE
-                                    SEMINOVOSBH
+                                <p class="text-black description-print no-wrap">ANÚNCIO NO SITE
+                                    SEMINOVOS.COM.BR
                                     <br>
                                     PLANO:
                                     <?= isset($dadosPagamento['nomePlano']) && $dadosPagamento['nomePlano'] != ""  ? $dadosPagamento['nomePlano'] : "Não informado" ?>
                                 </p>
                                 <div class="hint-text">
                                     <small>
-                                        Código do anúncio :
-                                        <?= isset($dadosCadastro['idCadastro']) && $dadosCadastro['idCadastro'] != ""  ? $dadosCadastro['idCadastro'] : "Não informado" ?>
+                                        Código do anúncio: <?= $dadosVeiculo['idVeiculo']?>
+                                    </small>
+                                </div>
+                                <div class="hint-text">
+                                    <small>
+                                        Placa: <?= $dadosVeiculo['placa'] ?>
+                                    </small>
+                                </div>
+                                <div class="hint-text">
+                                    <small>
+                                        Modelo: <?= $dadosVeiculo['caracteristica'] ?>
                                     </small>
                                 </div>
                                 <div class="hint-text">

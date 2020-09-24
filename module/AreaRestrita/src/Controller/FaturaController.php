@@ -67,6 +67,7 @@ class FaturaController extends AbstractActionController
         return new ViewModel([
             'dadosCadastro' => $dadosCadastro,
             'dadosPagamento' => $dadosPagamento['data'][0],
+            'dadosVeiculo' => $dadosVeiculo,
         ]);
     }
 

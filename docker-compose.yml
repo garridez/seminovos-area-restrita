@@ -17,7 +17,7 @@ services:
         environment:
             - APPLICATION_ENV=development
             - SNBH_API_HOST=http://dev.seminovos.com.br:8081
-            - SNBH_URL_SITE=http://dev.seminovos.com.br:8091
+            - SNBH_URL_SITE=http://localhost:8091
             - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
     snbh-area-restrita-redis:
         image: redis:5.0.4

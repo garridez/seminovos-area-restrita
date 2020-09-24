@@ -119,6 +119,14 @@ class VeiculoController extends AbstractActionController {
         if (isset($data['versao']) && $data['versao'] == '-1') {
             $data['versao'] = '';
         }
+        
+        if (isset($data['portas']) && $data['portas']) {
+            $data['carroPortas'] = $data['portas'];
+        }
+        
+        if (isset($data['combustivel']) && $data['combustivel']) {
+            $data['idCombustivel'] = $data['combustivel'];
+        }
 
         if (isset($data['kilometragem'])) {
             $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
@@ -126,7 +134,7 @@ class VeiculoController extends AbstractActionController {
 
         if (isset($data['observacoes']) && $data['observacoes']) {
             // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-            $data['observacoes'] = substr($data['observacoes'], 0, 700);
+            $data['observacoes'] = mb_substr($data['observacoes'], 0, 700);
         }
 
         // Se não for passado acessórios, envia "0" para apagar os existentes

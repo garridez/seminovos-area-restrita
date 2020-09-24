@@ -7,7 +7,7 @@ $form = $this->formDadosVeiculos;
 $fields = $form->getElements();
 
 foreach ($fields as $element) {
-    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'flag_km')
+    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'motoTrilha' && $element->getAttribute('name') != 'flag_km')
         $element->setAttribute('class', 'form-control');
 }
 
@@ -28,6 +28,7 @@ $versao = $form->get('versao')->getValue();
                 <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar
                     seu anúncio.
                     <br />Campos com * são de preenchimento obrigatório.
+                    <br />Em veículos 0Km não é necessário informar uma placa.
                 </small>
             </div>
 
@@ -36,6 +37,13 @@ $versao = $form->get('versao')->getValue();
             <form class="" role="form"> -->
             <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
                 <?= $this->formElement($fields['tipoVeiculo']) ?>
+                <?php if (isset($fields['motoCilindradas'])): ?>
+                <div class="form-group form-group-default">
+                    <div class="checkbox">
+                        <?= $this->formCheckbox($fields['motoTrilha']) ?>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-default required">
@@ -89,7 +97,7 @@ $versao = $form->get('versao')->getValue();
                 </div>
                 <div id="divOutraVersao" class="form-group form-group-default hide required">
                     <label for="outraVersao">Versão</label>
-                    <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off">
+                    <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off" maxlength="50">
                 </div>
                 <div class="row">
                     <?php if (isset($fields['motor'])): ?>

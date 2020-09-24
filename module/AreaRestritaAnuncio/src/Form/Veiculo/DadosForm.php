@@ -57,6 +57,17 @@ class DadosForm extends Form
         
         $this->add([
             'type' => Element\Checkbox::class,
+            'name' => 'motoTrilha',
+            'options' => [
+                'label' => 'Sua moto é de trilha?',
+            ],
+            'attributes' => [
+                'value' => 'yes',
+            ],
+        ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
             'name' => 'flag_km',
             'options' => [
                 'label' => 'Não exibir Km?',
@@ -277,13 +288,15 @@ class DadosForm extends Form
         $this->get('checkboxacessorios')->setVeiculoTipo($tipoVeiculo);
         $removerCamposPorTipo = [
             VeiculoTipo::TIPO_CARRO => [
-                'motoCilindradas'
+                'motoCilindradas',
+                'motoTrilha'
             ],
             VeiculoTipo::TIPO_CAMINHAO => [
                 'idValvula',
                 'motor',
                 'acessorios',
-                'motoCilindradas'
+                'motoCilindradas',
+                'motoTrilha'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',

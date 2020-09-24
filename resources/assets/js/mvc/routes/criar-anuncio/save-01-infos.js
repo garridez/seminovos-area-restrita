@@ -29,6 +29,9 @@ module.exports.callback = ($) => {
             // Para esperar as máscaras serem aplicadas
             setTimeout(function () {
                 let idStatus = $("input.idStatus").val();
+                if($("input[name='motoTrilha']").is(':checked') || $("input[name='veiculo_zero_km']").is(':checked')){
+                    $("input[name='placa']").removeAttr('required');
+                }
                 if (idStatus == 3 || idStatus == 6 || idStatus == 10) {
                     $("input[name='placa']").prop('readonly', false).prop('disabled', false);
                 }

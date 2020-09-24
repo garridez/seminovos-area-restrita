@@ -179,7 +179,7 @@ class XmlController extends AbstractActionController
                         $veiculo['carroPortas'] = $item->nodeValue;
                         break;
                     
-                    case 'COLOR': // Portas
+                    case 'COLOR': // Cor
                         $veiculo['cor'] = $item->nodeValue;
                         break;
                     

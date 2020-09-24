@@ -44,6 +44,10 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             $('#modalCuidado').modal('hide');
         }, 8000);
     }
+    $('form', '.container-form-particular, .container-form-revenda').submit(function (e) {
+        $('.container-form-particular, .container-form-revenda').slideUp();
+        $('.loading-container').slideDown();
+    });
     $('#formLembrarSenha').submit(function (e) {
         e.preventDefault();
         $('#modalLembrarSenha').modal('hide');

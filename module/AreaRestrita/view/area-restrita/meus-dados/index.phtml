@@ -1,5 +1,5 @@
 <?php
-/* @var $this \AreaRestrita\Form\MeusDados\ParticularForm */
+/* @var $this \Zend\View\Renderer\PhpRenderer */
 $this->headTitle('Meus Dados');
 
 $formCadastro = $this->formCadastro;
@@ -54,12 +54,14 @@ if($currentIdCadastro && $currentIdCadastro == 290948){
                                 <div class="form-group form-group-default required ">
                                     <?= $this->formLabel($fields['email']) ?>
                                     <?= $this->formText($fields['email']) ?>
+                                    <?= $this->formElementErrors($fields['email']) ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-group-default">
                                     <?= $this->formLabel($fields['email_secundario']) ?>
                                     <?= $this->formText($fields['email_secundario']) ?>
+                                    <?= $this->formElementErrors($fields['email_secundario']) ?>
                                 </div>
                             </div>
                         </div>

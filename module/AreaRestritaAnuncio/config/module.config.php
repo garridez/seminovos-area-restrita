@@ -104,6 +104,16 @@ return [
                             ],
                         ],
                     ],
+                    'cpf-disponivel' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/cpf-disponivel/:cpf',
+                            'defaults' => [
+                                'controller' => Controller\CadastrarController::class,
+                                'action' => 'cpf-disponivel',
+                            ],
+                        ],
+                    ],
                     'anuncio' => [
                         'type' => Segment::class,
                         'options' => [

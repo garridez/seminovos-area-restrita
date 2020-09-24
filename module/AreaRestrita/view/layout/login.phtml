@@ -18,8 +18,6 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta content="" name="description" />
-  <meta content="" name="author" />
   <link class="main-stylesheet" href="/css/app.css?<?= $assetSufix ?>" rel="stylesheet" type="text/css" />
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -28,35 +26,10 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
 </head>
 
-<body class="fixed-header l-login <?= $this->bodyClass() ?> bg-white container-fluid <?= $isRedirect ? 'intro-off' : '' ?>">
-  <div class="login-wrapper bg-white d-block d-md-flex">
-    <?php /*<div class="col-md-4">
-      <div class="ad-login d-flex justify-content-end mt-3">
-        <!-- <div data-ad-path="login.lateral"></div> -->
-      </div>
-    </div> */?>
-    <div class="col-12 col-md-12 d-flex justify-content-center">
-      <div class="login-container bg-white">
-        <div class="d-flex flex-wrap justify-content-center">
-          <?= $this->content ?>
-        </div>
-      </div>
+<body class="fixed-header l-login <?= $this->bodyClass() ?> container-fluid <?= $isRedirect ? 'intro-off' : '' ?>">
+    <div class="col-12 col-md-12">
+        <?= $this->content ?>
     </div>
-    <?php /*
-    <div class="bg-pic bg-light">
-        // Quando tiver uma imagem colocar nessa tag
-        if (0):
-            ?>
-      <img src="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg"
-        data-src="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg"
-        data-src-retina="assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" alt="" class="lazy">
-      <?php endif; ?>
-      <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
-      </div>
-    </div>
-    */?>
-  </div>
-  <?php /*<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script> */ ?>
-  <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
+    <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 </html>

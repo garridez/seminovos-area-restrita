@@ -5,6 +5,7 @@ import _ from 'lodash';
 import 'moment/locale/pt-br';
 
 import { isSendedForMe } from '../../utils/messages';
+import  veiculoUtil from '../../utils/veiculo';
 import { filterUser, isOnline } from '../../utils/user';
 
 class ChatSubject extends Component {
@@ -38,6 +39,11 @@ class ChatSubject extends Component {
     render() {
         const {data, isActive, meusDados} = this.props;
 
+        var veiculoStatus = '';
+        if(!veiculoUtil.isAtivo(data.idStatus)){
+            var veiculoStatus = <span className="badge">Anúncio inativo</span>;
+        }
+
         var lastMsg = data.lastMessage;
         var dates = this.formatDate(lastMsg.enviadoEm);
         var status = isOnline(data) ? 'user-status online' : 'user-status offline';
@@ -63,6 +69,7 @@ class ChatSubject extends Component {
                         <div className="chat-title">
                             <span>{data.marca} {data.modelo}</span>
                         </div>
+                        {veiculoStatus}
                     </div>
                     <div className="chat-info">
                         <div className="chat-status px-2"></div>

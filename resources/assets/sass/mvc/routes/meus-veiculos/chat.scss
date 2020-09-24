@@ -1,6 +1,9 @@
 
 section.section-chat {
     position: relative;
+    max-width: 1200px;
+    margin: 0px auto;
+
     > [class*="col-"]{
         position: relative;
     }
@@ -380,6 +383,9 @@ section.section-chat {
                 /*&:focus {
                     background-color: #fff;
                 }*/
+                &[disabled] {
+                    color: black; 
+                }
             }
             input {
                 font-size: 15px;
