@@ -1,0 +1,36 @@
+<?php
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+$this->headTitle('XML');
+?>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Relatório importação XML</h3>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div id="rootwizard">
+        <div class="tab-content tab-content-main">
+            <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <?php if (!empty($this->veiculosComErro)) { ?>
+                            <h5>Alguns veículos não foram importados corretamente, logo abaixo você verá a placa e o motivo.</h5>
+
+                            <?php 
+                            foreach ($this->veiculosComErro as $placa => $erro) {
+                                echo '<p>' . $placa . ' -> ' . $erro . '</p>';
+                            } 
+                            ?>
+
+                        <?php } else { ?>
+                            <p>Todos os veículos foram importados com sucesso!</p>
+                            <p>Você pode conferir clicando no botão Meus Veículos ou <a href="/meus-veiculos">clicando aqui</a></p>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

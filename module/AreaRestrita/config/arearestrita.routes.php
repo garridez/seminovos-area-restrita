@@ -182,6 +182,77 @@ return [
             ],
         ],
     ],
+    'banners' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'banners',
+            'defaults' => [
+                'controller' => Ctrl\BannerController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'cadastrar' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/cadastrar',
+                    'defaults' => [
+                        'action' => 'cadastrar',
+                    ],
+                ],
+            ],
+            'salvar' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/salvar',
+                    'defaults' => [
+                        'action' => 'salvar',
+                    ],
+                ],
+            ],
+            'excluir' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/excluir/:idSiteHospedadoBanner',
+                    'defaults' => [
+                        'action' => 'excluir',
+                    ],
+                ],
+            ],
+        ]
+    ],
+    'xml' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'xml',
+            'defaults' => [
+                'controller' => Ctrl\XmlController::class,
+                'action' => 'index'
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'cadastrar' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/cadastrar',
+                    'defaults' => [
+                        'action' => 'cadastrar',
+                    ],
+                ],
+            ],
+            'salvar' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/salvar',
+                    'defaults' => [
+                        'action' => 'salvar',
+                    ],
+                ],
+            ],
+        ]
+    ],
     'meus-veiculos' => [
         'type' => Http\Literal::class,
         'options' => [

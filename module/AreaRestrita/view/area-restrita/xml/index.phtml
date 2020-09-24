@@ -1,0 +1,62 @@
+<?php
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+$this->headTitle('XML');
+?>
+<div class=" container-fluid   container-fixed-lg">
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            <h3 class="font-montserrat all-caps hint-text">Importar XML</h3>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg">
+    <div id="rootwizard">
+        <div class="tab-content tab-content-main">
+            <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div id="loading" style="
+                            border:1px solid #999;
+                            position:absolute;
+                            width:350px;
+                            height: 200px;
+                            line-height: 200px;
+                            margin:0;
+                            top:50%;
+                            left: 20%;
+                            background-color: #fff;
+                            z-index:99;
+                            text-align:center;
+                            padding-top: 20px;
+                            display:none;
+                            -webkit-box-shadow: 0px 0px 14px 2px rgba(0,0,0,0.75);
+                            -moz-box-shadow: 0px 0px 14px 2px rgba(0,0,0,0.75);
+                            box-shadow: 0px 0px 14px 2px rgba(0,0,0,0.75);">
+                            <p>Importando XML... <br>
+                            <img src="/img/carregando.gif" width="100px"></p>
+                            <p>Isso pode levar algum tempo, não feche a página.</p>
+                        </div>
+
+                        <form class="mt-5" action="/xml/salvar" method="post" enctype="multipart/form-data">
+
+                            <input type="hidden" name="idSiteHospedado" value="102">
+
+                            <div class="form-group">
+                                <label for="link">Link do XML</label>
+                                <input type="text" name="href" class="form-control" id="link" placeholder="Ex: http://seminovos.com.br/xml/veiculos.xml">
+                            </div>
+
+                            <button type="submit" onclick="exibirLoading()" class="btn btn-laranja text-white btn-cons pull-right">Importar xml</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function exibirLoading() {
+        window.document.getElementById('loading').style.display = 'block';
+    }
+</script>
