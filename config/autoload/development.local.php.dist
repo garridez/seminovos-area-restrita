@@ -20,7 +20,8 @@ $removeKey = new \Zend\Stdlib\ArrayUtils\MergeRemoveKey();
 return [
     'ApiClient' => [
         'credentials' => [
-            'serverUrl' => getenv('SNBH_API_HOST'),
+            // 'serverUrl' => getenv('SNBH_API_HOST'),
+            'serverUrl' => 'http://snbh-api',
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
             ]

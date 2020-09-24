@@ -154,6 +154,7 @@ return [
             Controller\FiltrosController::class => InvokableFactory::class,
             Controller\FinanceiroController::class => InvokableFactory::class,
             Controller\BannerController::class => InvokableFactory::class,
+            Controller\XmlController::class => InvokableFactory::class,
             Controller\HistoricoPagamentosController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
             Controller\JsonController::class => InvokableFactory::class,
