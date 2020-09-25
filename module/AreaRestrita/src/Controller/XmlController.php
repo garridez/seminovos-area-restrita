@@ -60,8 +60,8 @@ class XmlController extends AbstractActionController
         }
 
         /* @var $siteHospedadoModel siteHospedado */
-        $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
-        $dadosSiteHospedado = $siteHospedado->get();
+        $cadastro = $this->getContainer()->get(Cadastros::class);
+        $dadosCadastro = $cadastro->getCurrent();
 
         // Busca os acessorios carro
         $acessoriosCarroApi = $this->getApiClient()->acessoriosGet(['idTipo' => 1]);
@@ -97,7 +97,7 @@ class XmlController extends AbstractActionController
 
         foreach ($document->childNodes as $ad) {
             $veiculo = [];
-            $veiculo['idCadastro'] = $dadosSiteHospedado[0]['idCadastro'];
+            $veiculo['idCadastro'] = $dadosCadastro['idCadastro'];
             $veiculo['troca'] = 1;
 
             foreach ($ad->childNodes as $item) {
