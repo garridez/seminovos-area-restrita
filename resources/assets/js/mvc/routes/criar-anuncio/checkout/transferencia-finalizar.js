@@ -1,6 +1,6 @@
 
 /**
- * 
+ *
  * Finaliza o pagamento para o cliente enviar o comprovante depois
  */
 module.exports = function () {
@@ -8,8 +8,8 @@ module.exports = function () {
     $('a.pagamento-finalizar-deposito').click(function (e) {
         e.preventDefault();
         requestPagamento([{
-                'name': 'metodo',
-                'value': 'deposito'
-            }]);
+          'name': 'metodo',
+          'value': 'deposito'
+        }]);
     });
 };
