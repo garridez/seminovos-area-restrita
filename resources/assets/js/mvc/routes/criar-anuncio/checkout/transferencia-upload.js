@@ -1,6 +1,6 @@
 
 module.exports = function () {
-    var requestPagamento = require('./request-pagamento');
+  var requestPagamento = require('./request-pagamento');
     $('.pagamento-transferencia-form').submit(function (e) {
         e.preventDefault();
         if (!$(this).valid()) {
@@ -19,17 +19,11 @@ module.exports = function () {
             data.append(this.name, this.value);
         });
 
-        requestPagamento([{
-          'name': 'metodo',
-          'value': 'deposito'
-        }]);
-        $(document).ajaxComplete(function() {
-          requestPagamento(null, {
-            data: data,
-            cache: false,
-            processData: false,
-            contentType: false
-          });
+        requestPagamento(null, {
+          data: data,
+          cache: false,
+          processData: false,
+          contentType: false
         });
     });
 };

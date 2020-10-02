@@ -73,10 +73,10 @@ module.exports.callback = ($) => {
                         }
 
                         if(response.historicoCarro) {
-                            
+
                             let historico = response.historicoCarro;
                             let anoModelo = historico.dados_veiculo.ano_modelo;
-                            
+
                             //seta ano de fabricacao
                             $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
                             $("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
@@ -93,7 +93,7 @@ module.exports.callback = ($) => {
                             //trigger para buscar versao
                             setTimeout(() => {
                                 $("select[name='anoModelo']").trigger('change', [ false, $('[name="caracteristicaVeiculo"]').val() ]);
-                            },0); 
+                            },0);
 
                             //seta cor do veiculo
                             let corSelecionada = historico.dados_veiculo.cor.toLowerCase().slice(0, -1);
@@ -101,7 +101,7 @@ module.exports.callback = ($) => {
                             let options = $("select[name='cor'] option");
                             options.each(function(k, v) {
                                 let option = $(v);
-                                let cor = option.val().toLowerCase().slice(0, -1); 
+                                let cor = option.val().toLowerCase().slice(0, -1);
                                 if(corSelecionada == cor) {
                                     option.prop('selected', true);
                                     return false;
@@ -125,7 +125,7 @@ module.exports.callback = ($) => {
                             //seta marca -- precisa ser verificado
                             $("select[name='idMarca'] option:not(:selected)").prop('disabled', false).removeClass("hide");
                             $("select[name='idMarca'] option:selected").prop('selected', false);
-                            options = $("select[name='idMarca'] option"); 
+                            options = $("select[name='idMarca'] option");
                             let marcaSelecionada = historico.dados_veiculo.marca.toLowerCase();
                             options.each(function(k, v) {
                                 let option = $(v);
@@ -142,14 +142,14 @@ module.exports.callback = ($) => {
                             //seta o modelo
                             let modeloSelecionado = historico.dados_veiculo.modelo;
                             $("select[name='modeloCarro'] option:selected").prop('selected', false);
-                            options = $("select[name='modeloCarro'] option"); 
+                            options = $("select[name='modeloCarro'] option");
                             var matchRegex = -1;
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let modelo = option.html().trim();
-                                let regex = RegExp(modelo, 'i'); 
+                                let regex = RegExp(modelo, 'i');
                                 if(regex.test(modeloSelecionado) && modelo != '') {
-                                    
+
                                     if(matchRegex > -1) {
                                         previosOption = $(options[matchRegex]).html().trim();
                                         matchRegex =  previosOption.length > modelo.length ? matchRegex : k;
@@ -182,6 +182,9 @@ module.exports.callback = ($) => {
                 });
             });
         }).on('change', function () {
+            if ($(this).stepPlugin('inLastStep')) {
+              return;
+            }
             BtnContinuar.enable();
         });
 
@@ -200,7 +203,7 @@ module.exports.callback = ($) => {
         var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
         var tipoCadastro = $('input[name="tipoCadastro"]').val();
-        
+
         if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCad == 2){
             advancedAlerts.warning({
                 text:'Você precisa selecionar pelo menos um meio para contato',
