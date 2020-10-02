@@ -19,11 +19,17 @@ module.exports = function () {
             data.append(this.name, this.value);
         });
 
-        requestPagamento(null, {
+        requestPagamento([{
+          'name': 'metodo',
+          'value': 'deposito'
+        }]);
+        $(document).ajaxComplete(function() {
+          requestPagamento(null, {
             data: data,
             cache: false,
             processData: false,
             contentType: false
+          });
         });
     });
 };
