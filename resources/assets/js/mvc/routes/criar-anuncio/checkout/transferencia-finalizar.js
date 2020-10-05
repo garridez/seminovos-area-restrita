@@ -11,4 +11,5 @@ module.exports = function () {
   $(ctx + ' button.btn-submit-pagt').click(function (e) {
       $(ctx + ' .form-control-file').prop('required', true);
   });
+  $('button.btn-continuar.btn.btn-lg.btn-laranja').addClass('d-none');
 };
