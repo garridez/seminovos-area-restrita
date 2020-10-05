@@ -54,7 +54,7 @@
 <form class="pagamento-transferencia-form">
     <h5>Anexar Comprovante</h5>
     <div class="form-group">
-        <input type="file" class="form-control-file" id="comprovanteAnexo" name="comprovanteAnexo">
+        <input type="file" class="form-control-file" id="comprovanteAnexo" name="comprovanteAnexo" required="required">
     </div>
     <br>
     <div class="form-group form-group-default d-flex align-items-center font-theme checkbox check-success" title="Termos de adesão">
@@ -81,11 +81,14 @@
             </div>
         </div> 
     </div> -->
-    <div class="d-flex justify-content-around">
+    <div class="d-flex flex-wrap justify-content-around">
+        <div class="w-100 my-3 text-center">
+            <strong>ENVIAR COMPROVANTE</strong>
+        </div>
         <div class="">
             <input class="d-none" type="hidden" name="metodo" value="deposito">
-            <button type="submit" class="btn-submit-pagt btn btn-info d-flex h-auto">ENVIAR COMPROVANTE</button>
+            <button type="submit" class="btn-submit-pagt btn btn-info d-flex h-auto">AGORA</button>
         </div>
-        <?php /*<a href="#" class="pagamento-finalizar-deposito btn btn-success d-flex h-auto">FINALIZAR COMPRA</a> */?>
+        <button type="submit"  class="pagamento-finalizar-deposito btn btn-success d-flex h-auto">DEPOIS</button>
     </div>
 </form>
