@@ -12,4 +12,53 @@ module.exports = function () {
       $(ctx + ' .form-control-file').prop('required', true);
   });
   $('button.btn-continuar.btn.btn-lg.btn-laranja').addClass('d-none');
+
+
+
+
+  // handler certificado no checkout
+  ctx = ' .step-checkout ';
+  let flagCertificado = $(ctx + '.flagCertificado');
+
+  let classAcitive = 'remove-certificado';
+
+  let resumoContainer = $(ctx +'.resumo-compra');
+  let certificadoContainer = $(ctx + '.handle-certificado');
+
+  let btnControlCertificado = $(ctx +'.btn-control-certificado a');
+
+  btnControlCertificado.on('click',function(e){
+
+    e.preventDefault();
+    let remover = flagCertificado.is(':checked');
+
+    resumoContainer.addClass(classAcitive);
+    certificadoContainer.addClass(classAcitive);
+    flagCertificado.prop('checked','checked');
+
+    if(remover){
+      resumoContainer.removeClass(classAcitive);
+      certificadoContainer.removeClass(classAcitive);
+      flagCertificado.prop('checked',false);
+    }
+
+  });
+  // handler modal certificado
+
+  let btnSaibaMais = $(ctx + '.saiba-mais a');
+
+  btnSaibaMais.on('click',function(e){
+    e.preventDefault();
+    $('body').prepend($('<div class="modal-fade"></div>'));
+    $(ctx).addClass('modal-open');
+
+  });
+  let btnModalClose = $(ctx + '.modal-sobre-certificado .close');
+  btnModalClose.on('click',function(e){
+    e.preventDefault();
+    $('body').find('.modal-fade').remove();
+    $(ctx).removeClass('modal-open');
+
+  });
+
 };

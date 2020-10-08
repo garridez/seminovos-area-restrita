@@ -18,6 +18,7 @@
         }
     }
     .anuncio-steps{
+        position: initial !important;
 
         .step-veiculo{
 
@@ -29,8 +30,9 @@
             }
         }
         .step-checkout{
-
+            @import 'checkout';
         }
+
     }
 
     form {

@@ -1,4 +1,93 @@
 &{
+    position: initial !important;
+    &.modal-open{
+        .modal-sobre-certificado{
+            top: 0;
+            right: 0;
+            .content .close{
+                right: 25px;
+                @include media-breakpoint-down(md){
+                    right: 10px;
+                    top: 10px;
+                }
+            }
+        }
+    }
+    .modal-sobre-certificado{
+        position: absolute;
+        z-index: 1051;
+        display: flex;
+        top: 0;
+        right: -100%;
+        transition: all 400ms;
+        height: 100%;
+        width: 45%;
+        overflow-y: scroll;
+        padding: 0.5rem;
+        padding-left: 2rem;
+
+        background-color: white !important;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        @include media-breakpoint-down(md){
+            width: 100%;
+            position: fixed;
+            padding-left: 1rem;             
+        }
+        .content{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding-bottom: 1rem;
+
+            .close{
+                transition: all 400ms;
+                cursor: pointer;
+                z-index: 999;
+                position: fixed;
+                top: 75px;
+                right: -100%;
+                font-size: 2rem;
+                color: #5e5e5e;
+                &:hover{
+                    color: black;
+                }
+            }
+            .topo{
+                h3{
+                    letter-spacing: 0px;
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                }
+            }
+            .corpo{
+                
+                i{
+                    font-size: 0.5rem;
+                }
+                p{
+                    padding-right: 2rem;
+                    font-size: 1rem;
+                    margin-bottom: 1px;
+                }
+                h5{
+                    font-size: 1.1rem;
+                    font-weight: 400;
+                    margin-bottom: 5px;
+                    letter-spacing: 0px;
+                }
+                div.img{
+                    width: 100%;
+                }
+
+            }
+        }
+
+    }
+
+
+
     .processando{
         display: none;
     }
@@ -6,6 +95,141 @@
         display: none;
         .error-message{
 
+        }
+    }
+
+    .checkout-metodos-container{
+        .accordion .card{
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 1px;
+            .card-header{
+                padding-top: 7px;
+            }
+        }
+    }
+
+    .card-style{
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 1px;
+        padding: 0.5rem 0.8rem;
+    }
+    .resumo-compra{
+
+        &.remove-certificado{
+            .renovacao{
+                display: none;
+            }
+            .certificado, .valor-total{
+                display: flex;
+            }
+        }
+
+        .plano{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            .nome-plano-ate-venda{
+                width: 70%;
+            }
+            .valor-plano{
+                width: 30%;
+                text-align: right;
+            }
+            margin-bottom: 10px;
+        }
+        .renovacao{
+            padding: 0.5rem 0;
+            display: block;
+        }
+        .certificado, .valor-total{
+            display: none;
+            justify-content: space-between;
+            padding: 0.5rem 0.8rem;
+        }
+    }
+
+    .handle-certificado{
+        $certificadoColor : $verde;
+        @include media-breakpoint-down(md){
+            max-height: initial;
+        }
+        // colors
+            border: 1px solid rgba($verde, 0.45);
+            .btn-control-certificado{
+                background-color: rgba($verde, 0.8);
+            }
+            .titulo{
+                color: rgba($verde, 0.8);
+            }
+            &.remove-certificado{
+                border: 1px solid rgba($vermelho, 0.45);
+                .btn-control-certificado{
+                    background-color: rgba($vermelho, 0.8);
+                }
+                .titulo{
+                    color: rgba($vermelho, 0.8);
+                }
+            }
+        // /colors
+
+        background-color: #fff;
+        
+        margin-bottom: 20px;
+        padding: 0.5rem;
+        
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-height: 122px;
+
+        .titulo{
+            font-weight: 600;
+            font-size: 1.2rem;
+            @include media-breakpoint-down(md){
+                margin-bottom: 15px;
+            }
+        }
+
+        .titulo-remove{display: none;}
+        .titulo-add{display: block;}
+
+        a.add-certificado{display: block;}
+        a.remove-certificado{display: none;}
+
+        &.remove-certificado{
+            a.add-certificado{display: none;}
+            a.remove-certificado{display: block;}
+
+            .titulo-remove{display: block;}
+            .titulo-add{display: none;}
+        }
+
+        .btn-control-certificado{
+            
+            display: flex;
+            align-items: center;
+            height: 20%;
+            width: 40%;
+            @include media-breakpoint-down(md){
+                width: 100%;
+                height: 28%;
+            }
+            padding: 0.4rem 0;
+
+            a{
+                color: white;
+                text-align: center;
+                width: 100%;
+            }
+        }
+        .saiba-mais{
+            font-size: 0.7rem;
+            align-self: flex-end;
+            height: 15%;
+            a{
+                color: #5e5e5e;
+            }
         }
 
     }

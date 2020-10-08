@@ -1,3 +1,39 @@
+<input type="checkbox" class="d-none flagCertificado" name="flagCertificado" id="">
+
+<div class="modal-sobre-certificado">
+    <div class="content">
+        <div class="close"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+        <div class="topo">
+            <h3>O que é o certificado documental?</h3>
+        </div>
+        <div class="corpo">
+            <p>É um certificado TERCERIZADO emitido pela empresa Historicar referente a situação APENAS DOCUMENTAL do veículo.</p>
+            <p>Este certificado não é estrutural.</p>
+            <p>Aconselhamos emiti-lo periodicamente caso o vaículo não seja veiculo.</p>
+            <p>Se você já o adquiriu, foi enviado em seu e-mail TODA a informação da consulta realizada</p>
+            <p>O que vem no laudo:</p>
+
+            <div class="sobre-checktudo">
+                <h5>Sobre a CheckTudo : </h5>
+                <p><i class="fa fa-circle" aria-hidden="true"></i> O Historicar é a mais completa plataforma de busca a histórico veicular do Brasil.</p>
+                <p><i class="fa fa-circle" aria-hidden="true"></i> De forma ágil, fácil e segura, o usuário tem acesso a mais de 60 informações sobre um veículo pesquisado.</p>
+            </div>
+            <div class="informacoes-consulta">
+                <h5>Quais informações da consulta terá no meu anúncio?</h5>
+                <div class="img">
+                    <img class="img-fluid" src="/img/exemplo/certficado_exemplo.png" alt="" srcset="">
+                </div>
+            </div>
+            <div class="como-relatorio">
+                <h5>Como será o relatório completo e como receberei?</h5>
+                <div class="img">
+                    <img class="img-fluid" src="/img/exemplo/certficado_exemplo.png" alt="" srcset="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <h4 class="text-center">
         PAGAMENTO
@@ -8,31 +44,79 @@
         </small>
     </div>
     <div class="row">
-        <div class="col-md-5">
-            <div class="container-fixed-lg">
-                <div class="text-left"><strong>RESUMO DA SUA COMPRA</strong></div>
-                <?php foreach ($planos as $plano) { ?>
-                <div id="planos<?=$plano['idPlano']?>" class="form-group form-group-default align-items-center row">
-                    <div class="col-md-8">
-                        <div><strong><?= $plano['nomePlano']=="Grátis"?"Simples":$plano['nomePlano'] ?></strong></div>
-                        <div><small>Até a venda</small></div>
+        <div class="col-md-5 d-flex flex-wrap align-content-between">
+            <div class="w-100 resumo-compra">
+                <div class="w-100">
+                    <div class="titulo"><strong>RESUMO DA SUA COMPRA</strong></div>
+                    <?php foreach ($planos as $plano) { ?>
+                    <div id="planos<?=$plano['idPlano']?>" class="plano card-style" data-valor-plano="<?= number_format($plano['valorPlano'], 2, ',', '.') ?>">
+                        <div class="nome-plano-ate-venda">
+                            <div class="nome-plano"><strong><?= $plano['nomePlano']=="Grátis"?"Simples":$plano['nomePlano'] ?></strong></div>
+                            <div class="ate-venda"><small>Até a venda</small></div>
+                        </div>
+                        <div class="valor-plano">
+                            <?php if (($this->idStatus == 2 || $this->idStatus == 9) && $this->idPlano != 4) : ?>
+                                <?php $valorPagar = (double)($plano['valorPlano'] - $this->valorPlanoAtual) ?>
+                                <strong>R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
+                            <?php else: ?>
+                                <strong>R$ <?= number_format($plano['valorPlano'], 2, ',', '.') ?></strong>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <?php if (($this->idStatus == 2 || $this->idStatus == 9) && $this->idPlano != 4) : ?>
-                            <?php $valorPagar = (double)($plano['valorPlano'] - $this->valorPlanoAtual) ?>
-                            <strong>R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
-                        <?php else: ?>
-                            <strong>R$ <?= number_format($plano['valorPlano'], 2, ',', '.') ?></strong>
-                        <?php endif; ?>
+                    <?php } ?>
+                </div>
+                <div class="w-100 renovacao">
+                    <div class="text-left"><strong class="text-capitalize">Atenção</strong></div>
+                    <span>
+                        Necessário renovar a cada 30 dias, renovação gratuita, exceto veículo 0km
+                    </span>  
+                </div>
+                <div class="w-100 certificado card-style">
+                    <div class="titulo">
+                        Certificado
+                    </div>
+                    <div class="valor">
+                        <b>
+                            R$ 29,90
+                        </b>
                     </div>
                 </div>
-                <?php } ?>
+                <div class="w-100 valor-total">
+                    <div class="titulo">
+                        Total
+                    </div>
+                    <div class="valor">
+                        <b>R$ </b>
+                        <b data-valor-total="">0,00</b>
+                    </div>
+                </div>
             </div>
-            <div class="">
-                <div class="text-left"><strong class="text-capitalize">Atenção</strong></div>
-                <span>
-                    Necessário renovar a cada 30 dias, renovação gratuita, exceto veículo 0km
-                </span>  
+            <div class="w-100 handle-certificado">
+
+                <div class="titulo titulo-add">
+                    <span>Adquirira o certificado documental junto com seu plano</span>
+                </div>
+                <div class="titulo titulo-remove">
+                    <span>Remover certificado documental</span>
+                </div>
+
+                <div class="btn-control-certificado">
+                    <a class="add-certificado" href="">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        <span> R$ 29,90</span>
+                    </a>
+                    <a class="remove-certificado" href="">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <span>remover</span>
+                    </a>
+                </div>
+                <div class="saiba-mais">
+                    <a href="">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <span>Saiba mais sobre o certificado</span>
+                    </a>
+
+                </div>
             </div>
         </div>
         <div class="col-md-7 checkout-metodos-container pt-3 pl-2 pt-md-0 pl-md-0">

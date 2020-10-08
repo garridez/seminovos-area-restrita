@@ -20,7 +20,7 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-    
+
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function () {
         advancedAlerts.warning({
             text:'Você atingiu o limite de anúncio disponíveis para este plano',
@@ -35,26 +35,38 @@ module.exports.callback = ($) => {
                 BtnContinuar.enable();
             }
         });
-        
+
          if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
             $("#idPlano").val(idPlano);
             $("#radio-idPlano-"+idPlano).click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
         }
-        
+
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
             $("#acao").val("trocarPlano");
         }
     });
-    
+
     $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
         let plano = "planos" + $("#idPlano").val();
+        let planoSelecionado =  $("#" + plano);
+
         $('[id^="planos"]').each((i, obj) => {
             $(obj).hide();
+            $(obj).removeClass('plano-selecionado');
         });
-        $("#" + plano).show();
+
+        planoSelecionado.show();
+        planoSelecionado.addClass('plano-selecionado');
+
+        let valorTotal = 29.90;
+        valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
+
+
+        $('.valor-total').find('[data-valor-total]').html(valorTotal);
     });
+
     $('.step-container').on('step:pre-exit:plano', function (e) {
         var ctx = $('.step-plano');
         var plano = ctx.find('[name="idPlano"]:checked');

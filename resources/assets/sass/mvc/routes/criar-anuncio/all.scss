@@ -1,9 +1,6 @@
 &.c-criar-anuncio{
     @import 'index';
 }
-&.c-criar-anuncio .step-checkout{
-    @import 'checkout';
-}
 
 &.c-criar-anuncio.a-index{
     @import 'steps/_all';
