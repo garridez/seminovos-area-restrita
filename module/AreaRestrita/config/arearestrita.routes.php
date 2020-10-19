@@ -214,7 +214,7 @@ return [
             'excluir' => [
                 'type' => Http\Segment::class,
                 'options' => [
-                    'route' => '/excluir/:idSiteHospedadoBanner',
+                    'route' => '/excluir',
                     'defaults' => [
                         'action' => 'excluir',
                     ],
