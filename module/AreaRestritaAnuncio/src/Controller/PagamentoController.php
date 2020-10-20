@@ -108,6 +108,7 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['idAnuncioVeiculo'] = isset($dados['idAnuncioVeiculo']) ? $dados['idAnuncioVeiculo'] : null;
         $dadosPagamento['idCadastro'] = $cadastro['idCadastro'];
         $dadosPagamento['idPlano'] = $dados['idPlano'] ?? null;
+        $dadosPagamento['flagCertificado'] = (isset($dados['certificado']) && !empty($dados['certificado'])) ? (int) $dados['certificado'] : null;
         $dadosPagamento['parcelas'] = 1;
 
         // dados para pagamento Cielo
@@ -169,7 +170,9 @@ class PagamentoController extends AbstractActionController
             
         }
 
-
+        echo $this->getApiClient()
+            ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;
+        
         $response = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)
             ->json();

@@ -19,6 +19,8 @@ module.exports = function () {
   // handler certificado no checkout
   ctx = ' .step-checkout ';
   let flagCertificado = $(ctx + '.flagCertificado');
+  
+  let certificado = $('#dados-basicos .certificado');
 
   let classAcitive = 'remove-certificado';
 
@@ -35,11 +37,13 @@ module.exports = function () {
     resumoContainer.addClass(classAcitive);
     certificadoContainer.addClass(classAcitive);
     flagCertificado.prop('checked','checked');
+    certificado.val(1);
 
     if(remover){
       resumoContainer.removeClass(classAcitive);
       certificadoContainer.removeClass(classAcitive);
       flagCertificado.prop('checked',false);
+      certificado.val('');
     }
 
   });
