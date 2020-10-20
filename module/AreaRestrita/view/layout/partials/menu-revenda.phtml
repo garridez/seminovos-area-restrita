@@ -58,12 +58,12 @@ if($diasParaExpirar > 7){
       </a>
       <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
     </li>
-    <!-- <li class="">
+    <li class="">
       <a href="<?= $this->url('restrito/banners') ?>">
         <span class="title">Banners</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
-    </li> -->
+    </li>
     <?php if (SHOW_CHAT): ?>
     <li class="menu-chat">
       <a href="<?= $this->url('restrito/chat') ?>">
@@ -109,6 +109,7 @@ if($diasParaExpirar > 7){
       <span class="icon-thumbnail"><i class="fa fa-external-link b-transparent-white" aria-hidden="true"></i></span>
     </li>
     <?php
+
     // Desativado temporariamente
     if(false && $this->userInfo('idPlano') >= 20): ?>
     <li class="">
