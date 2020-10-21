@@ -1,0 +1,32 @@
+&{
+    .loading-container{
+        position: absolute;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+        flex-wrap: wrap;
+    
+        z-index: 10;
+
+
+        width: calc(100% - 290px);
+        height: calc(100% - 60px);
+        top: 60px;
+        left: 290px;
+
+        background-color: rgba(150,150,150, 0.5) !important;
+
+        .feedback-text{
+            width: 100%;
+        }
+        @include media-breakpoint-down(md){
+            top: 48px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 48px);
+        }
+    }
+}
