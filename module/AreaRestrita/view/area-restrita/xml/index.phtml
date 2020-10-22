@@ -43,8 +43,21 @@ $this->headTitle('XML');
 
                             <div class="form-group">
                                 <label for="link">Link do XML</label>
-                                <input type="text" name="href" class="form-control" id="link" placeholder="Ex: http://seminovos.com.br/xml/veiculos.xml">
+                                <input type="text" name="href" class="form-control" id="link" placeholder="Ex: http://seminovos.com.br/xml/veiculos.xml" required>
                             </div>
+                                
+                            <label for="" class="mt-2">Selecione em qual plano deseja cadastrar os veículos</label>
+
+                            <?php foreach ($planos as $nomePlano => $quantidade) { ?>
+                                <div class="form-check">
+                                    
+                                    <input class="form-check-input" name="plano" type="radio" value="<?= $nomePlano ?>" id="plano" required>
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        <?= ucfirst($nomePlano) ?> (<?= $quantidade ?>)
+                                    </label>
+
+                                </div>
+                            <?php } ?>
 
                             <button type="submit" onclick="exibirLoading()" class="btn btn-laranja text-white btn-cons pull-right">Importar xml</button>
                         </form>
@@ -57,6 +70,13 @@ $this->headTitle('XML');
 
 <script>
     function exibirLoading() {
-        window.document.getElementById('loading').style.display = 'block';
+        var selecionado = $('input[type=radio]:checked').length;
+        var xml = $('#link').val();
+
+        if (selecionado && xml != '') {
+            window.document.getElementById('loading').style.display = 'block';
+        } else {
+            alert('Insira um xml válido e selecione um plano');
+        }
     }
 </script>
