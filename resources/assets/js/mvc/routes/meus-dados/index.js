@@ -34,15 +34,14 @@ module.exports.callback = ($) => {
               if (!response.emailDisponivel) {
 
                   $btnSubmit
-                      .addClass('disabled')
-                      .attr('disabled', true)
                       .attr('title', 'Verifique os dados antes de continuar');
 
                   advancedAlerts.error({
                       title: "E-mail já cadastrado",
                       text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
                       time: 10000
-                  })
+                  });
+                  $('.loading-container').addClass('hide');
                   return;
               }
 
