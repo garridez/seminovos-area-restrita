@@ -20,19 +20,15 @@ if ($this->checkedProposta !== '0') {
 }
 
 if ($this->checkedLigacao !== '0') {
-    $fields['aceitaLigacao']->setChecked(true);
-}
-
-if ($this->checkedLigacao !== '0') {
     $fields['aceitaChat']->setChecked(true);
 }
 
-if ($this->userInfo()->isRevenda() || $this->checkedLigacao) {
-    $replace = $fields['aceitaLigacao']->getValueOptions();
+$replace = $fields['aceitaLigacao']->getValueOptions();
+if ($this->checkedLigacao === '0') {
     $replace[0]['selected'] = true;
     $replace[1]['selected'] = false;
-    $fields['aceitaLigacao']->setValueOptions($replace);
 }
+$fields['aceitaLigacao']->setValueOptions($replace);
 
 ?>
 <div class="container container-fixed-lg">
