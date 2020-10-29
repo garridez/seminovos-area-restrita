@@ -20,6 +20,7 @@ export default class Message extends Component {
 
         var statusTitle = '';
         var statusIcon = '';
+        var lidaIcon = '';
 
         if (data.delivered !== undefined) {
             messageStatusClass.push(data.delivered ? 'delivered' : 'not-delivered');
@@ -32,6 +33,7 @@ export default class Message extends Component {
             if (data.lidoEm) {
                 messageStatusClass.push('lida');
                 statusTitle = 'Lida';
+                lidaIcon = <i className="fa fa-check" aria-hidden="true"></i>
             }
         }
 
@@ -44,10 +46,11 @@ export default class Message extends Component {
                         <div className="text">{data.mensagem}</div>
                         <div className="infos">
                             <div className="time" title={enviadoEm.format('LLLL')}>
-                                {enviadoEm.format('LT')} &nbsp;
+                                {enviadoEm.format('L LT')} &nbsp;
                             </div>
                             <div className="status" title={statusTitle}>
                                 <i className={statusIcon} aria-hidden="true"></i>
+                                {lidaIcon}
                             </div>
                         </div>
                     </div>
