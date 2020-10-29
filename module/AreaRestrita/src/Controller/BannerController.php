@@ -47,7 +47,8 @@ class BannerController extends AbstractActionController
                         ->json();
 
         return new ViewModel([
-            'banners' => $banners['dados']
+            'banners' => $banners['dados'],
+            'siteHospedado' => $dadosSiteHospedado
         ]);
     }
 
@@ -108,6 +109,7 @@ class BannerController extends AbstractActionController
         // deleta o banner
         $retorno = $this->getApiClient()->SiteHospedadoBannerDelete([
             'idSiteHospedado' => $dadosSiteHospedado[0]['idSiteHospedado'],
+            'idCadastro' => $dadosSiteHospedado[0]['idCadastro'],
             'idSiteHospedadoBanner' => $idSiteHospedadoBanner,
             'key' => $key,
         ])->json();
