@@ -5,6 +5,48 @@ module.exports.callback = ($) => {
     var Loading = require('components/Loading');
     var Alert = require('components/Alerts');
 
+    var Verificadores = require('./Verificadores');
+
+    var ctx = $('form[name="form_cadastroSimples"]');
+
+    function validationControl(input, validated) {
+      $btnSubmit = ctx.find('button[type="submit"]');
+      $input = ctx.find(input);
+
+      $btnSubmit
+        .addClass('disabled')
+        .attr('disabled', true)
+        .attr('title', 'Verifique os dados antes de continuar');
+
+      $input
+        .removeClass('is-invalid is-valid')
+        .addClass(validated ? 'is-valid' : 'is-invalid');
+
+      if(validated){
+        $btnSubmit.removeClass('disabled')
+          .attr('disabled', false)
+          .attr('title', 'Continuar');
+      }
+    }
+
+    ctx.find("input[name='confirmacaoEmail']").blur(function (event) {
+      var emailInput = $(this);
+      var email = emailInput.val() || '';
+
+      Verificadores.verficaEmailAction(email).then(function(response){
+          validationControl(emailInput, response.emailDisponivel);
+      });
+    });
+
+    ctx.find('input[name="cpfResponsavel"]').blur(function (event) {
+        var cpfInput = $(this);
+        var cpf = cpfInput.val() || '';
+
+        Verificadores.verficaCpfAction(cpf).then(function(response){
+          validationControl(cpfInput, response.cpfDisponivel)
+        });
+    });
+
     $('form[name="form_cadastroSimples"]').submit(function (e) {
         var $this = $(this);
         var emailConfInput = $this.find('[name="confirmacaoEmail"]');
@@ -32,12 +74,13 @@ module.exports.callback = ($) => {
             e.preventDefault();
             return false;
         }
+
         Loading.addFeedbackTexts([
-                    'Validando informações...',
-                    'Salvando dados...',
-                    'Fazendo login...',
-                    'Redirecionando...'
-                ], false);
+            'Validando informações...',
+            'Salvando dados...',
+            'Fazendo login...',
+            'Redirecionando...'
+        ], false);
         Loading.open();
     });
 };
