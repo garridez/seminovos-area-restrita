@@ -30,11 +30,22 @@ $banners = $this->banners;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($banners as $banner): ?>
+                                    <?php foreach ($banners as $banner): 
+                                        // Verifica se é banner antigo
+                                        if (!preg_match("/{$siteHospedado[0]['dominio']}/", $banner['image'])) {
+                                            if (!preg_match("/\.\.\/\.\.\//", $banner['image'])) {
+                                                $banner['image'] = $siteHospedado[0]['dominio'] . '/banners/' . $banner['image'];
+                                            } else {
+                                                $banner['image'] = 'default';
+                                            }
+                                        }    
+                                    ?>
+
                                         <tr class="border-bottom">
                                             <td class="pl-0" align="center" style="vertical-align: middle;">
                                                 <div class="radio radio-success p-2">
                                                     <img src="https://s3-us-west-2.amazonaws.com/site-revenda.seminovosbh.com.br/<?= $banner['image'] ?>" alt="" srcset="" width="400">
+                                                    <?= $banner['image'] == 'default' ? 'Banner não encontrado' : '' ?>
                                                 </div>
                                             </td>
                                             <td class="" style="vertical-align: middle;">
