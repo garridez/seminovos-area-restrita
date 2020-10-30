@@ -25,7 +25,7 @@ function verficaCpfAction(cpf) {
               advancedAlerts.error({
                   title: "CPF já cadastrado",
                   text: `O CPF informado já está cadastrado com o email: ${emailMasked} <div class='esqueci-minha-senha'><a class='' href=''>Esqueci a senha</a></div>`,
-                  time: 100000000
+                  time: 10000
               }).on('click','.esqueci-minha-senha a', function(e){
                 e.preventDefault();
                 e.stopPropagation();
