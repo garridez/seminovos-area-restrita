@@ -1,0 +1,62 @@
+&.a-index, &.a-cadastro-simples{
+    .modal .modal-body{
+        .esqueci-minha-senha{
+            margin-top: 0.5rem;
+            a{
+                font-size: 1.2rem;
+                text-decoration: underline;
+                font-weight: 600;
+                color: $laranja;
+            }
+        }
+    }
+    .card-header{
+        .card-title{
+            text-transform: initial;
+        }
+    }
+    .termo_responsabilidade{
+        a{
+            color: $amarelo !important;
+        }
+    }
+    .text-success{
+        color: $verde !important;
+    }
+}
+&.a-cadastro-simples{
+    .form-group {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: none;
+    } 
+    .card-body{
+        padding: 0 !important;
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+    .row-nome, .row-senha{
+        @include media-breakpoint-down(md){
+            padding: 0;
+            margin: 0;
+        }
+    }
+    .row-senha{
+        .form-group{
+            padding-bottom: 2px;
+        }
+    }
+    .row-telefone{
+        .form-group{
+            &:not(:first-of-type){
+                padding-left: 1px;
+            }
+            &:not(:last-of-type){
+                padding-right: 1px;
+            }
+            &:last-of-type{
+                padding-left: 11px;
+            }
+        }
+    }
+}

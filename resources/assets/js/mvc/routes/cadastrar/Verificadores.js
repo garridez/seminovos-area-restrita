@@ -24,9 +24,9 @@ function verficaCpfAction(cpf) {
 
               advancedAlerts.error({
                   title: "CPF já cadastrado",
-                  text: `O CPF informado já está cadastrado com o email: ${emailMasked} <div><a class='esqueci-minha-senha'href=''>Esqueceu a senha</a></div>`,
-                  time: 10000
-              }).on('click','a.esqueci-minha-senha', function(e){
+                  text: `O CPF informado já está cadastrado com o email: ${emailMasked} <div class='esqueci-minha-senha'><a class='' href=''>Esqueci a senha</a></div>`,
+                  time: 100000000
+              }).on('click','.esqueci-minha-senha a', function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 $('.modal, .modal-backdrop').hide();
@@ -47,9 +47,9 @@ function verficaEmailAction(email) {
         if (!response.emailDisponivel) {
             advancedAlerts.error({
                 title: "E-mail já cadastrado",
-                text: "E-mail já cadastrado no sistema, confira o e-mail.<div><a class='esqueci-minha-senha'href=''>Esqueceu a senha</a></div>",
+                text: "E-mail já cadastrado no sistema, confira o e-mail.<div class='esqueci-minha-senha'><a class='' href=''>Esqueci a senha</a></div>",
                 time: 10000
-            }).on('click','a.esqueci-minha-senha', function(e){
+            }).on('click','.esqueci-minha-senha a', function(e){
               e.preventDefault();
               e.stopPropagation();
               $('.modal, .modal-backdrop').hide();
