@@ -3,9 +3,13 @@ module.exports.seletor = '.c-cadastrar.a-index';
 
 module.exports.callback = ($) => {
     require('components/EstadoCidade')();
+
+    var Verificadores = require('./Verificadores');
     var HandleApiError = require('components/HandleApiError');
     var Alert = require('components/Alerts');
     var advancedAlerts = require('components/AdvancedAlerts');
+
+    var ctx = $("form[name='form_particularSite']");
 
     var ua = navigator.userAgent.toLowerCase();
     if (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1) {
@@ -22,19 +26,19 @@ module.exports.callback = ($) => {
         var email = $this.find('[name="email"]').val().trim();
         var emailConf = emailConfInput.val().trim();
 
+        if (email !== emailConf) {
+          Alert.info('Os emails não são iguais!', 'Atenção')
+                  .on('hidden.bs.modal', function () {
+                      emailConfInput.focus();
+                  });
+          return;
+        }
+
         if (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1) {
           var $inpuDataNasc = $('input[name="dataNascimento"]');
           var date = $inpuDataNasc.val().split('/');
           $inpuDataNasc.unmask();
           $inpuDataNasc.val(date[2] + "-" + date[1] + "-" + date[0]);
-        }
-
-        if (email !== emailConf) {
-            Alert.info('Os emails não são iguais!', 'Atenção')
-                    .on('hidden.bs.modal', function () {
-                        emailConfInput.focus();
-                    });
-            return;
         }
 
         $.ajax({
@@ -68,85 +72,41 @@ module.exports.callback = ($) => {
         });
     });
 
-    $("form[name='form_particularSite']").find("input[name='email']").blur(function (event) {
+    ctx.find("input[name='confirmacao-email']").blur(function (event) {
         var emailInput = $(this);
         var email = emailInput.val() || '';
 
-        $("form[name='form_particularSite']").find("button")
-                        .addClass('disabled')
-                        .attr('disabled', true)
-                        .attr('title', 'Verifique os dados antes de continuar');
-        $.ajax({
-            type: "GET",
-            url: "/carro/email-disponivel/"+email,
-            dataType: "json",
-            success: function (response) {
-                emailInput
-                    .removeClass('is-invalid is-valid')
-                    .addClass(response.emailDisponivel ? 'is-valid' : 'is-invalid');
-                if (!response.emailDisponivel) {
-                    $("form[name='form_particularSite']").find("button")
-                        .addClass('disabled')
-                        .attr('disabled', true)
-                        .attr('title', 'Verifique os dados antes de continuar');
-
-                    advancedAlerts.error({
-                        title: "E-mail já cadastrado",
-                        text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
-                        time: 10000
-                    })
-                    return;
-                }
-                $("form[name='form_particularSite']").find("button")
-                    .removeClass('disabled')
-                    .attr('disabled', false)
-                    .attr('title', 'Continuar');
-            },
-            error: function (e) {
-
-            }
+        Verificadores.verficaEmailAction(email).then(function(response){
+            validationControl(emailInput, response.emailDisponivel);
         });
-
     });
-    
-    $("form[name='form_particularSite']").find("input[name='cpfResponsavel']").blur(function (event) {
-        var cpfInput = $(this);
-        var cpf = cpfInput.val() || '';
 
-        $("form[name='form_particularSite']").find("button")
-                        .addClass('disabled')
-                        .attr('disabled', true)
-                        .attr('title', 'Verifique os dados antes de continuar');
-        $.ajax({
-            type: "GET",
-            url: "/carro/cpf-disponivel/"+cpf,
-            dataType: "json",
-            success: function (response) {
-                cpfInput
-                    .removeClass('is-invalid is-valid')
-                    .addClass(response.cpfDisponivel ? 'is-valid' : 'is-invalid');
-                if (!response.cpfDisponivel) {
-                    $("form[name='form_particularSite']").find("button")
-                        .addClass('disabled')
-                        .attr('disabled', true)
-                        .attr('title', 'Verifique os dados antes de continuar');
-
-                    advancedAlerts.error({
-                        title: "CPF já cadastrado",
-                        text: "CPF já cadastrado no sistema, confira o CPF ou entre em contato.",
-                        time: 10000
-                    })
-                    return;
-                }
-                $("form[name='form_particularSite']").find("button")
-                    .removeClass('disabled')
-                    .attr('disabled', false)
-                    .attr('title', 'Continuar');
-            },
-            error: function (e) {
-
-            }
-        });
-
+    ctx.find("input[name='cpfResponsavel']").blur(function (event) {
+      var cpfInput = $(this);
+      var cpf = cpfInput.val() || '';
+      Verificadores.verficaCpfAction(cpf).then(function(response){
+          validationControl(cpfInput, response.cpfDisponivel)
+      });
     });
+
+    function validationControl(input, validated) {
+      $btnSubmit = ctx.find('button[type="submit"]');
+      $input = ctx.find(input);
+
+      $btnSubmit
+        .addClass('disabled')
+        .attr('disabled', true)
+        .attr('title', 'Verifique os dados antes de continuar');
+
+      $input
+        .removeClass('is-invalid is-valid')
+        .addClass(validated ? 'is-valid' : 'is-invalid');
+
+      if(validated){
+        $btnSubmit.removeClass('disabled')
+          .attr('disabled', false)
+          .attr('title', 'Continuar');
+      }
+    }
+
 };
