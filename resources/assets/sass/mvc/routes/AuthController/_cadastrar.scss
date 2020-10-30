@@ -24,6 +24,13 @@
         color: $verde !important;
     }
 }
+&.a-index{
+    .row-senha{
+        .col-12{
+            padding-left: 0;
+        }
+    }
+}
 &.a-cadastro-simples{
     .form-group {
         padding-top: 5px;
@@ -44,6 +51,14 @@
     .row-senha{
         .form-group{
             padding-bottom: 2px;
+        }
+        .col-6.col-md-6{
+            &:not(:first-of-type){
+                padding-right: 0 !important;
+            }
+        }
+        .col-12{
+            padding-left: 0;
         }
     }
     .row-telefone{
