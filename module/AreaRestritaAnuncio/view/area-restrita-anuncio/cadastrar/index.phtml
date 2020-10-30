@@ -17,7 +17,7 @@ $fields['telefone_2_is_wpp']->setChecked(false);
 $fields['telefone_3_is_wpp']->setChecked(false);
 $fields['senha']->setAttribute('autocomplete', 'off');
 ?>
-<form method="POST" name="form_particularSite" class="form-group m-0 " role="form" id="form_particularSite"
+<form method="POST" name="form_particularSite" class="container" role="form" id="form_particularSite"
     action="me-cadastrar">
     <div class="container-fluid container-fixed-lg">
         <div class="row">
@@ -35,27 +35,34 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                         </a>
                     </div>
                     <div class="card-header ">
-                        <div class="card-title"><span class="text-capitalize">SeminovosBH - Cadastro</span> <span
-                                class="text-lowercase">de</span> <span class="text-capitalize">Usuário</span></div>
+                        <div class="card-title">
+                            <span class="">SeminovosBH - Cadastro de Usuário</span> 
+                        </div>
                     </div>
                     <div class="card-body">
                         <p>
                             <small>Preencha os dados abaixo e clique no botão cadastrar para criar seu cadastro</small>
                         </p>
                         <div class="row">
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
-                                <?= $this->formText($fields['cpfResponsavel']) ?>
-                            </div>
                             <div class="form-group col-8 col-md-6 required">
                                 <?= $this->formLabel($fields['responsavelNome']) ?>
                                 <?= $this->formText($fields['responsavelNome']) ?>
                             </div>
+                            <div class="form-group col-4 col-md-6">
+                                <div class="d-none d-md-block">
+                                    <?= $this->formLabel($fields['dataNascimento']) ?>
+                                </div>
+                                <div class="d-block d-md-none">
+                                    <?= str_replace('Data de Nascimento','Nascimento',$this->formLabel($fields['dataNascimento'])) ?>
+
+                                </div>
+                                <?= str_replace('class="', 'placeholder="31/12/1980" class="', $this->formElement($fields['dataNascimento'])) ?>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-4 col-md-6">
-                                <?= $this->formLabel($fields['dataNascimento']) ?>
-                                <?= str_replace('class="', 'placeholder="31/12/1980" class="', $this->formElement($fields['dataNascimento'])) ?>
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                <?= $this->formText($fields['cpfResponsavel']) ?>
                             </div>
                             <div class="form-group col-6 required">
                                 <?= $this->formLabel($fields['rg']) ?>
@@ -119,29 +126,29 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                                 <?= $this->formText($fields['telefone_1']) ?>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 mt-2">
-                                <small class="text-success ml-2">
+                        <div class="row row-senha">
+                            <div class="form-group required col-6 mb-0">
+                                <?= $this->formLabel($fields['senha']) ?>
+                                <?= $this->formPassword($fields['senha']) ?>
+                            </div>
+                            <div class="form-group required col-6 mb-0">
+                                <?= $this->formLabel($fields['confirmacaoSenha']) ?>
+                                <?= $this->formPassword($fields['confirmacaoSenha']) ?>
+                            </div>
+                            <div class="col-12">
+                                <small class="text-success">
                                     sua senha deve conter no
                                     mínimo 4 caractéres
                                 </small>
                             </div>
-                            <div class="form-group required col-6">
-                                <?= $this->formLabel($fields['senha']) ?>
-                                <?= $this->formPassword($fields['senha']) ?>
-                            </div>
-                            <div class="form-group required col-6">
-                                <?= $this->formLabel($fields['confirmacaoSenha']) ?>
-                                <?= $this->formPassword($fields['confirmacaoSenha']) ?>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="checkbox check-success">
+                                <div class="checkbox check-success termo_responsabilidade">
                                     <input type="hidden" name="termo_responsabilidade" value="0">
                                     <input type="checkbox" required name="termo_responsabilidade" value="1"
                                         id="termo_responsabilidade">
-                                    <label for="termo_responsabilidade"> Li e aceito os <br class="d-block d-md-none"><a
+                                    <label for="termo_responsabilidade"> Li e aceito os <a
                                             href="https://seminovos.com.br/termo-de-responsabilidade"
                                             target="_blank">termos de
                                             responsibilidade</a>.</label>
