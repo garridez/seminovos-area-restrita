@@ -23,7 +23,7 @@ class ParticularForm extends Form
                 'required' => true,
                 'readonly' => true,
                 'class' => 'form-control',
-                'placeholder' => 'Ex: Nome Sobrenome'
+                'placeholder' => 'Nome Sobrenome'
             ]
         ]);
 
