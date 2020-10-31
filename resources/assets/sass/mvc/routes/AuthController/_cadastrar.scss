@@ -1,4 +1,10 @@
 &.a-index, &.a-cadastro-simples{
+    .obrigatorios small{
+        font-size: 0.8rem;
+    }
+    .card-body p{
+        margin: 0;
+    }
     .modal .modal-body{
         .esqueci-minha-senha{
             margin-top: 0.5rem;

@@ -36,15 +36,15 @@ $fields = $dadosForm->getElements();
         </div>
         <div class="col-12 row row-nome">
             <div class="col-6 col-md-6">
-                <div class="form-group required">
-                    <?= $this->formLabel($fields['responsavelNome'])  ?>
-                    <?= $this->formText($fields['responsavelNome'])  ?>
-                </div>
-            </div>
-            <div class="col-6 col-md-6">
                 <div class="form-group">
                     <?= $this->formLabel($fields['cpfResponsavel'])  ?>
                     <?= $this->formText($fields['cpfResponsavel'])  ?>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group required">
+                    <?= $this->formLabel($fields['responsavelNome'])  ?>
+                    <?= $this->formText($fields['responsavelNome'])  ?>
                 </div>
             </div>
         </div>
@@ -97,13 +97,28 @@ $fields = $dadosForm->getElements();
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-block btn-amarelo text-white" value="Cadastrar">Cadastrar</button>
+        <div class="col-12 row d-flex align-items-center flex-wrap-reverse">
+            <div class="col-12 col-md-6">
+                <div class="checkbox check-success termo_responsabilidade my-1">
+                    <input type="hidden" name="termo_responsabilidade" value="0">
+                    <input type="checkbox" required name="termo_responsabilidade" value="1"
+                        id="termo_responsabilidade">
+                    <label for="termo_responsabilidade"> Li e aceito os <a
+                            href="https://seminovos.com.br/termo-de-responsabilidade"
+                            target="_blank">termos de
+                            responsibilidade</a>.</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 obrigatorios my-1">
+                <small>
+                    <span class="text-danger">*</span> Esses campos são obrigatórios
+                </small>
             </div>
         </div>
-        <div class="col mt-3 mb-3">
-            <span class="text-danger h3">*</span> Esses campos são obrigatórios
+        <div class="col-12">  
+            <div class="form-group mb-2">
+                <button type="submit" name="submit" class="btn btn-block btn-amarelo text-white" value="Cadastrar">Cadastrar</button>
+            </div>
         </div>
     </div>
 </div>

@@ -44,29 +44,28 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             <small>Preencha os dados abaixo e clique no botão cadastrar para criar seu cadastro</small>
                         </p>
                         <div class="row">
-                            <div class="form-group col-8 col-md-6 required">
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                <?= $this->formText($fields['cpfResponsavel']) ?>
+                            </div>
+                            <div class="form-group col-6 col-md-6 required">
                                 <?= $this->formLabel($fields['responsavelNome']) ?>
                                 <?= $this->formText($fields['responsavelNome']) ?>
                             </div>
-                            <div class="form-group col-4 col-md-6">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['rg']) ?>
+                                <?= $this->formText($fields['rg']) ?>
+                            </div>
+                            <div class="form-group col-6 col-md-6">
                                 <div class="d-none d-md-block">
                                     <?= $this->formLabel($fields['dataNascimento']) ?>
                                 </div>
                                 <div class="d-block d-md-none">
                                     <?= str_replace('Data de Nascimento','Nascimento',$this->formLabel($fields['dataNascimento'])) ?>
-
                                 </div>
                                 <?= str_replace('class="', 'placeholder="31/12/1980" class="', $this->formElement($fields['dataNascimento'])) ?>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
-                                <?= $this->formText($fields['cpfResponsavel']) ?>
-                            </div>
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['rg']) ?>
-                                <?= $this->formText($fields['rg']) ?>
                             </div>
                         </div>
                         <div class="row">
@@ -78,52 +77,6 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                                 <label>Confirme o e-mail</label>
                                 <input type="email" name="confirmacao-email" class="form-control"
                                     placeholder="seuemail@example.com.br" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['idEstado']) ?>
-                                <?= $this->formSelect($fields['idEstado']) ?>
-                            </div>
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['idCidade']) ?>
-                                <?= $this->formSelect($fields['idCidade']) ?>
-                            </div>
-                        </div>
-                        <div class="row d-flex align-items-end">
-                            <div class="form-group col-4 required">
-                                <?= $this->formLabel($fields['telefone_2']) ?>
-                                <?= $this->formText($fields['telefone_2']) ?>
-                            </div>
-                            <div class="form-group col-4 required">
-                                <?= $this->formLabel($fields['operadora_2']) ?>
-                                <?= $this->formSelect($fields['operadora_2']) ?>
-                            </div>
-                            <div class="form-group col-4">
-                                <div class="checkbox check-success m-0">
-                                    <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row d-flex align-items-end">
-                            <div class="form-group col-4">
-                                <?= $this->formLabel($fields['telefone_3']) ?>
-                                <?= $this->formText($fields['telefone_3']) ?>
-                            </div>
-                            <div class="form-group col-4">
-                                <?= $this->formLabel($fields['operadora_3']) ?>
-                                <?= $this->formSelect($fields['operadora_3']) ?>
-                            </div>
-                            <div class="form-group col-4">
-                                <div class="checkbox check-success m-0">
-                                    <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <?= $this->formLabel($fields['telefone_1']) ?>
-                                <?= $this->formText($fields['telefone_1']) ?>
                             </div>
                         </div>
                         <div class="row row-senha">
@@ -143,8 +96,54 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['idEstado']) ?>
+                                <?= $this->formSelect($fields['idEstado']) ?>
+                            </div>
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['idCidade']) ?>
+                                <?= $this->formSelect($fields['idCidade']) ?>
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-end">
+                            <div class="p-0 form-group col-4 required">
+                                <?= $this->formLabel($fields['telefone_2']) ?>
+                                <?= $this->formText($fields['telefone_2']) ?>
+                            </div>
+                            <div class="p-0 form-group col-4 required">
+                                <?= $this->formLabel($fields['operadora_2']) ?>
+                                <?= $this->formSelect($fields['operadora_2']) ?>
+                            </div>
+                            <div class="p-0 pl-1 pl-md-2 form-group col-4">
+                                <div class="checkbox check-success m-0">
+                                    <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-end">
+                            <div class="p-0 form-group col-4">
+                                <?= $this->formLabel($fields['telefone_3']) ?>
+                                <?= $this->formText($fields['telefone_3']) ?>
+                            </div>
+                            <div class="p-0 form-group col-4">
+                                <?= $this->formLabel($fields['operadora_3']) ?>
+                                <?= $this->formSelect($fields['operadora_3']) ?>
+                            </div>
+                            <div class="p-0 pl-1 pl-md-2 form-group col-4">
+                                <div class="checkbox check-success m-0">
+                                    <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <?= $this->formLabel($fields['telefone_1']) ?>
+                                <?= $this->formText($fields['telefone_1']) ?>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12">
-                                <div class="checkbox check-success termo_responsabilidade">
+                                <div class="checkbox check-success termo_responsabilidade m-0">
                                     <input type="hidden" name="termo_responsabilidade" value="0">
                                     <input type="checkbox" required name="termo_responsabilidade" value="1"
                                         id="termo_responsabilidade">
@@ -153,6 +152,11 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                                             target="_blank">termos de
                                             responsibilidade</a>.</label>
                                 </div>
+                            </div>
+                            <div class="col-12 obrigatorios mb-2">
+                                <small>
+                                    <span class="text-danger">*</span> Esses campos são obrigatórios
+                                </small>
                             </div>
                         </div>
                         <div class="row">
