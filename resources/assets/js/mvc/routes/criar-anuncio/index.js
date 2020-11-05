@@ -79,6 +79,7 @@ module.exports.callback = ($) => {
     stepsContainer
             .on('step:change:checkout step:change:finalizar', function (e) {
                 BtnContinuar.disable();
+                BtnContinuar.get().addClass('hide');
             })
             .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
                 BtnContinuar.enable();
@@ -132,7 +133,6 @@ function checkLastStep() {
     var inLast = allStepsInlast();
     if (inLast) {
         text = 'Finalizar';
-        // btn.addClass('hide');
     } else {
         btn.addClass('btn-laranja').attr('disabled', false);
     }
