@@ -132,6 +132,7 @@ function checkLastStep() {
     var inLast = allStepsInlast();
     if (inLast) {
         text = 'Finalizar';
+        btn.addClass('hide');
     } else {
         btn.addClass('btn-laranja').attr('disabled', false);
     }
