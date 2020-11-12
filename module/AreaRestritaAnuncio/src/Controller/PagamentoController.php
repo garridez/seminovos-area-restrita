@@ -169,9 +169,9 @@ class PagamentoController extends AbstractActionController
             die;
             
         }
-
-        echo $this->getApiClient()
-            ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;
+        
+        /*echo $this->getApiClient()
+            ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
         
         $response = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)

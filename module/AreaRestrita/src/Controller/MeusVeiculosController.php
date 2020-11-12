@@ -160,6 +160,7 @@ class MeusVeiculosController extends AbstractActionController
                 "enviar_comprovante" => false,
                 "renovar_plano" => false,
                 "inativar" => false,
+                "certificado" => false,
             ];
 
             switch ($veiculo['idStatus']) {
@@ -278,6 +279,7 @@ class MeusVeiculosController extends AbstractActionController
                 "enviar_comprovante" => false,
                 "renovar_plano" => false,
                 "alerta" => false,
+                "certificado" => false,
             ];
 
             switch ($veiculo['idStatus']) {
@@ -297,6 +299,9 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
+                    if($veiculo['flagCertificado'] != 1){
+                        $temp_acoes["certificado"] = true;
+                    }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
