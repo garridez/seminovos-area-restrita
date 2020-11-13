@@ -62,9 +62,9 @@ module.exports.callback = ($) => {
 
         let valorTotal = 0.00;
         valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
-
-
-        $('.valor-total').find('[data-valor-total]').html(valorTotal);
+        if($('#dados-basicos .acao').val() != 'addCertificado'){
+          $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
+        }
     });
 
     $('.step-container').on('step:pre-exit:plano', function (e) {
