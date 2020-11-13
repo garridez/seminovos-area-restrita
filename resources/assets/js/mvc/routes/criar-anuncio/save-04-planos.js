@@ -36,7 +36,7 @@ module.exports.callback = ($) => {
             }
         });
 
-         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
+        if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
             $("#idPlano").val(idPlano);
             $("#radio-idPlano-"+idPlano).click();
@@ -60,7 +60,7 @@ module.exports.callback = ($) => {
         planoSelecionado.show();
         planoSelecionado.addClass('plano-selecionado');
 
-        let valorTotal = 29.90;
+        let valorTotal = 0.00;
         valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
 
 

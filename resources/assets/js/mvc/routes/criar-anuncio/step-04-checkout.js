@@ -25,6 +25,10 @@ module.exports.callback = ($) => {
             $("#acao").val("trocarPlano");
             
         }
+        
+        if (location.hash && location.hash.indexOf('addCertificado') !== -1 && location.hash.indexOf('planoCem') !== -1) {
+            $("#acao").val("addCertificado");  
+        }
 
         window.location = '#checkout';
         var planoAtual = $('#dados-basicos #idPlano').val();

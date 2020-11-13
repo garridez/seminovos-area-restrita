@@ -21,6 +21,8 @@ module.exports = function () {
   let flagCertificado = $(ctx + '.flagCertificado');
   
   let certificado = $('#dados-basicos .certificado');
+  
+  let acao = $('#dados-basicos .acao');
 
   let classAcitive = 'remove-certificado';
 
@@ -33,6 +35,10 @@ module.exports = function () {
 
     e.preventDefault();
     let remover = flagCertificado.is(':checked');
+    
+    if(acao.val() == 'addCertificado'){
+        $('.valor-total').find('[data-valor-total]').html('29,90');
+    }
 
     resumoContainer.addClass(classAcitive);
     certificadoContainer.addClass(classAcitive);
