@@ -425,12 +425,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             </div>
                         </div>
                         <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
-                        <div class="bg-verde text-white text-center align-items-center  w-100">
-                            <div><a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem"
-                                        class="btn btn-sm btn-verde text-white d-flex align-items-center btn-certificado">Adiquira seu certificado</a>
-                            </div>
-                            <b>R$ 29,90</b>
-                        </div>
+                            <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
+                                <div><span>Adiquira seu certificado</span></div>
+                                <b>R$ 29,90</b>
+                            </a>
                         <?php } ?>
                     </div>
                 </div>
