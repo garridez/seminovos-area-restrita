@@ -199,7 +199,7 @@ class CadastrarController extends AbstractActionController
     {
         $email = $this->params()->fromRoute('email',false);
         if(!$email){
-            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']); 
+            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']);
         }
 
         /* @var $cadastrosModel Cadastros */
@@ -231,7 +231,7 @@ class CadastrarController extends AbstractActionController
     {
         $cpf = $this->params()->fromRoute('cpf',false);
         if(!$cpf){
-            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']); 
+            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']);
         }
 
         /* @var $cadastrosModel Cadastros */
@@ -245,19 +245,23 @@ class CadastrarController extends AbstractActionController
         ]);
 
         $cpfDisponivel = false;
+        $emailVinculado = false;
         if(!sizeof($dadosCadastro)){
             $cpfDisponivel =  true;
+        }else{
+            $emailVinculado = $dadosCadastro[0]['email'];
         }
 
         return new JsonModel( [
             'status' => 200,
-            'cpfDisponivel' => $cpfDisponivel
+            'cpfDisponivel' => $cpfDisponivel,
+            'emailVinculado' => $emailVinculado
         ]);
     }
 
     public function cadastroSimplesAction()
     {
-        
+
         $dadosForm = new CadastroSimplesForm();
 
         $request = $this->getRequest();
@@ -283,7 +287,7 @@ class CadastrarController extends AbstractActionController
                 if (!$data['cpfResponsavel']) {
                      unset($data['cpfResponsavel']);
                  }
-                 
+
                 $resPost = $cadastrosModel->post($data);
                 if ($resPost->status === 200) {
                     // Redireciona internamente para o login
@@ -313,7 +317,7 @@ class CadastrarController extends AbstractActionController
                 die;
             }
         } else {
-        
+
             $view = new ViewModel([
                 'formCadastro' => $dadosForm
             ]);
@@ -321,7 +325,7 @@ class CadastrarController extends AbstractActionController
             $this->layout('layout/blank.phtml');
 
             return $view;
-        
+
         }
     }
 }

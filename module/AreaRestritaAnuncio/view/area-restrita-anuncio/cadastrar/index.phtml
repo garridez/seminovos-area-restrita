@@ -17,7 +17,7 @@ $fields['telefone_2_is_wpp']->setChecked(false);
 $fields['telefone_3_is_wpp']->setChecked(false);
 $fields['senha']->setAttribute('autocomplete', 'off');
 ?>
-<form method="POST" name="form_particularSite" class="form-group m-0 " role="form" id="form_particularSite"
+<form method="POST" name="form_particularSite" class="container-fluid" role="form" id="form_particularSite"
     action="me-cadastrar">
     <div class="container-fluid container-fixed-lg">
         <div class="row">
@@ -35,20 +35,36 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                         </a>
                     </div>
                     <div class="card-header ">
-                        <div class="card-title"><span class="text-capitalize">SeminovosBH - Cadastro</span> <span
-                                class="text-lowercase">de</span> <span class="text-capitalize">Usuário</span></div>
+                        <div class="card-title">
+                            <span class="">SeminovosBH - Cadastro de Usuário</span> 
+                        </div>
                     </div>
                     <div class="card-body">
                         <p>
                             <small>Preencha os dados abaixo e clique no botão cadastrar para criar seu cadastro</small>
                         </p>
                         <div class="row">
-                            <div class="form-group col-8 col-md-6 required">
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
+                                <?= $this->formText($fields['cpfResponsavel']) ?>
+                            </div>
+                            <div class="form-group col-6 col-md-6 required">
                                 <?= $this->formLabel($fields['responsavelNome']) ?>
                                 <?= $this->formText($fields['responsavelNome']) ?>
                             </div>
-                            <div class="form-group col-4 col-md-6">
-                                <?= $this->formLabel($fields['dataNascimento']) ?>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6 required">
+                                <?= $this->formLabel($fields['rg']) ?>
+                                <?= $this->formText($fields['rg']) ?>
+                            </div>
+                            <div class="form-group col-6 col-md-6">
+                                <div class="d-none d-md-block">
+                                    <?= $this->formLabel($fields['dataNascimento']) ?>
+                                </div>
+                                <div class="d-block d-md-none">
+                                    <?= str_replace('Data de Nascimento','Nascimento',$this->formLabel($fields['dataNascimento'])) ?>
+                                </div>
                                 <?= str_replace('class="', 'placeholder="31/12/1980" class="', $this->formElement($fields['dataNascimento'])) ?>
                             </div>
                         </div>
@@ -63,14 +79,20 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                                     placeholder="seuemail@example.com.br" required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['cpfResponsavel']) ?>
-                                <?= $this->formText($fields['cpfResponsavel']) ?>
+                        <div class="row row-senha">
+                            <div class="form-group required col-6 mb-0">
+                                <?= $this->formLabel($fields['senha']) ?>
+                                <?= $this->formPassword($fields['senha']) ?>
                             </div>
-                            <div class="form-group col-6 required">
-                                <?= $this->formLabel($fields['rg']) ?>
-                                <?= $this->formText($fields['rg']) ?>
+                            <div class="form-group required col-6 mb-0">
+                                <?= $this->formLabel($fields['confirmacaoSenha']) ?>
+                                <?= $this->formPassword($fields['confirmacaoSenha']) ?>
+                            </div>
+                            <div class="col-12">
+                                <small class="text-success">
+                                    sua senha deve conter no
+                                    mínimo 4 caractéres
+                                </small>
                             </div>
                         </div>
                         <div class="row">
@@ -84,30 +106,30 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             </div>
                         </div>
                         <div class="row d-flex align-items-end">
-                            <div class="form-group col-4 required">
+                            <div class="p-0 form-group col-4 required">
                                 <?= $this->formLabel($fields['telefone_2']) ?>
                                 <?= $this->formText($fields['telefone_2']) ?>
                             </div>
-                            <div class="form-group col-4 required">
+                            <div class="p-0 form-group col-4 required">
                                 <?= $this->formLabel($fields['operadora_2']) ?>
                                 <?= $this->formSelect($fields['operadora_2']) ?>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="p-0 pl-1 pl-md-2 form-group col-4">
                                 <div class="checkbox check-success m-0">
                                     <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
                                 </div>
                             </div>
                         </div>
                         <div class="row d-flex align-items-end">
-                            <div class="form-group col-4">
+                            <div class="p-0 form-group col-4">
                                 <?= $this->formLabel($fields['telefone_3']) ?>
                                 <?= $this->formText($fields['telefone_3']) ?>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="p-0 form-group col-4">
                                 <?= $this->formLabel($fields['operadora_3']) ?>
                                 <?= $this->formSelect($fields['operadora_3']) ?>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="p-0 pl-1 pl-md-2 form-group col-4">
                                 <div class="checkbox check-success m-0">
                                     <?= $this->formCheckbox($fields['telefone_3_is_wpp']) ?>
                                 </div>
@@ -120,32 +142,21 @@ $fields['senha']->setAttribute('autocomplete', 'off');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 mt-2">
-                                <small class="text-success ml-2">
-                                    sua senha deve conter no
-                                    mínimo 4 caractéres
-                                </small>
-                            </div>
-                            <div class="form-group required col-6">
-                                <?= $this->formLabel($fields['senha']) ?>
-                                <?= $this->formPassword($fields['senha']) ?>
-                            </div>
-                            <div class="form-group required col-6">
-                                <?= $this->formLabel($fields['confirmacaoSenha']) ?>
-                                <?= $this->formPassword($fields['confirmacaoSenha']) ?>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-12">
-                                <div class="checkbox check-success">
+                                <div class="checkbox check-success termo_responsabilidade m-0">
                                     <input type="hidden" name="termo_responsabilidade" value="0">
                                     <input type="checkbox" required name="termo_responsabilidade" value="1"
                                         id="termo_responsabilidade">
-                                    <label for="termo_responsabilidade"> Li e aceito os <br class="d-block d-md-none"><a
+                                    <label for="termo_responsabilidade"> Li e aceito os <a
                                             href="https://seminovos.com.br/termo-de-responsabilidade"
                                             target="_blank">termos de
                                             responsibilidade</a>.</label>
                                 </div>
+                            </div>
+                            <div class="col-12 obrigatorios mb-2">
+                                <small>
+                                    <span class="text-danger">*</span> Esses campos são obrigatórios
+                                </small>
                             </div>
                         </div>
                         <div class="row">
