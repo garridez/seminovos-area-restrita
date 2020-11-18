@@ -77,16 +77,24 @@ class CadastrarController extends AbstractActionController
         }
         $post = $request->getPost();
 
-        $email = $post['emailLembrarSenha'];
+        $emailOuCpf = $post['emailLembrarSenha'];
         $tipoCadastro = 2;
+
+        // Verifica se parametro enviado é email ou cpf
+        $campoEmailCpf = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $emailOuCpf) ? 'cpfResponsavel' : 'email';
+
+        // Se for CPF retira a pontuação
+        if ($campoEmailCpf == 'cpfResponsavel') {
+            $emailOuCpf = preg_replace('/(\.|-)/', '', $emailOuCpf);
+        }
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o email informado já foi cadastrado no sistema
+        #verifica se o email ou CPF informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'tipoCadastro' => $tipoCadastro,
-            'email' => $email,
+            $campoEmailCpf => $emailOuCpf,
             'checkEmail' => true
         ]);
 
