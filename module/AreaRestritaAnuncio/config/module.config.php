@@ -256,6 +256,26 @@ return [
                     ],
                 ],
             ],
+            'remember-pass-phone' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/remember-pass-phone',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'rememberPassPhone'
+                    ],
+                ],
+            ],
+            'validate-token' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/validate-token',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'validateToken'
+                    ],
+                ],
+            ],
             'remember-pass' => [
                 'type' => Segment::class,
                 'options' => [
@@ -263,6 +283,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
                         'action' => 'rememberPass'
+                    ],
+                ],
+            ],
+            'remember-pass-save' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/remember-pass-save',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'rememberPassSave'
                     ],
                 ],
             ],
