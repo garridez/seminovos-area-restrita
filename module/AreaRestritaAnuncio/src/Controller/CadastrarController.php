@@ -140,6 +140,57 @@ class CadastrarController extends AbstractActionController
     }
 
     /**
+     * Envia o token para o cliente
+     * 
+     * @return Json
+     */
+    public function rememberPassPhoneAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $telefone = $request['telefone'];
+
+        /* @var $enviarEmailModel EnviarEmail */
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsPost(['telefone' => $telefone])->json();
+
+        return new JsonModel($retorno); 
+    }
+
+    /**
+     * Valida o Token Sms para restaurar senha
+     */
+    public function validateTokenAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $token = $request['token'];
+
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsGet(['token' => $token])->json();
+
+        return new JsonModel($retorno);
+    }
+
+
+    /**
+     * Salva nova senha do usuário
+     */
+    public function rememberPassSaveAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsDelete([
+            'senha' => $request['senha'], 
+            'idCadastro' => $request['idCadastro']
+            ])->json();
+
+        return new JsonModel($retorno);
+    }
+    
+
+    /**
      * Verifica se a email está disponível para cadastro
      * Retorna TRUE se a email estiver disponível
      * Retorna FALSE se a email estiver indisponível
