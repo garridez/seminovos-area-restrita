@@ -102,7 +102,7 @@ class CadastrarController extends AbstractActionController
             echo json_encode([
                 'status' => 400,
                 'title' => 'Method Not Allowed',
-                'detail' => 'Email incorreto. Verifique e tente novamente',
+                'detail' => 'Email ou CPF não encontrado. Verifique e tente novamente',
             ]);
             die;
         }
