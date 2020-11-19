@@ -40,7 +40,7 @@
     </div>
 </div>
 
-
+<!-- Modal lembrar senha email/cpf -->
 <div class="modal fade" id="modalLembrarSenha" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaLabel"
      aria-hidden="true">
     <form method="POST" name="formLembrarSenha" id="formLembrarSenha" action="remember-pass">
@@ -48,7 +48,7 @@
             <div class="modal-content">
                 <div class="modal-header py-2">
                     <h5 class="modal-title text-warning" id="modalLembrarSenhaLabel">Esqueci minha senha</h5>
-                    <button type="button" id="fecharModalEmail" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -56,7 +56,7 @@
                     <div class="container">
                         <div class="row pt-2">
                             <div class="col-md-12 no-padding sm-p-l-10">
-                                <p>Não lembra sua senha? Digite o e-mail cadastrado do portal no campo abaixo, para
+                                <p>Não lembra sua senha? Digite o e-mail ou CPF cadastrado do portal no campo abaixo, para
                                     receber sua nova senha!</p>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
                                         <input type="text" id="emailLembrarSenha" name="emailLembrarSenha" class="form-control" id="inlineFormInputGroup" placeholder="Email ou CPF">
                                     </div>
                                     <p class="text-justify mt-2"> 
-                                        Não lembro ou não possuo meu e-mail. <br>
-                                        <a href="#" data-toggle="modal" onclick="fecharModalEmail()" data-target="#modalLembrarSenhaTelefone" class="text-info btn-esqueci-minha-senha semi-bold">
+                                        Não lembro ou não possuo meu e-mail e CPF. <br>
+                                        <a href="#" data-toggle="modal" onclick="fecharModal('modalLembrarSenha')" data-target="#modalLembrarSenhaTelefone" class="text-info btn-esqueci-minha-senha semi-bold">
                                             <span class="semi-bold"></span>
                                             Recuperar via telefone
                                         </a>
@@ -164,13 +164,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row border-top py-2">
-                            <div class="col-md-12 no-padding sm-p-l-10">
-                                <p class="text-justify">Ao solicitar uma nova senha o site enviará a nova senha para
-                                    o e-mail cadastrado, se não receber o e-mail na sua caixa de entrada verifique
-                                    na sua caixa de lixo eletrônico (spam).</p>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <!-- Passo 3 - Nova Senha -->
@@ -206,11 +199,6 @@
                                     <p class="text-muted small mt-2 text-danger" style="display:none;">senha inválida!</p>
                             </div>
                         </div>
-                        <!-- <div class="row border-top py-2">
-                            <div class="col-md-12 no-padding sm-p-l-10">
-                                <p class="text-justify"></p>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <!-- Passo 4 - Conclusão -->
@@ -244,6 +232,38 @@
         </div>
 </div>
 
+<!-- Modal email enviado -->
+<div class="modal fade" id="modalEmailEnviado" tabindex="-1" role="dialog" aria-labelledby="modalEmailEnviadoLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h5 class="modal-title text-warning" id="modalLembrarSenhaLabel">Senha Enviada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row py-2">
+                        <div class="col-md-12 no-padding sm-p-l-10">
+                            <p class="text-justify">
+                                A senha foi enviada para o e-mail: <b><span id="emailEnviado"></span></b> <br>
+                                Caso não possua esse e-mail clique em
+                                <a href="javascript:void(0);" data-toggle="modal" onclick="fecharModal('modalEmailEnviado')" data-target="#modalLembrarSenhaTelefone" class="text-info btn-esqueci-minha-senha semi-bold">
+                                    <span class="semi-bold"></span>
+                                    recuperar por SMS/telefone
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal lembrar senha revenda -->
 <div class="modal fade" id="modalLembrarSenhaRevenda" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaLabelRevenda"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -388,8 +408,8 @@
         document.getElementById('lembrarSenhaTelefone').value = telefone;
     }
 
-    function fecharModalEmail() {
-        document.getElementById('fecharModalEmail').click();
+    function fecharModal(modal) {
+        $('#' + modal).modal('hide');
     }
 </script>
 
