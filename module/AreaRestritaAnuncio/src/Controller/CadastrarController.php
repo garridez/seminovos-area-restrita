@@ -143,8 +143,8 @@ class CadastrarController extends AbstractActionController
         if ($retorno instanceof \SnBH\ApiClient\Response) {
             $retorno = $retorno->json();
         }
-        echo json_encode($retorno);
-        die;
+
+        return new JsonModel(['status' => 200, 'email' => $dadosCadastro['email']]);
     }
 
     /**
