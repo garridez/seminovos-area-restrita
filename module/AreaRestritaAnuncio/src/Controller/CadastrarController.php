@@ -144,7 +144,10 @@ class CadastrarController extends AbstractActionController
             $retorno = $retorno->json();
         }
 
-        return new JsonModel(['status' => 200, 'email' => $dadosCadastro['email']]);
+        // Mascara email
+        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{3})([a-zA-Z0-9]{2,})\.(.*)/', '$1***$3***$5@$6***.$8', $dadosCadastro['email']);
+
+        return new JsonModel(['status' => 200, 'email' => $email]);
     }
 
     /**
