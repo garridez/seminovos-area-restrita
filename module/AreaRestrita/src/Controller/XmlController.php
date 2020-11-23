@@ -32,12 +32,17 @@ class XmlController extends AbstractActionController
 
         $dadosSiteHospedado = $siteHospedado->get();
 
-        $banners = $this->getApiClient()
-                        ->SiteHospedadoBannerGet(['idSiteHospedado' => 102])
-                        ->json();
-        
+        $cadastro = $this->getContainer()->get(Cadastros::class);
+        $dadosCadastro = $cadastro->getCurrent();
+
+        $planos = [
+            'nitro' => $dadosCadastro['nitro'],
+            'turbo' => $dadosCadastro['turbo'],
+            'simples' => $dadosCadastro['simples'],
+        ];
+
         return new ViewModel([
-            'banners' => $banners
+            'planos' => $planos,
         ]);
     }
 
@@ -50,11 +55,11 @@ class XmlController extends AbstractActionController
     {
         $request = $this->getRequest();
 
-        $link = $request->getPost()->toArray();
+        $inputs = $request->getPost()->toArray();
         $veiculosComErro = [];
 
         // valida link XML
-        if (substr($link['href'], -3) != 'xml') {
+        if (substr($inputs['href'], -3) != 'xml') {
             die('Não é um arquivo .xml válido');
             // return $this->redirect()->toUrl('/xml');
         }
@@ -62,6 +67,31 @@ class XmlController extends AbstractActionController
         /* @var $siteHospedadoModel siteHospedado */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
+
+        // Numero de veículos que podem ser cadastrados no plano selecionado
+        $quantidadeAnunciosPlano = $dadosCadastro[$inputs['plano']];
+
+        switch ($inputs['plano']) {
+            case 'simples':
+                $idPlano = 1;
+                break;
+            
+            case 'turbo':
+                $idPlano = 2;
+                break;
+            
+            case 'nitro':
+                $idPlano = 3;
+                break;
+            
+            case 'nitro + home|nitro+home':
+                $idPlano = 4;
+                break;
+            
+            case 'basico':
+                $idPlano = 5;
+                break;
+        }
 
         // Busca os acessorios carro
         $acessoriosCarroApi = $this->getApiClient()->acessoriosGet(['idTipo' => 1]);
@@ -89,11 +119,13 @@ class XmlController extends AbstractActionController
                 return $array;
             }, $modelosApi->data);        
 
-
+        
+            
         // Carrega o XML
         $xmlDoc = new \DOMDocument();
-        $xmlDoc->load($link['href']);        
+        $xmlDoc->load($inputs['href']);        
         $document = $xmlDoc->documentElement;
+        $quantidadeVeiculosCadastrados = 0;
 
         foreach ($document->childNodes as $ad) {
             $veiculo = [];
@@ -101,8 +133,8 @@ class XmlController extends AbstractActionController
             $veiculo['troca'] = 1;
 
             foreach ($ad->childNodes as $item) {
-                // $item->nodeName = $item->nodeValue
-                // TITLE = fiat idea sporting 1.8 flex 16v 5p
+                // $item->nodeName => $item->nodeValue
+                // TITLE => fiat idea sporting 1.8 flex 16v 5p
 
                 switch ($item->nodeName) {
                     case 'TITLE': // caracteristica
@@ -244,35 +276,50 @@ class XmlController extends AbstractActionController
             try {
                 
                 $veiculo['flagIpva'] = 1;
-                $veiculo['idPlano'] = 1;
+                $veiculo['idPlano'] = $idPlano;
                 $apiClient = $this->getApiClient();
                 
-                // Salva o veículo
-                $retorno = $apiClient->veiculosPost($veiculo)->json();
-
-                if ($retorno['status'] != 200) {
-                    $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
+                if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
+                    $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ({$quantidadeAnunciosPlano})";
                 } else {
+                    // Salva o veículo
+                    $retorno = $apiClient->veiculosPost($veiculo)->json();
 
-                    // Salva imagens do veículo
-                    $imagem = [
-                        'idVeiculo' => $retorno['data'][0]['idVeiculo'],
-                        'idTipo' => 1,
-                        'flagS3' => 0,
-                    ];
-
-                    $imagem[$apiClient::KEY_FILES] = [
-                        'fotos' => $arrayFotos
-                    ];
-
-                    // Faz upload da imagem
-                    $retorno = $apiClient->veiculosFotosPost($imagem)->json();
+                    if ($retorno['status'] != 200) {
+                        $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
+                    } else {
+                        $quantidadeVeiculosCadastrados++;
+    
+                        // Salva imagens do veículo
+                        $imagem = [
+                            'idVeiculo' => $retorno['data'][0]['idVeiculo'],
+                            'idTipo' => 1,
+                            'flagS3' => 0,
+                        ];
+    
+                        $imagem[$apiClient::KEY_FILES] = [
+                            'fotos' => $arrayFotos
+                        ];
+    
+                        // Faz upload da imagem
+                        $retorno = $apiClient->veiculosFotosPost($imagem)->json();
+                    }
                 }
 
             } catch (\Exception $e) {
                 $veiculosComErro[$veiculo['placa']] = $e->getMessage();
             }
         }
+
+        $anunciosRestantes = $quantidadeAnunciosPlano - $quantidadeVeiculosCadastrados;
+
+        // Remove a quantidade de veículos cadastrados do plano escolhido
+        $resPut = $this->getApiClient()->cadastrosPut(
+            [
+                $inputs['plano'] => $anunciosRestantes,
+                'tipoCadastro' => $dadosCadastro['tipoCadastro']
+            ], 
+            $dadosCadastro['idCadastro']);
 
         $view = new ViewModel([
             'veiculosComErro' => $veiculosComErro

@@ -30,29 +30,43 @@ $banners = $this->banners;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    foreach ($banners['dados'] as $plano):
+                                    <?php foreach ($banners as $banner): 
+                                        // Verifica se é banner antigo
+                                        if (!preg_match("/{$siteHospedado[0]['dominio']}/", $banner['image'])) {
+                                            if (!preg_match("/\.\.\/\.\.\//", $banner['image'])) {
+                                                $banner['image'] = $siteHospedado[0]['dominio'] . '/banners/' . $banner['image'];
+                                            } else {
+                                                $banner['image'] = 'default';
+                                            }
+                                        }    
                                     ?>
-                                    <tr class="border-bottom">
-                                        <td class="pl-0">
-                                            <div class="radio radio-success">
-                                                IMG
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            
-                                        </td>
-                                        <td class="">
-                                            <h4 class="text-orange font-montserrat">R$
-                                                <span id="valor"><?= $plano['valor'] ?></span>
-                                            </h4>
-                                        </td>
-                                    </tr>
 
+                                        <tr class="border-bottom">
+                                            <td class="pl-0" align="center" style="vertical-align: middle;">
+                                                <div class="radio radio-success p-2">
+                                                    <img src="https://s3-us-west-2.amazonaws.com/site-revenda.seminovosbh.com.br/<?= $banner['image'] ?>" alt="" srcset="" width="400">
+                                                    <?= $banner['image'] == 'default' ? 'Banner não encontrado' : '' ?>
+                                                </div>
+                                            </td>
+                                            <td class="" style="vertical-align: middle;">
+                                                <a href="<?= $banner['href'] ?>" target="<?= $banner['target'] ?>">
+                                                    <?= $banner['href'] ?>
+                                                </a>
+                                            </td>
+                                            <td class="" style="vertical-align: middle;">
+                                                <h4 class="text-orange">
+                                                    <form action="/banners/excluir" method="post">
+                                                        <input type="hidden" name="idSiteHospedadoBanner" value="<?= $banner['idSiteHospedadoBanner'] ?>" />
+                                                        <input type="hidden" name="key" value="<?= $banner['image'] ?>" />
+                                                        <button type="submit">Deletar</button>
+                                                    </form>
+                                                </h4>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
 
                                     <?php
-                                    if (count($banners['dados']) == 0) {
+                                    if (count($banners) == 0) {
                                     ?>
                                         <tr>
                                             <td colspan="3" align="center">Nenhum banner cadastrado ainda.</td>

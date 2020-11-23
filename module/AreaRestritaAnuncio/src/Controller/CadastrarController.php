@@ -77,16 +77,24 @@ class CadastrarController extends AbstractActionController
         }
         $post = $request->getPost();
 
-        $email = $post['emailLembrarSenha'];
+        $emailOuCpf = $post['emailLembrarSenha'];
         $tipoCadastro = 2;
+
+        // Verifica se parametro enviado é email ou cpf
+        $campoEmailCpf = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $emailOuCpf) ? 'cpfResponsavel' : 'email';
+
+        // Se for CPF retira a pontuação
+        if ($campoEmailCpf == 'cpfResponsavel') {
+            $emailOuCpf = preg_replace('/(\.|-)/', '', $emailOuCpf);
+        }
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o email informado já foi cadastrado no sistema
+        #verifica se o email ou CPF informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'tipoCadastro' => $tipoCadastro,
-            'email' => $email,
+            $campoEmailCpf => $emailOuCpf,
             'checkEmail' => true
         ]);
 
@@ -94,7 +102,7 @@ class CadastrarController extends AbstractActionController
             echo json_encode([
                 'status' => 400,
                 'title' => 'Method Not Allowed',
-                'detail' => 'Email incorreto. Verifique e tente novamente',
+                'detail' => 'Email ou CPF não encontrado. Verifique e tente novamente',
             ]);
             die;
         }
@@ -135,10 +143,64 @@ class CadastrarController extends AbstractActionController
         if ($retorno instanceof \SnBH\ApiClient\Response) {
             $retorno = $retorno->json();
         }
-        echo json_encode($retorno);
-        die;
+
+        // Mascara email
+        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{3})([a-zA-Z0-9]{2,})\.(.*)/', '$1***$3***$5@$6***.$8', $dadosCadastro['email']);
+
+        return new JsonModel(['status' => 200, 'email' => $email]);
+    }
+
+    /**
+     * Envia o token para o cliente
+     * 
+     * @return Json
+     */
+    public function rememberPassPhoneAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $telefone = $request['telefone'];
+
+        /* @var $enviarEmailModel EnviarEmail */
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsPost(['telefone' => $telefone])->json();
+
+        return new JsonModel($retorno); 
+    }
+
+    /**
+     * Valida o Token Sms para restaurar senha
+     */
+    public function validateTokenAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $token = $request['token'];
+
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsGet(['token' => $token])->json();
+
+        return new JsonModel($retorno);
+    }
+
+
+    /**
+     * Salva nova senha do usuário
+     */
+    public function rememberPassSaveAction()
+    {
+        $request = $this->getRequest()->getPost();
+        $apiClient = $this->getApiClient();
+
+        $retorno = $apiClient->smsDelete([
+            'senha' => $request['senha'], 
+            'idCadastro' => $request['idCadastro']
+            ])->json();
+
+        return new JsonModel($retorno);
     }
     
+
     /**
      * Verifica se a email está disponível para cadastro
      * Retorna TRUE se a email estiver disponível
@@ -148,7 +210,7 @@ class CadastrarController extends AbstractActionController
     {
         $email = $this->params()->fromRoute('email',false);
         if(!$email){
-            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']); 
+            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']);
         }
 
         /* @var $cadastrosModel Cadastros */
@@ -180,7 +242,7 @@ class CadastrarController extends AbstractActionController
     {
         $cpf = $this->params()->fromRoute('cpf',false);
         if(!$cpf){
-            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']); 
+            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']);
         }
 
         /* @var $cadastrosModel Cadastros */
@@ -194,19 +256,23 @@ class CadastrarController extends AbstractActionController
         ]);
 
         $cpfDisponivel = false;
+        $emailVinculado = false;
         if(!sizeof($dadosCadastro)){
             $cpfDisponivel =  true;
+        }else{
+            $emailVinculado = $dadosCadastro[0]['email'];
         }
 
         return new JsonModel( [
             'status' => 200,
-            'cpfDisponivel' => $cpfDisponivel
+            'cpfDisponivel' => $cpfDisponivel,
+            'emailVinculado' => $emailVinculado
         ]);
     }
 
     public function cadastroSimplesAction()
     {
-        
+
         $dadosForm = new CadastroSimplesForm();
 
         $request = $this->getRequest();
@@ -232,7 +298,7 @@ class CadastrarController extends AbstractActionController
                 if (!$data['cpfResponsavel']) {
                      unset($data['cpfResponsavel']);
                  }
-                 
+
                 $resPost = $cadastrosModel->post($data);
                 if ($resPost->status === 200) {
                     // Redireciona internamente para o login
@@ -262,7 +328,7 @@ class CadastrarController extends AbstractActionController
                 die;
             }
         } else {
-        
+
             $view = new ViewModel([
                 'formCadastro' => $dadosForm
             ]);
@@ -270,7 +336,7 @@ class CadastrarController extends AbstractActionController
             $this->layout('layout/blank.phtml');
 
             return $view;
-        
+
         }
     }
 }

@@ -8,11 +8,24 @@ $fields = $dadosForm->getElements();
 
 <?= $this->form()->openTag($dadosForm) ?>
 <div class="container d-flex justify-content-center">
-    <div class="row col-12 col-md-6 pt-3 bg-white">
+    <div class="row col-12 col-md-6 card card-default m-0">
         <div class="col-12">
-            <h1>
-                Cadastre-se
-            </h1>
+            <div class="snbh-logo-container d-flex justify-content-center mt-3">
+                <a href="/" title="Voltar e fazer login">
+                    <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+                        <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                        <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-header px-0 text-center">
+                <div class="card-title">
+                    <span class="">SeminovosBH - Cadastro Simplificado</span> 
+                </div>
+            </div>
+            <div class="card-body">
+                <p><small>Preencha os dados abaixo e clique no botão cadastrar para criar seu cadastro</small></p>
+            </div>
         </div>
         <div class="col-12">
             <?php if ($this->erro): ?>
@@ -20,6 +33,20 @@ $fields = $dadosForm->getElements();
                 <?= $this->erro ?>
                 </div>
             <?php endif; ?>
+        </div>
+        <div class="col-12 row row-nome">
+            <div class="col-6 col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($fields['cpfResponsavel'])  ?>
+                    <?= $this->formText($fields['cpfResponsavel'])  ?>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group required">
+                    <?= $this->formLabel($fields['responsavelNome'])  ?>
+                    <?= $this->formText($fields['responsavelNome'])  ?>
+                </div>
+            </div>
         </div>
         <div class="col-12">
             <div class="form-group required">
@@ -33,57 +60,65 @@ $fields = $dadosForm->getElements();
                 <?= $this->formEmail($fields['confirmacaoEmail'])  ?>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group required">
-                <?= $this->formLabel($fields['responsavelNome'])  ?>
-                <?= $this->formText($fields['responsavelNome'])  ?>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group">
-                <?= $this->formLabel($fields['cpfResponsavel'])  ?>
-                <?= $this->formText($fields['cpfResponsavel'])  ?>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group required mb-0">
-                <?= $this->formLabel($fields['senha'])  ?>
-                <?= $this->formPassword($fields['senha'])  ?>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group required mb-0">
-                <?= $this->formLabel($fields['confirmacaoSenha'])  ?>
-                <?= $this->formPassword($fields['confirmacaoSenha'])  ?>
-            </div>
-        </div>
-        <div class="col-12 mb-2">
-            <small>(Recomendamos que a senha tenha no mínimo <b>4 caracteres</b> incluindo letras e números)</small>
-        </div>
-        <div class="col-12">
-            <div class="row d-flex align-items-end">
-                <div class="form-group required col-12 col-md-4 required">
-                    <?= $this->formLabel($fields['telefone_2']) ?>
-                    <?= $this->formText($fields['telefone_2']) ?>
+        
+        <div class="col-12 row row-senha">
+            <div class="col-6 col-md-6">
+                <div class="form-group required mb-0">
+                    <?= $this->formLabel($fields['senha'])  ?>
+                    <?= $this->formPassword($fields['senha'])  ?>
                 </div>
-                <div class="form-group col-6 col-md-4 required">
-                    <?= $this->formLabel($fields['operadora_2']) ?>
-                    <?= $this->formSelect($fields['operadora_2']) ?>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group required mb-0">
+                    <?= $this->formLabel($fields['confirmacaoSenha'])  ?>
+                    <?= $this->formPassword($fields['confirmacaoSenha'])  ?>
                 </div>
-                <div class="form-group col-6 col-md-4">
-                    <div class="checkbox check-success m-0">
-                        <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
-                    </div>
+            </div>
+            <div class="col-12 mb-2 text-success">
+                <small class="text-success">
+                    sua senha deve conter no
+                    mínimo 4 caractéres
+                </small>
+            </div>
+        </div>
+        
+        <div class="col-12 row row-telefone d-flex align-items-end">
+            <div class="form-group col-4 col-md-4 required">
+                <?= $this->formLabel($fields['telefone_2']) ?>
+                <?= $this->formText($fields['telefone_2']) ?>
+            </div>
+            <div class="form-group col-4 col-md-4 required">
+                <?= $this->formLabel($fields['operadora_2']) ?>
+                <?= $this->formSelect($fields['operadora_2']) ?>
+            </div>
+            <div class="form-group col-4 col-md-4">
+                <div class="checkbox check-success m-0">
+                    <?= $this->formCheckbox($fields['telefone_2_is_wpp']) ?>
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-block btn-laranja text-white" value="Cadastrar">Cadastrar</button>
+        <div class="col-12 row d-flex align-items-center flex-wrap-reverse">
+            <div class="col-12 col-md-6">
+                <div class="checkbox check-success termo_responsabilidade my-1">
+                    <input type="hidden" name="termo_responsabilidade" value="0">
+                    <input type="checkbox" required name="termo_responsabilidade" value="1"
+                        id="termo_responsabilidade">
+                    <label for="termo_responsabilidade"> Li e aceito os <a
+                            href="https://seminovos.com.br/termo-de-responsabilidade"
+                            target="_blank">termos de
+                            responsibilidade</a>.</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 obrigatorios my-1">
+                <small>
+                    <span class="text-danger">*</span> Esses campos são obrigatórios
+                </small>
             </div>
         </div>
-        <div class="col mt-3 mb-3">
-            <span class="text-danger h3">*</span> Esses campos são obrigatórios
+        <div class="col-12">  
+            <div class="form-group mb-2">
+                <button type="submit" name="submit" class="btn btn-block btn-amarelo text-white" value="Cadastrar">Cadastrar</button>
+            </div>
         </div>
     </div>
 </div>
