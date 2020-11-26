@@ -116,24 +116,26 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         </div>
                         <div class="col-12 col-md-8 col-lg-9">
                             <div class="row justify-content-between m-t-10 active px-2 py-2 pb-md-0">
-                                <div
-                                    class="justify-content-center row col-12 h-auto justify-content-md-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano'] ?>-20 pb-2 pb-md-0 mb-md-0">
-                                    <p
-                                        class="col-12 col-md-6 m-0 p-0 text-uppercase h4 text-cinza-escuro d-flex align-items-center">
-                                        <span class="mr-2">
+                                <div class="justify-content-center col-12 justify-content-md-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano'] ?>-20">
+                                    <div class="d-flex flex-wrap veiculo-titulo">
+                                        <div class="text-uppercase h4 text-cinza-escuro marca-modelo">
                                             <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] . ' ' . $veiculo['caracteristica']; ?>
-                                        </span>
+                                        </div>
+                                        <div class="preco">
+                                            <h4
+                                                class="d-flex h4 text-cinza-escuro">
+                                                R$ <?= $veiculo['valorFormatado'] ?>
+                                            </h4>
+                                        </div>
                                         <?php if ($veiculo['codFipe'] == 0 || empty($veiculo['codFipe'])) : ?>
-                                            <small class="small d-none d-md-block">
-                                                <?= $veiculo['motor'] . ' ' ?>
-                                                <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'] . 'V' : '' ?>
-                                            </small>
+                                            <div class="valvula pb-2">
+                                                <small class="small d-none d-md-block">
+                                                    <?= $veiculo['motor'] . ' ' ?>
+                                                    <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'] . 'V' : '' ?>
+                                                </small>
+                                            </div>
                                         <?php endif; ?>
-                                    </p>
-                                    <h4
-                                        class="d-flex justify-content-start justify-content-md-end col-12 col-md-6 m-0 p-0 h4 text-cinza-escuro">
-                                        R$ <?= $veiculo['valorFormatado'] ?>
-                                    </h4>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mt-2">
                                     <ul class="h-auto">
@@ -182,7 +184,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-3 mt-2  p-0 m-0 row justify-content-center">
+                                <div class="col-12 col-md-12 col-lg-4 p-0 m-0 d-flex flex-wrap justify-content-center">
                                     <!-- <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
                                         <div class="pl-3 bold no-margin">
                                             <?//= $veiculo['cliques'] ? : 0 ?>
@@ -196,10 +198,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                     </div> -->
                                     <?php if ($veiculo['combinarValor'] == 1) : ?>
-                                        <div class="col-12 col-lg-12 ">
-                                            <div class="bg-master-lightest  mt-1 padding-15">
+                                        <div class="w-100">
+                                            <div class="bg-master-lightest mt-1 padding-15">
                                                 <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
-                                                    <div class="row d-flex justify-content-between pl-3">
+                                                    <div class="d-flex justify-content-between">
                                                         <div class="bold no-margin d-flex align-items-center link-danger">
                                                             <span class="fa fa-circle text-warning fs-11 mr-1"></span>
                                                             Valor a Combinar
@@ -209,25 +211,22 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                    <div class="col-12 col-lg-12 ">
-                                        <div class="bg-master-lightest  mt-1 padding-15">
+                                    <div class="w-100">
+                                        <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
-                                                <div class="row d-flex justify-content-between pl-3">
+                                                <div class="d-flex justify-content-between">
                                                     <div class="bold no-margin d-flex align-items-center link-danger">
-                                                        <!-- <span class="fa fa-envelope fs-16 mr-1"></span> -->
                                                         Propostas: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
                                                         <?php
                                                         /** @todo
+                                                         *  <span class="fa fa-envelope fs-16 mr-1"></span>
                                                          *  Trazer o numero de propostas
                                                          *  Trazer bolinha verde quando há nova proposta
                                                          */
-
                                                         ?>
                                                     </div>
-                                                    <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>">
-                                                        <span class=" label bg-verde text-white p-t-3 p-b-3 inline fs-12 mr-2">
-                                                            Ver
-                                                        </span>
+                                                    <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="label bg-verde text-white px-2 py-1 inline fs-12">
+                                                        Ver
                                                     </a>
                                                 </div>
                                             </a>
@@ -284,56 +283,53 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-3">
-                        <div data-index="0" class="company-stat-box m-t-10 px-4 py-3 bg-master-lightest">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="pull-left d-flex text-uppercase bold align-items-center mb-0">
+                            <div data-index="0" class="m-t-10 px-3 py-3 bg-master-lightest">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
                                     <?php if ($veiculo["idStatus"] != SnBH\ApiModel\Model\VeiculosStatus::STATUS_CADASTRANDO) { ?>
-                                        <span class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></span>
-                                        <?= $veiculo['nomePlano'] ?>
+                                        <p class="d-flex text-uppercase bold align-items-center titulo-plano-<?= $veiculo['nomePlano'] ?> mb-0">
+                                            <i class="fa fa-circle text-p-<?= $veiculo['idPlano'] ?> fs-11 mr-1"></i>
+                                            <?= $veiculo['nomePlano'] ?>
+                                        </p>
                                     <?php } ?>
-                                </p>
-                                <div>
-                                    <?php if ($veiculo["botoes"]["trocar_plano"]) { ?>
-
-                                        <?php
-                                        $editarPlanosUrl = $urls['editarAnuncio'];
-                                        if ($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO) {
-                                            $editarPlanosUrl .= '?editar=planos';
-                                        }
-                                        $editarPlanosUrl .= '#plano';
-
-                                        ?>
-
-                                        <a href="<?= $editarPlanosUrl ?>"
-                                           class="btn btn-sm btn-info text-white d-flex align-items-center ml-2 btn-acao-trocar-plano"><?= $veiculo['idStatus'] == 3 ? 'Escolha um plano' : 'Trocar
-                                    Plano' ?></a>
+                                    <?php if(in_array(TRUE, $veiculo["botoes"])){ ?>
+                                        <div class="d-flex flex-wrap w-100">
+                                            <?php if ($veiculo["botoes"]["trocar_plano"]) {
+                                                $editarPlanosUrl = $urls['editarAnuncio'];
+                                                if ($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO) {
+                                                    $editarPlanosUrl .= '?editar=planos';
+                                                }
+                                                $editarPlanosUrl .= '#plano'; ?>
+                                                <a href="<?= $editarPlanosUrl ?>"
+                                                    class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center btn-acao-trocar-plano">
+                                                    <?= $veiculo['idStatus'] == 3 ? 'Escolha um plano' : 'Trocar Plano' ?>
+                                                </a>
+                                            <?php } ?>
+                                            <?php if ($veiculo["botoes"]["upgrade_plano"]) { ?>
+                                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#plano&trocarPlano" 
+                                                class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center py-4 btn-acao-upgrade-plano">
+                                                Melhorar meu Plano
+                                                </a>
+                                            <?php } ?>
+                                            <?php if ($veiculo["botoes"]["renovar_plano"]) { ?>
+                                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&trocarPlano&planoNitroHome"
+                                                class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center btn-acao-renovar-plano">
+                                                Renovar Plano
+                                                </a>
+                                            <?php } ?>
+                                        </div>
                                     <?php } ?>
-                                    <?php if ($veiculo["botoes"]["upgrade_plano"]) { ?>
-                                        <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#plano&trocarPlano"
-                                           class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2 btn-acao-upgrade-plano">Melhorar
-                                            meu Plano</a>
-                                    <?php } ?>
-                                    <?php if ($veiculo["botoes"]["renovar_plano"]) { ?>
-                                        <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&trocarPlano&planoNitroHome"
-                                           class="btn btn-sm btn-info text-white d-flex align-items-center btn-acao-renovar-plano">Renovar Plano</a>
-                                       <?php } ?>
-                                       <?php
-                                       /** @todo
-                                        *  Centralizar verticalmente
-                                        */
-
-                                       ?>
                                 </div>
                             </div>
-                        </div>
 
                         <div class="pb-2">
-                            <div data-index="0" class="company-stat-box m-t-10 bg-master-lightest active px-4 pt-3 h-100 ">
+                            <div data-index="0" class="m-t-10 bg-master-lightest px-3 pt-3 h-100 ">
                                 <div class="d-flex justify-content-between">
                                     <p
-                                        class="company-name pull-left text-uppercase bold no-margin d-flex align-items-center">
-                                        <span class="fa fa-circle text-s-<?= $veiculo['idStatus'] ?> fs-11 mr-1"></span>
-                                        <?= $veiculo['tituloStatus'] ?>
+                                        class="text-uppercase bold d-flex align-items-center">
+                                        <i class="fa fa-circle text-s-<?= $veiculo['idStatus'] ?> fs-11 mr-1"></i>
+                                        <span class="text-size-<?= $veiculo['idStatus'] ?>">
+                                            <?= $veiculo['tituloStatus'] ?>
+                                        </span>
                                     </p>
                                 </div>
                                 <div class=" d-flex mt-1">
@@ -352,17 +348,17 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </small>
                                     </div>
                                 <?php endif; ?>
-                                <div class="justify-content-end d-flex m-t-15 pb-2">
+                                <div class="justify-content-end d-flex m-t-15 pb-2 flex-wrap">
 
                                     <?php if ($veiculo["botoes"]["enviar_comprovante"]) { ?>
                                         <a href="<?= $urls['editarAnuncio'] ?>?editar=planos&<?= $veiculo["botoes"]["plano_comprovante"] ?>#plano"
-                                           class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2 btn-acao-enviar-comprovante">Enviar
+                                           class="btn btn-sm btn-cinza text-white d-flex w-100 justify-content-center btn-acao-enviar-comprovante">Enviar
                                             comprovante</a>
                                     <?php } ?>
 
                                     <?php if ($veiculo["botoes"]["realizar_pagamento"]) { ?>
                                         <a href="<?= $urls['editarAnuncio'] ?>#plano"
-                                           class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2 btn-acao-realiza-pagamento">Pagar</a>
+                                           class="btn btn-sm bg-verde text-white d-flex align-items-center btn-acao-realiza-pagamento">Pagar</a>
                                        <?php } ?>
 
                                     <?php if ($veiculo['botoes']['inativar'] ?? false) { ?>
@@ -387,18 +383,18 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar"
                                            data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                            title="Renovar anúncio">
-                                            <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
+                                            <button class="btn btn-sm btn-laranja text-white">renovar</button>
                                         </a>
                                     <?php } ?>
 
                                     <?php if ($veiculo["botoes"]["reativar"] ?? false) { ?>
-                                        <a href="#" class="reativar anuncios btn-acao-reativar" data-confirm data-confirm-type="success"
+                                        <a href="#" class="reativar anuncios btn-acao-reativar pt-2 w-100" data-confirm data-confirm-type="success"
                                            data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
                                            data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>") ?>"
                                            data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
                                            data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                            title="Reativar anúncio">
-                                            <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
+                                            <button class="btn btn-sm btn-laranja text-white w-100">Reativar</button>
                                         </a>
                                     <?php } ?>
                                     <?php if ($veiculo["botoes"]["alerta"] ?? false) { ?>
