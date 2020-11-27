@@ -7,6 +7,7 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var HandleApiError = require('components/HandleApiError');
 
+    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
@@ -20,7 +21,7 @@ module.exports.callback = ($) => {
             title:$('<span class="text-primary">').html('Atenção!')
         });
     });
-    
+
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function () {
         advancedAlerts.warning({
             text:'Você atingiu o limite de anúncio disponíveis para este plano',
@@ -35,19 +36,19 @@ module.exports.callback = ($) => {
                 BtnContinuar.enable();
             }
         });
-        
+
          if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
             $("#idPlano").val(idPlano);
             $("#radio-idPlano-"+idPlano).click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
         }
-        
+
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
             $("#acao").val("trocarPlano");
         }
     });
-    
+
     $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
         let plano = "planos" + $("#idPlano").val();
         $('[id^="planos"]').each((i, obj) => {
@@ -62,6 +63,8 @@ module.exports.callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
+        var ctx = $('.step-0, .step-1, .step-plano');
+        DataLayerGTMPopulate(ctx,'checkout_step_7');
         // Se for grátis
         if (idPlano === 1) {
             // Salvar todo o formulario anterior as fotos aqui

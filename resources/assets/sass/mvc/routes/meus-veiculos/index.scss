@@ -108,3 +108,29 @@
     font-size:1.2rem;
   }
 }
+
+.veiculo{
+  .veiculo-titulo{
+    .marca-modelo{
+      width: 70%;
+    }
+    .preco{
+      width: 30%;
+      text-align: right;
+      h4{
+        margin:0;
+      }
+    }
+    .valvula{
+
+    }
+    @include media-breakpoint-down(md){
+      .marca-modelo{
+        width: 100%;
+      }
+      .preco{
+        width: 100%;
+      }
+    }
+  }
+}
