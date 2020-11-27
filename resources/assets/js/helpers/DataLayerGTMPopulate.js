@@ -6,7 +6,7 @@
 
 
 module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
-  $ctx = $(ctx);
+  var $ctx = $(ctx);
   var defaultVal = {
     name : '',
     id : '',
