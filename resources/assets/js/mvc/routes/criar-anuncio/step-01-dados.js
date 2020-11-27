@@ -42,7 +42,7 @@ function init() {
     if($('#dados-basicos .idVeiculo').val() !== ''){
       var camposToDisable = ['placa','veiculo_zero_km','idMarca','modeloCarro'];
       let $ctx = $('[name="form_dadosVeiculo"]');
-      camposToDisable.forEach(element => {
+      camposToDisable.forEach(function(element){
         $ctx.find('[name="' + element + '"]')
             .addClass('disabled')
             .attr('disabled', true)
