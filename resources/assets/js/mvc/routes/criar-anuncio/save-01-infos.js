@@ -18,6 +18,9 @@ module.exports.callback = ($) => {
 
     var advancedAlerts = require('components/AdvancedAlerts');
 
+    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+
+
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
     var dataWithError;
@@ -260,6 +263,12 @@ module.exports.callback = ($) => {
                 data = data.data;
                 if (data) {
                     var idVeiculo = data[0].idVeiculo;
+
+                    if($('#dados-basicos .idVeiculo').val() === ''){
+                      var ctx = $('.step-0, .step-1');
+                      DataLayerGTMPopulate(ctx,'checkout_step_1');
+                    }
+
                     $('#dados-basicos .idVeiculo').val(idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
 
