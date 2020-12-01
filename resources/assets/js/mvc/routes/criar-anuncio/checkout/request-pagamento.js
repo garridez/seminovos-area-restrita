@@ -11,6 +11,8 @@ module.exports = function (formData, ajaxParams) {
 
     var advancedAlerts = require('components/AdvancedAlerts');
 
+    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+
     var data = $('#dados-basicos form').serializeArray();
 
     if (formData && Array.isArray(formData)) {
@@ -44,6 +46,8 @@ module.exports = function (formData, ajaxParams) {
              * @return void
              */
             if (httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
+                var ctx = $('#dados-basicos form, .step-0, .step-1, .step-plano');
+                DataLayerGTMPopulate(ctx, 'purchase', data)
                 window.location = httpResponse.data.url;
             }
         },

@@ -7,6 +7,7 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var HandleApiError = require('components/HandleApiError');
 
+    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
@@ -74,6 +75,8 @@ module.exports.callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
+        var ctx = $('.step-0, .step-1, .step-plano');
+        DataLayerGTMPopulate(ctx,'checkout_step_7');
         // Se for grátis
         if (idPlano === 1) {
             // Salvar todo o formulario anterior as fotos aqui

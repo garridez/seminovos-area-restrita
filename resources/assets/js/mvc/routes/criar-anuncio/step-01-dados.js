@@ -38,6 +38,21 @@ function init() {
         }
         return val;
     };
+
+    if($('#dados-basicos .idVeiculo').val() !== ''){
+      var camposToDisable = ['placa','veiculo_zero_km','idMarca','modeloCarro'];
+      let $ctx = $('[name="form_dadosVeiculo"]');
+      camposToDisable.forEach(function(element){
+        $ctx.find('[name="' + element + '"]')
+            .addClass('disabled')
+            .attr('disabled', true)
+            .attr('required', false)
+            .closest('.form-group-default').removeClass('required');
+      });
+    }
+
+
+
     placa.change(function(){
       anoModelo.html('')
       .prepend(anoModeloOptions)
