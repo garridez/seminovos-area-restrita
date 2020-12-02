@@ -6,7 +6,7 @@
 
 
 module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
-  $ctx = $(ctx);
+  var $ctx = $(ctx);
   var defaultVal = {
     name : '',
     id : '',
@@ -33,7 +33,7 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     case 3:
       tipoVei = 'moto';
       break;
-                        default:
+    default:
       tipoVei = 'carro';
       break;
   };
@@ -44,7 +44,7 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     currentVal.name = $ctx.find('[name="idPlano"]:checked').closest('.plano-box').find('h3').html();
     currentVal.id = $ctx.find('[name="idPlano"]:checked').val();
     currentVal.price = $ctx.find('[name="idPlano"]:checked').data('valor-plano');
-  }
+  };
 
   if(stepWhoCall == 'purchase'){
     var transaction_data = {
@@ -55,15 +55,15 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
       tax :0,
       shipping : 0,
       coupon : ''
-    }
+    };
 
     if(requestData || false){
 
       var pagamento = requestData.filter(function(val){
-          return val.name == "metodo";
-      })[0].value;
+          return val.name === "metodo";
+      })[0];
 
-      transaction_data.payment_method = pagamento;
+      transaction_data.payment_method = pagamento ? pagamento.value : null;
     }
 
 
