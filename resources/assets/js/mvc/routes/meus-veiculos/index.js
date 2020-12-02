@@ -394,7 +394,8 @@ module.exports.callback = $ => {
             negateText: $this.data("confirm-negate-text"),
             successText: $this.data("confirm-success-text"),
             confirmCallback: $this.data("confirm-option-confirm"),
-            negateCallback: $this.data("confirm-option-negate")
+            negateCallback: $this.data("confirm-option-negate"),
+            reloadPage: $this.data("reload-page")
         }));
     }
 };

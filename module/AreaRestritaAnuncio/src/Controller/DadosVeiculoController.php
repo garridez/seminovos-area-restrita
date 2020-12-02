@@ -83,7 +83,7 @@ class DadosVeiculoController extends AbstractActionController
                 $data['versao'] = $data['outraVersao'];
             }
 
-            if($data['versao'] == '-1'){
+            if(isset($data['versao']) && $data['versao'] == '-1'){
                 $data['versao'] = '';
             }
 
