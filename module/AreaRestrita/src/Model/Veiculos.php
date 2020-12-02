@@ -40,6 +40,8 @@ class Veiculos extends ApiModelVeiculos
                 'ignorarCondicoesBasicas' => true,
                 'registrosPagina' => 100,
                 'paginaAtual' => $page,
+                'ordenarPor' => 5, // status
+                'ordem' => 'ASC',
                 'cache' => $cache ? 1 : 0,
                 ], null, $cache)->json();
     }
