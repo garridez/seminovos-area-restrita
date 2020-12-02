@@ -60,10 +60,10 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     if(requestData || false){
 
       var pagamento = requestData.filter(function(val){
-          return val.name == "metodo";
-      })[0].value;
+          return val.name === "metodo";
+      })[0];
 
-      transaction_data.payment_method = pagamento;
+      transaction_data.payment_method = pagamento ? pagamento.value : null;
     }
 
 
