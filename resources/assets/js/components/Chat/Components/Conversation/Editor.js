@@ -59,8 +59,6 @@ class Editor extends Component {
                             autoComplete="off"
                             ref={this.input}
                             disabled={attrDisable}
-                            onPasteCapture={(event) => event.preventDefault()}
-                            onDropCapture={(event) => event.preventDefault()}
                             title={title} />
                         <button type="submit" title="Enivar mensagem" disabled={attrDisable}>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
