@@ -2,6 +2,20 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
+
+    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+    $('.step-container').on('step:pre-exit:video', function(){
+      if($('#dados-basicos #flagCriando').val() == 1){
+        var ctx = $('.step-0, .step-1');
+        DataLayerGTMPopulate(ctx,'checkout_step_5');
+      }
+    });
+    $('.step-container').on('step:pre-exit:plano', function(){
+      if($('#dados-basicos #flagCriando').val() == 1){
+        var ctx = $('.step-0, .step-1');
+        DataLayerGTMPopulate(ctx,'checkout_step_6');
+      }
+    });
 };
 
 function init() {
@@ -100,7 +114,7 @@ function init() {
     /**
      * Exibe a miniatura da imagem selecionada na tag img passada
      * Também adiciona metadados ao elemento img
-     * 
+     *
      * @param HTMLElement imgElement
      * @param File file Imagem que será colocada no elemento IMG.
      *      Se não for passado, então é colocado no lugar o placeholder
@@ -115,7 +129,7 @@ function init() {
 
         if (typeof file === 'string') {
             var background = 'url("' + file + '")';
-                
+
             if (imgElement.css('background-image') === background) {
                 return;
             }

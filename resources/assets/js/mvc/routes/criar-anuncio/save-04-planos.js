@@ -7,8 +7,6 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var HandleApiError = require('components/HandleApiError');
 
-    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
-
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
             text:'Não é possível diminuir o plano',
