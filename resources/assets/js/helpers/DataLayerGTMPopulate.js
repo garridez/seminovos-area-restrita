@@ -43,7 +43,7 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
   if(stepWhoCall == 'checkout_step_7'){
     currentVal.name = $ctx.find('[name="idPlano"]:checked').closest('.plano-box').find('h3').html();
     currentVal.id = $ctx.find('[name="idPlano"]:checked').val();
-    currentVal.price = $ctx.find('[name="idPlano"]:checked').data('valor-plano');
+    currentVal.price = parseFloat($ctx.find('[name="idPlano"]:checked').data('valor-plano'));
   };
 
   if(stepWhoCall == 'purchase'){
@@ -84,7 +84,7 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     });
   }
 
-  console.log('SENDING TO GTM');
+  console.log('SENDING TO GTM ---' + stepWhoCall);
   console.log(currentVal);
 
   return window.dataLayer.push({
