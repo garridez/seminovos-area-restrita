@@ -6,8 +6,28 @@ function stopEvent(e) {
     return false;
 }
 
+var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
+    $('.step-container').on('step:pre-exit:dados', function(){
+      if($('#dados-basicos #flagCriando').val() == 1){
+        var ctx = $('.step-0, .step-1');
+        DataLayerGTMPopulate(ctx,'checkout_step_1');
+      }
+    });
+    $('.step-container').on('step:pre-exit:preco', function(){
+      if($('#dados-basicos #flagCriando').val() == 1){
+        var ctx = $('.step-0, .step-1');
+        DataLayerGTMPopulate(ctx,'checkout_step_2');
+      }
+    });
+    $('.step-container').on('step:pre-exit:mais-informacoes', function(){
+      if($('#dados-basicos #flagCriando').val() == 1){
+        var ctx = $('.step-0, .step-1');
+        DataLayerGTMPopulate(ctx,'checkout_step_3');
+      }
+    });
 };
 
 function init() {
@@ -38,6 +58,10 @@ function init() {
         }
         return val;
     };
+
+    if($('#dados-basicos .idVeiculo').val() == ''){
+      $('#dados-basicos #flagCriando').val(1);
+    }
 
     if($('#dados-basicos .idVeiculo').val() !== ''){
       var camposToDisable = ['placa','veiculo_zero_km','idMarca','modeloCarro'];
