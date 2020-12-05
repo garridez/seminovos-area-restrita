@@ -61,6 +61,7 @@ module.exports.callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
+        var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
         var ctx = $('.step-0, .step-1, .step-plano');
         DataLayerGTMPopulate(ctx,'checkout_step_7');
         // Se for grátis
