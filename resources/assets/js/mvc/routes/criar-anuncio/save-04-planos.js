@@ -7,8 +7,6 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var HandleApiError = require('components/HandleApiError');
 
-    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
-
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
         advancedAlerts.warning({
             text:'Não é possível diminuir o plano',
@@ -75,6 +73,7 @@ module.exports.callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
+        var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
         var ctx = $('.step-0, .step-1, .step-plano');
         DataLayerGTMPopulate(ctx,'checkout_step_7');
         // Se for grátis

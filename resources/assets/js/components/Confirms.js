@@ -13,6 +13,7 @@ module.exports = confirms = {
         confirmText: "Sim",
         negateText: "Não",
         successText: "Sucesso",
+        reloadPage: false,
         confirmCallback: function () { return },
         negateCallback: function () { return }
     },
@@ -44,6 +45,12 @@ module.exports = confirms = {
                                     text: options.successText,
                                     title: $("<span class='text-primary'>").html("Sucesso")
                                 });
+
+                                if (options.reloadPage) {
+                                    setTimeout(() => {
+                                        document.location.reload(true);
+                                    }, 3000);                                    
+                                }
                             }
                             $(".modal").modal('hide');
                         }).fail(function () {
