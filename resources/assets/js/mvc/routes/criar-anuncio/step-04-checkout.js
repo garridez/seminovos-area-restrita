@@ -15,7 +15,7 @@ module.exports.callback = ($) => {
         $(ctx +'.btn-control-certificado a').on('click',function(e){
           e.preventDefault();
 
-          var valorCertificado = 29.90;
+          var valorCertificado = 24.90; //preço certificado
           let remover = $(ctx + '.flagCertificado').is(':checked');
           if($('#dados-basicos .acao').val() != 'addCertificado'){
               var valorPlano = parseFloat($("#" + ("planos" + $("#idPlano").val())).data('valor-plano').replace(',','.'));
