@@ -35,7 +35,7 @@ module.exports.callback = ($) => {
             }
         });
 
-         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
+        if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
             $("#idPlano").val(idPlano);
             $("#radio-idPlano-"+idPlano).click();
@@ -49,11 +49,23 @@ module.exports.callback = ($) => {
 
     $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
         let plano = "planos" + $("#idPlano").val();
+        let planoSelecionado =  $("#" + plano);
+
         $('[id^="planos"]').each((i, obj) => {
             $(obj).hide();
+            $(obj).removeClass('plano-selecionado');
         });
-        $("#" + plano).show();
+
+        planoSelecionado.show();
+        planoSelecionado.addClass('plano-selecionado');
+
+        let valorTotal = 0.00;
+        valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
+        if($('#dados-basicos .acao').val() != 'addCertificado'){
+          $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
+        }
     });
+
     $('.step-container').on('step:pre-exit:plano', function (e) {
         var ctx = $('.step-plano');
         var plano = ctx.find('[name="idPlano"]:checked');

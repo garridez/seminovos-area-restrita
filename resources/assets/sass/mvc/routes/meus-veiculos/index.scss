@@ -109,6 +109,26 @@
   }
 }
 
+.btn-certificado{
+  @include media-breakpoint-down(md){
+    margin-bottom: 10px;
+  }
+  font-size: 0.7rem;
+  line-height: 0.7rem;  
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 60px;
+  >div{
+    margin-bottom: 10px;
+    span{
+      font-size: 0.7rem;
+    }
+  }
+  b{
+    font-size: 0.8rem;
+	}
+}
+
 .veiculo{
   .veiculo-titulo{
     .marca-modelo{

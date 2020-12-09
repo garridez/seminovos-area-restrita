@@ -1,11 +1,63 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
+module.exports.prepend = true;
 
 module.exports.callback = ($) => {
     var advancedAlerts = require('components/AdvancedAlerts');
     var Confirms = require('components/Confirms');
     var stepContainer = $('.step-container');
+    var stopEvent = require('helpers/StopEvent');
     var idPlano = $("#idPlano").val();
     stepContainer.on('step:change:checkout', function (e) {
+        // handler certificado no checkout
+        var ctx = ' .step-checkout ';
+        var classAcitive = 'remove-certificado';
+
+        $(ctx +'.btn-control-certificado a').on('click',function(e){
+          e.preventDefault();
+
+          var valorCertificado = 24.90; //preço certificado
+          let remover = $(ctx + '.flagCertificado').is(':checked');
+          if($('#dados-basicos .acao').val() != 'addCertificado'){
+              var valorPlano = parseFloat($("#" + ("planos" + $("#idPlano").val())).data('valor-plano').replace(',','.'));
+              valorCertificado += valorPlano;
+          }
+          $('.valor-total').find('[data-valor-total]').html(valorCertificado.toFixed(2));
+
+          $(ctx +'.resumo-compra').addClass(classAcitive);
+          $(ctx + '.handle-certificado').addClass(classAcitive);
+          $(ctx + '.flagCertificado').prop('checked','checked');
+          $('#dados-basicos .certificado').val(1);
+
+          if(remover){
+            $(ctx +'.resumo-compra').removeClass(classAcitive);
+            $(ctx + '.handle-certificado').removeClass(classAcitive);
+            $(ctx + '.flagCertificado').prop('checked',false);
+            $('#dados-basicos .certificado').val('');
+          }
+
+        });
+        // handler modal certificado
+
+        let btnSaibaMais = $(ctx + '.saiba-mais a');
+
+        btnSaibaMais.on('click',function(e){
+          e.preventDefault();
+          $('body').prepend($('<div class="modal-fade"></div>'));
+          $(ctx).addClass('modal-open');
+
+        });
+        let btnModalClose = $(ctx + '.modal-sobre-certificado .close');
+        btnModalClose.on('click',function(e){
+          e.preventDefault();
+          $('body').find('.modal-fade').remove();
+          $(ctx).removeClass('modal-open');
+
+        });
+
+
+
+
+
         var location = window.location;
         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var btnTranferencia = $('#accordion-payment [data-target="#transferencia"]');
@@ -23,7 +75,24 @@ module.exports.callback = ($) => {
                 $("#idPlano").val(4);
             }
             $("#acao").val("trocarPlano");
+        }
 
+        if (location.hash && location.hash.indexOf('addCertificado') !== -1 && location.hash.indexOf('planoCem') !== -1) {
+            $("#acao").val("addCertificado");
+
+            let ctx = '.handle-certificado';
+            $(ctx + ' .titulo,'+ ctx +' .btn-control-certificado').hide();
+            $(ctx).addClass('border-0');
+            $(ctx + ' .btn-control-certificado .add-certificado').click();
+
+            var $btnVoltar = $('.step-controls').find('.btn-voltar');
+            $btnVoltar.replaceWith($btnVoltar.clone());
+
+            $('.step-controls').find('.btn-voltar').on('click',function(e){
+              location.href = '/meus-veiculos';
+              $(this).addClass('disabled').attr('disabled','disabled')
+              stopEvent(e);
+            });
         }
 
         window.location = '#checkout';
