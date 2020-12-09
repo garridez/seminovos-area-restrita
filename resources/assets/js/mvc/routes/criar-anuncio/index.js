@@ -41,6 +41,13 @@ module.exports.callback = ($) => {
     });
     $('.btn-continuar').on('click', function () {
         // BtnContinuar.disable();
+        // Valida no 1º passo se o modelo foi selecionado
+        var modelo = $('[name="modeloCarro"]').val();
+        if (modelo == 'Selecione o modelo') {
+            alert('Selecione o modelo do veículo para continuar');
+            return;
+        }
+
         var inLastStep = $(this).data('in-last-step');
         var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
