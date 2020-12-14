@@ -13,37 +13,21 @@ $formLogin->prepare();
     </div>
     <div class="form-group">
         <?= $this->formLabel($fields['usuarioSenha']) ?>
-        <div class="input-group">
+        <div class="input-group group-senha">
             <?= $this->formElement($formLogin->get('usuarioSenha')) ?>
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4 no-padding sm-p-l-10 text-center"></div>
-        <div class="col-md-8 d-flex align-items-center justify-content-end">
-            <small class="semi-bold">Esqueceu sua senha?
-                <a href="#" data-toggle="modal" data-target="#modalLembrarSenhaRevenda" class="text-info small btn-esqueci-minha-senha">
-                    <small class="semi-bold"> Clique aqui</small>
-                </a>
-            </small>
-        </div>
+    <div class="esqueci-senha text-right">
+        <a href="#" data-toggle="modal" data-target="#modalLembrarSenhaRevenda" class="btn-esqueci-minha-senha link-laranja">
+            Esqueci minha senha
+        </a>
     </div>
-    <br>
     <div class="form-group">
         <div class="">
             <?= $this->formElement($formLogin->get('entrar')) ?>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-12 no-padding sm-p-l-10 text-center">
-            <small class="semi-bold">Não tem cadastro?
-                <a href="https://seminovos.com.br/cadastrar-revenda" class="text-info small" target="_blank">
-                    <small class="text-amarelo semi-bold"> Cadastre-se</small>
-                </a>
-            </small>
         </div>
     </div>
 </form>

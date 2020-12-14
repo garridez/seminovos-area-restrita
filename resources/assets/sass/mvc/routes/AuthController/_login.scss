@@ -1,68 +1,136 @@
-&.a-login{
-    button.btn-warning{
-        color: #3C3C3C;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-    .close{
-        background-color: rgba(0,0,0,0);
-        border:0;
-    }
-    form {
-        > .form-group{
-            border: none;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        .form-group label {
-            font-weight: bold !important;
-        }
-    }
+*{
+    font-family: 'Roboto';
 
-    .container-forms {
-        /*background-color: #fff;*/
-        /*border-radius: 10px;*/
+}
+.login-area{
+    width: 365px;
+    @include media-breakpoint-down(md){
+        width: 100%;
     }
-    .login-container-root {
-        min-height: 100vh;
-        align-items: center;
+}
+.titulo{
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+.switch-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .switch-field {
+        width: 100%;
         display: flex;
-    }
-    .login-container {
-        .loading-container {
-            padding-top: 70px;
+        overflow: hidden;
+        justify-content: space-between;
+        input {
+            position: absolute !important;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            width: 1px;
+            border: 0;
+            overflow: hidden;
+            &:checked + label {
+                background-color: $laranja;
+                color: white;
+                box-shadow: none;
+            }
         }
-        /*padding: 30px 60px 60px 60px;*/
-        border-radius: 10px;
-        /*background-image: url(/img/login-cover.jpg);*/
-        background-position: center;
-        background-repeat: no-repeat;
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #eff0f2;
-        @include media-breakpoint-down(md) {
-            background-color: #fff;
+        label {
+            background-color: #e4e4e4;
+
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+
+            transition: all 0.4s ease-in-out;
+
+            padding: 5px 0px;
+            width: 49%;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    } 
+}
+.conteudo{
+    background: white;
+    box-shadow: 0px 0px 3px 0px #ccc;
+}
+.forms{
+    padding: 1.9rem;
+    padding-top: 1rem;
+
+    .form-group{
+        padding: 0;
+        border: none;
+        margin-bottom: 0.8rem;
+        label{
+            margin: 0;
+            font-size: 0.8rem;
+
+            font-weight: bold;
+            font-family: 'Roboto' !important;
+            letter-spacing: initial;
+            text-transform: initial;
+        }
+        >div{
+            display: flex;
+            width: 100%;
+            input{
+                border: 1px solid #ccc;
+                padding: 0.5rem;
+                width: 100%;
+
+                font-size: 0.8rem;
+                font-family: 'Roboto';
+            }
+            button[type='submit'].btn{
+                width: 100%;
+                background-color: black;
+                color: white;
+            }
+        }
+    }
+    .group-senha{
+        flex-wrap: nowrap;
+        input{
+            border-right: none !important;
+        }
+        .input-group-text{
+            height: 2.4rem;
+            background-color: white;
+            border-left: none;
+            font-size: 0.9rem;
+        }
+    }
+    .esqueci-senha{
+        margin-bottom: 1rem;
+        a{
+            color: $laranja;
+            font-weight: 600;
+        }
+    }
+}
+
+#modalRecuperarSenha{
+    .modal-header{
+        line-height: initial;
+    }
+    .options >div a{
+        color: black;
+        &:hover{
+            b{
+                color: $laranja;
+            }
         }
 
-        .banner-offset {
-            
-            &, h3, a{
-                color: #fff;
-            }
-            @include media-breakpoint-up(md) {
-                line-height: 30px;
-                border-radius: 10px;
-                background-color: $orange;
-                min-height: 430px;
-                right: -150px;
-            }
-            @include media-breakpoint-down(md) {
-                padding: 25px;
-                .alerta-anti-fraude {
-                    border-radius: 10px;
-                    background-color: $orange;
-                }
-            }
+        span{
+            font-weight: initial;
+            font-size: 0.7rem;
         }
+
+        border-bottom: 1px solid #ccc;
     }
 }

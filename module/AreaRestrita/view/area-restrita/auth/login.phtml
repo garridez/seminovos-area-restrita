@@ -1,110 +1,71 @@
-<?php
-/* @var $this Zend\View\Renderer\PhpRenderer */
-global $container;
-$url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
+<?php $urlCadastrar = ($this->cadastroSimples ?? false) ? '/cadastro-simples' : '/me-cadastrar' ?>
+<div class="login-area">
+    <div class="titulo text-center py-4">
+        Entre com suas informações para ver e gerenciar sua conta
+    </div>
 
-if ($this->loginError) {
-    echo '<input type="hidden" name="login-error" value="1" />';
-}
-$this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
-$this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
-
-$this->particularForm->get('usuarioEmail')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'username');
-$this->particularForm->get('usuarioSenha')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'username');
-
-$this->revendaForm->get('usuarioEmail')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'current-password');
-$this->revendaForm->get('usuarioSenha')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'current-password');
-?>
-
-<div class="row login-container-root">
-    <div class="col-12">
-        <div class="forms-container login-container px-md-5 py-md-5">
-            <div class="row">
-                <div class="col-12 intro-1">
-                    <div class="snbh-logo-container pb-md-5">
-                        <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
-                            <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-                            <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
-                            <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+    <div class="switch-container">
+        <div class="switch-field">
+            <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
+            <label class="m-0" for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
+            
+            <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
+            <label class="m-0" for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
+        </div>
+    </div>
+    <div class="conteudo">
+        <div class="forms">
+            <div class="loading-container hide">
+                <div class="spinner-border"></div>
+                <div class="feedback-text"></div>
             </div>
-            <div class="row">
-                <div class="col-md-7 intro-2 order-1 order-md-0">
-                    <p class="text-center">Preencha os campos abaixo para entrar na sua área restrita.</p>
-                    <form class="tipo-cadastro-container container">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                Sou:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="switch-field">
-                                <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
-                                <label for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
-
-                                <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
-                                <label for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="forms-group container-forms">
-                        <div class="loading-container hide">
-                            <div class="spinner-border"></div>
-                            <div class="feedback-text"></div>
-                        </div>
-                        <div class="container-form-particular">
-                            <?=
-                            $this->partial('./partials/form-particular', [
-                                'formLogin' => $this->particularForm
-                            ])
-                            ?>
-                        </div>
-                        <div class="container-form-revenda hide">
-                            <?=
-                            $this->partial('./partials/form-revenda', [
-                                'formLogin' => $this->revendaForm
-                            ])
-                            ?>
-
-                        </div>
-
-                    </div>        
-                </div>
-                <div class="col-md-5 intro-2 banner-offset order-0 order-md-1">
-                    <div class="forms-container alerta-anti-fraude py-md-5 px-md-0 p-3">
-                        <div class="text-center">
-                            <div class="conteudo">
-                                <div class="texto px-0 px-md-2">
-                                    <h3><b>ATENÇÃO!</b></h3>
-                                    <div class="text-left">
-                                        <span>
-                                            A Seminovos <b>NÃO </b>faz contato por
-                                            <b>telefone </b> ou <b>whatsapp </b>
-                                            solicitando código de verificação de anúncio ou similar.<br>
-                                            <b>CUIDADO PARA NÃO CAIR EM GOLPES</b><br>
-                                            Estamos à disposição para esclarecer 
-                                            <a href="/central-informacoes" title="Central de informações">dúvidas</a><br>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="container-form-particular">
+                <?=
+                $this->partial('./partials/form-particular', [
+                    'formLogin' => $this->particularForm
+                ])
+                ?>
+            </div>
+            <div class="container-form-revenda hide">
+                <?=
+                $this->partial('./partials/form-revenda', [
+                    'formLogin' => $this->revendaForm
+                ])
+                ?>
+            </div>
+            <div class="separador">
+                <span></span>ou<span></span>
+            </div>
+            <div class="cadastrar mt-3">
+                <a href="<?= $urlCadastrar ?>" title="Criar uma conta" class="btn btn-laranja btn-cadastrar text-center">
+                    Não tem uma conta? Criar conta
+                </a>
             </div>
         </div>
     </div>
-</div>
+    <div class="aviso mt-3">
+        <div class="esquerda">
+            <div class="text-center">
+                <img src="/img/icons/warning.png" alt="" srcset="">
+            </div>
+            <div class="text-center mt-2">
+                <span>Atenção</span>
+            </div>
+        </div>
+        <div class="direita">
+            
+            <span class="mt-2">
+                A Seminovos <b>NÃO</b> faz contato por <b>telefone</b> ou
+                <b>whatsapp</b> solicitando código de verificação de
+                anúncio ou similar.
+            </span>
 
-<?= $this->partial('./partials/modais-login.phtml'); ?>
+            <div>
+                <span class="mt-2"><b>Cuidado para não cair em golpes</b></span>
+            </div>
+
+            <span class="mt-3">Estamos à disposição para esclarecer dúvidas</span>
+        </div>
+
+    </div>
+</div>
