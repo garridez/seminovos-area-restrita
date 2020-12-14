@@ -1,0 +1,191 @@
+<!-- Modal -->
+<div class="modal fade" id="modalErroSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b class="text-danger">Atenção</b></h5>
+                <div class="mt-4 text-left">
+                    <p>Usuário e/ou Senha estão incorretos</p>
+                    <p>Confira os campos de usuário e senha e tente novamente</p>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalCuidado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b class="text-danger">Atenção!!</b></h5>
+                <div class="mt-4 text-left">
+                    <p>Detectamos Ações Maliciosas!!</p>
+                    <p>Sua sessão foi inválidada faça login novamente e tenha cuidado com o que tenta acessar!</p>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal email e senha from cpf -->
+<div class="modal fade" id="modalLembrarSenha" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaLabel"
+     aria-hidden="true">
+    <form method="POST" name="formEmailTelFromCpfCpnj" id="formEmailTelFromCpf" action="email-telefone-from-cpf">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <?php /*<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button> */?>
+                <div class="modal-header">
+                    <span>Informe seu <b>CPF</b> para receber uma nova senha</span>
+                </div>
+                <div class="modal-body mt-2">
+                    <div class="">
+                        <span>CPF</span>
+                        <input type="text" id="cpfOuCpnj" data-mask="000.000.000-00" name="cpfOuCpnj"  class="form-control" placeholder="000.000.000-00" required="required" minlength="10" maxlength="15">
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="submit" class="btn btn-default">Enviar</button>
+                </div>
+                <div class="text-center mt-3">
+                    <b><a href="#" data-dismiss="modal" aria-label="Fechar" class="link-laranja">CANCELAR</a></b>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal escolha resetar senha -->
+<div class="modal fade" id="modalRecuperarSenha" tabindex="-1" role="dialog" aria-labelledby="modalRecuperarSenhaLabel"
+     aria-hidden="true">
+    <form method="POST" name="formLembrarSenha" id="formLembrarSenha" action="remember-pass">
+        <input type="hidden" name="cpfCnpjRetorno" id="cpfCnpjRetorno" class="hide" disabled>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <?php /*<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button> */?>
+                <div class="modal-header">
+                    <div class="w-100 text-center mb-2"><h5 class="m-0">Recupere sua senha!</h5></div>
+                    <div class="text-left d-flex"><span>Escolha a opção abaixo para receber o código de autenticação para cadastrar a nova senha</span></div>
+                </div>
+
+                <div class="modal-body mt-2 options">
+                    <div class="sms w-100 d-flex">
+                        <a href="" class="w-100 py-2">
+                            <b class="mr-2">SMS</b>
+                            <span>clique para enviar o código para: </br><b><span id="telefoneRetorno"></span></b> </span>
+                        </a>
+                    </div>
+                    <div class="email w-100 d-flex">
+                        <a href="" class="w-100 pt-2 border-0">
+                            <b class="mr-2">Email</b>
+                            <span>clique para enviar a nova senha para: </br><b><span id="emailRetorno"></span></b> </span>
+                        </a>
+                    </div>
+                    
+                </div>
+                <div class="text-center mt-3">
+                    <b><a href="#" data-dismiss="modal" aria-label="Fechar" class="link-laranja">CANCELAR</a></b>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal lembrar senha revenda -->
+<div class="modal fade" id="modalLembrarSenhaRevenda" tabindex="-1" role="dialog" aria-labelledby="modalLembrarSenhaRevendaLabel"
+     aria-hidden="true">
+    <form method="POST" name="formEmailTelFromCpfCpnj" id="formEmailTelFromCpnj" action="email-telefone-from-cpf">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>Informe seu <b>CNPJ</b> para receber uma nova senha</span>
+                </div>
+                <div class="modal-body mt-2">
+                    <div class="">
+                        <span>CNPJ</span>
+                        
+                        <input type="text" id="cpfOuCpnj" name="cpfOuCpnj" data-mask="00.000.000/0000-00"  class="form-control" placeholder="00.000.000/0000-00" required="required" minlength="14" maxlength="18">
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="submit" class="btn btn-default">Enviar</button>
+                </div>
+                <div class="text-center mt-3">
+                    <b><a href="#" data-dismiss="modal" aria-label="Fechar" class="link-laranja">CANCELAR</a></b>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal recuperar senha via telefone -->
+<div class="modal fade" id="modalValidaToken" tabindex="-1" role="dialog" aria-labelledby="modalValidaTokenLabel" aria-hidden="true">
+    <form method="POST" name="formValidaToken" id="formValidaToken" action="validate-token">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="w-100 text-center mb-2"><h5 class="m-0">Informe o código de verificação</h5></div>
+                    <div class="text-left d-flex"><span>Digite abaixo o código recebido por <b>SMS</b> em: </br><span id="telefoneEnviado"></span></span></div>
+                </div>
+                <div class="modal-body mt-3">
+                    <div class="w-100 d-flex justify-content-center">                        
+                        <input type="text" id="token" name="token" data-mask="0000"  class="form-control w-50 text-center" placeholder="0000" required="required" minlength="4" maxlength="4">
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="submit" class="btn btn-default">Validar</button>
+                </div>
+                <div class="text-center mt-3">
+                    <b><a href="#" data-dismiss="modal" aria-label="Fechar" class="link-laranja">CANCELAR</a></b>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal nova senha -->
+<div class="modal fade" id="modalNovaSenha" tabindex="-1" role="dialog" aria-labelledby="modalNovaSenhaLabel" aria-hidden="true">
+    <form method="POST" name="formNovaSenha" id="formNovaSenha" action="remember-pass-save">
+        <input type="hidden" name="idCadastro" class="hide" disabled>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="w-100 text-center mb-2"><h5 class="m-0">Cadastre a sua nova senha</h5></div>
+                </div>
+                <div class="modal-body mt-2">
+                    <div class="">
+                        <span>Senha</span>                        
+                        <input type="text" id="senha" name="senha" class="form-control" placeholder="*****" required="required" minlength="4">
+                    </div>
+                    <div class="mt-3">
+                        <span>Confirme sua senha</span>                        
+                        <input type="text" id="senhaConf" name="senhaConf" class="form-control" placeholder="*****" required="required" minlength="4">
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="submit" class="btn btn-default">Salvar Senha</button>
+                </div>
+                <div class="text-center mt-3">
+                    <b><a href="#" data-dismiss="modal" aria-label="Fechar" class="link-laranja">CANCELAR</a></b>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

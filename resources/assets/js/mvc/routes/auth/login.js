@@ -2,11 +2,10 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     require('bootstrap/js/dist/modal');
     var HandleApiError = require('components/HandleApiError');
     var Alert = require('components/Alerts');
-    var formsContainer = $('div.forms-group > div');
 
     var ShowPassword = require('components/ShowPassword');
     ShowPassword($("input[type='password']"));
-    
+
     $("body").on("click", "input.radioTipoCadastro[data-cookie]", function(e){
         let $this = $(this);
         let cookieDate = new Date;
@@ -14,10 +13,12 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         document.cookie = `login-tipoCadastro=${$this.data("cookie")}; expires=${cookieDate.toGMTString()};`;
     });
 
-    formsContainer.filter('.hide').hide().removeClass('hide');
-    $('form.tipo-cadastro-container input').change(function () {
+    var $ctx = $('.login-area');
+    var $formDivs = $('.container-form-particular, .container-form-revenda');
+    $formDivs.filter('.hide').hide().removeClass('hide');
+    $ctx.find('.switch-field input').change(function () {
         let seletectedForm = '.' + $(this).val();
-        formsContainer
+        $formDivs
                 .slideUp()
                 .filter(seletectedForm)
                 .slideDown();
@@ -29,7 +30,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     //     tipoCadastro = match.groups.tipoCadastro || tipoCadastro;
     // }
     // $(`input.radioTipoCadastro[data-cookie='${tipoCadastro}']`).click()
-    
+
     var url = window.location.href;
     if ($('input[name=login-error]').val() === '1') {
         $('#modalErroSenha').modal('show');
@@ -48,23 +49,30 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         $('.container-form-particular, .container-form-revenda').slideUp();
         $('.loading-container').slideDown();
     });
-    $('#formLembrarSenha').submit(function (e) {
+
+    $('form[name="formEmailTelFromCpfCpnj"]').submit(function (e) {
         e.preventDefault();
         $('#modalLembrarSenha').modal('hide');
-        var email = $(this).find('#emailLembrarSenha').val();
+        var cfpCnpj = $(this).find('input[name="cpfOuCpnj"]').val();
         $.ajax({
             type: 'POST',
-            url: '/remember-pass',
+            url: '/email-telefone-from-cpf-cnpj',
             data: $(this).serialize(),
             dataType: 'json',
             success: function (data) {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                
-                // Alert.info('Confira a caixa de entrada do email <b>' + email + '</b>', 'Email enviado');
-                $('#emailEnviado').text(data.email);
-                $('#modalEmailEnviado').modal('show');
+
+                var $ctx = $('#modalRecuperarSenha');
+
+                $ctx.find('#emailRetorno').text(data.email);
+                $ctx.find('#telefoneRetorno').text(data.telefone);
+                $ctx.find('#cpfCnpjRetorno').val(cfpCnpj);
+
+                $('#modalValidaToken').find('#telefoneEnviado').text(data.telefone);
+
+                $('#modalRecuperarSenha').modal('show');
             },
             error: function (e) {
                 if (e.responseJSON) {
@@ -75,5 +83,132 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             }
         });
     });
+
+
+
+
+    /**------------------------------------------------ */
+
+
+    var AdvancedAlerts = require('components/AdvancedAlerts');
+    $('#modalRecuperarSenha').on('click','.options .sms a',function(e){
+      e.preventDefault();
+      var cpfOuCpnj = $('#modalRecuperarSenha #cpfCnpjRetorno').val();
+
+      $.ajax({
+        type: 'POST',
+        url: '/remember-pass-phone',
+        data: {'cpfOuCpnj' : '131.623.356-12'},
+        success: function (data) {
+            if (!HandleApiError(data)) {
+                return;
+            }
+            $('#modalValidaToken').modal('show');
+        },
+        error: function (e) {
+            if (e.responseJSON) {
+                HandleApiError(e.responseJSON);
+            } else {
+                HandleApiError(false);
+            }
+        }
+      }).always(function(){
+        $('#modalRecuperarSenha').modal('hide');
+      });
+
+    });
+
+    $('#modalRecuperarSenha').modal('show');
+    $('#modalValidaToken form#formValidaToken').submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/validate-token',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (data) {
+            if (!HandleApiError(data)) {
+                return;
+            }
+            if (data.token != token) {
+              AdvancedAlerts.error({
+                title: 'Erro',
+                text: 'Token Inválido'
+              });
+              return;
+            }
+            $('#modalNovaSenha input[name="idCadastro"]').val(data.idCadastro);
+            $('#modalNovaSenha').modal('show');
+        },
+        error: function (e) {
+            if (e.responseJSON) {
+                HandleApiError(e.responseJSON);
+            } else {
+                HandleApiError(false);
+            }
+        }
+      }).always(function(){
+        $('#modalValidaToken').modal('hide');
+      });
+    });
+
+    $('#modalNovaSenha form#formNovaSenha').submit(function(e){
+      e.preventDefault();
+
+      var $this = $(this);
+      var senha = $this.find('input[name="senha"]');
+      var senhaConf = $this.find('input[name="senhaConf"]');
+
+      if(senha != senhaConf){
+        return;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: '/remember-pass-save',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (data) {
+            if (!HandleApiError(data)) {
+                return;
+            }
+            $('#modalNovaSenha').modal('hide');
+        },
+        error: function (e) {
+            if (e.responseJSON) {
+                HandleApiError(e.responseJSON);
+            } else {
+                HandleApiError(false);
+            }
+        }
+      });
+    });
+
+    /*AdvancedAlerts.info({
+      title: 'Sucesso',
+      text: 'Sua senha foi atualizada com sucesso',
+      closeCallback: function(){
+          window.location.href = '/';
+      }
+    });
+    return;
+    fetch('/remember-pass-phone', {
+            method: 'POST',
+            body: formData
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
+            if (response.status == 201) {
+                mudarPasso('passo2');
+            } else {
+                document.getElementById('telefone_invalido').style.display = 'block';
+            }
+        })
+        .catch(function (error) {
+            console.log("Error: " + error);
+        });
+  }*/
 });
 
