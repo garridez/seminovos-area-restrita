@@ -228,7 +228,7 @@ return [
                                     ],
                                 ],
                             ],
-                            
+
                         ],
                     ],
                 ],
@@ -283,6 +283,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
                         'action' => 'rememberPass'
+                    ],
+                ],
+            ],
+            'email-telefone-from-cpf-cnpj' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/email-telefone-from-cpf-cnpj',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'getEmailTelefoneFromCpfOuCnpj'
                     ],
                 ],
             ],
