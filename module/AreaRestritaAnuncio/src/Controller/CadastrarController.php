@@ -67,14 +67,15 @@ class CadastrarController extends AbstractActionController
             return $view;
         }
     }
-    private function getContatosFromCpfCnpj($cpfOuCpnj, $mask = true){
-
+    private function getContatosFromCpfCnpj($cpfOuCpnj, $mask = true)
+    {
         $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
         $tipoCadastro = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 2 : 1;
 
         // CPF ou CNPJ retira a pontuação
         $cpfOuCpnj = preg_match_all('(\d)',$cpfOuCpnj, $matches);
         $cpfOuCpnj = implode($matches[0]);
+
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -85,6 +86,7 @@ class CadastrarController extends AbstractActionController
             $campoCpfOuCnpj => $cpfOuCpnj,
             'checkEmail' => true
         ]);
+
 
         if (!$dadosCadastro || !$dadosCadastro[0]) {
             return [
@@ -98,6 +100,7 @@ class CadastrarController extends AbstractActionController
 
         $email = $dadosCadastro['email'];
         $telefone = $dadosCadastro['telefone2'];
+        $dadosCadastroRetorno = [];
 
         if($mask){
             // Mascara email
@@ -105,8 +108,12 @@ class CadastrarController extends AbstractActionController
 
             // Mascara telefone
             $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{3})(\d{1})/', '($1)$2$3***-***$6', $telefone);
+
+        }else{
+            $dadosCadastroRetorno = $dadosCadastro;
         }
-        return ['status' => 200, 'email' => $email, 'telefone' => $telefone];
+
+        return ['status' => 200, 'email' => $email, 'telefone' => $telefone, 'dadosCadastro' => $dadosCadastroRetorno];
     }
 
 
@@ -133,54 +140,37 @@ class CadastrarController extends AbstractActionController
     public function rememberPassAction()
     {
         $request = $this->getRequest();
-
         if (!$request->isPost()) {
             return [];
         }
+
+
         $post = $request->getPost();
 
-        $emailOuCpf = $post['emailLembrarSenha'];
-        $tipoCadastro = 2;
+        $cpfOuCpnj = $post['cpfOuCpnj'];
+        $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
 
-        // Verifica se parametro enviado é email ou cpf
-        $campoEmailCpf = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $emailOuCpf) ? 'cpfResponsavel' : 'email';
+        $dadosCadastro = $retornoContato['dadosCadastro'];
 
-        // Se for CPF retira a pontuação
-        if ($campoEmailCpf == 'cpfResponsavel') {
-            $emailOuCpf = preg_replace('/(\.|-)/', '', $emailOuCpf);
-        }
-
-        /* @var $cadastrosModel Cadastros */
-        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-
-        #verifica se o email ou CPF informado já foi cadastrado no sistema
-        $dadosCadastro = $cadastrosModel->get([
-            'tipoCadastro' => $tipoCadastro,
-            $campoEmailCpf => $emailOuCpf,
-            'checkEmail' => true
-        ]);
-
-        if (!$dadosCadastro || !$dadosCadastro[0]) {
+        if (!$dadosCadastro) {
             echo json_encode([
                 'status' => 400,
                 'title' => 'Method Not Allowed',
-                'detail' => 'Email ou CPF não encontrado. Verifique e tente novamente',
+                'detail' => 'CPF ou CNPJ não encontrado. Verifique e tente novamente',
             ]);
             die;
         }
 
-        $dadosCadastro = $dadosCadastro[0];
         // gerar uma nova senha
         $senha = substr(md5(uniqid('')), 0, 7);
         $senha = str_replace('0', '', $senha); // não inserir zeros
         $novaSenha = $senha;
 
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        /*$retorno = $cadastrosModel->put([
-            'senha' => $novaSenha,
-            'tipoCadastro' => $tipoCadastro
+        $retorno = $cadastrosModel->put([
+            'senha' => $novaSenha
             ], $dadosCadastro['idCadastro'], null);
-
 
         if ($retorno->status == 200) {
             // Envia email pela nova api
@@ -197,21 +187,23 @@ class CadastrarController extends AbstractActionController
                 'tipoEmail' => 'nova_senha'
             ];
 
-            /* @var $enviarEmailModel EnviarEmail *//*
+            /* @var $enviarEmailModel EnviarEmail */
             $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
-
             $retorno = $enviarEmailModel->post($dadosEmail);
         }
+
         if ($retorno instanceof \SnBH\ApiClient\Response) {
             $retorno = $retorno->json();
-        }*/
+        }
+
+        $email = $dadosCadastro['email'];
+        $telefone = $dadosCadastro['telefone2'];
 
         // Mascara email
-        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', $dadosCadastro['email']);
+        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', $email);
 
         // Mascara telefone
-        $telefone = preg_replace('/\D/', '',$dadosCadastro['telefone2']);
-        $telefone = preg_replace('/(\d{1,2})?(\d{1})?(\d{1,1})?(\d{3})?(\d{1})?/', '($1) $2 $3-$5', $telefone);
+        $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{3})(\d{1})/', '($1)$2$3***-***$6', $telefone);
 
         return new JsonModel(['status' => 200, 'email' => $email, 'telefone' => $telefone]);
     }

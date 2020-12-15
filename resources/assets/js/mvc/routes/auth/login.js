@@ -50,55 +50,54 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         $('.loading-container').slideDown();
     });
 
-    $('form[name="formEmailTelFromCpfCpnj"]').submit(function (e) {
-        e.preventDefault();
-        $('#modalLembrarSenha').modal('hide');
-        var cfpCnpj = $(this).find('input[name="cpfOuCpnj"]').val();
-        $.ajax({
-            type: 'POST',
-            url: '/email-telefone-from-cpf-cnpj',
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function (data) {
-                if (!HandleApiError(data)) {
-                    return;
-                }
+    /**------------------------------------------------ */
+    var $formDadosBasicos = $('form#formdadosBasicos');
+    var AdvancedAlerts = require('components/AdvancedAlerts');
 
-                var $ctx = $('#modalRecuperarSenha');
+    $('form[name="formContatosCpfCpnj"]').submit(function (e) {
+      e.preventDefault();
+      $('#modalLembrarSenha').modal('hide');
 
-                $ctx.find('#emailRetorno').text(data.email);
-                $ctx.find('#telefoneRetorno').text(data.telefone);
-                $ctx.find('#cpfCnpjRetorno').val(cfpCnpj);
+      var cfpCnpj = $(this).find('input[name="cpfOuCpnj"]').val();
 
-                $('#modalValidaToken').find('#telefoneEnviado').text(data.telefone);
+      var tipoCad = $(this).find('input[name="tipoCadastro"]').val();
+      $formDadosBasicos.find('input[name="tipoCadastro"]').val(tipoCad);
 
-                $('#modalRecuperarSenha').modal('show');
-            },
-            error: function (e) {
-                if (e.responseJSON) {
-                    HandleApiError(e.responseJSON);
-                } else {
-                    HandleApiError(false);
-                }
-            }
-        });
+      $.ajax({
+          type: 'POST',
+          url: '/email-telefone-from-cpf-cnpj',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function (data) {
+              if (!HandleApiError(data)) {
+                  return;
+              }
+
+              $('[data-retorno-telefone]').text(data.telefone);
+              $('[data-retorno-email]').text(data.email);
+
+              $formDadosBasicos.find('input[name="cpfCnpj"]').val(cfpCnpj);
+
+              $('#modalRecuperarSenha').modal('show');
+          },
+          error: function (e) {
+              if (e.responseJSON) {
+                  HandleApiError(e.responseJSON);
+              } else {
+                  HandleApiError(false);
+              }
+          }
+      });
     });
 
-
-
-
-    /**------------------------------------------------ */
-
-
-    var AdvancedAlerts = require('components/AdvancedAlerts');
     $('#modalRecuperarSenha').on('click','.options .sms a',function(e){
       e.preventDefault();
-      var cpfOuCpnj = $('#modalRecuperarSenha #cpfCnpjRetorno').val();
+      var cpfOuCpnj = $formDadosBasicos.find('input[name="cpfCnpj"]').val();
 
       $.ajax({
         type: 'POST',
         url: '/remember-pass-phone',
-        data: {'cpfOuCpnj' : '131.623.356-12'},
+        data: {'cpfOuCpnj' : cpfOuCpnj},
         success: function (data) {
             if (!HandleApiError(data)) {
                 return;
@@ -118,9 +117,45 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
 
     });
 
-    $('#modalRecuperarSenha').modal('show');
+    $('#modalRecuperarSenha').on('click','.options .token a',function(e){
+      e.preventDefault();
+      $('#modalRecuperarSenha').modal('hide');
+      $('#modalValidaToken').modal('show');
+    });
+
+    $('#modalRecuperarSenha').on('click','.options .email a',function(e){
+      e.preventDefault();
+
+      var cpfOuCpnj = $formDadosBasicos.find('input[name="cpfCnpj"]').val();
+      $.ajax({
+        type: 'POST',
+        url: '/remember-pass',
+        data: { 'cpfOuCpnj': cpfOuCpnj },
+        dataType: 'json',
+        success: function (data) {
+            if (!HandleApiError(data)) {
+                return;
+            };
+            AdvancedAlerts.success({
+              title: 'Senha Enviada',
+              text: 'Nova senha enviada para o email:</br>' + data.email
+            });
+        },
+        error: function (e) {
+            if (e.responseJSON) {
+                HandleApiError(e.responseJSON);
+            } else {
+                HandleApiError(false);
+            }
+        }
+      }).always(function(){
+        $('#modalRecuperarSenha').modal('hide');
+      });
+    });
+
     $('#modalValidaToken form#formValidaToken').submit(function(e){
       e.preventDefault();
+      var $this = $(this);
       $.ajax({
         type: 'POST',
         url: '/validate-token',
@@ -130,14 +165,15 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             if (!HandleApiError(data)) {
                 return;
             }
-            if (data.token != token) {
+            var token = $this.find('input[name="token"]').val();
+            if (data.data.token != token) {
               AdvancedAlerts.error({
                 title: 'Erro',
                 text: 'Token Inválido'
               });
               return;
             }
-            $('#modalNovaSenha input[name="idCadastro"]').val(data.idCadastro);
+            $formDadosBasicos.find('input[name="idCadastro"]').val(data.data.idCadastro);
             $('#modalNovaSenha').modal('show');
         },
         error: function (e) {
@@ -156,23 +192,36 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
       e.preventDefault();
 
       var $this = $(this);
-      var senha = $this.find('input[name="senha"]');
-      var senhaConf = $this.find('input[name="senhaConf"]');
+      var senha = $this.find('input[name="senha"]').val();
+      var senhaConf = $this.find('input[name="senhaConf"]').val();
+      var idCadastro = $formDadosBasicos.find('input[name="idCadastro"]').val();
 
       if(senha != senhaConf){
+        AdvancedAlerts.error({
+          title: 'Erro',
+          text: 'As senhas não conferem'
+        });
         return;
       }
 
       $.ajax({
         type: 'POST',
         url: '/remember-pass-save',
-        data: $(this).serialize(),
+        data: {
+          'senha' : senha,
+          'idCadastro' : idCadastro
+        },
         dataType: 'json',
         success: function (data) {
             if (!HandleApiError(data)) {
                 return;
             }
             $('#modalNovaSenha').modal('hide');
+            AdvancedAlerts.success({
+              title: 'Nova senha cadastrada',
+              text: 'Utilize a nova senha para entrar'
+            });
+            $formDadosBasicos.find('input').val('');
         },
         error: function (e) {
             if (e.responseJSON) {
