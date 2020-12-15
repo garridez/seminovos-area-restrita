@@ -1,0 +1,330 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+$placa = $this->placa;
+$dadosCertificados = $this->dadosCertificados;
+$dados = $dadosCertificados['dadosBasicos']['body']['data'];
+$baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'];
+$baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'];
+var_dump($baseEstadual);
+
+?>
+
+<div class="d-flex justify-content-center bg-light">
+    <div class="py-2">
+        <a href="/meus-veiculos" title="Voltar" class="btn">
+            <i class="link-primary fa fa-arrow-circle-left mr-1"></i>
+            Voltar
+        </a>
+        <a href="#" title="Imprimir" class="btn btn-print">
+            <i class="link-primary fa fa-print mr-1"></i>
+            Imprimir
+        </a>
+    </div>
+</div>
+<div class="container-fluid to-print">
+    <div class="card card-default mt-1">
+        <div class="card-body pt-0 px-2 px-md-3">
+            <div class="invoice p-md-3 pl-print-0 pt-print-0">
+                <div class="row mx-0">
+                    <div class="col-12 col-md-6 d-none d-md-block">
+                        <img alt="" class="invoice-logo" data-src-retina="assets/img/invoice/squarespace2x.png"
+                            data-src="assets/img/invoice/squarespace.png" src="/img/svg/logo.svg">
+                    </div>
+                    <div class="col-12 col-md-6 p-2">
+                        <h4 class="font-montserrat all-caps hint-text">DETALHES DO CERTIFICADO DOCUMENTAL </h4>
+                    </div>
+                </div>
+                <address class="pl-2 mt-0 d-block d-md-flex">
+                    <div class="mr-0 mr-md-1">
+                        Rua Níquel, 11-a, Serra - Belo Horizonte/MG -
+                    </div>
+                    <div class="">
+                        CEP: 30240-020 - (31) 3077-5888
+                    </div>
+                </address>
+            </div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2">
+                <table class="table w-100 table-responsive-sm">
+                    <thead>
+                        <tr class="bg-cinza">
+                            <th class="text-center text-white" colspan="2">QUADRO DE AVISOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui Restrições?
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <?= isset($dadosCertificados['flagRestricao']) && $dadosCertificados['flagRestricao'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui Indicio de Sinistro?
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <?= isset($dadosCertificados['flagSinistro']) && $dadosCertificados['flagSinistro'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui registro de Leilão?
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <?= isset($dadosCertificados['flagLeilao']) && $dadosCertificados['flagLeilao'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui Débitos?
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <?= isset($dadosCertificados['flagDebitos']) && $dadosCertificados['flagDebitos'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="no-wrap pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui registro de Roubo?
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <?= isset($dadosCertificados['flagFurto']) && $dadosCertificados['flagFurto'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-2">
+                            <span class="text-uppercase text-white">
+                                Dados Principais do Veículo
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Placa: <span class="semi-bold mt-0"><?= isset($placa) && $placa != ""  ? $placa : "Não informada" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Renavan: <span class="semi-bold mt-0"><?= isset($dados['renavam']) && $dados['renavam']  ? $dados['renavam'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Tipo de Veículo: <span class="semi-bold mt-0"><?= isset($dados['tipoVeiculo']) && $dados['tipoVeiculo']  ? $dados['tipoVeiculo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Ano Modelo: <span class="semi-bold mt-0"><?= isset($dados['anoModelo']) && $dados['anoModelo']  ? $dados['anoModelo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Combustível: <span class="semi-bold mt-0"><?= isset($dados['combustivel']) && $dados['combustivel']  ? $dados['combustivel'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Município: <span class="semi-bold mt-0"><?= isset($dados['municipio']) && $dados['municipio']  ? $dados['municipio'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Chassi: <span class="semi-bold mt-0"><?= isset($dados['chassi']) && $dados['chassi']  ? $dados['chassi'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Núm. Motor: <span class="semi-bold mt-0"><?= isset($dados['numMotor']) && $dados['numMotor']  ? $dados['numMotor'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Marca/Modelo: <span class="semi-bold mt-0"><?= isset($dados['marcaModelo']) && $dados['marcaModelo']  ? $dados['marcaModelo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Ano Fabricação: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Cor: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">UF: <span class="semi-bold mt-0"><?= isset($dados['uf']) && $dados['uf']  ? $dados['uf'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-2">
+                            <span class="text-uppercase text-white">
+                                Restrições Estatuais
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Restrições 1: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes1']) && $baseEstadual['outrasRestricoes1']  ? $baseEstadual['outrasRestricoes1'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Restrições 3: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes3']) && $baseEstadual['outrasRestricoes3']  ? $baseEstadual['outrasRestricoes3'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">RENAJUD: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoRenajud']) && $baseEstadual['restricaoRenajud']  ? $baseEstadual['restricaoRenajud'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Administrativa: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoAdminisrativa']) && $baseEstadual['restricaoAdminisrativa']  ? $baseEstadual['restricaoAdminisrativa'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Tributária: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoTributaria']) && $baseEstadual['restricaoTributaria']  ? $baseEstadual['restricaoTributaria'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Comun. de Venda: <span class="semi-bold mt-0"><?= isset($baseEstadual['comunicacaoVenda']) && $baseEstadual['comunicacaoVenda']  ? $baseEstadual['comunicacaoVenda'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Restrições 2: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes2']) && $baseEstadual['outrasRestricoes2']  ? $baseEstadual['outrasRestricoes2'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Restrições 4: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes4']) && $baseEstadual['outrasRestricoes4']  ? $baseEstadual['outrasRestricoes4'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Judicial: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoJudicial']) && $baseEstadual['restricaoJudicial']  ? $baseEstadual['restricaoJudicial'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Guincho: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoGuincho']) && $baseEstadual['restricaoGuincho']  ? $baseEstadual['restricaoGuincho'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Financeira: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoFinanceira']) && $baseEstadual['restricaoFinanceira']  ? $baseEstadual['restricaoFinanceira'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-2">
+                            <span class="text-uppercase text-white">
+                                Restrições Nacionais
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Restrições 1: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao1']) && $baseNacional['restricao1']  ? $baseNacional['restricao1'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Restrições 3: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao3']) && $baseNacional['restricao3']  ? $baseNacional['restricao3'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">RENAJUD: <span class="semi-bold mt-0"><?= isset($baseNacional['indicadorRestricaoRenajud']) && $baseNacional['indicadorRestricaoRenajud']  ? $baseNacional['indicadorRestricaoRenajud'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Financiadora: <span class="semi-bold mt-0"><?= isset($baseNacional['restricaoFinanciadora']) && $baseNacional['restricaoFinanciadora']  ? $baseNacional['restricaoFinanciadora'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Restrições 2: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao2']) && $baseNacional['restricao2']  ? $baseNacional['restricao2'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Restrições 4: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao4']) && $baseNacional['restricao4']  ? $baseNacional['restricao4'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Comun. de Venda: <span class="semi-bold mt-0"><?= isset($baseNacional['indicadorComunicacaoVendas']) && $baseNacional['indicadorComunicacaoVendas']  ? $baseNacional['indicadorComunicacaoVendas'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Financiamento: <span class="semi-bold mt-0"><?= isset($baseNacional['restricaoFinanciamento']) && $baseNacional['restricaoFinanciamento']  ? $baseNacional['restricaoFinanciamento'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice py-0 px-2 mt-3 mt-print-3 pl-print-0 col-print-12">
+                <div class="row b-a b-grey">
+                    <div
+                        class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
+                        <h5 class="font-montserrat all-caps small no-margin hint-text bold">
+                            Data de Pagamento
+                        </h5>
+                        <h3 class="no-margin h3-print">
+                            <?= isset($dadosPagamento['dataCadastro']) && $dadosPagamento['dataCadastro'] != ""  ? date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])) : "Não informado" ?>
+                        </h3>
+                    </div>
+                    <div
+                        class="col-md-4 col-print-4 text-right bg-master-darker col-sm-height padding-15 d-flex flex-column justify-content-center align-items-end">
+                        <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
+                            Total</h5>
+                        <h1 class="no-margin text-white">R$
+                            <?= isset($dadosPagamento['valor']) && $dadosPagamento['valor'] != ""  ? number_format($dadosPagamento['valor'], 2, ',', '.') : "Não informado" ?>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice p-l-15 row mt-4 mt-print-3 row-print pl-print-0 col-print-12">
+                <div class="col-12">
+                    <div class="border-bottom pb-2">
+                        <span class="text-uppercase hint-text">
+                            Informações
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 description-print">
+                    <div class="col-12 pl-0 pl-print-0">
+                        <div class="">
+                            <small>
+                                * Entretanto o cliente deverá renová-lo sem ônus a cada 30 dias visando a
+                                atualização do
+                                site.
+                                Caso o cliente não reative ou renove depois de 30 dias, o mesmo será excluído do
+                                banco
+                                de dados perdendo o direito de renovação gratuita.
+                            </small>
+                        </div>
+                        <div>
+                            <small class="">
+                                Operação não tributada pelo ISS, conforme veto do item 17.07 da lista de
+                                Serviços anexa a lei Complementar No. 116 de 31/01/2003 (DOU de 01/08/2003).
+                            </small>
+                        </div>
+                        <div>
+                            <small class="">
+                                <strong>Empresa dispensada de emissão de nota fiscal, conforme processo PBH Nº
+                                    01-175.711/15-00, de 04/12/2015.</strong>
+                            </small>
+                        </div>
+
+                        <div>
+                            <small class="">
+                                Não é permitida a veiculação de veículos de revendas ou lojistas fora da sua
+                                área específica.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-block d-md-flex align-items-baseline">
+                <img src="/img/svg/logo.svg" alt="logo" data-src="assets/img/logo.png"
+                    data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                <span class="text-black no-wrap">Seminovos, aqui tem negócio!</span>
+                <a href="www.seminovos.com.br" class="ml-auto text-right text-black">www.seminovos.com.br</a>
+            </div>
+        </div>
+    </div>
+</div>

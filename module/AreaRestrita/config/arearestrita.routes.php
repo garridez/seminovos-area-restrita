@@ -471,4 +471,14 @@ return [
             ],
         ],
     ],
+    'certificados' => [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'certificados/placa/:placa',
+            'defaults' => [
+                'controller' => Ctrl\CertificadosController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
 ];
