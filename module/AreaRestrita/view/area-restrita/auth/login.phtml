@@ -1,3 +1,29 @@
+<?php
+/* @var $this Zend\View\Renderer\PhpRenderer */
+global $container;
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
+
+if ($this->loginError) {
+    echo '<input type="hidden" name="login-error" value="1" />';
+}
+$this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+$this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+
+$this->particularForm->get('usuarioEmail')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'username');
+$this->particularForm->get('usuarioSenha')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'username');
+
+$this->revendaForm->get('usuarioEmail')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'current-password');
+$this->revendaForm->get('usuarioSenha')
+        ->setAttribute('class', 'form-control')
+        ->setAttribute('autocomplete', 'current-password');
+?>
+
 <?php $urlCadastrar = ($this->cadastroSimples ?? false) ? '/cadastro-simples' : '/me-cadastrar' ?>
 <div class="login-area">
     <div class="titulo text-center py-4">
@@ -14,11 +40,11 @@
         </div>
     </div>
     <div class="conteudo">
+        <div class="loading-container" style="display: none;">
+            <div class="spinner-border"></div>
+            <div class="feedback-text"></div>
+        </div>
         <div class="forms">
-            <div class="loading-container hide">
-                <div class="spinner-border"></div>
-                <div class="feedback-text"></div>
-            </div>
             <div class="container-form-particular">
                 <?=
                 $this->partial('./partials/form-particular', [
