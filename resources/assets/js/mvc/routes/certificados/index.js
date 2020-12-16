@@ -5,14 +5,14 @@ module.exports.callback = ($) => {
     require('printthis');
     $(document).bind("keydown", function (e) {
         if (e.ctrlKey && e.keyCode == 80) {
-            $('.card-body').printThis({
+            $('.to-print').printThis({
                 loadCSS: "/css/app.css"
             });
             return false;
         }
     });
     $('.btn-print').click(function () {
-        $('.card-body').printThis({
+        $('.to-print').printThis({
             loadCSS: "/css/app.css"
         });
     })
