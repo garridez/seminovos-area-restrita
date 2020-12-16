@@ -132,4 +132,8 @@ $namespace:_login-;
             color: white;
         }
     }
+    @include media-breakpoint-down(md){
+        width: 93.6%;
+        margin: 0.7rem;
+    }
 }
