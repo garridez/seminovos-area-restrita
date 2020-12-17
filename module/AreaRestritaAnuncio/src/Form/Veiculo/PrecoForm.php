@@ -52,7 +52,7 @@ class PrecoForm extends Form
             'type' => Element\Checkbox::class,
             'name' => 'flagIpva',
             'options' => [
-                'label' => 'IPVA 2020 quitado?',
+                'label' => 'IPVA 2021 quitado?',
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
