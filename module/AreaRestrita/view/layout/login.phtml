@@ -26,10 +26,34 @@ $assetSufix = APPLICATION_ENV === 'development' ? rand(0, 64456645) . '-developm
   })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
 </head>
 
-<body class="fixed-header l-login <?= $this->bodyClass() ?> container-fluid <?= $isRedirect ? 'intro-off' : '' ?>">
-    <div class="col-12 col-md-12">
-        <?= $this->content ?>
+<?php
+/* @var $this Zend\View\Renderer\PhpRenderer */
+global $container;
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
+?>
+
+
+<body class="l-login <?= $this->bodyClass() ?> <?= $isRedirect ? 'intro-off' : '' ?>">
+
+    <div class="topo d-flex justify-content-center align-items-center">
+        <div class="intro-1">
+            <div class="snbh-logo-container">
+                <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
+                    <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+                    <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                    <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </div>
+    <div class="container d-flex justify-content-center">
+        <div class="login-container">
+            <?= $this->content ?>
+        </div>
+    </div>
+
+    <?= $this->partial('./partials/modais-login.phtml'); ?>
     <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
 </body>
 </html>

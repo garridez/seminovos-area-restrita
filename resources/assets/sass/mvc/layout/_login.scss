@@ -19,50 +19,121 @@ $namespace:_login-;
         }
     }
 }
-.snbh-logo-container {
-    text-align: center;
-}
-
 @import "imports/login_animations";
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-& {
-    background: #151a22;
-    @include media-breakpoint-down(md) {
-        background: #fff;
+
+.link-laranja{
+    color: $laranja !important;
+    &:hover{
+        color: darken($color: $laranja, $amount: 10) !important;
     }
 }
-.switch-field {
-    width: 100%;
+
+
+&{
+    background-color: #F9F9F9;
+    font-family: 'Roboto' !important;
+}
+.topo{
+    background-color: white;
+    height: 10vh;
+    .snbh-logo-container svg{
+        height: 45px;
+        width: auto;
+    }
+}
+.login-container{
+    height: 90vh;
+}
+.separador{
     display: flex;
-    overflow: hidden;
-    input {
-        position: absolute !important;
-        clip: rect(0, 0, 0, 0);
-        height: 1px;
-        width: 1px;
-        border: 0;
-        overflow: hidden;
-        &:checked + label {
-            background-color: $yellow;
-            box-shadow: none;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    span{
+        border-top: 1px solid #ccc;
+        width: 43%;
+    }
+}
+.cadastrar{
+    width: 100%;
+    .btn-cadastrar{
+        display: flex;
+        width: 100%;
+        color: white;
+        text-transform: initial;
+        justify-content: center;
+    }
+}
+
+.aviso{
+    display: flex;
+    justify-content: space-between;
+    .esquerda{
+        width: 20%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: center;
+        align-content: flex-start;
+        >div{
+            width: 100%;
+        }
+        img{
+            width: 50px;
+            height: auto;
+        }
+        span{
+            font-weight: bold;
+            font-size: 1.1rem;
         }
     }
-    label {
-        background-color: #e4e4e4;
-        color: rgba(0, 0, 0, 0.6);
-        font-size: 14px;
-        text-align: center;
-        padding: 8px 16px;
-        transition: all 0.4s ease-in-out;
-        width: 50%;
-        &:hover {
-            cursor: pointer;
-        }
-        &:first-of-type {
-            border-radius: 4px 0 0 4px;
-        }
-        &:last-of-type {
-            border-radius: 0 4px 4px 0;
+    .direita{
+        width: 75%;
+    }
+}
+
+.modal-dialog{
+    width: 365px;
+    position: relative;
+    button.close{
+        border: none;
+        background-color: transparent;
+        right: 10px;
+        top: 10px;
+        z-index: 10;
+    }
+    .modal-content{
+        padding: 1.9rem;
+        padding-bottom: 0.5rem;
+    }
+    .modal-header{
+        padding: 0;
+        span{
+            font-size: 0.7rem;
         }
     }
-} 
+    .modal-body{
+        padding: 0;
+        span{
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+    }
+    .modal-footer{
+        padding: 0;
+        display: flex;
+        width: 100%;
+        .btn-default{
+            margin: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+    }
+    @include media-breakpoint-down(md){
+        width: 93.6%;
+        margin: 0.7rem;
+    }
+}
