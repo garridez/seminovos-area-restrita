@@ -73,16 +73,19 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               if (!HandleApiError(data)) {
                   return;
               }
-              $('#modalRecuperarSenha').find('.sms,.token').removeClass('d-flex').removeClass('d-none');
+              $('#modalRecuperarSenha').find('.sms,.token,.email').removeClass('d-flex').removeClass('d-none');
 
               $('[data-retorno-telefone]').text(data.telefone);
               $('[data-retorno-email]').text(data.email);
 
-              if(!data.telefone){
-                console.log('Sem telefone');
-                $('#modalRecuperarSenha').find('.sms,.token').addClass('d-none');
-              }else{
-                $('#modalRecuperarSenha').find('.sms,.token').addClass('d-flex');
+              $('#modalRecuperarSenha').find('.sms,.token').addClass('d-none');
+              if(data.telefone){
+                $('#modalRecuperarSenha').find('.sms,.token').removeClass('d-none').addClass('d-flex');
+              }
+
+              $('#modalRecuperarSenha').find('.email').addClass('d-none');
+              if(data.email){
+                $('#modalRecuperarSenha').find('.email').removeClass('d-none').addClass('d-flex');
               }
 
               $formDadosBasicos.find('input[name="cpfCnpj"]').val(cfpCnpj);
