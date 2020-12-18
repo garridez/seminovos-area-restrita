@@ -39,7 +39,7 @@ class ParticularForm extends Form
                             'type' => Element\Email::class,
                             'name' => 'usuarioEmail',
                             'options' => [
-                                'label' => 'Email',
+                                'label' => 'E-mail',
                             ],
                             'attributes' => [
                                 'required'=> true,
