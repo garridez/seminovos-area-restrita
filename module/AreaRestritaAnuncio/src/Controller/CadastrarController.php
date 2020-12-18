@@ -101,8 +101,8 @@ class CadastrarController extends AbstractActionController
 
         $dadosCadastro = $dadosCadastro[0];
 
-        $email = $dadosCadastro['email'];
-        $telefone = $dadosCadastro['telefone2'];
+        $email = $dadosCadastro['email'] ?? null;
+        $telefone = $dadosCadastro['telefone2'] ?? null;
         $dadosCadastroRetorno = [];
 
         if($mask){
