@@ -113,7 +113,7 @@ class CadastrarController extends AbstractActionController
             $dadosCadastroRetorno = $dadosCadastro;
         }
 
-        return ['status' => 200, 'email' => $email, 'telefone' => $telefone, 'dadosCadastro' => $dadosCadastroRetorno];
+        return ['status' => 200, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
     }
 
 
@@ -169,6 +169,7 @@ class CadastrarController extends AbstractActionController
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         $retorno = $cadastrosModel->put([
+            'tipoCadastro' => $retornoContato['tipoCadastro'],
             'senha' => $novaSenha
             ], $dadosCadastro['idCadastro'], null);
 
