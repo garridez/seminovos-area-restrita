@@ -57,6 +57,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     $('form[name="formContatosCpfCpnj"]').submit(function (e) {
       e.preventDefault();
       $('#modalLembrarSenha').modal('hide');
+      $('#modalLembrarSenhaRevenda').modal('hide');
 
       var cfpCnpj = $(this).find('input[name="cpfOuCpnj"]').val();
 
