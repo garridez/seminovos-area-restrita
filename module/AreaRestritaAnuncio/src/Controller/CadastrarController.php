@@ -71,6 +71,7 @@ class CadastrarController extends AbstractActionController
     {
         $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
         $tipoCadastro = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 2 : 1;
+        $considerarInativo = false;
 
         // CPF ou CNPJ retira a pontuação
         if($tipoCadastro == 2){
@@ -78,6 +79,7 @@ class CadastrarController extends AbstractActionController
             $cpfOuCpnj = implode($matches[0]);
         }else{
             $cpfOuCpnj = $cpfOuCpnj;
+            $considerarInativo = true;
         }
             
 
@@ -88,7 +90,8 @@ class CadastrarController extends AbstractActionController
         $dadosCadastro = $cadastrosModel->get([
             'tipoCadastro' => $tipoCadastro,
             $campoCpfOuCnpj => $cpfOuCpnj,
-            'checkEmail' => true
+            'checkEmail' => true,
+            'considerarInativo' => $considerarInativo
         ]);
 
         if (!$dadosCadastro || !$dadosCadastro[0]) {
