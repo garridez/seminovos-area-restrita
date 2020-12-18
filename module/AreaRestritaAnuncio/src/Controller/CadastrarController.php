@@ -73,9 +73,13 @@ class CadastrarController extends AbstractActionController
         $tipoCadastro = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 2 : 1;
 
         // CPF ou CNPJ retira a pontuação
-        $cpfOuCpnj = preg_match_all('(\d)',$cpfOuCpnj, $matches);
-        $cpfOuCpnj = implode($matches[0]);
-
+        if($tipoCadastro == 2){
+            $cpfOuCpnj = preg_match_all('(\d)',$cpfOuCpnj, $matches);
+            $cpfOuCpnj = implode($matches[0]);
+        }else{
+            $cpfOuCpnj = $cpfOuCpnj;
+        }
+            
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -87,7 +91,6 @@ class CadastrarController extends AbstractActionController
             'checkEmail' => true
         ]);
 
-
         if (!$dadosCadastro || !$dadosCadastro[0]) {
             return [
                 'status' => 400,
@@ -98,8 +101,8 @@ class CadastrarController extends AbstractActionController
 
         $dadosCadastro = $dadosCadastro[0];
 
-        $email = $dadosCadastro['email'];
-        $telefone = $dadosCadastro['telefone2'];
+        $email = $dadosCadastro['email'] ?? null;
+        $telefone = $dadosCadastro['telefone2'] ?? null;
         $dadosCadastroRetorno = [];
 
         if($mask){
