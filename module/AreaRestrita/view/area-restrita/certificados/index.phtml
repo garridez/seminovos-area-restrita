@@ -1,7 +1,8 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $placa = $this->placa;
-$dadosCertificados = $this->dadosCertificados;
+var_dump($this->dadosCertificados);
+$dadosCertificados = $this->dadosCertificados ? $this->dadosCertificados : null;
 $dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
 $dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
 $dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
@@ -113,6 +114,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($dados){ ?>
                     <div
                         class="pt-print-3 pl-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
                         <div class="text-left font-montserrat all-caps mb-1">
@@ -157,6 +159,14 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             <p class="small no-margin bold">UF: <span class="semi-bold mt-0"><?= isset($dados['uf']) && $dados['uf']  ? $dados['uf'] : "Não informado" ?></span> </p>
                         </div>
                     </div>
+                    <?php }else{ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -179,14 +189,22 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($dados){ ?>
                     <div
                         class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
                         <div class="text-left font-montserrat all-caps mb-1">
                             <p class="small no-margin bold"><span class="semi-bold mt-0"><?= isset($dados['analiseRisco']['parecer']) && $dados['analiseRisco']['parecer']  ? $dados['analiseRisco']['parecer'] : "Não há dados" ?></span> </p>
                             
                         </div>
-                        
                     </div>
+                    <?php }else{ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -199,6 +217,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($baseEstadual){ ?>
                     <div class="col-12 pl-0">
 <!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
                             <h3 class="small bold my-0">Debitos Estatuais</h3>
@@ -282,6 +301,14 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             <p class="small no-margin bold">Financeira: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoFinanceira']) && $baseEstadual['restricaoFinanceira']  ? $baseEstadual['restricaoFinanceira'] : "Não informado" ?></span> </p>
                         </div>
                     </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mb-print-3 mt-2 pl-print-3 pr-print-3">
@@ -295,6 +322,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($baseNacional){ ?>
                     <div class="col-12 pl-0">
 <!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
                             <h3 class="small bold my-0">Debitos Estatuais</h3>
@@ -337,6 +365,14 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             <p class="small no-margin bold">Financiamento: <span class="semi-bold mt-0"><?= isset($baseNacional['restricaoFinanciamento']) && $baseNacional['restricaoFinanciamento']  ? $baseNacional['restricaoFinanciamento'] : "Não informado" ?></span> </p>
                         </div>
                     </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2 pl-print-3 pr-print-3">
@@ -358,14 +394,22 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($sinistro){ ?>
                     <div
                         class="d-block pl-print-3 d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
                         <div class="text-left font-montserrat all-caps mb-1">
                             <p class="small no-margin bold"><span class="semi-bold mt-0"><?= isset($sinistro['descricao']) && $sinistro['descricao']  ? $sinistro['descricao'] : "Não informado" ?></span> </p>
                             
                         </div>
-                        
                     </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
                 </div>
             </div>
             
@@ -379,7 +423,8 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </div>
                     </div>
                 </div>
-                <table class="table w-100 table-responsive-sm col-print-12 pl-print-3">
+                <?php if($leilao){ ?>
+                <table class="table w-100 col-print-12 pl-print-3">
                     <thead>
                         <tr class="border-bottom">
                             <th >Data</th>
@@ -393,7 +438,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                     <tbody>
                         <?php foreach ($leilao['registros'] as $key =>$dado): ?>
                         <tr>
-                            <td class="p-1">
+                            <td class="p-2">
                                 <span class="text-black description-print no-wrap">
                                     <?php echo date('d/m/Y', strtotime($dado['dataLeilao'])); ?>
                                 </span>
@@ -427,6 +472,14 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
             </div>
             
             <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-3 pl-print-3 pr-print-3">
@@ -448,6 +501,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </span>
                         </div>
                     </div>
+                    <?php if($dadosFurto){ ?>
                     <div
                         class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
                         <div class="text-left font-montserrat mb-1">
@@ -458,9 +512,17 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                         </div>
                         
                     </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
                 </div>
                 <?php if(isset($dadosFurto['rouboFurto']['historico']) && $dadosFurto['rouboFurto']['historico']): ?>
-                <table class="table w-100 table-responsive-sm col-print-12 pl-print-3">
+                <table class="table w-100 col-print-12 pl-print-3">
                     <thead>
                         <tr class="border-bottom">
                             <th >Data</th>
@@ -505,7 +567,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                 <?php endif; ?>
             </div>
             
-            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mt-3 pl-print-3">
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mt-5 pl-print-3">
                 <div class="col-12 pl-0">
                         <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3">
                             <span class="text-uppercase hint-text">
