@@ -81,7 +81,7 @@ class CadastrarController extends AbstractActionController
             $cpfOuCpnj = $cpfOuCpnj;
             $considerarInativo = true;
         }
-            
+
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -113,7 +113,7 @@ class CadastrarController extends AbstractActionController
             $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', $email);
 
             // Mascara telefone
-            $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{3})(\d{1})/', '($1)$2$3***-***$6', $telefone);
+            $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', $telefone);
 
         }else{
             $dadosCadastroRetorno = $dadosCadastro;
