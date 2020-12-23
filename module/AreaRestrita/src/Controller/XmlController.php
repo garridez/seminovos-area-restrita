@@ -178,13 +178,34 @@ class XmlController extends AbstractActionController
                     
                     case 'MODEL': // Modelo
                         $modeloXml = explode(' ', $item->nodeValue)[0];
+                        $modeloXml2 = explode(' ', $item->nodeValue)[1];
+
+                        // $modeloExpr = '/(.*)?(';
+                        // $modeloExpr .= implode(')?(.*)?(', $modeloXml);
+                        // $modeloExpr .= ')?(.*)?/';
                         
                         foreach ($modelosApi->data as $modeloApi) {
 
                             $modeloTemp = explode(' ', $modeloApi['modelo'])[0];
+                            // if (preg_match($modeloExpr, $modeloTemp)) {
+                            //     var_dump($modeloApi['modelo'], 'deu');
+                            //     die;
+                            // }
+                            
+                            /**
+                             * TODO
+                             * 
+                             * Melhorar a escolha do modelo atravéz de pagina para preencher os dados
+                             */
 
                             if ($modeloXml == $modeloTemp) {
                                 $veiculo['modeloCarro'] = $modeloApi['idModelo'];
+                                break;
+                            } else if ($modeloXml2 == $modeloTemp) {
+                                $veiculo['modeloCarro'] = $modeloApi['idModelo'];
+                                break;
+                            } else {
+                                $veiculo['modeloCarro'] = 1199;
                                 break;
                             }
                         }
