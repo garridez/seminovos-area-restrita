@@ -231,6 +231,11 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 </div>
                                             </a>
                                         </div>
+                                        <?php if($veiculo['flagCertificado'] == 1): ?>
+                                        <div class="bg-master-lightest mt-1 padding-15">
+                                            <b class="text-s-2">Certificado Ativo</b>
+                                        </div>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
