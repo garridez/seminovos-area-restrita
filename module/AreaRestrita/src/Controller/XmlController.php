@@ -177,35 +177,19 @@ class XmlController extends AbstractActionController
                         break;
                     
                     case 'MODEL': // Modelo
-                        $modeloXml = explode(' ', $item->nodeValue)[0];
-                        $modeloXml2 = explode(' ', $item->nodeValue)[1];
-
-                        // $modeloExpr = '/(.*)?(';
-                        // $modeloExpr .= implode(')?(.*)?(', $modeloXml);
-                        // $modeloExpr .= ')?(.*)?/';
+                        $modeloXml = $item->nodeValue;
                         
                         foreach ($modelosApi->data as $modeloApi) {
+                        
+                            $modelo = preg_replace("/\//", "\/", $modeloApi['modelo']);
 
-                            $modeloTemp = explode(' ', $modeloApi['modelo'])[0];
-                            // if (preg_match($modeloExpr, $modeloTemp)) {
-                            //     var_dump($modeloApi['modelo'], 'deu');
-                            //     die;
-                            // }
-                            
                             /**
                              * TODO
                              * 
                              * Melhorar a escolha do modelo atravéz de pagina para preencher os dados
                              */
-
-                            if ($modeloXml == $modeloTemp) {
+                            if(ctype_alnum($modelo) && preg_match("/($modelo)/", $modeloXml)) {
                                 $veiculo['modeloCarro'] = $modeloApi['idModelo'];
-                                break;
-                            } else if ($modeloXml2 == $modeloTemp) {
-                                $veiculo['modeloCarro'] = $modeloApi['idModelo'];
-                                break;
-                            } else {
-                                $veiculo['modeloCarro'] = 1199;
                                 break;
                             }
                         }
@@ -297,6 +281,7 @@ class XmlController extends AbstractActionController
             try {
                 
                 $veiculo['flagIpva'] = 1;
+                $veiculo['idStatus'] = 2;
                 $veiculo['idPlano'] = $idPlano;
                 $apiClient = $this->getApiClient();
                 
