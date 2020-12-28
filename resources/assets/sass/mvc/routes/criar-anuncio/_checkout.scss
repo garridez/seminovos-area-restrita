@@ -116,25 +116,22 @@
     }
     .resumo-compra{
 
-        &.remove-certificado{
-            .renovacao{
-                display: none;
-            }
-            .certificado, .valor-total{
-                display: flex;
-            }
-        }
-
         .plano{
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             .nome-plano-ate-venda{
-                width: 70%;
+                strong{
+                    font-size: 1rem;
+                }
             }
             .valor-plano{
-                width: 30%;
-                text-align: right;
+                width: 25%;
+                @include media-breakpoint-down(md){
+                    width: 35%;
+                }
+                
+                font-size: 1rem;
             }
             margin-bottom: 10px;
         }
@@ -142,98 +139,71 @@
             padding: 0.5rem 0;
             display: block;
         }
-        .certificado, .valor-total{
-            display: none;
-            justify-content: space-between;
-            padding: 0.5rem 0.8rem;
-        }
     }
+    .resumo-compra{
 
-    .handle-certificado{
-        $certificadoColor : $verde;
-        @include media-breakpoint-down(md){
-            max-height: initial;
-        }
-        // colors
-            border: 1px solid rgba($verde, 0.45);
-            .btn-control-certificado{
-                background-color: rgba($verde, 0.8);
-            }
+        .certificado-resumo{
             .titulo{
-                color: rgba($verde, 0.8);
+                color: #575757 !important;
             }
-            &.remove-certificado{
-                border: 1px solid rgba($vermelho, 0.45);
-                .btn-control-certificado{
-                    background-color: rgba($vermelho, 0.8);
+            .valor {
+                width: 25%;
+                @include media-breakpoint-down(md){
+                    width: 35%;
                 }
-                .titulo{
-                    color: rgba($vermelho, 0.8);
+                strong {
+                    font-size: 1rem;
                 }
-            }
-        // /colors
-
-        background-color: #fff;
-        
-        margin-bottom: 20px;
-        padding: 0.5rem;
-        
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        max-height: 145px;
-
-        .titulo{
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 3%;
-            @include media-breakpoint-down(md){
-                margin-bottom: 15px;
             }
         }
 
-        .titulo-remove{display: none;}
-        .titulo-add{display: block;}
+        .certificado{
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 1px;
+            padding: 0.5rem 0.8rem;
+            .titulo{
+                font-size: 1rem;
+                color: $verde;
+            }
+            .desc{
+                font-size: 0.7rem;
+                line-height: initial;
+                display: flex;
+            }
+            .preco-btn{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: center;
 
-        a.add-certificado{display: block;}
-        a.remove-certificado{display: none;}
+                .preco{
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
 
-        &.remove-certificado{
-            a.add-certificado{display: none;}
-            a.remove-certificado{display: block;}
-
-            .titulo-remove{display: block;}
-            .titulo-add{display: none;}
+                .btn-success{
+                    background-color: $verde;
+                    font-size: 0.8rem;
+                    text-transform: initial;
+                }
+            }
+            .rodape{
+                color: lighten($color: #000000, $amount: 60);
+            }
         }
 
-        .btn-control-certificado{
-            
+        .fa-info-circle{
+            color: lighten($color: #000000, $amount: 60);
+        }
+
+        .valor-total{
             display: flex;
-            align-items: center;
-            height: 22%;
-            width: 40%;
-            @include media-breakpoint-down(md){
-                width: 100%;
-                height: 28%;
-            }
-            padding: 0.4rem 0;
-
-            a{
-                color: white;
-                text-align: center;
-                width: 100%;
-            }
+            justify-content: center;
+            background-color: #F4F4F4;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 1.2rem;
         }
-        .saiba-mais{
-            font-size: 0.8rem;
-            align-self: flex-end;
-            height: 100%;
-            padding-right: 75px;
-            padding-left: 8px;
-            a{
-                color: #5e5e5e;
-            }
-        }
-
     }
 }
