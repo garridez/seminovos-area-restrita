@@ -429,9 +429,8 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         </div>
                         <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
-                                <div><span>VALOR PROMOCIONAL DE LANÇAMENTO</span></div>
-                                <div><span>Adiquira seu certificado</span></div>
-                                <b>R$ 24,90</b>
+                                <div><span>Adiquira seu certificado <b>R$ 24,90</b></span></div>
+                                <div><span><small>VALOR PROMOCIONAL DE LANÇAMENTO</small></span></div>
                             </a>
                         <?php } ?>
                     </div>
