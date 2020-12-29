@@ -22,7 +22,7 @@ module.exports.callback = ($) => {
           var valorTotal = 0;
           let remover = $(ctx + '.flagCertificado').is(':checked');
           if($('#dados-basicos .acao').val() != 'addCertificado'){
-              var valorPlano = parseFloat($("#" + ("planos" + $("#idPlano").val())).data('valor-plano').replace(',','.'));
+              var valorPlano = parseFloat($(ctx + ' .plano-selecionado input[data-valor-plano]').val());
               valorTotal = valorCertificado + valorPlano;
           }
 
