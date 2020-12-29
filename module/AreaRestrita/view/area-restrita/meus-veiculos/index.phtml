@@ -233,7 +233,9 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                         <?php if($veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
-                                            <b class="text-s-2">Certificado Ativo</b>
+                                            <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
+                                                <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
+                                            </a>
                                         </div>
                                         <?php endif ?>
                                     </div>
@@ -276,12 +278,6 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                     <a href="<?= $editarFotosUrl ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
                                         title="Editar Fotos">
                                         <i class=" fa fa-camera"></i><span>Editar fotos</span>
-                                    </a>
-                                <?php } ?>
-                                <?php if ($veiculo['flagCertificado']) { ?>
-                                <a href="/certificados/placa/<?php echo $veiculo['placa']?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-dados"
-                                        title="Visualiza Certificado">
-                                        <i class=" fa fa-eye"></i><span>Ver Certificado</span>
                                     </a>
                                 <?php } ?>
                                 <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
