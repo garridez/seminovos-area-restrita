@@ -177,13 +177,18 @@ class XmlController extends AbstractActionController
                         break;
                     
                     case 'MODEL': // Modelo
-                        $modeloXml = explode(' ', $item->nodeValue)[0];
+                        $modeloXml = $item->nodeValue;
                         
                         foreach ($modelosApi->data as $modeloApi) {
+                        
+                            $modelo = preg_replace("/\//", "\/", $modeloApi['modelo']);
 
-                            $modeloTemp = explode(' ', $modeloApi['modelo'])[0];
-
-                            if ($modeloXml == $modeloTemp) {
+                            /**
+                             * TODO
+                             * 
+                             * Melhorar a escolha do modelo atravéz de pagina para preencher os dados
+                             */
+                            if(ctype_alnum($modelo) && preg_match("/($modelo)/", $modeloXml)) {
                                 $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                 break;
                             }
@@ -276,6 +281,7 @@ class XmlController extends AbstractActionController
             try {
                 
                 $veiculo['flagIpva'] = 1;
+                $veiculo['idStatus'] = 2;
                 $veiculo['idPlano'] = $idPlano;
                 $apiClient = $this->getApiClient();
                 
