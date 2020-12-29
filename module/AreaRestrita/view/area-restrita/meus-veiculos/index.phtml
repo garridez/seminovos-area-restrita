@@ -231,6 +231,13 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 </div>
                                             </a>
                                         </div>
+                                        <?php if($veiculo['flagCertificado'] == 1): ?>
+                                        <div class="bg-master-lightest mt-1 padding-15">
+                                            <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
+                                                <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
+                                            </a>
+                                        </div>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
@@ -420,13 +427,12 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 </div>
                             </div>
                         </div>
-                        <?php /*if ($veiculo["botoes"]["certificado"] ?? false) { ?>
+                        <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
-                                <div><span>VALOR PROMOCIONAL DE LANÇAMENTO</span></div>
-                                <div><span>Adiquira seu certificado</span></div>
-                                <b>R$ 24,90</b>
+                                <div><span>Adiquira seu certificado <b>R$ 24,90</b></span></div>
+                                <div><span><small>VALOR PROMOCIONAL DE LANÇAMENTO</small></span></div>
                             </a>
-                        <?php } */?>
+                        <?php } ?>
                     </div>
                 </div>
             <?php endforeach; ?>

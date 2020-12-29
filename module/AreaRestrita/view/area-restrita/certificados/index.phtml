@@ -1,0 +1,607 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+$placa = $this->placa;
+// var_dump($this->dadosCertificados);
+$dadosCertificados = $this->dadosCertificados ? $this->dadosCertificados : null;
+$dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
+$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
+$dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
+$sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] : null;
+$leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['data']['leilao'] : null;
+$baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] : null;
+$baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] : null;
+//var_dump($dadosFurto);
+
+?>
+
+<div class="d-flex justify-content-center bg-light">
+    <div class="py-2">
+        <a href="/meus-veiculos" title="Voltar" class="btn">
+            <i class="link-primary fa fa-arrow-circle-left mr-1"></i>
+            Voltar
+        </a>
+        <a href="#" title="Imprimir" class="btn btn-print">
+            <i class="link-primary fa fa-print mr-1"></i>
+            Imprimir
+        </a>
+    </div>
+</div>
+<div class="container-fluid to-print">
+    <div class="card card-default mt-1">
+        <div class="card-body pt-0 px-2 px-md-3 row-print">
+            <div class="invoice p-md-3 mt-print-4 col-print-12">
+                <div class="row mx-0">
+<!--                    <div class="col-12 col-md-6 d-none d-md-block">
+                        <img alt="" class="invoice-logo" data-src-retina="assets/img/invoice/squarespace2x.png"
+                            data-src="assets/img/invoice/squarespace.png" src="/img/svg/logo.svg">
+                    </div>
+                    <div class="col-12 col-md-6 p-2 pl-print-3">
+                        <h4 class="font-montserrat all-caps hint-text">DETALHES DO CERTIFICADO DOCUMENTAL </h4>
+                    </div>-->
+                    <div class="col-12 col-md-12 p-2 pl-print-3 text-center">
+                        <h3 class="font-montserrat all-caps hint-text">DETALHES DO CERTIFICADO DOCUMENTAL </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="px-2 pl-md-3 pr-md-3 col-12 col-print-12 row-print mt-print-3 mt-2">
+                <table class="table w-100 table-responsive-sm col-print-12 pl-print-3">
+                    <thead class="col-print-12 pl-print-2">
+                        <tr class="bg-cinza col-print-12 text-center d-print-flex justify-content-center">
+                            <th class="text-center text-white" colspan="2">QUADRO DE AVISOS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-bottom col-print-12 pl-print-2 mt-print-2">
+                        <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
+                            <td class="no-wrap pl-print-3 col-print-10 pl-2 pl-md-3">
+                                <span class=" description-print no-wrap">
+                                    Possui Restrições?
+                                </span>
+                            </td>
+                            <td class="text-center col-print-2">
+                                <?= isset($dadosCertificados['flagRestricao']) && $dadosCertificados['flagRestricao'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
+                            <td class="no-wrap pl-print-3 col-print-10 pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui Indicio de Sinistro?
+                                </span>
+                            </td>
+                            <td class="text-center col-print-2">
+                                <?= isset($dadosCertificados['flagSinistro']) && $dadosCertificados['flagSinistro'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
+                            <td class="no-wrap pl-print-3 col-print-10 pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui registro de Leilão?
+                                </span>
+                            </td>
+                            <td class="text-center col-print-2">
+                                <?= isset($dadosCertificados['flagLeilao']) && $dadosCertificados['flagLeilao'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
+                            <td class="no-wrap pl-print-3 col-print-10 pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui Débitos?
+                                </span>
+                            </td>
+                            <td class="text-center col-print-2">
+                                <?= isset($dadosCertificados['flagDebitos']) && $dadosCertificados['flagDebitos'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                        <tr class="col-print-12 d-print-flex justify-content-between">
+                            <td class="no-wrap pl-print-3 col-print-10 pl-2 pl-md-3">
+                                <span class="text-black description-print no-wrap">
+                                    Possui registro de Roubo?
+                                </span>
+                            </td>
+                            <td class="text-center col-print-2">
+                                <?= isset($dadosCertificados['flagFurto']) && $dadosCertificados['flagFurto'] != ""  ? "SIM" : "NÃO" ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-5 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza mb-print-2">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                            <span class="text-uppercase text-white">
+                                Dados Principais do Veículo
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($dados){ ?>
+                    <div
+                        class="pt-print-3 pl-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Placa: <span class="semi-bold mt-0"><?= isset($placa) && $placa != ""  ? $placa : "Não informada" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Renavan: <span class="semi-bold mt-0"><?= isset($dados['renavam']) && $dados['renavam']  ? $dados['renavam'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Tipo de Veículo: <span class="semi-bold mt-0"><?= isset($dados['tipoVeiculo']) && $dados['tipoVeiculo']  ? $dados['tipoVeiculo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Ano Modelo: <span class="semi-bold mt-0"><?= isset($dados['anoModelo']) && $dados['anoModelo']  ? $dados['anoModelo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Combustível: <span class="semi-bold mt-0"><?= isset($dados['combustivel']) && $dados['combustivel']  ? $dados['combustivel'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Município: <span class="semi-bold mt-0"><?= isset($dados['municipio']) && $dados['municipio']  ? $dados['municipio'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="pt-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Chassi: <span class="semi-bold mt-0"><?= isset($dados['chassi']) && $dados['chassi']  ? $dados['chassi'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Núm. Motor: <span class="semi-bold mt-0"><?= isset($dados['numMotor']) && $dados['numMotor']  ? $dados['numMotor'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Marca/Modelo: <span class="semi-bold mt-0"><?= isset($dados['marcaModelo']) && $dados['marcaModelo']  ? $dados['marcaModelo'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Ano Fabricação: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Cor: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">UF: <span class="semi-bold mt-0"><?= isset($dados['uf']) && $dados['uf']  ? $dados['uf'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <?php }else{ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                            <span class="text-uppercase text-white">
+                                Risco de Recusa em Comercialização
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Descrição</h3>
+                        </div>-->
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3 pl-3">
+                            <span class="text-uppercase hint-text">
+                                Análise
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($dados){ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0"><?= isset($dados['analiseRisco']['parecer']) && $dados['analiseRisco']['parecer']  ? $dados['analiseRisco']['parecer'] : "Não há dados" ?></span> </p>
+                            
+                        </div>
+                    </div>
+                    <?php }else{ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mb-print-4 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                            <span class="text-uppercase text-white">
+                                Dados do cadastrdo Estadual
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($baseEstadual){ ?>
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Debitos Estatuais</h3>
+                        </div>-->
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-4 pl-print-3">
+                            <span class="text-uppercase hint-text">
+                                Debitos Estatuais
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">IPVA: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoIpva']) && $baseEstadual['existeDebitoIpva']  ? $baseEstadual['existeDebitoIpva'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Licenciamento: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoLicenciamento']) && $baseEstadual['existeDebitoLicenciamento']  ? $baseEstadual['existeDebitoLicenciamento'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">DPVAT: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoDpvat']) && $baseEstadual['existeDebitoDpvat']  ? $baseEstadual['existeDebitoDpvat'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Multas: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoMulta']) && $baseEstadual['existeDebitoMulta']  ? $baseEstadual['existeDebitoMulta'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-print mx-0 mb-print-3">
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Restrições Estatuais</h3>
+                        </div>-->
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3">
+                            <span class="text-uppercase hint-text">
+                                Restrições Estatuais
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Restrições 1: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes1']) && $baseEstadual['outrasRestricoes1']  ? $baseEstadual['outrasRestricoes1'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Restrições 3: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes3']) && $baseEstadual['outrasRestricoes3']  ? $baseEstadual['outrasRestricoes3'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">RENAJUD: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoRenajud']) && $baseEstadual['restricaoRenajud']  ? $baseEstadual['restricaoRenajud'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Administrativa: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoAdminisrativa']) && $baseEstadual['restricaoAdminisrativa']  ? $baseEstadual['restricaoAdminisrativa'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Tributária: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoTributaria']) && $baseEstadual['restricaoTributaria']  ? $baseEstadual['restricaoTributaria'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Comun. de Venda: <span class="semi-bold mt-0"><?= isset($baseEstadual['comunicacaoVenda']) && $baseEstadual['comunicacaoVenda']  ? $baseEstadual['comunicacaoVenda'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Restrições 2: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes2']) && $baseEstadual['outrasRestricoes2']  ? $baseEstadual['outrasRestricoes2'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Restrições 4: <span class="semi-bold mt-0"><?= isset($baseEstadual['outrasRestricoes4']) && $baseEstadual['outrasRestricoes4']  ? $baseEstadual['outrasRestricoes4'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Judicial: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoJudicial']) && $baseEstadual['restricaoJudicial']  ? $baseEstadual['restricaoJudicial'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Guincho: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoGuincho']) && $baseEstadual['restricaoGuincho']  ? $baseEstadual['restricaoGuincho'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Financeira: <span class="semi-bold mt-0"><?= isset($baseEstadual['restricaoFinanceira']) && $baseEstadual['restricaoFinanceira']  ? $baseEstadual['restricaoFinanceira'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mb-print-3 mt-2 pl-print-3 pr-print-3">
+            </div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-5 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                            <span class="text-uppercase text-white">
+                                Dados do cadastrdo Nacional
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($baseNacional){ ?>
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Debitos Estatuais</h3>
+                        </div>-->
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3">
+                            <span class="text-uppercase hint-text">
+                                Restrições Nacionais
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold">Restrições 1: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao1']) && $baseNacional['restricao1']  ? $baseNacional['restricao1'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Restrições 3: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao3']) && $baseNacional['restricao3']  ? $baseNacional['restricao3'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">RENAJUD: <span class="semi-bold mt-0"><?= isset($baseNacional['indicadorRestricaoRenajud']) && $baseNacional['indicadorRestricaoRenajud']  ? $baseNacional['indicadorRestricaoRenajud'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="text-left font-montserrat all-caps mr-3 mb-1">
+                            <p class="small no-margin bold">Financiadora: <span class="semi-bold mt-0"><?= isset($baseNacional['restricaoFinanciadora']) && $baseNacional['restricaoFinanciadora']  ? $baseNacional['restricaoFinanciadora'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                            <div class="font-montserrat bold all-caps mr-2 mb-1">
+                                <p class="small no-margin bold">Restrições 2: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao2']) && $baseNacional['restricao2']  ? $baseNacional['restricao2'] : "Não informado" ?></span> </p>
+                            </div>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Restrições 4: <span class="semi-bold mt-0"><?= isset($baseNacional['restricao4']) && $baseNacional['restricao4']  ? $baseNacional['restricao4'] : "Não informado" ?></span> </p>
+                         </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Comun. de Venda: <span class="semi-bold mt-0"><?= isset($baseNacional['indicadorComunicacaoVendas']) && $baseNacional['indicadorComunicacaoVendas']  ? $baseNacional['indicadorComunicacaoVendas'] : "Não informado" ?></span> </p>
+                        </div>
+                        <div class="font-montserrat bold all-caps mr-2 mb-1">
+                            <p class="small no-margin bold">Financiamento: <span class="semi-bold mt-0"><?= isset($baseNacional['restricaoFinanciamento']) && $baseNacional['restricaoFinanciamento']  ? $baseNacional['restricaoFinanciamento'] : "Não informado" ?></span> </p>
+                        </div>
+                    </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                        <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                            <span class="text-uppercase text-white">
+                                Indicio de Sinistro
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Descrição</h3>
+                        </div>-->
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3">
+                            <span class="text-uppercase hint-text">
+                                Descrição
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($sinistro){ ?>
+                    <div
+                        class="d-block pl-print-3 d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat all-caps mb-1">
+                            <p class="small no-margin bold"><span class="semi-bold mt-0"><?= isset($sinistro['descricao']) && $sinistro['descricao']  ? $sinistro['descricao'] : "Não informado" ?></span> </p>
+                            
+                        </div>
+                    </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
+                </div>
+            </div>
+            
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-2 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                            <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                                <span class="text-uppercase text-white">
+                                    LEILÃO
+                                </span>
+                            </div>
+                    </div>
+                </div>
+                <?php if($leilao){ ?>
+                <table class="table w-100 col-print-12 pl-print-3">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th >Data</th>
+                            <th >Id do leilão</th>
+                            <th >Lote</th>
+                            <th >Condição</th>
+                            <th >Comitente</th>
+                            <th >Leiloeiro</th>    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($leilao['registros'] as $key =>$dado): ?>
+                        <tr>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?php echo date('d/m/Y', strtotime($dado['dataLeilao'])); ?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $dado['_id']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="">
+                                    <?= $dado['lote']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $dado['condicaoGeral']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $dado['condicaoGeral']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $dado['leiloeiro']?>
+                                </span>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
+            </div>
+            
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-3 mt-3 pl-print-3 pr-print-3">
+                <div class="row row-print mx-0">
+                    <div class="col-12 pl-0 bg-cinza">
+                            <div class="pb-0 pb-md-1 mt-3 mb-2 mt-print-2 mb-print-3 ml-0 text-center">
+                                <span class="text-uppercase text-white">
+                                    Ocorrêcia de Roubo/Furto
+                                </span>
+                            </div>
+                    </div>
+                    <div class="col-12 pl-0">
+<!--                        <div class="border-bottom pb-0 pb-md-1 mt-3 mb-2 mt-print-3 ml-2">
+                            <h3 class="small bold my-0">Descrição</h3>
+                        </div>-->
+                        <div class="pl-print-3 border-bottom pb-2 mt-3 mb-2 mt-print-3">
+                            <span class="text-uppercase hint-text">
+                                Descrição
+                            </span>
+                        </div>
+                    </div>
+                    <?php if($dadosFurto){ ?>
+                    <div
+                        class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
+                        <div class="text-left font-montserrat mb-1">
+                            <p class="no-margin bold"><span class="semi-bold mt-0">
+                                <?= isset($dadosFurto['rouboFurto']['constaOcorrencia']) && $dadosFurto['rouboFurto']['constaOcorrencia']  ? 'Consta ocorrência de roubo ativa' : "Não consta ocorrência de roubo ativa" ?>
+                            </span> </p>
+                            
+                        </div>
+                        
+                    </div>
+                    <?php }else{ ?>
+                            <div
+                                class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
+                                <div class="text-left font-montserrat all-caps mb-1">
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                </div>
+                            </div>
+                    <?php } ?>
+                </div>
+                <?php if(isset($dadosFurto['rouboFurto']['historico']) && $dadosFurto['rouboFurto']['historico']): ?>
+                <table class="table w-100 col-print-12 pl-print-3">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th >Data</th>
+                            <th >Município Ocorrência</th>
+                            <th >UF Ocorrência</th>
+                            <th >Ocorrência</th>
+                            <th>Declaracao</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($dadosFurto['rouboFurto']['historico'] as $key =>$roubo): ?>
+                        <tr>
+                            <td class="p-1">
+                                <span class="text-black description-print no-wrap">
+                                    <?php echo date('d/m/Y', strtotime($roubo['dataOcorrencia'])); ?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $roubo['municipioOcorrencia']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="">
+                                    <?= $roubo['ufOcorrencia']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $roubo['ocorrencia']?>
+                                </span>
+                            </td>
+                            <td class="p-2">
+                                <span class="text-black description-print no-wrap">
+                                    <?= $roubo['declaracao']?>
+                                </span>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+            
+            <div class="px-2 pl-md-3 col-12 col-print-12 mt-print-4 mt-5 pl-print-3">
+                <div class="col-12 pl-0">
+                        <div class="border-bottom pb-2 mt-3 mb-2 mt-print-3 pl-print-3">
+                            <span class="text-uppercase hint-text">
+                                Informações
+                            </span>
+                        </div>
+                    </div>
+                <div class="col-12 description-print mt-print-2">
+                    <div class="col-12 pl-0 pl-print-0">
+                        <div>
+                            <small>
+                                * CERTIFICADO EMITIDO POR ORGÃOS PARCEIROS DA EEMPRESA OLHO NO CARRO
+                            </small>
+                        </div>
+                        <div class="">
+                            <small>
+                                * Algumas informações podem não estar disponíveis no momento da consulta devido a instabilidades da base de dados dos prestadores de serviço,
+                                mas serão reconsultadas (sem custo adicional) e enviadas assim que possível ao usuário.
+                            </small>
+                        </div>
+                        <div>
+                            <small class="">
+                                * Não nos responsabilizamos por informações errôneas enviadas, tanto do usuário quanto da empresa OLHO NO CARRO.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            <div class="d-block d-md-flex align-items-baseline pl-print-3">
+                <img src="/img/svg/logo.svg" alt="logo" data-src="assets/img/logo.png"
+                    data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                <span class="text-black no-wrap">Seminovos, aqui tem negócio!</span>
+                <a href="www.seminovos.com.br" class="ml-auto text-right text-black">www.seminovos.com.br</a>
+            </div>-->
+        </div>
+    </div>
+</div>

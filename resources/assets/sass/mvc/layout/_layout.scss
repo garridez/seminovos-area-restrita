@@ -14,6 +14,9 @@
 }
 // grid to print
 @media print {
+    body{
+        -webkit-print-color-adjust: exact;
+    }
     .pl-print-0 {
         padding-left: 0px !important;
     }

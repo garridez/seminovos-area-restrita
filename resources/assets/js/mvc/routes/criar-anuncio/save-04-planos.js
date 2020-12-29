@@ -60,7 +60,7 @@ module.exports.callback = ($) => {
         planoSelecionado.addClass('plano-selecionado');
 
         let valorTotal = 0.00;
-        valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
+        valorTotal += parseFloat(planoSelecionado.find('input[data-valor-plano]').val());
         if($('#dados-basicos .acao').val() != 'addCertificado'){
           $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
         }
