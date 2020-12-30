@@ -24,6 +24,8 @@ module.exports.callback = ($) => {
           if($('#dados-basicos .acao').val() != 'addCertificado'){
               var valorPlano = parseFloat($(ctx + ' .plano-selecionado input[data-valor-plano]').val());
               valorTotal = valorCertificado + valorPlano;
+          }else{
+            valorTotal = valorCertificado;
           }
 
           $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
@@ -36,7 +38,9 @@ module.exports.callback = ($) => {
             $(ctx +'.resumo-compra').removeClass(classAcitive);
             $(ctx + '.flagCertificado').prop('checked',false);
             $('#dados-basicos .certificado').val('');
-
+            if(!valorPlano){
+              valorPlano = 0;
+            }
             valorTotal = valorPlano;
             $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
 
