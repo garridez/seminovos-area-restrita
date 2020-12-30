@@ -179,10 +179,11 @@ class XmlController extends AbstractActionController
                     case 'MODEL': // Modelo
                         $modeloXml = $item->nodeValue;
                         
-                        foreach ($modelosApi->data as $modeloApi) {
                         
+                        foreach ($modelosApi->data as $modeloApi) {
                             $modelo = preg_replace("/\//", "\/", $modeloApi['modelo']);
-
+                            $modelo2 = explode(" ", $modeloApi['modelo'])[0];
+                            
                             /**
                              * TODO
                              * 
@@ -190,7 +191,16 @@ class XmlController extends AbstractActionController
                              */
                             if(ctype_alnum($modelo) && preg_match("/($modelo)/", $modeloXml)) {
                                 $veiculo['modeloCarro'] = $modeloApi['idModelo'];
-                                break;
+                                
+                            } else if (ctype_alnum($modelo) && preg_match("/($modelo2)/", $modeloXml)) {
+                                $veiculo['modeloCarro'] = $modeloApi['idModelo'];
+                            } else {
+                                if ($modeloXml == 'ka se 1.0 ha c') {
+                                    $veiculo['modeloCarro'] = 174;
+                                }
+                                if ($modeloXml == 'sorento ex2 3.5g17') {
+                                    $veiculo['modeloCarro'] = 571;
+                                }
                             }
                         }
                         break;
@@ -288,8 +298,8 @@ class XmlController extends AbstractActionController
                 if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
                     $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ({$quantidadeAnunciosPlano})";
                 } else {
-                    // Salva o veículo
-                    $retorno = $apiClient->veiculosPost($veiculo)->json();
+                        // Salva o veículo
+                        $retorno = $apiClient->veiculosPost($veiculo)->json();
 
                     if ($retorno['status'] != 200) {
                         $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
