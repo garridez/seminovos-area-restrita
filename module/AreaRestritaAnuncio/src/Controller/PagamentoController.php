@@ -184,6 +184,9 @@ class PagamentoController extends AbstractActionController
         }
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
+            if ($dados['metodo'] == 'cielo' && isset($dados['placaVeiculo']) && $dados['certificado']) {
+                $res = $apiClient->veiculosCertificadosPost(array('placa'=> $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo))->getData();
+            }
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
