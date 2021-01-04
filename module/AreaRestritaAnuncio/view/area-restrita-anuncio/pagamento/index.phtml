@@ -61,7 +61,7 @@
                     <div class="w-100">
                         <div class="titulo mb-3"><strong>RESUMO DA SUA COMPRA</strong></div>
                         <?php foreach ($planos as $plano) { ?>
-                        <div id="planos<?=$plano['idPlano']?>" class="plano card-style justify-content-between">
+                        <div id="planos<?=$plano['idPlano']?>" class="mb-0 plano card-style justify-content-between">
                             <div class="nome-plano-ate-venda">
                                 <div class="nome-plano"><strong>Plano <?= $plano['nomePlano']=="Grátis"?"Simples":$plano['nomePlano'] ?></strong></div>
                                 <div class="ate-venda"><small>Até a venda</small></div>
@@ -79,9 +79,15 @@
                         </div>
                         <?php } ?>
                     </div>
+                    
+                    <div class="w-100 d-none d-md-block pl-1">
+                        <div class="w-100 renovacao">
+                            <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
+                            <div><span>Nescessário renovar a cada 30 dias;</span></div>
+                            <div><span>Renovação gratúita a cada 30 dias (exceto veículos 0km);</span></div>
+                        </div>
+                    </div>
 
-
-<?php /*
                     <div class="w-100 certificado certificado-adicionar">
                         <a href="" class="saiba-mais">
                             <div class="titulo mb-2 d-flex justify-content-between">
@@ -134,20 +140,11 @@
                     </div>
 
                     <div class="w-100 d-none d-md-block">
-                        <div class="w-100 renovacao mt-4">
-                            <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
-
-                            <div><span>Nescessário renovar a cada 30 dias;</span></div>
-                            <div><span>Renovação gratúita a cada 30 dias (exceto veículos 0km);</span></div>
-                        </div>
-
-<?php /*                        
                         <div class="w-100 mt-2 mb-4">
                             <a href="" class="saiba-mais">
                                 <div><i class="fa fa-info-circle" aria-hidden="true"></i> Texto do saiba mais do certificado documental</div>
                             </a>
                         </div>
-*/ ?>
                     </div>
                 </div>
             </div>
