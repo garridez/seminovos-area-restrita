@@ -35,7 +35,7 @@ module.exports.callback = ($) => {
         if ($('.step-dados').is('.active')) {
             window.location.href = '/';
         } else {
-            stepContainer.stepPlugin('prev', false);
+          stepContainer.stepPlugin('prev');
         }
         checkLastStep();
     });
