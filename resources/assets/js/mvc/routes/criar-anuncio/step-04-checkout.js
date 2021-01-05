@@ -10,6 +10,10 @@ module.exports.callback = ($) => {
 
     stepContainer.on('step:change:checkout', function (e) {
         // handler certificado no checkout
+        window.fromCheckout = true;
+
+        $('.btn-voltar').removeClass('hide d-none');
+
         var ctx = ' .step-checkout ';
         var classAcitive = 'certificado-active';
 
