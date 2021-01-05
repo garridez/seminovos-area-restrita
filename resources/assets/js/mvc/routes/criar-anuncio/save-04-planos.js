@@ -12,7 +12,6 @@ module.exports.callback = ($) => {
             text:'Não é possível diminuir o plano',
             title:$('<span class="text-primary">').html('Atenção!')
         });
-        BtnContinuar.disable();
         stopEvent(e);
     });
 
@@ -21,7 +20,6 @@ module.exports.callback = ($) => {
             text:`Plano já ativo, selecione outro plano ou clique em voltar`,
             title:$('<span class="text-primary">').html('Atenção!')
         });
-        BtnContinuar.disable();
         stopEvent(e);
     });
 
@@ -30,7 +28,6 @@ module.exports.callback = ($) => {
             text:'Você atingiu o limite de anúncio disponíveis para este plano',
             title:$('<span class="text-primary">').html('Atenção!')
         });
-        BtnContinuar.disable();
         stopEvent(e);
     });
 
