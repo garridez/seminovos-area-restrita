@@ -10,17 +10,27 @@ module.exports.callback = ($) => {
 
     stepContainer.on('step:change:checkout', function (e) {
         // handler certificado no checkout
+        window.fromCheckout = true;
+
+        $('.btn-voltar').removeClass('hide d-none');
+
         var ctx = ' .step-checkout ';
         var classAcitive = 'certificado-active';
 
-        $(ctx +'a.btn-control-certificado').on('click',function(e){
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
+        $('.btn-voltar').on('click',function(e){
+          handdlerCertificado(true);
+        });
 
+        $(ctx +'a.btn-control-certificado').on('click',function(e){
+          stopEvent(e);
+          handdlerCertificado();
+        });
+
+        function handdlerCertificado(ForceRemover = false){
           var valorCertificado = 24.90; //preço certificado
           var valorTotal = 0;
-          let remover = $(ctx + '.flagCertificado').is(':checked');
+          var remover = $(ctx + '.flagCertificado').is(':checked');
+
           if($('#dados-basicos .acao').val() != 'addCertificado'){
               var valorPlano = parseFloat($(ctx + ' .plano-selecionado input[data-valor-plano]').val());
               valorTotal = valorCertificado + valorPlano;
@@ -34,7 +44,7 @@ module.exports.callback = ($) => {
           $(ctx + '.flagCertificado').prop('checked','checked');
           $('#dados-basicos .certificado').val(1);
 
-          if(remover){
+          if(remover || ForceRemover){
             $(ctx +'.resumo-compra').removeClass(classAcitive);
             $(ctx + '.flagCertificado').prop('checked',false);
             $('#dados-basicos .certificado').val('');
@@ -52,11 +62,10 @@ module.exports.callback = ($) => {
             $('.certificado-resumo').slideDown();
           }
           return;
-        });
-        // handler modal certificado
-
+        }
         let btnSaibaMais = $(ctx + 'a.saiba-mais');
 
+        // handler modal certificado
         btnSaibaMais.on('click',function(e){
           e.preventDefault();
           $('body').prepend($('<div class="modal-fade"></div>'));
