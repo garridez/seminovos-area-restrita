@@ -236,9 +236,9 @@ return [
             'cadastrar' => [
                 'type' => Http\Literal::class,
                 'options' => [
-                    'route' => '/cadastrar',
+                    'route' => '/dados-veiculos',
                     'defaults' => [
-                        'action' => 'cadastrar',
+                        'action' => 'dadosVeiculos',
                     ],
                 ],
             ],

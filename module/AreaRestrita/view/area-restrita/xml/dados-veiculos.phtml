@@ -1,0 +1,240 @@
+<?php
+/* @var $this \Zend\View\Renderer\PhpRenderer */
+$this->headTitle('Dados dos veículos');
+$veiculos = $this->veiculos;
+
+/* @var $formatDate \AreaRestrita\View\Helper\Data */
+$formatDate = new \AreaRestrita\View\Helper\Data();
+$nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ?? "Não informado"
+
+?>
+<input type="hidden" class="data-user-display-name" value="<?=$nome?>">
+<div class="container-fluid container-anuncios">
+    <div class="row justify-content-center px-3 px-md-0">
+        <div class="col-sm-12 col-md-12">
+            <h3>Dados dos Veículos</h3>
+        </div>
+        <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
+            <div class="col-12 w-100 d-flex my-2 my-md-3 justify-content-center">
+                <!-- <div data-ad-path="meus_anucios.topo"></div> -->
+            </div>
+            <form action="/xml/salvar" method="post">
+                <?php
+                foreach ($veiculos as $veiculo):
+                    $urls = [];
+
+                    ?>
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][tipoVeiculo]" value="<?= $veiculo['tipoVeiculo'] ?>">
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][veiculoZeroKm]" value="<?= $veiculo['veiculoZeroKm'] ?>">
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][idCadastro]" value="<?= $veiculo['idCadastro'] ?>">
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][troca]" value="<?= $veiculo['troca'] ?>">
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][nomePlano]" value="<?= $veiculo['nomePlano'] ?>">
+                    <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][idPlano]" value="<?= $veiculo['idPlano'] ?>">
+
+                    <div class="col-12 row mb-3 bg-white p-0 justify-content-center veiculo">
+                        <div class="col-12 col-md-12 col-lg-12 row" style="border-bottom:1px solid #ccc;">
+                            <div class="col-2 col-md-2 col-lg-2 d-flex pt-3 justify-content-center">
+                                <a href="/meus-veiculos/<?= $veiculo['placa'] ?>">
+                                    
+                                    <?php foreach ($veiculo['imagens'] as $imagem) { ?>
+                                        <input type="hidden" name="veiculos[<?= $veiculo['placa'] ?>][imagens][]" value="<?= $imagem ?>">
+                                    <?php } ?>
+
+                                    <img class="img-fluid" src="<?= $veiculo['imagens'][0] ?>" alt="" />
+                                
+                                    <?php if (isset($veiculo['imagens'][1])) { ?>
+                                        <img class="img-fluid" src="<?= $veiculo['imagens'][1] ?>" alt="" />
+                                    <?php } ?>
+                                
+                                    <small>...mais <?= count($veiculo['imagens']) - 2 <= 0 ? 0 : count($veiculo['imagens']) ?> imagens</small>
+                                </a>
+                            </div>
+                            <div class="col-10 col-md-10 col-lg-10">
+                                <div class="row justify-content-between m-t-10 active px-2 py-2 pb-md-0">
+                                    <div class="justify-content-center col-12 justify-content-md-between border-bottom-c border-s-2 border-<?= $veiculo['idPlano'] ?>-20">
+                                        <div class="d-flex flex-wrap veiculo-titulo">
+                                            <div class="text-uppercase h4 text-cinza-escuro marca-modelo">
+                                                <input type="text" name="veiculos[<?= $veiculo['placa'] ?>][caracteristica]" class="form-control" value="<?= $veiculo['caracteristica'] ?>" style="font-size:18px;" required>
+                                            </div>
+                                            <div class="preco">
+                                                <h4 class="d-flex h4 text-cinza-escuro">
+                                                    R$ <input type="text" name="veiculos[<?= $veiculo['placa'] ?>][valor]" class="form-control" value="<?= $veiculo['valor'] ?>" required onkeyup="formatarValorBr(this)">
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-6 mt-2">
+                                        <div class="row p-2">
+                                            <div class="col-4">Placa</div>
+                                            <div class="col-8"><input type="text" name="veiculos[<?= $veiculo['placa'] ?>][placa]" class="form-control" value="<?= $veiculo['placa'] ?>" required></div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Marca</div>
+                                            <div class="col-8">
+                                                <select name="veiculos[<?= $veiculo['placa'] ?>][marca]" class="form-control" required>
+                                                    <?php foreach ($marcas as $marca) { ?>
+                                                        <option value="<?= $marca['idMarca'] ?>" <?= $marca['idMarca'] == $veiculo['idMarca'] ? 'selected' : '' ?> ><?= $marca['marca'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Modelo</div>
+                                            <div class="col-8">
+                                                <select name="veiculos[<?= $veiculo['placa'] ?>][modeloCarro]" class="form-control" required>
+                                                    <option value=""><?= $veiculo['modelo'] ?? 'nao encontrado' ?></option>
+                                                    <?php foreach ($veiculo['modelos'] as $modelo) { ?>
+                                                        <option value="<?= $modelo['idModelo'] ?>" <?= $modelo['idModelo'] == $veiculo['modeloCarro'] ? 'selected' : '' ?>><?= $modelo['modelo'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Kilometragem</div>
+                                            <div class="col-8">
+                                                <input type="text" name="veiculos[<?= $veiculo['placa'] ?>][kilometragem]" class="form-control" value="<?= $veiculo['kilometragem'] ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Combustivel</div>
+                                            <div class="col-8">
+                                                <select name="veiculos[<?= $veiculo['placa'] ?>][combustivel]" class="form-control">
+                                                    <option value="1" <?= $veiculo['combustivel'] == 1 ? 'selected' : '' ?>>Álcool</option>
+                                                    <option value="2" <?= $veiculo['combustivel'] == 2 ? 'selected' : '' ?>>Flex</option>
+                                                    <option value="3" <?= $veiculo['combustivel'] == 3 ? 'selected' : '' ?>>Diesel</option>
+                                                    <option value="4" <?= $veiculo['combustivel'] == 4 ? 'selected' : '' ?>>Gasolina</option>
+                                                    <option value="5" <?= $veiculo['combustivel'] == 5 ? 'selected' : '' ?>>Gasolina + Gás</option>
+                                                    <option value="6" <?= $veiculo['combustivel'] == 6 ? 'selected' : '' ?>>Gás</option>
+                                                    <option value="7" <?= $veiculo['combustivel'] == 7 ? 'selected' : '' ?>>Tetra Combustível</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6 col-lg-6 mt-2">
+                                        <div class="row p-2">
+                                            <div class="col-4">Ano Fabricação</div>
+                                            <div class="col-8"><input type="text" name="veiculos[<?= $veiculo['placa'] ?>][anoFabricacao]" class="form-control" maxlength="4" value="<?= $veiculo['anoFabricacao'] ?>" required></div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Ano Modelo</div>
+                                            <div class="col-8"><input type="text" name="veiculos[<?= $veiculo['placa'] ?>][anoModelo]" class="form-control" maxlength="4" value="<?= $veiculo['anoModelo'] ?>" required></div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Portas</div>
+                                            <div class="col-8">
+                                                <input type="number" name="veiculos[<?= $veiculo['placa'] ?>][portas]" min="1" max="10" class="form-control" value="<?= $veiculo['portas'] ?? '' ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Cor</div>
+                                            <div class="col-8"><input type="text" name="veiculos[<?= $veiculo['placa'] ?>][cor]" class="form-control" value="<?= $veiculo['cor'] ?>"></div>
+                                        </div>
+
+                                        <div class="row p-2">
+                                            <div class="col-4">Motor</div>
+                                            <div class="col-8">
+                                                <select name="veiculos[<?= $veiculo['placa'] ?>][motor]" class="form-control">
+                                                    <option value="1" <?= $veiculo['motor'] == '1.0' ? 'selected' : '' ?>>1.0</option>
+                                                    <option value="2" <?= $veiculo['motor'] == '1.6' ? 'selected' : '' ?>>1.6</option>
+                                                    <option value="3" <?= $veiculo['motor'] == '1.2' ? 'selected' : '' ?>>1.2</option>
+                                                    <option value="4" <?= $veiculo['motor'] == '1.3' ? 'selected' : '' ?>>1.3</option>
+                                                    <option value="5" <?= $veiculo['motor'] == '1.4' ? 'selected' : '' ?>>1.4</option>
+                                                    <option value="6" <?= $veiculo['motor'] == '1.5' ? 'selected' : '' ?>>1.5</option>
+                                                    <option value="7" <?= $veiculo['motor'] == '1.7' ? 'selected' : '' ?>>1.7</option>
+                                                    <option value="8" <?= $veiculo['motor'] == '1.8' ? 'selected' : '' ?>>1.8</option>
+                                                    <option value="9" <?= $veiculo['motor'] == '1.9' ? 'selected' : '' ?>>1.9</option>
+                                                    <option value="10" <?= $veiculo['motor'] == '2.0' ? 'selected' : '' ?>>2.0</option>
+                                                    <option value="11" <?= $veiculo['motor'] == '2.1' ? 'selected' : '' ?>>2.1</option>
+                                                    <option value="12" <?= $veiculo['motor'] == '2.2' ? 'selected' : '' ?>>2.2</option>
+                                                    <option value="13" <?= $veiculo['motor'] == '2.3' ? 'selected' : '' ?>>2.3</option>
+                                                    <option value="14" <?= $veiculo['motor'] == '2.4' ? 'selected' : '' ?>>2.4</option>
+                                                    <option value="15" <?= $veiculo['motor'] == '2.5' ? 'selected' : '' ?>>2.5</option>
+                                                    <option value="16" <?= $veiculo['motor'] == '2.6' ? 'selected' : '' ?>>2.6</option>
+                                                    <option value="17" <?= $veiculo['motor'] == '2.7' ? 'selected' : '' ?>>2.7</option>
+                                                    <option value="18" <?= $veiculo['motor'] == '2.8' ? 'selected' : '' ?>>2.8</option>
+                                                    <option value="19" <?= $veiculo['motor'] == '2.9' ? 'selected' : '' ?>>2.9</option>
+                                                    <option value="20" <?= $veiculo['motor'] == '3.0' ? 'selected' : '' ?>>3.0</option>
+                                                    <option value="21" <?= $veiculo['motor'] == '3.2' ? 'selected' : '' ?>>3.2</option>
+                                                    <option value="22" <?= $veiculo['motor'] == '3.3' ? 'selected' : '' ?>>3.3</option>
+                                                    <option value="23" <?= $veiculo['motor'] == '3.4' ? 'selected' : '' ?>>3.4</option>
+                                                    <option value="24" <?= $veiculo['motor'] == '3.5' ? 'selected' : '' ?>>3.5</option>
+                                                    <option value="25" <?= $veiculo['motor'] == '3.6' ? 'selected' : '' ?>>3.6</option>
+                                                    <option value="26" <?= $veiculo['motor'] == '3.7' ? 'selected' : '' ?>>3.7</option>
+                                                    <option value="27" <?= $veiculo['motor'] == '3.8' ? 'selected' : '' ?>>3.8</option>
+                                                    <option value="28" <?= $veiculo['motor'] == '3.9' ? 'selected' : '' ?>>3.9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-12 col-lg-12 mt-2">
+                                <div class="row col-12 d-flex justify-content-center">
+                                    <p>
+                                        <a href="#acessorios_<?= $veiculo['placa'] ?>" class="btn btn-outline-secondary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="acessorios">Acessórios</a>
+                                        <a href="#observacoes_<?= $veiculo['placa'] ?>" class="btn btn-outline-secondary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="observacoes">Observações</a>
+                                    </p>
+                                </div>
+                                <div class="row col-12">
+                                    <div class="col-12">
+                                        <div class="collapse multi-collapse" id="acessorios_<?= $veiculo['placa'] ?>">
+                                            <div class="card card-body">
+                                                <div class="col-12 row">                                                
+                                                    <?php foreach ($acessoriosCarroApi as $acessorio) { ?>
+                                                        <div class="col-3 col-lg-3 col-md-2 m-0 p-1">
+                                                            <input 
+                                                                type="checkbox" 
+                                                                id="acessorio_<?= $acessorio['idAcessorio'] ?>" 
+                                                                name="veiculos[<?= $veiculo['placa'] ?>][listaAcessorios][]" 
+                                                                value="<?= $acessorio['idAcessorio'] ?>"
+                                                                <?= in_array($acessorio['idAcessorio'], $veiculo['listaAcessorios']) ? 'checked' : '' ?>
+                                                            >
+                                                            <label for="acessorio_<?= $acessorio['idAcessorio'] ?>"><?= $acessorio['acessorio'] ?></label>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="collapse multi-collapse" id="observacoes_<?= $veiculo['placa'] ?>">
+                                            <div class="card card-body">
+                                                <textarea name="veiculos[<?= $veiculo['placa'] ?>][observacoes]" cols="30" rows="10"><?= $veiculo['observacoes'] ?></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                <?php endforeach; ?>
+                <button type="submit" class="btn btn-laranja text-white btn-cons pull-right">Importar Veículos</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function formatarValorBr(input) {
+
+    var valor = input.value;
+
+    if(valor.length <= 2) {
+        input.value = valor.replace(/(\D)/g, '').replace(/(\d{2})/g, '0,$1');
+    } else if (valor.length > 2 && valor.length <= 6) {
+        input.value = valor.replace(/(\D)/g, '').replace(/^0(.*)/, '$1').replace(/(\d{1,4})(\d{2})/, '$1,$2');
+    } else if (valor.length > 5) {
+        input.value = valor.replace(/(\D)/g, '').replace(/(\d{1,3})(\d{3})(\d{2})/g, '$1.$2,$3');
+    }
+}
+</script>
