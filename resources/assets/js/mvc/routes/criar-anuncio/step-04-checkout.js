@@ -7,39 +7,65 @@ module.exports.callback = ($) => {
     var stepContainer = $('.step-container');
     var stopEvent = require('helpers/StopEvent');
     var idPlano = $("#idPlano").val();
+
     stepContainer.on('step:change:checkout', function (e) {
         // handler certificado no checkout
+        window.fromCheckout = true;
+
+        $('.btn-voltar').removeClass('hide d-none');
+
         var ctx = ' .step-checkout ';
-        var classAcitive = 'remove-certificado';
+        var classAcitive = 'certificado-active';
 
-        $(ctx +'.btn-control-certificado a').on('click',function(e){
-          e.preventDefault();
+        $('.btn-voltar').on('click',function(e){
+          handdlerCertificado(true);
+        });
 
+        $(ctx +'a.btn-control-certificado').on('click',function(e){
+          stopEvent(e);
+          handdlerCertificado();
+        });
+
+        function handdlerCertificado(ForceRemover = false){
           var valorCertificado = 24.90; //preço certificado
-          let remover = $(ctx + '.flagCertificado').is(':checked');
+          var valorTotal = 0;
+          var remover = $(ctx + '.flagCertificado').is(':checked');
+
           if($('#dados-basicos .acao').val() != 'addCertificado'){
-              var valorPlano = parseFloat($("#" + ("planos" + $("#idPlano").val())).data('valor-plano').replace(',','.'));
-              valorCertificado += valorPlano;
+              var valorPlano = parseFloat($(ctx + ' .plano-selecionado input[data-valor-plano]').val());
+              valorTotal = valorCertificado + valorPlano;
+          }else{
+            valorTotal = valorCertificado;
           }
-          $('.valor-total').find('[data-valor-total]').html(valorCertificado.toFixed(2));
+
+          $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
 
           $(ctx +'.resumo-compra').addClass(classAcitive);
-          $(ctx + '.handle-certificado').addClass(classAcitive);
           $(ctx + '.flagCertificado').prop('checked','checked');
           $('#dados-basicos .certificado').val(1);
 
-          if(remover){
+          if(remover || ForceRemover){
             $(ctx +'.resumo-compra').removeClass(classAcitive);
-            $(ctx + '.handle-certificado').removeClass(classAcitive);
             $(ctx + '.flagCertificado').prop('checked',false);
             $('#dados-basicos .certificado').val('');
+            if(!valorPlano){
+              valorPlano = 0;
+            }
+            valorTotal = valorPlano;
+            $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
+
+            $('.certificado-adicionar').slideDown();
+            $('.certificado-resumo').slideUp();
           }
+          else{
+            $('.certificado-adicionar').slideUp();
+            $('.certificado-resumo').slideDown();
+          }
+          return;
+        }
+        let btnSaibaMais = $(ctx + 'a.saiba-mais');
 
-        });
         // handler modal certificado
-
-        let btnSaibaMais = $(ctx + '.saiba-mais a');
-
         btnSaibaMais.on('click',function(e){
           e.preventDefault();
           $('body').prepend($('<div class="modal-fade"></div>'));

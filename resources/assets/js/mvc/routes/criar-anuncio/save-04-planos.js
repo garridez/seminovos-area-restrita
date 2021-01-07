@@ -7,25 +7,45 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var HandleApiError = require('components/HandleApiError');
 
-    $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function () {
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({
             text:'Não é possível diminuir o plano',
             title:$('<span class="text-primary">').html('Atenção!')
         });
+        stopEvent(e);
     });
-    $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function () {
+
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function (e) {
         advancedAlerts.warning({
             text:`Plano já ativo, selecione outro plano ou clique em voltar`,
             title:$('<span class="text-primary">').html('Atenção!')
         });
+        stopEvent(e);
     });
 
-    $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function () {
+    $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function (e) {
         advancedAlerts.warning({
             text:'Você atingiu o limite de anúncio disponíveis para este plano',
             title:$('<span class="text-primary">').html('Atenção!')
         });
+        stopEvent(e);
     });
+
+    $('.anuncio-steps').on('click', '.step-plano label', function(e){
+      BtnContinuar.get().removeClass('hide d-none');
+      BtnContinuar.enable();
+    });
+
+    $('.step-container').on('step:pre-change:plano', function (e) {
+      if($("#acao").val() == 'trocarPlano'){
+        $('.btn-voltar').addClass('hide d-none');
+      }
+      if(window.fromCheckout){
+        BtnContinuar.get().removeClass('hide d-none');
+        BtnContinuar.enable();
+      }
+    });
+
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
         BtnContinuar.disable();
@@ -43,6 +63,7 @@ module.exports.callback = ($) => {
         }
 
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
+            $('.btn-voltar').addClass('hide d-none');
             $("#acao").val("trocarPlano");
         }
     });
@@ -60,7 +81,7 @@ module.exports.callback = ($) => {
         planoSelecionado.addClass('plano-selecionado');
 
         let valorTotal = 0.00;
-        valorTotal += parseFloat(planoSelecionado.data('valor-plano'));
+        valorTotal += parseFloat(planoSelecionado.find('input[data-valor-plano]').val());
         if($('#dados-basicos .acao').val() != 'addCertificado'){
           $('.valor-total').find('[data-valor-total]').html(valorTotal.toFixed(2));
         }

@@ -166,6 +166,7 @@ return [
             Controller\PainelController::class => InvokableFactory::class,
             Controller\PagesController::class => InvokableFactory::class,
             Controller\ValidacaoController::class => InvokableFactory::class,
+            Controller\CertificadosController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
