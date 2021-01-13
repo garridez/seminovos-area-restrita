@@ -342,4 +342,14 @@ function init() {
             }
         }
     });
+
+    /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
+    $("form[name='form_opcionaisVeiculo']").find("#btnCompleto").click(function (event) {
+      var checked = $(this).find('#completoCheckbox').is(':checked');
+      let acessorios = [4, 6, 7, 17, 33, 35];
+      acessorios.forEach((element, index) => {
+          $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
+      });
+    });
+
 }
