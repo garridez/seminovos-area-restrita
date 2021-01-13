@@ -160,6 +160,41 @@ class DadosVeiculoController extends AbstractActionController
         ]);
     }
 
+    public function opcionaisAction()
+    {
+        $tipos = [
+            'carro' => 1,
+            'caminhao' => 2,
+            'moto' => 3
+        ];
+        $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
+        if ($tipoVeiculo === 0) {
+            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+        }
+
+        $dadosForm = new Veiculo\DadosForm();
+        $dadosForm->setTipoVeiculo($tipoVeiculo);
+        $dadosForm->setCombustivel($tipoVeiculo);
+
+        $cambio = null;
+        $veiculoDados = $this->getVeiculo(5);
+        if ($veiculoDados) {
+            $dadosForm->populateValues($veiculoDados);
+            $dadosForm->setIsEdition(true);
+            $cambio = (int) $veiculoDados['idAcessorio'];
+        }
+
+        //libera edição para revendas
+        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+            $dadosForm->setIsEdition(false);
+        }
+
+        return new ViewModel([
+            'formDadosVeiculos' => $dadosForm,
+            'cambio' => $cambio
+        ]);
+    }
+
     public function precoAction()
     {
         $precoForm = new Veiculo\PrecoForm();
