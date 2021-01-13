@@ -14,6 +14,14 @@ foreach ($fields as $element) {
 $form->setAttribute('class', 'form');
 
 $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
+
+$airBags = [2,3,67,52,68,69,70,71,72,73,74,75];
+
+$dados = $fields['checkboxacessorios']->getValueOptions();
+foreach ($airBags as $key => $value) {
+    $fields['checkboxacessorios']->unsetValueOption($value);
+    $airBagsValue[$value] = $dados[$value];
+}
 ?>
 
 
@@ -34,6 +42,14 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
                 </div>
             </div>
             <div class="opcionais">
+                <div class="airbags">
+                    <select name="checkboxacessorios[]" class="">
+                        <option value="">Air Bags</option>
+                        <?php foreach ($airBagsValue as $key => $value) : ?>
+                            <option value="<?= $key ?>"> <?= $value ?> </option>
+                        <?php endforeach ?>
+                    </select>                        
+                </div>
                 <?php
                     $acessoriosHTML = $this->formMultiCheckbox($fields['checkboxacessorios']);
 

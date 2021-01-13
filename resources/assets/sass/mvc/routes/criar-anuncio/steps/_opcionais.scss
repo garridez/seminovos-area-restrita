@@ -5,6 +5,29 @@
         width: 100%;
         justify-content: center;
     }
+    .airbags{
+        display: flex;
+        margin: 3px 2px;
+        select{
+            text-align: center;
+            cursor: pointer;
+            padding: 0.5px 0.7rem;
+            border-radius: 17px;
+            border: 1px solid;
+            border-color: #7B7B7B;
+            display: flex;
+            align-items: center;
+            transition: all 200ms;
+            &.selected{
+                background-color: #7B7B7B;
+                color: white;
+                &::after {
+                    display: none;
+                    content: "";
+                }
+            }
+        }
+    }
     .checkbox-custom{
         display: flex;
         margin: 3px 2px;
@@ -33,5 +56,9 @@
                 display: block;
             }     
         }
+
+        // font-family: FontAwesome;
+        // content: "\F00C";
+        // color: #fff;
     }
 }
