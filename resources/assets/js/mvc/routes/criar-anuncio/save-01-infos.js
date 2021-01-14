@@ -217,7 +217,7 @@ module.exports.callback = ($) => {
         }
 
         // Salvar todo o formulario anterior as fotos aqui
-        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
+        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes,.step-opcionais');
         var dataSerialized = form.serialize();
 
         if (formWithError && dataSerialized === dataWithError) {
