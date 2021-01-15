@@ -21,12 +21,13 @@ $temAirBag = -1;
 
 if($tipoVeiculo === 1){
     $airBags = [2,3,67,52,68,69,70,71,72,73,74,75];
-    
     $dados = $fields['checkboxacessorios']->getValueOptions();
+
     foreach ($airBags as $key => $value) {
-        if(in_array($key,$acessoriosSelecionados ?? []) && $temAirBag == -1){
+        if(in_array($value, $acessoriosSelecionados ?? []) && $temAirBag == -1){
             $temAirBag = $value;
         }
+
         $fields['checkboxacessorios']->unsetValueOption($value);
         $airBagsValue[$value] = $dados[$value];
     }
