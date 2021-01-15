@@ -112,6 +112,10 @@ class DadosVeiculoController extends AbstractActionController
             // Se não for passado acessórios, envia "0" para apagar os existentes
             $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
 
+            $data['listaAcessorios'] = array_filter($data['listaAcessorios'], function($value){
+                return $value !== '';
+            });
+
             if ($idVeiculo) {
                 // Atualiza
                 $data = array_diff_key($data, array_flip([
