@@ -136,7 +136,7 @@ return [
                                         'options' => [
                                             'route' => ':action',
                                             'constraints' => [
-                                                'action' => 'dados|preco|mais-informacoes|fotos|video'
+                                                'action' => 'dados|preco|mais-informacoes|fotos|video|opcionais'
                                             ]
                                         ],
                                     ],

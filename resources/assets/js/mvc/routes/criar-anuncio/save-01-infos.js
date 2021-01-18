@@ -172,15 +172,6 @@ module.exports.callback = ($) => {
                 });
 
             });
-
-            /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
-            $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
-                var checked = $(this).find('#completoCheckbox').is(':checked');
-                let acessorios = [4, 6, 7, 17, 33, 35];
-                acessorios.forEach((element, index) => {
-                    $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
-                });
-            });
         }).on('change', function () {
             if ($(this).stepPlugin('inLastStep')) {
               return;
@@ -226,7 +217,7 @@ module.exports.callback = ($) => {
         }
 
         // Salvar todo o formulario anterior as fotos aqui
-        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
+        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes,.step-opcionais');
         var dataSerialized = form.serialize();
 
         if (formWithError && dataSerialized === dataWithError) {
