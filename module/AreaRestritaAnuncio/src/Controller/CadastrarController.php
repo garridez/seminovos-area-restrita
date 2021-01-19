@@ -96,7 +96,8 @@ class CadastrarController extends AbstractActionController
 
         if (!$dadosCadastro || !$dadosCadastro[0]) {
             return [
-                'status' => 400,
+                'status' => 200,
+                'cpfCadastro' => false,
                 'title' => 'Method Not Allowed',
                 'detail' => 'CPF ou CPNJ não encontrado. Verifique e tente novamente',
             ];
@@ -119,7 +120,7 @@ class CadastrarController extends AbstractActionController
             $dadosCadastroRetorno = $dadosCadastro;
         }
 
-        return ['status' => 200, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
+        return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
     }
 
 
