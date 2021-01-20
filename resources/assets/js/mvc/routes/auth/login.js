@@ -2,6 +2,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     require('bootstrap/js/dist/modal');
     var HandleApiError = require('components/HandleApiError');
     var Alert = require('components/Alerts');
+    var advancedAlerts = require('components/AdvancedAlerts');
 
     var ShowPassword = require('components/ShowPassword');
     ShowPassword($("input[type='password']"));
@@ -73,6 +74,16 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               if (!HandleApiError(data)) {
                   return;
               }
+              
+              if(!data.cpfCadastro){
+                  advancedAlerts.error({
+                  title: "CPF não encontrado",
+                  text: `O CPF informado não existe em nossos cadastrados.<br/><br/>Entre em contato!<br/>`,
+                  time: 10000
+                });
+                    return;
+              }
+              
               $('#modalRecuperarSenha').find('.sms,.token,.email').removeClass('d-flex').removeClass('d-none');
 
               $('[data-retorno-telefone]').text(data.telefone);
