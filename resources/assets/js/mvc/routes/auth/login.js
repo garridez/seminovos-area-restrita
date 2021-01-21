@@ -78,7 +78,9 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               if(!data.cpfCadastro){
                   advancedAlerts.error({
                   title: "CPF não encontrado",
-                  text: `O CPF informado não existe em nossos cadastrados.<br/><br/>Entre em contato!<br/>`,
+                  text: `O CPF informado não existe em nossos cadastrados.<br/><br/>
+                        <div><a href="/me-cadastrar" title="Criar uma conta" class="btn link-laranja">
+                        Cadastre-se </a></div><br/>`,
                   time: 10000
                 });
                     return;
