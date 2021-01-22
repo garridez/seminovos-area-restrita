@@ -189,7 +189,7 @@ class CadastrarController extends AbstractActionController
                 'mensagem' => $mensagem,
                 'assunto' => 'Nova senha de acesso',
                 'email' => $dadosCadastro['email'],
-                /*'cnpj' => $dadosCadastro['cnpj'],*/
+                'cnpj' => $dadosCadastro['cnpj'],
                 'nome' => $dadosCadastro['responsavelNome'],
                 'emailRemetente' => 'senha@seminovosbh.com.br',
                 'nomeRemetente' => 'SeminovosBH',
