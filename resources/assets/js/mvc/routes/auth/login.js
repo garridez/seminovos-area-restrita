@@ -64,6 +64,8 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
 
       var tipoCad = $(this).find('input[name="tipoCadastro"]').val();
       $formDadosBasicos.find('input[name="tipoCadastro"]').val(tipoCad);
+      var text = null;
+      var title = null;
 
       $.ajax({
           type: 'POST',
@@ -76,11 +78,20 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               }
               
               if(!data.cpfCadastro){
-                  advancedAlerts.error({
-                  title: "CPF não encontrado",
-                  text: `O CPF informado não existe em nossos cadastrados.<br/><br/>
+                  if(data.tipoCadastro == 2){
+                    title = "CPF não encontrado";
+                    text = `O CPF informado não existe em nossos cadastrados.<br/><br/>
                         <div><a href="/me-cadastrar" title="Criar uma conta" class="btn link-laranja">
-                        Cadastre-se </a></div><br/>`,
+                        Cadastre-se </a></div><br/>`;
+                  }else{
+                    title = "CNPJ não encontrado";
+                    text = `O CNPJ informado não existe em nossos cadastrados.<br/><br/>
+                        <div><a href="https://seminovos.com.br/cadastrar-revenda" title="Criar uma conta" class="btn link-laranja">
+                        Cadastre-se </a></div><br/>`;
+                  }
+                  advancedAlerts.error({
+                  title: title,
+                  text: text,
                   time: 10000
                 });
                     return;
@@ -100,7 +111,10 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               if(data.email){
                 $('#modalRecuperarSenha').find('.email').removeClass('d-none').addClass('d-flex');
               }
-
+              $('#modalRecuperarSenha').find('.modalText').addClass('d-none');
+              if(data.tipoCadastro == 2){
+                $('#modalRecuperarSenha').find('.modalText').removeClass('d-none').addClass('d-flex');
+              }
               $formDadosBasicos.find('input[name="cpfCnpj"]').val(cfpCnpj);
 
               $('#modalRecuperarSenha').modal('show');
