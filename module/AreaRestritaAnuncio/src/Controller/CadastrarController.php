@@ -98,6 +98,7 @@ class CadastrarController extends AbstractActionController
             return [
                 'status' => 200,
                 'cpfCadastro' => false,
+                'tipoCadastro' => $tipoCadastro,
                 'title' => 'Method Not Allowed',
                 'detail' => 'CPF ou CPNJ não encontrado. Verifique e tente novamente',
             ];
@@ -188,6 +189,7 @@ class CadastrarController extends AbstractActionController
                 'mensagem' => $mensagem,
                 'assunto' => 'Nova senha de acesso',
                 'email' => $dadosCadastro['email'],
+                /*'cnpj' => $dadosCadastro['cnpj'],*/
                 'nome' => $dadosCadastro['responsavelNome'],
                 'emailRemetente' => 'senha@seminovosbh.com.br',
                 'nomeRemetente' => 'SeminovosBH',
