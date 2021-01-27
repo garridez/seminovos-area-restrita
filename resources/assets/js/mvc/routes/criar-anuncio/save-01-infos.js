@@ -194,6 +194,7 @@ module.exports.callback = ($) => {
         var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
         var tipoCadastro = $('input[name="tipoCadastro"]').val();
+        var placa = $("form[name='form_dadosVeiculo']").find("input[name='placa']").val();
 
         if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCad == 2){
             advancedAlerts.warning({
@@ -254,6 +255,7 @@ module.exports.callback = ($) => {
 
                     $('#dados-basicos .idVeiculo').val(idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
+                    $('#dados-basicos .placaVeiculo').val(placa);
 
                     var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
                     window.history.pushState(null, null, path);
