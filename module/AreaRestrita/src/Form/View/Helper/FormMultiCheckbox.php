@@ -22,12 +22,12 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
             return sprintf('%s', parent::render($oElement));
         }
 
-        $this->setSeparator('</div><div class="checkbox mb-0 mt-0">');
+        $this->setSeparator('</div><div class="checkbox">');
         $oElement->setLabelAttributes(array('class' => 'checkbox'));
 
-        return sprintf('<div class="checkbox mb-0 mt-0">%s</div>', parent::render($oElement));
+        return sprintf('<div class="checkbox">%s</div>', parent::render($oElement));
     }
-    
+
     public function renderOptions(
         MultiCheckboxElement $element,
         array $options,

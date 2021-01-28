@@ -172,15 +172,6 @@ module.exports.callback = ($) => {
                 });
 
             });
-
-            /* IMPLEMENTAÇÃO DA OPÇÃO DE ATALHO PARA MARCAR OS ACESSÓRIOS DE UM CARRO COMPLETO*/
-            $("form[name='form_dadosVeiculo']").find("#btnCompleto").click(function (event) {
-                var checked = $(this).find('#completoCheckbox').is(':checked');
-                let acessorios = [4, 6, 7, 17, 33, 35];
-                acessorios.forEach((element, index) => {
-                    $("#dadosAcessorios").find(`input[value='${element}']`).prop('checked', checked);
-                });
-            });
         }).on('change', function () {
             if ($(this).stepPlugin('inLastStep')) {
               return;
@@ -203,6 +194,7 @@ module.exports.callback = ($) => {
         var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
         var tipoCadastro = $('input[name="tipoCadastro"]').val();
+        var placa = $("form[name='form_dadosVeiculo']").find("input[name='placa']").val();
 
         if(!aceitaProposta && !aceitaLigacao && !aceitaChat && tipoCad == 2){
             advancedAlerts.warning({
@@ -226,7 +218,7 @@ module.exports.callback = ($) => {
         }
 
         // Salvar todo o formulario anterior as fotos aqui
-        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
+        var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes,.step-opcionais');
         var dataSerialized = form.serialize();
 
         if (formWithError && dataSerialized === dataWithError) {
@@ -263,6 +255,7 @@ module.exports.callback = ($) => {
 
                     $('#dados-basicos .idVeiculo').val(idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
+                    $('#dados-basicos .placaVeiculo').val(placa);
 
                     var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
                     window.history.pushState(null, null, path);

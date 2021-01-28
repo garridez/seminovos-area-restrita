@@ -1,6 +1,7 @@
 <?php
 
 use SnBH\ApiModel\Model\VeiculosStatus;
+use SnBH\ApiModel\Model\VeiculoTipo;
 
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
@@ -9,6 +10,7 @@ $veiculo = $this->veiculo ?: false;
 $rotasAnuncio = [
     'veiculo' => [
         'dados' => 'dados',
+        'opcionais' => 'opcionais',
         'preco' => 'preco',
         'mais-informacoes' => 'mais-informacoes',
         'fotos' => 'fotos',
@@ -21,6 +23,11 @@ $rotasAnuncio = [
 if ($this->userInfo('tipoCadastro') == 1) {
     unset($rotasAnuncio['checkout']);
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
+}
+
+
+if($this->tipoCadastro == VeiculoTipo::TIPO_CAMINHAO){
+    unset($rotasAnuncio['veiculo']['opcionais']);
 }
 
 if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veiculo['idStatus'] == VeiculosStatus::STATUS_FOTOS_ALTERADAS)) {
@@ -85,7 +92,7 @@ if ($this->idVeiculo) {
         <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total">
         <input type="hidden" id="acao" name="acao" value="" class="acao">
         <input type="hidden" id="codFipe" name="codFipe" value="<?= $this->codFipe ?>" class="codFipe">
-        <input type="hidden" id="placaVeiculo" name="placaVeiculo" value="<?= $this->placa ?>">
+        <input type="hidden" id="placaVeiculo" name="placaVeiculo" value="<?= $this->placa ?>" class="placaVeiculo">
         <input type="hidden" id="caracteristicaVeiculo" name="caracteristicaVeiculo" value="<?= $this->caracteristica ?>">
         <input type="hidden" id="certificado" name="certificado" value="" class="certificado">
         <input type="hidden" id="flagCriando" name="flagCriando" value="0">

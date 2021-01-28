@@ -74,7 +74,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                 </div>
             </div>
 
-            <div class="pl-2 pl-md-3 col-12">
+            <div class="pl-2 pl-md-3 col-12 col-print-12 mt-print-3">
                 <div class="border-bottom pb-0 pb-md-1 mt-3 mt-print-3 ml-0 ml-md-2">
                     <span class="text-uppercase hint-text">
                         Tomador dos Serviços
@@ -82,9 +82,6 @@ $dadosVeiculo = $this->dadosVeiculo;
                 </div>
                 <div class="row mx-0 mt-2">
                     <div class="col-lg-9 col-sm-height sm-no-padding">
-                        <h5 class="semi-bold m-t-0">
-                            <?= isset($dadosCadastro['razaoSocial']) && $dadosCadastro['razaoSocial'] != ""  ? $dadosCadastro['razaoSocial'] : "Não informado" ?>
-                        </h5>
                         <address>
                             <?php 
                             /*
@@ -118,8 +115,8 @@ $dadosVeiculo = $this->dadosVeiculo;
                     </div>
                 </div>
             </div>
-            <div class="invoice pt-4 mt-print-2 py-0 row-print pl-print-0">
-                <table class="table w-100 table-responsive-sm">
+            <div class="invoice pt-4 mt-print-2 py-0 row-print pl-print-3">
+                <table class="table w-100">
                     <thead>
                         <tr>
                             <th class="pl-0 ">Serviço</th>
@@ -148,7 +145,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                                 </div>
                                 <div class="hint-text">
                                     <small>
-                                        Modelo: <?= $dadosVeiculo['caracteristica'] ?>
+                                        Modelo: <?= $dadosVeiculo['marca'] . ' ' . $dadosVeiculo['modelo'] . ' '. (isset($dadosVeiculo['caracteristica']) && $dadosVeiculo['caracteristica'] ? $dadosVeiculo['caracteristica'] : '')  ?>
                                     </small>
                                 </div>
                                 <div class="hint-text">
@@ -170,7 +167,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                     </tbody>
                 </table>
             </div>
-            <div class="invoice py-0 px-2 mt-3 mt-print-3 pl-print-0 col-print-12">
+            <div class="invoice py-0 px-2 mt-3 mt-print-3 pl-print-3 col-print-12">
                 <div class="row b-a b-grey">
                     <div
                         class="col-md-8 col-print-8 p-l-15 sm-p-t-15 clearfix sm-p-b-15 d-flex flex-column justify-content-center">
@@ -191,7 +188,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                     </div>
                 </div>
             </div>
-            <div class="invoice p-l-15 row mt-4 mt-print-3 row-print pl-print-0 col-print-12">
+            <div class="invoice p-l-15 row mt-4 mt-print-3 row-print pl-print-3 col-print-12">
                 <div class="col-12">
                     <div class="border-bottom pb-2">
                         <span class="text-uppercase hint-text">
@@ -201,7 +198,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                 </div>
                 <div class="col-12 description-print">
                     <div class="col-12 pl-0 pl-print-0">
-                        <div class="">
+                          <div class="">
                             <small>
                                 * Entretanto o cliente deverá renová-lo sem ônus a cada 30 dias visando a
                                 atualização do

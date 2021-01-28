@@ -58,7 +58,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                                 </span>
                             </td>
                             <td class="text-center col-print-2">
-                                <?= isset($dadosCertificados['flagRestricao']) && $dadosCertificados['flagRestricao'] != ""  ? "SIM" : "NÃO" ?>
+                                <?= isset($dadosCertificados['flagRestricao']) && $dadosCertificados['flagRestricao'] == 1  ? "SIM" : "NÃO" ?>
                             </td>
                         </tr>
                         <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
@@ -68,7 +68,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                                 </span>
                             </td>
                             <td class="text-center col-print-2">
-                                <?= isset($dadosCertificados['flagSinistro']) && $dadosCertificados['flagSinistro'] != ""  ? "SIM" : "NÃO" ?>
+                                <?= isset($dadosCertificados['flagSinistro']) && $dadosCertificados['flagSinistro'] == 1  ? "SIM" : "NÃO" ?>
                             </td>
                         </tr>
                         <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
@@ -78,7 +78,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                                 </span>
                             </td>
                             <td class="text-center col-print-2">
-                                <?= isset($dadosCertificados['flagLeilao']) && $dadosCertificados['flagLeilao'] != ""  ? "SIM" : "NÃO" ?>
+                                <?= isset($dadosCertificados['flagLeilao']) && $dadosCertificados['flagLeilao'] == 1  ? "SIM" : "NÃO" ?>
                             </td>
                         </tr>
                         <tr class="col-print-12 d-print-flex justify-content-between border-bottom">
@@ -88,7 +88,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                                 </span>
                             </td>
                             <td class="text-center col-print-2">
-                                <?= isset($dadosCertificados['flagDebitos']) && $dadosCertificados['flagDebitos'] != ""  ? "SIM" : "NÃO" ?>
+                                <?= isset($dadosCertificados['flagDebitos']) && $dadosCertificados['flagDebitos'] == 1  ? "SIM" : "NÃO" ?>
                             </td>
                         </tr>
                         <tr class="col-print-12 d-print-flex justify-content-between">
@@ -98,7 +98,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                                 </span>
                             </td>
                             <td class="text-center col-print-2">
-                                <?= isset($dadosCertificados['flagFurto']) && $dadosCertificados['flagFurto'] != ""  ? "SIM" : "NÃO" ?>
+                                <?= isset($dadosCertificados['flagFurto']) && $dadosCertificados['flagFurto'] == 1  ? "SIM" : "NÃO" ?>
                             </td>
                         </tr>
                     </tbody>

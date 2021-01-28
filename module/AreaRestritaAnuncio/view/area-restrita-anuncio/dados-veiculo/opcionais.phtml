@@ -1,0 +1,87 @@
+<?php
+/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+/* @var $form \Zend\Form\View\Helper\Form */
+
+/* @var $this \AreaRestritaAnuncio\Form\Veiculo\DadosForm */
+$form = $this->formDadosVeiculos;
+$fields = $form->getElements();
+
+foreach ($fields as $element) {
+    if ($element->getAttribute('name') != 'checkboxacessorios' && $element->getAttribute('name') != 'veiculo_zero_km' && $element->getAttribute('name') != 'motoTrilha' && $element->getAttribute('name') != 'flag_km')
+        $element->setAttribute('class', 'form-control');
+}
+
+$form->setAttribute('class', 'form');
+
+$tipoVeiculo = $form->get('tipoVeiculo')->getValue();
+$airBagsValue = [];
+
+$acessoriosSelecionados = $form->get('checkboxacessorios')->getValue();
+$temAirBag = -1;
+
+if($tipoVeiculo === 1){
+    $airBags = [2,3,67,52,68,69,70,71,72,73,74,75];
+    $dados = $fields['checkboxacessorios']->getValueOptions();
+
+    foreach ($airBags as $key => $value) {
+        if(in_array($value, $acessoriosSelecionados ?? []) && $temAirBag == -1){
+            $temAirBag = $value;
+        }
+
+        $fields['checkboxacessorios']->unsetValueOption($value);
+        $airBagsValue[$value] = $dados[$value];
+    }
+}
+?>
+
+
+<?php if ($tipoVeiculo !== \SnBH\ApiModel\Model\VeiculoTipo::TIPO_CAMINHAO) : ?>
+    <form method="POST" name="form_opcionaisVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
+        <h5 class="text-center">
+            Quais são os opcionais do seu veículo?
+        </h5>
+        <div class="form-group form-group-default" id="dadosAcessorios">
+            <div class="d-flex justify-content-between">
+                <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
+                    <?php if ($tipoVeiculo == 1) : ?>
+                        <div class="checkbox m-0 p-0 m-b-0">
+                            <input type="checkbox" id="completoCheckbox">
+                            <label for="completoCheckbox">Completo</label>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="opcionais">
+                <?php if ($tipoVeiculo == 1) : ?>           
+                    <div class="airbags">
+                        <select name="checkboxacessorios[]" class="<?= $temAirBag != -1 ? 'selected' : '' ?>">
+                            <option value>Air Bags</option>
+                            <?php foreach ($airBagsValue as $key => $value) : ?>
+                                <option value="<?= $key ?>"  <?= $temAirBag == $key ? 'selected' : '' ?> > <?= $value ?> </option>
+                            <?php endforeach ?>
+                        </select>                        
+                    </div>
+                <?php endif; ?>
+                <?php
+                    $acessoriosHTML = $this->formMultiCheckbox($fields['checkboxacessorios']);
+
+                    $acessoriosHTML = str_replace('class="checkbox"', 'class="checkbox-custom"', $acessoriosHTML);
+
+                    $acessoriosHTML = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $acessoriosHTML);
+
+                    $acessoriosHTML = explode('<div', $acessoriosHTML);
+                    if (trim($acessoriosHTML[0]) == '') {
+                        unset($acessoriosHTML[0]);
+                    }
+                    $t = "\t";
+                    foreach ($acessoriosHTML as $key => $acessorio) {
+                        echo $t . $t . '<div' . $acessorio . PHP_EOL;
+                    } 
+                ?>
+            </div>
+        </div>
+        <div class="form-group ">
+            <?= $this->formSubmit($fields['submit']) ?>
+        </div>
+    </form>
+<?php endif; ?>
