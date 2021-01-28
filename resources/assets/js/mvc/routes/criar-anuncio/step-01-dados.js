@@ -314,7 +314,7 @@ function init() {
             placa.closest('.form-group').removeClass('required');
 
             $("select[name='idMarca'] option").addClass("hide");
-            let marcasTrilha = [95,115,103,97,173,101];
+            let marcasTrilha = [95,115,103,97,173,101,203];
                 marcasTrilha.forEach((element, index) => {
                     marca.find(`option[value='${element}']:not([data='destaque'])`).removeClass("hide");
                 });
@@ -331,10 +331,10 @@ function init() {
     $('body').on('change',$("select[name='modeloCarro']"), function(){
         if($("select[name='idMarca'] option:selected").val() != ''){
             if ($("input[name='motoTrilha']").is(':checked')) {
-                //honda 95 - yamaha 115 - ktm 103 - Kawasaki 101
-                if(marca.val()== 95 || marca.val()== 115 || marca.val() == 103 || marca.val() == 101){
+                //honda 95 - yamaha 115 - ktm 103 - Kawasaki 101 -MXF 203
+                if(marca.val()== 95 || marca.val()== 115 || marca.val() == 103 || marca.val() == 101  || marca.val() == 203){
                     $("select[name='modeloCarro'] option").addClass("hide");
-                    let modelosTrilha = [673,1095,1507,653,2122,668,838,1945,1609,2241,912,1716,1402,2237,2051,2146,2372,2373];
+                    let modelosTrilha = [673,1095,1507,653,2122,668,838,1945,1609,2241,912,1716,1402,2237,2051,2146,2372,2373,2391];
                         modelosTrilha.forEach((element, index) => {
                             modelo.find(`option[value='${element}']`).removeClass("hide");
                         });

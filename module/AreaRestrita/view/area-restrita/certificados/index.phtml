@@ -423,7 +423,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </div>
                     </div>
                 </div>
-                <?php if($leilao){ ?>
+                <?php if($leilao && sizeof($leilao['registros']) > 0){ ?>
                 <table class="table w-100 col-print-12 pl-print-3">
                     <thead>
                         <tr class="border-bottom">
