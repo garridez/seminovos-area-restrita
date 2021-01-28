@@ -217,11 +217,9 @@ class XmlController extends AbstractActionController
                                 $palavra2 = isset($modeloApiArray[1]) && strlen($palavra1) >= 2 ? $modeloApiArray[1] : 'xzxzxzxz';
                             }
 
-
-                            if (ctype_alnum($palavra1)) { 
-                                
+                            if (ctype_alnum($palavra1)) {
                                 // 1º tenta dar match na string inteira do modelo da API
-                                if (preg_match("/\s?^($modeloApiString)(.*)?/", $modeloXml)) {
+                                if (preg_match("/[a-zA-Z0-9]/", $modeloXml) && preg_match("/\s?^($modeloApiString)(.*)?/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
 
