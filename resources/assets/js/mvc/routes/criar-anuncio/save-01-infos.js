@@ -46,6 +46,8 @@ module.exports.callback = ($) => {
 
                 var placaInput = $(this);
                 var placa = placaInput.val() || '';
+
+                placaInput.removeClass('is-invalid is-valid');
                 if (!placa || placa.length < 7) {
                     return;
                 }
