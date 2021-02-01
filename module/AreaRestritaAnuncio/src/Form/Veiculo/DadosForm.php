@@ -43,18 +43,18 @@ class DadosForm extends Form
                 'minlength' => 7,
             ]
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'veiculo_zero_km',
             'options' => [
-                'label' => 'Seu Veiculo é Zero km?',
+                'label' => 'Zero km?',
             ],
             'attributes' => [
                 'value' => 'yes',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'motoTrilha',
@@ -65,7 +65,7 @@ class DadosForm extends Form
                 'value' => 'yes',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'flag_km',
