@@ -78,7 +78,9 @@ class MeusDadosController extends AbstractActionController
                 #campos que não podem ser alterados
                 unset($data['responsavelNome']);
                 unset($data['dataNascimento']);
-                unset($data['cpf']);
+                if(!isset($data['flagEdicao'])){
+                    unset($data['cpf']);
+                }
                 unset($data['nomeFantasia']);
 
                 $resPut = $cadastrosModel->put($data);
