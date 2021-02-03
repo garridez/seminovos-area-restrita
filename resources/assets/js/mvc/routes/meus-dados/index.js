@@ -2,7 +2,6 @@
 module.exports.seletor = '.c-meus-dados.a-index';
 
 module.exports.callback = ($) => {
-    // alert('oi')
     var advancedAlerts = require('components/AdvancedAlerts');
     var $ctxForm = $('form[name="form_particularSite"]');
     var emailInput = $ctxForm.find("input[name='email']");
