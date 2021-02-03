@@ -15,23 +15,6 @@ module.exports.callback = ($) => {
       $btnSubmit.addClass('to-validade');
     });
 
-    $ctxForm.on('submit', function (e) {
-        var cpfInput = $ctxForm.find("input[name='cpfResponsavel']").val();
-
-        if (cpfInput == '') {
-            advancedAlerts.error({
-                title: "CPF obrigatório!",
-                text: "Por favor, preencha o campo CPF.",
-                time: 10000
-            });
-
-            $ctxForm.find("input[name='cpfResponsavel']").removeAttr('readonly');
-
-            return false;
-        }
-
-    })
-
 
     $ctxForm.on('click','button.to-validade',function (e) {
       e.preventDefault();
