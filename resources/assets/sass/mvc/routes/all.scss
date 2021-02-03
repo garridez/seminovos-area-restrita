@@ -13,4 +13,5 @@ body {
   &.c-meus-dados{
     @import "meus-dados/all";    
   }
+  @import "restrito-banners/all";
 }

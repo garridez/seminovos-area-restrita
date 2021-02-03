@@ -15,23 +15,13 @@ module.exports.callback = ($) => {
       $btnSubmit.addClass('to-validade');
     });
 
-    $ctxForm.on('submit', function (e) {
-        var cpfInput = $ctxForm.find("input[name='cpfResponsavel']").val();
-
-        if (cpfInput == '') {
-            advancedAlerts.error({
-                title: "CPF obrigatório!",
-                text: "Por favor, preencha o campo CPF.",
-                time: 10000
-            });
-
-            $ctxForm.find("input[name='cpfResponsavel']").removeAttr('readonly');
-
-            return false;
-        }
-
-    })
-
+    var cpfInput = $ctxForm.find("input[name='cpfResponsavel']");
+    var cpfOriginal = cpfInput.val() || '';
+    $ctxForm.find("input[name='cpfResponsavel']").on('change',function(e){
+      if(cpfInput.val() != cpfOriginal){
+        $btnSubmit.addClass('to-validade-cpf');
+      }
+    });
 
     $ctxForm.on('click','button.to-validade',function (e) {
       e.preventDefault();
@@ -72,39 +62,46 @@ module.exports.callback = ($) => {
           error: function (e) {}
       });
     });
-    
-    $ctxForm.find("input[name='cpfResponsavel']").blur(function (event) {
-      var cpfInput = $(this);
+
+    $ctxForm.on('click','button.to-validade-cpf',function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $('.loading-container').removeClass('hide');
+
       var cpf = cpfInput.val() || '';
       $.ajax({
-      type: "GET",
-      url: "/carro/cpf-disponivel/"+cpf,
-      dataType: "json",
-      success: function (response) {
-          if (!response.cpfDisponivel) {
+        type: "GET",
+        url: "/carro/cpf-disponivel/"+cpf,
+        dataType: "json",
+        success: function (response) {
+            if (!response.cpfDisponivel) {
 
-              var concat = '*******';
+                var concat = '*******';
 
-              var email = response.emailVinculado;
-              var emailMask = response.emailVinculado.split('@');
+                var email = response.emailVinculado;
+                var emailMask = response.emailVinculado.split('@');
 
-              var emailName =  emailMask[0].slice(0,3) + concat;
-              var emailDomain =  '@' + emailMask[1].slice(0,2) + concat;
+                var emailName =  emailMask[0].slice(0,3) + concat;
+                var emailDomain =  '@' + emailMask[1].slice(0,2) + concat;
 
-              emailMask = emailMask[1].split('.').splice(1);
+                emailMask = emailMask[1].split('.').splice(1);
 
-              var emailLocation = '.' + emailMask.join('.');
-              var emailMasked = emailName + emailDomain + emailLocation;
+                var emailLocation = '.' + emailMask.join('.');
+                var emailMasked = emailName + emailDomain + emailLocation;
 
-              advancedAlerts.error({
-                  title: "CPF já cadastrado",
-                  text: `O CPF informado já está cadastrado com o email: ${emailMasked}`,
-                  time: 10000
-              });
-              return;
-          }
-      },
-      error: function (e) {}
+                advancedAlerts.error({
+                    title: "CPF já cadastrado",
+                    text: `O CPF informado já está cadastrado com o email: ${emailMasked}`,
+                    time: 10000
+                });
+                $('.loading-container').addClass('hide');
+                return;
+            }
+            $btnSubmit.removeClass('to-validade-cpf');
+            $('.loading-container').addClass('hide');
+        },
+        error: function (e) {}
       });
     });
 
