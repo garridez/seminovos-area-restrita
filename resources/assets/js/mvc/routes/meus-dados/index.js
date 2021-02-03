@@ -73,6 +73,41 @@ module.exports.callback = ($) => {
           error: function (e) {}
       });
     });
+    
+    $ctxForm.find("input[name='cpfResponsavel']").blur(function (event) {
+      var cpfInput = $(this);
+      var cpf = cpfInput.val() || '';
+      $.ajax({
+      type: "GET",
+      url: "/carro/cpf-disponivel/"+cpf,
+      dataType: "json",
+      success: function (response) {
+          if (!response.cpfDisponivel) {
+
+              var concat = '*******';
+
+              var email = response.emailVinculado;
+              var emailMask = response.emailVinculado.split('@');
+
+              var emailName =  emailMask[0].slice(0,3) + concat;
+              var emailDomain =  '@' + emailMask[1].slice(0,2) + concat;
+
+              emailMask = emailMask[1].split('.').splice(1);
+
+              var emailLocation = '.' + emailMask.join('.');
+              var emailMasked = emailName + emailDomain + emailLocation;
+
+              advancedAlerts.error({
+                  title: "CPF já cadastrado",
+                  text: `O CPF informado já está cadastrado com o email: ${emailMasked}`,
+                  time: 10000
+              });
+              return;
+          }
+      },
+      error: function (e) {}
+      });
+    });
 
     require('components/EstadoCidade')();
     var advancedAlerts = require('components/AdvancedAlerts');

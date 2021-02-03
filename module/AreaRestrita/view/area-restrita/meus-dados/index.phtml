@@ -17,6 +17,11 @@ if($currentIdCadastro && $currentIdCadastro == 290948){
         }
     }
 }
+$inputCpf = false;
+if(!$fields['cpfResponsavel']->getValue()){
+   $fields['cpfResponsavel']->setAttribute("readonly",false);
+   $inputCpf = true;
+}
 ?>
 
 <div class=" container-fluid   container-fixed-lg">
@@ -34,6 +39,9 @@ if($currentIdCadastro && $currentIdCadastro == 290948){
 </div>
 
 <form method="POST" name="form_particularSite" class="" id="form_particularSite">
+    <?php if($inputCpf): ?>
+    <input type="hidden" id="flagEdicao" name="flagEdicao" value="<?php echo $fields['cpfResponsavel']->getValue(); ?>">
+    <?php endif; ?>
     <div class=" container-fluid   container-fixed-lg">
         <div class="row">
             <div class="col-lg-2"></div>
