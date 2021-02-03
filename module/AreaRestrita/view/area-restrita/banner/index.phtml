@@ -42,18 +42,20 @@ $banners = $this->banners;
                                     ?>
 
                                         <tr class="border-bottom">
-                                            <td class="pl-0" align="center" style="vertical-align: middle;">
-                                                <div class="radio radio-success p-2">
-                                                    <img src="https://s3-us-west-2.amazonaws.com/site-revenda.seminovosbh.com.br/<?= $banner['image'] ?>" alt="" srcset="" width="400">
+                                            <td class="pl-0">
+                                                <div class="image">
+                                                    <img src="https://s3-us-west-2.amazonaws.com/site-revenda.seminovosbh.com.br/<?= $banner['image'] ?>" alt="" srcset="">
                                                     <?= $banner['image'] == 'default' ? 'Banner não encontrado' : '' ?>
                                                 </div>
                                             </td>
-                                            <td class="" style="vertical-align: middle;">
+                                            <td class="link">
+                                                <?php if($banner['href']): ?>
                                                 <a href="<?= $banner['href'] ?>" target="<?= $banner['target'] ?>">
-                                                    <?= $banner['href'] ?>
+                                                    LINK DA IMAGEM
                                                 </a>
+                                                <?php endif; ?>
                                             </td>
-                                            <td class="" style="vertical-align: middle;">
+                                            <td class="">
                                                 <h4 class="text-orange">
                                                     <form action="/banners/excluir" method="post">
                                                         <input type="hidden" name="idSiteHospedadoBanner" value="<?= $banner['idSiteHospedadoBanner'] ?>" />
