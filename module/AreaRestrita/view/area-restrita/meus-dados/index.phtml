@@ -18,7 +18,7 @@ if($currentIdCadastro && $currentIdCadastro == 290948){
     }
 }
 $inputCpf = false;
-if(!$fields['cpfResponsavel']->getValue()){
+if(isset($fields['cpfResponsavel']) && !$fields['cpfResponsavel']->getValue()){
    $fields['cpfResponsavel']->setAttribute("readonly",false);
    $inputCpf = true;
 }
