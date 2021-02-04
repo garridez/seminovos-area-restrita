@@ -4,10 +4,14 @@ module.exports.seletor = '.c-meus-dados.a-index';
 module.exports.callback = ($) => {
     var advancedAlerts = require('components/AdvancedAlerts');
     var $ctxForm = $('form[name="form_particularSite"]');
+
     var emailInput = $ctxForm.find("input[name='email']");
+    var emailSecundarioInput = $ctxForm.find("input[name='email_secundario']");
 
     var $btnSubmit = $ctxForm.find('button[type="submit"]');
     var originalEmail = emailInput.val() || '';
+    var originalEmailSecundario = emailSecundarioInput.val() || '';
+
     $(emailInput).keypress(function(){
       var email = emailInput.val() || '';
       if(originalEmail == email) return;
@@ -15,46 +19,108 @@ module.exports.callback = ($) => {
       $btnSubmit.addClass('to-validade');
     });
 
+    var validarEmail = function(emailInput){
+        email = emailInput.val();
 
-    $ctxForm.on('click','button.to-validade',function (e) {
+        if (email == '') return;
+
+        $('.loading-container').removeClass('hide');
+
+        $.ajax({
+            type: "GET",
+            url: "/carro/email-disponivel/"+email,
+            dataType: "json",
+            success: (response) => {
+                emailInput
+                    .removeClass('is-invalid is-valid')
+                    .addClass(response.emailDisponivel ? 'is-valid' : 'is-invalid');
+                if (!response.emailDisponivel) {
+
+                    $btnSubmit
+                        .attr('title', 'Verifique os dados antes de continuar');
+
+                    advancedAlerts.error({
+                        title: "E-mail já cadastrado",
+                        text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
+                        time: 10000
+                    });
+                    
+                    $('.loading-container').addClass('hide');
+                    
+                    emailInput.val('');
+
+                    return;
+                } else {
+                    emailValidado = true;
+                }
+
+                $('.loading-container').addClass('hide');
+
+                $btnSubmit
+                    .removeClass('to-validade');
+                
+                
+                //   $btnSubmit.click();
+            },
+            error: function (e) {}
+        });
+    }
+
+    emailInput.on('blur', function (e) {
       e.preventDefault();
       e.stopPropagation();
 
-      $('.loading-container').removeClass('hide');
-
-      var email = emailInput.val() || '';
-      $.ajax({
-          type: "GET",
-          url: "/carro/email-disponivel/"+email,
-          dataType: "json",
-          success: function (response) {
-              emailInput
-                  .removeClass('is-invalid is-valid')
-                  .addClass(response.emailDisponivel ? 'is-valid' : 'is-invalid');
-              if (!response.emailDisponivel) {
-
-                  $btnSubmit
-                      .attr('title', 'Verifique os dados antes de continuar');
-
-                  advancedAlerts.error({
-                      title: "E-mail já cadastrado",
-                      text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
-                      time: 10000
-                  });
-                  $('.loading-container').addClass('hide');
-                  return;
-              }
-
-              $('.loading-container').addClass('hide');
-
-              $btnSubmit
-                  .removeClass('to-validade');
-
-              $btnSubmit.click();
-          },
-          error: function (e) {}
-      });
+      validarEmail(emailInput);
     });
+
+    emailSecundarioInput.on('blur', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+          
+        validarEmail(emailSecundarioInput);
+      });
+   
+
+
+    // $ctxForm.on('click','button.to-validade',function (e) {
+    //   e.preventDefault();
+    //   e.stopPropagation();
+
+    //   $('.loading-container').removeClass('hide');
+
+    //   var email = emailInput.val() || '';
+    //   $.ajax({
+    //       type: "GET",
+    //       url: "/carro/email-disponivel/"+email,
+    //       dataType: "json",
+    //       success: function (response) {
+    //           emailInput
+    //               .removeClass('is-invalid is-valid')
+    //               .addClass(response.emailDisponivel ? 'is-valid' : 'is-invalid');
+    //           if (!response.emailDisponivel) {
+
+    //               $btnSubmit
+    //                   .attr('title', 'Verifique os dados antes de continuar');
+
+    //               advancedAlerts.error({
+    //                   title: "E-mail já cadastrado",
+    //                   text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
+    //                   time: 10000
+    //               });
+    //               $('.loading-container').addClass('hide');
+    //               return;
+    //           }
+
+    //           $('.loading-container').addClass('hide');
+
+    //           $btnSubmit
+    //               .removeClass('to-validade');
+
+    //           $btnSubmit.click();
+    //       },
+    //       error: function (e) {}
+    //   });
+    // });
 
     $ctxForm.on('click','button.to-validade-cpf',function (e) {
       e.preventDefault();
