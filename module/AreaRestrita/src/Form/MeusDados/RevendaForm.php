@@ -239,7 +239,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'readonly' => true,
+                // 'readonly' => true,
                 'class' => 'form-control'
             ],
         ]);
