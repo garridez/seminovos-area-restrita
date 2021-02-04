@@ -19,6 +19,14 @@ module.exports.callback = ($) => {
       $btnSubmit.addClass('to-validade');
     });
 
+    var cpfInput = $ctxForm.find("input[name='cpfResponsavel']");
+    var cpfOriginal = cpfInput.val() || '';
+    $ctxForm.find("input[name='cpfResponsavel']").on('change',function(e){
+      if(cpfInput.val() != cpfOriginal){
+        $btnSubmit.addClass('to-validade-cpf');
+      }
+    });
+
     var validarEmail = function(emailInput){
         email = emailInput.val();
 
