@@ -15,13 +15,6 @@ module.exports.callback = ($) => {
       $btnSubmit.addClass('to-validade');
     });
 
-    var cpfInput = $ctxForm.find("input[name='cpfResponsavel']");
-    var cpfOriginal = cpfInput.val() || '';
-    $ctxForm.find("input[name='cpfResponsavel']").on('change',function(e){
-      if(cpfInput.val() != cpfOriginal){
-        $btnSubmit.addClass('to-validade-cpf');
-      }
-    });
 
     $ctxForm.on('click','button.to-validade',function (e) {
       e.preventDefault();
