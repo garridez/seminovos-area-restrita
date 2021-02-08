@@ -15,6 +15,8 @@ phases:
     runtime-versions:
         docker: 18
     commands:
+      - apt install curl -y
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
       - apt update -y && apt install git -y
       - git checkout master
       - PROJECT_TAG=$(git describe)

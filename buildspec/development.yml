@@ -13,6 +13,8 @@ env:
 phases:
   install:
     commands:
+      - apt install curl -y
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
       - apt update -y && apt install git -y
       - git checkout develop
       - PROJECT_TAG=$(git describe)
