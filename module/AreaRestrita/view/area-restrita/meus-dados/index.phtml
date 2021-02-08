@@ -18,10 +18,12 @@ if($currentIdCadastro && $currentIdCadastro == 290948){
     }
 }
 $inputCpf = false;
-if(isset($fields['cpfResponsavel']) && !$fields['cpfResponsavel']->getValue()){
-   $fields['cpfResponsavel']->setAttribute("readonly",false);
-   $inputCpf = true;
-}
+if($tipoCadastro == 2){
+    if(isset($fields['cpfResponsavel']) && !$fields['cpfResponsavel']->getValue()){
+       $fields['cpfResponsavel']->setAttribute("readonly",false);
+       $inputCpf = true;
+    }
+}    
 ?>
 
 <div class=" container-fluid   container-fixed-lg">
