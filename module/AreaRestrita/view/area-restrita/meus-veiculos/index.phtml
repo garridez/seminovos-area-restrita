@@ -231,7 +231,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 </div>
                                             </a>
                                         </div>
-                                        <?php if($veiculo['flagCertificado'] == 1): ?>
+                                        <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
                                                 <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
