@@ -2,6 +2,10 @@ FROM snbh-server-base:7.2-node
 
 RUN docker-php-ext-enable redis
 
+ENV NR_INSTALL_SILENT=1
+ENV NR_INSTALL_KEY=e9479f1a8574667a610b4cb062a9135144628e4f
+ENV NEW_RELIC_APP_NAME="area_restrita"
+
 COPY . .
 
 RUN apt-get install -y zlib1g-dev libicu-dev g++ \
