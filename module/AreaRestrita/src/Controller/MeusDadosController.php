@@ -42,6 +42,8 @@ class MeusDadosController extends AbstractActionController
 
     public function indexAction()
     {
+        error_reporting(E_ALL);
+ini_set('display_errors', 1);
         $requestResponse = false;
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -49,6 +51,8 @@ class MeusDadosController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
         $tipoCadastro = $cadastrosModel->isRevenda() ? 1 : 2;
+
+        $ctrlCpf = !$dadosCadastro['cpfResponsavel'] ? true : false;
 
         if ($cadastrosModel->isRevenda()) {
             $dadosForm = new MeusDados\RevendaForm();
@@ -96,6 +100,7 @@ class MeusDadosController extends AbstractActionController
 
         return new ViewModel([
             'tipoCadastro' => $tipoCadastro,
+            'ctrlCpf' => $ctrlCpf,
             'formCadastro' => $dadosForm,
             'idCidade' => $dadosCadastro['idCidade'],
             'requestResponse' => $requestResponse

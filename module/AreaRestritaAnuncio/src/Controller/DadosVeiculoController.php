@@ -148,6 +148,7 @@ class DadosVeiculoController extends AbstractActionController
                     }
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
+                //echo $res->getBody();
             }
             // Limpa o cache do middleware
             $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
