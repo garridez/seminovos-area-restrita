@@ -19,9 +19,6 @@ require '../vendor/autoload.php';
 
 $appConfig = require 'config/application.config.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 if (file_exists('config/development.config.php')) {
     $appConfig = ArrayUtils::merge($appConfig, require 'config/development.config.php');
 }
