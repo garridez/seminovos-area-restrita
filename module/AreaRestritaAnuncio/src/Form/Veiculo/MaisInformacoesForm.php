@@ -13,16 +13,6 @@ class MaisInformacoesForm extends Form
         parent::__construct($name, $options);
 
         $this->add([
-            'type' => Element\Textarea::class,
-            'name' => 'observacoes',
-            'options' => [
-                'label' => 'Observações sobre o veículo',
-            ],
-            'attributes' => [
-                'maxlength' => 700
-            ]
-        ]);
-        $this->add([
             'type' => Element\Radio::class,
             'name' => 'idTroca',
             'options' => [
@@ -85,6 +75,7 @@ class MaisInformacoesForm extends Form
                 'value' => 'yes',
             ],
         ]);
+
         // $this->add([
         //     'type' => Element\Checkbox::class,
         //     'name' => 'aceitaLigacao',
