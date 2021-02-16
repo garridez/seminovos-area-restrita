@@ -13,6 +13,44 @@ class PrecoForm extends Form
         parent::__construct($name, $options);
 
         $this->add([
+            'type' => Element\Textarea::class,
+            'name' => 'observacoes',
+            'options' => [
+                'label' => 'Observações sobre o veículo',
+            ],
+            'attributes' => [
+                'maxlength' => 700
+            ]
+        ]);
+
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'kilometragem',
+            'options' => [
+                'label' => 'Kilometragem',
+            ],
+            'attributes' => [
+                'required' => false,
+                'data-mask' => '000.000.000.000.000',
+                'data-mask-options' => json_encode([
+                    'reverse' => true
+                ]),
+                'placeholder' => '52.000',
+            ]
+        ]);
+
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flag_km',
+            'options' => [
+                'label' => 'Não exibir Km?',
+            ],
+            'attributes' => [
+                'value' => 'no',
+            ],
+        ]);
+
+        $this->add([
             'type' => Element\Text::class,
             'name' => 'valor',
             'options' => [
@@ -48,26 +86,7 @@ class PrecoForm extends Form
                 'unchecked_value' => 0,
             ],
         ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'flagIpva',
-            'options' => [
-                'label' => 'IPVA 2021 quitado?',
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'flagLeilao',
-            'options' => [
-                'label' => 'Carro proveniente de leilão?',
-                'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
-            ],
-        ]);
+
         $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',
@@ -97,8 +116,8 @@ class PrecoForm extends Form
     }
 
     public function setIsEdition(){
-        $this->get('flagLeilao')
-            ->setAttribute('readonly', true)
-            ->setAttribute('disabled', true);
+        // $this->get('flagLeilao')
+        //     ->setAttribute('readonly', true)
+        //     ->setAttribute('disabled', true);
     }
 }

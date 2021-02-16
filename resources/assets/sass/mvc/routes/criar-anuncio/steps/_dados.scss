@@ -3,7 +3,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-bottom: 10px;
+        margin-bottom: 25px;
         .titulo{
             font-size: 1.3rem;
             font-weight: 400;
@@ -24,10 +24,19 @@
         padding-bottom: 1rem;
         .placa {
             &::after{
-                right: 50% !important;
+                left: 25% !important;
+            }
+            .field{
+                @include media-breakpoint-down(sm){
+                    width: 68%;
+                    b{
+                        width: 50%;
+                    }
+                }
+                width: 70%;
             }
             input{
-                width: 50% !important;
+                width: 25% !important;
             }
         }
         .checkbox{
@@ -40,6 +49,20 @@
             }
             @include media-breakpoint-down(sm){
                 width: 40%;
+            }
+        }
+
+        [class^="conjunto-"],[class*=" conjunto-"]{
+            .form-group{
+                width: 48%;
+            }
+        }
+
+        .conjunto-leilao{
+            @include media-breakpoint-down(sm){
+                b{
+                    width: 70%;
+                }
             }
         }
         .form-group{
@@ -57,10 +80,20 @@
             .is-valid input,select{
                 border: 1px solid $verde;
             }
-           
             &.required:after{
                 right: 0px;
                 top: 5px;
+            }
+
+
+            select{
+                appearance: menulist !important;
+                
+                // background-image: url(/img/svg/icons/arrow-down.svg);
+                // background-repeat: no-repeat;
+                // background-size: 7px;
+                // background-position: top 50% right .8rem;
+                // padding-right: 1rem;
             }
             label{
                 margin: 0;
@@ -92,18 +125,5 @@
                 }
             }
         }
-        .group-senha{
-            flex-wrap: nowrap;
-            input{
-                border-right: none !important;
-            }
-            .input-group-text{
-                height: 2.2rem;
-                background-color: white;
-                border-left: none;
-                font-size: 0.9rem;
-            }
-        }
-
     }
 }
