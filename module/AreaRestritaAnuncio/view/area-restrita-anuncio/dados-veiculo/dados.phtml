@@ -69,6 +69,12 @@ $versao = $form->get('versao')->getValue();
                 <?= $this->formLabel($fields['versao']) ?>
                 <div><?= $this->formElement($fields['versao']) ?></div>
             </div>
+            <div id="divOutraVersao" class="form-group form-group-default hide required">
+                <label for="outraVersao">Outra Versão? Qual?</label>
+                <div>
+                    <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off" maxlength="50">
+                </div>
+            </div>
 
             <div class="d-flex justify-content-between conjunto-motor">
                 <div class="form-group form-group-default required">
@@ -85,7 +91,7 @@ $versao = $form->get('versao')->getValue();
                 <label for="cambio">Câmbio</label>
 
                 <div>
-                    <select name="checkboxacessorios[]" required="required" disabled="disabled" class="form-control">
+                    <select name="checkboxacessorios[]" required="required" class="form-control">
                         <option value="">Selecione</option>
                         <option value="11" <?= $cambio === 11 ? 'selected="selected"' : '' ?>>Automático</option>
                         <option value="78" <?= $cambio === 78 ? 'selected="selected"' : '' ?>>Automatizado</option>
