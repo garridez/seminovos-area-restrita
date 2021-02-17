@@ -41,6 +41,9 @@
             <div class="form-group form-group-default">
                 <b>Certo, agora fale sobre os diferenciais do seu carro, ou as observações que desejar. Não é obrigatório, ok?</b>
                 <div class="mt-2"><?= $this->formTextarea($fields['observacoes']) ?></div>
+                <div class="wordcount float-right mb-3 justify-content-end">
+                    (<span class="count"><?= strlen($fields['observacoes']->getValue())?></span>/700)
+                </div>
             </div>
 
             <div class="form-group form-group-default required mt-2">

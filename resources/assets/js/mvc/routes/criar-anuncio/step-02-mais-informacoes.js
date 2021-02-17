@@ -13,7 +13,7 @@ module.exports.callback = ($) => {
 };
 
 function init() {
-    var ctx = $('.step-mais-informacoes');
+    var ctx = $('.step-preco');
     var observacoesTextarea = ctx.find('textarea[name="observacoes"]');
     var countSpan = ctx.find('.wordcount span.count');
     observacoesTextarea.keyup(function () {
