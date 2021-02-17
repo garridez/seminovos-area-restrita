@@ -35,9 +35,6 @@
                 }
                 width: 70%;
             }
-            input{
-                width: 25% !important;
-            }
         }
         .checkbox{
             width: 30%;
@@ -57,7 +54,6 @@
                 width: 48%;
             }
         }
-
         .conjunto-leilao{
             @include media-breakpoint-down(sm){
                 b{
