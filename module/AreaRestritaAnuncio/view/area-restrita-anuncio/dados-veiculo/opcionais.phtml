@@ -40,18 +40,18 @@ if($tipoVeiculo === 1){
         <h5 class="text-center">
             Quais são os opcionais do seu veículo?
         </h5>
-        <div class="form-group form-group-default" id="dadosAcessorios">
-            <div class="d-flex justify-content-between">
-                <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
-                    <?php if ($tipoVeiculo == 1) : ?>
-                        <div class="checkbox m-0 p-0 m-b-0">
-                            <input type="checkbox" id="completoCheckbox">
-                            <label for="completoCheckbox">Completo</label>
-                        </div>
-                    <?php endif; ?>
+        <div class="form-group form-group-default pt-3" id="dadosAcessorios">
+            <?php if ($tipoVeiculo == 1) : ?>
+                <div class="d-flex justify-content-between">
+                    <div id="btnCompleto" title="Marcar todos os acessórios de um carro completo.">
+                            <div class="checkbox m-0 p-0 m-b-0">
+                                <input type="checkbox" id="completoCheckbox">
+                                <label for="completoCheckbox">Completo</label>
+                            </div>
+                    </div>
                 </div>
-            </div>
-            <div class="opcionais">
+            <?php endif; ?>
+            <div class="opcionais pb-2">
                 <?php if ($tipoVeiculo == 1) : ?>           
                     <div class="airbags">
                         <select name="checkboxacessorios[]" class="<?= $temAirBag != -1 ? 'selected' : '' ?>">
@@ -82,8 +82,8 @@ if($tipoVeiculo === 1){
 
             <div class="border-top my-2 border-3x"></div>
 
-            <div class="destaques">
-                <div class="text-center mb-2"><b>Algum item que você quer destacar?</b></div>
+            <div class="destaques pt-1 pb-3">
+                <div class="text-center"><b>Algum item que você quer destacar?</b></div>
 
                 <div class="opcionais">
                     <?php

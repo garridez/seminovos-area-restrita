@@ -28,8 +28,8 @@
                             <b class="mr-2">KM</b>
                             <?= $this->formText($fields['kilometragem']) ?>
                         </div>
-                        <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end w-50 flex-wrap">
-                            <b class="mr-0 mr-md-2">Exibir KM</b>
+                        <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-km">
+                            <b class="mr-1 mr-md-2">Exibir KM</b>
                             <label class="switch switch-danger switch-inverse-danger mb-0">
                                 <?= $this->formElement($fields['flag_km']->setLabel('')) ?>
                                 <span class="slider round"></span>
@@ -39,15 +39,15 @@
                 </div>
             </div>
             
-            <div class="form-group form-group-default">
+            <div class="form-group form-group-default mb-0">
                 <b>Certo, agora fale sobre os diferenciais do seu carro, ou as observações que desejar. Não é obrigatório, ok?</b>
                 <div class="mt-2"><?= $this->formTextarea($fields['observacoes']) ?></div>
-                <div class="wordcount float-right mb-3 justify-content-end">
+                <div class="wordcount float-right justify-content-end">
                     (<span class="count"><?= strlen($fields['observacoes']->getValue())?></span>/700)
                 </div>
             </div>
 
-            <div class="form-group form-group-default required mt-2">
+            <div class="form-group form-group-default required">
                 <b>Por quanto deseja vender o seu carro?</b>
                 <div class="mt-1 d-flex align-items-center">
                     <b class="mr-2 text-verde">R$</b>
