@@ -5,24 +5,37 @@
 
 /* @var $this \AreaRestritaAnuncio\Form\Veiculo\PrecoForm */
     $form = $this->formPrecoVeiculo;
-    //var_dump($form->getElements());
     $fields = $form->getElements();
 
     $fields['observacoes']->setAttributes(
         array('class' => 'form-control', 'style' => 'height:100px;',
             'placeholder' => 'Utilize este espaço para informar mais detalhes do veículo, seu histórico ou itens que não foram contemplados nas etapas anteriores.'
     ));
+
+    switch ($tipoVeiculo) {
+        case 2:
+            $veiculo = 'o seu caminhão';
+            break;
+
+        case 3:
+            $veiculo = 'a sua moto';
+            break;
+        
+        default:
+            $veiculo = 'o seu carro';
+            break;
+    }
 ?>
 <div class="container">
     <h4 class="text-center">
-        Sobre o seu carro agora, conta pra gente
+        Sobre <?= $veiculo ?> agora, conta pra gente
     </h4>
     <div class="conteudo">
         <form method="POST" name="form_precoVeiculo" class="needs-validation forms" role="form" id="form_precoVeiculo">
 
             <div class="d-flex justify-content-between">
                 <div class="conjunto-km form-group form-group-default required">
-                    <div class="mb-1"><b>Quanto o seu carro já rodou?</b></div>
+                    <div class="mb-1"><b>Quanto <?= $veiculo ?> já rodou?</b></div>
                     <div class="d-flex align-items-center">
                         <div class="form-group mb-0 d-flex align-items-center">
                             <b class="mr-2">KM</b>
@@ -48,7 +61,7 @@
             </div>
 
             <div class="form-group form-group-default required">
-                <b>Por quanto deseja vender o seu carro?</b>
+                <b>Por quanto deseja vender <?= $veiculo ?>?</b>
                 <div class="mt-1 d-flex align-items-center">
                     <b class="mr-2 text-verde">R$</b>
                     <?= $this->formText($fields['valor']) ?>

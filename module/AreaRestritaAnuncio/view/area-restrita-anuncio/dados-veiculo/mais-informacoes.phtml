@@ -80,12 +80,12 @@ $fields['aceitaLigacao']->setValueOptions($replace);
                     </div>
                 <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
-                <div class="checkbox form-group form-group-default">
+                <div class="checkbox checkbox-success form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
                 <?php endif; ?>
 
-                <div class="checkbox form-group form-group-default required">
+                <div class="checkbox checkbox-success form-group form-group-default required">
                     <?= $this->formCheckbox($fields['termo'])?>
                     <div class="ml-4">
                         <small class="font-theme text-uppercase smallest">

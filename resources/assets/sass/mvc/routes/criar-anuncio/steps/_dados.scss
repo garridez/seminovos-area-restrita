@@ -25,6 +25,7 @@
         .placa {
             &::after{
                 left: 25% !important;
+                width: 5px;
             }
             .field{
                 @include media-breakpoint-down(sm){
