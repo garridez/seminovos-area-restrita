@@ -201,6 +201,16 @@ class DadosVeiculoController extends AbstractActionController
 
     public function precoAction()
     {
+        $tipos = [
+            'carro' => 1,
+            'caminhao' => 2,
+            'moto' => 3
+        ];
+        $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
+        if ($tipoVeiculo === 0) {
+            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+        }
+
         $precoForm = new Veiculo\PrecoForm();
         $data = $this->getVeiculo(5);
         $precoForm->populateValues($data);
@@ -212,7 +222,8 @@ class DadosVeiculoController extends AbstractActionController
         }
 
         return new ViewModel([
-            'formPrecoVeiculo' => $precoForm
+            'formPrecoVeiculo' => $precoForm,
+            'tipoVeiculo' => $tipoVeiculo
         ]);
     }
 
