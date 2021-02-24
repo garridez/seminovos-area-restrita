@@ -38,7 +38,7 @@ class XmlController extends AbstractActionController
         $planos = [
             'nitro' => $dadosCadastro['nitro'],
             'turbo' => $dadosCadastro['turbo'],
-            'simples' => $dadosCadastro['simples'],
+            'basico' => $dadosCadastro['simples'],
         ];
 
         return new ViewModel([
