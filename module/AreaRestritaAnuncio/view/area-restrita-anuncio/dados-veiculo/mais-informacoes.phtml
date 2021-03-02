@@ -6,11 +6,6 @@
 $form = $this->formMaisInformacoesVeiculo;
 $fields = $form->getElements();
 
-$fields['observacoes']->setAttributes(
-    array('class' => 'form-control', 'style' => 'height:100px;',
-        'placeholder' => 'Utilize este espaço para informar mais detalhes do veículo, seu histórico ou itens que não foram contemplados nas etapas anteriores.'
-));
-
 if ($this->checkedTermo) {
     $fields['termo']->setChecked(true);
 }
@@ -44,16 +39,6 @@ $fields['aceitaLigacao']->setValueOptions($replace);
                 </small>
             </div>
             <form method="POST" name="form_maisInformacoesVeiculo" class="form-group" role="form" id="form_maisInformacoesVeiculo">
-                <div class="row text-center">
-                    <div class="form-group form-group-default input-shadow">
-                        <span>
-                            <?= $this->formLabel($fields['observacoes']) ?>
-                        </span>
-                        <?= $this->formTextarea($fields['observacoes']) ?>
-                    </div>
-                </div>
-                <div class="wordcount float-right mb-3">(<span class="count"><?= strlen($fields['observacoes']->getValue())?></span>/700)</div>
-
                 <div class="form-group form-group-default form-troca">
                     <?= $this->formLabel($fields['idTroca']) ?>
                     <?= $this->formRadio($fields['idTroca']) ?>
@@ -95,12 +80,12 @@ $fields['aceitaLigacao']->setValueOptions($replace);
                     </div>
                 <?php endif; ?>
                 <?php if($this->userInfo('tipoCadastro') != 1): ?>
-                <div class="checkbox form-group form-group-default">
+                <div class="checkbox checkbox-success form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
                 <?php endif; ?>
 
-                <div class="checkbox form-group form-group-default required">
+                <div class="checkbox checkbox-success form-group form-group-default required">
                     <?= $this->formCheckbox($fields['termo'])?>
                     <div class="ml-4">
                         <small class="font-theme text-uppercase smallest">

@@ -13,6 +13,9 @@
 .step-opcionais{
     @import "_opcionais";
 }
+.step-dados{
+    @import "_dados";
+}
 label{
     line-break: auto;
     white-space: normal;
@@ -32,6 +35,9 @@ label{
             width: 50%;
         }
     }
+}
+h4, h5{
+    font-weight: bold;
 }
 .checkbox.form-group.form-group-default{
     padding-left: 1rem;

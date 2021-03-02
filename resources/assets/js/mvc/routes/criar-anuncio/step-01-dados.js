@@ -300,10 +300,14 @@ function init() {
         if ($(this).is(':checked')) {
             placa.removeAttr('required');
             placa.closest('.form-group').removeClass('required');
+            placa.closest('.placa-container').removeClass('is-invalid').addClass('is-valid')
+            placa.val('');
         }else{
             if(!motoTrilha.is(':checked')){
                 placa.attr('required', true);
                 placa.closest('.form-group').addClass('required');
+                placa.closest('.placa-container').removeClass('is-invalid is-valid');
+                placa.val('');
             }
         }
     });

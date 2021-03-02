@@ -43,18 +43,18 @@ class DadosForm extends Form
                 'minlength' => 7,
             ]
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'veiculo_zero_km',
             'options' => [
-                'label' => 'Seu Veiculo é Zero km?',
+                'label' => 'Zero km?',
             ],
             'attributes' => [
                 'value' => 'yes',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'motoTrilha',
@@ -65,15 +65,15 @@ class DadosForm extends Form
                 'value' => 'yes',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
-            'name' => 'flag_km',
+            'name' => 'flagLeilao',
             'options' => [
-                'label' => 'Não exibir Km?',
-            ],
-            'attributes' => [
-                'value' => 'no',
+                'label' => 'Carro proveniente de leilão?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
         ]);
 
@@ -188,21 +188,18 @@ class DadosForm extends Form
                 'required' => true,
             ]
         ]);
+
         $this->add([
-            'type' => Element\Text::class,
-            'name' => 'kilometragem',
+            'type' => Element\Checkbox::class,
+            'name' => 'flagIpva',
             'options' => [
-                'label' => 'Kilometragem',
+                'label' => 'IPVA 2021 quitado?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
-            'attributes' => [
-                'required' => false,
-                'data-mask' => '000.000.000.000.000',
-                'data-mask-options' => json_encode([
-                    'reverse' => true
-                ]),
-                'placeholder' => '52.000',
-            ]
         ]);
+
         global $container;
         /** @var CheckboxAcessorios $checkboxAcessorios */
         $checkboxAcessorios = $container->get(CheckboxAcessorios::class);
@@ -330,6 +327,7 @@ class DadosForm extends Form
             'portas',
             'combustivel',
             'motoCilindradas',
+            'flagLeilao',
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {

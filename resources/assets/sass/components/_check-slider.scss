@@ -1,0 +1,134 @@
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+    input{
+        display: none;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+}
+
+.slider {
+    position: absolute !important;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+
+    &:before {
+        position: absolute;
+        content: "";
+        height: 24px;
+        width: 24px;
+        left: 1px;
+        bottom: 1px;
+        background-color: white;
+        border: 2px solid #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    &:after {
+        position: absolute;
+        content: "não";
+        left: 26px;
+        bottom: 4px;
+        color: white;
+        font-weight: bold;
+        font-weight: bold;
+        font-size: 1rem;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+}
+
+input:checked{
+    & + .slider:before {
+        -webkit-transform: translateX(35px);
+        -ms-transform: translateX(35px);
+        transform: translateX(35px);
+    }
+    & + .slider:after {
+        -webkit-transform: translateX(-19px);
+        -ms-transform: translateX(-19px);
+        transform: translateX(-19px);
+        content: "sim";
+    }
+}
+
+.switch{
+    input:focus + .slider {
+        box-shadow: 0 0 1px $laranja !important;
+    }
+    input:checked{
+        & + .slider{
+            background-color: $laranja !important;
+        }
+        & + .slider:before {
+            border-color: $laranja;
+        }
+    }
+}
+
+
+$theme-colors: map-merge(
+  (
+    "success": $verde,
+    "warning" : $color-warning,
+    "danger" : $vermelho
+  ),
+  $theme-colors
+);
+
+@each $theme, $color in $theme-colors {
+    .switch-#{$theme}{
+        input:focus + .slider {
+            box-shadow: 0 0 1px $color !important;
+        }
+        input:checked{
+            & + .slider{
+                background-color: $color !important;
+            }
+            & + .slider:before {
+                border-color: $color;
+            }
+        }
+    }
+
+    .switch-inverse-#{$theme}{
+        // input:focus + .slider {
+        //     box-shadow: 0 0 1px #ccc !important;
+        // }
+        input:checked{
+            & + .slider{
+                // background-color: #ccc !important;
+                &:after {
+                    content: "não";
+                }
+            }
+            // & + .slider:before {
+            //     border-color: #ccc;
+            // }
+        }
+        .slider {
+            // background-color: $color;
+            &:after {
+                content: "sim";
+            }
+            // &:before {
+            //     background-color: white;
+            //     border: 2px solid $color;
+            // }
+        }
+    }
+}
+

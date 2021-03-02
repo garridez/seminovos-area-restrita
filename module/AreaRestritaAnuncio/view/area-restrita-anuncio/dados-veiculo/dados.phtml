@@ -17,178 +17,150 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
 
 $versao = $form->get('versao')->getValue();
 ?>
-<div class="container container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-12">
-
-            <h4 class="text-center">
-                DADOS DO ANÚNCIO
-            </h4>
-            <div class="text-center my-3">
-                <small class="align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar
-                    seu anúncio.
-                    <br />Campos com * são de preenchimento obrigatório.
-                    <br />Em veículos 0Km não é necessário informar uma placa.
-                </small>
-            </div>
-
-            <!-- <? $this->form()->openTag($form); ?>
-
-            <form class="" role="form"> -->
-            <form method="POST" name="form_dadosVeiculo" class="form-group m-b-20 needs-validation" role="form" id="form_dadosVeiculo">
-                <?= $this->formElement($fields['tipoVeiculo']) ?>
-                <?php if (isset($fields['motoCilindradas'])): ?>
-                <div class="form-group form-group-default">
-                    <div class="checkbox">
-                        <?= $this->formCheckbox($fields['motoTrilha']) ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
+<div class="container">
+    <h4 class="text-center">
+        Vamos aos dados do seu anúncio?
+    </h4>
+    
+    <div class="conteudo">
+        <form method="POST" name="form_dadosVeiculo" class="needs-validation forms" role="form" id="form_dadosVeiculo">
+            <?= $this->formElement($fields['tipoVeiculo']) ?>
+            <div class="d-flex justify-content-between">
+                <div class="form-group form-group-default required placa">
+                    <div class="flex-wrap placa-container align-items-center">
+                        <div class="w-25">
                             <?= $this->formLabel($fields['placa']) ?>
                             <?= $this->formText($fields['placa']) ?>
-                            <div class="valid-feedback"></div>
-                            <div class="invalid-feedback">
-                                Esta placa já está cadastrada no nosso sistema.
+                        </div>
+
+                        <div class="field pl-1 pl-md-3 w-75">
+                            <?php if(isset($fields['motoTrilha'])): ?>
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <b class="mr-2">
+                                        Moto de trilha?
+                                    </b>
+                                    <label class="switch">
+                                        <?= $this->formElement($fields['motoTrilha']->setLabel('')) ?>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            <?php endif; ?>
+                            <div class="d-flex justify-content-end align-items-center">
+                                <b class="mr-2">
+                                    Veículo 0KM sem placa?
+                                </b>
+                                <label class="switch switch-success">
+                                    <?= $this->formElement($fields['veiculo_zero_km']->setLabel('')) ?>
+                                    <span class="slider round"></span>
+                                </label>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default">
-                            <div class="checkbox">
-                                <?= $this->formCheckbox($fields['veiculo_zero_km']) ?>
-                            </div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">
+                            Esta placa já está cadastrada no nosso sistema.
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['idMarca']) ?>
-                            <?= $this->formSelect($fields['idMarca']) ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required ">
-                            <?= $this->formLabel($fields['modeloCarro']) ?>
-                            <?= $this->formSelect($fields['modeloCarro']) ?>
-                        </div>
-                    </div>
+            </div>
+            <div class="form-group form-group-default required">
+                <?= $this->formLabel($fields['idMarca']) ?>
+                <div><?= $this->formSelect($fields['idMarca']) ?></div>
+            </div>
+            <div class="form-group form-group-default required">
+                <?= $this->formLabel($fields['modeloCarro']) ?>
+                <div><?= $this->formSelect($fields['modeloCarro']) ?></div>
+            </div>
+            <div class="d-flex justify-content-between conjunto-ano">
+                <div class="form-group form-group-default required">
+                    <?= $this->formLabel($fields['anoFabricacao']) ?>
+                    <div><?= $this->formSelect($fields['anoFabricacao']) ?></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['anoFabricacao']) ?>
-                            <?= $this->formSelect($fields['anoFabricacao']) ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['anoModelo']) ?>
-                            <?= $this->formSelect($fields['anoModelo']) ?>
-                        </div>
-                    </div>
+                <div class="form-group form-group-default required">
+                    <?= $this->formLabel($fields['anoModelo']) ?>
+                    <div><?= $this->formSelect($fields['anoModelo']) ?></div>
                 </div>
-                <div class="form-group form-group-default required ">
-                    <?= $this->formLabel($fields['versao']) ?>
-                    <?= $this->formElement($fields['versao']) ?>
-                </div>
-                <div id="divOutraVersao" class="form-group form-group-default hide required">
-                    <label for="outraVersao">Versão</label>
+            </div>
+            <div class="form-group form-group-default required ">
+                <?= $this->formLabel($fields['versao']) ?>
+                <div><?= $this->formElement($fields['versao']) ?></div>
+            </div>
+            <div id="divOutraVersao" class="form-group form-group-default hide required">
+                <label for="outraVersao">Outra Versão? Qual?</label>
+                <div>
                     <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off" maxlength="50">
                 </div>
-                <div class="row">
-                    <?php if (isset($fields['motor'])): ?>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default required">
-                                <?= $this->formLabel($fields['motor']) ?>
-                                <?= $this->formSelect($fields['motor']) ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($fields['idValvula'])): ?>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default">
-                                <?= $this->formLabel($fields['idValvula']) ?>
-                                <?= $this->formSelect($fields['idValvula']) ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
-                <div class="row">
-                    <?php if (isset($fields['portas'])): ?>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-default required">
-                                <?= $this->formLabel($fields['portas']) ?>
-                                <?= $this->formSelect($fields['portas']) ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($fields['motoCilindradas'])): ?>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['motoCilindradas']) ?>
-                            <?= $this->formText($fields['motoCilindradas']) ?>
-                        </div>
+            </div>
+
+            <?php if(isset($fields['motor']) && isset($fields['idValvula'])): ?>
+                <div class="d-flex justify-content-between conjunto-motor">
+                    
+                    <div class="form-group form-group-default required">
+                        <?= $this->formLabel($fields['motor']) ?>
+                        <div><?= $this->formSelect($fields['motor']) ?></div>
                     </div>
-                    <?php endif;?>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default">
-                            <?= $this->formLabel($fields['cor']) ?>
-                            <?= $this->formSelect($fields['cor']) ?>
-                        </div>
+                    <div class="form-group form-group-default">
+                        <?= $this->formLabel($fields['idValvula']) ?>
+                        <div><?= $this->formSelect($fields['idValvula']) ?></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default required">
-                            <?= $this->formLabel($fields['combustivel']) ?>
-                            <?= $this->formSelect($fields['combustivel']) ?>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3">
-                        <div class="form-group form-group-default">
-                            <?= $this->formLabel($fields['kilometragem']) ?>
-                            <?= $this->formText($fields['kilometragem']) ?>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3">
-                        <div class="form-group form-group-default">
-                            <div class="checkbox">
-                                <?= $this->formCheckbox($fields['flag_km']) ?>
-                            </div>
-                        </div>
+            <?php endif; ?>
+
+
+            <?php if($tipoVeiculo === 1) : ?>
+                <div class="form-group form-group-default required">
+                    <label for="cambio">Câmbio</label>
+
+                    <div>
+                        <select name="checkboxacessorios[]" required="required" class="form-control">
+                            <option value="">Selecione</option>
+                            <option value="11" <?= $cambio === 11 ? 'selected="selected"' : '' ?>>Automático</option>
+                            <option value="78" <?= $cambio === 78 ? 'selected="selected"' : '' ?>>Automatizado</option>
+                            <option value="60" <?= $cambio === 60 ? 'selected="selected"' : '' ?>>Manual</option>
+                        </select>
                     </div>
                 </div>
-                <?php if ($tipoVeiculo === \SnBH\ApiModel\Model\VeiculoTipo::TIPO_CARRO) : ?>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group form-group-default form-troca required">
-                            <label for="checkboxacessorioss mb-2">Câmbio</label>
-                            <div class="mt-2 mb-0 d-block d-md-flex align-items-center">
-                                <div class="d-flex mr-5 align-items-center radio radio-success mt-0 mb-0">
-                                    <input type="radio" name="checkboxacessorios[]" required="required" class="form-control" value="11" <?= $cambio === 11 ? 'checked' : '' ?> id="Automatico_0f7b">
-                                    <label for="Automatico_0f7b">Automático</label>
-                                </div>
-                                <div class="d-flex mr-5 align-items-center radio radio-success mt-0 mb-0">
-                                    <input type="radio" name="checkboxacessorios[]" required="required" class="form-control" value="78" <?= $cambio === 78 ? 'checked' : '' ?> id="Automatizado_25cc">
-                                    <label for="Automatizado_25cc">Automatizado</label>
-                                </div>
-                                <div class="d-flex mr-5 align-items-center radio radio-success mt-0 mb-0">
-                                    <input type="radio" name="checkboxacessorios[]" required="required" class="form-control" value="60" <?= $cambio === 60 ? 'checked' : '' ?> id="Manual_e1ba">
-                                    <label for="Manual_e1ba">Manual</label>
-                                </div>
-                            </div>                        
-                        </div>
+            <?php endif ?>
+
+            <div class="d-flex justify-content-between conjunto-motor">
+                <?php if(isset($fields['motoCilindradas'])): ?>
+                    <div class="form-group form-group-default required ">
+                        <?= $this->formLabel($fields['motoCilindradas']) ?>
+                        <div><?= $this->formElement($fields['motoCilindradas']) ?></div>
                     </div>
-                </div>
                 <?php endif; ?>
-                <div class="form-group ">
-                    <?= $this->formSubmit($fields['submit']) ?>
+
+
+                <div class="form-group form-group-default">
+                    <?= $this->formLabel($fields['cor']) ?>
+                    <div><?= $this->formSelect($fields['cor']) ?></div>
                 </div>
-            </form>
-        </div>
+
+                <?php if(isset($fields['portas'])): ?>
+                    <div class="form-group form-group-default required">
+                        <?= $this->formLabel($fields['portas']) ?>
+                        <div><?= $this->formSelect($fields['portas']) ?></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="form-group form-group-default required">
+                <?= $this->formLabel($fields['combustivel']) ?>
+                <div><?= $this->formSelect($fields['combustivel']) ?></div>
+            </div>
+
+            <div class="d-flex justify-content-between w-100 conjunto-leilao">
+                <b class="mr-3">
+                    Este veículo é proveniente de leilão?
+                </b>
+                <label class="switch">
+                    <?= $this->formElement($fields['flagLeilao']->setLabel('')) ?>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="form-group ">
+                <?= $this->formSubmit($fields['submit']) ?>
+            </div>
+        </form>
     </div>
 </div>
