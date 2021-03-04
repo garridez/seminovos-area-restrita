@@ -21,8 +21,13 @@ module.exports.callback = $ => {
             .on("click", "a.vendido[data-confirm]", vendidoDataConfirm)
             // Configura os modais genericos
             .on("click", ".anuncios [data-modal]", anunciosModal)
-            .on("click", ".sidebar-menu .menu-items >li:first-of-type #cirarAnuncio a",function(e){
+            .on('click', '.sidebar-menu .menu-items .btn-novo-anuncio', function(e){
               e.preventDefault();
+              $('#modalTipoAnuncio').modal('show');
+            })
+            .on("click", "#modalTipoAnuncio .modal-body a",function(e){
+              e.preventDefault();
+
               var link = $(this).attr('href');
               var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
                   <b class='text-primary'>telefone </b> ou <b class='text-primary'>whatsapp </b>
@@ -38,8 +43,7 @@ module.exports.callback = $ => {
               }).on('hide.bs.modal', function () {
                   window.location = link;
               });
-            })
-            ;
+            });
 
     if (location.hash !== '' && window.URLSearchParams) {
         (function () {

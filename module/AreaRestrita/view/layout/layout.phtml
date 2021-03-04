@@ -142,6 +142,42 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
     </div>
     <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>
   </div>
+
+<div class="modal fade" id="modalTipoAnuncio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0">
+                <div class="w-100 text-center mb-2"><h5 class="m-0">O que deseja vender?</h5></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="d-flex justify-content-center">
+                    <a class="link-tipo" data-confirm href="/carro">
+                        <div>
+                            <i class="fa-2x icon icon-type-car-2"></i><br>
+                            Carro
+                        </div>
+                    </a>
+                    <a class="link-tipo" data-confirm href="/moto">
+                        <div>
+                            <i class="fa-2x icon icon-type-moto-2"></i><br>
+                            Moto
+                        </div>
+                    </a>
+                    <a class="link-tipo" data-confirm href="/caminhao">
+                        <div>
+                            <i class="fa-2x icon icon-type-truck-2"></i><br>
+                            Caminhão
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
   <?php /*<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
   <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>*/ ?>
 </body>
