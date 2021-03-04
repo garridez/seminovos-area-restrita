@@ -155,3 +155,60 @@
     }
   }
 }
+#modalTipoAnuncio{
+  .modal-dialog{
+    max-width: 400px !important;
+    @include media-breakpoint-down(sm) {
+      width: 96%;
+    }
+    .modal-content{
+      padding: 1rem 0px;
+    }
+  }
+  h5{
+    font-weight: 600;
+    letter-spacing: normal;
+  }
+  .modal-header button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    right: 15px;
+    top: 15px;
+    font-size: 1.2rem;
+  }
+  .modal-body{
+    .link-tipo{
+      width: 100px;
+      height: 100px;
+      @include media-breakpoint-down(sm) {
+        width: 85px;
+        height: 85px;
+      }
+
+      text-align: center;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: #505050;
+      background-color: #F4F4F4;
+
+      margin-right: 0.6rem;
+
+      &:last-of-type{
+        margin-right: 0;
+      }
+      &:hover{
+        color: #FFF;
+        background-color: $laranja;
+      }
+
+      i{ 
+        font-size: 2.5rem;
+        vertical-align: middle;
+      }
+    }
+  }
+}

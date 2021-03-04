@@ -76,7 +76,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
               if (!HandleApiError(data)) {
                   return;
               }
-              
+
               if(!data.cpfCadastro){
                   if(data.tipoCadastro == 2){
                     title = "CPF não encontrado";
@@ -96,7 +96,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 });
                     return;
               }
-              
+
               $('#modalRecuperarSenha').find('.sms,.token,.email').removeClass('d-flex').removeClass('d-none');
 
               $('[data-retorno-telefone]').text(data.telefone);
