@@ -2,10 +2,10 @@
 
 namespace AreaRestrita\Model;
 
+use SnBH\ApiModel\Model\AbstractModel;
 use SnBH\ApiModel\Model\Cadastros;
-use SnBH\ApiModel\Model\PlanosRevenda as ApiModelPagamentos;
 
-class Planos extends ApiModelPagamentos
+class Planos extends AbstractModel
 {
 
     use Traits\TraitCadastro;
@@ -39,5 +39,20 @@ class Planos extends ApiModelPagamentos
         return parent::get([
                 'tipoPlano' => $tipoPlano
                 ], null, $cache)->getData();
+    }
+
+    public function getPlanosUsados($cacheable = false)
+    {
+        $cadastro = $this->getCadastroData();
+
+        if (!$cadastro) {
+            return false;
+        }
+
+        return parent::get([
+                'tipoCadastro' => $cadastro['tipoCadastro'],
+                'idCadastro' => $cadastro['idCadastro'],
+                'version2' => 1,
+                ], 'anuncios', $cacheable)->getData();
     }
 }

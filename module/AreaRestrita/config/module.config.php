@@ -199,6 +199,8 @@ return [
             View\Helper\BodyClass::class => View\Helper\Factory\BodyClassFactory::class,
             View\Helper\QtdAnuncios::class => View\Helper\Factory\QtdAnunciosFactory::class,
             View\Helper\ExpiracaoRevenda::class => View\Helper\Factory\ExpiracaoRevendaFactory::class,
+            'planos' => View\Helper\Factory\PlanosFactory::class,
+            'planosUsados' => View\Helper\Factory\PlanosUsadosFactory::class,
             Form\View\Helper\FormCheckbox::class => InvokableFactory::class,
             Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class
         ],

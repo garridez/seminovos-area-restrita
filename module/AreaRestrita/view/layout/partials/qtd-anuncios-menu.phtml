@@ -1,10 +1,39 @@
 <?php
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+use \SnBH\Common\Helper\StringFuncs;
+
 if ($this->userInfo('tipoCadastro') == 1) {
     $arrayPlanos = [
         1 => ['nitro', 'Nitro', '12', 'alta', '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
         2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
         3 => ['basico', 'Básico', '06', 'baixa', '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
     ];
+
+    foreach ($arrayPlanos as $i => $plano):
+        list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano;
+
+        ?>
+        <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
+            <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+                <div class="icon-plano m-0">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                    <span class="bar-4"></span>
+                </div>
+            </div>
+            <div class="text-left ml-2">
+                <div>
+                    <b><?= $plano ?></b>
+                </div>
+                <div>
+                    <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    endforeach;
 } else if ($this->userInfo('tipoCadastro') == 2) {
     $arrayPlanos = [
         1 => ['nitro-home', 'Nitro Home', '12', 'máxima', '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
@@ -13,30 +42,44 @@ if ($this->userInfo('tipoCadastro') == 1) {
         4 => ['basico', 'Básico', '06', 'baixa', '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
         5 => ['simples', 'Simples', '03', 'mínima', '', 'Grátis', 'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
     ];
+
+    $planos = $this->planos();
+    usort($planos, function($a, $b) {
+        return $a['ordem'] < $b['ordem'];
+    });
+    $planosUsados = $this->planosUsados();
+
+
+
+    foreach ($planos as $i => $plano):
+        $slug = preg_replace('/[^a-zA-Z ]/', '', StringFuncs::removerAcentos($plano['nomePlano']));
+        $slug = preg_replace('/ +/', '-', $slug);
+        $usados = $planosUsados[$plano['idPlano']] ?? [
+            'publicado' => 0,
+            'total' => 0
+        ];
+
+        ?>
+        <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
+            <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+                <div class="icon-plano m-0">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                    <span class="bar-4"></span>
+                </div>
+            </div>
+            <div class="text-left ml-2">
+                <div>
+                    <b><?= $plano['nomePlano'] ?></b>
+                </div>
+                <div>
+                    <?php echo $usados['publicado'] . "/" . $usados['total'] ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    endforeach;
 }
 
-foreach ($arrayPlanos as $i => $plano):
-    list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano;
-
-    ?>
-    <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
-        <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
-            <div class="icon-plano m-0">
-                <span class="bar-1"></span>
-                <span class="bar-2"></span>
-                <span class="bar-3"></span>
-                <span class="bar-4"></span>
-                <span class="bar-4"></span>
-            </div>
-        </div>
-        <div class="text-left ml-2">
-            <div>
-                <b><?= $plano ?></b>
-            </div>
-            <div>
-                <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
-            </div>
-        </div>
-    </div>
-    <?php
-endforeach;
