@@ -7,22 +7,21 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
   <ul class="menu-items">
     <li class="mt-md-5 m-b-20">
       <div class="p-l-10 p-r-10">
-        <a class="btn-block btn btn-laranja text-capitalize" data-toggle="collapse" href="#cirarAnuncio" role="button"
-          aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn-block btn btn-laranja text-capitalize">
           <span class="text-black title">
             Novo Anúncio
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </span>
         </a>
-        <div class="collapse mt-2" id="cirarAnuncio">
+        <div class="mt-2">
           <div class="d-flex justify-content-around">
-            <a class="link-white" data-confirm href="/carro">
+            <a class="link-white" data-confirm href="/carro" title="Anunciar um carro">
               <i class="fa-2x icon icon-type-car-2"></i>
             </a>
-            <a class="link-white" data-confirm href="/moto">
+            <a class="link-white" data-confirm href="/moto" title="Anunciar uma moto">
               <i class="fa-2x icon icon-type-moto-2"></i>
             </a>
-            <a class="link-white" data-confirm href="/caminhao">
+            <a class="link-white" data-confirm href="/caminhao" title="Anunciar um caminhão">
               <i class="fa-2x icon icon-type-truck-2"></i>
             </a>
           </div>
