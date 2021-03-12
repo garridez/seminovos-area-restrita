@@ -61,15 +61,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
           ];
           echo $this->partial('partials/menu-revenda.phtml',$data);
       } else if ($this->userInfo('tipoCadastro') == 2) {
-          $arrayPlanos = [
-              1 => ['nitro-home', 'Nitro Home', '12',  'máxima',  '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
-              2 => ['nitro',      'Nitro',      '12',  'alta',    '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
-              3 => ['turbo',      'Turbo',      '09',  'média',   '', 'R$ 29,90', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
-              4 => ['basico',     'Básico',     '06',  'baixa',   '', 'R$ 14,90', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
-              5 => ['simples',    'Simples',    '03',  'mínima',  '', 'Grátis',   'simple-value', $this->qtdAnuncios()->totalGratuito, $this->qtdAnuncios()->totalGratuitoPublicado],
-          ];
-          echo $this->partial('partials/menu-particular.phtml',["arrayPlanos" => $arrayPlanos]);
-
+          echo $this->partial('partials/menu-particular.phtml');
       }
 
       ?>
@@ -83,7 +75,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
                 </span>
             </a>
             <div class="sidebar-header">
-                <a  href="<?= $url . '?' . substr(time(), 0, 4) ?>" title="Voltar para o site seminovos.com.br">
+                <a  href="/" title="Voltar para o site seminovos.com.br">
                     <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
                         <use xlink:href="/img/svg/logo.svg#layer_letters"></use>
                         <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>

@@ -13,7 +13,8 @@ if($diasParaExpirar > 7){
   $fraseExpiracao = "Expirará em <br/><b>".$dataExpiracaoRevenda."</b>";
   $bgExpiracao = "plano-expira-mes";
 }
-
+global $container;
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 ?>
 <div class="sidebar-menu mt-3">
   <!-- BEGIN SIDEBAR MENU ITEMS-->
@@ -126,6 +127,12 @@ if($diasParaExpirar > 7){
         ])
 
         ?>
+    </li>
+    <li>
+        <a href="<?= $url . '?' . substr(rand(), 0, 4) ?>" title="Ir para o site">
+            <span class="title">Ir para o site</span>
+        </a>
+      <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
     </li>
   </ul>
   <div class="clearfix"></div>

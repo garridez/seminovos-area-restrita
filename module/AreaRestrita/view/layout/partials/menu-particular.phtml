@@ -1,3 +1,7 @@
+<?php
+global $container;
+$url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
+?>
 <div class="sidebar-menu mt-md-5">
   <!-- BEGIN SIDEBAR MENU ITEMS-->
   <ul class="menu-items">
@@ -58,12 +62,13 @@
       <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
     </li>
     <li class="qtd-anuncios-menu">
-        <?=
-        $this->partial('partials/qtd-anuncios-menu.phtml', [
-            'arrayPlanos' => $arrayPlanos
-        ])
-
-        ?>
+        <?= $this->partial('partials/qtd-anuncios-menu.phtml') ?>
+    </li>
+    <li>
+      <a href="<?= $url . '?' . substr(rand(), 0, 4) ?>" title="Ir para o site">
+        <span class="title">Ir para o site</span>
+      </a>
+      <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
     </li>
   </ul>
   <div class="clearfix"></div>
