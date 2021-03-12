@@ -123,6 +123,10 @@ module.exports.callback = ($) => {
                                 }
                             });
 
+                            var motoCilindradas = $('input[name="motoCilindradas"');
+                            if (motoCilindradas.length && response.historicoCarro.dados_veiculo.cilindradas) {
+                                motoCilindradas.val(response.historicoCarro.dados_veiculo.cilindradas).trigger('input');
+                            }
 
                             //seta marca -- precisa ser verificado
                             $("select[name='idMarca'] option:not(:selected)").prop('disabled', false).removeClass("hide");

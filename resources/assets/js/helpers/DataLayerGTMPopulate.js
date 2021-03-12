@@ -6,6 +6,10 @@
 
 
 module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
+  var {isDev} = require('components/Env');
+  if (isDev) {
+      return;
+  }
   var $ctx = $(ctx);
   var defaultVal = {
     name : '',

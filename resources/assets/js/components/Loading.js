@@ -60,10 +60,10 @@ module.exports = {
         if (this._persistent) {
             return;
         }
+        this._showing = false;
         if (!this._instance) {
             return;
         }
-        this._showing = false;
         this._feedbackTexts = false;
         var modal = this._getModal().modal('hide');
         var self = this;

@@ -109,12 +109,15 @@ class DadosVeiculoController extends AbstractActionController
                     unset($data[$from]);
                 }
             }
+
+            if(isset($data['listaAcessorios'])){
+                $data['listaAcessorios'] = array_filter($data['listaAcessorios'], function($value){
+                    return $value !== '';
+                });
+            }
+
             // Se não for passado acessórios, envia "0" para apagar os existentes
             $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
-
-            $data['listaAcessorios'] = array_filter($data['listaAcessorios'], function($value){
-                return $value !== '';
-            });
 
             if ($idVeiculo) {
                 // Atualiza
@@ -296,14 +299,15 @@ class DadosVeiculoController extends AbstractActionController
                 foreach ($files as $file) {
                     unlink($file);
                 }
-
-                for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
-                    $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
+                if(isset($resUpload['data']['fotosInseridas'])) {
+                    for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
+                        $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
+                    }
                 }
 
             }
 
-            if ($dataPost->fotosToDelete) {
+            if ($dataPost->fotosToDelete && $auxReordem) {
                 ksort($auxReordem);
                 $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
