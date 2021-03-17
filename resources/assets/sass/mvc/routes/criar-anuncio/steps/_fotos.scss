@@ -1,24 +1,65 @@
 &{
+    h4{
+        text-transform: initial;
+        line-height: inherit;
+        font-weight: 600;
+        letter-spacing: initial;
+    }
+    .mult-imagens{
+        padding-right: 18px;
+
+        @include media-breakpoint-down(sm){
+            padding-right: 7px;
+        }
+        label{
+            background-color: white;
+            box-shadow: 0px 2px 3px #00000029;
+            padding: 0.5rem 0.7rem;
+            align-items: center;
+            cursor: pointer;
+        }
+        .icones{
+            position: relative;
+            font-size: 1.1rem;
+            i{
+                &:first-of-type{
+                    position: absolute;
+                    background-color: white;
+                    left: 3px;
+                }
+                margin-right: 0.5rem;
+            }
+        }
+    }
     .foto{
-        &:first-of-type
-        .img-thumbnail::before{
-            justify-content: center;
+        padding-right: 7px;
+        padding-left: 7px;
+        position: relative;
+
+        &:first-of-type::before{
+            position: absolute;
             opacity: 0.8;
-            content: "Foto Principal";
-            margin-left: -4px;
-            margin-top: 59%;
-            width: 106%;
+            top: -13px;
+            left: 7px;
+            display: flex;
             height: 20px;
+            width: calc(100% - 14px);
+
+            padding: 0 7px;
+
+            justify-content: center;
+
+            content: "Foto Principal";
             background-color: orange;
             color: #fff;
             font-weight: 700;
+
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 13px;
-            display: flex;
+            font-size: 12px;
         }
         transition: outline 400ms;
-        outline: #f0f0f0 dashed;
+        // outline: #f0f0f0 dashed;
         .display-img{
             $proportion: 3;
             width: #{58*$proportion}px;
@@ -30,11 +71,111 @@
         &.sortable-ghost{
             outline: #ccc dashed;
         }
+
         .foto-container{
+            box-shadow: 0px 2px 3px #00000029;
+            @include media-breakpoint-down(sm) {
+                background-color: white;
+                text-align: center;
+            }
             overflow: hidden;
+            .fundo{
+                width: 127px;
+                height: 116px;
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    border: none;
+                    width: 100%;
+                    height: auto;
+                }
+            }
         }
-        .btn-to-rotate{
-            display: none;
+        .btn-adicionar{
+            top: calc(50% - 25px);
+            left: calc(50% - 25px);
+            position: absolute;
+            width: 50px;
+            height: 50px;
+
+            font-weight: 700;
+            background-color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            box-shadow: 0px 2px 3px #00000029;
+
+            opacity: 0.5;
+            cursor: pointer;
+
+            &:hover{
+                opacity: 1;
+                a{
+                    font-size: 1.7rem;
+                    color: #333;
+                }
+            }
+
+            transition: all 600ms;
+            a{
+                transition: all 600ms;
+                font-size: 1.2rem;
+                color: #666;
+            }
         }
+        .controls{
+            position: absolute;
+            z-index: 2;
+            bottom: 12px;
+            left: 0;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+
+            &, .btn-move{
+                cursor: move;
+                cursor: -webkit-grab;
+                cursor: -moz-grab;
+                &:active {
+                    cursor: move;
+                    cursor: -webkit-grabbing;
+                    cursor: -moz-grabbing;
+                }
+            }
+            &.controls-sup{
+                top: 9px;
+                right: 0px;
+                justify-content: space-between;    
+                padding: 0 0.6rem;
+                @include media-breakpoint-down(sm){
+                    .btn-move{
+                        width: 35px;
+                        height: 35px;
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+            a{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                box-shadow: 0px 2px 3px #00000029;
+                border-radius: 25px;
+                background-color: white;
+                height: 25px;
+                width: 25px;
+                &:not(:last-of-type){
+                    margin-right: 0.8rem;
+                }
+            }
+        }
+        // .btn-to-rotate{
+        //     display: none;
+        // }
     }
 }

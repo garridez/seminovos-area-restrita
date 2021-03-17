@@ -40,6 +40,9 @@ module.exports.callback = $ => {
                   time: false,
                   img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
                   closeText: "ESTOU CIENTE",
+                  closeCallback: function(){
+                    $('#modalTipoAnuncio').modal('hide');
+                  }
               }).on('hide.bs.modal', function () {
                   window.location = link;
               });

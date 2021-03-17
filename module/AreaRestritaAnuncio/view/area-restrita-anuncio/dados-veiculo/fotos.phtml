@@ -11,14 +11,12 @@ unset($foto, $fotosNewKeys);
     <div class="row">
         <div class="col-lg-12">
             <h4 class="text-center">
-                FOTOS DO SEU VEÍCULO
+                Hora de mostrar o seu veículo, anúncios com fotos despertam mais interesse!
             </h4>
+            
+            <?php /*
             <div class="text-center my-3">
                 <small class="my-3 align-center">
-                    Agora está na hora de mostrar a sua joia! Se você já preparou o book do
-                    seu veículo, clique no box abaixo,
-                    <!--ou arraste para dentro dele, -->
-                    para enviar as fotos que deseja inserir no seu anúncio.
                 </small>
             </div>
             <div class="alert alert-warning d-flex align-items-center w-100" role="alert">
@@ -33,7 +31,7 @@ unset($foto, $fotosNewKeys);
                         </small>
                     </div>    
                 </div>
-            </div>
+            </div> */?>
 
             <form>
                 <?php
@@ -48,9 +46,13 @@ unset($foto, $fotosNewKeys);
                         </label>
                     </div> 
                     <div class="h1 text-center">ou</div> -->
-                    <div class="form-group-lg form-group form-text-center">
-                        <label class="form-control-lg btn btn-lg btn-laranja btn-block text-white" for="fotos">
-                            Clique aqui para escolher <b>várias fotos</b>:
+                    <div class="mult-imagens w-100 d-flex justify-content-end">
+                        <label class="d-flex m-0" for="fotos" title="Enviar multiplas fotos">
+                            <div class="icones">
+                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                            </div>
+                            Multiplas imagens
                             <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
                         </label>
                     </div>
@@ -74,30 +76,45 @@ unset($foto, $fotosNewKeys);
                                 <?php
                                 foreach (range(0, 3) as $i):
                                     $count++;
-                                    $foto = $fotos[$count] ?? $default;
+                                    $default['imagem'] = "/img/placeholder_criar_anuncio/carro_$count.png";
+                                    $foto = $fotos[$count] ?? $default;                            
                                     $foto_ = $foto['imagem'];
                                     ?>
                                     <div class="foto col-6 col-md-3 col-sm-6 py-2">
-                                        <div class="foto-container">
-                                            <div class="display-img img-thumbnail" style="background-image: url('<?= $foto_ ?>')"
-                                                 data-posicao-rotacao=0
-                                                 data-idfoto="<?= $foto['idFoto'] ?>"
-                                                 data-placeholder="https://placehold.it/262x196&text=Enviar%20Foto"
-                                                 data-original="<?= $foto['imagem'] ?>" title="Enviar Foto"></div>
-                                        </div>
 
-                                        <div class="text-justify">
-                                            <a href="#" class="btn-upload-img btn btn-small text-success px-2" title="Adicionar nova foto">
-                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                        <div class="controls controls-sup d-none">
+                                            <a href="#" class="btn-upload-img text-black" title="Adicionar nova foto">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
-                                            <a href="#" class="btn-remove-img btn btn-small text-danger px-2" title="Remover foto">
-                                                <i class=" fa fa-trash-o"></i>
-                                            </a>
-                                            <a href="#" class="btn-move btn btn-small text-danger px-2" title="Arraste para reordenar">
+
+                                            <a href="#" class="btn-move text-verde" title="Arraste para reordenar">
                                                 <i class="fa fa-arrows" aria-hidden="true"></i>
                                             </a>
-                                            <a href="#" class="btn-to-rotate btn btn-small text-warning px-2" title="Girar imagem">
-                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        </div>
+
+                                        <div class="foto-container">
+                                            <?/*<div class="fundo <?= $foto['idFoto'] ? 'd-none' :''?>"> 
+                                                <img class="display-img img-thumbnail" src="" alt="" srcset="">
+                                            </div>*/?>
+                                            <div class="display-img img-thumbnail" style="background-image: url('<?= $foto_ ?>')"
+                                                data-posicao-rotacao=0
+                                                data-idfoto="<?= $foto['idFoto'] ?>"
+                                                data-placeholder="/img/placeholder_criar_anuncio/carro_<?=$count?>.png"
+                                                data-original="<?= $foto['imagem'] ?>" title="Enviar Foto"></div>
+                                        </div>
+
+                                        <div class="btn-adicionar" title="Adicionar nova foto">
+                                            <a href="#" class="btn-upload-img" title="Adicionar nova foto">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="controls d-none">
+                                            <a href="#" class="btn-remove-img text-danger px-2" title="Remover foto">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" class="btn-to-rotate text-verde" title="Girar imagem">
+                                                <i class="fa fa-retweet" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                     </div>
