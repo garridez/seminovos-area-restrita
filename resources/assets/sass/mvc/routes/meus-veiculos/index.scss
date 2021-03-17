@@ -11,6 +11,9 @@
   padding-left: 15px  !important;
   padding-right: 15px !important;
 }
+.img-fluid{
+  width: 100%;
+}
 .veiculo{
   ul{
     margin-bottom: 0;
@@ -141,9 +144,6 @@
       h4{
         margin:0;
       }
-    }
-    .valvula{
-
     }
     @include media-breakpoint-down(md){
       .marca-modelo{
