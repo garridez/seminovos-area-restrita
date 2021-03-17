@@ -63,8 +63,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                 </div>
             </div>
         <?php else: ?>
-            <div class="col-sm-12 col-md-12">
-                <h3>Meus Veículos</h3>
+            <div class="col-sm-12 col-md-12 my-2">
+                <!-- <h3>Meus Veículos</h3> -->
+                <img src="/img/banner_leilao.jpg" alt="" srcset="" class="d-none d-md-block img-fluid">
+                <img src="/img/banner_leilao_mobile_3.jpg" alt="" srcset="" class="d-block d-md-none img-fluid">
             </div>
         <?php endif; ?>
         <div class="anuncios col-11 col-lg-12 row justify-content-center p-0 m-0">
@@ -89,9 +91,6 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                     </div>
                 </div>
             <?php endif; ?>
-            <div class="col-12 w-100 d-flex my-2 my-md-3 justify-content-center">
-                <!-- <div data-ad-path="meus_anucios.topo"></div> -->
-            </div>
             <?php
             foreach ($veiculos as $veiculo):
                 $urls = [
