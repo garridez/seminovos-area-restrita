@@ -4,6 +4,11 @@ $this->headTitle("Cadastro Área Restrita");
 $dadosForm = $formCadastro;
 $dadosForm->prepare();
 $fields = $dadosForm->getElements();
+$fields['senha']->setAttributes(array('autocomplete' => 'off',
+        'minlength'  => '4',
+));
+$fields['confirmacaoSenha']->setAttribute('minlength', '4');
+
 ?>
 
 <?= $this->form()->openTag($dadosForm) ?>
