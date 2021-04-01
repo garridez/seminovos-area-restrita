@@ -1,0 +1,160 @@
+<?php
+
+$prioridade = [
+    1 => 'máxima',
+    2 => 'alta',
+    3 => 'média',
+    4 => 'baixa',
+    5 => 'mínima',
+];
+
+$class = [
+    1 => 'nitro-home-value text-nitro-home',
+    2 => 'nitro-value text-nitro',
+    3 => 'turbo-value text-turbo',
+    4 => 'basic-value text-basico',
+    5 => 'simple-value text-simples',
+];
+
+$boxes = [
+    1 => 'nitro-home',
+    2 => 'nitro',
+    3 => 'turbo',
+    4 => 'basico',
+    5 => 'simples',
+];
+
+
+
+if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
+    $desabilitarPlano = true;
+}
+$desabilitarPlano = false;
+$desabilitarPlanoRenda = false;
+$planoAtual = false;
+$planoJaEscolhido = true;
+
+if ($prioridadePlano >= $plano['prioridade']) {
+    $diminuirPlano = true;
+} else {
+    $diminuirPlano = false;
+}
+if ($isRevenda && $plano['qtd']['publicado'] == $plano['qtd']['total']) {
+    $desabilitarPlanoRenda = true;
+}
+if ($idPlanoAtual == $plano['idPlano']) {
+    $planoAtual = true;
+}
+
+if ($idStatusAnuncio ?? false) {
+    if ($idStatusAnuncio == 6 || $idStatusAnuncio == 10 || $idStatusAnuncio == 3 || ($idStatusAnuncio == 4 && $zeroKm)) {
+        $diminuirPlano = true;
+        $planoAtual = false;
+    }
+} else {
+    $diminuirPlano = true;
+}
+
+if (($idStatusAnuncio  ?? false) && ($plano['idPlano'] ?? 0) == 1 && $idStatusAnuncio == 4 && $zeroKm) {
+    $desabilitarPlano = true;
+}
+
+$isGratis = $plano['idPlano'] == 1;
+
+if ($isRevenda) {
+    $diminuirPlano = true;
+}
+$nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
+$nomePlano = mb_strtoupper($nomePlano);
+?>
+<div class="col-12 col-sm col-md col-lg mb-4">
+    <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual' : '' ?>
+                                <?= $desabilitarPlano ? 'plano-desabilitado' : '' ?>" <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
+        <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
+            <div class="plano-number"><?= $k + 1 . 'º' ?></div>
+            <div class="icon-plano">
+                <span class="bar-1"></span>
+                <span class="bar-2"></span>
+                <span class="bar-3"></span>
+                <span class="bar-4"></span>
+                <span class="bar-4"></span>
+            </div>
+            <h3><?= $nomePlano ?></h3>
+        </div>
+        <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
+            <li>
+                <span>
+                    <strong>
+                        <?= $isGratis ? 'Apenas ' : '' ?> <?= $plano['quantidadeFotos']; ?>
+                    </strong>
+                    fotos
+                </span>
+            </li>
+            <?php
+            if ($boxes[$plano['prioridade']] == 'nitro-home' || $boxes[$plano['prioridade']] == 'nitro' || $boxes[$plano['prioridade']] == 'turbo') {
+                echo '<li><span>1 vídeo</span></li>';
+            } else {
+                echo '<li><span class="text-black-50">Sem vídeos</span></li>';
+            }
+
+
+
+            ?>
+            <?php if (!$isRevenda) : ?>
+                <li>
+                    <span>
+                        <?php
+                        if ($isGratis) {
+                            echo 'Exibição no site por <b>apenas 10 dias</b>';
+                        } else {
+                            echo 'Exibição no site até a venda*';
+                        }
+                        ?>
+                    </span>
+                </li>
+            <?php endif; ?>
+            <li>
+                <span>
+                    Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de exibição
+                </span>
+            </li>
+        </ul>
+        <?php if (!$isRevenda) : ?>
+            <div class="valor-label <?= $class[$plano['prioridade']] ?>">
+                <?php
+                $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '.'));
+                echo '<span>R$ </span>';
+                echo $valorPlano[0];
+                echo "<span>,{$valorPlano[1]}</span>";
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($isRevenda) : ?>
+            <div class="m-2">
+                Anúncios
+                <b class="h4 text-laranja"><?= $nomePlano ?></b> disponíveis:
+                <b class="h4 text-laranja"><?= $plano['qtd']['publicado'] ?></b>
+                de
+                <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
+            </div>
+        <?php endif; ?>
+        <input
+            type="radio"
+            id="radio-idPlano-<?= $plano['idPlano'] ?>"
+            name="idPlano"
+            value="<?= $plano['idPlano'] ?>"
+            required
+            class="input-radio-plano"
+            <?= $desabilitarPlano || $desabilitarPlanoRenda || !$diminuirPlano ? 'disabled' : '' ?>
+            data-valor-plano="<?= $plano['valorPlano'] ?>">
+        <label
+            class="btn btn-block btn-sm bg-light text-dark text-bold "
+            for="radio-idPlano-<?= $plano['idPlano'] ?>"
+            <?= !$diminuirPlano ? 'data-plano-desativado' : '' ?>
+            <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
+            <?= $planoAtual ? 'data-plano-atual' : '' ?>>
+            <?= $planoAtual ? 'PLANO ATUAL' : 'SELECIONE' ?>
+        </label>
+    </div>
+</div>

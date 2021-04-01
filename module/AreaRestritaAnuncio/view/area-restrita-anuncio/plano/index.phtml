@@ -2,6 +2,7 @@
 /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $isRevenda = $this->userInfo('tipoCadastro') == 1;
+$isParticular = !$isRevenda;
 
 $idPlanoAtual = $idPlanoAtual ?? false;
 
@@ -9,29 +10,7 @@ usort($planos, function ($a, $b) {
     return $b['ordem'] <=> $a['ordem'];
 });
 
-$prioridade = [
-    1 => 'máxima',
-    2 => 'alta',
-    3 => 'média',
-    4 => 'baixa',
-    5 => 'mínima',
-];
 
-$class = [
-    1 => 'nitro-home-value text-nitro-home',
-    2 => 'nitro-value text-nitro',
-    3 => 'turbo-value text-turbo',
-    4 => 'basic-value text-basico',
-    5 => 'simple-value text-simples',
-];
-
-$boxes = [
-    1 => 'nitro-home',
-    2 => 'nitro',
-    3 => 'turbo',
-    4 => 'basico',
-    5 => 'simples',
-];
 
 if ($isRevenda) {
     $qtdAnuncios = $this->qtdAnuncios()->getData();
@@ -67,7 +46,8 @@ if ($isRevenda) {
         PLANOS DE ANÚNCIOS
     </h4>
     <div class="text-center my-3">
-        <small class="align-center">Escolha o plano que atende às suas necessidades e pode dar o destaque que você quer ao seu veículo.
+        <small class="align-center">
+            Escolha o plano que atende às suas necessidades e pode dar o destaque que você quer ao seu veículo.
             <br />Analise os Planos de Anúncios abaixo e conheça as vantagens de cada plano:
         </small>
     </div>
@@ -77,168 +57,99 @@ if ($isRevenda) {
             <form id="form_Plano" name="form_Plano">
                 <div class="row grupo-planos">
                     <?php
-                        $planoJaEscolhido = false;
-                        $prioridadePlano = $prioridadePlano ?? 0;
-                        foreach ($planos as $k => $plano) :     
-                            if ($planoJaEscolhido && $plano['idPlano'] != $idPlanoAtual) {
-                                $desabilitarPlano = true;
-                            }
-                            $desabilitarPlano = false;
-                            $desabilitarPlanoRenda = false;
-                            $planoAtual = false;
-                            $planoJaEscolhido = true;
-                            
-                            if($prioridadePlano >= $plano['prioridade']){
-                                $diminuirPlano = true;
-                            }else{
-                                $diminuirPlano = false;
-                            }
-                            if ($isRevenda && $plano['qtd']['publicado'] == $plano['qtd']['total']) {
-                                $desabilitarPlanoRenda = true;
-                            }
-                            if($idPlanoAtual == $plano['idPlano']){
-                                $planoAtual = true;
-                            }
-
-                            if($idStatusAnuncio ?? false){
-                                if($idStatusAnuncio == 6 || $idStatusAnuncio == 10 ||$idStatusAnuncio == 3 || ($idStatusAnuncio == 4 && $zeroKm)){
-                                    $diminuirPlano = true;
-                                    $planoAtual = false;
-                                }
-                            }else{
-                                $diminuirPlano = true;
-                            }
-                            
-                            if(($idStatusAnuncio  ?? false) && ($plano['idPlano'] ?? 0 ) == 1 && $idStatusAnuncio == 4 && $zeroKm){
-                                $desabilitarPlano = true;
-                            }
-
-                            if($isRevenda){
-                                $diminuirPlano = true;
-                            }
-                            $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
-                            $nomePlano = mb_strtoupper($nomePlano);
-                            ?>
-                    <div class="col-12 col-sm col-md col-lg">
-                        <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual':''?>
-                                <?= $desabilitarPlano ? 'plano-desabilitado':''?>"
-                            <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
-                            <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
-                                <div class="plano-number"><?= $k + 1 . 'º' ?></div>
-                                <div class="icon-plano">
-                                    <span class="bar-1"></span>
-                                    <span class="bar-2"></span>
-                                    <span class="bar-3"></span>
-                                    <span class="bar-4"></span>
-                                    <span class="bar-4"></span>
-                                </div>
-                                <h3><?= $nomePlano ?></h3>
-                            </div>
-                            <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
-                                <li>
-                                    <span>
-                                        <strong><?= $plano['quantidadeFotos']; ?></strong>
-                                        fotos por anúncio
-                                    </span>
-                                </li>
-                                <?php
-                                        if ($boxes[$plano['prioridade']] == 'nitro-home' || $boxes[$plano['prioridade']] == 'nitro' || $boxes[$plano['prioridade']] == 'turbo') {
-                                            echo '<li><span>1 vídeo</span></li>';
-                                        } else {
-                                            echo '<li><span class="text-black-50"><s>0 vídeos</s></span></li>';
-                                        }
-
-                                        if ($boxes[$plano['prioridade']] == 'simples') {
-                                            $anuncioTempo = 'Exibição no site por 10 dias';
-                                        } else {
-                                            $anuncioTempo = 'Exibição no site até a venda*';
-                                        }
-
-                                        ?>
-                            <?php if (!$isRevenda): ?>
-                                <li><span><?= $anuncioTempo; ?></span></li>
-                            <?php endif; ?>
-
-                                <li><span>Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de
-                                        exibição</span></li>
-                            </ul>
-                            <?php if (!$isRevenda): ?>
-                                <div class="valor-label <?= $class[$plano['prioridade']] ?>">R$
-                                    <?= number_format((float) $plano['valorPlano'], 2, ',', '.') ?></div>
-                            <?php endif; ?>
-
-                            <?php if ($isRevenda): ?>
-                                <div class="m-2">
-                                    Anúncios
-                                    <b class="h4 text-laranja"><?= $nomePlano ?></b> disponíveis:
-                                    <b class="h4 text-laranja"><?= $plano['qtd']['publicado'] ?></b>
-                                    de
-                                    <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
-                                </div>
-                            <?php endif; ?>
-                            <input
-                                type="radio"
-                                id="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                name="idPlano"
-                                required
-                                value="<?= $plano['idPlano'] ?>"
-                                <?= $desabilitarPlano ||$desabilitarPlanoRenda || !$diminuirPlano ? 'disabled' : '' ?>
-                                data-valor-plano="<?= $plano['valorPlano'] ?>">
-                                <label class="btn btn-block btn-sm bg-light text-dark text-bold " for="radio-idPlano-<?= $plano['idPlano'] ?>"
-                                    <?= !$diminuirPlano ? 'data-plano-desativado' : '' ?>
-                                    <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
-                                    <?= $planoAtual ? 'data-plano-atual':''?>
-                                >
-                                <?= $planoAtual?'PLANO ATUAL':'SELECIONE'?>
-                            </label>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
+                    $planoJaEscolhido = false;
+                    $prioridadePlano = $prioridadePlano ?? 0;
+                    $planoGratis = false;
+                    foreach ($planos as $k => $plano) :
+                        if ($plano['valorPlano'] == '0.0') {
+                            $planoGratis = $plano;
+                            continue;
+                        }
+                        echo $this->partial('./box-plano.phtml', [
+                            'k' => $k,
+                            'planoJaEscolhido' => $planoJaEscolhido,
+                            'plano' => $plano,
+                            'prioridadePlano' => $prioridadePlano,
+                            'isRevenda' => $isRevenda,
+                            'isParticular' => $isParticular,
+                            'idPlanoAtual' => $idPlanoAtual,
+                        ]);
+                    endforeach;
+                    ?>
                 </div>
-                <div class="alert-primary row-full">
-                    <div class="container">
-                        <div class=" row  justify-content-center text-justify p-4">
-                            <div class="d-none d-md-block col-md-1 align-self-center">
-                                <i class="icon icon-alert"></i>
+                <div>
+                    <?php if ($isParticular && $prioridadePlano >= $planoGratis['prioridade']) : ?>
+                        <div class="row mt-1 mb-4">
+                            <div class="col col-md-4 offset-md-4 text-center">
+                                <div>
+                                    <a
+                                        data-toggle="collapse"
+                                        href="#planoSimplesCollapse"
+                                        role="button"
+                                        aria-expanded="false"
+                                        aria-controls="planoSimples"
+                                    >Clique aqui</a> para continuar sem dar prioridade
+                                </div>
                             </div>
-                            <div class="col-12 col-md-6 align-baseline">
-                                <h5 class="text-left bold">Reativação dos anúncios</h5>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        Nos planos Nitro Home, Nitro, Turbo e Básico, para que seja mantida a condição de
-                                        exibição
-                                        do seu anúncio até a venda, é necessário a reativação do anúncio a cada 30 dias (sem
-                                        custo
-                                        adicional).
-                                    </li>
-                                </ul>
+                        </div>
+                        <div id="planoSimplesCollapse" class="row mt-2 collapse">
+                            <div class="col-md-4 offset-md-4 text--center">
+                                <?= $this->partial('./box-plano.phtml', [
+                                    'k' => $k,
+                                    'planoJaEscolhido' => $planoJaEscolhido,
+                                    'plano' => $planoGratis,
+                                    'prioridadePlano' => $prioridadePlano,
+                                    'isRevenda' => $isRevenda,
+                                    'isParticular' => $isParticular,
+                                    'idPlanoAtual' => $idPlanoAtual,
+                                ]) ?>
                             </div>
-                            <div class="col-12 col-md-5 border-left border-primary border-sm-0">
-                                <h5 class="bold">Para veículos 0km</h5>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        Anúncios de veículos 0km terá o prazo de exibição no site limitado a 30 dias, sem
-                                        direito a
-                                        renovação gratuita.
-                                    </li>
-                                    <li>
-                                        A renovação do anúncio de veículos 0km, será cobrado novamente conforme plano
-                                        selecionado.
-                                    </li>
-                                    <li>
-                                        Anúncios de veículos 0km que não estiverem listados como tal, serão removidos
-                                        deliberadamente após o prazo de 30 dias e deverão pagar por um novo anúncio para
-                                        reativar o
-                                        mesmo.
-                                    </li>
-                                </ul>
+                        </div>
+                    <?php endif; ?>
+                    <div class="alert-primary row-full">
+                        <div class="container">
+                            <div class=" row  justify-content-center text-justify p-4">
+                                <div class="d-none d-md-block col-md-1 align-self-center">
+                                    <i class="icon icon-alert"></i>
+                                </div>
+                                <div class="col-12 col-md-6 align-baseline">
+                                    <h5 class="text-left bold">Reativação dos anúncios</h5>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            Nos planos Nitro Home, Nitro, Turbo e Básico, para que seja mantida a condição de
+                                            exibição
+                                            do seu anúncio até a venda, é necessário a reativação do anúncio a cada 30 dias (sem
+                                            custo
+                                            adicional).
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-5 border-left border-primary border-sm-0">
+                                    <h5 class="bold">Para veículos 0km</h5>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            Anúncios de veículos 0km terá o prazo de exibição no site limitado a 30 dias, sem
+                                            direito a
+                                            renovação gratuita.
+                                        </li>
+                                        <li>
+                                            A renovação do anúncio de veículos 0km, será cobrado novamente conforme plano
+                                            selecionado.
+                                        </li>
+                                        <li>
+                                            Anúncios de veículos 0km que não estiverem listados como tal, serão removidos
+                                            deliberadamente após o prazo de 30 dias e deverão pagar por um novo anúncio para
+                                            reativar o
+                                            mesmo.
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group ">
-                    <input type="submit">
-                </div>
+                    <div class="form-group ">
+                        <input type="submit">
+                    </div>
             </form>
         </div>
     </div>
