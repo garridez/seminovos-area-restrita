@@ -36,7 +36,7 @@ $.extend(Plugin.prototype, {
     getSteps: function (indexOrSelector) {
         var steps = this.$ctx.find(this.opts.stepSeletor);
 
-        if (indexOrSelector) {
+        if (indexOrSelector != undefined) {
             if (typeof indexOrSelector === 'number') {
                 return steps.eq(indexOrSelector);
             }
@@ -138,12 +138,18 @@ $.extend(Plugin.prototype, {
             console.log.apply(this, arguments);
         }
     },
-    _triggerEvent: function (event, index) {
+    _triggerEvent: function (event, index) { 
         var eventRes = {};// Event Result
-        var stepElement = this.getSteps().eq(index);
+        var stepElementTarget = this.getSteps().eq(index);
+        var stepElementDeep = null;
+
+        if (stepElementTarget.find('.active').length) {
+            stepElementDeep = stepElementTarget.find('.active');
+        }
         var extraParams = {
             'stepIndex': index,
-            'stepElement': stepElement
+            'stepElementTarget': stepElementTarget,
+            'stepElementDeep': stepElementDeep
         };
         this._log('Event triggered:', 'step:' + event);
 
@@ -153,7 +159,7 @@ $.extend(Plugin.prototype, {
         eventRes.b = this.$ctx.triggerHandler(eventName, extraParams);
         this._log('Event triggered:', eventName);
 
-        var stepLabel = stepElement.data('step-label');
+        var stepLabel = stepElementTarget.data('step-label');
         if (stepLabel) {
             eventName = 'step:' + event + ':' + stepLabel;
             eventRes.c = this.$ctx.triggerHandler(eventName, extraParams);
