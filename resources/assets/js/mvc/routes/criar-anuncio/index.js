@@ -21,6 +21,7 @@ module.exports.callback = ($) => {
     stepsContainer.on('step:change', setStepIconActive);
     stepsContainer.on('step:change', BtnContinuar.enable);
     stepsContainer.on('step:change', checkLastStep);
+    stepsContainer.on('step:change', setHashState);
     anuncioSteps.on('steps-loaded', setStepIconActive);
 
     stepsContainer
@@ -177,4 +178,14 @@ function setStepIconActive() {
                     .addClass('active');
         }
     });
+}
+
+function setHashState(e, params) {
+    var $element = params.stepElementDeep || params.stepElementTarget || $(this);
+    var label = $element.data('step-label');
+
+    if (!label) {
+        return label;
+    }
+    location.hash = label;
 }
