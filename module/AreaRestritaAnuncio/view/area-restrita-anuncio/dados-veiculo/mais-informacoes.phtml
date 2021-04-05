@@ -14,7 +14,7 @@ if ($this->checkedProposta !== '0') {
     $fields['aceitaProposta']->setChecked(true);
 }
 
-if ($this->checkedLigacao !== '0') {
+if ($this->checkedChat !== '0') {
     $fields['aceitaChat']->setChecked(true);
 }
 
@@ -79,11 +79,10 @@ $fields['aceitaLigacao']->setValueOptions($replace);
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if($this->userInfo('tipoCadastro') != 1): ?>
+                
                 <div class="checkbox checkbox-success form-group form-group-default">
                     <?= $this->formCheckbox($fields['aceitaChat']) ?>
                 </div>
-                <?php endif; ?>
 
                 <div class="checkbox checkbox-success form-group form-group-default required">
                     <?= $this->formCheckbox($fields['termo'])?>

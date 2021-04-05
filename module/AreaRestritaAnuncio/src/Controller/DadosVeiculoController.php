@@ -241,12 +241,15 @@ class DadosVeiculoController extends AbstractActionController
         $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
 
         $checkedLigacao = (empty($data) ?  false : $data['aceitaLigacao']);
+        
+        $checkedChat = (empty($data) ?  false : $data['aceitaChat']);
 
         return new ViewModel([
             'formMaisInformacoesVeiculo' => $maisInformacoesForm,
             'checkedTermo' => $checkedTermo,
             'checkedProposta' => $checkedProposta,
             'checkedLigacao' => $checkedLigacao,
+            'checkedChat' => $checkedChat,
         ]);
     }
 
