@@ -31,6 +31,7 @@ class SelectCombustivel extends Select
                     1 => 'Álcool',
                     9 => 'Álcool + Kit Gás',
                     2 => 'Bi-Combustível',
+                    10 => 'Bi-Combustível + Kit Gás',
                     3 => 'Diesel',
                     4 => 'Gasolina',
                     8 => 'Gasolina e Elétrico',
