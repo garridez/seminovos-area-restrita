@@ -58,7 +58,7 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                     $planoJaEscolhido = false;
-                    $prioridadePlano = $prioridadePlano ?? 0;
+                    $prioridadePlano = $prioridadePlano ?? 5;
                     $planoGratis = false;
                     foreach ($planos as $k => $plano) :
                         if ($plano['valorPlano'] == '0.0') {
