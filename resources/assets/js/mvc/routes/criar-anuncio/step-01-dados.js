@@ -7,6 +7,7 @@ function stopEvent(e) {
 }
 
 var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+// var AutoFillCriarAnuncio = require('helpers/AutoFillCriarAnuncio')();
 
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
