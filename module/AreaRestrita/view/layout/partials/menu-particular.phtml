@@ -6,8 +6,9 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
   <!-- BEGIN SIDEBAR MENU ITEMS-->
   <ul class="menu-items">
     <li class="mt-md-5 m-b-20">
-      <div class="p-l-10 p-r-10">
-        <a class="btn-block btn btn-laranja btn-novo-anuncio text-capitalize" href="#cirarAnuncio">
+    <div class="p-l-10 p-r-10">
+        <a class="btn-block btn btn-laranja text-capitalize" data-toggle="collapse" href="#cirarAnuncio" role="button"
+          aria-expanded="false" aria-controls="collapseExample">
           <span class="text-black title">
             Novo Anúncio
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
