@@ -39,6 +39,19 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
           </span>
         </a>
       </div>
+      <div class="collapse mt-2" id="cirarAnuncio">
+          <div class="d-flex justify-content-around">
+            <a class="link-white" data-confirm href="/carro">
+              <i class="fa-2x icon icon-type-car-2"></i>
+            </a>
+            <a class="link-white" data-confirm href="/moto">
+              <i class="fa-2x icon icon-type-moto-2"></i>
+            </a>
+            <a class="link-white" data-confirm href="/caminhao">
+              <i class="fa-2x icon icon-type-truck-2"></i>
+            </a>
+          </div>
+      </div>
     </li>
     <li class="m-t-30 hide">
       <a href="<?= $this->url('restrito') ?>" class="detailed">
