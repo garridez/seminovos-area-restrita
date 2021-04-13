@@ -16,6 +16,7 @@ use SnBH\Common\Helper\MoveUpload;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use SnBH\Common\Helper\StringFuncs;
 
 class DadosVeiculoController extends AbstractActionController
 {
@@ -95,7 +96,10 @@ class DadosVeiculoController extends AbstractActionController
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $data['observacoes'] = substr($data['observacoes'], 0, 700);
+                $auxTexto = str_replace("\r\n","",StringFuncs::removerAcentos($data['observacoes']));
+                if(strlen($auxTexto) > 700){
+                    $data['observacoes'] = mb_substr($data['observacoes'], 0, 710,'UTF8');
+                }
             }
 
             $keyRemap = [
