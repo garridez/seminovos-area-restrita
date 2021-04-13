@@ -152,6 +152,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'servicos-adicionais' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/servicos-adicionais',
+                                    'defaults' => [
+                                        'controller' => Controller\ServicosAdicionaisController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
                             'placa-disponivel' => [
                                 'type' => Segment::class,
                                 'options' => [
@@ -318,6 +328,7 @@ return [
             Controller\LoginController::class => InvokableFactory::class,
             Controller\PagamentoController::class => InvokableFactory::class,
             Controller\PlanoController::class => InvokableFactory::class,
+            Controller\ServicosAdicionaisController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [

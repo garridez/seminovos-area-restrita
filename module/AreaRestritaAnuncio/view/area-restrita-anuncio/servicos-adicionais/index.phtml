@@ -1,0 +1,84 @@
+<?php
+$btnAdicionar = '<label for="servico-adicional-certificado" class="btn-control-certificado btn btn-success">
+            <span class="text-adicionar">Adicionar à compra</span>
+            <span class="text-adicionado hide">Adicionado (Clique para remover)</span>
+        </label>';
+
+?>
+<form id="form_servicos-adicionais" name="form_servicos-adicionais">
+    <div class="w-100 certificado certificado-adicionar mt-5 mt-md-0">
+        <div class="mb-2 text-center h1">
+            Certificado Documental
+        </div>
+        <div class="desc mb-3">
+            <span>Adquirira o Certificado Documental do seu veículo junto ao seu plano e dê maior segurança para os compradores.</span>
+        </div>
+
+        <div class="preco-btn mb-3 text-center">
+            <div class="preco mr-2">
+                <span class="h2"> R$ 24,90*</span>
+            </div>
+            <div>
+                <?= $btnAdicionar ?>
+            </div>
+        </div>
+
+        <div class="rodape text-center w-100">
+            <small>*Preço promocional de lançamento</small>
+        </div>
+    </div>
+    <div class="alert-primary row-full mt-5">
+        <div class="container">
+            <div class="row justify-content-center-text-justify p-4">
+                <div class="col-md-8 offset-md-2">
+                    <div class="content">
+                        <div class="topo">
+                            <h3 class="bold">O que é o certificado documental?</h3>
+                        </div>
+                        <div class="corpo">
+                            <p>
+                                É um documento emitido pela empresa OLHO NO CARRO, terceirizada, que faz a busca no banco de dados nacional do Denatran. 
+                                Esse histórico é emitido através de uma consulta realizado pela placa cadastrada no momento de criar o anúncio. 
+                                Então deve ser inserida a placa correta do mesmo.
+                            </p>
+                            <p>NÃO SE TRATA DE UMA VERIFICAÇÃO ESTRUTURAL.</p>
+
+                            <div class="sobre-checktudo">
+                                <h5>Sobre a CheckTudo : </h5>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> O Historicar é a mais completa plataforma de busca a histórico veicular do Brasil.</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> De forma ágil, fácil e segura, o usuário tem acesso a mais de 60 informações sobre um veículo pesquisado.</p>
+                            </div>
+                            <div class="informacoes-consulta">
+                                <h5>Quais as informações que possuem neste certificado?</h5>
+                                <p>Descritivo do pacote:</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Base Nacional</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Base Estadual</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Indício de Sinistro</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Oferta em Leilão</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Risco de Recusa em Comercialização</p>
+                                <p><i class="fa fa-circle" aria-hidden="true"></i> Possui risco em aceitação de Seguros</p>
+                                <p class="mt-2">IMPORTANTE</p>
+                                <p>
+                                    Algumas informações podem não estar disponíveis no momento da consulta devido a instabilidades da base de dados dos prestadores de serviço,
+                                    mas serão reconsultadas (sem custo adicional) e enviadas assim que possível ao usuário.
+                                </p>
+                            </div>
+                            <div class="como-relatorio">
+                                <h5>Segue exemplo do laudo que será adquirido:</h5>
+                                <div class="img">
+                                    <img class="img-fluid" src="https://fotos.seminovosbh.com.br/certificado.png" alt="" srcset="">
+                                </div>
+                            </div>
+                            <p>Não nos responsabilizamos por informações errôneas enviadas, tanto do usuário quanto da empresa OLHO NO CARRO.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center m-5">
+        <?= $btnAdicionar ?>
+    </div>
+    <input type="checkbox" id="servico-adicional-certificado" class="hide" data-valor="24.90">
+    <input type="submit">
+</form>

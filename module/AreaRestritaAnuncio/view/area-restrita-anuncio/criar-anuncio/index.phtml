@@ -17,16 +17,18 @@ $rotasAnuncio = [
         'video' => 'video',
     ],
     'plano' => $this->url('criar-anuncio/anuncio/planos', $routeParams),
+    'servicos-adicionais' => $this->url('criar-anuncio/anuncio/servicos-adicionais', $routeParams),
     'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
 ];
 
 if ($this->userInfo('tipoCadastro') == 1) {
     unset($rotasAnuncio['checkout']);
+    unset($rotasAnuncio['servicos-adicionais']);
     $rotasAnuncio['finalizar'] = $this->url('criar-anuncio/anuncio/finalizar', $routeParams);
 }
 
 
-if($this->tipoCadastro == VeiculoTipo::TIPO_CAMINHAO){
+if($this->tipoVeiculo == VeiculoTipo::TIPO_CAMINHAO){
     unset($rotasAnuncio['veiculo']['opcionais']);
 }
 
@@ -89,7 +91,7 @@ if(isset($this->idStatus)){
 <div id="dados-basicos" class="hide">
     <form>
         <input type="hidden" id="tipoCad" name="tipoCad" value="<?= $this->userInfo('tipoCadastro') ?>" class="tipoCadastro">
-        <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoCadastro ?>" class="tipoCadastro">
+        <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->tipoVeiculo ?>" class="tipoCadastro">
         <input type="hidden" id="tipoUsuarioCadastro" name="tipoUsuarioCadastro" value="<?= isset($veiculo['cadastro']['tipoCadastro']) ? $veiculo['cadastro']['tipoCadastro'] : 2 ?>" class="tipoCadastro">
         <input type="hidden" id="idStatus" name="idStatus" value="<?= $status ?>" class="idStatus">
         <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
