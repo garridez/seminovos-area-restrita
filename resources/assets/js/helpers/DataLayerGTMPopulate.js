@@ -10,6 +10,7 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
   if (isDev) {
       return;
   }
+  window.dataLayer = window.dataLayer || [];
   var $ctx = $(ctx);
   var defaultVal = {
     name : '',
