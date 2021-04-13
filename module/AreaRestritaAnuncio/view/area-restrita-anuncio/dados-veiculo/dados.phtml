@@ -158,6 +158,36 @@ $versao = $form->get('versao')->getValue();
                 </label>
             </div>
 
+            <?php if($tipoVeiculo == 2): ?>
+                <div class="destaques pt-1 pb-3">
+                    <div class="text-center"><b>Algum item que você quer destacar?</b></div>
+
+                    <div class="opcionais">
+                        <?php
+                            $destaques = [
+                                $this->formCheckbox($fields['flagIpva'])
+                            ];
+
+                            foreach ($destaques as $key => $value) {
+                                $value = str_replace('class="checkbox"', 'class="checkbox-custom"', $value);
+
+                                $value = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $value);
+
+                                $value = explode('<div', $value);
+                                if (trim($value[0]) == '') {
+                                    unset($value[0]);
+                                } ?>
+
+                                <div class="checkbox-custom">
+                                    <?= $value[0] ?>
+                                </div>
+                            <?php
+                            }
+                        ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <div class="form-group ">
                 <?= $this->formSubmit($fields['submit']) ?>
             </div>
