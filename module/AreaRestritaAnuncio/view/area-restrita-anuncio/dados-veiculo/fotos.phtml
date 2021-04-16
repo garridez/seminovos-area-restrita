@@ -77,12 +77,13 @@ unset($foto, $fotosNewKeys);
                                 foreach (range(0, 3) as $i):
                                     $count++;
                                     $default['imagem'] = "/img/placeholder_criar_anuncio/carro_$count.png";
-                                    $foto = $fotos[$count] ?? $default;                            
+                                    $foto = $fotos[$count] ?? $default;
+                                    $isDefault = ($fotos[$count] ?? false) ? false : true; 
                                     $foto_ = $foto['imagem'];
                                     ?>
                                     <div class="foto col-6 col-md-3 col-sm-6 py-2">
 
-                                        <div class="controls controls-sup d-none">
+                                        <div class="controls controls-sup <?= $isDefault ? 'd-none' : '' ?>">
                                             <a href="#" class="btn-upload-img text-black" title="Adicionar nova foto">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
@@ -103,13 +104,13 @@ unset($foto, $fotosNewKeys);
                                                 data-original="<?= $foto['imagem'] ?>" title="Enviar Foto"></div>
                                         </div>
 
-                                        <div class="btn-adicionar" title="Adicionar nova foto">
+                                        <div class="btn-adicionar <?= $isDefault ? '' : 'd-none' ?>" title="Adicionar nova foto">
                                             <a href="#" class="btn-upload-img" title="Adicionar nova foto">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </a>
                                         </div>
 
-                                        <div class="controls d-none">
+                                        <div class="controls <?= $isDefault ? 'd-none' : '' ?>">
                                             <a href="#" class="btn-remove-img text-danger px-2" title="Remover foto">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </a>
