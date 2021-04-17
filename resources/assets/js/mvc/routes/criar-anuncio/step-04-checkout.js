@@ -36,6 +36,9 @@ module.exports.callback = ($) => {
         }
 
         if (location.hash && location.hash.indexOf('addCertificado') !== -1 && location.hash.indexOf('planoCem') !== -1) {
+            $('#servico-adicional-certificado').prop('checked', true);
+            $('[data-adicionar-action]').prop('checked', 1);
+            $('#dados-basicos .certificado').val(1);
             $("#acao").val("addCertificado");
 
             let ctx = '.handle-certificado';
