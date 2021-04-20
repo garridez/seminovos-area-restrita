@@ -81,7 +81,11 @@ module.exports.callback = ($) => {
         planoSelecionado.addClass('plano-selecionado');
 
         let valorTotal = 0.00;
-        valorTotal += parseFloat(planoSelecionado.find('input[data-valor-plano]').val());
+        if (location.hash.indexOf('addCertificado') !== -1) {
+            valorTotal += parseFloat(planoSelecionado.find('input[data-valor-plano]').val());
+        } else {
+            $('.resumo-compra [id*=plano].plano').hide();
+        }
 
         var servicoAdicionalCertificado = $('#servico-adicional-certificado');
         if (servicoAdicionalCertificado.is(':checked')) {

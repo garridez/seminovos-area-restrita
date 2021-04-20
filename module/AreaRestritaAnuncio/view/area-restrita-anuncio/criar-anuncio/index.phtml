@@ -50,6 +50,16 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
                 $rotasAnuncio['veiculo']['video']
             );
             break;
+        case 'certificado':
+            unset(
+                $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['preco'],
+                $rotasAnuncio['veiculo']['mais-informacoes'],
+                $rotasAnuncio['veiculo']['fotos'],
+                $rotasAnuncio['veiculo']['video'],
+                $rotasAnuncio['plano']
+            );
+            break;
 
         default:
             unset(
