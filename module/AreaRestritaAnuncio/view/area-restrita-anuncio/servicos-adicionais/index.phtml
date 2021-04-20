@@ -1,0 +1,79 @@
+<?php
+$btnAdicionar = '<label for="servico-adicional-certificado" class="btn-control-certificado btn btn-success">
+            <span class="text-adicionar">Adicionar ao anúncio</span>
+            <span class="text-adicionado hide">Remover do anúncio</span>
+        </label>';
+
+?>
+<form id="form_servicos-adicionais" name="form_servicos-adicionais">
+    <div class="w-100 certificado certificado-adicionar mt-5 mt-md-0 ">
+        <div class="mb-5 m2-2 text-center h2">
+            Adicione segurança ao comprador
+        </div>
+
+        <div class="container mt-2">
+            <div class="row justify-content-center-text-justify p--4">
+                <div class="col-md-4 border">
+                    <div class="mb-2 text-center h3">
+                        Certificado Documental
+                    </div>
+                    <div class="preco-btn mb-3 text-center">
+                        <div class="preco mr-2 pb-2">
+                            <span class="h-2">
+                                <sup><small>R$</small></sup>
+                                <span class="h1">24,</span>
+                                <small>90</small>*</span>
+                        </div>
+                        <div>
+                            <?= $btnAdicionar ?>
+                        </div>
+                    </div>
+
+                    <div class="corpo">
+                        <p>
+                            É um documento emitido pela empresa OLHO NO CARRO, terceirizada, que faz a busca no banco de dados nacional do Denatran. 
+                            Esse histórico é emitido através de uma consulta realizado pela placa cadastrada no momento de criar o anúncio. 
+                            Então deve ser inserida a placa correta do mesmo.
+                        </p>
+                        <p>NÃO SE TRATA DE UMA VERIFICAÇÃO ESTRUTURAL.</p>
+                    </div>
+                </div>
+                <div class="col-md-8 border">
+                    <img class="img-fluid" src="https://fotos.seminovosbh.com.br/assets/certificado-2.0.jpg" alt="" srcset="">
+                </div>
+            </div>
+
+            <div>
+                <div class="col-12">
+                    <h5>Tudo sobre a CheckTudo: </h5>
+                    <div class="card card-body">
+                        <div class="sobre-checktudo">
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> O Historicar é a mais completa plataforma de busca a histórico veicular do Brasil.</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> De forma ágil, fácil e segura, o usuário tem acesso a mais de 60 informações sobre um veículo pesquisado.</p>
+                        </div>
+                        <div class="informacoes-consulta">
+                            <h5>Quais as informações que possuem neste certificado?</h5>
+                            <p>Descritivo do pacote:</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Base Nacional</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Base Estadual</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Indício de Sinistro</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Oferta em Leilão</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Risco de Recusa em Comercialização</p>
+                            <p><i class="fa fa-circle" aria-hidden="true"></i> Possui risco em aceitação de Seguros</p>
+                            <p class="mt-2">IMPORTANTE</p>
+                            <p>
+                                Algumas informações podem não estar disponíveis no momento da consulta devido a instabilidades da base de dados dos prestadores de serviço,
+                                mas serão reconsultadas (sem custo adicional) e enviadas assim que possível ao usuário.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center m-5">
+        <?= $btnAdicionar ?>
+    </div>
+    <input type="checkbox" id="servico-adicional-certificado" class="hide" data-valor="24.90">
+    <input type="submit">
+</form>

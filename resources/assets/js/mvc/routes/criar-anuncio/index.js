@@ -181,6 +181,7 @@ function setStepIconActive() {
 }
 
 function setHashState(e, params) {
+    return;
     var $element = params.stepElementDeep || params.stepElementTarget || $(this);
     var label = $element.data('step-label');
 

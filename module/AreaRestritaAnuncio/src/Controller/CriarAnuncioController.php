@@ -61,7 +61,7 @@ class CriarAnuncioController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'routeParams' => $params->fromRoute(),
-            'tipoCadastro' => $tipos[strtolower($this->params()->fromRoute('tipo'))],
+            'tipoVeiculo' => $tipos[strtolower($this->params()->fromRoute('tipo'))],
             ] + $adicionalData);
 
         $this->layout('layout/criar-anuncio');
