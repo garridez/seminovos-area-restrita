@@ -24,7 +24,7 @@
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
   "dependencies": {
     "animate-sass": "^0.8.2",
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
     "compress.js": "^1.1.2",
@@ -40,14 +40,14 @@
     "jquery-validation": "^1.19.3",
     "laravel-mix": "^4.1.4",
     "lodash": "^4.17.21",
-    "modernizr": "^3.11.4",
+    "modernizr": "^3.11.7",
     "moment": "^2.29.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "printthis": "^0.1.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.3",
     "redis": "^2.8.0",
     "redux": "^4.0.5",
     "sass-loader": "^7.2.0",
@@ -57,7 +57,7 @@
     "sortablejs": "^1.10.0-rc3"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.12.13",
-    "livereload": "^0.9.1"
+    "@babel/preset-react": "^7.13.13",
+    "livereload": "^0.9.3"
   }
 }
