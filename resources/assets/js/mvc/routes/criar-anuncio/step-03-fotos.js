@@ -17,7 +17,6 @@ module.exports.callback = ($) => {
       }
     });
 };
-
 function init() {
     var ctx = $('.step-fotos');
     if (!ctx.length) {
@@ -32,11 +31,14 @@ function init() {
         'rotate(270deg)',
     ];
 
-
+    var handle = '.btn-move, .foto-container, .controls';
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+      handle = '.btn-move';
+    }
     new sortablejs.Sortable($('.fotos-container > div')[0], {
         animation: 150,
         swap: true,
-        handle: '.btn-move',
+        handle: handle,
         onChange: function (/**Event*/evt) {
             $('.fotos-container').data('reordanado', true);
         }
@@ -80,8 +82,9 @@ function init() {
         // Seta o placeholder e limpa os metadados
         var img = $(this).closest('.foto').find('.display-img');
 
-        //oculta botao de rotacao
-        $(this).closest('.foto').find('.btn-to-rotate').hide();
+        //oculta os botões de ação
+        $(this).closest('.foto').find('.controls').addClass('d-none');
+        $(this).closest('.foto').find('.btn-adicionar').removeClass('d-none');
 
         img.data('delete', true);
         showPhoto(img);
@@ -151,8 +154,10 @@ function init() {
         var reader = new FileReader();
         reader.onload = function (e) {
 
-            //exibe botao de rotacao ao ler imagem
-            imgElement.parents('.foto').find('.btn-to-rotate').show();
+            //exibe os botões de ação
+            imgElement.parents('.foto').find('.controls').removeClass('d-none');
+            imgElement.parents('.foto').find('.btn-adicionar').addClass('d-none');
+
             showPhoto(imgElement, e.target.result);
             if (imgElement.data('idfoto')) {
                 imgElement.data('delete', true);
