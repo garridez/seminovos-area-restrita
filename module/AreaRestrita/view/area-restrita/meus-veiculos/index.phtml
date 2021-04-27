@@ -318,7 +318,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <?php if ($veiculo["botoes"]["renovar_plano"]) { ?>
                                                 <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&trocarPlano&planoNitroHome"
                                                 class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center btn-acao-renovar-plano">
-                                                Renovar Plano
+                                                Pagar Destaque
                                                 </a>
                                             <?php } ?>
                                         </div>
@@ -399,7 +399,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
                                            data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                            title="Reativar anúncio">
-                                            <button class="btn btn-sm btn-laranja text-white w-100">Reativar</button>
+                                            <button class="btn btn-sm btn-laranja text-white w-100"><?= $veiculo['idStatus'] == 4 || $veiculo['idStatus'] == 2 ? 'Renovar' : 'Reativar' ?></button>
                                         </a>
                                     <?php } ?>
                                     <?php if ($veiculo["botoes"]["alerta"] ?? false) { ?>
