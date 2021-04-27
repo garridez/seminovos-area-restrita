@@ -399,7 +399,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar"
                                            data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>"
                                            title="Reativar anúncio">
-                                            <button class="btn btn-sm btn-laranja text-white w-100"><?= $veiculo['idStatus'] == 4 ? 'Renovar' : 'Reativar' ?></button>
+                                            <button class="btn btn-sm btn-laranja text-white w-100"><?= $veiculo['idStatus'] == 4 || $veiculo['idStatus'] == 2 ? 'Renovar' : 'Reativar' ?></button>
                                         </a>
                                     <?php } ?>
                                     <?php if ($veiculo["botoes"]["alerta"] ?? false) { ?>
