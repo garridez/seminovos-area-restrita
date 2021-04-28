@@ -13,58 +13,28 @@ class MaisInformacoesForm extends Form
         parent::__construct($name, $options);
 
         $this->add([
-            'type' => Element\Radio::class,
+            'type' => Element\Checkbox::class,
             'name' => 'idTroca',
             'options' => [
                 'label' => 'Aceita Troca?',
-                'value_options' => [
-                    [
-                        'label' => 'SIM',
-                        'value' => '4',
-                        'attributes' => [
-                            'id' => 'idTroca_radio_sim',
-                        ]
-                    ],
-                    [
-                        'label' => 'NÃO',
-                        'value' => '1',
-                        'attributes' => [
-                            'id' => 'idTroca_radio_nao',
-                        ]
-                    ],
-                ],
+                'use_hidden_element' => true,
+                'checked_value' => 4,
+                'unchecked_value' => 1,
             ],
-            'attributes' => [
-                'required' => true,
-            ]
         ]);
+
         $this->add([
-            'type' => Element\Radio::class,
+            'type' => Element\Checkbox::class,
             'name' => 'delivery',
             'options' => [
                 'label' => 'Este veículo pode ser levado até o cliente?',
-                'value_options' => [
-                    [
-                        'label' => 'SIM',
-                        'value' => 1,
-                        'attributes' => [
-                            'id' => 'delivery_radio_sim',
-                        ],
-                    ],
-                    [
-                        'label' => 'NÃO',
-                        'value' => 0,
-                        'attributes' => [
-                            'id' => 'delivery_radio_nao',
-                        ],
-                    ],
-                ],
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
-            'attributes' => [
-                'id' => 'delivery_radio',
-                'required' => false,
-            ]
         ]);
+
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'aceitaProposta',
@@ -96,34 +66,18 @@ class MaisInformacoesForm extends Form
                 'value' => 'yes',
             ],
         ]);
+
         $this->add([
-            'type' => Element\Radio::class,
+            'type' => Element\Checkbox::class,
             'name' => 'aceitaLigacao',
             'options' => [
                 'label' => 'Exibir meu(s) telefone(s)?',
-                'value_options' => [
-                    [
-                        'label' => 'SIM',
-                        'value' => '1',
-                        'selected' => true,
-                        'attributes' => [
-                            'id' => 'aceitaLigacao_radio_sim',
-                        ]
-                    ],
-                    [
-                        'label' => 'NÃO',
-                        'value' => '0',
-                        'selected' => false,
-                        'attributes' => [
-                            'id' => 'aceitaLigacao_radio_nao',
-                        ]
-                    ],
-                ],
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
             ],
-            'attributes' => [
-                'required' => true,
-            ]
         ]);
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'termo',
@@ -134,6 +88,7 @@ class MaisInformacoesForm extends Form
                 'required' => true,
             ],
         ]);
+
         $this->add([
             'type' => Element\Submit::class,
             'name' => 'submit',

@@ -18,88 +18,90 @@ if ($this->checkedChat !== '0') {
     $fields['aceitaChat']->setChecked(true);
 }
 
-$replace = $fields['aceitaLigacao']->getValueOptions();
-if ($this->checkedLigacao === '0') {
-    $replace[0]['selected'] = true;
-    $replace[1]['selected'] = false;
+if ($this->checkedLigacao !== '0') {
+    $fields['aceitaLigacao']->setChecked(true);
 }
-$fields['aceitaLigacao']->setValueOptions($replace);
 
 ?>
-<div class="container container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-12">
+<div class="container">
+    <h4 class="text-center">
+        Mais sobre o anúncio
+    </h4>
+    <div class="conteudo">
+        <form method="POST" name="form_maisInformacoesVeiculo" class="forms" role="form" id="form_maisInformacoesVeiculo">
 
-            <h4 class="text-center">
-                QUAIS OS DIFERENCIAIS DO SEU VEÍCULO?
-            </h4>
-            <div class="text-center my-3">
-                <small class="my-3 align-center">Preencha corretamente os campos abaixo e clique no botão próximo para criar seu anúncio.
-                    <br/>Campos com * são de preenchimento obrigatório.
+            <div class="field d-flex justify-content-between align-items-center">
+                <b class="mr-2">
+                    Aceita Troca?
+                </b>
+                <label class="switch">
+                    <?= $this->formElement($fields['idTroca']->setLabel('')) ?>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            
+            <div class="field d-flex justify-content-between align-items-center">
+                <b class="mr-2">
+                    Aceita contato por chat?
+                </b>
+                <label class="switch switch-success">
+                    <?= $this->formElement($fields['aceitaChat']->setLabel('')) ?>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <?php if ($this->userInfo()->isParticular()) : ?>
+                <div class="field d-flex justify-content-between align-items-center">
+                    <b class="mr-2">
+                        Aceita contato por ligação?
+                    </b>
+                    <label class="switch switch-success">
+                        <?= $this->formElement($fields['aceitaLigacao']->setLabel('')) ?>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            <?php endif; ?>
+
+            <div class="field d-flex justify-content-between align-items-center flex-wrap">
+                <b class="mr-2">
+                    Pode ser levado até o cliente?
+                </b>
+                <label class="switch switch-success">
+                    <?= $this->formElement($fields['delivery']->setLabel('')) ?>
+                    <span class="slider round"></span>
+                </label>
+                <small class="font-theme text-uppercase smallest w-100">
+                    <a href="#" data-toggle="collapse" data-target="#delivery-detalhes-collapse" class="text-cinza">
+                        <i class="fa fa-info-circle text-laranja" aria-hidden="true"></i> Clique aqui para saber mais
+                    </a>
                 </small>
             </div>
-            <form method="POST" name="form_maisInformacoesVeiculo" class="form-group" role="form" id="form_maisInformacoesVeiculo">
-                <div class="form-group form-group-default form-troca">
-                    <?= $this->formLabel($fields['idTroca']) ?>
-                    <?= $this->formRadio($fields['idTroca']) ?>
+        
+            <div class="collapse" id="delivery-detalhes-collapse">
+                <div class="px-3 py-0">
+                    <span>Ao marcar como <b class="text-verde">"SIM"</b> esta opção, é adicionada ao anúncio do veículo a seguinte mensagem:</span>
+                    <span><b class="text-verde">Este veículo pode ser levado até você.</b></span>
+                    <span>Dessa forma, sua revenda e o cliente podem acordar um local e horário.</span>
+                    <span>Assim, sua revenda poderá <b>continuar a atender seus clientes</b> sem desrespeitar os decretos contra o <b>COVID-19</b>.</span>
                 </div>
-                <?php if ($this->userInfo()->isParticular()) : ?>
-                <div class="form-group form-group-default form-troca required">
-                    <?= $this->formLabel($fields['aceitaLigacao']) ?>
-                    <div class="">
-                        <b class="text-danger">
-                            <span>Por motivos de Segurança os contatos do anunciante foram ocultados. Tenho ciência da possibilidade do contato de possíveis golpistas, mesmo assim desejo exibir meu(s) telefone(s)</span>
-                        </b>
-                    </div>
-                    <?= str_replace('radio-success', 'radio-danger', $this->formRadio($fields['aceitaLigacao']))?>
-                </div>
-                <?php endif; ?>
-                <?php
-                    if($this->userInfo()->isRevenda()):
-                        /** @var \Zend\Form\Element\Radio $deliveryRadio */
-                        $deliveryRadio = $fields['delivery'];
-                        $deliveryRadio->setAttribute('required', true);
-                ?>
-                    <div class="form-group form-group-default form-troca required">
-                        <?= $this->formLabel($deliveryRadio) ?>
-                        <?= $this->formRadio($deliveryRadio) ?>
-                        <br>
-                        <small class="font-theme text-uppercase smallest">
-                            <a href="#" data-toggle="collapse" data-target="#delivery-detalhes-collapse">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i> Clique aqui para saber mais
-                            </a>
-                        </small>
-                        <div class="collapse" id="delivery-detalhes-collapse">
-                            <div class="card card-body">
-                                <span>Ao marcar como <b>"SIM"</b> esta opção, é adicionada ao anúncio do veículo a seguinte mensagem:</span>
-                                <span><b>Este veículo pode ser levado até você</b></span>
-                                <span>Dessa forma, sua revenda e o cliente podem acordar um local e horário.</span>
-                                <span>Assim, sua revenda poderá <b>continuar a atender seus clientes</b> sem desrespeitar os decretos contra o <b>COVID-19</b>.</span>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                
-                <div class="checkbox checkbox-success form-group form-group-default">
-                    <?= $this->formCheckbox($fields['aceitaChat']) ?>
-                </div>
+            </div>
 
-                <div class="checkbox checkbox-success form-group form-group-default required">
-                    <?= $this->formCheckbox($fields['termo'])?>
-                    <div class="ml-4">
-                        <small class="font-theme text-uppercase smallest">
-                            Leia atentamente as informações contidas no
-                            <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja">termo de responsabilidade</a> 
-                            e 
-                            <a href="/../termos/politica-de-privacidade" target="_blank" class="text-laranja">política de privacidade.</a>
-                        </small>
-                    </div>
-                </div>
+            <div class="mb-1 mt-3">
+                <small class="text-uppercase text-reset d-flex flex-wrap">
+                    Leia atentamente as informações contidas no
+                    <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja mr-1">termo de responsabilidade</a> 
+                    e 
+                    <a href="/../termos/politica-de-privacidade" target="_blank" class="text-laranja ml-1">política de privacidade.</a>
+                </small>
+            </div>
+            <div class="check-termos checkbox checkbox-success text-reset form-group-default required pt-0 mt-0">
+                <?= $this->formCheckbox($fields['termo'])?>
+            </div>
 
-                <div class="form-group ">
-                    <?= $this->formSubmit($fields['submit']) ?>
-                </div>
-            </form>
-        </div>
+            <div class="form-group ">
+                <?= $this->formSubmit($fields['submit']) ?>
+            </div>
+        </form>
     </div>
 </div>
