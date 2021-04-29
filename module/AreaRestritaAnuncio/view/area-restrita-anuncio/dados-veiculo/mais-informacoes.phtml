@@ -63,20 +63,23 @@ if ($this->checkedLigacao !== '0') {
                 </div>
             <?php endif; ?>
 
-            <div class="field d-flex justify-content-between align-items-center flex-wrap">
-                <b class="mr-2">
-                    Pode ser levado até o cliente?
-                </b>
-                <label class="switch switch-success">
-                    <?= $this->formElement($fields['delivery']->setLabel('')) ?>
-                    <span class="slider round"></span>
-                </label>
-                <small class="font-theme text-uppercase smallest w-100">
-                    <a href="#" data-toggle="collapse" data-target="#delivery-detalhes-collapse" class="text-cinza">
-                        <i class="fa fa-info-circle text-laranja" aria-hidden="true"></i> Clique aqui para saber mais
-                    </a>
-                </small>
-            </div>
+            <?php if ($this->userInfo()->isRevenda()) : ?>
+                <div class="field d-flex justify-content-between align-items-center flex-wrap">
+                    <b class="mr-2">
+                        Pode ser levado até o cliente?
+                    </b>
+                    <label class="switch switch-success">
+                        <?= $this->formElement($fields['delivery']->setLabel('')) ?>
+                        <span class="slider round"></span>
+                    </label>
+                    <small class="font-theme text-uppercase smallest w-100">
+                        <a href="#" data-toggle="collapse" data-target="#delivery-detalhes-collapse" class="text-cinza">
+                            <i class="fa fa-info-circle text-laranja" aria-hidden="true"></i> Clique aqui para saber mais
+                        </a>
+                    </small>
+                </div>
+            <?php endif; ?>
+
         
             <div class="collapse" id="delivery-detalhes-collapse">
                 <div class="px-3 py-0">
