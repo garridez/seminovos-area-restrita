@@ -16,6 +16,9 @@
 .step-dados{
     @import "_dados";
 }
+.step-mais-informacoes{
+    @import "_step_mais_informacoes";
+}
 label{
     line-break: auto;
     white-space: normal;
