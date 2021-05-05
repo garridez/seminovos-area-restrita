@@ -22,4 +22,11 @@ class IndexController extends AbstractActionController
     {
         return new ViewModel();
     }
+
+    public function selecionarTipoAction()
+    {
+        $viewModel = new ViewModel();
+        $this->layout('layout/criar-anuncio');
+        return $viewModel;
+    }
 }

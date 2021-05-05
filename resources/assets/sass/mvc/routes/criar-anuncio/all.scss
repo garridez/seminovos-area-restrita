@@ -2,6 +2,10 @@
     @import 'index';
 }
 
+&.r-selecionar-tipo{
+    @import 'selecionar_tipo';
+}
+
 &.c-criar-anuncio.a-index{
     @import 'steps/_all';
 }

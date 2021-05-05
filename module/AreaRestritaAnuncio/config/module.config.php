@@ -35,6 +35,17 @@ return [
                     ]
                 ],
             ],
+            'selecionar-tipo' => [
+                'may_terminate' => true,
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/criar-anuncio',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'selecionar-tipo'
+                    ]
+                ],
+            ],
             'criar-anuncio' => [
                 'may_terminate' => true,
                 'type' => Segment::class,
