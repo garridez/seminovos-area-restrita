@@ -51,9 +51,10 @@ if ($idStatusAnuncio ?? false) {
         $diminuirPlano = true;
         $planoAtual = false;
     }
-} else {
-    $diminuirPlano = false;
-}
+}/* else {
+    $diminuirPlano = true;
+    var_dump("entrei 1");
+}*/
 
 if (($idStatusAnuncio  ?? false) && ($plano['idPlano'] ?? 0) == 1 && $idStatusAnuncio == 4 && $zeroKm) {
     $desabilitarPlano = true;
