@@ -16,11 +16,14 @@ module.exports.callback = ($) => {
     });
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function (e) {
-        advancedAlerts.warning({
-            text:`Plano já ativo, selecione outro plano ou clique em voltar`,
-            title:$('<span class="text-primary">').html('Atenção!')
-        });
-        stopEvent(e);
+        var idStatus = $('#dados-basicos input[name="idStatus"]').val();
+        if(idStatus != 10){
+            advancedAlerts.warning({
+                text:`Plano já ativo, selecione outro plano ou clique em voltar`,
+                title:$('<span class="text-primary">').html('Atenção!')
+            });
+            stopEvent(e);
+        }
     });
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function (e) {

@@ -52,7 +52,7 @@ if ($idStatusAnuncio ?? false) {
         $planoAtual = false;
     }
 } else {
-    $diminuirPlano = true;
+    $diminuirPlano = false;
 }
 
 if (($idStatusAnuncio  ?? false) && ($plano['idPlano'] ?? 0) == 1 && $idStatusAnuncio == 4 && $zeroKm) {
