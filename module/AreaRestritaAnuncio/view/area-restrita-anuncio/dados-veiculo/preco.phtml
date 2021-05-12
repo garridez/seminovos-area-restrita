@@ -38,11 +38,11 @@
                     <div class="mb-1"><b>Quanto <?= $veiculo ?> já rodou?</b></div>
                     <div class="d-flex align-items-center">
                         <div class="form-group mb-0 d-flex align-items-center">
-                            <b class="mr-2">KM</b>
+                            <b class="mr-2 text-laranja">KM</b>
                             <?= $this->formText($fields['kilometragem']) ?>
                         </div>
                         <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-km">
-                            <b class="mr-1 mr-md-2">Exibir KM</b>
+                            <b class="mr-1 mr-md-2">Exibir <span class="text-laranja">KM</span>?</b>
                             <label class="switch switch-danger switch-inverse-danger mb-0">
                                 <?= $this->formElement($fields['flag_km']->setLabel('')) ?>
                                 <span class="slider round"></span>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             
-            <div class="form-group form-group-default mb-0">
+            <div class="form-group form-group-default mb-2">
                 <b>Certo, agora fale sobre os diferenciais do seu carro, ou as observações que desejar. Não é obrigatório, ok?</b>
                 <div class="mt-2"><?= $this->formTextarea($fields['observacoes']) ?></div>
                 <div class="wordcount float-right justify-content-end">
@@ -60,30 +60,37 @@
                 </div>
             </div>
 
-            <div class="form-group form-group-default required">
-                <b>Por quanto deseja vender <?= $veiculo ?>?</b>
-                <div class="mt-1 d-flex align-items-center">
-                    <b class="mr-2 text-verde">R$</b>
-                    <?= $this->formText($fields['valor']) ?>
+
+            <div class="d-flex justify-content-between">
+                <div class="conjunto-preco form-group form-group-default required">
+                    <div class="mb-1"><b>Por quanto deseja vender <?= $veiculo ?>?</b></div>
+                    <div class="d-flex align-items-center">
+                        <div class="form-group mb-0 d-flex align-items-center">
+                            <div class="mt-1 d-flex align-items-center">
+                                <b class="mr-2 text-verde">R$</b>
+                                <?= $this->formText($fields['valor']) ?>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-preco">
+                            <b class="mr-1 mr-md-2">Exibir <span class="text-verde">preço</span>?</b>
+                            <label class="switch mb-0">
+                                <?= $this->formElement($fields['combinarValor']->setLabel('')) ?>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            
             <div class="d-flex justify-content-between w-100 align-items-center">
                 <div><b>Este veículo esta financiado?</b></div>
-                <div>
+                <div class="pr-1 pr-md-2 mr-0 mr-md-1">
                     <label class="switch mb-0">
                         <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
                         <span class="slider round"></span>
                     </label>
                 </div>
-            </div>
-
-            <div class="d-flex justify-content-between w-100 align-items-center">
-                <b>Ocultar o valor do veículo?</b>
-                <label class="switch mb-0">
-                    <?= $this->formElement($fields['combinarValor']->setLabel('')) ?>
-                    <span class="slider round"></span>
-                </label>
             </div>
 
             <div class="form-group">

@@ -36,6 +36,18 @@
             }
         }
 
+        .conjunto-preco .exibir-preco{
+            @include media-breakpoint-down(sm){
+                width: 60%;
+            }
+        }
+        .conjunto-preco{
+            &.required:after{
+                right: 49% !important;
+                top: 15px !important;
+            }
+        }
+
         padding: 1.9rem;
         padding-top: 1rem;
         padding-bottom: 1rem;
