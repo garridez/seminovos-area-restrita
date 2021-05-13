@@ -30,21 +30,29 @@
             }
         }
         .conjunto-km{
-            &.required:after{
-                right: 49% !important;
-                top: 15px !important;
+            input{
+                font-weight: bold;
             }
+            
         }
 
+        .form-group.required:after{
+            position: relative;
+            right: 4% !important;
+            top: initial !important;
+            bottom: 0.4rem !important;
+            @include media-breakpoint-down(sm){
+                right: 5% !important;
+            }
+        }
         .conjunto-preco .exibir-preco{
             @include media-breakpoint-down(sm){
                 width: 60%;
             }
         }
         .conjunto-preco{
-            &.required:after{
-                right: 49% !important;
-                top: 15px !important;
+            input{
+                font-weight: bold;
             }
         }
 

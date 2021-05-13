@@ -25,6 +25,13 @@
             $veiculo = 'o seu carro';
             break;
     }
+
+    if ($this->checkedCombinarValor) {
+        $fields['combinarValor']->setChecked(true);
+    }
+    if ($this->checkedExibirKm) {
+        $fields['flag_km']->setChecked(true);
+    }
 ?>
 <div class="container">
     <h4 class="text-center">
@@ -34,16 +41,16 @@
         <form method="POST" name="form_precoVeiculo" class="needs-validation forms" role="form" id="form_precoVeiculo">
 
             <div class="d-flex justify-content-between">
-                <div class="conjunto-km form-group form-group-default required">
+                <div class="conjunto-km form-group form-group-default">
                     <div class="mb-1"><b>Quanto <?= $veiculo ?> já rodou?</b></div>
                     <div class="d-flex align-items-center">
-                        <div class="form-group mb-0 d-flex align-items-center">
+                        <div class="form-group required mb-0 d-flex align-items-center">
                             <b class="mr-2 text-laranja">KM</b>
                             <?= $this->formText($fields['kilometragem']) ?>
                         </div>
                         <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-km">
                             <b class="mr-1 mr-md-2">Exibir <span class="text-laranja">KM</span>?</b>
-                            <label class="switch switch-danger switch-inverse-danger mb-0">
+                            <label class="switch mb-0">
                                 <?= $this->formElement($fields['flag_km']->setLabel('')) ?>
                                 <span class="slider round"></span>
                             </label>
@@ -62,10 +69,10 @@
 
 
             <div class="d-flex justify-content-between">
-                <div class="conjunto-preco form-group form-group-default required">
+                <div class="conjunto-preco form-group form-group-default">
                     <div class="mb-1"><b>Por quanto deseja vender <?= $veiculo ?>?</b></div>
                     <div class="d-flex align-items-center">
-                        <div class="form-group mb-0 d-flex align-items-center">
+                        <div class="form-group required mb-0 d-flex align-items-center">
                             <div class="mt-1 d-flex align-items-center">
                                 <b class="mr-2 text-verde">R$</b>
                                 <?= $this->formText($fields['valor']) ?>
@@ -83,9 +90,9 @@
                 </div>
             </div>
             
-            <div class="d-flex justify-content-between w-100 align-items-center">
+            <div class="form-group d-flex justify-content-between w-100 align-items-center">
                 <div><b>Este veículo esta financiado?</b></div>
-                <div class="pr-1 pr-md-2 mr-0 mr-md-1">
+                <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
                     <label class="switch mb-0">
                         <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
                         <span class="slider round"></span>

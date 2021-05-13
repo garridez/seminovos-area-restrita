@@ -40,17 +40,6 @@ class PrecoForm extends Form
         ]);
 
         $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'flag_km',
-            'options' => [
-                'label' => 'Não exibir Km?',
-            ],
-            'attributes' => [
-                'value' => 'no',
-            ],
-        ]);
-
-        $this->add([
             'type' => Element\Text::class,
             'name' => 'valor',
             'options' => [
@@ -70,12 +59,27 @@ class PrecoForm extends Form
             'type' => Element\Checkbox::class,
             'name' => 'combinarValor',
             'options' => [
-                'label' => 'Não exibir valor do veículo <b class="text-warning">(não recomendado)</b>',
+                'label' => 'Exibir preço',
+                'use_hidden_element' => true,
+                'checked_value' => 0,
+                'unchecked_value' => 1,
+            ],
+        ]);
+
+        /**
+         * rever quando o Felipe normalizar
+         */
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flag_km',
+            'options' => [
+                'label' => 'Exibir Km?',
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
         ]);
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'financiamento',
