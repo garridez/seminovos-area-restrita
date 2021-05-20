@@ -6,9 +6,16 @@ module.exports.callback = ($) => {
 };
 
 function init() {
-    var $ctx = $('#form_servicos-adicionais');
     var BtnContinuar = require('./helpers/BtnContinuar');
+    var $ctx = $('#form_servicos-adicionais');
 
+    $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
+
+      if(window.fromCheckout){
+        BtnContinuar.get().removeClass('hide d-none');
+        BtnContinuar.enable();
+      }
+    });
 
     $('input#servico-adicional-certificado').change(function () {
         var $this = $(this);
@@ -26,6 +33,7 @@ function init() {
         } else {
             adicionado.hide();
             adicionar.show();
+            $('.btn-continuar').click();
         }
 
 
