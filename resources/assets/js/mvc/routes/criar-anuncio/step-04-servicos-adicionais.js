@@ -7,6 +7,8 @@ module.exports.callback = ($) => {
 
 function init() {
     var $ctx = $('#form_servicos-adicionais');
+    var BtnContinuar = require('./helpers/BtnContinuar');
+
 
     $('input#servico-adicional-certificado').change(function () {
         var $this = $(this);

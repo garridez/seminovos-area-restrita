@@ -87,7 +87,11 @@ module.exports.callback = ($) => {
     stepsContainer
             .on('step:change:checkout step:change:finalizar', function (e) {
                 BtnContinuar.disable();
-                BtnContinuar.get().addClass('hide');
+                BtnContinuar.hide();
+            })
+            .on('step:change:servicos-adicionais', function (e) {
+                BtnContinuar.enable();
+                BtnContinuar.show();
             })
             .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
                 BtnContinuar.enable();
