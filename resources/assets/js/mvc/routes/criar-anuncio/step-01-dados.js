@@ -339,7 +339,7 @@ function init() {
                 //honda 95 - yamaha 115 - ktm 103 - Kawasaki 101 -MXF 203
                 if(marca.val()== 95 || marca.val()== 115 || marca.val() == 103 || marca.val() == 101  || marca.val() == 203){
                     $("select[name='modeloCarro'] option").addClass("hide");
-                    let modelosTrilha = [673,1095,1507,653,2122,668,838,1945,1609,2241,912,1716,1402,2237,2051,2146,2372,2373,2391];
+                    let modelosTrilha = [673,1095,1507,653,2122,668,838,1945,1609,2241,912,724,1716,1402,2237,2051,2146,2372,2373,2391];
                         modelosTrilha.forEach((element, index) => {
                             modelo.find(`option[value='${element}']`).removeClass("hide");
                         });
