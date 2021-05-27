@@ -37,6 +37,7 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
         case 'fotos':
             unset(
                 $rotasAnuncio['veiculo']['video'],
+                $rotasAnuncio['servicos-adicionais'],
                 $rotasAnuncio['plano'],
                 $rotasAnuncio['checkout']
             );
@@ -63,6 +64,7 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
 
         default:
             unset(
+                $rotasAnuncio['servicos-adicionais'],
                 $rotasAnuncio['plano'],
                 $rotasAnuncio['checkout']
             );
