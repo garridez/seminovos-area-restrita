@@ -75,8 +75,8 @@ class PrecoForm extends Form
             'options' => [
                 'label' => 'Exibir Km?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => 0,
+                'unchecked_value' => 1,
             ],
         ]);
 
