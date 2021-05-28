@@ -14,6 +14,12 @@ var methods = {
                 .removeClass('disabled')
                 .prop('disabled', false)
                 .attr('title', 'Continuar');
+    },
+    hide: function () {
+        return methods.get().addClass('hide d-none');
+    },
+    show: function () {
+        return methods.get().removeClass('hide d-none');
     }
 };
 module.exports = methods;

@@ -224,13 +224,20 @@ class DadosVeiculoController extends AbstractActionController
 
         $this->layout()->setTemplate('none');
 
+        $checkedExibirKm = (empty($data) ?  true : $data['flag_km']);
+        $checkedCombinarValor = (empty($data) ?  true : $data['combinarValor']);
+
+
         if($data['idVeiculo'] ?? false) {
             $precoForm->setIsEdition();
         }
 
         return new ViewModel([
             'formPrecoVeiculo' => $precoForm,
-            'tipoVeiculo' => $tipoVeiculo
+            'tipoVeiculo' => $tipoVeiculo,
+            'checkedExibirKm' => $checkedExibirKm,
+            'checkedCombinarValor' => $checkedCombinarValor,
+            'data' => $data
         ]);
     }
 
@@ -245,7 +252,7 @@ class DadosVeiculoController extends AbstractActionController
         $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
 
         $checkedLigacao = (empty($data) ?  false : $data['aceitaLigacao']);
-        
+
         $checkedChat = (empty($data) ?  false : $data['aceitaChat']);
 
         return new ViewModel([

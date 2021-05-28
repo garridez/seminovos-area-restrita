@@ -8,9 +8,9 @@ module.exports.callback = ($) => {
 function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
-    
+
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
-      
+
       if(window.fromCheckout){
         BtnContinuar.get().removeClass('hide d-none');
         BtnContinuar.enable();

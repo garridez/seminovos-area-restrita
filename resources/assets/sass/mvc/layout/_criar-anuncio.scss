@@ -1,3 +1,8 @@
+.step-list-container{
+    @include media-breakpoint-down(sm) {
+        line-height: 0px;
+    }
+}
 .page-container{
     min-height: 100%;
     margin-bottom: -50px;
@@ -12,7 +17,6 @@
 .row-full{
     width: 99.5vw;
 }
-
 .modal-fade{
     position: fixed;
     top: 0;

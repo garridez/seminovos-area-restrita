@@ -35,7 +35,7 @@ module.exports.callback = ($) => {
     });
 
     $('.anuncio-steps').on('click', '.step-plano label', function(e){
-      BtnContinuar.get().removeClass('hide d-none');
+      BtnContinuar.show();
       BtnContinuar.enable();
     });
 
@@ -44,7 +44,7 @@ module.exports.callback = ($) => {
         $('.btn-voltar').addClass('hide d-none');
       }
       if(window.fromCheckout){
-        BtnContinuar.get().removeClass('hide d-none');
+        BtnContinuar.show();
         BtnContinuar.enable();
       }
     });
@@ -93,7 +93,7 @@ module.exports.callback = ($) => {
         var servicoAdicionalCertificado = $('#servico-adicional-certificado');
         if (servicoAdicionalCertificado.is(':checked')) {
             valorTotal += parseFloat(servicoAdicionalCertificado.data('valor'));
-            
+
         }
         $('.valor-total').find('[data-valor-total]').html(valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
     });

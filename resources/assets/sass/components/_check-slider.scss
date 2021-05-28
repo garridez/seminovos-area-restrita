@@ -84,7 +84,8 @@ $theme-colors: map-merge(
   (
     "success": $verde,
     "warning" : $color-warning,
-    "danger" : $vermelho
+    "danger" : $vermelho,
+    "laranja" : $laranja
   ),
   $theme-colors
 );
