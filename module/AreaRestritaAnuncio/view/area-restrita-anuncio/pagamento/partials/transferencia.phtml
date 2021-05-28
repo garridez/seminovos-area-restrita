@@ -5,30 +5,37 @@
                 "nome"=> "Itaú",
                 "img"=> "/img/bancos/logo-itau.jpg",
                 "agencia" => "0781",
-                "conta" => "46.900-2"
+                "conta" => "46.900-2",
+                "link" => "https://app.adjust.com/ezb10an_eg0ygy9?&campaign=Home_Varejo&adgroup=&creative=&fallback=http%3A%2F%2Fwww.itau.com.br/conveniencia/celular/"
             ],
             [
                 "nome"=> "Bradesco",
                 "img"=> "/img/bancos/logo-bradesco.jpg",
                 "agencia" => "2286-1",
-                "conta" => "18.193-5"
+                "conta" => "18.193-5",
+                "link" => "https://www.bradescocelular.com.br/app_redirect/index.html?deeplink=app/listadeconta"                
             ],
             [
                 "nome"=> "Caixa",
                 "img"=> "/img/bancos/logo-caixa-eco.jpg",
                 "agencia" => "2984",
-                "conta" => "00003919-6"
+                "conta" => "00003919-6",
+                "link" => "https://internetbanking.caixa.gov.br/sinbc/#!nb/login"
             ],
             [
                 "nome"=> "Brasil",
                 "img"=> "/img/bancos/logo-bb.jpg",
                 "agencia" => "1614-4",
                 "conta" => "15.062-2",
-                "operacao" => "003"
+                "operacao" => "003",
+                "link" => "https://www.bb.com.br/AppBBFloat"
+
             ]]  as $banco): ?>
         <div class="w-50 mb-2">
             <div title="Banco <?=$banco['nome']?>">
-                <img src="<?=$banco['img']?>" title="Banco <?=$banco['nome']?>" alt="Logo <?=$banco['nome']?>" style="width: 50px; height: 50px;">
+                <a href="<?= $banco['link'] ?>" target="_BLANK">
+                    <img src="<?=$banco['img']?>" title="Banco <?=$banco['nome']?>" alt="Logo <?=$banco['nome']?>" style="width: 50px; height: 50px;">
+                </a>
                 <div class="d-flex justify-content-center">
                     <div>Agência:</div>
                     <div><?=$banco['agencia']?></div>
