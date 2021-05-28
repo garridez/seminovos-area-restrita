@@ -26,10 +26,12 @@
             break;
     }
 
-    if ($this->checkedCombinarValor) {
+
+    if ($checkedCombinarValor != '1') {
         $fields['combinarValor']->setChecked(true);
     }
-    if ($this->checkedExibirKm) {
+
+    if ($checkedExibirKm != '1') {
         $fields['flag_km']->setChecked(true);
     }
 ?>

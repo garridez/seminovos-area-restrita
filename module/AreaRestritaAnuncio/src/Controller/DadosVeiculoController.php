@@ -224,8 +224,8 @@ class DadosVeiculoController extends AbstractActionController
 
         $this->layout()->setTemplate('none');
 
-        $checkedExibirKm = (empty($data) ?  true : $data['flag_km']);
         $checkedCombinarValor = (empty($data) ?  true : $data['combinarValor']);
+        $checkedExibirKm = (empty($data) ?  true : $data['flag_km']);
 
 
         if($data['idVeiculo'] ?? false) {
