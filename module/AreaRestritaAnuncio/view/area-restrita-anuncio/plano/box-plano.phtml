@@ -82,7 +82,12 @@ $nomePlano = mb_strtoupper($nomePlano);
             </div>
             <h3><?= $nomePlano ?></h3>
         </div>
-        <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?>">
+        <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?> <?= $isRevenda ? 'is-revenda' : '' ?>">
+            <?php if($plano['prioridade'] == 1 && !$isRevenda): ?>
+                <li class="tempo-na-home">
+                    <span>Exibição na <strong class="mx-1">Home do site</strong><br><small>por 30 dias podendo ser renovado</small></span>
+                </li>
+            <?php endif; ?>
             <li>
                 <span>
                     <strong>

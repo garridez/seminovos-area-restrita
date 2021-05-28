@@ -25,6 +25,20 @@
         span{
             font-size: 0.80rem;
         }
+        ul.list.list-styled:not(.is-revenda){
+            &.list-nitro-home li.tempo-na-home{
+                line-height: 7px !important;
+                span{
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+            &:not(.list-nitro-home){
+                @include media-breakpoint-up(md){
+                    padding-top: 28px;
+                }
+            }
+        }
         &.plano-desabilitado{
             .icon-plano{
                 span[class^="bar-"]{
