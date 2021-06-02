@@ -90,6 +90,17 @@ class PrecoForm extends Form
                 'unchecked_value' => 0,
             ],
         ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flagFinanciar',
+            'options' => [
+                'label' => 'Este veículo pode ser financiado?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
 
         $this->add([
             'type' => Element\Submit::class,

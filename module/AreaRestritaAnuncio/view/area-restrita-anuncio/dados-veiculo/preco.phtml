@@ -91,15 +91,29 @@
                 </div>
             </div>
             
-            <div class="form-group d-flex justify-content-between w-100 align-items-center">
-                <div><b>Este veículo esta financiado?</b></div>
-                <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
-                    <label class="switch mb-0">
-                        <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
-                        <span class="slider round"></span>
-                    </label>
+            <?php if ($this->userInfo()->isParticular()) : ?>
+                <div class="form-group d-flex justify-content-between w-100 align-items-center">
+                    <div><b>Este veículo esta financiado?</b></div>
+                    <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
+                        <label class="switch mb-0">
+                            <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
+            
+            <?php if ($this->userInfo()->isRevenda()) : ?>
+                <div class="form-group d-flex justify-content-between w-100 align-items-center">
+                    <div><b>Este veículo pode ser financiado?</b></div>
+                    <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
+                        <label class="switch mb-0">
+                            <?= $this->formElement($fields['flagFinanciar']->setLabel('')) ?>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="form-group">
                 <?= $this->formSubmit($fields['submit']) ?>
