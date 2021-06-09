@@ -43,7 +43,7 @@ class Planos extends AbstractModel
         return parent::get([
                 'tipoPlano' => $tipoPlano,
                 'status' => $status
-                ], null, null)->getData();
+                ], null, $cache)->getData();
     }
 
     public function getPlanosUsados($cacheable = false)
