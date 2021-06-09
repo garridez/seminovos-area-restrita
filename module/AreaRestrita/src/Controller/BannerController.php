@@ -41,13 +41,17 @@ class BannerController extends AbstractActionController
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
-
-        $banners = $this->getApiClient()
-                        ->SiteHospedadoBannerGet(['idSiteHospedado' => $dadosSiteHospedado[0]['idSiteHospedado']])
+        
+        $dadosSite = $dadosSiteHospedado[0]['idSiteHospedado']?? null;
+        
+        if($dadosSite){
+            $banners = $this->getApiClient()
+                        ->SiteHospedadoBannerGet(['idSiteHospedado' => $dadosSite])
                         ->json();
+        }
 
         return new ViewModel([
-            'banners' => $banners['dados'],
+            'banners' => $banners['dados']??[],
             'siteHospedado' => $dadosSiteHospedado
         ]);
     }

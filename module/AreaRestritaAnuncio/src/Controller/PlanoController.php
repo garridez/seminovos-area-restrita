@@ -19,7 +19,7 @@ class PlanoController extends AbstractActionController
 
         $dadosPlanos = $this->getContainer()
             ->get(Planos::class)
-            ->get(2);
+            ->get(2, true, -1);
 
         if ($this->getCadastro('tipoCadastro') == '1') {
             $template = 'revenda';
@@ -33,6 +33,9 @@ class PlanoController extends AbstractActionController
             });
         } else {
             $template = 'particular';
+            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda) {
+                return in_array($i['status'], [1]);
+            });
         }
 
         $data = [

@@ -29,15 +29,20 @@ class Planos extends AbstractModel
                 ], null, $cacheable)->getData();
     }
 
-    public function get($tipoPlano = null, $cache = true)
+    public function get($tipoPlano = null, $cache = true, $status = 1)
     {
         if (!is_numeric($tipoPlano)) {
             $tipoPlano = Cadastros::TIPO_STRING_ID[strtolower($tipoPlano)];
         }
         $tipoPlano = Cadastros::TIPO_ID_STRING[(int) $tipoPlano];
 
+        if($tipoPlano === 'revenda'){
+            $status = -1;
+        }
+
         return parent::get([
-                'tipoPlano' => $tipoPlano
+                'tipoPlano' => $tipoPlano,
+                'status' => $status
                 ], null, $cache)->getData();
     }
 
