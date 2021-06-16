@@ -56,7 +56,6 @@ module.exports.callback = ($) => {
             type: 'POST',
             dataType: 'json',
             success: function (httpResponse) {
-                Loading.close();
                 if (httpResponse.html) {
                     $('.retorno-boleto').html(httpResponse.html);
                     return;
