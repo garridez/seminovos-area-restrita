@@ -37,6 +37,18 @@ module.exports.callback = ($) => {
             name: 'tempo_contrato',
             value: tempo_contrato,
         });
+
+
+        var Loading = require('components/Loading');
+        Loading.addFeedbackTexts([
+          'Validando informações...',
+          'Realizando pagamento ...'
+        ], false);
+
+        Loading.open();
+        $btnSubmit = $(this).find('button[type="submit"]');
+
+
         var ajaxDefaultParams = {
             url: '/carro/checkout/processar',
             cache: false,
@@ -44,7 +56,7 @@ module.exports.callback = ($) => {
             type: 'POST',
             dataType: 'json',
             success: function (httpResponse) {
-                
+                Loading.close();
                 if (httpResponse.html) {
                     $('.retorno-boleto').html(httpResponse.html);
                     return;
@@ -63,7 +75,7 @@ module.exports.callback = ($) => {
                 /**
                  * Caso seja necessário redirecionar o cliente para alguma tela de pagamento
                  * como PagSeguro ou se escolhido a opção 'débito' da Cielo
-                 * 
+                 *
                  * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
                  * @return void
                  */
@@ -81,14 +93,17 @@ module.exports.callback = ($) => {
                         title,
                         text,
                         closeText,
-                        time   
+                        time
                     });
 
                     $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
                 }
+                $btnSubmit.prop('disabled',true);
+                Loading.close();
             },
             error: function (e) {
                 HandleApiError(e.responseText);
+                Loading.close();
             }
         };
         var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
@@ -163,7 +178,7 @@ module.exports.callback = ($) => {
         if (direction === 'finish'){
             return true;
         }
-        
+
         var idTab = $('.tab-content-main > .tab-pane.active').attr('id');
         if (idTab) {
             idTab = idTab.replace('tab-', '');
