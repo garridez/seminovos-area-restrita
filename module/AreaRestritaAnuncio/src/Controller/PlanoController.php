@@ -33,7 +33,7 @@ class PlanoController extends AbstractActionController
             });
         } else {
             $template = 'particular';
-            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda) {
+            $dadosPlanos = array_filter($dadosPlanos, function($i) {
                 return in_array($i['status'], [1]);
             });
         }

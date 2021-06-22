@@ -111,7 +111,7 @@ $nomePlano = mb_strtoupper($nomePlano);
                     <span>
                         <?php
                         if ($isGratis) {
-                            echo 'Exibição no site por <b>apenas 10 dias</b>';
+                            echo 'Exibição no site por <b>apenas  '. $plano['dias'] .' dias</b>';
                         } else {
                             echo 'Exibição no site até a venda*';
                         }
