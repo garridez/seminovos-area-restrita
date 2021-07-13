@@ -165,7 +165,8 @@ $versao = $form->get('versao')->getValue();
                     <div class="opcionais">
                         <?php
                             $destaques = [
-                                $this->formCheckbox($fields['flagIpva'])
+                                $this->formCheckbox($fields['flagIpva']),
+                                $this->formCheckbox($fields['adaptado']),
                             ];
 
                             foreach ($destaques as $key => $value) {

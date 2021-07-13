@@ -199,6 +199,17 @@ class DadosForm extends Form
                 'unchecked_value' => 0,
             ],
         ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'adaptado',
+            'options' => [
+                'label' => 'Adaptado para PCD?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
 
         global $container;
         /** @var CheckboxAcessorios $checkboxAcessorios */
