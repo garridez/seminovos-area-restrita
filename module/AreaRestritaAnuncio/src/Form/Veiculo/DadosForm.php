@@ -304,12 +304,14 @@ class DadosForm extends Form
                 'motor',
                 'acessorios',
                 'motoCilindradas',
-                'motoTrilha'
+                'motoTrilha',
+                'adaptado'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
                 'motor',
-                'portas'
+                'portas',
+                'adaptado'
             ],
         ];
         if (isset($removerCamposPorTipo[$tipoVeiculo])) {
