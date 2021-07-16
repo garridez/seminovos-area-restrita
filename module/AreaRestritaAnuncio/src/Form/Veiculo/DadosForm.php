@@ -199,6 +199,17 @@ class DadosForm extends Form
                 'unchecked_value' => 0,
             ],
         ]);
+        
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'adaptado',
+            'options' => [
+                'label' => 'Adaptado para PCD?',
+                'use_hidden_element' => true,
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+            ],
+        ]);
 
         global $container;
         /** @var CheckboxAcessorios $checkboxAcessorios */
@@ -293,12 +304,14 @@ class DadosForm extends Form
                 'motor',
                 'acessorios',
                 'motoCilindradas',
-                'motoTrilha'
+                'motoTrilha',
+                'adaptado'
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
                 'motor',
-                'portas'
+                'portas',
+                'adaptado'
             ],
         ];
         if (isset($removerCamposPorTipo[$tipoVeiculo])) {
