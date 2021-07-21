@@ -16,6 +16,7 @@ use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
 use SnBH\ApiClient\Client as ApiClient;
 use Zend\View\Model\ViewModel;
+use SnBH\Common\Helper\StringFuncs;
 
 class XmlController extends AbstractActionController
 {
@@ -122,7 +123,6 @@ class XmlController extends AbstractActionController
                 return $array;
             }, $marcasApi->data);
 
-
         // Busca modelos
         $modelosApi = $this->getApiClient()->modelosGet();
         $modelosApi->data = 
@@ -188,9 +188,8 @@ class XmlController extends AbstractActionController
                         break;
                     
                     case 'MAKE': // Marca
-                        
                         foreach ($marcasApi->data as $marcaApi) {
-                            if (preg_match("/($item->nodeValue)/i", $marcaApi['marca'])) {
+                            if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', $marcaApi['marca']))) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
@@ -203,11 +202,12 @@ class XmlController extends AbstractActionController
                     
                     case 'MODEL': // Modelo
                         $modeloXml = $item->nodeValue;
-                        
-                        
+
                         foreach ($modelosApi->data as $modeloApi) {
                             // Escapa a "/" nos modelos
                             $modeloApiString = preg_replace("/\//", "\/", $modeloApi['modelo']);
+
+                            $modeloApiSemEspaco = StringFuncs::removeCaractersEspecias($modeloApiString);
 
                             // Cria 2 palavras com o modelo se possivel: ka hatch => [ka, hatch]
                             $modeloApiArray = explode(" ", $modeloApiString);
@@ -230,6 +230,10 @@ class XmlController extends AbstractActionController
                                     
                                 // 3º tenta dar match na segunda palavra do modelo
                                 } else if (isset($palavra2) && preg_match("/\s?($palavra2)/", $modeloXml)) {
+                                    $veiculo['modeloCarro'] = $modeloApi['idModelo'];
+                                    break;
+                                    // 4º tenta dar match na primeira palavra do modelo sem espaço se ele tiver mais q 2 caracteres
+                                } else if (preg_match("/[a-zA-Z0-9]/", $modeloXml) && preg_match("/\s?^($modeloApiSemEspaco)(.*)?/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
                                 }
