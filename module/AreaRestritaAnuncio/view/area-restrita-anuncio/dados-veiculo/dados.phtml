@@ -166,8 +166,11 @@ $versao = $form->get('versao')->getValue();
                         <?php
                             $destaques = [
                                 $this->formCheckbox($fields['flagIpva']),
-                                $this->formCheckbox($fields['adaptado']),
                             ];
+                            
+                            if(isset($fields['adaptado'])) {
+                                $destaques[] = $this->formCheckbox($fields['adaptado']);
+                            }
 
                             foreach ($destaques as $key => $value) {
                                 $value = str_replace('class="checkbox"', 'class="checkbox-custom"', $value);
