@@ -189,7 +189,14 @@ class XmlController extends AbstractActionController
                     
                     case 'MAKE': // Marca
                         foreach ($marcasApi->data as $marcaApi) {
-                            if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', $marcaApi['marca']))) {
+                            if (preg_match("/($item->nodeValue)/i", $marcaApi['marca'])) {
+                                $veiculo['marca'] = $item->nodeValue;
+                                $veiculo['idMarca'] = $marcaApi['idMarca'];
+                                // Busca modelos
+                                $modelos =  $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']]);
+                                $veiculo['modelos'] = $modelos->data;
+                                break;
+                            } else if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', $marcaApi['marca']))) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
