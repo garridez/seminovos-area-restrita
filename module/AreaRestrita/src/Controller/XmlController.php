@@ -315,9 +315,14 @@ class XmlController extends AbstractActionController
 
                     case 'IMAGES':
                         $arrayFotos = [];
-
+                        $count = 0;
+                        
                         foreach ($item->childNodes as $imagem) {
+                            if ($count > 11) {
+                                break;
+                            }
                             $veiculo['imagens'][] = $imagem->nodeValue;
+                            $count++;
                         }
                         break;
                 }
