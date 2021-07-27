@@ -39,7 +39,7 @@ class XmlController extends AbstractActionController
         $planos = [
             'nitro' => $dadosCadastro['nitro'],
             'turbo' => $dadosCadastro['turbo'],
-            'basico' => $dadosCadastro['simples'],
+            'simples' => $dadosCadastro['simples'],
         ];
 
         return new ViewModel([
@@ -315,9 +315,14 @@ class XmlController extends AbstractActionController
 
                     case 'IMAGES':
                         $arrayFotos = [];
-
+                        $count = 0;
+                        
                         foreach ($item->childNodes as $imagem) {
+                            if ($count > 11) {
+                                break;
+                            }
                             $veiculo['imagens'][] = $imagem->nodeValue;
+                            $count++;
                         }
                         break;
                 }
@@ -370,6 +375,14 @@ class XmlController extends AbstractActionController
 
             // Formata o valor do dinheiro para o Banco
             $veiculo['valor'] = preg_replace(['/\./', '/\,/'], ['', '.'], $veiculo['valor']);
+
+            if (isset($veiculo['observacoes']) && $veiculo['observacoes']) {
+                // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
+                $auxTexto = str_replace("\r\n","",StringFuncs::removerAcentos($veiculo['observacoes']));
+                if(strlen($auxTexto) > 700){
+                    $veiculo['observacoes'] = mb_substr($veiculo['observacoes'], 0, 700,'UTF8');
+                }
+            }
             
             // Faz upload das imagens
             $arrayFotos = [];
