@@ -38,6 +38,10 @@ class SelectCombustivel extends Select
                     5 => 'Gasolina + Kit Gás',
                     6 => 'Kit Gás',
                     7 => 'Tetra Fuel',
+                    8 => 'Gasolina e elétrico',
+                    9 => 'Álcool + Kit Gás',
+                    10 => 'Bi-Combustível + Kit Gás',
+                    11 => 'Elétrico',
                 ];
                 break;
             case 2:
