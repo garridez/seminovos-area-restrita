@@ -307,6 +307,22 @@ class XmlController extends AbstractActionController
                                 $veiculo['combustivel'] = 7;
                                 break;
                             
+                            case 'gasolina e eletrico|gasolina+eletrico|gasolina + eletrico|gasolina + elétrico|gasolina e elétrico':
+                                $veiculo['combustivel'] = 8;
+                                break;
+                            
+                            case 'alcool e gas|alcool+gas|alcool + gas|alcool + kit gas|alcool + kit-gas':
+                                $veiculo['combustivel'] = 9;
+                                break;
+                            
+                            case 'bi combustivel e gas|bi combustivel+gas|bi combustivel + gas|bi combustivel + kit gas|bi combustivel + kit-gas':
+                                $veiculo['combustivel'] = 10;
+                                break;
+                            
+                            case 'eletrico|elétrico':
+                                $veiculo['combustivel'] = 11;
+                                break;
+                            
                             default:
                                 $veiculo['combustivel'] = 4;
                                 break;
