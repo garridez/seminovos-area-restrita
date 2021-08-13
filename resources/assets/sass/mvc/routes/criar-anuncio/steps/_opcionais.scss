@@ -74,4 +74,10 @@
         // content: "\F00C";
         // color: #fff;
     }
+    .detalhes-pcd{
+        text-align: center;
+        @include media-breakpoint-up(md) {
+            text-align: right;
+        }
+    }
 }
