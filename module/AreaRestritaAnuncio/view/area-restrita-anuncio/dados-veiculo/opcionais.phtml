@@ -88,30 +88,39 @@ if($tipoVeiculo === 1){
 
                     <div class="opcionais">
                         <?php
-                            $destaques = [
-                                $this->formCheckbox($fields['flagIpva'])
-                            ];
-                            if(isset($fields['adaptado'])) {
-                                $destaques[] = $this->formCheckbox($fields['adaptado']);
+                        $destaques = [
+                            $this->formCheckbox($fields['flagIpva'])
+                        ];
+                        foreach ($destaques as $key => $value) {
+                            $value = str_replace('class="checkbox"', 'class="checkbox-custom"', $value);
+
+                            $value = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $value);
+
+                            $value = explode('<div', $value);
+                            if (trim($value[0]) == '') {
+                                unset($value[0]);
+                            } ?>
+
+                            <div class="checkbox-custom">
+                                <?= $value[0] ?>
+                            </div>
+                        <?php
+                        }
+                        if(isset($fields['adaptado'])) {
+                            $adaptadoHTML = $this->formCheckbox($fields['adaptado']);
+                            $adaptadoHTML = str_replace('class="checkbox"', 'class="checkbox-custom"', $adaptadoHTML);
+                            $adaptadoHTML = str_replace('</label>', '<i class="fa fa-wheelchair" aria-hidden="true"></i><i class="fa fa-check" aria-hidden="true"></i></label>', $adaptadoHTML);
+                            $adaptadoHTML = explode('<div', $adaptadoHTML);
+                            if (trim($adaptadoHTML[0]) == '') {
+                                unset($adaptadoHTML[0]);
                             }
-
-                            foreach ($destaques as $key => $value) {
-                                $value = str_replace('class="checkbox"', 'class="checkbox-custom"', $value);
-
-                                $value = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $value);
-
-                                $value = explode('<div', $value);
-                                if (trim($value[0]) == '') {
-                                    unset($value[0]);
-                                } ?>
-
-                                <div class="checkbox-custom">
-                                    <?= $value[0] ?>
-                                </div>
-                            <?php
-                            }
-                        ?>
+                            $adaptadoHTML = $adaptadoHTML[0];
+                        }?>
+                        <div class="checkbox-custom" data-toggle="collapse" data-target=".detalhes-pcd" aria-expanded="false">
+                            <?= $adaptadoHTML ?>
+                        </div>
                     </div>
+                    <div class="text-right detalhes-pcd collapse">Este veículo é adaptado para <b class="text-success">PCD (Pessoa com deficiência)</b></div>
                 </div>
             <?php endif; ?>
         </div>
