@@ -226,6 +226,7 @@ class DadosVeiculoController extends AbstractActionController
 
         $checkedCombinarValor = (empty($data) ?  true : $data['combinarValor']);
         $checkedExibirKm = (empty($data) ?  true : $data['flag_km']);
+        $checkedFlagFinanciar = (empty($data) ?  true : $data['flagFinanciar'] ?? 0);
 
 
         if($data['idVeiculo'] ?? false) {
@@ -236,6 +237,7 @@ class DadosVeiculoController extends AbstractActionController
             'formPrecoVeiculo' => $precoForm,
             'tipoVeiculo' => $tipoVeiculo,
             'checkedExibirKm' => $checkedExibirKm,
+            'checkedFlagFinanciar' => $checkedFlagFinanciar,
             'checkedCombinarValor' => $checkedCombinarValor,
             'data' => $data
         ]);

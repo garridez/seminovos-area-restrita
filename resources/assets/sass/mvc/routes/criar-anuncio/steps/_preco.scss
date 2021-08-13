@@ -110,6 +110,9 @@
                 letter-spacing: initial;
                 text-transform: initial;
             }
+            a{
+                color:#575757;
+            }
             textarea{
                 padding: 0.5rem;
                 border: 2px solid #ccc !important;
@@ -145,6 +148,23 @@
                 font-size: 0.9rem;
             }
         }
-
+        .group-financiamento{
+            .rodape{
+                line-height: 12px;
+            }
+            
+        }
+        .detalhes-financiamento{
+            a{
+                color:#575757;
+            }
+            .link-bv{
+                color: #5A71B4;
+                font-weight: 600;
+            }
+            i{
+                font-size: 60%;
+            }
+        }
     }
 }

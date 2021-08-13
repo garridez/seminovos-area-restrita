@@ -16,6 +16,13 @@ module.exports.callback = ($) => {
         var ctx = $('.step-0, .step-1');
         DataLayerGTMPopulate(ctx,'checkout_step_1');
       }
+
+      var anoVeiculo = parseInt($('.step-dados').find('select[name="anoModelo"]').val()) || 0;
+      var anoAtual = new Date().getFullYear();
+      var stepPreco = $('.step-preco');
+      if((anoAtual - anoVeiculo) <= 4){
+        stepPreco.find('.control-financiamento').removeClass('d-none');
+      }
     });
     $('.step-container').on('step:pre-exit:preco', function(){
       if($('#dados-basicos #flagCriando').val() == 1){

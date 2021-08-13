@@ -33,6 +33,10 @@
     if ($checkedExibirKm !== '1') {
         $fields['flag_km']->setChecked(true);
     }
+
+    if ($checkedFlagFinanciar !== '0') {
+        $fields['flagFinanciar']->setChecked(true);
+    }
 ?>
 <div class="container">
     <h4 class="text-center">
@@ -102,10 +106,20 @@
                     </div>
                 </div>
             <?php endif; ?>
-            
-            <?php/* if ($this->userInfo()->isRevenda()) : */?>
-                <div class="form-group d-flex justify-content-between w-100 align-items-center">
-                    <div><b>Este veículo pode ser financiado?</b></div>
+            <?php $particularClass = $this->userInfo()->isParticular()? 'd-none' : '' ; ?>
+            <div class="control-financiamento <?= $particularClass ?>">
+                <div class="form-group group-financiamento mb-0 d-flex justify-content-between w-100 align-items-center">
+                    <?php if ($this->userInfo()->isParticular()) : ?>
+                        <div>
+                            <a href="" data-toggle="collapse" data-target=".texto-financiamento" aria-expanded="true" aria-controls="texto-financiamento">
+                                <b class="mr-2">Quero disponibilizar meu veículo para financiamento?</b>
+                                <i class="fa fa-info-circle text-laranja" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div><b class="mr-2">Este veículo pode ser financiado?</b></div>
+                    <?php endif; ?>
+
                     <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
                         <label class="switch mb-0">
                             <?= $this->formElement($fields['flagFinanciar']->setLabel('')) ?>
@@ -113,7 +127,31 @@
                         </label>
                     </div>
                 </div>
-            <?php/* endif; */?>
+
+                <?php if ($this->userInfo()->isParticular()) : ?>
+                    <div class="detalhes-financiamento">
+
+                        <div class="d-flex rodape">
+                            <a href="" data-toggle="collapse" data-target=".texto-financiamento" aria-expanded="true" aria-controls="texto-financiamento">
+                                <small>A <b class="text-laranja">Seminovos</b> fez uma parceria com a <b class="link-bv">BV Financeira</b> que disponibiliza o <b>financiamento de veículos em particulares.</b></small>
+                            </a>
+                        </div>
+                        <div class="mt-2 texto-financiamento collapse">
+                            <b class="">Como funciona: </b>
+                            <p class="mb-0"><i class="fa fa-circle text-laranja mr-1"></i>O interessado <b>clica no botão</b> disponível no seu anúncio.</p>                    
+                            <p class="mb-0"><i class="fa fa-circle text-laranja mr-1"></i>Preenche o formulário com dados dele.</p>
+                            <p class="mb-0"><i class="fa fa-circle text-laranja mr-1"></i>Enviamos os dados do veículo e o <b>seu contato para a financeira.</b></p>
+                            <p class="mb-0"><i class="fa fa-circle text-laranja mr-1"></i>Financeira faz uma avaliação e em caso de aprovação <b>entra em contato com você (vendedor)</b> para que o processo de financiamento dê continuidade.</p>
+                            <p class="mb-2"><i class="fa fa-circle text-laranja mr-1"></i>Você <b>não pagará</b> nada há mais por isso, e facilita o pagamento ao comprador, <b>aumentando a chance de venda</b>.</p>
+                            <b class="">IMPORTANTE:</b>
+                            <p class="mb-0">Está é mais uma funcionalidade para que seu carro seja vendido de forma segura e <b class="text-verde">o recebimento é á vista</b> por parte da financeira.</p>
+                            <p class="mb-0"><small>*Atualmente o Financiamento com a BV Financeira só está disponível para vendas com <b>valor acima de R$ 60.000,00</b> e com <b>modelo  do veículo superior a <?= Date('Y') - 4 ?>.</b></samll></p>
+                            <p class="mb-0"><small>*O processo de verificação de crédito e pagamento é de <b>responsabilidade da financeira!</b></samll></p>
+                            <p class="mb-0"><small>**Processo pela financeira ocorre <b>100% online.</b></samll></p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
 
             <div class="form-group">
                 <?= $this->formSubmit($fields['submit']) ?>
