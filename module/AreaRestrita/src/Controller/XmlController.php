@@ -124,12 +124,12 @@ class XmlController extends AbstractActionController
             }, $marcasApi->data);
 
         // Busca modelos
-        $modelosApi = $this->getApiClient()->modelosGet();
+        /*$modelosApi = $this->getApiClient()->modelosGet();
         $modelosApi->data = 
             array_map(function($array) {
                 $array['modelo'] = $this->removerAcentos($array['modelo']);
                 return $array;
-            }, $modelosApi->data);        
+            }, $modelosApi->data); */       
 
         
         // Carrega o XML
@@ -210,7 +210,7 @@ class XmlController extends AbstractActionController
                     case 'MODEL': // Modelo
                         $modeloXml = $item->nodeValue;
 
-                        foreach ($modelosApi->data as $modeloApi) {
+                        foreach ($modelos->data as $modeloApi) {
                             // Escapa a "/" nos modelos
                             $modeloApiString = preg_replace("/\//", "\/", $modeloApi['modelo']);
 
@@ -241,6 +241,10 @@ class XmlController extends AbstractActionController
                                     break;
                                     // 4º tenta dar match na primeira palavra do modelo sem espaço se ele tiver mais q 2 caracteres
                                 } else if (preg_match("/[a-zA-Z0-9]/", $modeloXml) && preg_match("/\s?^($modeloApiSemEspaco)(.*)?/", $modeloXml)) {
+                                    $veiculo['modeloCarro'] = $modeloApi['idModelo'];
+                                    break;
+                                // 5º tenta dar match na primeira palavra do modelo de forma simples
+                                } else if (preg_match("/$palavra1/i", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
                                 }
