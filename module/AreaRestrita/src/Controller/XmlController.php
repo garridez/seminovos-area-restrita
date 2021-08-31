@@ -39,7 +39,7 @@ class XmlController extends AbstractActionController
         $planos = [
             'nitro' => $dadosCadastro['nitro'],
             'turbo' => $dadosCadastro['turbo'],
-            'simples' => $dadosCadastro['simples'],
+            'basico' => $dadosCadastro['simples'],
         ];
 
         return new ViewModel([
@@ -71,8 +71,10 @@ class XmlController extends AbstractActionController
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
 
+        //conversão plano do banco, para o padrão aplicado
+        $plano = $inputs['plano'] == 'basico' ? 'simples' : $inputs['plano'];
         // Numero de veículos que podem ser cadastrados no plano selecionado
-        $quantidadeAnunciosPlano = $dadosCadastro[$inputs['plano']];
+        $quantidadeAnunciosPlano = $dadosCadastro[$plano];
 
         switch ($inputs['plano']) {
             case 'simples':
@@ -153,8 +155,10 @@ class XmlController extends AbstractActionController
                         break;
                     
                     case 'CATEGORY': // Tipo veículo
-                        $veiculo['tipo'] = strtolower($item->nodeValue) == 'carro' ? 1 : (strtolower($item->nodeValue) == 'moto' ? 3 : 2);
-                        $veiculo['tipoVeiculo'] = strtolower($item->nodeValue) == 'carro' ? 1 : (strtolower($item->nodeValue) == 'moto' ? 3 : 2);
+                        $node = strtolower($item->nodeValue);
+                        $tipo = $node == 'carro' ? 1 : (($node == 'moto' || $node == 'motocicleta') ? 3 : 2);
+                        $veiculo['tipo'] = $tipo;
+                        $veiculo['tipoVeiculo'] = $tipo;
                         break;
                     
                     case 'DESCRIPTION': // observações
@@ -282,8 +286,9 @@ class XmlController extends AbstractActionController
                         break;
                     
                     case 'FUEL': // Combustivel
-                        switch ($this->removerAcentos(strtolower($item->nodeValue))) {
-                            case 'flex|bi combustivel|bi-combustivel':
+                        $fuel = $this->removerAcentos(strtolower($item->nodeValue));
+                        switch ($fuel) {
+                            case (preg_match('/flex|bi combustivel|bi-combustivel/i', $fuel)?$fuel:!$fuel) :
                                 $veiculo['combustivel'] = 2;
                                 break;
                             
@@ -350,7 +355,7 @@ class XmlController extends AbstractActionController
 
             // IPVA, Status ativo e ID Plano
             $veiculo['idPlano'] = $idPlano;
-            $veiculo['nomePlano'] = $inputs['plano'];
+            $veiculo['nomePlano'] = $plano;
                 
             $veiculos[] = $veiculo;
         }
@@ -382,12 +387,12 @@ class XmlController extends AbstractActionController
         $nomePlano = '';
         $veiculos = $request->getPost()->toArray();
 
-
         /* @var $siteHospedadoModel siteHospedado */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
 
-        
+        $apiClient = $this->getApiClient();
+
         foreach ($veiculos['veiculos'] as $placa => $veiculo) {
             // Numero de veículos que podem ser cadastrados no plano selecionado
             $quantidadeAnunciosPlano = $dadosCadastro[$veiculo['nomePlano']];
@@ -421,12 +426,18 @@ class XmlController extends AbstractActionController
             try {
                 $veiculo['flagIpva'] = 1;
                 $veiculo['idStatus'] = 2; // Ativo
-
-                $apiClient = $this->getApiClient();
                 
                 if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
-                    $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ({$quantidadeAnunciosPlano})";
-                } else {
+                    $veiculo['idStatus'] = 5;
+                }
+                
+//                if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
+//                    $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ($quantidadeAnunciosPlano)";
+//                } else {
+//                
+//                    unset($veiculo['modelos']);
+//                    unset($veiculo['imagens']);
+
                     // Salva o veículo
                     $retorno = $apiClient->veiculosPost($veiculo)->json();
 
@@ -449,7 +460,7 @@ class XmlController extends AbstractActionController
                         // Faz upload da imagem
                         $retorno = $apiClient->veiculosFotosPost($imagem)->json();
                     }
-                }
+//                }
 
             } catch (\Exception $e) {
                 $veiculosComErro[$veiculo['placa']] = $e->getMessage();
@@ -457,15 +468,15 @@ class XmlController extends AbstractActionController
 
         }
 
-        $anunciosRestantes = $quantidadeAnunciosPlano - $quantidadeVeiculosCadastrados;
+//        $anunciosRestantes = $quantidadeAnunciosPlano - $quantidadeVeiculosCadastrados;
 
         // Remove a quantidade de veículos cadastrados do plano escolhido
-        $resPut = $this->getApiClient()->cadastrosPut(
-            [
-                $nomePlano => $anunciosRestantes,
-                'tipoCadastro' => $dadosCadastro['tipoCadastro']
-            ], 
-            $dadosCadastro['idCadastro']);
+//        $resPut = $this->getApiClient()->cadastrosPut(
+//            [
+//                $nomePlano => $anunciosRestantes,
+//                'tipoCadastro' => $dadosCadastro['tipoCadastro']
+//            ], 
+//            $dadosCadastro['idCadastro']);
 
         $view = new ViewModel([
             'veiculosComErro' => $veiculosComErro
