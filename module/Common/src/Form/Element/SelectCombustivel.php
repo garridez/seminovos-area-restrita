@@ -33,18 +33,15 @@ class SelectCombustivel extends Select
                     2 => 'Bi-Combustível',
                     10 => 'Bi-Combustível + Kit Gás',
                     3 => 'Diesel',
+                    11 => 'Elétrico',
                     4 => 'Gasolina',
-                    8 => 'Híbrido(combustão +  eletrico)',
                     5 => 'Gasolina + Kit Gás',
+                    8 => 'Híbrido(combustão +  eletrico)',
                     6 => 'Kit Gás',
                     7 => 'Tetra Fuel',
-                    8 => 'Híbrido (combustão +  eletrico)',
-                    9 => 'Álcool + Kit Gás',
-                    10 => 'Bi-Combustível + Kit Gás',
-                    11 => 'Elétrico',
                 ];
                 break;
-            case 2:
+                case 2:
                 $valueOptions = [
                     '' => 'Selecione',
                     3 => 'Diesel',
