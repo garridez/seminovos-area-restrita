@@ -132,7 +132,10 @@ module.exports.callback = ($) => {
                             $("select[name='idMarca'] option:not(:selected)").prop('disabled', false).removeClass("hide");
                             $("select[name='idMarca'] option:selected").prop('selected', false);
                             options = $("select[name='idMarca'] option");
-                            let marcaSelecionada = historico.dados_veiculo.marca.toLowerCase();
+                            let marcaSelecionada = historico.dados_veiculo.marca;
+                            if (marcaSelecionada) {
+                                marcaSelecionada = marcaSelecionada.toLowerCase();
+                            }
                             options.each(function(k, v) {
                                 let option = $(v);
                                 let marca = option.html().trim().toLowerCase();
