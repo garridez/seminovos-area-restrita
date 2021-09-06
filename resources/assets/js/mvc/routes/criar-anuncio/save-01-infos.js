@@ -74,23 +74,24 @@ module.exports.callback = ($) => {
                             return;
                         }
 
-                        if(response.historicoCarro) {
+                        if(response.historicoCarro && response.historicoCarro.dados_veiculo) {
 
                             let historico = response.historicoCarro;
                             let anoModelo = historico.dados_veiculo.ano_modelo;
+                            if(historico.dados_veiculo.ano_fabricacao) {
+                                //seta ano de fabricacao                            
+                                $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
+                                $("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
+                                $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
-                            //seta ano de fabricacao
-                            $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
-                            $("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
-                            $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
-
-                            //seta ano do modelo
-                            if(anoModelo === '0'){
-                                anoModelo = historico.dados_veiculo.ano_fabricacao;
+                                //seta ano do modelo
+                                if(anoModelo === '0'){
+                                    anoModelo = historico.dados_veiculo.ano_fabricacao;
+                                }
+                                $("select[name='anoModelo']").val(anoModelo);
+                                $("select[name='anoModelo'] option:selected").prop('disabled', false).removeClass("hide");
+                                $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true).addClass("hide");
                             }
-                            $("select[name='anoModelo']").val(anoModelo);
-                            $("select[name='anoModelo'] option:selected").prop('disabled', false).removeClass("hide");
-                            $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                             //trigger para buscar versao
                             setTimeout(() => {
