@@ -74,7 +74,9 @@ module.exports.callback = ($) => {
                             return;
                         }
 
-                        if(response.historicoCarro && response.historicoCarro.dados_veiculo) {
+                        if(response.historicoCarro
+                                && response.historicoCarro.dados_veiculo
+                                && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
 
                             let historico = response.historicoCarro;
                             let anoModelo = historico.dados_veiculo.ano_modelo;
