@@ -73,10 +73,21 @@ module.exports.callback = ($) => {
                             })
                             return;
                         }
-
-                        if(response.historicoCarro
-                                && response.historicoCarro.dados_veiculo
-                                && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
+                        
+                        if(Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
+                            if (Array.isArray(response.historicoCarro.dados_veiculo)) {
+                                var dados_veiculo = response.historicoCarro.dados_veiculo[0];
+                                if (dados_veiculo !== undefined) {
+                                    response.historicoCarro.dados_veiculo = dados_veiculo;
+                                } else {
+                                    response.historicoCarro.dados_veiculo = false;
+                                }
+                            }
+                        } else {
+                            response.historicoCarro.dados_veiculo = false;
+                        }
+                        
+                        if(response.historicoCarro && response.historicoCarro.dados_veiculo) {
 
                             let historico = response.historicoCarro;
                             let anoModelo = historico.dados_veiculo.ano_modelo;
