@@ -78,7 +78,9 @@ class HistoricoPagamentosController extends AbstractActionController
         $arrayFormaPagamento = array(
             'cielo' => 'Cartão de Crédito',
             'deposito' => 'Depósito/Transferência',
-            'pagseguro' => 'PagSeguro'
+            'pagseguro' => 'PagSeguro',
+            'boleto' => 'Boleto',
+            'creditcard' => 'Cartão de Crédito'
         );
 
         return new ViewModel([

@@ -39,7 +39,8 @@
             "AreaRestrita\\": "module/AreaRestrita/src/",
             "SnBH\\ApiModel\\": "module/ApiModel/src/",
             "SnBH\\Common\\": "module/Common/src/",
-            "SnBH\\Integrador\\": "module/Integrador/src/"
+            "SnBH\\Integrador\\": "module/Integrador/src/",
+            "SnBH\\GalaxPay\\": "module/GalaxPay/src/"
         }
     },
     "autoload-dev": {
