@@ -28,4 +28,5 @@ return [
     'AreaRestrita',
     'AreaRestritaAnuncio',
     'SnBH\Integrador',
+    'SnBH\GalaxPay',
 ];
