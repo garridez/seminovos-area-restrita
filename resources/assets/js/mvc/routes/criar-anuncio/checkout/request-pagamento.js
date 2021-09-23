@@ -19,7 +19,7 @@ module.exports = function (formData, ajaxParams) {
         data = data.concat(formData);
     }
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
-    var dataPagamento = {
+    var dataRedirectPagamento = {
       urlAguardando : `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
     };
     var ajaxDefaultParams = {
@@ -59,8 +59,8 @@ module.exports = function (formData, ajaxParams) {
 
                 window.open(httpResponse.data.url, '_blank');
 
-                dataPagamento.url = httpResponse.data.url || '';
-                modalPagamentoBoleto(dataPagamento);
+                dataRedirectPagamento.url = httpResponse.data.url || '';
+                modalPagamentoBoleto(dataRedirectPagamento);
             }
         },
         error: function (e) {
