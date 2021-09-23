@@ -47,7 +47,8 @@ module.exports.callback = ($) => {
 
         Loading.open();
         $btnSubmit = $(this).find('button[type="submit"]');
-
+        var dataRedirectPagamento = {};
+        dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
 
         var ajaxDefaultParams = {
             url: '/carro/checkout/processar',
@@ -79,7 +80,14 @@ module.exports.callback = ($) => {
                  * @return void
                  */
                 if (httpResponse.data && httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
+                  if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
                     window.location = httpResponse.data.url;
+                    return;
+                  }
+
+                  window.open(httpResponse.data.url, '_blank');
+                  dataRedirectPagamento.url = httpResponse.data.url || '';
+                  modalPagamentoBoleto(dataRedirectPagamento);
                 } else {
                     var title = "Pagamento aprovado!";
                     var text = $(`  <div>
@@ -109,6 +117,29 @@ module.exports.callback = ($) => {
         $.ajax(ajaxParams);
 
     });
+
+    function modalPagamentoBoleto(data){
+      var text = `
+      <div class="w-100 text-center flex-wrap">
+        <div>
+          <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
+        </div>
+        <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
+      </div>`;
+      advancedAlerts.success({
+        text: text,
+        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+        time: 35000,
+        closeText: `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto`,
+        closeCallback: function(){
+          window.open(data.url, '_blank');
+          setTimeout(function(){
+            window.location = data.urlAguardando;
+          }, 1000);
+        }
+      });
+    }
+
     $('.nav-main-financeiro li a').on('shown.bs.tab', function (e) {
         var target = $(this).data('target').replace('#tab-', '');
         var state = ({
