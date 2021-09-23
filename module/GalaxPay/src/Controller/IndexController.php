@@ -16,7 +16,7 @@ class IndexController extends AbstractActionController
 
             $data = json_decode($request->getContent(), true);
             
-            if ($data['confirmHash'] != WEBHOOK_GALAYPAT) {
+            if ($data['confirmHash'] != WEBHOOK_GALAYPAY) {
                 return new JsonModel([
                         'status' => 401,
                         'detail' => 'A chave enviada é inválida.'
