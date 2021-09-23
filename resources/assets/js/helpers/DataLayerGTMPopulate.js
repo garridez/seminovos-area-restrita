@@ -75,9 +75,9 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     transaction_data.revenue = $ctx.find('[name="idPlano"]:checked').data('valor-plano');
     transaction_data.id = $ctx.find('[name="idVeiculo"]').val() + '-' + new Date().getTime();
 
-    console.log('SENDING TO GTM WITH TRANSACTION DATA');
-    console.log(transaction_data);
-    console.log(currentVal);
+    // console.log('SENDING TO GTM WITH TRANSACTION DATA');
+    // console.log(transaction_data);
+    // console.log(currentVal);
 
     return window.dataLayer.push({
       'event': 'eec_dl_push',
@@ -89,8 +89,8 @@ module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {
     });
   }
 
-  console.log('SENDING TO GTM ---' + stepWhoCall);
-  console.log(currentVal);
+  // console.log('SENDING TO GTM ---' + stepWhoCall);
+  // console.log(currentVal);
 
   return window.dataLayer.push({
     'event': 'eec_dl_push',
