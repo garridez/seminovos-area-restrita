@@ -161,14 +161,14 @@ class PagamentoController extends AbstractActionController
         /**
          * retorno quando é boleto da revenda feito pelo itau.
          **/
-        if($cadastro['tipoCadastro'] == 1 && $dados['metodo'] == 'boleto'){
+            /*if($cadastro['tipoCadastro'] == 1 && $dados['metodo'] == 'boleto'){
             $response['html'] = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)
             ->getBody();
             echo json_encode($response);
             die;
             
-        }
+        }*/
         
         /*echo $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
