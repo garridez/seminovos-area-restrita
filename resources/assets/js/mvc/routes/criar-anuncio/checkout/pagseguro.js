@@ -7,7 +7,7 @@ module.exports = function () {
         }
         requestPagamento([{
                 'name': 'metodo',
-                'value': 'pagseguro'
+                'value': 'boleto'
             }]);
     });
 };

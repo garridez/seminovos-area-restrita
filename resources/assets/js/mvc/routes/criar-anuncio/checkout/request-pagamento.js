@@ -18,7 +18,10 @@ module.exports = function (formData, ajaxParams) {
     if (formData && Array.isArray(formData)) {
         data = data.concat(formData);
     }
-
+    var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
+    var dataRedirectPagamento = {
+      urlAguardando : `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
+    };
     var ajaxDefaultParams = {
         url: '/carro/checkout/processar',
         cache: false,
@@ -47,8 +50,17 @@ module.exports = function (formData, ajaxParams) {
              */
             if (httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
                 var ctx = $('#dados-basicos form, .step-0, .step-1, .step-plano');
-                DataLayerGTMPopulate(ctx, 'purchase', data)
-                window.location = httpResponse.data.url;
+                DataLayerGTMPopulate(ctx, 'purchase', data);
+
+                if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
+                  window.location = httpResponse.data.url;
+                  return;
+                }
+
+                window.open(httpResponse.data.url, '_blank');
+
+                dataRedirectPagamento.url = httpResponse.data.url || '';
+                modalPagamentoBoleto(dataRedirectPagamento);
             }
         },
         error: function (e) {
@@ -72,4 +84,26 @@ module.exports = function (formData, ajaxParams) {
     }).on('hide.bs.modal', function () {
         $.ajax(ajaxParams);
     });
+
+    function modalPagamentoBoleto(data){
+      var text = `
+      <div class="w-100 text-center flex-wrap">
+        <div>
+          <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
+        </div>
+        <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
+      </div>`;
+      advancedAlerts.success({
+        text: text,
+        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+        time: 35000,
+        closeText: `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto`,
+        closeCallback: function(){
+          window.open(data.url, '_blank');
+          setTimeout(function(){
+            window.location = data.urlAguardando;
+          }, 1000);
+        }
+      });
+    }
 };

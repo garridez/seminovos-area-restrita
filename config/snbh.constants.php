@@ -11,3 +11,6 @@ define('IS_PROD', !IS_DEV);
 
 define('SNBH_API_HOST', getenv('SNBH_API_HOST'));
 define('SNBH_URL_SITE', getenv('SNBH_URL_SITE'));
+
+//chave webhook galayPay
+define('WEBHOOK_GALAYPAY', 'e0cbb34e242fcfc17e0d89750a643327');
