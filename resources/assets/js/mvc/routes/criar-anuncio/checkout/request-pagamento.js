@@ -93,17 +93,21 @@ module.exports = function (formData, ajaxParams) {
         </div>
         <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
       </div>`;
-      advancedAlerts.success({
-        text: text,
-        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
-        time: 35000,
-        closeText: `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto`,
-        closeCallback: function(){
-          window.open(data.url, '_blank');
+      var downloadBtn = $(`<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`)
+        .on('click',function(e){
           setTimeout(function(){
             window.location = data.urlAguardando;
           }, 1000);
+        });
+  
+      advancedAlerts.success({
+        text: text,
+        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+        time: false,
+        closeText: `download`,
+        closeCallback: function(){
+          window.open(data.url, '_blank');
         }
-      });
-    }
+      }).find('.modal-footer').html(downloadBtn);
+    };
 };
