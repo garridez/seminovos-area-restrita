@@ -119,26 +119,30 @@ module.exports.callback = ($) => {
     });
 
     function modalPagamentoBoleto(data){
-      var text = `
-      <div class="w-100 text-center flex-wrap">
-        <div>
-          <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
-        </div>
-        <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
-      </div>`;
-      advancedAlerts.success({
-        text: text,
-        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
-        time: 35000,
-        closeText: `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto`,
-        closeCallback: function(){
-          window.open(data.url, '_blank');
-          setTimeout(function(){
-            window.location = data.urlAguardando;
-          }, 1000);
-        }
-      });
-    }
+        var text = `
+        <div class="w-100 text-center flex-wrap">
+            <div>
+                <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
+            </div>
+            <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
+        </div>`;
+        var downloadBtn = $(`<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`)
+            .on('click',function(e){
+                setTimeout(function(){
+                    window.location = data.urlAguardando;
+                }, 1000);
+        });
+
+        advancedAlerts.success({
+            text: text,
+            title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+            time: false,
+            closeText: `download`,
+            closeCallback: function(){
+                window.open(data.url, '_blank');
+            }
+        }).find('.modal-footer').html(downloadBtn);
+    };
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function (e) {
         var target = $(this).data('target').replace('#tab-', '');
