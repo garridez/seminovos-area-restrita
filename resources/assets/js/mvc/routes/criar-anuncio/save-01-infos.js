@@ -74,7 +74,7 @@ module.exports.callback = ($) => {
                             return;
                         }
                         
-                        if(Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
+                        if(response.historicoCarro !== null && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
                             if (Array.isArray(response.historicoCarro.dados_veiculo)) {
                                 var dados_veiculo = response.historicoCarro.dados_veiculo[0];
                                 if (dados_veiculo !== undefined) {
@@ -84,6 +84,7 @@ module.exports.callback = ($) => {
                                 }
                             }
                         } else {
+                            response.historicoCarro = response.historicoCarro || {};
                             response.historicoCarro.dados_veiculo = false;
                         }
                         
