@@ -137,10 +137,7 @@ module.exports.callback = ($) => {
             text: text,
             title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
             time: false,
-            closeText: `download`,
-            closeCallback: function(){
-                window.open(data.url, '_blank');
-            }
+            closeText: `download`
         }).find('.modal-footer').html(downloadBtn);
     };
 
