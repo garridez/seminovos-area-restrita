@@ -47,7 +47,8 @@ class VeiculoController extends AbstractActionController {
             'tipoCadastro' => 1,
             'idCadastro' => $idCadastro,
             'troca' => 4,
-            'idStatus' => 2
+            'idStatus' => 2,
+            'origem' => 'Integrador'
         ];
 
         $data += $request->getPost()->toArray();
