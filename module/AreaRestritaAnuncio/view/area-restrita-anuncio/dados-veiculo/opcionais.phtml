@@ -84,9 +84,10 @@ if($tipoVeiculo === 1){
 
             <?php 
             
-                $mesIPVA =  date('m');                                
-                $meses = [1, 2, 3, 4, 5,10, 12];
-                $exibeIPVA = in_array($mesIPVA, $meses);
+            $mesIPVA =  date('m');                                
+            $meses = [1, 2, 3, 4, 5,12];
+            $exibeIPVA = in_array($mesIPVA, $meses);
+            $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
 
                 if($tipoVeiculo != 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))): 
             ?>
@@ -97,7 +98,7 @@ if($tipoVeiculo === 1){
                         <?php
                         if ($exibeIPVA) {
                             $destaques = [
-                                $this->formCheckbox($fields['flagIpva'])
+                                $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.' quitado?'))
                             ];
                             foreach ($destaques as $key => $value) {
                                 $value = str_replace('class="checkbox"', 'class="checkbox-custom"', $value);
