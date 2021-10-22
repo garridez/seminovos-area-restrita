@@ -115,10 +115,12 @@ if($tipoVeiculo === 1){
                                 unset($adaptadoHTML[0]);
                             }
                             $adaptadoHTML = $adaptadoHTML[0];
+                            ?>
+                            <div class="checkbox-custom" data-toggle="collapse" data-target=".detalhes-pcd" aria-expanded="false">
+                                <?= $adaptadoHTML ?>
+                            </div>
+                            <?php
                         }?>
-                        <div class="checkbox-custom" data-toggle="collapse" data-target=".detalhes-pcd" aria-expanded="false">
-                            <?= $adaptadoHTML ?>
-                        </div>
                     </div>
                     <div class="detalhes-pcd collapse">Este veículo é adaptado para <br class="d-block d-md-none"><b class="text-success">PCD (Pessoa com deficiência)</b></div>
                 </div>
