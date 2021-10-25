@@ -80,9 +80,6 @@ class DadosVeiculoController extends AbstractActionController
 
             $data += $request->getPost()->toArray();
 
-            if(!isset($data['flagLeilao'])){
-                $data['flagLeilao'] = '0';
-            }
             if(!empty($data['outraVersao'])){
                 $data['versao'] = $data['outraVersao'];
             }
@@ -140,6 +137,10 @@ class DadosVeiculoController extends AbstractActionController
                     unset($data['listaAcessorios']);
                 }
 
+                if(isset($data['tipoCad']) && $data['tipoCad'] === '2') {
+                    unset($data['flagLeilao' ]);
+                }
+
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
 
@@ -168,8 +169,7 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($res->json());
         }
 
-        $data = $this->getVeiculo(5);
-        $checkedLeilao = (empty($data) ?  false : $data['flagLeilao']);
+        $checkedLeilao = (empty($veiculoDados) ?  false : $veiculoDados['flagLeilao']);
         
         return new ViewModel([
             'checkedLeilao' => $checkedLeilao,
