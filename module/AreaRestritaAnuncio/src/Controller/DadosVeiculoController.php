@@ -165,9 +165,13 @@ class DadosVeiculoController extends AbstractActionController
             return new JsonModel($res->json());
         }
 
+        $data = $this->getVeiculo(5);
+        $checkedLeilao = (empty($data) ?  false : $data['flagLeilao']);
+
         return new ViewModel([
+            'checkedLeilao' => $checkedLeilao,
             'formDadosVeiculos' => $dadosForm,
-            'cambio' => $cambio
+            'cambio' => $cambio,
         ]);
     }
 
