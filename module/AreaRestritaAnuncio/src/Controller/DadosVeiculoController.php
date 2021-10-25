@@ -80,6 +80,9 @@ class DadosVeiculoController extends AbstractActionController
 
             $data += $request->getPost()->toArray();
 
+            if(!isset($data['flagLeilao'])){
+                $data['flagLeilao'] = '0';
+            }
             if(!empty($data['outraVersao'])){
                 $data['versao'] = $data['outraVersao'];
             }
@@ -167,7 +170,7 @@ class DadosVeiculoController extends AbstractActionController
 
         $data = $this->getVeiculo(5);
         $checkedLeilao = (empty($data) ?  false : $data['flagLeilao']);
-
+        
         return new ViewModel([
             'checkedLeilao' => $checkedLeilao,
             'formDadosVeiculos' => $dadosForm,
