@@ -80,9 +80,6 @@ class DadosVeiculoController extends AbstractActionController
 
             $data += $request->getPost()->toArray();
 
-            if(!isset($data['flagLeilao'])){
-                $data['flagLeilao'] = '0';
-            }
             if(!empty($data['outraVersao'])){
                 $data['versao'] = $data['outraVersao'];
             }
@@ -165,6 +162,7 @@ class DadosVeiculoController extends AbstractActionController
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
+            return new JsonModel($data);
             return new JsonModel($res->json());
         }
 
