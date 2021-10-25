@@ -137,6 +137,10 @@ class DadosVeiculoController extends AbstractActionController
                     unset($data['listaAcessorios']);
                 }
 
+                if(isset($data['tipoCad']) && $data['tipoCad'] === '2') {
+                    unset($data['flagLeilao' ]);
+                }
+
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
 
@@ -162,12 +166,10 @@ class DadosVeiculoController extends AbstractActionController
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
-            return new JsonModel($data);
             return new JsonModel($res->json());
         }
 
-        $data = $this->getVeiculo(5);
-        $checkedLeilao = (empty($data) ?  false : $data['flagLeilao']);
+        $checkedLeilao = (empty($veiculoDados) ?  false : $veiculoDados['flagLeilao']);
         
         return new ViewModel([
             'checkedLeilao' => $checkedLeilao,

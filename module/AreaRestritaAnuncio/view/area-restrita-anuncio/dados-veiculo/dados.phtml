@@ -18,9 +18,7 @@ $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
 $versao = $form->get('versao')->getValue();
 
 if ($this->checkedLeilao === '1') {
-    $fields['flagLeilao']->setChecked(true)
-        ->setAttribute('readonly', true)
-        ->setAttribute('disabled', true);
+    $fields['flagLeilao']->setChecked(true);
 }
 ?>
 <div class="container">

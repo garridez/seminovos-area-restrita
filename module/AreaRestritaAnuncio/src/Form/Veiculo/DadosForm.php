@@ -340,6 +340,7 @@ class DadosForm extends Form
             'portas',
             'combustivel',
             'motoCilindradas',
+            'flagLeilao'
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {
