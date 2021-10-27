@@ -73,7 +73,7 @@ class DadosForm extends Form
                 'label' => 'Carro proveniente de leilão?',
                 'use_hidden_element' => true,
                 'checked_value' => 1,
-                'unchecked_value' => 0,
+                'unchecked_value' => 0
             ],
         ]);
 
@@ -340,7 +340,7 @@ class DadosForm extends Form
             'portas',
             'combustivel',
             'motoCilindradas',
-            'flagLeilao',
+            'flagLeilao'
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {

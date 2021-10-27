@@ -16,6 +16,10 @@ $form->setAttribute('class', 'form');
 $tipoVeiculo = $form->get('tipoVeiculo')->getValue();
 
 $versao = $form->get('versao')->getValue();
+
+if ($this->checkedLeilao === '1') {
+    $fields['flagLeilao']->setChecked(true);
+}
 ?>
 <div class="container">
     <h4 class="text-center">
@@ -84,7 +88,7 @@ $versao = $form->get('versao')->getValue();
                 <?= $this->formLabel($fields['versao']) ?>
                 <div><?= $this->formElement($fields['versao']) ?></div>
             </div>
-            <div id="divOutraVersao" class="form-group form-group-default hide required">
+            <div id="divOutraVersao" class="form-group form-group-default hide">
                 <label for="outraVersao">Outra Versão? Qual?</label>
                 <div>
                     <input type="text" name="outraVersao" placeholder="Digite a versão" class="form-control" value autocomplete="off" maxlength="50">
@@ -130,7 +134,7 @@ $versao = $form->get('versao')->getValue();
                 <?php endif; ?>
 
 
-                <div class="form-group form-group-default">
+                <div class="form-group form-group-default required">
                     <?= $this->formLabel($fields['cor']) ?>
                     <div><?= $this->formSelect($fields['cor']) ?></div>
                 </div>

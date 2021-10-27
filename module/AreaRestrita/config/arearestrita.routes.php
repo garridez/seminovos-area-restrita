@@ -222,7 +222,7 @@ return [
             ],
         ]
     ],
-    'xml' => [
+    /*'xml' => [
         'type' => Http\Literal::class,
         'options' => [
             'route' => 'xml',
@@ -252,7 +252,7 @@ return [
                 ],
             ],
         ]
-    ],
+    ],*/
     'meus-veiculos' => [
         'type' => Http\Literal::class,
         'options' => [
