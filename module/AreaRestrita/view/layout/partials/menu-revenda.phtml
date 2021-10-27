@@ -89,13 +89,13 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
       </a>
       <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
     </li>
-    <li class="">
+    <?php
+    /*<li class="">
       <a href="<?= $this->url('restrito/xml') ?>">
         <span class="title">Importar XML</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-external-link b-transparent-white" aria-hidden="true"></i></span>
-    </li>
-    <?php
+    </li>*/
 
     // Desativado temporariamente
     if(false && $this->userInfo('idPlano') >= 20): ?>
