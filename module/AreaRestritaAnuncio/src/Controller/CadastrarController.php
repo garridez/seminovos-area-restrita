@@ -8,6 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
+use AreaRestritaAnuncio\Form\Cadastro\CadastroCarroBolsoForm;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Controller\AuthController;
 use AreaRestrita\Form\MeusDados\ParticularForm;
@@ -412,6 +413,72 @@ class CadastrarController extends AbstractActionController
 
             $view = new ViewModel([
                 'formCadastro' => $dadosForm
+            ]);
+
+            $this->layout('layout/blank.phtml');
+
+            return $view;
+
+        }
+    }
+    
+    public function carroBolsoAction()
+    {
+        $dadosForm = new CadastroCarroBolsoForm();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            //var_dump($request); exit;
+            $post = $request->getPost();
+
+            $dadosForm->setData($post);
+
+            if ($dadosForm->isValid()) {
+
+                $data = $dadosForm->getData();
+
+                 $mensagem = '<br /><br /><strong>Parceria Seminovos.com</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+
+                $dadosEmail = [
+                    'mensagem' => $mensagem,
+                    'assunto' => 'Carro no bolso',
+                    'email' => 'joao@seminovosbh.com.br',
+                    'nome' => 'Carro no bolso',
+                    'emailRemetente' => 'contato@seminovosbh.com.br',
+                    'nomeRemetente' => 'SeminovosBH',
+                    'layout' => 'blank-nova',
+                    'tipoEmail' => 'personalizado_novo',
+                    'bcc' => ['felipe@seminovosbh.com.br']
+                ];
+
+                /* @var $enviarEmailModel EnviarEmail */
+                $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+                $retorno = $enviarEmailModel->post($dadosEmail);
+
+                //return $this->redirect()->toUrl('https://seminovos.com');
+                
+                $view = new ViewModel([
+                    'formCarroBolso' => $dadosForm,
+                    'sucesso' => $retorno['status'] == 200 ? true : false
+                ]);
+                
+                $this->layout('layout/blank.phtml');
+                
+                return $view;
+
+            } else {
+                echo json_encode([
+                    'status' => 405,
+                    'title' => 'Revise as informações inseridas',
+                    'detail' => ValidatorMessages::toHTML($dadosForm->getMessages(), $dadosForm),
+                ]);
+                die;
+            }
+        } else {
+
+            $view = new ViewModel([
+                'formCarroBolso' => $dadosForm
             ]);
 
             $this->layout('layout/blank.phtml');
