@@ -1,0 +1,103 @@
+<?php
+
+$this->headTitle("Cadastro Área Restrita");
+
+
+$dadosForm = $formCarroBolso;
+$dadosForm->prepare();
+$fields = $dadosForm->getElements();
+
+?>
+<form method="POST" name="form_cadastroCarroBolso" class="container-fluid" role="form" id="form_cadastroCarroBolso"
+    action="carro-bolso">
+    <div class="container-fluid container-fixed-lg">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 mt-md-4">
+                <!-- START card -->
+                <div class="card card-default m-0">
+                    <div class="snbh-logo-container d-flex justify-content-center mt-3">
+                        <!--<img src="/img/svg/snbh_logo.svg" alt="logo" class="snbh-logo" width="180" height="66">-->
+                        <a href="https://seminovos.com" title="Seminovos.com">
+                            <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
+                                <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                                <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="card-header ">
+                        <div class="card-title text-center">
+                            <span class="">SeminovosBH - QUER VENDER SEU CARRO RÁPIDO?</span> 
+                        </div>
+                    </div>
+                    <?php if(isset($sucesso) && $sucesso): ?>
+                    <div class="alert alert-primary" role="alert">
+                        Cadastro realizado com sucesso.
+                     </div>
+                    <?php elseif(isset($sucesso) && !$sucesso): ?>
+                    <div class="alert alert-danger" role="alert">
+                        Houve um erro ao se cadastrar?
+                     </div>
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <p>
+                            <small>Preencha os dados abaixo e clique no botão cadastrar.</small>
+                        </p>
+                        <div class="row">
+                            <div class="form-group col-12 col-md-12 required">
+                                <?= $this->formLabel($fields['responsavelNome']) ?>
+                                <?= $this->formText($fields['responsavelNome']) ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-md-12 required">
+                                <?= $this->formLabel($fields['email']) ?>
+                                <?= $this->formEmail($fields['email']) ?>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex align-items-end">
+                            <div class="p-0 form-group col-4 required">
+                                <?= $this->formLabel($fields['telefone_2']) ?>
+                                <?= $this->formText($fields['telefone_2']) ?>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-warning btn-block btn-lg">Cadastrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+</form>
+<!-- Facebook Pixel Code -->
+<script>
+! function(f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function() {
+        n.callMethod ?
+            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = !0;
+    n.version = '2.0';
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = !0;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+}(window, document, 'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '408763516364456');
+fbq('track', 'cadastro');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=408763516364456&ev=PageView&noscript=1" /></noscript>
+<!-- End Facebook Pixel Code -->

@@ -277,6 +277,16 @@ return [
                     ],
                 ],
             ],
+            'carro-bolso' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/carro-bolso',
+                    'defaults' => [
+                        'controller' => Controller\CadastrarController::class,
+                        'action' => 'carro-bolso',
+                    ],
+                ],
+            ],
             'remember-pass-phone' => [
                 'type' => Segment::class,
                 'options' => [
