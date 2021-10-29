@@ -299,14 +299,12 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
+                    $temp_acoes["excluir"] = true;
                     if($veiculo['flagCertificado'] != 1){
                         $temp_acoes["certificado"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
-                    }
-                    if ($veiculo['idPlano'] != 1) {
-                        $temp_acoes["excluir"] = true;
                     }
                     if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] !=1){
                         $temp_acoes["reativar"] = true;
