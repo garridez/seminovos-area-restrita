@@ -162,15 +162,26 @@ if ($this->checkedLeilao === '1') {
                 </label>
             </div>
 
-            <?php if($tipoVeiculo == 2): ?>
+            <?php 
+                  $mesIPVA =  date('m');                                
+                  $meses = [1, 2, 3, 4, 5,12];
+                  $exibeIPVA = in_array($mesIPVA, $meses);
+                  $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
+
+
+                if($tipoVeiculo == 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))): ?>
                 <div class="destaques pt-1 pb-3">
                     <div class="text-center"><b>Algum item que você quer destacar?</b></div>
 
                     <div class="opcionais">
                         <?php
-                            $destaques = [
-                                $this->formCheckbox($fields['flagIpva']),
-                            ];
+                            $destaques = [];
+                                
+                            if ($exibeIPVA) {
+                                $destaques = [
+                                    $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.'quitado?'))
+                                ];
+                            }
                             
                             if(isset($fields['adaptado'])) {
                                 $destaques[] = $this->formCheckbox($fields['adaptado']);
