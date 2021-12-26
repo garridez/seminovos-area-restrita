@@ -183,9 +183,7 @@ function init() {
 
             compress.compress([imageFile], {
                 size: 4, // the max size in MB, defaults to 2MB
-                quality: 0.8, // the quality of the image, max is 1,
-                maxWidth: 600, // the max width of the output image, defaults to 1920px
-                maxHeight: 600, // the max height of the output image, defaults to 1920px
+                quality: 0.9, // the quality of the image, max is 1,
                 resize: true // defaults to true, set false if you do not want to resize the image width and height
             }).then(function (images) {
                 var img = images[0];
