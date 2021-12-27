@@ -12,7 +12,7 @@ $class = [
     1 => 'nitro-home-value text-nitro-home',
     2 => 'nitro-value text-nitro',
     3 => 'turbo-value text-turbo',
-    4 => 'basic-value text-basico',
+    4 => 'flex-value text-flex',
     5 => 'simple-value text-simples',
 ];
 
@@ -20,7 +20,7 @@ $boxes = [
     1 => 'nitro-home',
     2 => 'nitro',
     3 => 'turbo',
-    4 => 'basico',
+    4 => 'flex',
     5 => 'simples',
 ];
 
@@ -139,10 +139,10 @@ $nomePlano = mb_strtoupper($nomePlano);
         <?php if ($isRevenda) : ?>
             <div class="m-2">
                 Anúncios
-                <b class="h4 text-laranja"><?= $nomePlano ?></b> preenchidos:
-                <b class="h4 text-laranja"><?= $plano['qtd']['publicado'] ?></b>
+                <b class="h4 text-<?= $boxes[$plano['prioridade']] ?>"><?= $nomePlano ?></b> preenchidos:
+                <b class="h4 text-<?= $boxes[$plano['prioridade']] ?>"><?= $plano['qtd']['publicado'] ?></b>
                 de
-                <b class="h5 text-laranja"><?= $plano['qtd']['total'] ?></b>
+                <b class="h5"><?= $plano['qtd']['total'] ?></b>
             </div>
         <?php endif; ?>
         <input
