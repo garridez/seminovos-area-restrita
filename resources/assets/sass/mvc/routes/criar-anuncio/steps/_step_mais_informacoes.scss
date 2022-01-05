@@ -40,6 +40,17 @@
         .check-termos{
             border: none;
             label{
+                @include media-breakpoint-down(xl){
+                    margin-top: 6px;
+                    &:before{
+                        bottom:0px;
+                        top: initial !important;
+                    }
+                    &:after{
+                        bottom:-2px;
+                        top: initial !important;
+                    }
+                }
                 line-height: initial !important;
                 font-weight: bold;
                 &:before{
