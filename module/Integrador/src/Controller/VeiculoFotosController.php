@@ -52,7 +52,7 @@ class VeiculoFotosController extends AbstractActionController {
                         ->json();
                 $ultimoOrdem = sizeof($fotosVeiculo['data']);
                 
-                if($ultimoOrdem == 12){
+                if($ultimoOrdem == 15){
                     return new JsonModel([
                         'status'=> 405,
                         'detail' => 'Limite de fotos alcançado'
