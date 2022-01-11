@@ -31,7 +31,7 @@ function init() {
         'rotate(270deg)',
     ];
 
-    var handle = '.btn-move, .foto-container, .controls';
+    var handle = '.btn-move';
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
       handle = '.btn-move';
     }
