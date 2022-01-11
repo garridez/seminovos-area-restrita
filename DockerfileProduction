@@ -56,6 +56,8 @@ RUN apt-get --allow-releaseinfo-change update && \
     apt-get -yq install newrelic-php5 && \
     newrelic-install install
 
+RUN apt-get install htop -y
+
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY server/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 COPY server/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
