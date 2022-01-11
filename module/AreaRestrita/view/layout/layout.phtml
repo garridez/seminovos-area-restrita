@@ -50,7 +50,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <?php
       if ($this->userInfo('tipoCadastro') == 1) {
           $arrayPlanos = [
-              1 => ['nitro',      'Nitro',      '12',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+              1 => ['nitro',      'Nitro',      '15',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
               2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
               3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
           ];

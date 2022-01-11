@@ -41,28 +41,48 @@
         padding-right: 7px;
         padding-left: 7px;
         position: relative;
+        height: max-content;
 
-        &:first-of-type::before{
-            position: absolute;
-            opacity: 0.8;
-            top: -13px;
-            left: 7px;
-            display: flex;
-            height: 20px;
-            width: calc(100% - 14px);
+        &:first-of-type{
+            @include media-breakpoint-down(sm) {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
 
-            padding: 0 7px;
+                .display-img{
+                    width: 100%;
+                    height: 210.1px;
+                }
+            }
+            @include media-breakpoint-up(md) {
+                flex: 0 0 50% !important;
+                max-width: 100% !important;
+                .display-img{
+                    height: 200px;
+                    width: 100%;
+                }
+            }
+            &::before{
+                position: absolute;
+                opacity: 0.8;
+                top: -13px;
+                left: 7px;
+                display: flex;
+                height: 20px;
+                width: calc(100% - 14px);
 
-            justify-content: center;
+                padding: 0 7px;
 
-            content: "Foto Principal";
-            background-color: orange;
-            color: #fff;
-            font-weight: 700;
+                justify-content: center;
 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 12px;
+                content: "Foto Principal";
+                background-color: orange;
+                color: #fff;
+                font-weight: 700;
+
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-size: 12px;
+            }
         }
         transition: outline 400ms;
         // outline: #f0f0f0 dashed;
