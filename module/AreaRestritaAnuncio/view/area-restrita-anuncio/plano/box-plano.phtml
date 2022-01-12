@@ -2,14 +2,14 @@
 
 $prioridade = [
     1 => 'máxima',
-    2 => 'alta',
-    3 => 'média',
-    4 => 'baixa',
+    2 => 'máxima',
+    3 => 'alta',
+    4 => 'média',
     5 => 'mínima',
 ];
 
 $class = [
-    1 => 'nitro-home-value text-nitro-home',
+    1 => 'nitro-value text-nitro',
     2 => 'nitro-value text-nitro',
     3 => 'turbo-value text-turbo',
     4 => 'flex-value text-flex',
@@ -17,7 +17,7 @@ $class = [
 ];
 
 $boxes = [
-    1 => 'nitro-home',
+    1 => 'nitro',
     2 => 'nitro',
     3 => 'turbo',
     4 => 'flex',
@@ -84,8 +84,11 @@ $nomePlano = mb_strtoupper($nomePlano);
         </div>
         <ul class="list list-styled list-<?= $boxes[$plano['prioridade']] ?> <?= $isRevenda ? 'is-revenda' : '' ?>">
             <?php if($plano['prioridade'] == 1 && !$isRevenda): ?>
-                <li class="tempo-na-home">
-                    <span>Exibição na <strong class="mx-1">Home do site</strong><br><small>por 30 dias podendo ser renovado</small></span>
+                <li class="tempo-na-home mb-3">
+                    <span>Exibição na <strong class="mx-1 <?= $class[$plano['prioridade']] ?>">Home do site</strong></span>
+                    <div class="text-black">
+                        <small>por 30 dias podendo ser renovado <strong class="<?= $class[$plano['prioridade']] ?>">via pagamento</strong></small>
+                    </div>
                 </li>
             <?php endif; ?>
             <li>
@@ -97,7 +100,7 @@ $nomePlano = mb_strtoupper($nomePlano);
                 </span>
             </li>
             <?php
-            if ($boxes[$plano['prioridade']] == 'nitro-home' || $boxes[$plano['prioridade']] == 'nitro' || $boxes[$plano['prioridade']] == 'turbo') {
+            if ($boxes[$plano['prioridade']] == 'nitro') {
                 echo '<li><span>1 vídeo</span></li>';
             } else {
                 echo '<li><span class="text-black-50">Sem vídeos</span></li>';

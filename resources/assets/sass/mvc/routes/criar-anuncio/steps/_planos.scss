@@ -26,14 +26,16 @@
             font-size: 0.80rem;
         }
         ul.list.list-styled:not(.is-revenda){
-            &.list-nitro-home li.tempo-na-home{
+            &.list-nitro li.tempo-na-home{
                 line-height: 7px !important;
-                span{
-                    display: flex;
-                    flex-wrap: wrap;
+                position: relative;
+                >div{
+                    position: absolute;
+                    bottom: -14px;
+                    left: -4px;
                 }
             }
-            &:not(.list-nitro-home){
+            &:not(.list-nitro){
                 @include media-breakpoint-up(md){
                     padding-top: 28px;
                 }
