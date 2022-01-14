@@ -12,7 +12,7 @@ class SelectAnoFabricacao extends Select
         $listaAnos = array(
             '' => 'Selecione'
         );
-        $anoMaiorAtual = date('Y');
+        $anoMaiorAtual = date('Y') + 1;
         for ($ano = $anoMaiorAtual; $ano >= 1925; $ano--) {
             $listaAnos[$ano] = $ano;
         }
