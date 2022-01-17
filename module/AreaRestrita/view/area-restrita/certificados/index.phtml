@@ -1,10 +1,11 @@
 <?php
 /* @var $this \Zend\View\Renderer\PhpRenderer */
 $placa = $this->placa;
-// var_dump($this->dadosCertificados);
+//var_dump($this->dadosCertificados);
 $dadosCertificados = $this->dadosCertificados ? $this->dadosCertificados : null;
 $dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
-$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
+//$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
+$dadosFurto = $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] : null;
 $dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
 $sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] : null;
 $leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['data']['leilao'] : null;
