@@ -426,7 +426,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 </div>
                             </div>
                         </div>
-                        <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
+                        <?php if (/*$veiculo["botoes"]["certificado"] ?? false*/ false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
                                 <div><span>Adquira seu Certificado de Procedência Digital</span></div>                                
                                 <div class="mt-2"><b>R$ 24,90</b></div>
