@@ -30,9 +30,6 @@ module.exports.callback = $ => {
 
 
     (function () {
-        if ($('body').is('.c-chat.a-index')) {
-            return;
-        }
         var title = $('title');
         title.data('original', title.html());
 
