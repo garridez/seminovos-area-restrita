@@ -14,6 +14,10 @@ class ChatSubject extends Component {
         this.active = this.active.bind(this);
     }
     active() {
+        if(this.props.data.lastMessage.lidoEm === null) {
+            this.props.data.lastMessage.lidoEm = moment().format('YYYY-MM-DD HH:mm:ss');
+        }
+
         this.props.dispatch({
             type: 'CHAT_ACTIVE',
             data: this.props.data
@@ -60,20 +64,24 @@ class ChatSubject extends Component {
         return (
                 <li className={classes} onClick={this.active}>
                     <div className="chat-img col-3">
+                        <div className="chat-title">
+                            <span>{data.marca} {data.modelo}</span>
+                        </div>
                         <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
                     <div className="chat-details col-9">
-                        <div className="chat-name mt-1">
-                            <span className={status}></span> {outroContato}
+                        <div className="chat-name">
+                            <span className={status}></span> {outroContato}:
                         </div>
-                        <div className="chat-title">
-                            <span>{data.marca} {data.modelo}</span>
+                        <div className="chat-last-msg">
+                            <i className="fa fa-circle fa-icon-nao-lida" title="Você tem mensagens não lidas"></i>
+                            {lastMsg.mensagem}
                         </div>
                         {veiculoStatus}
                     </div>
                     <div className="chat-info">
                         <div className="chat-status px-2"></div>
-                        <i className="fa fa-circle icon-nao-lida" title="Você tem mensagnes não lidas"></i>
+                        
                         <div className="chat-date" title={dates.absoluteDate}>
                             {dates.chatDate}
                         </div>

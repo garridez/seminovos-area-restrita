@@ -20,6 +20,19 @@ export default function (chatRoot) {
 }
 
 $(window).resize(function () {
+    console.log('resize');
+    var headerHeight = $('.header').outerHeight();
+    var $mainChat = $('.section-chat .main-chat');
+    var $topHeader = $mainChat.find('> .top-header');
+    var $conversation = $mainChat.find('> .conversation');
+    var $editor = $mainChat.find('> .editor');
+
+    var conversationHeight = innerHeight - headerHeight - $editor.outerHeight() - $topHeader.outerHeight() - 15;
+
+    $conversation.height(conversationHeight);
+
+
+    $editor.width($mainChat.width());
+
     // $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
-});
- 
+}).resize();

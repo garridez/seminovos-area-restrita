@@ -10,7 +10,7 @@ import NoMsgs from './Containers/NoMsgs';
 class Chat extends Component {
 
     render() {
-        const { numChats } = this.props;
+        const {numChats} = this.props;
 
         if (numChats > 0) {
             return <ChatContainer />;
@@ -21,6 +21,12 @@ class Chat extends Component {
         }
 
         return <NoMsgs />;
+    }
+
+    componentDidMount() {
+        setTimeout(function(){
+            $(window).resize();
+        }, 2000);
     }
 }
 
