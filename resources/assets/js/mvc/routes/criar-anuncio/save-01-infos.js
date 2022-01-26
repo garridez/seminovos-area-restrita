@@ -99,7 +99,7 @@ module.exports.callback = ($) => {
                                 $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
 
                                 //seta ano do modelo
-                                if(anoModelo === '0'){
+                                if(anoModelo === '0' || anoModelo === null){
                                     anoModelo = historico.dados_veiculo.ano_fabricacao;
                                 }
                                 $("select[name='anoModelo']").val(anoModelo);
