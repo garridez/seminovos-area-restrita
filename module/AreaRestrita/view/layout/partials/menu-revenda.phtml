@@ -71,12 +71,14 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
       </a>
       <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
     </li>
-    <li class="">
-      <a href="<?= $this->url('restrito/financeiro') ?>">
-        <span class="title">Financeiro</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
-    </li>
+    <?php if($this->userInfo('concessionaria') === 'N'): ?>
+      <li class="">
+        <a href="<?= $this->url('restrito/financeiro') ?>">
+          <span class="title">Financeiro</span>
+        </a>
+        <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
+      </li>
+    <?php endif; ?>
     <li class="">
       <a href="<?= $this->url('restrito/contrato-revenda') ?>">
         <span class="title">Contrato</span>
