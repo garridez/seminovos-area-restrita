@@ -52,6 +52,7 @@ class VeiculoController extends AbstractActionController {
         ];
 
         $data += $request->getPost()->toArray();
+        file_put_contents('data/logs/' . date('Y-m-d-') . $idCadastro . '.log', json_encode($data) . "\n");
         
         $data['idPlano'] = $data['idPlano'] ?? 5;
         
