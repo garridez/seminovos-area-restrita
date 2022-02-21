@@ -434,8 +434,8 @@ class DadosVeiculoController extends AbstractActionController
                 unset($data['submit']);
                 unset($data['checkboxacessorios']);
 
-                var_dump($data);
-                exit;
+                // var_dump($data);
+                // exit;
 
                 $resPost = $veiculosModel->post($data);
 
@@ -544,6 +544,7 @@ class DadosVeiculoController extends AbstractActionController
 
             $arrayStatusAltera = ['1', '3', '10'];
 
+            var_dump($veiculo);die;
             if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)){
                 return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
             }
