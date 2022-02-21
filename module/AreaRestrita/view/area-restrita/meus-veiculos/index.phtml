@@ -5,8 +5,7 @@ $veiculos = $this->meusVeiculos['data'] ?? []; //idPlano
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
-$nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ?? "Não informado"
-
+$nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ?? "Não informado";
 ?>
 <input type="hidden" class="data-user-display-name" value="<?=$nome?>">
 <div class="container-fluid container-anuncios">
@@ -120,8 +119,16 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                         <div class="preco">
                                             <h4
-                                                class="d-flex h4 text-cinza-escuro">
-                                                R$ <?= $veiculo['valorFormatado'] ?>
+                                                class="d-flex h4 text-cinza-escuro flex-wrap">
+                                                <span class="mr-3 mr-md-0">
+                                                    R$ <?= $veiculo['valorFormatado'] ?>
+                                                </span>
+                                                <?php if ($veiculo['financiamento']) : ?>
+                                                    <div>
+                                                        <b class="text-laranja mr-1">+</b>
+                                                        <small class="text-laranja text-capitalize">financiamento</small>
+                                                    </div>
+                                                <?php endif; ?>
                                             </h4>
                                         </div>
                                         <?php if ($veiculo['codFipe'] == 0 || empty($veiculo['codFipe'])) : ?>

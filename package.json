@@ -23,6 +23,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
   "dependencies": {
+    "@algolia/autocomplete-theme-classic": "^1.5.2",
     "animate-sass": "^0.8.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.6.0",

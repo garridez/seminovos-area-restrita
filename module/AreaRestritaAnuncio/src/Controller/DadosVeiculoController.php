@@ -499,7 +499,7 @@ class DadosVeiculoController extends AbstractActionController
         return new JsonModel( [
             'status' => 200,
             'placaDisponivel' => $placaDisponivel,
-            'historicoCarro' => isset($veiculo['data']) ? $veiculo['data'][0]['historicoCarro'] : $veiculo
+            'historicoCarro' => $veiculo['data'][0]['historicoCarro']
         ]);
     }
 
