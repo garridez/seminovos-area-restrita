@@ -74,7 +74,7 @@ module.exports.callback = ($) => {
                             return;
                         }
                         
-                        if(response.historicoCarro !== null && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
+                        if(response.historicoCarro && response.historicoCarro !== null && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
                             if (Array.isArray(response.historicoCarro.dados_veiculo)) {
                                 var dados_veiculo = response.historicoCarro.dados_veiculo[0];
                                 if (dados_veiculo !== undefined) {
