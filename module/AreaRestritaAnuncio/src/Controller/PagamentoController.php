@@ -111,8 +111,8 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['flagCertificado'] = (isset($dados['certificado']) && !empty($dados['certificado'])) ? (int) $dados['certificado'] : null;
         $dadosPagamento['parcelas'] = 1;
 
-        // dados para pagamento Cielo
-        if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'creditcard') {
+        // dados para pagamento Cielo/cartão
+        if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card' ) {
             $dadosPagamento['numero_cartao'] = $dados['numero_cartao'] ?: $dados['number'];
             $dadosPagamento['nome_cartao'] = $dados['nome_cartao'] ?: $dados['name'];
             $dadosPagamento['validade_cartao'] = $dados['validade_cartao'] ?: $dados['expiry'];
@@ -184,7 +184,7 @@ class PagamentoController extends AbstractActionController
         }
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
-            if (($dados['metodo'] == 'cielo' || $dados['metodo'] == 'creditcard') && isset($dados['placaVeiculo']) && $dados['certificado']) {
+            if (($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') && isset($dados['placaVeiculo']) && $dados['certificado']) {
                 $res = $apiClient->veiculosCertificadosPost(array('placa'=> $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo))->getData();
             }
             if ($dados['metodo'] == 'deposito' && $controle) {

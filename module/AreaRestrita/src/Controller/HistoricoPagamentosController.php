@@ -80,7 +80,8 @@ class HistoricoPagamentosController extends AbstractActionController
             'deposito' => 'Depósito/Transferência',
             'pagseguro' => 'PagSeguro',
             'boleto' => 'Boleto',
-            'creditcard' => 'Cartão de Crédito'
+            'creditcard' => 'Cartão de Crédito',
+            'card' => 'Cartão de Crédito'
         );
 
         return new ViewModel([
