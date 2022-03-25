@@ -6,6 +6,10 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
 if ($this->loginError) {
     echo '<input type="hidden" name="login-error" value="1" />';
 }
+if ($this->captchaError) {
+    echo '<input type="hidden" name="captcha-error" value="' . $this->escapeHtmlAttr($this->captchaError) . '" />';
+}
+
 $this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
 $this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
 
@@ -22,6 +26,7 @@ $this->revendaForm->get('usuarioEmail')
 $this->revendaForm->get('usuarioSenha')
         ->setAttribute('class', 'form-control')
         ->setAttribute('autocomplete', 'current-password');
+$this->headScript()->appendFile('https://www.google.com/recaptcha/api.js?render=6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-');
 ?>
 
 <?php $urlCadastrar = ($this->cadastroSimples ?? false) ? '/cadastro-simples' : '/me-cadastrar' ?>

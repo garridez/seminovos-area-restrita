@@ -61,6 +61,42 @@ class AuthController extends AbstractActionController
         }
         $post = $request->getPost();
 
+
+        if (!isset($post['token']) || !$post['token']) {
+            $viewModel->setVariable('loginError', true);
+            $viewModel->setVariable('captchaError', true);
+            return $viewModel;
+        }
+        
+        
+        $post['token'] ='03AGdBq27SFbvrp5APkuZnLHbhqbrMDdwywNDNiM8_WXc137G3o70tdqxpdgpUjdOCCdT6xwZCIPHUwiJf7rE2KuL1vNtTl4hJHCpweLxp2z0qLng8g23occ-IhIG7LfpeKAssIBYOfIYJp45LgUWNkr6LJKZqeWarL0_xaKU4tiuQzGIRsEER-tJNcbkWJMj9JccAjnjpD4DsaKE20aTgUbFCp2CWqLDoDa2ZGG5IcBFY8DwI_6OkQPxTaUufxvjFfQ2SqE1yI5-B0mKYbxaF3wOEQSqhrQJKIpYaehqZ7JYckN5rtWcTApe5zMHUMGaSQBKJPIn3UvaMjKIcnCf_Ecjr9Km7oGc0vzXFL0qLGbP7kuafqvQttVvMeUCX4t6TqDhA9NQr5o7GPyKQAvP_FAWSjMpKElkkEDus-cnDWIuT4B1HLFKY6IgKM2Wyc892PaATrnv6bNt7';
+        
+        $httpClient = new \Zend\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+
+        $request = $httpClient->getRequest();
+        $httpClient->setMethod('POST');
+        $request->setPost(new \Zend\Stdlib\Parameters([
+            'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
+            'response' => $post['token']
+        ]));
+        
+        $resposta = $httpClient->send();
+        
+        
+        if ($resposta->getStatusCode()) {
+            $result = json_decode($resposta->getBody(), true) ;
+            if (!$result['success']) {
+                $viewModel->setVariable('loginError', true);
+                $viewModel->setVariable('captchaError', json_encode($result['error-codes']));
+                return $viewModel;
+            }
+            
+        } else {
+            $viewModel->setVariable('loginError', true);
+            $viewModel->setVariable('captchaError', true);
+            return $viewModel;
+        }
+
         /* @var $form \Zend\Form\Form */
         $form = null;
         foreach ([$particularForm, $revendaForm] as $form) {
