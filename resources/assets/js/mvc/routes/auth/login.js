@@ -39,7 +39,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             $('#modalErroSenha').modal('hide');
         }, 8000);
     }
-    if ($('input[name=captcha-error').length >=0) {
+    if ($('input[name=captcha-error').length > 0) {
         var msgsMap = {
             'missing-input-secret':	'A chave secreta do captcha não foi enviada',
             'invalid-input-secret':	'Chave secreta do captcha inválida',
