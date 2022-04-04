@@ -13,7 +13,7 @@ class IndexController extends AbstractActionController
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
-            file_put_contents('data/log/zoop/' . date('dmY') . '.log', date('Y-m-d h:i:s') . "\n" . $request->getContent() . "\n\n", FILE_APPEND);
+            file_put_contents('data/logs/zoop/' . date('dmY') . '.log', date('Y-m-d h:i:s') . "\n" . $request->getContent() . "\n\n", FILE_APPEND);
             $data = json_decode($request->getContent(), true);
             
             if (!isset($data['payload']['object'])) {
