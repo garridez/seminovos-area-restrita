@@ -105,6 +105,39 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
+                    'revendas' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/revendas',
+                            'defaults' => [
+                                'controller' => Controller\RevendasController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'estados' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/estados',
+                            'defaults' => [
+                                'controller' => Controller\EstadosController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'cidades' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/cidades',
+                            'defaults' => [
+                                'controller' => Controller\CidadesController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -119,6 +152,9 @@ return [
             Controller\ModelosController::class => InvokableFactory::class,
             Controller\AcessoriosController::class => InvokableFactory::class,
             Controller\MotorController::class => InvokableFactory::class,
+            Controller\RevendasController::class => InvokableFactory::class,
+            Controller\EstadosController::class => InvokableFactory::class,
+            Controller\CidadesController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [

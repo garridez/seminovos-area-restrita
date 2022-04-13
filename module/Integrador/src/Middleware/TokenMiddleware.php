@@ -22,6 +22,12 @@ class TokenMiddleware implements MiddlewareInterface
     {
         $token = $request->getHeaderLine('X-SnBH-Token');
         $idCadastro = $request->getHeaderLine('X-SnBH-IdCadastro');
+
+        $acessoToken = false;
+        if ($request->getHeaderLine('X-SnBH-Cadastro')) {
+            $acessoToken = true;
+            $idCadastro = true;
+        }
         // Os dois campos são obrigatórios
         if (!$token || !$idCadastro) {
             return $this->naoAutorizadoResponse();
@@ -34,7 +40,7 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         // O idCadastro passado deve ser igual ao idCadastro que está no banco
-        if ($tokenData['idCadastro'] !== $idCadastro) {
+        if ($tokenData['idCadastro'] !== $idCadastro && !$acessoToken) {
             return $this->naoAutorizadoResponse();
         }
 
