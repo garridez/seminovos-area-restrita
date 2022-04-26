@@ -85,20 +85,24 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         $('.loading-container').slideDown();
     });
     
-    
-    setTimeout(function(){
-         grecaptcha.ready(function() {
-          grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {action: 'submit'}).then(function(token) {
-              $('form', '.container-form-particular, .container-form-revenda')
-                      .find('[type="submit"]')
-                      .after($('<input/>')
-                      .attr('name', 'token')
-                      .attr('type', 'hidden')
-                      .attr('data-msg','Acabou a festa!')
-                      .val(token));
-          });
+   
+    var grecaptchaIntervalID = setInterval(function () {
+        if (grecaptcha === undefined || grecaptcha.ready === undefined) {
+            return;
+        }
+        clearInterval(grecaptchaIntervalID);
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {action: 'submit'}).then(function (token) {
+                $('form', '.container-form-particular, .container-form-revenda')
+                        .find('[type="submit"]')
+                        .after($('<input/>')
+                                .attr('name', 'token')
+                                .attr('type', 'hidden')
+                                .attr('data-msg', 'Acabou a festa!')
+                                .val(token));
+            });
         });
-    }, 2000);
+    }, 50);
 
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');
