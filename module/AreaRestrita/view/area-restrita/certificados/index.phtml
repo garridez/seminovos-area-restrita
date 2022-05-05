@@ -3,14 +3,26 @@
 $placa = $this->placa;
 //var_dump($this->dadosCertificados);
 $dadosCertificados = $this->dadosCertificados ? $this->dadosCertificados : null;
-$dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
-//$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
-$dadosFurto = $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] : null;
-$dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
-$sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] : null;
-$leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['data']['leilao'] : null;
-$baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] : null;
-$baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] : null;
+if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertificados['dadosBasicos']['body']['data']) {
+    $dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
+    //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
+    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] : null;
+    $dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
+    $sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] : null;
+    $leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['data']['leilao'] : null;
+    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] : null;
+    $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] : null;
+
+} else if (isset($dadosCertificados['dadosBasicos']['body']['responseJSON']) && $dadosCertificados['dadosBasicos']['body']['responseJSON']) {
+    $dados = $dadosCertificados['dadosBasicos']['body']['responseJSON'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON'] : null;
+    //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
+    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['responseJSON']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['rouboFurto'] : null;
+    $dadosRecall = $dadosCertificados['dadosRecall']['body']['responseJSON'] ? $dadosCertificados['dadosRecall']['body']['responseJSON'] : null;
+    $sinistro = $dadosCertificados['dadosBasicos']['body']['responseJSON']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['indicioSinistro'] : null;
+    $leilao = $dadosCertificados['dadosBasicos']['body']['responseJSON']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['leilao'] : null;
+    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseEstadual'] : null;
+    $baseNacional = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseNacional'] : null;
+}
 //var_dump($dadosFurto);
 
 ?>
@@ -477,7 +489,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             <div
                                 class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
                                 <div class="text-left font-montserrat all-caps mb-1">
-                                    <p class="small no-margin bold"><span class="semi-bold mt-0">Consulta ainda pendente</span> </p>
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0"><?= $leilao['descricao'] ?></span> </p>
                                 </div>
                             </div>
                     <?php } ?>
@@ -507,7 +519,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                         class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
                         <div class="text-left font-montserrat mb-1">
                             <p class="no-margin bold"><span class="semi-bold mt-0">
-                                <?= isset($dadosFurto['rouboFurto']['constaOcorrencia']) && $dadosFurto['rouboFurto']['constaOcorrencia']  ? 'Consta ocorrência de roubo ativa' : "Não consta ocorrência de roubo ativa" ?>
+                                <?= isset($dadosFurto['constaOcorrenciaAtiva']) && $dadosFurto['constaOcorrenciaAtiva']  ? 'Consta ocorrência de roubo ativa' : "Não consta ocorrência de roubo ativa" ?>
                             </span> </p>
                             
                         </div>
@@ -522,7 +534,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                             </div>
                     <?php } ?>
                 </div>
-                <?php if(isset($dadosFurto['rouboFurto']['historico']) && $dadosFurto['rouboFurto']['historico']): ?>
+                <?php if(isset($dadosFurto['historico']) && $dadosFurto['historico']): ?>
                 <table class="table w-100 col-print-12 pl-print-3">
                     <thead>
                         <tr class="border-bottom">
@@ -534,11 +546,11 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($dadosFurto['rouboFurto']['historico'] as $key =>$roubo): ?>
+                        <?php foreach ($dadosFurto['historico'] as $key =>$roubo): ?>
                         <tr>
                             <td class="p-1">
                                 <span class="text-black description-print no-wrap">
-                                    <?php echo date('d/m/Y', strtotime($roubo['dataOcorrencia'])); ?>
+                                    <?php echo date('d/m/Y', strtotime(str_replace('/','-',$roubo['dataOcorrencia']))); ?>
                                 </span>
                             </td>
                             <td class="p-2">
@@ -580,7 +592,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                     <div class="col-12 pl-0 pl-print-0">
                         <div>
                             <small>
-                                * CERTIFICADO EMITIDO POR ORGÃOS PARCEIROS DA EMPRESA OLHO NO CARRO
+                                * CERTIFICADO EMITIDO POR ORGÃOS PARCEIROS DA EMPRESA CHECKTUDO
                             </small>
                         </div>
                         <div class="">
@@ -591,7 +603,7 @@ $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional
                         </div>
                         <div>
                             <small class="">
-                                * Não nos responsabilizamos por informações errôneas enviadas, tanto do usuário quanto da empresa OLHO NO CARRO.
+                                * Não nos responsabilizamos por informações errôneas enviadas, tanto do usuário quanto da empresa CHECKTUDO.
                             </small>
                         </div>
                     </div>
