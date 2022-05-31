@@ -5,6 +5,8 @@ $isRevenda = $this->userInfo('tipoCadastro') == 1;
 $isParticular = !$isRevenda;
 
 $idPlanoAtual = $idPlanoAtual ?? false;
+$idStatusAnuncio = $idStatusAnuncio ?? false;
+$zeroKm = $zeroKm ?? false;
 
 usort($planos, function ($a, $b) {
     return $b['ordem'] <=> $a['ordem'];
@@ -73,6 +75,8 @@ if ($isRevenda) {
                             'isRevenda' => $isRevenda,
                             'isParticular' => $isParticular,
                             'idPlanoAtual' => $idPlanoAtual,
+                            'idStatusAnuncio' => $idStatusAnuncio,
+                            'zeroKm' => $zeroKm,
                         ]);
                     endforeach;
                     ?>
@@ -103,6 +107,8 @@ if ($isRevenda) {
                                     'isRevenda' => $isRevenda,
                                     'isParticular' => $isParticular,
                                     'idPlanoAtual' => $idPlanoAtual,
+                                    'idStatusAnuncio' => $idStatusAnuncio,
+                                    'zeroKm' => $zeroKm,
                                 ]) ?>
                             </div>
                         </div>
