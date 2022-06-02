@@ -7,7 +7,7 @@
     "compile-icons": "node_modules/.bin/icon-font-generator resources/assets/img/svg/icons/*.svg -o resources/assets/fonts/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run development",
-    "development": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "node node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "prod": "npm run production",

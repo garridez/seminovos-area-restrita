@@ -42,8 +42,17 @@ const SnBH = {
             var self = this;
             var webpackContext = require
                     .context('./mvc', true, /\.js$/);
+            var uniquePaths = [];
 
             webpackContext.keys()
+                    .filter(function (file) {
+                        var fileNormalized = file.replace(/^\.\//, 'mvc/');
+                        if (uniquePaths.includes(fileNormalized)) {
+                            return false;
+                        }
+                        uniquePaths.push(fileNormalized);
+                        return true;
+                    })
                     .forEach(function (file) {
                         module = webpackContext(file);
                         if (module.seletor) {
