@@ -6,13 +6,19 @@ let basePath = 'resources/assets';
 
 mix.webpackConfig({
     plugins: [
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
+        })
     ],
     resolve: {
         modules: [path.resolve(__dirname, 'resources/assets/js'), 'node_modules'],
         alias: {
             SnBH: path.resolve('resources/assets/js/SnBH.js')
         }
+    },
+    stats: {
+        children: true
     }
 });
 
@@ -28,7 +34,7 @@ mix.webpackConfig({
     }
 });
 
-mix.react('resources/assets/js/Main.js', 'public/js/app.js');
+mix.js('resources/assets/js/Main.js', 'public/js/app.js').react();
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 mix.sourceMaps(!mix.inProduction(), 'source-map');
 mix.copy(basePath + '/img', 'public/img');

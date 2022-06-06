@@ -216,6 +216,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                     <?php endif; ?>
                                     <div class="w-100">
+                                        <!--
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
                                                 <div class="d-flex justify-content-between">
@@ -236,7 +237,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                     </div>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div>-->
                                         <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
@@ -433,8 +434,8 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 </div>
                             </div>
                         </div>
-                        <?php #if ($veiculo["botoes"]["certificado"] ?? false) { ?>
-                        <?php if (false) { ?>
+                        <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
+                        <?php #if (false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
                                 <div><span>Adquira seu Certificado de Procedência Digital</span></div>                                
                                 <div class="mt-2"><b>R$ 24,90</b></div>

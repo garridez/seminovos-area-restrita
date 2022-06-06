@@ -38,8 +38,42 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         setTimeout(function () {
             $('#modalErroSenha').modal('hide');
         }, 8000);
-
     }
+    if ($('input[name=captcha-error').length > 0) {
+        var msgsMap = {
+            'missing-input-secret':	'A chave secreta do captcha não foi enviada',
+            'invalid-input-secret':	'Chave secreta do captcha inválida',
+            'missing-input-response':	'Desafio do captchanão enviado',
+            'invalid-input-response':	'Desafio do captcha inválido',
+            'bad-request':	'Requisção do captcha errada',
+            'timeout-or-duplicate':	'Seu captcha está inválido'
+
+        };
+        var msg = $('input[name=captcha-error').val();
+        if (msg !== '1') {
+            try{
+                var listErros = JSON.parse(msg);
+            }catch(e){
+                
+            }
+            var listErrosMsg = [];
+            if (listErros){
+                for(var i of listErros){
+                    if (msgsMap[i] !== undefined) {
+                        listErrosMsg.push(msgsMap[i]);
+                    }
+                }
+            }
+            
+            $('#modalErroSenha .msg-principal').html(listErrosMsg.join('<br>'));
+        }
+        
+        $('#modalErroSenha').modal('show');
+        setTimeout(function () {
+            $('#modalErroSenha').modal('hide');
+        }, 8000);
+    }
+    
     if (url.search('#cuidado') > 0) {
         $('#modalCuidado').modal('show');
         setTimeout(function () {
@@ -50,6 +84,25 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         $('.container-form-particular, .container-form-revenda').slideUp();
         $('.loading-container').slideDown();
     });
+    
+   
+    var grecaptchaIntervalID = setInterval(function () {
+        if (grecaptcha === undefined || grecaptcha.ready === undefined) {
+            return;
+        }
+        clearInterval(grecaptchaIntervalID);
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {action: 'submit'}).then(function (token) {
+                $('form', '.container-form-particular, .container-form-revenda')
+                        .find('[type="submit"]')
+                        .after($('<input/>')
+                                .attr('name', 'token')
+                                .attr('type', 'hidden')
+                                .attr('data-msg', 'Acabou a festa!')
+                                .val(token));
+            });
+        });
+    }, 50);
 
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');

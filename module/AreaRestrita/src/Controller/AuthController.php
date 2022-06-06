@@ -61,6 +61,39 @@ class AuthController extends AbstractActionController
         }
         $post = $request->getPost();
 
+
+        if (!isset($post['token']) || !$post['token']) {
+            $viewModel->setVariable('loginError', true);
+            $viewModel->setVariable('captchaError', true);
+            return $viewModel;
+        }
+
+        $httpClient = new \Zend\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+
+        $request = $httpClient->getRequest();
+        $httpClient->setMethod('POST');
+        $request->setPost(new \Zend\Stdlib\Parameters([
+            'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
+            'response' => $post['token']
+        ]));
+        
+        $resposta = $httpClient->send();
+        
+        
+        if ($resposta->getStatusCode()) {
+            $result = json_decode($resposta->getBody(), true) ;
+            if (!$result['success']) {
+                $viewModel->setVariable('loginError', true);
+                $viewModel->setVariable('captchaError', json_encode($result['error-codes']));
+                return $viewModel;
+            }
+            
+        } else {
+            $viewModel->setVariable('loginError', true);
+            $viewModel->setVariable('captchaError', true);
+            return $viewModel;
+        }
+
         /* @var $form \Zend\Form\Form */
         $form = null;
         foreach ([$particularForm, $revendaForm] as $form) {
