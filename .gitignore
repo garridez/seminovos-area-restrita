@@ -4,6 +4,7 @@ config/development.config.php
 data/cache/*
 data/**
 !data/**/.gitkeep
+!data/logs/zoop/.gitkeep
 phpunit.xml
 nbproject
 .idea
