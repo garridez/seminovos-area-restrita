@@ -216,28 +216,29 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                     <?php endif; ?>
                                     <div class="w-100">
-                                        <!--
-                                        <div class="bg-master-lightest mt-1 padding-15">
-                                            <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="bold no-margin d-flex align-items-center link-danger">
-                                                        E-mails recebidos: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
-                                                        <?php
-                                                        /** @todo
-                                                         *  <span class="fa fa-envelope fs-16 mr-1"></span>
-                                                         *  Trazer o numero de propostas
-                                                         *  Trazer bolinha verde quando há nova proposta
-                                                         */
-                                                        ?>
+                                        <?php if($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
+                                            <div class="bg-master-lightest mt-1 padding-15">
+                                                <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="bold no-margin d-flex align-items-center link-danger">
+                                                            E-mails recebidos: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
+                                                            <?php
+                                                            /** @todo
+                                                             *  <span class="fa fa-envelope fs-16 mr-1"></span>
+                                                             *  Trazer o numero de propostas
+                                                             *  Trazer bolinha verde quando há nova proposta
+                                                             */
+                                                            ?>
+                                                        </div>
+                                                        <div>
+                                                            <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="label bg-verde text-white px-2 py-1 inline fs-12">
+                                                            Ver
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="label bg-verde text-white px-2 py-1 inline fs-12">
-                                                        Ver
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>-->
+                                                </a>
+                                            </div>
+                                        <?php endif; ?>
                                         <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
