@@ -10,11 +10,14 @@ function init() {
     var $ctx = $('#form_servicos-adicionais');
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
+        if (window.fromCheckout) {
+          BtnContinuar.get().removeClass('hide d-none');
+          BtnContinuar.enable();
+        }
 
-      if(window.fromCheckout){
-        BtnContinuar.get().removeClass('hide d-none');
-        BtnContinuar.enable();
-      }
+        if ($('#dados-basicos .placaVeiculo').empty()) {
+            $('.btn-continuar').click();
+        }
     });
 
     $('input#servico-adicional-certificado').change(function () {
@@ -35,7 +38,6 @@ function init() {
             adicionar.show();
             $('.btn-continuar').click();
         }
-
 
         $('[data-adicionar-action]').prop('checked', $this.is(':checked'));
         $('#dados-basicos .certificado').val($this.is(':checked') ? 1 : '');

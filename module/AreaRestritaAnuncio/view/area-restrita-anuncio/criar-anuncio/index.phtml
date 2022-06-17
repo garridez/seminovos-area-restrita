@@ -32,6 +32,10 @@ if($this->tipoVeiculo == VeiculoTipo::TIPO_CAMINHAO){
     unset($rotasAnuncio['veiculo']['opcionais']);
 }
 
+if ($veiculo && ($veiculo['veiculoZeroKm'] == 1 || empty($veiculo['placa']))) {
+    unset($rotasAnuncio['servicos-adicionais']);
+}
+
 if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veiculo['idStatus'] == VeiculosStatus::STATUS_FOTOS_ALTERADAS)) {
     switch ($_GET['editar'] ?? null) {
         case 'fotos':
