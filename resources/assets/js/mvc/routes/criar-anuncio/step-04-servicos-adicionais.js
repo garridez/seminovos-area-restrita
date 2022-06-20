@@ -8,6 +8,8 @@ module.exports.callback = ($) => {
 function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
+    var stopEvent = require('helpers/StopEvent');
+    var stepsContainer = $('.step-container.step-servicos-adicionais');
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
         if (window.fromCheckout) {
@@ -15,9 +17,25 @@ function init() {
           BtnContinuar.enable();
         }
 
-        if ($('#dados-basicos .placaVeiculo').empty()) {
-            $('.btn-continuar').click();
+//        if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
+//            $('.btn-continuar').click();
+//            stepsContainer.stepPlugin('next');
+//            //$('.step-container').stepPlugin('goTo', '.step-checkout');
+//            //$('.btn-continuar').click();
+//        }
+    });
+    
+    $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
+
+        if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
+            //$('.btn-continuar').click();
+            //stepsContainer.stepPlugin('next');
+           // $('.btn-continuar').click();
+            $('.step-container').stepPlugin('goTo', '.step-checkout');
+            //$('.btn-continuar').click();
         }
+        
+        return stopEvent(e);
     });
 
     $('input#servico-adicional-certificado').change(function () {
