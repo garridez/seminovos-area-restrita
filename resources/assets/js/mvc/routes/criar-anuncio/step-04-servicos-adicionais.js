@@ -16,26 +16,12 @@ function init() {
           BtnContinuar.get().removeClass('hide d-none');
           BtnContinuar.enable();
         }
-
-//        if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
-//            $('.btn-continuar').click();
-//            stepsContainer.stepPlugin('next');
-//            //$('.step-container').stepPlugin('goTo', '.step-checkout');
-//            //$('.btn-continuar').click();
-//        }
     });
     
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
-
         if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
-            //$('.btn-continuar').click();
-            //stepsContainer.stepPlugin('next');
-           // $('.btn-continuar').click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
-            //$('.btn-continuar').click();
         }
-        
-        //return stopEvent(e);
     });
 
     $('input#servico-adicional-certificado').change(function () {
