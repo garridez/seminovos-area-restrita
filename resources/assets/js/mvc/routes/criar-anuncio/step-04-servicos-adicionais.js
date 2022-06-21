@@ -35,7 +35,7 @@ function init() {
             //$('.btn-continuar').click();
         }
         
-        return stopEvent(e);
+        //return stopEvent(e);
     });
 
     $('input#servico-adicional-certificado').change(function () {
