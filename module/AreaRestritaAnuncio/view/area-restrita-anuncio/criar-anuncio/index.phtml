@@ -49,6 +49,7 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
         case 'planos':
             unset(
                 $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['opcionais'],
                 $rotasAnuncio['veiculo']['preco'],
                 $rotasAnuncio['veiculo']['mais-informacoes'],
                 $rotasAnuncio['veiculo']['fotos'],
@@ -58,14 +59,16 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
         case 'certificado':
             unset(
                 $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['opcionais'],
                 $rotasAnuncio['veiculo']['preco'],
                 $rotasAnuncio['veiculo']['mais-informacoes'],
                 $rotasAnuncio['veiculo']['fotos'],
                 $rotasAnuncio['veiculo']['video'],
                 $rotasAnuncio['plano']
             );
+            unset($rotasAnuncio['plano']);
             break;
-
+        
         default:
             unset(
                 $rotasAnuncio['servicos-adicionais'],
