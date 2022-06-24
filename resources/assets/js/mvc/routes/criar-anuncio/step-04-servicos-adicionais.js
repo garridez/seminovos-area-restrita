@@ -20,7 +20,9 @@ function init() {
     
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
         if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
+            $('.btn-continuar').click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
+            return stopEvent(e);
         }
     });
 
@@ -48,4 +50,6 @@ function init() {
 
 
     });
+    
+//    $('.step-container').on('step:pre-exit:plano', function (e) {});
 }
