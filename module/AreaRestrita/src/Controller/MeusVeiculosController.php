@@ -300,7 +300,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
-                    if($veiculo['flagCertificado'] != 1){
+                    if($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])){
                         $temp_acoes["certificado"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
