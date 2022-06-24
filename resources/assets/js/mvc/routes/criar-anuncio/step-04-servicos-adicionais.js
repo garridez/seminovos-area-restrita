@@ -8,13 +8,22 @@ module.exports.callback = ($) => {
 function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
+    var stopEvent = require('helpers/StopEvent');
+    var stepsContainer = $('.step-container.step-servicos-adicionais');
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
-
-      if(window.fromCheckout){
-        BtnContinuar.get().removeClass('hide d-none');
-        BtnContinuar.enable();
-      }
+        if (window.fromCheckout) {
+          BtnContinuar.get().removeClass('hide d-none');
+          BtnContinuar.enable();
+        }
+    });
+    
+    $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
+        if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
+            $('.btn-continuar').click();
+            $('.step-container').stepPlugin('goTo', '.step-checkout');
+            return stopEvent(e);
+        }
     });
 
     $('input#servico-adicional-certificado').change(function () {
@@ -36,10 +45,11 @@ function init() {
             $('.btn-continuar').click();
         }
 
-
         $('[data-adicionar-action]').prop('checked', $this.is(':checked'));
         $('#dados-basicos .certificado').val($this.is(':checked') ? 1 : '');
 
 
     });
+    
+//    $('.step-container').on('step:pre-exit:plano', function (e) {});
 }

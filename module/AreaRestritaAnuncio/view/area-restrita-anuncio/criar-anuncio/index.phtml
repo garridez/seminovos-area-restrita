@@ -32,6 +32,10 @@ if($this->tipoVeiculo == VeiculoTipo::TIPO_CAMINHAO){
     unset($rotasAnuncio['veiculo']['opcionais']);
 }
 
+if ($veiculo && ($veiculo['veiculoZeroKm'] == 1 || empty($veiculo['placa']))) {
+    unset($rotasAnuncio['servicos-adicionais']);
+}
+
 if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veiculo['idStatus'] == VeiculosStatus::STATUS_FOTOS_ALTERADAS)) {
     switch ($_GET['editar'] ?? null) {
         case 'fotos':
@@ -45,6 +49,7 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
         case 'planos':
             unset(
                 $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['opcionais'],
                 $rotasAnuncio['veiculo']['preco'],
                 $rotasAnuncio['veiculo']['mais-informacoes'],
                 $rotasAnuncio['veiculo']['fotos'],
@@ -54,14 +59,16 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
         case 'certificado':
             unset(
                 $rotasAnuncio['veiculo']['dados'],
+                $rotasAnuncio['veiculo']['opcionais'],
                 $rotasAnuncio['veiculo']['preco'],
                 $rotasAnuncio['veiculo']['mais-informacoes'],
                 $rotasAnuncio['veiculo']['fotos'],
                 $rotasAnuncio['veiculo']['video'],
                 $rotasAnuncio['plano']
             );
+            unset($rotasAnuncio['plano']);
             break;
-
+        
         default:
             unset(
                 $rotasAnuncio['servicos-adicionais'],
