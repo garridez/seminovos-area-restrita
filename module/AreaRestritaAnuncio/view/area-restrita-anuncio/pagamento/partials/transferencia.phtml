@@ -1,7 +1,7 @@
 <div class="col-md-12">Titular: <strong>Seminovos Ltda</strong><br>CNPJ: <strong>08.030.680/0001-06</strong></div>
     <div class="d-flex text-center justify-content-between my-3 flex-wrap">
         <?php foreach(
-            [[   
+            [/*[   
                 "nome"=> "Itaú",
                 "img"=> "/img/bancos/logo-itau.jpg",
                 "agencia" => "0781",
@@ -14,7 +14,7 @@
                 "agencia" => "2286-1",
                 "conta" => "18.193-5",
                 "link" => "https://www.bradescocelular.com.br/app_redirect/index.html?deeplink=app/listadeconta"                
-            ],
+            ],*/
             [
                 "nome"=> "Caixa",
                 "img"=> "/img/bancos/logo-caixa-eco.jpg",
@@ -22,7 +22,7 @@
                 "conta" => "00003919-6",
                 "link" => "https://internetbanking.caixa.gov.br/sinbc/#!nb/login"
             ],
-            [
+            /*[
                 "nome"=> "Brasil",
                 "img"=> "/img/bancos/logo-bb.jpg",
                 "agencia" => "1614-4",
@@ -30,7 +30,7 @@
                 "operacao" => "003",
                 "link" => "https://www.bb.com.br/AppBBFloat"
 
-            ]]  as $banco): ?>
+            ]*/]  as $banco): ?>
         <div class="w-50 mb-2">
             <div title="Banco <?=$banco['nome']?>">
                 <a href="<?= $banco['link'] ?>" target="_BLANK">
@@ -55,13 +55,15 @@
         <?php endforeach;?>
         <div class="w-50 mb-2">
             <div title="">
-                <img src="/img/pagamento/pix.png" title="Banco Pix" alt="Logo Pix" style="width: 50px; height: 50px;">
+                <img src="/img/bancos/logo-caixa-eco.jpg" title="Banco Pix" alt="Logo Pix" style="width: 50px; height: 50px;">
                 <div class="d-flex justify-content-center">
                     <div>Chave PIX:</div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div>08.030.680/0001-06</div>
                 </div>
+                <img src="/img/bancos/inter.png" title="Banco Pix" alt="Logo Pix" style="width: 25px; height: 25px;">
+                AG: 0001 - C/C: 16952949-5
             </div>
         </div>
     </div>
