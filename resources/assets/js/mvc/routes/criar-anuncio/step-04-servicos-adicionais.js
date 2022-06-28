@@ -51,5 +51,9 @@ function init() {
 
     });
     
-//    $('.step-container').on('step:pre-exit:plano', function (e) {});
+    $('.step-container').on('step:change:servicos-adicionais', function (e) {
+        if (location.hash && location.hash.indexOf('addCertificado') !== -1 && location.hash.indexOf('planoCem') !== -1) {
+            $("#acao").val("addCertificado");
+        }
+    });
 }
