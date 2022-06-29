@@ -14,8 +14,6 @@ use Zend\Stdlib\ArrayUtils;
 
 chdir(dirname(__DIR__));
 
-//teste de commit!
-
 // Composer autoloading
 require '../vendor/autoload.php';
 
