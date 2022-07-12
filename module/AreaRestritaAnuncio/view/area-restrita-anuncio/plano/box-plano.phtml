@@ -127,6 +127,13 @@ $nomePlano = mb_strtoupper($nomePlano);
                     Prioridade <strong><?= $prioridade[$plano['prioridade']] ?></strong> de exibição
                 </span>
             </li>
+            <?php if($isGratis && !$isRevenda): ?>
+                <li>
+                    <span>
+                        O mesmo veículo só pode ser anunciado uma única vez gratuitamente.
+                    </span>
+                </li>
+            <?php endif; ?>
         </ul>
         <?php if (!$isRevenda) : ?>
             <div class="valor-label <?= $class[$plano['prioridade']] ?>">
