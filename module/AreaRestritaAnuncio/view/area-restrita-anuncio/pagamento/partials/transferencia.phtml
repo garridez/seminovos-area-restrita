@@ -37,12 +37,10 @@
                     <img src="<?=$banco['img']?>" title="Banco <?=$banco['nome']?>" alt="Logo <?=$banco['nome']?>" style="width: 50px; height: 50px;">
                 </a>
                 <div class="d-flex justify-content-center">
-                    <div>Agência:</div>
-                    <div><?=$banco['agencia']?></div>
+                    <div>Agência: <strong><?=$banco['agencia']?></strong></div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div>C/C:</div>
-                    <div><?=$banco['conta']?></div>
+                    <div>C/C: <strong><?=$banco['conta']?></strong></div>
                 </div>
                 <?php if($banco['operacao'] ?? false): ?>
                     <div class="d-flex justify-content-center">
@@ -60,10 +58,10 @@
                     <div>Chave PIX:</div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div>08.030.680/0001-06</div>
+                    <div><strong>08.030.680/0001-06</strong></div>
                 </div>
                 <img src="/img/bancos/inter.jpg" title="Banco Inter" alt="Logo Inter" style="width: 25px; height: 25px;">
-                AG: 0001 - C/C: 16952949-5
+                Agência: <strong>0001</strong> <br/> C/C: <strong>16952949-5</strong>
             </div>
         </div>
     </div>
@@ -80,7 +78,7 @@
             Ou entrar em contato conosco no número: <a href="tel://(31) 3077-5888" class=text-sucess>(31) 3077-5888</a>
         </div>
         <div>
-           informando os dados do transação.
+           informando os dados da transação.
         </div>
     </small>
 </div>
