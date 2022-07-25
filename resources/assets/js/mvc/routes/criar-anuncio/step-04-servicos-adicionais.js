@@ -22,6 +22,7 @@ function init() {
         if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
             $('.btn-continuar').click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
+            $('.step-container .step-servicos-adicionais').remove();
             return stopEvent(e);
         }
     });
