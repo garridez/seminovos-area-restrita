@@ -51,6 +51,7 @@ class SelectCombustivel extends Select
                 $valueOptions = [
                     '' => 'Selecione',
                     2 => 'Bi-Combustível',
+                    11 => 'Elétrico',
                     4 => 'Gasolina',
                 ];
                 break;
