@@ -275,6 +275,7 @@ class DadosVeiculoController extends AbstractActionController
 
     public function fotosAction()
     {
+        ini_set('memory_limit', '1G');
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
