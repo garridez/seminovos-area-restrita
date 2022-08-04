@@ -93,6 +93,8 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         clearInterval(grecaptchaIntervalID);
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {action: 'submit'}).then(function (token) {
+                $('.container-form-particular').slideDown();
+                $('.loading-container').slideUp();
                 $('form', '.container-form-particular, .container-form-revenda')
                         .find('[type="submit"]')
                         .after($('<input/>')

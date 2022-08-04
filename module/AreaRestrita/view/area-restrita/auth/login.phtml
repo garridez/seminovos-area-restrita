@@ -45,12 +45,12 @@ $this->headScript()->appendFile('https://www.google.com/recaptcha/api.js?render=
         </div>
     </div>
     <div class="conteudo">
-        <div class="loading-container" style="display: none;">
+        <div class="loading-container">
             <div class="spinner-border"></div>
             <div class="feedback-text"></div>
         </div>
         <div class="forms">
-            <div class="container-form-particular">
+            <div class="container-form-particular hide">
                 <?=
                 $this->partial('./partials/form-particular', [
                     'formLogin' => $this->particularForm
