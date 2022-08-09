@@ -470,8 +470,8 @@ class DadosVeiculoController extends AbstractActionController
      */
     public function placaDisponivelAction(){
         $statusPermitidos = [
-                            1, // aguardando pagamento
-                            3, // cadastrando
+                            /*1, // aguardando pagamento
+                            3, // cadastrando */
                             7, // removido
                             8, // vendido
                         ];
