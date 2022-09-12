@@ -8,6 +8,10 @@ module.exports.callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var loading = require('components/Loading');
 
+
+    require('./save-02-fotos-v2')($);
+    // Depois de testado, remover todo código abaixo
+    return;
     $('.step-container').on('step:pre-exit:fotos', function (e) {
         var $fotosContainer = $('.fotos-container');
         var ordemCount = 0;
