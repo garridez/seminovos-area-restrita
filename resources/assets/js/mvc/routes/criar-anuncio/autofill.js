@@ -11,6 +11,10 @@ function randStr(length, type) {
     }
     return result;
 }
+function sleep(ms = 1000) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports = {
     init: function () {
         this._core({
@@ -18,13 +22,13 @@ module.exports = {
             /**
              * Serve para ir passando simulando click e parar num step específico
              */
-//            pararNoStep: 'step-checkout',
+            pararNoStep: 'step-fotos',
             /**
              * Se true, é sempre gerado uma placa nova
              * Útil para não gerar conflito com placa existe
              * Mas cuidado pra não encher de cadastros diferentes
              */
-            placaAleatoria: false,
+            placaAleatoria: !false,
             //placaAleatoria: true,
             // Valor fixo de placa
             placa: 'LJL5173',
@@ -66,28 +70,41 @@ module.exports = {
             if (options.autofill) {
                 setTimeout(populate, 500);
             }
-            setTimeout(avancar, 600);
+            setTimeout(avancar, 5000);
         });
         // Metodo para agilizar o desenvolvimento
-        function populate() {
+        async function populate() {
 
             var form = $('#form_dadosVeiculo');
 
             form.find('[name="placa"]').val(options.placa);
             form.find('[name="idMarca"]').val('18').change();
-            setTimeout(function () {
-                form.find('[name="modeloCarro"]').val('1964');
-            }, 50);
+            console.log('vai');
+            await sleep(1000);
+            console.log('vai');
+            form.find('[name="modeloCarro"]').val('1964').change();
+            await sleep(1000);
+
+            form.find('[name="anoFabricacao"]').val('2015');
+            form.find('[name="anoModelo"]').val('2015').change();
+            await sleep(1000);
+            form.find('[name="motor"]').val('3');
+                        
+            await sleep(1000);
+            form.find('[name="outraVersao"]').val('Outra versão');
+            
 
             form.find('[name="versao"]').val('3');
-            form.find('[name="motor"]').val('3');
             form.find('[name="idValvula"]').val('2');
-            form.find('[name="anoFabricacao"]').val('2015');
-            form.find('[name="anoModelo"]').val('2015');
             form.find('[name="portas"]').val('3');
             form.find('[name="cor"]').val('Cinza');
             form.find('[name="combustivel"]').val('3');
             form.find('[name="kilometragem"]').val('180000');
+            form.find('[name="versao"]').val('-1');
+            form.find('[name="idValvula"]').val('1');
+            form.find('[name="checkboxacessorios[]"] [value="11"]').prop('selected', true);
+//            console.log('para')
+//            return;
 
             $('[name="valor"]').val('15000');
             $('[name="observacoes"]').val('Observação de teste');
