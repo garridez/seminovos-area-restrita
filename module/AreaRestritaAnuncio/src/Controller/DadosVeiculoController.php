@@ -76,6 +76,7 @@ class DadosVeiculoController extends AbstractActionController
                 'tipoVeiculo' => $tipoVeiculo,
                 'idCadastro' => $identity->getIdentity(),
                 'video' => '',
+                'origem' => 'Area Restrita',
             ];
 
             $data += $request->getPost()->toArray();

@@ -453,12 +453,12 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                         <tr>
                             <td class="p-2">
                                 <span class="text-black description-print no-wrap">
-                                    <?php echo date('d/m/Y', strtotime($dado['dataLeilao'])); ?>
+                                    <?php echo date('d/m/Y', strtotime(str_replace("/", "-", $dado['dataLeilao']))); ?>
                                 </span>
                             </td>
                             <td class="p-2">
                                 <span class="text-black description-print no-wrap">
-                                    <?= $dado['_id']?>
+                                    <?php echo isset($dado['_id'])? $dado['_id'] : '' ; ?>
                                 </span>
                             </td>
                             <td class="p-2">
@@ -473,7 +473,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                             </td>
                             <td class="p-2">
                                 <span class="text-black description-print no-wrap">
-                                    <?= $dado['condicaoGeral']?>
+                                    <?= $dado['comitente']?>
                                 </span>
                             </td>
                             <td class="p-2">
