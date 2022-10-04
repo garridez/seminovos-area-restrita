@@ -500,7 +500,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                             <div
                                 class="pl-print-3 d-block d-md-block col-lg-12 p-0 p-md-2 col-print-12 justify-content-between mb-2 mb-md-0">
                                 <div class="text-left font-montserrat all-caps mb-1">
-                                    <p class="small no-margin bold"><span class="semi-bold mt-0"><?= $leilao['descricao'] ?></span> </p>
+                                    <p class="small no-margin bold"><span class="semi-bold mt-0"><?php echo isset($leilao['descricao'])? $leilao['descricao'] : "NAO EXISTE REGISTRO DE INDICIO DE LEILÃO"; ?></span> </p>
                                 </div>
                             </div>
                     <?php } ?>
