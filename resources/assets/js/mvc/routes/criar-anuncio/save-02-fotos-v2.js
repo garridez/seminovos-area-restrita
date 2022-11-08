@@ -24,6 +24,9 @@ function filterImgToDelete($img) {
 function filterImgToReorder($img) {
     return $img
             .filter(function () {
+                return !$(this).data('file-data');
+            })
+            .filter(function () {
                 return !!$(this).data('idfoto');
             });
 }

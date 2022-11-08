@@ -210,3 +210,55 @@ function init() {
         }
     }
 }
+
+function testImgUpload() {
+    var inputFoto = $('.step-fotos').find('[name="foto"]');
+    if (location.href.indexOf('insert') !== -1) {
+        setTimeout(async function () {
+            var list = [
+                1,
+                2,
+                3,
+                4,
+                5
+            ];
+
+            for (var key in list) {
+                var i = (list[key] + '').padStart(2, 0);
+                var url = `/sequenciais/${i}.jpg`;
+                await loadURLToInputFiled(inputFoto[0], url);
+                inputFoto.data('img-element', $('.display-img')[key]);
+                $('[type="file"][name="foto"]').change();
+            }
+            setTimeout(function () {
+                $('.btn-continuar').click();
+            }, 100);
+
+            return;
+            console.log($('[type="file"][name="foto"]')[0].files);
+            $('[type="file"][name="foto"]').change();
+        }, 1000);
+    }
+
+    async function loadURLToInputFiled(input, url) {
+        return new Promise(function (resolve) {
+            getImgURL(url, (imgBlob) => {
+                let fileName = 'hasFilename.jpg';
+                let file = new File([imgBlob], fileName, {type: "image/jpeg", lastModified: new Date().getTime()}, 'utf-8');
+                let container = new DataTransfer();
+                container.items.add(file);
+                input.files = container.files;
+                resolve();
+            });
+        });
+    }
+    function getImgURL(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            callback(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
+}
