@@ -95,17 +95,15 @@
                 </div>
             </div>
             
-            <?php if ($this->userInfo()->isParticular()) : ?>
-                <div class="form-group d-flex justify-content-between w-100 align-items-center">
-                    <div><b>Este veículo esta financiado?</b></div>
-                    <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
-                        <label class="switch mb-0">
-                            <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
+            <div class="form-group d-flex justify-content-between w-100 align-items-center">
+                <div><b>Este veículo está financiado?</b></div>
+                <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
+                    <label class="switch mb-0">
+                        <?= $this->formElement($fields['financiamento']->setLabel('')) ?>
+                        <span class="slider round"></span>
+                    </label>
                 </div>
-            <?php endif; ?>
+            </div>
             <?php $particularClass = $this->userInfo()->isParticular()? 'd-none' : '' ; ?>
             <div class="control-financiamento <?= $particularClass ?>">
                 <div class="form-group group-financiamento mb-0 d-flex justify-content-between w-100 align-items-center">
