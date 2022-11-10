@@ -80,8 +80,9 @@ module.exports = async function ($) {
     });
 
     async function uploadProcess() {
-        console.log('Start upload')
-        loading._persistent = true;
+        $.active = $.active || 1;
+        console.log('Start upload');
+        loading.open(true);
         var ordemCount = 0;
         var $fotosContainer = $('.fotos-container');
         var reordenar = $fotosContainer.data('reordanado') || false;
@@ -161,6 +162,7 @@ module.exports = async function ($) {
                     contentType: false,
                     processData: false,
                     dataType: 'json',
+                    context: document,
                     success: function (data) {
                         if (!HandleApiError(data)) {
                             return;
@@ -190,6 +192,8 @@ module.exports = async function ($) {
             }
             $img.animate({opacity: 1});
         }
+        $.active = 1;
+        $(document).triggerHandler('ajaxComplete', [{status: 200}]);
 
         console.log('Terminou o loop');
 
