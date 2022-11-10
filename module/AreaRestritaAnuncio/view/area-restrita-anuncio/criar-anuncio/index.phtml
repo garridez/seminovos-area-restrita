@@ -7,7 +7,7 @@ use SnBH\ApiModel\Model\VeiculoTipo;
 
 $veiculo = $this->veiculo ?: false;
 
-if ($this->userInfo('idCadastro') == '210195') {
+//if ($this->userInfo('idCadastro') == '210195') {
 $rotasAnuncio = [
     'veiculo' => [
         'dados' => 'dados',
@@ -21,7 +21,7 @@ $rotasAnuncio = [
     'servicos-adicionais' => $this->url('criar-anuncio/anuncio/servicos-adicionais', $routeParams),
     'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
 ];
-} else {
+/*} else {
   $rotasAnuncio = [
     'veiculo' => [
         'dados' => 'dados',
@@ -35,7 +35,7 @@ $rotasAnuncio = [
     //'servicos-adicionais' => $this->url('criar-anuncio/anuncio/servicos-adicionais', $routeParams),
     'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
 ];  
-}
+}*/
 
 if ($this->userInfo('tipoCadastro') == 1) {
     unset($rotasAnuncio['checkout']);
