@@ -89,28 +89,34 @@
                     <span aria-hidden="true">&times;</span>
                 </button> */?>
                 <div class="modal-header">
-                    <div class="w-100 text-center mb-2"><h5 class="m-0">Recupere sua senha!</h5></div>
-                    <div class="modalText text-left"><span>Escolha uma das opções abaixo para acessar seu cadastro.</span></div>
+                    <div class="w-100 text-center mb-2"><h2 class="m-0">Recupere sua senha!</h2></div>
                 </div>
 
                 <div class="modal-body mt-2 options">
-                    <div class="sms w-100 d-flex">
+                    <div class="sms w-100 d-flex flex-column">
+                        <div class="w-100 pt-2 border-0 h4">
+                            Receber código por SMS para criar uma nova senha:
+                        </div>
                         <a href="" class="w-100 py-2">
-                            <b class="mr-2">SMS</b>
-                            <span>clique para enviar o código para: </br><b><span disabled data-retorno-telefone></span></b> </span>
+                            <b class="mr-2">Enviar código:</b>
+                            <span><b><span disabled data-retorno-telefone></span></b> </span>
                             <div class="text-left "><span>O código pode demorar alguns minutos para chegar.</span></div>
                         </a>
                     </div>
                     <div class="token w-100 d-flex">
                         <a href="" class="w-100 py-2">
-                            <b class="mr-2">JÁ TENHO CÓDIGO</b>
-                            <span>já possuo o código enviado para: </br><b><span disabled data-retorno-telefone></span></b> </span>
+                            <b class="mr-2">Já tem um código?</b>
+                            <span>Click aqui para inserir o código recebido</br>
+<!--                            <span>já possuo o código enviado para: </br><b><span disabled data-retorno-telefone></span></b> </span>-->
                         </a>
                     </div>
-                    <div class="email w-100 d-flex">
+                    <hr>
+                    <div class="email w-100 d-flex flex-column">
+                        <div class="w-100 pt-2 border-0 h4">Receber nova senha:</div>
+                        <div class="w-100 pt-2 border-0">É gerado uma nova senha e enviado para o seu email de cadastro.</div>
                         <a href="" class="w-100 pt-2 border-0">
-                            <b class="mr-2">Email</b>
-                            <span>enviar nova senha para: </br><b><span data-retorno-email></span></b> </span>
+                            <b class="mr-2">Email:</b>
+                            <span><b><span data-retorno-email></span></b> </span>
                         </a>
                     </div>
                     
