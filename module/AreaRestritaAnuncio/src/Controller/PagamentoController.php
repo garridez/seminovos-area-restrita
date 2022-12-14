@@ -190,6 +190,9 @@ class PagamentoController extends AbstractActionController
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
+            if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])) {
+                $response['data']['url'] = $getUrlRedirect('plano-renovado');
+            }
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
                 $response['data']['url'] = $getUrlRedirect('plano-renovado');
             }

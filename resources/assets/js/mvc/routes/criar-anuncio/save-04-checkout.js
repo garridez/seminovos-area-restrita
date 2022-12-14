@@ -7,6 +7,7 @@ module.exports.callback = ($) => {
     var handlers = {
         cc: require('./checkout/cartao-de-credito'),
         pagseguro: require('./checkout/pagseguro'),
+        pix: require('./checkout/pix'),
         transferenciaFinalizar: require('./checkout/transferencia-finalizar'),
         transferenciaUpload: require('./checkout/transferencia-upload'),
     };
@@ -19,6 +20,7 @@ module.exports.callback = ($) => {
         initialized = true;
 
         handlers.cc();
+        handlers.pix();
         handlers.pagseguro();
         handlers.transferenciaFinalizar();
         handlers.transferenciaUpload();

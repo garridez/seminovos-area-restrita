@@ -104,6 +104,24 @@
                         </div>
                     </div>
                     <div class="card">
+                        <div class="card-header" id="pix-label">
+
+                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
+                                data-target=".pix">
+                                <strong>PIX</strong><br>
+                                <small class="text-capitalize">Ativação imediata</small>
+                            </button>
+
+
+                        </div>
+                        <div class="pix collapse" aria-labelledby="pix-label"
+                            data-parent="#accordion-payment">
+                            <div class="card-body">
+                                <?= $this->partial('partials/pix.phtml') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
                         <div class="card-header" id="boleto-label">
                             <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
                                 data-target="#boleto">
