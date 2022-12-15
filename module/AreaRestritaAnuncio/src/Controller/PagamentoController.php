@@ -84,6 +84,11 @@ class PagamentoController extends AbstractActionController
         return $this->getModelVeiculo();
     }
 
+    public function pagamentoPixAction()
+    {
+        return $this->getModelVeiculo();
+    }
+
     public function processarAction()
     {
         $dados = $this->params()->fromPost();
@@ -191,7 +196,9 @@ class PagamentoController extends AbstractActionController
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
             if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])) {
-                $response['data']['url'] = $getUrlRedirect('plano-renovado');
+                //$response['data']['url'] = $getUrlRedirect('plano-renovado');
+                $routeParams['action'] = 'pagamento-pix';
+                $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo.'&code='.$response['data']['qr_code'];
             }
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
                 $response['data']['url'] = $getUrlRedirect('plano-renovado');
