@@ -196,7 +196,6 @@ class PagamentoController extends AbstractActionController
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
             if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])) {
-                //$response['data']['url'] = $getUrlRedirect('plano-renovado');
                 $routeParams['action'] = 'pagamento-pix';
                 $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo.'&code='.$response['data']['qr_code'];
             }

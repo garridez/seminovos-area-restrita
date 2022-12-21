@@ -7,8 +7,31 @@
             <img src="/img/pagamento/obrigado.jpg" /> 
         </div>
     </div>
-    <div class="mx-auto py-2 mt-2" style="width: 75%; background-color: lightgray;">
-        <?php var_dump($this->idVeiculo); ?>
+    <div class="col-12 m-t-20 text-center">
+        <h4>Seu código PIX está disponível para pagamento.</h4>
+    </div>
+    <div class="col-12 offset-md-2 col-md-8 text-center pb-3 mb-2 border border-danger">
+        <div class="col-12 m-t-20 text-center text-pix" style="font-size: 16px; font-weight: bold;">
+            <?php echo trim($_GET['code']); ?>
+        </div>
+        <div class="col-12 m-t-20 text-center align-center">
+            <button id="copy"
+                style="
+                font-family: 'PT Sans', sans-serif;
+                margin-top: 16px;
+                font-size: 16px;
+                text-decoration: none;
+                color:white;
+                padding-top:2.4%;
+                padding-bottom:2.4%;
+                background-color: #ED9902;
+                border-radius: 4px;
+                /*display: block;*/
+                width: 60%;
+                font-weight: bold;">
+                Copiar
+            </button>
+        </div>
     </div>
     <div class="mx-auto py-2 mt-2" style="width: 75%; background-color: lightgray;">
         <p class="mx-5 my-1">Após confirmação do pagamento no prazo de 24 horas o anúncio será ativado.</p>
@@ -18,3 +41,14 @@
             <p style="color:#acacac; font-size:14px;font-weight: bold;">Equipe SeminovosBH!</p>
     </div>
 </div>
+<script>
+let btn = document.querySelector('#copy');
+btn.addEventListener('click', function(e) {
+  let textArea = document.querySelector('.text-pix').innerText;
+  console.log(textArea);
+  navigator.clipboard.writeText(textArea);
+  alert("Código copiado");
+  document.execCommand('copy');
+  
+});
+</script>
