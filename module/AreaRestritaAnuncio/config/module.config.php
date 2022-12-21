@@ -220,7 +220,7 @@ return [
                                             'route' => '/:action[/.*]',
                                             'route' => '/:action',
                                             'constraints' => [
-                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro',
+                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro|pagamento-pix',
                                             ],
                                         ],
                                     ],
@@ -243,7 +243,7 @@ return [
                                             'route' => '/:action[/.*]',
                                             'route' => '/:action',
                                             'constraints' => [
-                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro',
+                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro|pagamento-pix',
                                             ],
                                         ],
                                     ],

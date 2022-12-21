@@ -26,7 +26,7 @@ module.exports.callback = ($) => {
 
 
 
-    $('form.pagamento-cc-form, form.pagamento-boleto-form').submit(function (e) {
+    $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(function (e) {
         e.preventDefault();
         var data = $(this).serializeArray();
         var tempo_contrato = $(".tab-content")
