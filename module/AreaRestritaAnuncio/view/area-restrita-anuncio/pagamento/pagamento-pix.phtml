@@ -11,7 +11,7 @@
         <h4>Seu código PIX está disponível para pagamento.</h4>
     </div>
     <div class="col-12 offset-md-2 col-md-8 text-center pb-3 mb-2 border border-danger">
-        <div class="col-12 m-t-20 text-center text-pix" style="font-size: 16px; font-weight: bold;">
+        <div class="col-12 col-md-12 m-t-20 text-center text-pix" style="font-size: 15px; font-weight: bold;">
             <?php echo trim($_GET['code']); ?>
         </div>
         <div class="col-12 m-t-20 text-center align-center">
@@ -32,9 +32,12 @@
                 Copiar
             </button>
         </div>
+        <div class="col-12 m-t-20 text-center align-center">
+            <p style="font-weight: bold;color:red;">Pagamento processado pela empresa Zoop Tecnologia e Meios de Pagamentos Ltda.</p>
+        </div>
     </div>
     <div class="mx-auto py-2 mt-2" style="width: 75%; background-color: lightgray;">
-        <p class="mx-5 my-1">Após confirmação do pagamento no prazo de 24 horas o anúncio será ativado.</p>
+        <p class="mx-5 my-1">Após confirmação do pagamento no prazo de 10 minutos o anúncio será ativado.</p>
     </div>
     <div class="mx-auto py-4 text-center">
             <p style="font-weight: bold;color:#333;">Obrigado por anunciar conosco.</p>
@@ -47,8 +50,51 @@ btn.addEventListener('click', function(e) {
   let textArea = document.querySelector('.text-pix').innerText;
   console.log(textArea);
   navigator.clipboard.writeText(textArea);
-  alert("Código copiado");
+  //alert("Código copiado");
+  alerta('success', 'Seu código PIX foi copiado.', 'Atenção!', 5000);
   document.execCommand('copy');
   
 });
+
+function alerta (type, text, title, time) {
+        if (title === null || title === undefined) {
+            title = '';
+        }
+        time = time || this.options.time;
+        var count = Math.floor(time / 1000);
+        var spanCount = $('<span class="text-count"></span>').text('(' + count + ')');
+        var close = $('<button class="btn btn-primary" data-dismiss="modal">')
+            .html('<span class="text-close">Fechar</span> ')
+            .append(spanCount);
+
+        var intervalID = setInterval(function () {
+            spanCount.text('(' + count + ')');
+            count--;
+            if (count < 0) {
+                clearInterval(intervalID);
+            }
+
+        }, 1000);
+
+        setTimeout(function () {
+            modal.modal('hide');
+        }, time);
+
+        var modal = $.jsBsModal({
+            contents: {
+                'close': '',
+                'modal-title': title,
+                'modal-body': text,
+                'modal-footer': [
+                    close
+                ],
+            }
+        }).on('hidden.bs.modal', function () {
+            modal.modal('dispose').remove();
+        });
+
+        modal.find('.modal-content').addClass('alert alert-' + type);
+
+        return modal;
+    }
 </script>
