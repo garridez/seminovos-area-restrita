@@ -96,8 +96,8 @@ module.exports.callback = ($) => {
                             if(historico.dados_veiculo.ano_fabricacao && (parseInt(historico.dados_veiculo.ano_fabricacao) || false)) {
                                 //seta ano de fabricacao                            
                                 $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
-                                $("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
-                                $("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
+                                //$("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
+                                //$("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
                             }
 
                             if(historico.dados_veiculo.ano_modelo && (parseInt(historico.dados_veiculo.ano_modelo) || false)) {
@@ -106,8 +106,8 @@ module.exports.callback = ($) => {
                                     anoModelo = historico.dados_veiculo.ano_fabricacao;
                                 }
                                 $("select[name='anoModelo']").val(anoModelo);
-                                $("select[name='anoModelo'] option:selected").prop('disabled', false).removeClass("hide");
-                                $("select[name='anoModelo'] option:not(:selected)").prop('disabled', true).addClass("hide");
+                                //$("select[name='anoModelo'] option:selected").prop('disabled', false).removeClass("hide");
+                                //$("select[name='anoModelo'] option:not(:selected)").prop('disabled', true).addClass("hide");
                             }
 
                             //trigger para buscar versao
