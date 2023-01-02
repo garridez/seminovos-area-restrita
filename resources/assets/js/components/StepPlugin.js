@@ -89,7 +89,7 @@ $.extend(Plugin.prototype, {
             return true;
         }
 
-        if (withEvents && !this._triggerEvent('pre-exit', initialIndex)) {
+        if (withEvents && !this._triggerEvent('pre-exit', initialIndex, index)) {
             return false;
         }
         if (withEvents && !this._triggerEvent('pre-change', index)) {
@@ -138,7 +138,7 @@ $.extend(Plugin.prototype, {
             console.log.apply(this, arguments);
         }
     },
-    _triggerEvent: function (event, index) { 
+    _triggerEvent: function (event, index, nextIndex) { 
         var eventRes = {};// Event Result
         var stepElementTarget = this.getSteps().eq(index);
         var stepElementDeep = null;
@@ -149,7 +149,8 @@ $.extend(Plugin.prototype, {
         var extraParams = {
             'stepIndex': index,
             'stepElementTarget': stepElementTarget,
-            'stepElementDeep': stepElementDeep
+            'stepElementDeep': stepElementDeep,
+            'stepChangeTo': nextIndex
         };
         this._log('Event triggered:', 'step:' + event);
 

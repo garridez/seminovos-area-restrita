@@ -216,7 +216,7 @@ module.exports.callback = ($) => {
             BtnContinuar.enable();
         }
     });
-    stepsContainer.on('step:pre-exit:mais-informacoes', function (e) {
+    stepsContainer.on('step:pre-exit:mais-informacoes', function (e, extraParams) {
         var aceitaProposta = $('input[name="aceitaProposta"]').is(':checked');
         var aceitaLigacao = $('input[name="aceitaLigacao"]').is(':checked');
         var aceitaChat = $('input[name="aceitaChat"]').is(':checked');
@@ -250,6 +250,9 @@ module.exports.callback = ($) => {
 
         if (formWithError && dataSerialized === dataWithError) {
             ajaxProcessing = false;
+            if (extraParams.stepChangeTo && extraParams.stepIndex > extraParams.stepChangeTo) {
+                return true;
+            }
             return stopEvent(e);
         }
         if (!dataSerialized || dataSerialized === lastSavedData) {
