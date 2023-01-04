@@ -1,0 +1,100 @@
+<form class="pagamento-pix-form">
+    <?php
+    // @todo verificar se as revendas precisam de aceitar os termos
+    /* <div class="form-group form-group-default" title="Termos de adesão">
+      <label>
+      <input type="checkbox" name="termos" required>
+      Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
+      </label>
+      </div> */
+
+    ?>
+    <div class="form-group form-pix show">
+        <input type="hidden" name="metodo" value="pix" required aria-required="true">
+        <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">EFETUAR PAGAMENTO</button>
+    </div>
+    
+    <div class="col-12 offset-md-1 col-md-10 text-center pb-3 mb-2 border border-danger retorno-pix">
+        <div class="col-12 m-t-20 text-center">
+            <h5>Seu código PIX está disponível para pagamento.</h5>
+        </div>
+        <div class="col-12 col-md-12 m-t-20 text-center text-pix" style="font-size: 15px; font-weight: bold; word-wrap: break-word;">
+            
+        </div>
+        <div class="col-12 m-t-20 text-center align-center">
+            <button id="copy"
+                style="
+                font-family: 'PT Sans', sans-serif;
+                margin-top: 16px;
+                font-size: 16px;
+                text-decoration: none;
+                color:white;
+                padding-top:2.4%;
+                padding-bottom:2.4%;
+                background-color: #ED9902;
+                border-radius: 4px;
+                /*display: block;*/
+                width: 60%;
+                font-weight: bold;">
+                Copiar
+            </button>
+        </div>
+        <div class="col-12 m-t-20 text-center align-center">
+            <p style="font-weight: bold;color:red;">Pagamento processado pela empresa Zoop Tecnologia e Meios de Pagamentos Ltda.</p>
+        </div>
+    </div>
+</form>
+<script>
+let btn = document.querySelector('#copy');
+btn.addEventListener('click', function(e) {
+  let textArea = document.querySelector('.text-pix').innerText;
+  console.log(textArea);
+  navigator.clipboard.writeText(textArea);
+  //alert("Código copiado");
+  alerta('success', 'Seu código PIX foi copiado.', 'Atenção!', 5000);
+  document.execCommand('copy');
+  
+});
+
+function alerta (type, text, title, time) {
+        if (title === null || title === undefined) {
+            title = '';
+        }
+        time = time || this.options.time;
+        var count = Math.floor(time / 1000);
+        var spanCount = $('<span class="text-count"></span>').text('(' + count + ')');
+        var close = $('<button class="btn btn-primary" data-dismiss="modal">')
+            .html('<span class="text-close">Fechar</span> ')
+            .append(spanCount);
+
+        var intervalID = setInterval(function () {
+            spanCount.text('(' + count + ')');
+            count--;
+            if (count < 0) {
+                clearInterval(intervalID);
+            }
+
+        }, 1000);
+
+        setTimeout(function () {
+            modal.modal('hide');
+        }, time);
+
+        var modal = $.jsBsModal({
+            contents: {
+                'close': '',
+                'modal-title': title,
+                'modal-body': text,
+                'modal-footer': [
+                    close
+                ],
+            }
+        }).on('hidden.bs.modal', function () {
+            modal.modal('dispose').remove();
+        });
+
+        modal.find('.modal-content').addClass('alert alert-' + type);
+
+        return modal;
+    }
+</script>
