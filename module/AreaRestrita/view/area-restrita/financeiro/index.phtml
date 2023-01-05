@@ -190,14 +190,12 @@ $dadosFinanceiro = $this->financeiro;
                                     <span>Boleto Bancário</span>
                                 </a>
                             </li>
-                            <?php if ($this->userInfo('idCadastro') == '269236') { ?>
                             <li class="nav-item">
                                 <a class="" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
                                     <i class="fa fa-credit-card tab-icon"></i>
                                     <span>PIX</span>
                                 </a>
                             </li>
-                            <?php } ?>
                         </ul>
                         <div class="tab-content p-0">
                             <div class="tab-pane padding-20 sm-no-padding slide-left" id="cartao_tab">
@@ -210,13 +208,11 @@ $dadosFinanceiro = $this->financeiro;
                                     <?= $this->partial('area-restrita/financeiro/form-boleto.phtml') ?>
                                 </div>
                             </div>
-                            <?php if ($this->userInfo('idCadastro') == '269236') { ?>
                             <div class="tab-pane padding-20 sm-no-padding slide-left" id="pix_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
                                 </div>
                             </div>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
