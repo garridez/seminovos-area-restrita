@@ -16,6 +16,7 @@ module.exports.callback = ($) => {
 
     var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
     var formCC = $('.pagamento-cc-form');
+    $('.retorno-pix').hide();
 
     var advancedAlerts = require('components/AdvancedAlerts');
 
@@ -59,6 +60,13 @@ module.exports.callback = ($) => {
             success: function (httpResponse) {
                 if (httpResponse.html) {
                     $('.retorno-boleto').html(httpResponse.html);
+                    return;
+                }
+                if (httpResponse.data.qr_code) {
+                    $('.text-pix').html(httpResponse.data.qr_code);
+                    $('.form-pix').hide();
+                    $('.retorno-pix').show();
+                    Loading.close();
                     return;
                 }
                 if (httpResponse.type === 15002) {
