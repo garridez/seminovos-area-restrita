@@ -195,7 +195,7 @@ class PagamentoController extends AbstractActionController
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
-            if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])) {
+            if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])  && $cadastro['tipoCadastro'] != 1) {
                 $routeParams['action'] = 'pagamento-pix';
                 $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo.'&code='.$response['data']['qr_code'];
             }
