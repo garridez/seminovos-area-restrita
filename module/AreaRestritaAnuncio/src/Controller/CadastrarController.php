@@ -192,7 +192,7 @@ class CadastrarController extends AbstractActionController
                 'email' => $dadosCadastro['email'],
                 'cnpj' => $dadosCadastro['cnpj'],
                 'nome' => $dadosCadastro['responsavelNome'],
-                'emailRemetente' => 'senha@seminovosbh.com.br',
+                'emailRemetente' => 'senha@seminovos.com.br',
                 'nomeRemetente' => 'SeminovosBH',
                 'novaSenha' => $novaSenha,
                 'tipoEmail' => 'nova_senha'
@@ -443,13 +443,13 @@ class CadastrarController extends AbstractActionController
                 $dadosEmail = [
                     'mensagem' => $mensagem,
                     'assunto' => 'Carro no bolso',
-                    'email' => 'joao@seminovosbh.com.br',
+                    'email' => 'joao@seminovos.com.br',
                     'nome' => 'Carro no bolso',
-                    'emailRemetente' => 'contato@seminovosbh.com.br',
+                    'emailRemetente' => 'contato@seminovos.com.br',
                     'nomeRemetente' => 'SeminovosBH',
                     'layout' => 'blank-nova',
                     'tipoEmail' => 'personalizado_novo',
-                    'bcc' => ['felipe@seminovosbh.com.br']
+                    'bcc' => ['felipe@seminovos.com.br']
                 ];
 
                 /* @var $enviarEmailModel EnviarEmail */
