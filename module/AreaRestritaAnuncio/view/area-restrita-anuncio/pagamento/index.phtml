@@ -35,6 +35,13 @@
                             </div>
                         </div>
                         <?php } ?>
+                        <div class="w-100 d-none d-md-block pl-1">
+                            <div class="w-100 renovacao">
+                                <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
+                                <div><span><strong> Nescessário renovar a cada 30 dias;</strong></span></div>
+                                <div><span><strong>Renovação gratúita a cada 30 dias (exceto veículos 0km);</strong></span></div>
+                            </div>
+                        </div>
                         <div class="mb-0 plano servico-adicional-certificado card-style justify-content-between hide">
                             <div>
                                 <div class="nome-plano"><strong>Certificado Documental</strong></div>
@@ -45,15 +52,23 @@
                                 <!--<input type="hidden" name="valor-plano" class="d-none hide" data-valor-plano="<?= $valorPagar ?>" value="<?= $valorPagar ?>">-->
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="w-100 d-none d-md-block pl-1">
-                        <div class="w-100 renovacao">
-                            <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
-                            <div><span>Nescessário renovar a cada 30 dias;</span></div>
-                            <div><span>Renovação gratúita a cada 30 dias (exceto veículos 0km);</span></div>
+                        <div class="w-100 d-none d-md-block pl-1 servico-adicional-certificado hide">
+                            <div class="w-100 renovacao">
+                                <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
+                                <div><span><strong>Duração do Certificado por 30 dias;</strong></span></div>
+                            </div>
                         </div>
                     </div>
+                    
+<?php   /*               <div class="w-100 d-none d-md-block pl-1">
+                        <div class="w-100 renovacao">
+                            <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
+                            <div><span><strong> Nescessário renovar a cada 30 dias;</strong></span></div>
+                            <div><span><strong>Renovação gratúita a cada 30 dias (exceto veículos 0km);</strong></span></div>
+                        </div>
+                    </div>
+ */ ?>
+ 
                     
                     <div class="w-100 certificado certificado-resumo" style="display: none;">
                         <div class="d-flex align-items-center justify-content-between">
@@ -69,6 +84,12 @@
                                 <a href="" class="btn-control-certificado">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </a>
+                            </div>
+                        </div>
+                        <div class="w-100 d-none d-md-block pl-1">
+                            <div class="w-100 renovacao">
+                                <div class="text-left mb-2"><strong class="text-capitalize">Atenção</strong></div>
+                                <div><span><strong>Duração do Certificado por 30 dias;</strong></span></div>
                             </div>
                         </div>
                     </div>
