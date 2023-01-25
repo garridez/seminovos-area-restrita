@@ -63,6 +63,7 @@ module.exports.callback = ($) => {
                     return;
                 }
                 if (httpResponse.data.qr_code) {
+                    $('.qrcode-img').attr('src', 'https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' + httpResponse.data.qr_code);
                     $('.text-pix').html(httpResponse.data.qr_code);
                     $('.form-pix').hide();
                     $('.retorno-pix').show();

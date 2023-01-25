@@ -11,10 +11,14 @@
         <h4>Seu código PIX está disponível para pagamento.</h4>
     </div>
     <div class="col-12 offset-md-2 col-md-8 text-center pb-3 mb-2 border border-danger">
-        <div class="col-12 col-md-12 m-t-20 text-center text-pix" style="font-size: 15px; font-weight: bold; word-wrap: break-word;">
+        <?php /*<div class="col-12 col-md-12 m-t-20 text-center text-pix" style="font-size: 15px; font-weight: bold; word-wrap: break-word;">
             <?php echo trim($_GET['code']); ?>
         </div>
-        <div class="col-12 m-t-20 text-center align-center">
+        */?>
+        <div class="qrcode-container">
+            <img class="qrcode-img" style="width:70%;height:auto;" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=<?php echo trim($_GET['code']); ?>"/>
+        </div>
+        <div class="col-12 text-center align-center">
             <button id="copy"
                 style="
                 font-family: 'PT Sans', sans-serif;
