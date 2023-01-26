@@ -51,9 +51,7 @@
 <script>
 let btn = document.querySelector('#copy');
 btn.addEventListener('click', function(e) {
-  let textArea = document.querySelector('.text-pix').innerText;
-  console.log(textArea);
-  navigator.clipboard.writeText(textArea);
+  navigator.clipboard.writeText('<?= trim($_GET['code']) ?>');
   //alert("Código copiado");
   alerta('success', 'Seu código PIX foi copiado.', 'Atenção!', 5000);
   document.execCommand('copy');
