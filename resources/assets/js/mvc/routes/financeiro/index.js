@@ -62,7 +62,7 @@ module.exports.callback = ($) => {
                     $('.retorno-boleto').html(httpResponse.html);
                     return;
                 }
-                if (httpResponse.data.qr_code) {
+                if (httpResponse.data && httpResponse.data.hasOwnProperty('qr_code') && httpResponse.data.qr_code) {
                     $('.qrcode-img').attr('src', 'https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' + httpResponse.data.qr_code);
                     $('.text-pix').html(httpResponse.data.qr_code);
                     $('.form-pix').hide();
