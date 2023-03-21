@@ -23,7 +23,8 @@ function init() {
         return;
     }
     var sortablejs = require('sortablejs');
-    var Compress = require('compress.js');
+    var Compress = require('compress.js').default;
+
     var rotate = [
         'rotate(0deg)',
         'rotate(90deg)',
@@ -184,7 +185,9 @@ function init() {
             compress.compress([imageFile], {
                 size: 4, // the max size in MB, defaults to 2MB
                 quality: 0.9, // the quality of the image, max is 1,
-                resize: true // defaults to true, set false if you do not want to resize the image width and height
+                resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                maxWidth: 1000,
+                maxHeight: 750
             }).then(function (images) {
                 var img = images[0];
                 function dataURLtoFile(dataurl, filename) {
@@ -199,14 +202,15 @@ function init() {
                 var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
                 showPhoto(imgElement, file);
                 /** Debug * /
-                 console.log(`<b>Start Size:</b> ${img.initialSizeInMb} MB <br/>`
-                 + `<b>End Size:</b> ${img.endSizeInMb} MB <br/>`
-                 + `<b>Compression Cycles:</b> ${img.iterations} <br/>`
-                 + `<b>Size Reduced:</b> ${img.sizeReducedInPercent} % <br/>`
+                 console.log(`<b>Start Size:</b> ${img.initialSizeInMb} MB <br/>\n`
+                 + `<b>End Size:</b> ${img.endSizeInMb} MB <br/>\n`
+                 + `<b>Compression Cycles:</b> ${img.iterations} <br/>\n`
+                 + `<b>Size Reduced:</b> ${img.sizeReducedInPercent} % <br/>\n`
                  + `<b>File Name:</b> ${img.alt}`);/**/
             });
         } catch (e) {
-
+            console.log('Falha ao compactar');
+            console.log(e);
         }
     }
 }
