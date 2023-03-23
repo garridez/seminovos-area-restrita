@@ -192,6 +192,14 @@ module.exports = async function ($) {
             }
             $img.animate({opacity: 1});
         }
+         try {
+            var idVeiculo = $('#dados-basicos form').find('#idVeiculo').val();
+            if(idVeiculo){
+                $.get('https://seminovos.com.br/' + idVeiculo + '?clear-cache=1');
+            }
+        } catch (e) {
+            console.log('Erro no clear cache');
+        }
         $.active = 1;
         $(document).triggerHandler('ajaxComplete', [{status: 200}]);
 
