@@ -141,8 +141,7 @@ $nomePlano = mb_strtoupper($nomePlano);
                     $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '.'));
                     echo '<span>R$ </span>';
                     if ($plano["idPlano"] == 5) {
-                        echo "<span style='font-size: 40px; -webkit-text-stroke: 0.2px #000;'>{$valorPlano[0]}</span>
-                            <span style='-webkit-text-stroke: 0.2px #000;'>,{$valorPlano[1]}</span>";
+                        echo "<span style='font-size: 40px; -webkit-text-stroke: 0.2px #000;'>{$valorPlano[0]}</span><span style='-webkit-text-stroke: 0.1px #000;'>,{$valorPlano[1]}</span>";
 
                     } else {
                         echo $valorPlano[0] . "<span>,{$valorPlano[1]}</span>";
