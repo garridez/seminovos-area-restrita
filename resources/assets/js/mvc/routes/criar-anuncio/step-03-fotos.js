@@ -169,7 +169,7 @@ function init() {
         };
         reader.readAsDataURL(file);
     }
-    function compressPhoto(imgElement, imageFile) {
+    async function compressPhoto(imgElement, imageFile) {
         /**
          * Se for o Safari, não comprime
          * O Safari dá pau na hora de colocar a imagem gerada no FormData
@@ -180,6 +180,14 @@ function init() {
 
         // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
         try {
+            if (imageFile.name.match(/.heic$/) !== null) {
+                var heic2any = require('components/heic2any');
+                var resultBlob = await heic2any({
+                    blob: imageFile,
+                    toType: "image/jpg"
+                });
+                imageFile = new File([resultBlob], "heic" + ".jpg", {type: "image/jpeg", lastModified: new Date().getTime()});
+            }
             var compress = new Compress();
 
             compress.compress([imageFile], {
