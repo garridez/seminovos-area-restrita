@@ -561,5 +561,21 @@ class DadosVeiculoController extends AbstractActionController
             }
             return new JsonModel($result->json());
         }
+    }    
+    
+    public function clearCacheAction()
+    {
+        $idVeiculo = $this->params()->fromRoute('idVeiculo', false);
+        if (!$idVeiculo) {
+            return;
+        }
+        $host = 'http://snbh-site';
+        if (APPLICATION_ENV === 'production') {
+            $host = 'https://seminovos.com.br';
+        }
+        $url = "{$host}/{$idVeiculo}?clear-cache=1";
+        var_dump($url);
+        file_get_contents($url);
+        die;
     }
 }

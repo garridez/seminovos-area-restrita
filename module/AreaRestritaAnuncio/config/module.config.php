@@ -337,6 +337,16 @@ return [
                     ],
                 ],
             ],
+            'clear-cache' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/clear-cache[/:idVeiculo]',
+                    'defaults' => [
+                        'controller' => Controller\DadosVeiculoController::class,
+                        'action' => 'clear-cache'
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

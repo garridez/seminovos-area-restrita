@@ -195,7 +195,7 @@ module.exports = async function ($) {
          try {
             var idVeiculo = $('#dados-basicos form').find('#idVeiculo').val();
             if(idVeiculo){
-                $.get('https://seminovos.com.br/' + idVeiculo + '?clear-cache=1');
+                $.get('/clear-cache/' + idVeiculo);
             }
         } catch (e) {
             console.log('Erro no clear cache');
