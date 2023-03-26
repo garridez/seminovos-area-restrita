@@ -575,7 +575,7 @@ class DadosVeiculoController extends AbstractActionController
         }
         $url = "{$host}/{$idVeiculo}?clear-cache=1";
         var_dump($url);
-        file_get_contents($url);
+        @file_get_contents($url);
         die;
     }
 }
