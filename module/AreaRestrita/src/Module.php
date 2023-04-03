@@ -20,6 +20,7 @@ use Zend\Mvc\I18n\Translator as MvcTranslator;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Validator\AbstractValidator;
+use Zend\Session\SessionManager;
 
 class Module
 {
@@ -40,6 +41,31 @@ class Module
         $this->setMeasureApiResponseTime($sm);
         $this->translatorConfig();
         $this->showChat($sm);
+        $this->apiUserHeader($sm);
+    }
+
+    public function apiUserHeader(ServiceManager $sm)
+    {
+        /* @var $sessionManager AuthService */
+        $authService = $sm->get(AuthService::class);
+ 
+
+        /** @var ApiClient $apiClient */
+        $apiClient = $sm->get(ApiClient::class);
+        /* @var $sessionManager SessionManager */
+        $sessionManager = $sm->get(SessionManager::class);
+
+        $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_PRE_SEND, function (ZendEvent $event) use ($authService, $sessionManager) {
+            $client = $event->getTarget();
+            if (!$client instanceof \Zend\Http\Client) {
+                return;
+            }
+            $identity = $authService->getIdentity();
+            if ($identity) {
+                $client->getRequest()->getHeaders()->addHeaderLine('Idcadastro', $identity);
+                $client->getRequest()->getHeaders()->addHeaderLine('Sessid', $sessionManager->getId());
+            }
+        });
     }
 
     public function showChat($sm)
@@ -90,7 +116,7 @@ class Module
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);
 
-        $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_RESPONSE, function(ZendEvent $e) use($logger) {
+        $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_RESPONSE, function (ZendEvent $e) use ($logger) {
             /** @var ApiClientResponse $apiResponse */
             $apiResponse = $e->getTarget();
             if ($apiResponse->getTotalTime() < 1 && $apiResponse->status == 200) {
