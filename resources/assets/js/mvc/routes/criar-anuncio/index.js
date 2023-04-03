@@ -40,6 +40,38 @@ module.exports.callback = ($) => {
         }
         checkLastStep();
     });
+
+    function alerta (type, text, title) {
+        if (title === null || title === undefined) {
+            title = '';
+        }
+
+        var close = $('<button class="btn btn" data-dismiss="modal">')
+            .html('<span class="text-danger">Fechar</span> ');
+
+        var maisInfo = $('<a class="btn btn-success" href="https://wa.me/553197950664?text=Olá,%20Sou %20cliente%20da%20Seminovos%20e%20gostaria%20de%20mais%20informações!" target="blank">')
+            .html('<span class="text-close">Quero Saber Mais!</span>');
+
+
+        var modal = $.jsBsModal({
+            contents: {
+                'close': '',
+                'modal-title': title,
+                'modal-body': text,
+                'modal-footer': [
+                    close,
+                    maisInfo
+                ],
+            }
+        }).on('hidden.bs.modal', function () {
+            modal.modal('dispose').remove();
+        });
+
+        modal.find('.modal-content').addClass('alert alert-' + type);
+
+        return modal;
+    }
+
     $('.btn-continuar').on('click', function () {
         // BtnContinuar.disable();
         // Valida no 1º passo se o modelo foi selecionado
@@ -47,6 +79,15 @@ module.exports.callback = ($) => {
         if (modelo == 'Selecione o modelo') {
             alert('Selecione o modelo do veículo para continuar');
             return;
+        }
+
+        //verifica se é a primeira vez que passa por aqui, abrindo modal do advogado
+        var primeiraInteracao = localStorage.getItem($('[name="placa"]').val());
+        
+        if(primeiraInteracao !== '1') {
+
+            alerta('info', 'GARANTA SEU DIREITO DE DIRIGIR!<br>CONSULTE AGORA ESPECIALISTA PRA AJUDÁ-LO ( LEI SECA, SUSPENSÃO/CASSAÇÃO DE CNH/INDICAÇÃO DE CONDUTOR FORA DO PRAZO).', 'CNH EM RISCO?');
+            localStorage.setItem($('[name="placa"]').val(), '1');
         }
 
         var inLastStep = $(this).data('in-last-step');
