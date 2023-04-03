@@ -81,10 +81,12 @@ module.exports.callback = ($) => {
             return;
         }
 
-        //verifica se é a primeira vez que passa por aqui, abrindo modal do advogado
+        //verifica se é a primeira vez que passa por aqui, abrindo modal advogado
         var primeiraInteracao = localStorage.getItem($('[name="placa"]').val());
+
+        var tipoCadastro = $('#tipoCad').val();
         
-        if(primeiraInteracao !== '1') {
+        if(primeiraInteracao !== '1' && tipoCadastro !== '1') {
 
             alerta('info', 'GARANTA SEU DIREITO DE DIRIGIR!<br>CONSULTE AGORA ESPECIALISTA PRA AJUDÁ-LO ( LEI SECA, SUSPENSÃO/CASSAÇÃO DE CNH/INDICAÇÃO DE CONDUTOR FORA DO PRAZO).', 'CNH EM RISCO?');
             localStorage.setItem($('[name="placa"]').val(), '1');
