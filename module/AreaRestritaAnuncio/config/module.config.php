@@ -14,6 +14,7 @@ use AreaRestrita\Controller\Factory\AbstractFactoryClient;
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Middleware\DispatchMiddleware;
 use AreaRestrita\Middleware\LoginMiddleware;
+use AreaRestrita\Middleware;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -180,6 +181,11 @@ return [
                                     'defaults' => [
                                         'controller' => Controller\DadosVeiculoController::class,
                                         'action' => 'placa-disponivel',
+                                        'middleware' => [
+                                            Middleware\LoginMiddleware::class,
+                                            Middleware\CheckIdVeiculoMiddleware::class,
+                                            Middleware\DispatchMiddleware::class,
+                                        ]
                                     ],
                                 ],
                             ],
