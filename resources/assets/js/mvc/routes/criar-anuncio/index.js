@@ -49,7 +49,7 @@ module.exports.callback = ($) => {
         var close = $('<button class="btn btn" data-dismiss="modal">')
             .html('<span class="text-danger">Fechar</span> ');
 
-        var maisInfo = $('<a class="btn btn-success" href="https://wa.me/553197950664?text=Olá,%20Sou %20cliente%20da%20Seminovos%20e%20gostaria%20de%20mais%20informações!" target="blank">')
+        var maisInfo = $('<a class="btn btn-success" href="https://wa.me/5531971740697?text=Olá,%20Sou %20cliente%20da%20Seminovos%20e%20gostaria%20de%20mais%20informações!" target="blank">')
             .html('<span class="text-close">Quero Saber Mais!</span>');
 
 
