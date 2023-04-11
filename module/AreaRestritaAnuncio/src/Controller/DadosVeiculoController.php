@@ -161,6 +161,7 @@ class DadosVeiculoController extends AbstractActionController
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
+            \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
             // Limpa o cache do middleware
             $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
 
@@ -346,6 +347,7 @@ class DadosVeiculoController extends AbstractActionController
                     ],
                 ])->json();
             }
+            \SnBH\Common\Helper\VeiculoClearCache::clearCache($dataPost->idVeiculo);
 
             $dataJson = [
                 'status' => 200
@@ -569,13 +571,7 @@ class DadosVeiculoController extends AbstractActionController
         if (!$idVeiculo) {
             return;
         }
-        $host = 'http://snbh-site';
-        if (APPLICATION_ENV === 'production') {
-            $host = 'https://seminovos.com.br';
-        }
-        $url = "{$host}/{$idVeiculo}?clear-cache=1";
-        var_dump($url);
-        @file_get_contents($url);
+        \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
         die;
     }
 }
