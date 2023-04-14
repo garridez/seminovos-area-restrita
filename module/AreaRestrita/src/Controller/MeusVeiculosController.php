@@ -124,7 +124,7 @@ class MeusVeiculosController extends AbstractActionController
             // Busca os dados das propostas
             $dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
 
-            $dadosVeiculos['data'][$key]['qdtPropostas'] = count($dadosPropostas);
+            $dadosVeiculos['data'][$key]['qdtPropostas'] = is_countable($dadosPropostas) ? count($dadosPropostas) : 0;
         }
 
         return $dadosVeiculos;
