@@ -29,7 +29,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         LevelSetList::UP_TO_PHP_74
     ]);
-
+    
     $rectorConfig->skip([
         #
         //Php53\Rector\Ternary\TernaryToElvisRector::class,
@@ -51,7 +51,7 @@ return static function (RectorConfig $rectorConfig): void {
         #
         Php74\Rector\Assign\NullCoalescingOperatorRector::class,
         Php74\Rector\Closure\ClosureToArrowFunctionRector::class,
-        Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector::class,
+        #Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector::class,
         #
         Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class,
         Php80\Rector\FunctionLike\MixedTypeRector::class,

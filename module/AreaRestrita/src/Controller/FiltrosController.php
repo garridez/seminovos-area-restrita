@@ -19,7 +19,7 @@ class FiltrosController extends AbstractActionController
         $expires->setDate(date(DATE_W3C, time() + (60 * 60 * 24 * 31)));
 
         $cacheControl = new Header\CacheControl();
-        $cacheControl->addDirective('max-age', 2592000);
+        $cacheControl->addDirective('max-age', 2_592_000);
 
         $pragma = new Header\Pragma('cache');
 

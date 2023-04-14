@@ -30,7 +30,7 @@ class FacebookLeadsController extends AbstractActionController
         
         $response = $this->getResponse();
         $response->setStatusCode(200);
-        $response->setContent(1977358885);
+        $response->setContent(1_977_358_885);
 
         return $response;
 
