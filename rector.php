@@ -43,7 +43,7 @@ return static function (RectorConfig $rectorConfig): void {
         //Php71\Rector\ClassConst\PublicConstantVisibilityRector::class,
         Php71\Rector\FuncCall\CountOnNullRector::class,
         Php71\Rector\FuncCall\RemoveExtraParametersRector::class,
-        Php71\Rector\List_\ListToArrayDestructRector::class,
+        //Php71\Rector\List_\ListToArrayDestructRector::class,
         #
         Php73\Rector\FuncCall\ArrayKeyFirstLastRector::class,
         Php73\Rector\FuncCall\JsonThrowOnErrorRector::class,

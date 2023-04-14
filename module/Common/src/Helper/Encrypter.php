@@ -19,13 +19,13 @@ class Encrypter
 
     public static function decrypt($hash)
     {
-        list($encryptedText, $iv) = self::splitHash($hash);
+        [$encryptedText, $iv] = self::splitHash($hash);
         return openssl_decrypt($encryptedText, self::$method, self::$key, 0, $iv);
     }
 
     protected static function splitHash($hash)
     {
-        list($encryptedText, $iv) = explode(self::$delimiter, $hash);
+        [$encryptedText, $iv] = explode(self::$delimiter, $hash);
         $iv = hex2bin($iv);
 
         return [$encryptedText, $iv];
