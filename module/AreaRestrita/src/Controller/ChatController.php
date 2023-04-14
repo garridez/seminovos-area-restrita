@@ -86,8 +86,7 @@ class ChatController extends AbstractActionController
         if (!$listChats) {
             return;
         }
-        reset($listChats);
-        $firstkey = key($listChats);
+        $firstkey = array_key_first($listChats);
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);

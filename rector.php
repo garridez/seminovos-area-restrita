@@ -45,9 +45,9 @@ return static function (RectorConfig $rectorConfig): void {
         Php71\Rector\FuncCall\RemoveExtraParametersRector::class,
         //Php71\Rector\List_\ListToArrayDestructRector::class,
         #
-        Php73\Rector\FuncCall\ArrayKeyFirstLastRector::class,
+        //Php73\Rector\FuncCall\ArrayKeyFirstLastRector::class,
         Php73\Rector\FuncCall\JsonThrowOnErrorRector::class,
-        Php73\Rector\FuncCall\StringifyStrNeedlesRector::class,
+        //Php73\Rector\FuncCall\StringifyStrNeedlesRector::class,
         #
         Php74\Rector\Assign\NullCoalescingOperatorRector::class,
         Php74\Rector\Closure\ClosureToArrowFunctionRector::class,
