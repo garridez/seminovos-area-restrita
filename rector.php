@@ -36,7 +36,7 @@ return static function (RectorConfig $rectorConfig): void {
         #
         //Php54\Rector\Array_\LongArrayToShortArrayRector::class,
         #
-        Php55\Rector\Class_\ClassConstantToSelfClassRector::class,
+        //Php55\Rector\Class_\ClassConstantToSelfClassRector::class,
         #
         Php70\Rector\Ternary\TernaryToNullCoalescingRector::class,
         #
