@@ -25,8 +25,8 @@ class PagamentoController extends AbstractActionController
         $viewModel = new ViewModel([
             'planos' => $planos,
             'valorPlanoAtual' => (double) isset($dadosVeiculo['valorPlano']) ? ($dadosVeiculo['valorPlano'] + 0.00) : 0.00,
-            'idStatus' => isset($dadosVeiculo['idStatus']) ? $dadosVeiculo['idStatus'] : null,
-            'idPlano' => isset($dadosVeiculo['idPlano']) ? $dadosVeiculo['idPlano'] : null,
+            'idStatus' => $dadosVeiculo['idStatus'] ?? null,
+            'idPlano' => $dadosVeiculo['idPlano'] ?? null,
         ]);
         $viewModel->setTerminal(true);
         return $viewModel;
@@ -106,13 +106,13 @@ class PagamentoController extends AbstractActionController
         if (isset($dados['idPagamento'])) {
             $dadosPagamento['idPagamento'] = $dados['idPagamento'];
         }
-        $idVeiculo = isset($dados['idVeiculo']) ? $dados['idVeiculo'] : null;
+        $idVeiculo = $dados['idVeiculo'] ?? null;
         $dadosPagamento['metodo'] = $dados['metodo'];
         $dadosPagamento['areaRestrita'] = 'nova';
         $dadosPagamento['total'] = $dados['total'] ?? null;
-        $dadosPagamento['tempo_contrato'] = isset($dados['tempo_contrato']) ? $dados['tempo_contrato'] : null;
+        $dadosPagamento['tempo_contrato'] = $dados['tempo_contrato'] ?? null;
         $dadosPagamento['idVeiculo'] = $idVeiculo;
-        $dadosPagamento['idAnuncioVeiculo'] = isset($dados['idAnuncioVeiculo']) ? $dados['idAnuncioVeiculo'] : null;
+        $dadosPagamento['idAnuncioVeiculo'] = $dados['idAnuncioVeiculo'] ?? null;
         $dadosPagamento['idCadastro'] = $cadastro['idCadastro'];
         $dadosPagamento['idPlano'] = $dados['idPlano'] ?? null;
         $dadosPagamento['flagCertificado'] = (isset($dados['certificado']) && !empty($dados['certificado'])) ? (int) $dados['certificado'] : null;
