@@ -5,7 +5,7 @@ class LiveCache
 
     protected $cacheName;
 
-    const REVALIDATE_HEADER = 'LIVE_CACHE_REVALIDATE';
+    public const REVALIDATE_HEADER = 'LIVE_CACHE_REVALIDATE';
 
     protected function getBaseCachePath()
     {

@@ -38,9 +38,9 @@ return static function (RectorConfig $rectorConfig): void {
         #
         //Php55\Rector\Class_\ClassConstantToSelfClassRector::class,
         #
-        #Php70\Rector\Ternary\TernaryToNullCoalescingRector::class,
+        //Php70\Rector\Ternary\TernaryToNullCoalescingRector::class,
         #
-        Php71\Rector\ClassConst\PublicConstantVisibilityRector::class,
+        //Php71\Rector\ClassConst\PublicConstantVisibilityRector::class,
         Php71\Rector\FuncCall\CountOnNullRector::class,
         Php71\Rector\FuncCall\RemoveExtraParametersRector::class,
         Php71\Rector\List_\ListToArrayDestructRector::class,

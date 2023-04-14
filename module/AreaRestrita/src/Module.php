@@ -25,7 +25,7 @@ use Zend\Session\SessionManager;
 class Module
 {
 
-    const SESSION_NAMESPACE = 'LOGIN_SESSION';
+    public const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
     public function getConfig()
     {
