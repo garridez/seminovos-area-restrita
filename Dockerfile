@@ -1,4 +1,4 @@
-FROM snbh-server-base:7.2-node
+FROM snbh-server-base:7.4-node
 
 RUN docker-php-ext-enable redis
 
