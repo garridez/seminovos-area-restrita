@@ -3,6 +3,7 @@ section.section-chat {
     position: relative;
     max-width: 1200px;
     margin: 0px auto;
+    margin-top: 10px;
 
     > [class*="col-"]{
         position: relative;
@@ -21,12 +22,11 @@ section.section-chat {
     .top-header {
         // height: 50px;
         @include media-breakpoint-down(sm){
-            height: 22%;
+            //height: 22%;
         }
-        height: 10%;
-        min-height: 50px;
+        min-height: 40px;
         border-bottom: solid 1px #ed9902;
-        margin-left: -1px;
+        //margin-left: -1px;
         position: relative;
         .h4, button {
             color: $body-color;
@@ -39,6 +39,9 @@ section.section-chat {
         >div,>ul{
             width: 100%;
         }
+        .top-header {
+            border-bottom-color: transparent;
+        }
         .filter{
             // padding: 10px 0;
             /*border-bottom: 1px solid #c4c4c4;*/
@@ -46,8 +49,11 @@ section.section-chat {
             bottom: 0;
             position: absolute;
             width: 100%;
+            text-align: center;
             >input.form-control{
-                height: 100%;
+                width: 90%;
+                border-radius: 8px;
+                margin: 0 auto;
             }
         }
         .list-chats {
@@ -94,15 +100,17 @@ section.section-chat {
                     border-left: 1px solid #ed9902;
                     margin-top: -1px;
                 }
+                .chat-title {
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    width: 100%;
+                }
                 .chat-img {
                     height: auto;
                     width: 90px;
                     padding: 0px;
                     text-align: center;
-                    .chat-title {
-                        font-size: 0.8rem;
-                        font-weight: bold;
-                    }
+                    
                     img {
                         border-radius: 5px;
                     }
@@ -161,6 +169,7 @@ section.section-chat {
         // padding-right: 0;
         >div,>ul{
             width: 100%;
+            background-color: white;
         }
         .IMPLEMENTAR{
             .conversation-info {
@@ -184,6 +193,7 @@ section.section-chat {
 
         .top-header>.contact-row{
             height: 100%;
+            background-color: hsl(0, 0%, 94%);
         }
         .contact { 
             height: 100%;
@@ -192,18 +202,21 @@ section.section-chat {
                 width: 90%;
             }
             .anuncio-data{
-                height: 100%;
+
                 a{
-                    width: auto;
-                    max-width: 17%;
+                    //width: auto;
+                    //max-width: 17%;
+                   
                     img {
                         @include media-breakpoint-down(sm){
-                            padding: 50% 0;
+                            //padding: 50% 0;
+                            height: 100px;
                         }
-                        width: 100%;
+                        height: 30px;
+                        //width: 100%;
                     }
                     .img-fluid{
-                        height: 100%;
+                        //height: 100%;
                         width: auto;
                         border-radius: 10px;
                         padding: 4px;
@@ -214,7 +227,6 @@ section.section-chat {
                     .contact-name{
                         margin: 0;
                         width: 100%;
-                        height: 50%;
                     }
                     .anuncio-title{
                         width: 100%;

@@ -20,7 +20,7 @@ services:
             - SNBH_URL_SITE=http://localhost:8091
             - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
     snbh-area-restrita-redis:
-        image: redis:5.0.4
+        image: redis:7
         container_name: snbh-area-restrita-redis
         ports:
         - "6378:6379"

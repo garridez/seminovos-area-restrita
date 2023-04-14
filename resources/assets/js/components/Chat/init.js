@@ -26,6 +26,12 @@ $(window).resize(function () {
     var $topHeader = $mainChat.find('> .top-header');
     var $conversation = $mainChat.find('> .conversation');
     var $editor = $mainChat.find('> .editor');
+    var innerHeight = window.innerHeight;
+    console.log({innerHeight})
+    if (window.visualViewport && window.visualViewport.height) {
+        innerHeight = window.visualViewport.height;
+    }
+    console.log({innerHeight})
 
     var conversationHeight = innerHeight - headerHeight - $editor.outerHeight() - $topHeader.outerHeight() - 15;
 
@@ -34,5 +40,14 @@ $(window).resize(function () {
 
     $editor.width($mainChat.width());
 
+
     // $('.section-chat > *').css('height', window.innerHeight - $('.header').outerHeight());
 }).resize();
+$('.chat-subject.chat').eq(0).click();
+setTimeout(function () {
+  $('.editor input').focus()
+  $('.chat-subject.chat').eq(0).click();
+}, 1000);
+setTimeout(function () {
+  $('.chat-subject.chat').eq(0).click();
+}, 3000);

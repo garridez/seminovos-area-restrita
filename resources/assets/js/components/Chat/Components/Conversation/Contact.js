@@ -53,7 +53,7 @@ class Contact extends Component {
 
         var outroContato = filterUser(meusDados.idCadastro, data).responsavelNome;
         var outroContatoMobile = outroContato.split(" ");
-        outroContatoMobile = outroContatoMobile[0] + ' ' + outroContatoMobile[1] || '';
+        outroContatoMobile = outroContatoMobile[0] + ' ' + (outroContatoMobile[1] || '');
 
         var anuncioUrl = 'https://seminovos.com.br/' + data.idVeiculo;
         var anuncioTitle = `${data.marca} ${data.modelo} ${data.caracteristica}`;
@@ -94,10 +94,6 @@ class Contact extends Component {
                         className="close-conversation">
                         <i className="fa fa-times" aria-hidden="true"></i>
                     </button>
-                
-                
-                
-                
                     <div className="conversation-options-dropdown">
                         <a
                             title="Opções"

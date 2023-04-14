@@ -63,10 +63,10 @@ class ChatSubject extends Component {
         }
         return (
                 <li className={classes} onClick={this.active}>
+                    <div className="chat-title">
+                        <span>{data.marca} {data.modelo}</span>
+                    </div>
                     <div className="chat-img col-3">
-                        <div className="chat-title">
-                            <span>{data.marca} {data.modelo}</span>
-                        </div>
                         <img src={data.foto} alt="" className="img-fluid"/>
                     </div>
                     <div className="chat-details col-9">
@@ -81,7 +81,6 @@ class ChatSubject extends Component {
                     </div>
                     <div className="chat-info">
                         <div className="chat-status px-2"></div>
-                        
                         <div className="chat-date" title={dates.absoluteDate}>
                             {dates.chatDate}
                         </div>
