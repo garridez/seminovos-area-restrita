@@ -10,7 +10,7 @@ namespace AreaRestritaAnuncio;
 class Module
 {
 
-    const SESSION_NAMESPACE = __CLASS__;
+    const SESSION_NAMESPACE = self::class;
 
     public function getConfig()
     {
