@@ -9,7 +9,7 @@ class CheckboxAcessorios extends MultiCheckbox
 
     private $optionsVeiculoTipo = [];
 
-    public function __construct($name = 'acessorios', $options = array())
+    public function __construct($name = 'acessorios', $options = [])
     {
         $options = array_merge([
             'label' => 'Acessórios',

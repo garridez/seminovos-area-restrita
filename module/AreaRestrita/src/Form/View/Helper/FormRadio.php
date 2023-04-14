@@ -31,7 +31,7 @@ class FormRadio extends TwbBundleFormRadio
         if (isset($aElementOptions['inline']) && $aElementOptions['inline'] == true) {
             $sSeparator = $this->getSeparator();
             $this->setSeparator('');
-            $oElement->setLabelAttributes(array('class' => 'radio-inline'));
+            $oElement->setLabelAttributes(['class' => 'radio-inline']);
             $sReturn = sprintf('%s', parent::render($oElement));
             $this->setSeparator($sSeparator);
             return $sReturn;
@@ -45,7 +45,7 @@ class FormRadio extends TwbBundleFormRadio
             }
 
         	$this->setSeparator('');
-        	$oElement->setLabelAttributes(array('class' => $buttonClass));
+        	$oElement->setLabelAttributes(['class' => $buttonClass]);
 
         	return sprintf('<div class="btn-group" data-toggle="buttons">%s</div>', parent::render($oElement));
         }

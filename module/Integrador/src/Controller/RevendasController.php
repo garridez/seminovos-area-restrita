@@ -108,12 +108,12 @@ class RevendasController extends AbstractActionController {
         $string = preg_replace('`&(amp;)?#?[a-z0-9]+;`i','-',$string);
         // Remove acentos
         $string = preg_replace(
-            array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),
+            ["/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"],
             explode(" ","a A e E i I o O u U n N"),$string);
         // $string = htmlentities($string, ENT_COMPAT, 'utf-8');
         $string = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $string );
         if ($tolower) {
-            $string = preg_replace( array("`[^a-z0-9]`i","`[-]+`") , "-", $string);
+            $string = preg_replace( ["`[^a-z0-9]`i", "`[-]+`"] , "-", $string);
             $string = strtolower(trim($string, '-'));
         }
         return $string;

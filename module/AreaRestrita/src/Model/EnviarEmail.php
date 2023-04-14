@@ -13,6 +13,6 @@ class EnviarEmail extends ApiModelEnviarEmail
     {
         $res = parent::post($data);
         $data = $res->getData();
-        return $data ? $data : $res->json();
+        return $data ?: $res->json();
     }
 }

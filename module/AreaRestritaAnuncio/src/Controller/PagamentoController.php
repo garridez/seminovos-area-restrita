@@ -192,7 +192,7 @@ class PagamentoController extends AbstractActionController
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
             if (($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') && isset($dados['placaVeiculo']) && $dados['certificado']) {
-                $res = $apiClient->veiculosCertificadosPost(array('placa'=> $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo, 'idCadastro' => $dadosPagamento['idCadastro']))->getData();
+                $res = $apiClient->veiculosCertificadosPost(['placa'=> $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo, 'idCadastro' => $dadosPagamento['idCadastro']])->getData();
             }
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
@@ -217,7 +217,7 @@ class PagamentoController extends AbstractActionController
             if (isset($response['detail'])) {
                 $assunto .= ' - ' . $response['detail'];
             }
-            $message = array();
+            $message = [];
             $message[] = '$response = ' . var_export($response, true);
             $message[] = '$dadosPagamento = ' . var_export($dadosPagamento, true);
             $message[] = '$_SESSION = ' . var_export($_SESSION, true);

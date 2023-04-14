@@ -38,7 +38,7 @@ class SelectEstadosSigla extends Select
         27 => 'TO',
     ];
 
-    public function __construct($name = 'idEstado', $options = array())
+    public function __construct($name = 'idEstado', $options = [])
     {
         $options = array_merge([
             'label' => 'Estado',

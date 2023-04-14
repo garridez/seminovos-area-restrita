@@ -35,7 +35,7 @@ class SelectAnoModelo extends Select
 
     protected $valueOptions = [];
 
-    public function __construct($name = 'anoModelo', $options = array())
+    public function __construct($name = 'anoModelo', $options = [])
     {
         $this->valueOptions = $this->getAnoAte();
         

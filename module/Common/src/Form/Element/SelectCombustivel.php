@@ -7,7 +7,7 @@ use Zend\Form\Element\Select;
 class SelectCombustivel extends Select
 {
 
-    public function __construct($name = 'idCombustivel', $options = array())
+    public function __construct($name = 'idCombustivel', $options = [])
     {
         $options = array_merge([
             'label' => 'Combustível',

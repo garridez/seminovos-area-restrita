@@ -124,7 +124,7 @@ class SelectCor extends Select
     ];
     protected $emptyOption = 'Selecione';
 
-    public function __construct($name = 'cor', $options = array())
+    public function __construct($name = 'cor', $options = [])
     {
         $options = array_merge([
             'label' => 'Cor',

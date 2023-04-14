@@ -9,7 +9,7 @@ use Zend\Form\Factory as FormFactory;
 class RevendaForm extends Form
 {
 
-    public function __construct($name = 'login-revenda-form', $options = array())
+    public function __construct($name = 'login-revenda-form', $options = [])
     {
         parent::__construct($name, $options);
 

@@ -9,7 +9,7 @@ use Zend\Form\Factory as FormFactory;
 class ParticularForm extends Form
 {
 
-    public function __construct($name = 'login-particular-form', $options = array())
+    public function __construct($name = 'login-particular-form', $options = [])
     {
         parent::__construct($name, $options);
 

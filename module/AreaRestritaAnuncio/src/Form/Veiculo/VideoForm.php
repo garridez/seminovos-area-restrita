@@ -8,7 +8,7 @@ use Zend\Form\Element;
 class VideoForm extends Form
 {
 
-    public function __construct($name = 'form_videoVeiculo', $options = array())
+    public function __construct($name = 'form_videoVeiculo', $options = [])
     {
         parent::__construct($name, $options);
 

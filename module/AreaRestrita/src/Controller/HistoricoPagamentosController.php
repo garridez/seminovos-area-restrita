@@ -69,13 +69,13 @@ class HistoricoPagamentosController extends AbstractActionController
             $tipoCadastro = 2;
         }
 
-        $arrayStatus = array(
+        $arrayStatus = [
             1 => 'Aguardando Pagamento',
             2 => 'Aprovado',
             3 => 'Cancelado'
-        );
+        ];
 
-        $arrayFormaPagamento = array(
+        $arrayFormaPagamento = [
             'cielo' => 'Cartão de Crédito',
             'deposito' => 'Depósito/Transferência',
             'pagseguro' => 'PagSeguro',
@@ -83,7 +83,7 @@ class HistoricoPagamentosController extends AbstractActionController
             'creditcard' => 'Cartão de Crédito',
             'card' => 'Cartão de Crédito',
             'pix' => 'PIX'
-        );
+        ];
 
         return new ViewModel([
             'historicoPagamentos' => $dadosHistoricoPagamentos['data'],

@@ -8,7 +8,7 @@ use Zend\Form\Element;
 class CadastroSimplesForm extends Form
 {
 
-    public function __construct($name = 'form_cadastroSimples', $options = array())
+    public function __construct($name = 'form_cadastroSimples', $options = [])
     {
         parent::__construct($name, $options);
 

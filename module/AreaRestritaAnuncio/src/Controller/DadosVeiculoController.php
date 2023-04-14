@@ -336,7 +336,7 @@ class DadosVeiculoController extends AbstractActionController
 
             if ($dataPost->fotosToDelete && $auxReordem) {
                 ksort($auxReordem);
-                $dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
+                $dataPost->reordem = array_filter(array_merge([0], array_values($auxReordem)));
             }
 
             if ($dataPost->reordem) {

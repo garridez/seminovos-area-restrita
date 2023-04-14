@@ -38,7 +38,7 @@ class SelectEstados extends Select
         27 => 'Tocantins',
     ];
 
-    public function __construct($name = 'idEstado', $options = array())
+    public function __construct($name = 'idEstado', $options = [])
     {
         $options = array_merge([
             'label' => 'Estado',

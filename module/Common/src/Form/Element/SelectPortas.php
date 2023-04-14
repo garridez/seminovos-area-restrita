@@ -17,7 +17,7 @@ class SelectPortas extends Select
         6 => '6 Portas',
     ];
 
-    public function __construct($name = 'carroPortas', $options = array())
+    public function __construct($name = 'carroPortas', $options = [])
     {
         $options = array_merge([
             'label' => 'Portas',

@@ -8,7 +8,7 @@ use Zend\Form\Element\Select;
 class SelectMarca extends Select
 {
 
-    public function __construct($name = 'idMarca', $options = array())
+    public function __construct($name = 'idMarca', $options = [])
     {
         $options = array_merge([
             'label' => 'Marca',

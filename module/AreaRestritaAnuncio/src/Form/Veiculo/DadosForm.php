@@ -21,7 +21,7 @@ use Zend\Validator;
 class DadosForm extends Form
 {
 
-    public function __construct($name = 'form_dadosVeiculo', $options = array())
+    public function __construct($name = 'form_dadosVeiculo', $options = [])
     {
         parent::__construct($name, $options);
 

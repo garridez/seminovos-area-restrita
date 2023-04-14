@@ -8,7 +8,7 @@ use Zend\Form\Element;
 class PrecoForm extends Form
 {
 
-    public function __construct($name = 'form_precoVeiculo', $options = array())
+    public function __construct($name = 'form_precoVeiculo', $options = [])
     {
         parent::__construct($name, $options);
 

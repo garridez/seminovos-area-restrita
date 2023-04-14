@@ -8,7 +8,7 @@ use Zend\Form\Element;
 class RevendaForm extends Form
 {
 
-    public function __construct($name = 'form_revendaSite', $options = array())
+    public function __construct($name = 'form_revendaSite', $options = [])
     {
         parent::__construct($name, $options);
 

@@ -9,9 +9,7 @@ class SelectAnoFabricacao extends Select
 
     public function getAnoDe()
     {
-        $listaAnos = array(
-            '' => 'Selecione'
-        );
+        $listaAnos = ['' => 'Selecione'];
         $anoMaiorAtual = date('Y') + 1;
         for ($ano = $anoMaiorAtual; $ano >= 1925; $ano--) {
             $listaAnos[$ano] = $ano;
@@ -22,7 +20,7 @@ class SelectAnoFabricacao extends Select
 
     protected $valueOptions = [];
 
-    public function __construct($name = 'anoFabricacao', $options = array())
+    public function __construct($name = 'anoFabricacao', $options = [])
     {
         $this->valueOptions = $this->getAnoDe();
         $options = array_merge([

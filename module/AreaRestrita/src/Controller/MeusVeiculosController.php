@@ -556,7 +556,7 @@ class MeusVeiculosController extends AbstractActionController
             // Busca os dados das fotos do veiculo
             $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
 
-            $listaFotos = array();
+            $listaFotos = [];
             foreach ($dadosVeiculoFotos as $key => $dado) {
                 $listaFotos[] = $dado['idFoto'];
             }

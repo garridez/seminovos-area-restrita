@@ -32,9 +32,9 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip([
         #
-        Php53\Rector\Ternary\TernaryToElvisRector::class,
+        //Php53\Rector\Ternary\TernaryToElvisRector::class,
         #
-        Php54\Rector\Array_\LongArrayToShortArrayRector::class,
+        //Php54\Rector\Array_\LongArrayToShortArrayRector::class,
         #
         Php55\Rector\Class_\ClassConstantToSelfClassRector::class,
         #

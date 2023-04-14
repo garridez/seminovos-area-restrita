@@ -67,7 +67,7 @@ class SelectMotor extends Select
         55 => '7.7',
     ];
 
-    public function __construct($name = 'motor', $options = array())
+    public function __construct($name = 'motor', $options = [])
     {
         $options = array_merge([
             'label' => 'Motor',

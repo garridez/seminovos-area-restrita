@@ -9,7 +9,7 @@ use Zend\Validator\ValidatorChain;
 class ParticularForm extends Form
 {
 
-    public function __construct($name = 'form_particularSite', $options = array())
+    public function __construct($name = 'form_particularSite', $options = [])
     {
         parent::__construct($name, $options);
 

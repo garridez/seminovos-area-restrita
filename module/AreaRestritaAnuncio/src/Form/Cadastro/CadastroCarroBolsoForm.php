@@ -8,7 +8,7 @@ use Zend\Validator\ValidatorChain;
 
 class CadastroCarroBolsoForm extends Form
 {
-    public function __construct($name = 'form_cadastroCarroBolso', $options = array())
+    public function __construct($name = 'form_cadastroCarroBolso', $options = [])
     {
         parent::__construct($name, $options);
 

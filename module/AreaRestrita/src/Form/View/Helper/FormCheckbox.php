@@ -77,10 +77,7 @@ class FormCheckbox extends TwbBundleFormCheckbox
         if ($oElement->useHiddenElement()) {
             $sElementContent = sprintf(
                     '<input type="hidden" %s%s',
-                    $this->createAttributesString(array(
-                        'name' => $aAttributes['name'],
-                        'value' => $oElement->getUncheckedValue(),
-                    )),
+                    $this->createAttributesString(['name' => $aAttributes['name'], 'value' => $oElement->getUncheckedValue()]),
                     $sClosingBracket
                 ) . $sElementContent;
         }

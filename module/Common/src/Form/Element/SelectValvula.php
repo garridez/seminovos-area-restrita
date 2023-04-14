@@ -21,7 +21,7 @@ class SelectValvula extends Select
         "8" => 48,
     ];
 
-    public function __construct($name = 'idValvula', $options = array())
+    public function __construct($name = 'idValvula', $options = [])
     {
         $options = array_merge([
             'label' => 'Válvula',
