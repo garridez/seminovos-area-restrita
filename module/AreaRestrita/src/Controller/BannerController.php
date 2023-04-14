@@ -35,6 +35,7 @@ class BannerController extends AbstractActionController
      */
     public function indexAction()
     {
+        $banners = [];
         $apiClient = $this->getApiClient();
 
         /* @var $siteHospedadoModel siteHospedado */

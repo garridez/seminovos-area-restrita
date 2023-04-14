@@ -77,6 +77,7 @@
         "test": "phpunit"
     },
     "require-dev": {
+        "rector/rector": "^0.15.24",
         "squizlabs/php_codesniffer": "^3.5",
         "zendframework/zend-developer-tools": "^1.1.0",
         "zendframework/zend-test": "^3.3"

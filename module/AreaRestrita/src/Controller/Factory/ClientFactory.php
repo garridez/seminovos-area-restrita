@@ -28,6 +28,7 @@ class ClientFactory
      */
     public static function create(ContainerInterface $container): Client
     {
+        $sessionAuth = [];
         $sessionContainer = $container->get(Module::SESSION_NAMESPACE);
         /** @var array $sessionAuth pega o array serializado salvo em sessão com as credenciais do @Identity */
         if(isset($sessionContainer->auth)){

@@ -91,6 +91,8 @@ class PagamentoController extends AbstractActionController
 
     public function processarAction()
     {
+        $dadosPagamento = [];
+        $comprovanteAnexo = [];
         $dados = $this->params()->fromPost();
         if (!$dados) {
             throw new Exception('Certifique-se de que os dados foram enviados.');

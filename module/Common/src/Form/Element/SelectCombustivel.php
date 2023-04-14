@@ -24,6 +24,7 @@ class SelectCombustivel extends Select
      */
     public function setCombustivelFromVeiculo($tipoVeiculo)
     {
+        $valueOptions = null;
         switch ($tipoVeiculo) {
             case 1:
                 $valueOptions = [

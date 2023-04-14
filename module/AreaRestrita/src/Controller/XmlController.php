@@ -229,7 +229,7 @@ class XmlController extends AbstractActionController
                                 } else if (strlen($palavra1) >= 2 && preg_match("/\s?^($palavra1)/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
-                                    
+
                                 // 3º tenta dar match na segunda palavra do modelo
                                 } else if (isset($palavra2) && preg_match("/\s?($palavra2)/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
@@ -422,11 +422,11 @@ class XmlController extends AbstractActionController
             try {
                 $veiculo['flagIpva'] = 1;
                 $veiculo['idStatus'] = 2; // Ativo
-                
+
                 if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
                     $veiculo['idStatus'] = 5;
                 }
-                
+
 //                if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
 //                    $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ($quantidadeAnunciosPlano)";
 //                } else {
@@ -454,7 +454,7 @@ class XmlController extends AbstractActionController
                         $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
                     } else {
                         $quantidadeVeiculosCadastrados++;
-    
+
                         // Salva imagens do veículo
 
                         $imagem = [

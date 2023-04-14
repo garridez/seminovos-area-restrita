@@ -104,6 +104,7 @@ class MeusDadosController extends AbstractActionController
 
     public function alterarSenhaAction()
     {
+        $data = [];
         $request = $this->getRequest();
 
         if ($request->isPost()) {

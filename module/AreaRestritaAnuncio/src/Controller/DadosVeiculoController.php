@@ -530,6 +530,7 @@ class DadosVeiculoController extends AbstractActionController
 
     public function gratisAction()
     {
+        $data = [];
         $request = $this->getRequest();
 
         if ($request->isPost()) {
