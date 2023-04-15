@@ -2,8 +2,8 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 class PrecoForm extends Form
 {
@@ -61,8 +61,8 @@ class PrecoForm extends Form
             'options' => [
                 'label' => 'Exibir preço',
                 'use_hidden_element' => true,
-                'checked_value' => 0,
-                'unchecked_value' => 1,
+                'checked_value' => '0',
+                'unchecked_value' => '1',
             ],
         ]);
 
@@ -75,8 +75,8 @@ class PrecoForm extends Form
             'options' => [
                 'label' => 'Exibir Km?',
                 'use_hidden_element' => true,
-                'checked_value' => 0,
-                'unchecked_value' => 1,
+                'checked_value' => '0',
+                'unchecked_value' => '1',
             ],
         ]);
 
@@ -86,8 +86,8 @@ class PrecoForm extends Form
             'options' => [
                 'label' => 'Possui financiamento',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
         
@@ -97,8 +97,8 @@ class PrecoForm extends Form
             'options' => [
                 'label' => 'Este veículo pode ser financiado?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
 

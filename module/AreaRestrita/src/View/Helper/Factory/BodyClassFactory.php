@@ -5,8 +5,8 @@ namespace AreaRestrita\View\Helper\Factory;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\BodyClass;
 use Interop\Container\ContainerInterface;
-use Zend\Authentication\AuthenticationService as AuthService;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Authentication\AuthenticationService as AuthService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class BodyClassFactory implements FactoryInterface
 {

@@ -2,7 +2,7 @@
 
 namespace SnBH\ApiModel\Model;
 
-use Zend\Cache\Storage\Adapter\Filesystem;
+use Laminas\Cache\Storage\Adapter\Filesystem;
 
 class Veiculos extends AbstractModel
 {

@@ -7,7 +7,7 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class PagesController extends AbstractActionController
 {

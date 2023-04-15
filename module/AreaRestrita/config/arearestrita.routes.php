@@ -11,7 +11,8 @@
  *
  */
 use AreaRestrita\Controller as Ctrl;
-use Zend\Router\Http;
+use Laminas\Router\Http;
+use Laminas\Mvc\Middleware\PipeSpec;
 
 return [
     'rota-exemplo' => [
@@ -19,7 +20,8 @@ return [
         'options' => [
             'route' => 'rota-exemplo',
             'defaults' => [
-                'controller' => Ctrl\RotaExemploController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\RotaExemploController::class,
                 'action' => 'index',
                 'parametro' => 'Valor Padrão do parametro'
             ],
@@ -75,7 +77,8 @@ return [
         'options' => [
             'route' => 'meus-dados',
             'defaults' => [
-                'controller' => Ctrl\MeusDadosController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\MeusDadosController::class,
                 'action' => 'index'
             ],
         ],
@@ -85,7 +88,8 @@ return [
         'options' => [
             'route' => 'chat',
             'defaults' => [
-                'controller' => Ctrl\ChatController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\ChatController::class,
                 'action' => 'index'
             ],
         ],
@@ -137,7 +141,8 @@ return [
         'options' => [
             'route' => 'contrato-revenda',
             'defaults' => [
-                'controller' => Ctrl\ContratoRevendaController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\ContratoRevendaController::class,
                 'action' => 'index'
             ],
         ],
@@ -147,7 +152,8 @@ return [
         'options' => [
             'route' => 'historico-pagamentos',
             'defaults' => [
-                'controller' => Ctrl\HistoricoPagamentosController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\HistoricoPagamentosController::class,
                 'action' => 'index'
             ],
         ],
@@ -157,7 +163,8 @@ return [
         'options' => [
             'route' => 'fatura/particular/id/:idPagamento',
             'defaults' => [
-                'controller' => Ctrl\FaturaController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\FaturaController::class,
                 'action' => 'particular'
             ],
         ],
@@ -167,7 +174,8 @@ return [
         'options' => [
             'route' => 'fatura/revenda/id/:idPagamento',
             'defaults' => [
-                'controller' => Ctrl\FaturaController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\FaturaController::class,
                 'action' => 'revenda'
             ],
         ],
@@ -177,7 +185,8 @@ return [
         'options' => [
             'route' => 'financeiro',
             'defaults' => [
-                'controller' => Ctrl\FinanceiroController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\FinanceiroController::class,
                 'action' => 'index'
             ],
         ],
@@ -187,7 +196,8 @@ return [
         'options' => [
             'route' => 'banners',
             'defaults' => [
-                'controller' => Ctrl\BannerController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\BannerController::class,
                 'action' => 'index'
             ],
         ],
@@ -227,7 +237,8 @@ return [
         'options' => [
             'route' => 'xml',
             'defaults' => [
-                'controller' => Ctrl\XmlController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\XmlController::class,
                 'action' => 'index'
             ],
         ],
@@ -258,7 +269,8 @@ return [
         'options' => [
             'route' => 'meus-veiculos',
             'defaults' => [
-                'controller' => Ctrl\MeusVeiculosController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\MeusVeiculosController::class,
                 'action' => 'index'
             ],
         ],
@@ -370,7 +382,8 @@ return [
         'options' => [
             'route' => 'meu-site',
             'defaults' => [
-                'controller' => Ctrl\MeuSiteController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\MeuSiteController::class,
                 'action' => 'index'
             ],
         ],
@@ -380,7 +393,8 @@ return [
         'options' => [
             'route' => 'alterar-senha',
             'defaults' => [
-                'controller' => Ctrl\MeusDadosController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\MeusDadosController::class,
                 'action' => 'alterar-senha'
             ],
         ],
@@ -390,7 +404,8 @@ return [
         'options' => [
             'route' => 'central-informacoes',
             'defaults' => [
-                'controller' => Ctrl\PagesController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\PagesController::class,
                 'action' => 'central-informacoes'
             ],
         ],
@@ -400,7 +415,8 @@ return [
         'options' => [
             'route' => 'painel',
             'defaults' => [
-                'controller' => Ctrl\PainelController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\PainelController::class,
                 'action' => 'index'
             ],
         ],
@@ -476,7 +492,8 @@ return [
         'options' => [
             'route' => 'certificados/placa/:placa',
             'defaults' => [
-                'controller' => Ctrl\CertificadosController::class,
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\CertificadosController::class,
                 'action' => 'index'
             ],
         ],

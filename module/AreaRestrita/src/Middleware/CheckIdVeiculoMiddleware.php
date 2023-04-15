@@ -3,13 +3,16 @@
 namespace AreaRestrita\Middleware;
 
 use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiModel\Model\Veiculos;
-use Zend\Authentication\AuthenticationService as AuthServ;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Router\Http\RouteMatch;
+use Laminas\Authentication\AuthenticationService as AuthServ;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Router\Http\RouteMatch;
 
 /**
  * Esse middleware verifica se o veículo que está na URL é do usuário que está logado
@@ -31,13 +34,13 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestI $request, DelegateI $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
     {
         $idVeiculo = (int) $this->routeMatch->getParam('idVeiculo', false);
 
         // Se não tem idVeiculo no como parametro, então continua para o próximo middleware
         if (!$idVeiculo) {
-            return $delegate->process($request);
+            return $delegate->handle($request);
         }
         // Quando está tentando editar um veículo mas não está logado
         if (!$this->authService->hasIdentity()) {

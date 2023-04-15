@@ -2,9 +2,9 @@
 
 namespace AreaRestrita\Form\Login;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
-use Zend\Form\Factory as FormFactory;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
+use Laminas\Form\Factory as FormFactory;
 
 class RevendaForm extends Form
 {

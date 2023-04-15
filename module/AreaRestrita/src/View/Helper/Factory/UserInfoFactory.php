@@ -5,7 +5,7 @@ namespace AreaRestrita\View\Helper\Factory;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\UserInfo;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class UserInfoFactory implements FactoryInterface
 {

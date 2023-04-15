@@ -2,8 +2,8 @@
 
 namespace AreaRestrita\Service;
 
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result as AuthResult;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result as AuthResult;
 use SnBH\ApiClient\Client as ApiClient;
 
 class AuthAdapter implements AdapterInterface

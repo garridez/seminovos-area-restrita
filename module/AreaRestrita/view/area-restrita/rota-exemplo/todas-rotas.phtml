@@ -1,10 +1,10 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
+/* @var $this \Laminas\View\Renderer\PhpRenderer */
 
-use Zend\Router\PriorityList;
-use Zend\Router\Http\Part;
+use Laminas\Router\PriorityList;
+use Laminas\Router\Http\Part;
 
-/* @var $restrito Zend\Router\Http\Part */
+/* @var $restrito Laminas\Router\Http\Part */
 $restrito = $this->router->getRoutes();
 
 
@@ -20,7 +20,7 @@ $parametros = [
 function renderRoutes(PriorityList $routeList, $baseRoute, $ctx, $parametros)
 {
     foreach ($routeList as $routeName => $route) {
-        /* @var $route \Zend\Router\Http\Literal */
+        /* @var $route \Laminas\Router\Http\Literal */
         if ($baseRoute) {
             $routeName = $baseRoute . '/' . $routeName;
         }

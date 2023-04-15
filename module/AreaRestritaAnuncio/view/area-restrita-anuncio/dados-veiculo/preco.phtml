@@ -1,6 +1,6 @@
 <?php
-/* @var $this \Zend\View\Renderer\PhpRenderer */
-/* @var $form \Zend\Form\View\Helper\Form */
+/* @var $this \Laminas\View\Renderer\PhpRenderer */
+/* @var $form \Laminas\Form\View\Helper\Form */
 //echo $this->form($this->formPrecoVeiculo);
 
 /* @var $this \AreaRestritaAnuncio\Form\Veiculo\PrecoForm */
@@ -68,7 +68,7 @@
                 <b>Certo, agora fale sobre os diferenciais do seu carro, ou as observações que desejar. Não é obrigatório, ok?</b>
                 <div class="mt-2"><?= $this->formTextarea($fields['observacoes']) ?></div>
                 <div class="wordcount float-right justify-content-end">
-                    (<span class="count"><?= strlen($fields['observacoes']->getValue())?></span>/700)
+                    (<span class="count"><?= strlen($fields['observacoes']->getValue()??'')?></span>/700)
                 </div>
             </div>
 

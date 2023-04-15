@@ -5,7 +5,7 @@ namespace SnBH\ApiModel\Model;
 use BadMethodCallException;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @method Response get(array $where = array(), int $id = null, boolean $cacheable = false) Realiza get no endpoint correspondente à class

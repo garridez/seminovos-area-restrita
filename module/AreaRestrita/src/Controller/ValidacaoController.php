@@ -7,7 +7,7 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 
 class ValidacaoController extends AbstractActionController

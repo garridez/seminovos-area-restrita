@@ -4,8 +4,8 @@ namespace SnBH\ApiModel\Model;
 
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use SnBH\ApiModel;
 
 class ModelAbstractFactory implements AbstractFactoryInterface

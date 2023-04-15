@@ -3,8 +3,8 @@
 namespace SnBH\Integrador\Controller;
 
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Mvc\MvcEvent;
-use Zend\View\Model\JsonModel;
+use Laminas\Mvc\MvcEvent;
+use Laminas\View\Model\JsonModel;
 
 class ModelosController extends AbstractActionController {
 

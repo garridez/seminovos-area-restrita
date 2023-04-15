@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\View\Helper;
 
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * A T E N Ç Ã O

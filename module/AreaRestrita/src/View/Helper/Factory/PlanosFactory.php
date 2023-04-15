@@ -4,7 +4,7 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\View\Helper\ArrayData;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use AreaRestrita\Model\Planos;
 
 class PlanosFactory implements FactoryInterface

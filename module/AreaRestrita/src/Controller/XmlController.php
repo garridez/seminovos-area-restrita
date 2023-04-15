@@ -15,7 +15,7 @@ use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\StringFuncs;
 
 class XmlController extends AbstractActionController

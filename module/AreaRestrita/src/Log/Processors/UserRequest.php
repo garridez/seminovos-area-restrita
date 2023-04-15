@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\Log\Processors;
 
-use Zend\Log\Processor\ProcessorInterface;
+use Laminas\Log\Processor\ProcessorInterface;
 
 class UserRequest implements ProcessorInterface
 {

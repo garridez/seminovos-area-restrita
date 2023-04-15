@@ -4,9 +4,9 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
-use Zend\Authentication\AuthenticationService;
-use Zend\View\Model\ViewModel;
-use Zend\Session\SessionManager;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\View\Model\ViewModel;
+use Laminas\Session\SessionManager;
 
 class AuthController extends AbstractActionController
 {
@@ -68,11 +68,11 @@ class AuthController extends AbstractActionController
             return $viewModel;
         }
 
-        $httpClient = new \Zend\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+        $httpClient = new \Laminas\Http\Client('https://www.google.com/recaptcha/api/siteverify');
 
         $request = $httpClient->getRequest();
         $httpClient->setMethod('POST');
-        $request->setPost(new \Zend\Stdlib\Parameters([
+        $request->setPost(new \Laminas\Stdlib\Parameters([
             'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
             'response' => $post['token']
         ]));
@@ -94,7 +94,7 @@ class AuthController extends AbstractActionController
             return $viewModel;
         }
 
-        /* @var $form \Zend\Form\Form */
+        /* @var $form \Laminas\Form\Form */
         $form = null;
         foreach ([$particularForm, $revendaForm] as $form) {
             if ($form->getName() === $post['type']) {
@@ -152,7 +152,7 @@ class AuthController extends AbstractActionController
      *  Se estiver tudo certo, faz o login sem usar senha
      *  Isso acontece principalmente quando o usuário recebe um email
      * 
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function loginAutomaticoAction()
     {

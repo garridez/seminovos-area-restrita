@@ -2,11 +2,14 @@
 
 namespace AreaRestrita\Middleware;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Interop\Container\ContainerInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 class DispatchMiddleware implements MiddlewareInterface
 {
@@ -18,11 +21,11 @@ class DispatchMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestI $request, DelegateI $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
     {
         $container = $this->container;
 
-        /* @var $application \Zend\Mvc\Application */
+        /* @var $application \Laminas\Mvc\Application */
         $application = $container->get('Application');
 
         $event = $application->getMvcEvent();
@@ -30,7 +33,13 @@ class DispatchMiddleware implements MiddlewareInterface
          * Realiza manualmente o dispatch do DispatchListener
          *  para executar o controler de acordo com a rota
          */
+        /** @var \Laminas\Mvc\DispatchListener $dispatch */
         $dispatch = $container->get('DispatchListener');
+        $controller = $event->getRouteMatch()->getParam('controller_name');
+        if ($controller) {
+            $event->getRouteMatch()->setParam('controller', $controller);
+        }
+
         $resultDispath = $dispatch->onDispatch($event);
 
         $event->setResult($resultDispath);

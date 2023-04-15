@@ -15,7 +15,7 @@
  * You may also create files matching the glob pattern `{,*.}{global,local}-development.php`.
  */
 
-$removeKey = new \Zend\Stdlib\ArrayUtils\MergeRemoveKey();
+$removeKey = new \Laminas\Stdlib\ArrayUtils\MergeRemoveKey();
 
 return [
     'ApiClient' => [
@@ -37,7 +37,7 @@ return [
                 'local' => [
                     'name' => \AreaRestrita\Log\Writer\Local::class,
                     'options' => [
-                        'formatter' => \Zend\Log\Formatter\Json::class,
+                        'formatter' => \Laminas\Log\Formatter\Json::class,
                         'stream' => 'data/temp/logs/logger.txt',
                         'chmod' => 0777,
                     ],
@@ -45,7 +45,7 @@ return [
             ],
             'processors' => [
                 'Backtrace' => [
-                    'name' => Zend\Log\Processor\Backtrace::class,
+                    'name' => Laminas\Log\Processor\Backtrace::class,
                 ],
                 'UserRequest' => [
                     'name' => \AreaRestrita\Log\Processors\UserRequest::class,
@@ -54,7 +54,7 @@ return [
         ],
     ],
     'cache' => [
-        'adapter' => Zend\Cache\Storage\Adapter\Filesystem::class,
+        'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
         'options' => [
             'server' => $removeKey,
             'ttl' => 300, # 5 Minutos

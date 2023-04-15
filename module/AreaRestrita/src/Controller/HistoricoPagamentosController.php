@@ -8,7 +8,7 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Pagamentos;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
@@ -30,7 +30,7 @@ class HistoricoPagamentosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
+        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()

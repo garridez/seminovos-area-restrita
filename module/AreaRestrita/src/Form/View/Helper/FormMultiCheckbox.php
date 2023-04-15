@@ -4,14 +4,14 @@ namespace AreaRestrita\Form\View\Helper;
 
 use InvalidArgumentException;
 use LogicException;
-use \Zend\Form\View\Helper\FormMultiCheckbox as ZFFormMultiCheckbox;
-use Zend\Form\ElementInterface;
-use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
-use Zend\Form\View\Helper\FormRow;
+use \Laminas\Form\View\Helper\FormMultiCheckbox as ZFFormMultiCheckbox;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
+use Laminas\Form\View\Helper\FormRow;
 
 class FormMultiCheckbox extends ZFFormMultiCheckbox
 {
-    public function render(ElementInterface $oElement)
+    public function _render(ElementInterface $oElement)
     {
         $aElementOptions = $oElement->getOptions();
         // For inline multi-checkbox
@@ -28,7 +28,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
         return sprintf('<div class="checkbox">%s</div>', parent::render($oElement));
     }
 
-    public function renderOptions(
+    public function _renderOptions(
         MultiCheckboxElement $element,
         array $options,
         array $selectedOptions,

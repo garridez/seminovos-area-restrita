@@ -3,7 +3,7 @@
 namespace SnBH\Common\Form\Element;
 
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Form\Element\Select;
+use Laminas\Form\Element\Select;
 
 class SelectModelo extends Select
 {
@@ -21,7 +21,7 @@ class SelectModelo extends Select
      * 
      * Seta os modelos de acordo com as marcas
      * 
-     * @global \Zend\ServiceManager\ServiceManager $container
+     * @global \Laminas\ServiceManager\ServiceManager $container
      * @param int $idMarca
      */
     public function setModelosFromMarca($idMarca)

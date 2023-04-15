@@ -8,7 +8,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class CriarAnuncioController extends AbstractActionController
 {

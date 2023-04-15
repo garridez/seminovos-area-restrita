@@ -2,8 +2,8 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\Http\Header;
-use Zend\View\Model\JsonModel;
+use Laminas\Http\Header;
+use Laminas\View\Model\JsonModel;
 
 class JsonController extends AbstractActionController
 {
@@ -65,7 +65,7 @@ class JsonController extends AbstractActionController
 
         $pragma = new Header\Pragma('cache');
 
-        /* @var $response \Zend\Http\PhpEnvironment\Response */
+        /* @var $response \Laminas\Http\PhpEnvironment\Response */
         $response = $this->getResponse();
         $response->getHeaders()
             ->addHeader($expires)

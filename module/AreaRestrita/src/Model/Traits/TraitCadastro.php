@@ -10,7 +10,7 @@ trait TraitCadastro
     /**
      * Já deve estar setado pela classe que vai usar esse trait
      *
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var \Laminas\ServiceManager\ServiceManager
      */
     protected $container;
 

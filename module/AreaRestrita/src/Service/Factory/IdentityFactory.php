@@ -5,8 +5,8 @@ namespace AreaRestrita\Service\Factory;
 use AreaRestrita\Service\Identity;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class IdentityFactory implements FactoryInterface
 {

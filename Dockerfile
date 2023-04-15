@@ -1,4 +1,4 @@
-FROM snbh-server-base:7.4-node
+FROM snbh-server-base:8.2-node
 
 RUN docker-php-ext-enable redis
 
@@ -9,9 +9,6 @@ RUN apt-get install -y zlib1g-dev libicu-dev g++ \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
-RUN apt-get install gnupg -y && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs libpng-dev
 
 ARG SESSION_PHP_COOKIE_DOMAIN
 ARG SESSION_PHP_SAVE_HANDLER

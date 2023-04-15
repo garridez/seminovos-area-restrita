@@ -16,7 +16,7 @@ class VeiculoClearCache
         $url = "{$host}/{$idVeiculo}?clear-cache=1";
         @file_get_contents($url);
 
-        /** @var \Zend\ServiceManager\ServiceManager $sm */
+        /** @var \Laminas\ServiceManager\ServiceManager $sm */
         global $sm;
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);

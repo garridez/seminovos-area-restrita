@@ -5,8 +5,8 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Model\Cadastros;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\ServiceManager\ServiceManager;
 
 class AbstractActionController extends ZendAbstractActionController
 {

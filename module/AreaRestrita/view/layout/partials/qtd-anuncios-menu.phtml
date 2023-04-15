@@ -37,7 +37,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
 } else if ($this->userInfo('tipoCadastro') == 2) {
     $planos = $this->planos();
     usort($planos, function($a, $b) {
-        return $a['ordem'] < $b['ordem'];
+        return $a['ordem'] <=> $b['ordem'];
     });
     $planosUsados = $this->planosUsados();
 

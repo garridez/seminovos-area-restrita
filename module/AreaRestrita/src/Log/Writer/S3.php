@@ -3,7 +3,7 @@
 namespace AreaRestrita\Log\Writer;
 
 use Aws\Kinesis\KinesisClient;
-use Zend\Log\Writer\AbstractWriter;
+use Laminas\Log\Writer\AbstractWriter;
 
 class S3 extends AbstractWriter
 {

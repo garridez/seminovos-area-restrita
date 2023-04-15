@@ -3,7 +3,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Esse controller é só para as revendas
@@ -11,7 +11,7 @@ use Zend\View\Model\ViewModel;
 class FinalizarController extends AbstractActionController
 {
 
-    public function onDispatch(\Zend\Mvc\MvcEvent $e)
+    public function onDispatch(\Laminas\Mvc\MvcEvent $e)
     {
         if ($this->getCadastro('tipoCadastro') != 1) {
             die;

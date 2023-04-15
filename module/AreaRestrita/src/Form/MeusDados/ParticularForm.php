@@ -2,9 +2,9 @@
 
 namespace AreaRestrita\Form\MeusDados;
 
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Validator\ValidatorChain;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator\ValidatorChain;
 
 class ParticularForm extends Form
 {
@@ -296,7 +296,7 @@ class ParticularForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
+                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],
@@ -311,7 +311,7 @@ class ParticularForm extends Form
             ],
 //            'validators' => [
 //                [
-//                    'name' => \Zend\Validator\Regex::class,
+//                    'name' => \Laminas\Validator\Regex::class,
 //                    'options' => [
 //                        'pattern' => '/^[A-Z]{2}\s[0-9]{2,3}\.[0-9]{3}\.[0-9]{3}$|^[A-Z][0-9]{6}-[0-9]$/'
 //                    ]

@@ -4,18 +4,18 @@ namespace SnBH\Integrador\Controller;
 
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\Common\Helper\MoveUpload;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 use SnBH\Common\ServiceVeiculo;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class VeiculoFotosController extends AbstractActionController {
 
 
     public function create() {
 
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             $dataPost = $request->getPost();

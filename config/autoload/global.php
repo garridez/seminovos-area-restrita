@@ -11,8 +11,8 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-use Zend\Cache\Storage\Adapter\Redis;
-use Zend\Session\Storage\SessionArrayStorage;
+use Laminas\Cache\Storage\Adapter\Redis;
+use Laminas\Session\Storage\SessionArrayStorage;
 
 return [
     'SnBH' => [
@@ -41,13 +41,13 @@ return [
                 's3' => [
                     'name' => \AreaRestrita\Log\Writer\S3::class,
                     'options' => [
-                        'formatter' => \Zend\Log\Formatter\Json::class,
+                        'formatter' => \Laminas\Log\Formatter\Json::class,
                     ],
                 ],
             ],
             'processors' => [
                 'Backtrace' => [
-                    'name' => Zend\Log\Processor\Backtrace::class,
+                    'name' => Laminas\Log\Processor\Backtrace::class,
                 ],
                 'UserRequest' => [
                     'name' => \AreaRestrita\Log\Processors\UserRequest::class,
@@ -62,6 +62,7 @@ return [
         'temp' => 'data/temp',
         'upload' => 'data/temp/upload'
     ],
+    'caches' => [
     'cache' => [
         'adapter' => Redis::class,
         'options' => [
@@ -70,8 +71,11 @@ return [
             'namespace' => 'AreaRestritaProd'
         ],
         'plugins' => [
-            'Serializer',
+            [
+                'name' => 'Serializer',
+            ]
         ]
+    ],
     ],
     'session_config' => [
         'cookie_lifetime' => 60 * 60 * 24 * 31 * 12,

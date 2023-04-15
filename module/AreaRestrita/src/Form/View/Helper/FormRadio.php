@@ -5,10 +5,10 @@ namespace AreaRestrita\Form\View\Helper;
 use InvalidArgumentException;
 use LogicException;
 use TwbBundle\Form\View\Helper\TwbBundleFormRadio;
-use Zend\Form\ElementInterface;
-use Zend\Form\Element\Radio;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\Form\View\Helper\FormRow;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\View\Helper\FormRow;
 
 class FormRadio extends TwbBundleFormRadio
 {
@@ -77,7 +77,7 @@ class FormRadio extends TwbBundleFormRadio
             //Option attributes
             $aInputAttributes = $aAttributes;
             if (isset($aOptionspec['attributes'])) {
-                $aInputAttributes = \Zend\Stdlib\ArrayUtils::merge($aInputAttributes, $aOptionspec['attributes']);
+                $aInputAttributes = \Laminas\Stdlib\ArrayUtils::merge($aInputAttributes, $aOptionspec['attributes']);
             }
 
             //Option value
@@ -125,7 +125,7 @@ class FormRadio extends TwbBundleFormRadio
                     $sLabel = $oTranslator->translate($sLabel, $this->getTranslatorTextDomain());
                 }
 
-                if (!($oElement instanceof \Zend\Form\LabelAwareInterface) || !$oElement->getLabelOption('disable_html_escape')) {
+                if (!($oElement instanceof \Laminas\Form\LabelAwareInterface) || !$oElement->getLabelOption('disable_html_escape')) {
                     $sLabel = $this->getEscapeHtmlHelper()->__invoke($sLabel);
                 }
 

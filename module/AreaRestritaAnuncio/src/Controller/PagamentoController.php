@@ -9,7 +9,7 @@ namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Planos;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\MoveUpload;
 
 class PagamentoController extends AbstractActionController

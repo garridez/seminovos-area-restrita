@@ -2,7 +2,7 @@
 
 namespace SnBH\Common\Helper;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 
 /**
  * Converte a resposta dos validators em alguma coisa

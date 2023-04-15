@@ -4,9 +4,9 @@ namespace SnBH\Integrador\Controller;
 
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
-use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
-use Zend\ServiceManager\ServiceManager;
-use Zend\View\Model\JsonModel;
+use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\Model\JsonModel;
 
 class AbstractActionController extends ZendAbstractActionController
 {
@@ -16,7 +16,7 @@ class AbstractActionController extends ZendAbstractActionController
      */
     public function getIdCadastro()
     {
-        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->request;
         return (int) $request->getHeader('X-SnBH-IdCadastro')->getFieldValue();
     }

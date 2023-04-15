@@ -7,8 +7,8 @@ use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\View\Helper\ExpiracaoRevenda;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService as AuthService;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Authentication\AuthenticationService as AuthService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ExpiracaoRevendaFactory implements FactoryInterface
 {

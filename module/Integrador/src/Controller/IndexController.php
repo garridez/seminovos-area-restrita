@@ -2,7 +2,7 @@
 
 namespace SnBH\Integrador\Controller;
 
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class IndexController extends AbstractActionController
 {

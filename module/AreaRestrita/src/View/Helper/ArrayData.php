@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class ArrayData extends AbstractHelper
 {

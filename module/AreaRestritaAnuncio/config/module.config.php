@@ -15,9 +15,9 @@ use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Middleware\DispatchMiddleware;
 use AreaRestrita\Middleware\LoginMiddleware;
 use AreaRestrita\Middleware;
-use Zend\Router\Http\Literal;
-use Zend\Router\Http\Segment;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'session_containers' => [
@@ -353,6 +353,17 @@ return [
                     ],
                 ],
             ],
+            'chat-criar' => [
+                //'may_terminate' => true,
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/criar-anuncio-v2',
+                    'defaults' => [
+                        'controller' => Controller\ChatCriarAnuncioController::class,
+                        'action' => 'index'
+                    ]
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -366,6 +377,7 @@ return [
             Controller\PagamentoController::class => InvokableFactory::class,
             Controller\PlanoController::class => InvokableFactory::class,
             Controller\ServicosAdicionaisController::class => InvokableFactory::class,
+            Controller\ChatCriarAnuncioController::class => InvokableFactory::class
         ],
     ],
     'view_manager' => [

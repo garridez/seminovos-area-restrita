@@ -2,8 +2,8 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 class MaisInformacoesForm extends Form
 {
@@ -16,10 +16,10 @@ class MaisInformacoesForm extends Form
             'type' => Element\Checkbox::class,
             'name' => 'idTroca',
             'options' => [
-                'label' => 'Aceita Troca?',
+                'label' => 'Aceita Troca??',
                 'use_hidden_element' => true,
-                'checked_value' => 4,
-                'unchecked_value' => 1,
+                'checked_value' => '4',
+                'unchecked_value' => '1',
             ],
         ]);
 
@@ -29,8 +29,8 @@ class MaisInformacoesForm extends Form
             'options' => [
                 'label' => 'Este veículo pode ser levado até o cliente?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
 
@@ -73,8 +73,8 @@ class MaisInformacoesForm extends Form
             'options' => [
                 'label' => 'Exibir meu(s) telefone(s)?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
 

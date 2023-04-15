@@ -8,7 +8,7 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class ChatController extends AbstractActionController
 {

@@ -5,15 +5,22 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace AreaRestrita\Controller;
+namespace AreaRestritaAnuncio\Controller;
 
+use AreaRestrita\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class ChatCriarAnuncioController extends AbstractActionController
 {
 
     public function indexAction()
     {
-        return new ViewModel();
+        
+        $viewModel = new ViewModel([
+            
+        ]);
+
+        //$this->layout('layout/criar-anuncio');
+        return $viewModel;
     }
 }

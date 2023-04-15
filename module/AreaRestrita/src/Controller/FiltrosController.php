@@ -2,8 +2,8 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\View\Model\JsonModel;
-use Zend\Http\Header;
+use Laminas\View\Model\JsonModel;
+use Laminas\Http\Header;
 
 class FiltrosController extends AbstractActionController
 {
@@ -23,7 +23,7 @@ class FiltrosController extends AbstractActionController
 
         $pragma = new Header\Pragma('cache');
 
-        /* @var $response \Zend\Http\PhpEnvironment\Response */
+        /* @var $response \Laminas\Http\PhpEnvironment\Response */
         $response = $this->getResponse();
         $response->getHeaders()
             ->addHeader($expires)

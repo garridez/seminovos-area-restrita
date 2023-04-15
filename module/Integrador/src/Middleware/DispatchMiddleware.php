@@ -6,7 +6,7 @@ use Interop\Container\ContainerInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 class DispatchMiddleware implements MiddlewareInterface
 {
@@ -22,7 +22,7 @@ class DispatchMiddleware implements MiddlewareInterface
     {
         $container = $this->container;
 
-        /* @var $application \Zend\Mvc\Application */
+        /* @var $application \Laminas\Mvc\Application */
         $application = $container->get('Application');
 
         $event = $application->getMvcEvent();

@@ -2,9 +2,9 @@
 
 namespace AreaRestrita\Middleware\Factory;
 
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
-use Zend\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationService;
 use AreaRestrita\Middleware\LoginMiddleware;
 
 class LoginMiddlewareFactory implements FactoryInterface

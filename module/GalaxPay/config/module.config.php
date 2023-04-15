@@ -7,8 +7,8 @@
 
 namespace SnBH\GalaxPay;
 
-use Zend\Router\Http\Literal;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\Router\Http\Literal;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [

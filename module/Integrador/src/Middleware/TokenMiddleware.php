@@ -5,7 +5,7 @@ namespace SnBH\Integrador\Middleware;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Zend\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\JsonResponse;
 
 
 class TokenMiddleware implements MiddlewareInterface

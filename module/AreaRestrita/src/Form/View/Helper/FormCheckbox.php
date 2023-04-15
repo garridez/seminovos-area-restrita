@@ -2,86 +2,78 @@
 
 namespace AreaRestrita\Form\View\Helper;
 
-use InvalidArgumentException;
-use LogicException;
-use TwbBundle\Form\View\Helper\TwbBundleFormCheckbox;
-use Zend\Form\ElementInterface;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\View\Helper\FormRow;
+use Laminas\Form\Element\Checkbox as CheckboxElement;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Exception;
 
-class FormCheckbox extends TwbBundleFormCheckbox
+class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
 
-    public function render(ElementInterface $oElement): string
+    public function render(ElementInterface $element): string
     {
-        if ($oElement->getOption('disable-twb')) {
-            return parent::render($oElement);
+        if ($element->getOption('disable-twb')) {
+            return parent::render($element);
         }
 
-        if (!$oElement instanceof Checkbox) {
-            throw new InvalidArgumentException(sprintf(
-                    '%s requires that the element is of type Zend\Form\Element\Checkbox',
-                    __METHOD__
-            ));
-        }
-        if (($sName = $oElement->getName()) !== 0 && empty($sName)) {
-            throw new LogicException(sprintf(
-                    '%s requires that the element has an assigned name; none discovered',
-                    __METHOD__
+
+        if (!$element instanceof CheckboxElement) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                        '%s requires that the element is of type Laminas\Form\Element\Checkbox',
+                        __METHOD__
             ));
         }
 
-        $aAttributes = $oElement->getAttributes();
-        $aAttributes['name'] = $sName;
-        $aAttributes['type'] = $this->getInputType();
-        $aAttributes['value'] = $oElement->getCheckedValue();
-        if (!isset($aAttributes['id'])) {
-            $aAttributes['id'] = $sName . '_' . substr(md5($sName), 0, 4);
-        }
-        $sClosingBracket = $this->getInlineClosingBracket();
-
-        if ($oElement->isChecked()) {
-            $aAttributes['checked'] = 'checked';
+        $name = $element->getName();
+        if ($name === null || $name === '') {
+            throw new Exception\DomainException(sprintf(
+                        '%s requires that the element has an assigned name; none discovered',
+                        __METHOD__
+            ));
         }
 
-        // Render label
-        $sLabelOpen = $sLabelClose = '';
-        $sLabelContent = $this->getLabelContent($oElement);
-        if ($sLabelContent) {
-            $labelAttributes = $oElement->getLabelAttributes();
-            $labelAttributes['for'] = $aAttributes['id'];
-            $oElement->setLabelAttributes($labelAttributes);
+        $attributes = $element->getAttributes();
 
-            $oLabelHelper = $this->getLabelHelper();
-            $sLabelOpen = $oLabelHelper->openTag($oElement->getLabelAttributes() ?: null);
-            $sLabelClose = $oLabelHelper->closeTag();
+        if ($element->getAttribute('id') === null) {
+            $attributes['id'] = $name . '_' . substr(md5($name), 0, 4);
+            $element->setAttribute('id', $attributes['id']);
         }
 
-        // Render checkbox
-        $sElementContent = sprintf('<input %s%s', $this->createAttributesString($aAttributes), $sClosingBracket);
+        $attributes['name'] = $name;
+        $attributes['type'] = $this->getInputType();
+        $attributes['value'] = $element->getCheckedValue();
 
-        // Add label markup
-        if ($this->getLabelPosition($oElement) === FormRow::LABEL_PREPEND) {
-            $sElementContent = $sElementContent .
-                $sLabelOpen .
-                ($sLabelContent ? rtrim($sLabelContent) . ' ' : '') .
-                $sLabelClose;
-        } else {
-            $sElementContent = $sElementContent .
-                $sLabelOpen .
-                ($sLabelContent ? ' ' . ltrim($sLabelContent) : '') .
-                $sLabelClose;
+        $closingBracket = $this->getInlineClosingBracket();
+
+        if ($element->isChecked()) {
+            $attributes['checked'] = 'checked';
         }
 
-        //Render hidden input
-        if ($oElement->useHiddenElement()) {
-            $sElementContent = sprintf(
+        $rendered = sprintf(
+            '<input %s%s',
+            $this->createAttributesString($attributes),
+            $closingBracket
+        );
+
+        if ($element->useHiddenElement()) {
+            $hiddenAttributes = [
+                'disabled' => $attributes['disabled'] ?? false,
+                'name' => $attributes['name'],
+                'value' => $element->getUncheckedValue(),
+            ];
+
+            $rendered = sprintf(
                     '<input type="hidden" %s%s',
-                    $this->createAttributesString(['name' => $aAttributes['name'], 'value' => $oElement->getUncheckedValue()]),
-                    $sClosingBracket
-                ) . $sElementContent;
+                    $this->createAttributesString($hiddenAttributes),
+                    $closingBracket
+                ) . $rendered;
         }
 
-        return $sElementContent;
+        $label = $element->getLabel();
+        if ($label) {
+            $formLabel = new \Laminas\Form\View\Helper\FormLabel();
+            $rendered .= $formLabel($element);
+        }
+
+        return $rendered;
     }
 }

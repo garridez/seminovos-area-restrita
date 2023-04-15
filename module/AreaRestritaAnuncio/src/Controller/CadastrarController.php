@@ -15,9 +15,9 @@ use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
 use SnBH\Common\Helper\ValidatorMessages;
-use Zend\Stdlib\Parameters;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 
 class CadastrarController extends AbstractActionController
 {
@@ -374,7 +374,7 @@ class CadastrarController extends AbstractActionController
                 $data['tipoCadastro'] = 2;
                 $data['idCidade'] = 2700;
                 $data['idEstado'] = 11;
-                $data['cpfResponsavel'] = $data['cpfResponsavel'] ?? false;
+                $data['cpfResponsavel'] ??= false;
                 $data['cadastroSimplificado'] = 1;
 
                 if (!$data['cpfResponsavel']) {

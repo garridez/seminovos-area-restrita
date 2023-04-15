@@ -2,7 +2,7 @@
 
 namespace SnBH\Common\Form\Element;
 
-use Zend\Form\Element\Select;
+use Laminas\Form\Element\Select;
 
 class SelectCidades extends Select
 {

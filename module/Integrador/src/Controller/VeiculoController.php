@@ -4,13 +4,13 @@ namespace SnBH\Integrador\Controller;
 
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\Common\Helper\MoveUpload;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 use SnBH\Common\ServiceVeiculo;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
 use SnBH\ApiModel\Model\PlanosRevenda;
 use SnBH\Integrador\Controller\PlanoController;
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class VeiculoController extends AbstractActionController {
 
@@ -54,7 +54,7 @@ class VeiculoController extends AbstractActionController {
         $data += $request->getPost()->toArray();
         file_put_contents('data/logs/' . date('Y-m-d-') . $idCadastro . '.log', json_encode($data) . "\n");
         
-        $data['idPlano'] = $data['idPlano'] ?? 5;
+        $data['idPlano'] ??= 5;
         
         if($data['idPlano'] == 5 && $plano['totalBasico'] == $plano['totalBasicoPublicado']){
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Básico']);
@@ -86,7 +86,7 @@ class VeiculoController extends AbstractActionController {
         }
 
         // Se não for passado acessórios, envia "0" para apagar os existentes
-        $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
+        $data['listaAcessorios'] ??= 0;
 
         $res = $apiClient->veiculosPost($data)->json();
 
@@ -140,7 +140,7 @@ class VeiculoController extends AbstractActionController {
         }
 
         // Se não for passado acessórios, envia "0" para apagar os existentes
-        $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
+        $data['listaAcessorios'] ??= 0;
 
         $res = $apiClient->veiculosPut($data, $idVeiculo)->json();
 

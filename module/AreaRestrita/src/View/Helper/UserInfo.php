@@ -3,7 +3,7 @@
 namespace AreaRestrita\View\Helper;
 
 use SnBH\ApiModel\Model\Cadastros;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class UserInfo extends AbstractHelper
 {

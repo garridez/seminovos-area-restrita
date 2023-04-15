@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Esse helper é pra mostrar os dados de quantidade de anúncios usados e disponiveis na view

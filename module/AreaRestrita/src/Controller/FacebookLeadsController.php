@@ -7,10 +7,10 @@
 
 namespace AreaRestrita\Controller;
 
-use Zend\View\Model\ViewModel;
-use Zend\Form\Element;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
+use Laminas\View\Model\ViewModel;
+use Laminas\Form\Element;
+use Laminas\Log\Logger;
+use Laminas\Log\Writer\Stream;
 
 class FacebookLeadsController extends AbstractActionController 
 {

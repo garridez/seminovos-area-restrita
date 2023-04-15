@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\Log\Writer;
 
-use Zend\Log\Writer\AbstractWriter;
+use Laminas\Log\Writer\AbstractWriter;
 
 class Local extends AbstractWriter
 {

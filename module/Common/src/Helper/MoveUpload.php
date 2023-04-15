@@ -2,7 +2,7 @@
 
 namespace SnBH\Common\Helper;
 
-use Zend\Filter\File\RenameUpload;
+use Laminas\Filter\File\RenameUpload;
 
 class MoveUpload
 {
@@ -38,7 +38,7 @@ class MoveUpload
 
     /**
      * O parametro recebido deve estar no formato conforme a seguinte classe retorna
-     * @see \Zend\Http\PhpEnvironment\Request::getFiles
+     * @see \Laminas\Http\PhpEnvironment\Request::getFiles
      * 
      * 
      * @param $files Lista de arquivo vindo por upload

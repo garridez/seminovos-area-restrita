@@ -2,7 +2,7 @@
 
 namespace SnBH\Integrador\Middleware\Factory;
 
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use SnBH\Integrador\Middleware\TokenMiddleware;
 use SnBH\ApiClient\Client as ApiClient;

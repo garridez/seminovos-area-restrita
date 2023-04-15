@@ -2,14 +2,16 @@
 
 namespace AreaRestrita\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
 use Psr\Http\Message\ResponseInterface as ResponseI;
 use Interop\Container\ContainerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Authentication\AuthenticationService;
-use Zend\Router\Http\TreeRouteStack;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Router\Http\TreeRouteStack;
 
 class LoginMiddleware implements MiddlewareInterface
 {
@@ -23,11 +25,11 @@ class LoginMiddleware implements MiddlewareInterface
         $this->router = $router;
     }
 
-    public function process(ServerRequestI $request, DelegateI $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
     {
         if ($this->authService->hasIdentity()) {
             // Executa o próximo middleware
-            return $delegate->process($request);
+            return $delegate->handle($request);
         }
 
         $url = $this->router->getRoute('auth')->assemble();

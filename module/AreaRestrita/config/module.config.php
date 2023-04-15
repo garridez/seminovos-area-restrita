@@ -8,11 +8,11 @@
 namespace AreaRestrita;
 
 use AreaRestrita\Service\AuthenticationServiceFactory;
-use Zend\Authentication\AuthenticationService;
-use Zend\Cache\Service\StorageCacheFactory;
-use Zend\Router\Http\Literal;
-use Zend\Router\Http\Segment;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Cache\Service\StorageCacheFactory;
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'session_containers' => [
@@ -25,13 +25,11 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => Controller\MeusVeiculosController::class,
+                        'controller' => \Laminas\Mvc\Middleware\PipeSpec::class,
+                        'controller_name' => Controller\MeusVeiculosController::class,
                         'action' => 'index',
-                        'middleware' => [
-                            Middleware\LoginMiddleware::class,
-                            Middleware\CheckIdVeiculoMiddleware::class,
-                            Middleware\DispatchMiddleware::class,
-                        ]
+
+                        'middleware' => Middleware\Factory\MiddlewarePipeFactory::class,
                     ],
                 ],
                 'may_terminate' => true,
@@ -182,7 +180,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'cache' => StorageCacheFactory::class,
+            //'cache' => StorageCacheFactory::class,
             // Auth
             AuthenticationService::class => AuthenticationServiceFactory::class,
             Service\AuthManager::class => Service\AuthManagerFactory::class,
@@ -191,6 +189,11 @@ return [
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
             Middleware\CheckIdVeiculoMiddleware::class => Middleware\Factory\CheckIdVeiculoMiddlewareFactory::class,
+            
+            Middleware\Factory\MiddlewarePipeFactory::class => Middleware\Factory\MiddlewarePipeFactory::class
+        ],
+        'abstract_factories' => [
+            \Laminas\Cache\Service\StorageCacheAbstractServiceFactory::class,
         ]
     ],
     'view_helpers' => [

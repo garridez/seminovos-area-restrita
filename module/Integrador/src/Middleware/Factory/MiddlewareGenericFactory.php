@@ -2,7 +2,7 @@
 
 namespace SnBH\Integrador\Middleware\Factory;
 
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class MiddlewareGenericFactory implements FactoryInterface

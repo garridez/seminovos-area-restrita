@@ -2,7 +2,7 @@
 
 namespace SnBH\Common\Form\Element\Factory;
 
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
 

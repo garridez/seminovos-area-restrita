@@ -2,7 +2,7 @@
 
 namespace SnBH\Common\Form\Element;
 
-use Zend\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\MultiCheckbox;
 
 class CheckboxAcessorios extends MultiCheckbox
 {

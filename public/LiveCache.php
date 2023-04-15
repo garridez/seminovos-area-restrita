@@ -88,7 +88,7 @@ class LiveCache
                 'headers' => $header,
                 'body' => $body
             ];
-            $metadata = json_encode($metadata);
+            $metadata = json_encode($metadata, JSON_THROW_ON_ERROR);
             if ($metadata) {
                 file_put_contents($cacheName, $metadata);
             }
@@ -99,7 +99,7 @@ class LiveCache
     {
         $cacheName = $this->getFilenameCache();
         $data = file_get_contents($cacheName);
-        $data = json_decode($data, true);
+        $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
         if ($data && $data['headers']) {
             foreach ($data['headers'] as $header) {
                 header($header);

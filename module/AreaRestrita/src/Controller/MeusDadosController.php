@@ -8,12 +8,12 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Service\AuthManager;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
-use Zend\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationService;
 
 class MeusDadosController extends AbstractActionController
 {
@@ -30,7 +30,7 @@ class MeusDadosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
+        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()

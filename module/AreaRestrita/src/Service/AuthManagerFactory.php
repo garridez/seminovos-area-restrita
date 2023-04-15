@@ -5,9 +5,9 @@ namespace AreaRestrita\Service;
 use AreaRestrita\Service\AuthManager;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService;
-use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\Session\SessionManager;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\Session\SessionManager;
 
 class AuthManagerFactory implements FactoryInterface
 {

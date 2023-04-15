@@ -6,10 +6,10 @@ use AreaRestrita\Module;
 use AreaRestrita\Service\AuthAdapter;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Storage\Session as SessionStorage;
-use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\Session\SessionManager;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Storage\Session as SessionStorage;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\Session\SessionManager;
 
 class AuthenticationServiceFactory implements FactoryInterface
 {

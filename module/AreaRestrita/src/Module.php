@@ -10,17 +10,17 @@ namespace AreaRestrita;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Event as ApiClientEvents;
 use SnBH\ApiClient\Response as ApiClientResponse;
-use Zend\Authentication\AuthenticationService as AuthService;
-use Zend\EventManager\Event as ZendEvent;
-use Zend\I18n\Translator\Loader\PhpArray;
-use Zend\I18n\Translator\Resources as TranslatorResources;
-use Zend\I18n\Translator\Translator as I18nTranslator;
-use Zend\Log\Logger;
-use Zend\Mvc\I18n\Translator as MvcTranslator;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Validator\AbstractValidator;
-use Zend\Session\SessionManager;
+use Laminas\Authentication\AuthenticationService as AuthService;
+use Laminas\EventManager\Event as ZendEvent;
+use Laminas\I18n\Translator\Loader\PhpArray;
+use Laminas\I18n\Translator\Resources as TranslatorResources;
+use Laminas\I18n\Translator\Translator as I18nTranslator;
+use Laminas\Log\Logger;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Session\SessionManager;
 
 class Module
 {
@@ -57,7 +57,7 @@ class Module
 
         $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_PRE_SEND, function (ZendEvent $event) use ($authService, $sessionManager) {
             $client = $event->getTarget();
-            if (!$client instanceof \Zend\Http\Client) {
+            if (!$client instanceof \Laminas\Http\Client) {
                 return;
             }
             $identity = $authService->getIdentity();
@@ -143,7 +143,7 @@ class Module
 
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
             array_shift($trace); // ignore this clousure;
-            array_shift($trace); // ignore Zend\EventManager\EventManager->tiggerListeners()
+            array_shift($trace); // ignore Laminas\EventManager\EventManager->tiggerListeners()
             $realCallee = [];
             for (; $traceLine = array_shift($trace);) {
                 if (isset($traceLine['class']) && $traceLine['class'] == ApiClient::class && $traceLine['function'] == '__call') {

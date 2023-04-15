@@ -2,9 +2,9 @@
 
 namespace AreaRestritaAnuncio\Form\Cadastro;
 
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Validator\ValidatorChain;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator\ValidatorChain;
 
 class CadastroCarroBolsoForm extends Form
 {
@@ -74,7 +74,7 @@ class CadastroCarroBolsoForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
+                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],

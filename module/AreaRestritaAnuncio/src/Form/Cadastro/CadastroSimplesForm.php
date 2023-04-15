@@ -2,8 +2,8 @@
 
 namespace AreaRestritaAnuncio\Form\Cadastro;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 class CadastroSimplesForm extends Form
 {
@@ -164,7 +164,7 @@ class CadastroSimplesForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
+                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],

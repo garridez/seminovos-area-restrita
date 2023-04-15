@@ -9,13 +9,14 @@ register_shutdown_function(function() {
         header('X-SnBH-Instance-Hostname:' . gethostname());
     }
 });
-use Zend\Mvc\Application;
-use Zend\Stdlib\ArrayUtils; 
+use Laminas\Mvc\Application;
+use Laminas\Stdlib\ArrayUtils;
 
 chdir(dirname(__DIR__));
 
 // Composer autoloading
-require '../vendor/autoload.php';
+//require 'vendor/autoload.php';
+require json_decode(file_get_contents('composer.json'), true)['config']['vendor-dir'].'/autoload.php';
 
 $appConfig = require 'config/application.config.php';
 
@@ -25,7 +26,7 @@ if (file_exists('config/development.config.php')) {
 /**
  * Disponibiliza globalmente o service manager e a aplicação como atalho
  */
-/** @var Zend\ServiceManager\ServiceManager $container */
+/** @var Laminas\ServiceManager\ServiceManager $container */
 global $sm, $container, $application;
 
 $application = Application::init($appConfig);

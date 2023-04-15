@@ -2,7 +2,7 @@
 
 namespace SnBH\GalaxPay\Controller;
 
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 use SnBH\Integrador\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
@@ -10,7 +10,7 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
 

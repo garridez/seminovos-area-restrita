@@ -3,9 +3,9 @@
 namespace AreaRestrita\Service;
 
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService as AuthService;
-use Zend\Authentication\Result;
-use Zend\Session\SessionManager;
+use Laminas\Authentication\AuthenticationService as AuthService;
+use Laminas\Authentication\Result;
+use Laminas\Session\SessionManager;
 
 class AuthManager
 {

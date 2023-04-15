@@ -13,9 +13,9 @@ use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Service\Identity;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\Common\Helper\MoveUpload;
-use Zend\Mvc\MvcEvent;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\MvcEvent;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\StringFuncs;
 
 class DadosVeiculoController extends AbstractActionController
@@ -64,7 +64,7 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(false);
         }
 
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             /* @var $identity Identity */
@@ -122,7 +122,7 @@ class DadosVeiculoController extends AbstractActionController
             }
 
             // Se não for passado acessórios, envia "0" para apagar os existentes
-            $data['listaAcessorios'] = $data['listaAcessorios'] ?? 0;
+            $data['listaAcessorios'] ??= 0;
 
             if ($idVeiculo) {
                 // Atualiza
@@ -279,7 +279,7 @@ class DadosVeiculoController extends AbstractActionController
     {
         ini_set('memory_limit', '1G');
         ini_set('post_max_size', '700M');
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
 
@@ -303,7 +303,7 @@ class DadosVeiculoController extends AbstractActionController
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
                         'listaFotos' => $dataPost->fotosToDelete
                     ])->json();
-                $dataPost->reordem = $dataPost->reordem ??[];
+                $dataPost->reordem ??= [];
                 $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
                 //$dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
             }
@@ -381,7 +381,7 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(5);
         $videoForm->populateValues($data);
 
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             $post = $request->getPost();

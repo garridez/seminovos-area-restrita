@@ -2,8 +2,8 @@
 
 namespace AreaRestrita\Form\MeusDados;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 
 class RevendaForm extends Form
 {
@@ -358,7 +358,7 @@ class RevendaForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
+                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],

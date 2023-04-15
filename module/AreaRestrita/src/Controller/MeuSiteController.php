@@ -10,7 +10,7 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Model\SiteHospedado;
 use AreaRestrita\Model\SiteHospedadoBanner;
 use AreaRestrita\Model\SiteHospedadoConteudo;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
@@ -31,7 +31,7 @@ class MeuSiteController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
+        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()

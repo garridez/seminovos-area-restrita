@@ -9,7 +9,7 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Propostas;
 use SnBH\Common\ServiceVeiculo;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Service\Identity;
 use AreaRestrita\Form as Form;
@@ -35,7 +35,7 @@ class MeusVeiculosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
+        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -50,7 +50,7 @@ class MeusVeiculosController extends AbstractActionController
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
         
-        /* @var $request \Zend\Http\PhpEnvironment\Request */
+        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         
         $page = $request->getQuery('page') ?? 1;

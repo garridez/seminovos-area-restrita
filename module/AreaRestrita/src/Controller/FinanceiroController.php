@@ -15,7 +15,7 @@ use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class FinanceiroController extends AbstractActionController
 {
@@ -33,7 +33,7 @@ class FinanceiroController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Zend\Router\Http\RouteMatch */
+        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()

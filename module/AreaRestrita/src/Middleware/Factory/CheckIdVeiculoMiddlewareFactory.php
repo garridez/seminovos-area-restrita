@@ -5,8 +5,8 @@ namespace AreaRestrita\Middleware\Factory;
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use Interop\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use Zend\Authentication\AuthenticationService;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CheckIdVeiculoMiddlewareFactory implements FactoryInterface
 {

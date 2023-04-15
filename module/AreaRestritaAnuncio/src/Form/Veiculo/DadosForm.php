@@ -14,9 +14,9 @@ use SnBH\Common\Form\Element\SelectModelo;
 use SnBH\Common\Form\Element\SelectMotor;
 use SnBH\Common\Form\Element\SelectPortas;
 use SnBH\Common\Form\Element\SelectValvula;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Validator;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator;
 
 class DadosForm extends Form
 {
@@ -72,8 +72,8 @@ class DadosForm extends Form
             'options' => [
                 'label' => 'Carro proveniente de leilão?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0
+                'checked_value' => '1',
+                'unchecked_value' => '0'
             ],
         ]);
 
@@ -195,8 +195,8 @@ class DadosForm extends Form
             'options' => [
                 'label' => 'IPVA 2021 quitado?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
         
@@ -206,8 +206,8 @@ class DadosForm extends Form
             'options' => [
                 'label' => 'Adaptado para PCD?',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
 
@@ -351,7 +351,7 @@ class DadosForm extends Form
         }
     }
 
-    public function populateValues($data, $onlyBase = false)
+    public function populateValues(iterable $data, bool $onlyBase = false): void
     {
         if (isset($data['idMarca']) && $data['idMarca']) {
             $this->get('modeloCarro')->setModelosFromMarca($data['idMarca']);
