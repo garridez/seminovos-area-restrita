@@ -25,7 +25,7 @@ use Laminas\Session\SessionManager;
 class Module
 {
 
-    public const SESSION_NAMESPACE = 'LOGIN_SESSION';
+    final public const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
     public function getConfig()
     {
@@ -35,7 +35,7 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         global $container;
-        $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError']);
+        $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this->onDispatchError(...));
         $container = $sm = $e->getApplication()->getServiceManager();
         $this->setLogger($sm);
         $this->setMeasureApiResponseTime($sm);

@@ -240,19 +240,19 @@ HTML;
         die;
     }
 
-    public function cancelarPagamentosEmAbertoAction()
+    public function cancelarPagamentosEmAbertoAction(): never
     {
         var_dump(__METHOD__ . ':' . __LINE__);
         die;
     }
 
-    public function retornoCieloAction()
+    public function retornoCieloAction(): never
     {
         var_dump(__METHOD__ . ':' . __LINE__);
         die;
     }
 
-    public function retornoPagseguroAction()
+    public function retornoPagseguroAction(): never
     {
         var_dump(__METHOD__ . ':' . __LINE__);
         die;

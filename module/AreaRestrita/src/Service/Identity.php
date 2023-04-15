@@ -8,12 +8,10 @@ use SnBH\ApiClient\Client as ApiClient;
 class Identity
 {
 
-    protected $identity = false;
     protected $apiclient;
 
-    public function __construct($identity, ApiClient $apiClient)
+    public function __construct(protected $identity, ApiClient $apiClient)
     {
-        $this->identity = $identity;
         $this->apiclient = $apiClient;
     }
 

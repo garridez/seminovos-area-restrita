@@ -10,15 +10,8 @@ use Laminas\Session\SessionManager;
 class AuthManager
 {
 
-    private $authService;
-    private $sessionManager;
-    private $apiClient;
-
-    public function __construct(AuthService $authService, SessionManager $sessionManager, ApiClient $apiClient)
+    public function __construct(private readonly AuthService $authService, private readonly SessionManager $sessionManager, private readonly ApiClient $apiClient)
     {
-        $this->authService = $authService;
-        $this->sessionManager = $sessionManager;
-        $this->apiClient = $apiClient;
     }
 
     /**
@@ -31,7 +24,6 @@ class AuthManager
      *   rememberMe   // Opcional - Mantém a sessão ativa por 30 dias
      *
      * @param array $options
-     * @return Result
      * @throws \Exception
      */
     public function login($options, $condicaoIdentity = true): Result

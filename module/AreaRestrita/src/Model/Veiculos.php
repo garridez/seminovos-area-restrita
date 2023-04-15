@@ -24,7 +24,6 @@ class Veiculos extends ApiModelVeiculos
      * Atualiza na api os dados do veiculo
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
-     * @param array $data
      * @param int $idCadastro
      * @return \SnBH\ApiClient\Response
      */

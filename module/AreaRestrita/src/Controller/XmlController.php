@@ -52,7 +52,7 @@ class XmlController extends AbstractActionController
         $veiculos = [];
 
         $inputs = $request->getPost()->toArray();
-        $inputs['href'] = trim($inputs['href']);
+        $inputs['href'] = trim((string) $inputs['href']);
         // valida link XML
         if (substr($inputs['href'], -3) != 'xml') {
             die('Não é um arquivo .xml válido');
@@ -176,14 +176,14 @@ class XmlController extends AbstractActionController
                     
                     case 'MAKE': // Marca
                         foreach ($marcasApi->data as $marcaApi) {
-                            if (preg_match("/($item->nodeValue)/i", $marcaApi['marca'])) {
+                            if (preg_match("/($item->nodeValue)/i", (string) $marcaApi['marca'])) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
                                 $modelos =  $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
                                 $veiculo['modelos'] = $modelos->data;
                                 break;
-                            } else if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', $marcaApi['marca']))) {
+                            } else if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', (string) $marcaApi['marca']))) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
@@ -208,7 +208,7 @@ class XmlController extends AbstractActionController
 
                         foreach ($modelos->data as $modeloApi) {
                             // Escapa a "/" nos modelos
-                            $modeloApiString = preg_replace("/\//", "\/", $modeloApi['modelo']);
+                            $modeloApiString = preg_replace("/\//", "\/", (string) $modeloApi['modelo']);
 
                             $modeloApiSemEspaco = StringFuncs::removeCaractersEspecias($modeloApiString);
 
@@ -395,13 +395,13 @@ class XmlController extends AbstractActionController
             $nomePlano = $veiculo['nomePlano'];
 
             // Formata o valor do dinheiro para o Banco
-            $veiculo['valor'] = preg_replace(['/\./', '/\,/'], ['', '.'], $veiculo['valor']);
+            $veiculo['valor'] = preg_replace(['/\./', '/\,/'], ['', '.'], (string) $veiculo['valor']);
 
             if (isset($veiculo['observacoes']) && $veiculo['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $auxTexto = str_replace("\r\n","",StringFuncs::removerAcentos($veiculo['observacoes']));
+                $auxTexto = str_replace("\r\n","",(string) StringFuncs::removerAcentos($veiculo['observacoes']));
                 if(strlen($auxTexto) > 700){
-                    $veiculo['observacoes'] = mb_substr($veiculo['observacoes'], 0, 700,'UTF8');
+                    $veiculo['observacoes'] = mb_substr((string) $veiculo['observacoes'], 0, 700,'UTF8');
                 }
             }
             
@@ -409,7 +409,7 @@ class XmlController extends AbstractActionController
             $arrayFotos = [];
             
             foreach ($veiculo['imagens'] as $url) {
-                $extensao = substr($url, -4);
+                $extensao = substr((string) $url, -4);
                 $name = uniqid();
                 $img = '/tmp/' . $name . $extensao;
 

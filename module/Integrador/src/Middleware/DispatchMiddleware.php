@@ -18,7 +18,7 @@ class DispatchMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestI $request, DelegateI $delegate)
+    public function process(ServerRequestI $request, DelegateI $delegate): never
     {
         $container = $this->container;
 

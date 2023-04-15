@@ -7,7 +7,7 @@ class StringFuncs
 
     public static function removerAcentos($string)
     {
-        $string = trim($string);
+        $string = trim((string) $string);
 
         $string = preg_replace(
             ["/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(ç)/", "/(Ç)/"],
@@ -21,7 +21,7 @@ class StringFuncs
     public static function removeCaractersEspecias($string)
     {
 
-        return preg_replace('/([^a-zA-Z0-9])/', '', $string);
+        return preg_replace('/([^a-zA-Z0-9])/', '', (string) $string);
     }
     
 }

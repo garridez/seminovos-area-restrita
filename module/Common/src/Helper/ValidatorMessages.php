@@ -19,7 +19,7 @@ class ValidatorMessages
             $input = $form->get($name);
             $label = $input->getLabel();
             foreach ($messagesArray as $k => $message) {
-                $messages[$name][$k] = str_replace(['{label}', '{message}'], [$label, $message], $format);
+                $messages[$name][$k] = str_replace(['{label}', '{message}'], [$label, $message], (string) $format);
             }
         }
         return $messages;

@@ -8,11 +8,8 @@ use Laminas\View\Helper\AbstractHelper;
 class UserInfo extends AbstractHelper
 {
 
-    protected $data;
-
-    public function __construct($data)
+    public function __construct(protected $data)
     {
-        $this->data = $data;
     }
 
     public function __invoke($key = null)
@@ -39,14 +36,13 @@ class UserInfo extends AbstractHelper
         if (isset($this->data['imgPerfil'])) {
             return $this->data['imgPerfil'];
         }
-        preg_match('/(?P<inicial>^.).*?\s(?P<segunda>.)/', $this->data['responsavelNome'], $matches);
+        preg_match('/(?P<inicial>^.).*?\s(?P<segunda>.)/', (string) $this->data['responsavelNome'], $matches);
 
         return '<span>' . strtoupper($matches['inicial'] . $matches['segunda']) . '</span>';
     }
 
     /**
      * Retorna true se o tipo de cadastro do usuário logado é revenda
-     * @return bool
      */
     public function isRevenda(): bool
     {
@@ -55,7 +51,6 @@ class UserInfo extends AbstractHelper
 
     /**
      * Retorna true se o tipo de cadastro do usuário logado é particular
-     * @return bool
      */
     public function isParticular(): bool
     {

@@ -105,7 +105,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
             $inputAttributes['checked']  = $selected;
             $inputAttributes['disabled'] = $disabled;
             if (!isset($inputAttributes['id'])) {
-                $inputAttributes['id'] = trim($label) . '_' . substr(md5($label), 0, 4);
+                $inputAttributes['id'] = trim((string) $label) . '_' . substr(md5((string) $label), 0, 4);
             }
             $labelAttributes['for'] = $inputAttributes['id'];
             $input = sprintf(

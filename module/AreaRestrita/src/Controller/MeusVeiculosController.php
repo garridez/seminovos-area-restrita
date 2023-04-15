@@ -75,7 +75,7 @@ class MeusVeiculosController extends AbstractActionController
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
         
-        $routeName = str_replace("/meus-veiculos", "", $request->getRequestUri());
+        $routeName = str_replace("/meus-veiculos", "", (string) $request->getRequestUri());
 
         $routeParams = "/meus-veiculos";
         
@@ -460,7 +460,7 @@ class MeusVeiculosController extends AbstractActionController
      * ativar o veiculo quando for revenda
      */
 
-    public function reativarAction()
+    public function reativarAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
 
@@ -478,7 +478,7 @@ class MeusVeiculosController extends AbstractActionController
         die;
     }
 
-    public function inativarAction()
+    public function inativarAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
 
@@ -496,7 +496,7 @@ class MeusVeiculosController extends AbstractActionController
         die;
     }
 
-    public function vendidoAction()
+    public function vendidoAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
 
@@ -512,7 +512,7 @@ class MeusVeiculosController extends AbstractActionController
         die;
     }
     
-    public function pesquisaAction()
+    public function pesquisaAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
         

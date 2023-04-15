@@ -32,7 +32,7 @@ class Planos extends AbstractModel
     public function get($tipoPlano = null, $cache = true, $status = 1)
     {
         if (!is_numeric($tipoPlano)) {
-            $tipoPlano = Cadastros::TIPO_STRING_ID[strtolower($tipoPlano)];
+            $tipoPlano = Cadastros::TIPO_STRING_ID[strtolower((string) $tipoPlano)];
         }
         $tipoPlano = Cadastros::TIPO_ID_STRING[(int) $tipoPlano];
 

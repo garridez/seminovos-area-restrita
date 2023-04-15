@@ -14,7 +14,7 @@ class IndexController extends AbstractActionController
         $request = $this->request;
         if ($request->isPost()) {
 
-            $data = json_decode($request->getContent(), true);
+            $data = json_decode((string) $request->getContent(), true);
             
             if ($data['confirmHash'] != WEBHOOK_GALAYPAY) {
                 return new JsonModel([

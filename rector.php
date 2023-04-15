@@ -27,7 +27,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_74
+        LevelSetList::UP_TO_PHP_81
     ]);
     
     $rectorConfig->skip([
@@ -49,18 +49,18 @@ return static function (RectorConfig $rectorConfig): void {
         Php73\Rector\FuncCall\JsonThrowOnErrorRector::class,
         //Php73\Rector\FuncCall\StringifyStrNeedlesRector::class,
         #
-        Php74\Rector\Assign\NullCoalescingOperatorRector::class,
+        //Php74\Rector\Assign\NullCoalescingOperatorRector::class,
         Php74\Rector\Closure\ClosureToArrowFunctionRector::class,
         #Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector::class,
         #
-        Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class,
-        Php80\Rector\FunctionLike\MixedTypeRector::class,
-        Php80\Rector\FunctionLike\UnionTypesRector::class,
+        //Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class,
+        //Php80\Rector\FunctionLike\MixedTypeRector::class,
+        //Php80\Rector\FunctionLike\UnionTypesRector::class,
         Php80\Rector\Identical\StrEndsWithRector::class,
         Php80\Rector\Identical\StrStartsWithRector::class,
         Php80\Rector\NotIdentical\StrContainsRector::class,
         Php80\Rector\Switch_\ChangeSwitchToMatchRector::class,
         #
-        Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector::class,
+        //Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector::class,
     ]);
 };

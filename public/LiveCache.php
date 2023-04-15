@@ -5,7 +5,7 @@ class LiveCache
 
     protected $cacheName;
 
-    public const REVALIDATE_HEADER = 'LIVE_CACHE_REVALIDATE';
+    final public const REVALIDATE_HEADER = 'LIVE_CACHE_REVALIDATE';
 
     protected function getBaseCachePath()
     {
@@ -18,12 +18,12 @@ class LiveCache
             return $this->cacheName;
         }
         $folderCache = $this->getBaseCachePath() . '/cache';
-        $cacheName = preg_replace('/[^0-9a-zA-Z]/', '-', $_SERVER['REQUEST_URI']);
+        $cacheName = preg_replace('/[^0-9a-zA-Z]/', '-', (string) $_SERVER['REQUEST_URI']);
         $cacheName = preg_replace('/-+/', '-', $cacheName);
         $cacheName = trim($cacheName, '-');
         $cacheName = substr($cacheName, 0, 50);
         $cacheName = str_pad($cacheName, 50, '-', STR_PAD_RIGHT);
-        $md5 = md5($_SERVER['REQUEST_URI']);
+        $md5 = md5((string) $_SERVER['REQUEST_URI']);
 
         return $this->cacheName = $folderCache . '/' . substr($md5, 0, 2) . '/' . $cacheName . '-' . $md5 . '.response';
     }
@@ -78,8 +78,8 @@ class LiveCache
         $cacheName = $this->getFilenameCache();
         register_shutdown_function(function () use ($cacheName) {
 
-            if (!file_exists(dirname($cacheName))) {
-                mkdir(dirname($cacheName), 0744, true);
+            if (!file_exists(dirname((string) $cacheName))) {
+                mkdir(dirname((string) $cacheName), 0744, true);
             }
 
             $header = headers_list();

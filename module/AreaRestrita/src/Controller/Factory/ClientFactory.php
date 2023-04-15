@@ -22,7 +22,6 @@ use GuzzleHttp\Exception\GuzzleException;
 class ClientFactory
 {
     /**
-     * @param ContainerInterface $container
      * @return Client
      * @throws GuzzleException
      */

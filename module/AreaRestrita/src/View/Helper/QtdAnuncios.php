@@ -22,11 +22,8 @@ use Laminas\View\Helper\AbstractHelper;
 class QtdAnuncios extends AbstractHelper
 {
 
-    protected $data;
-
-    public function __construct($data)
+    public function __construct(protected $data)
     {
-        $this->data = $data;
     }
 
     public function __invoke()

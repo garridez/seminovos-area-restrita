@@ -104,7 +104,7 @@ class RevendasController extends AbstractActionController {
     
     protected function transformLabel($string, $tolower = true)
     {
-        $string = preg_replace("`\[.*\]`U","",$string);
+        $string = preg_replace("`\[.*\]`U","",(string) $string);
         $string = preg_replace('`&(amp;)?#?[a-z0-9]+;`i','-',$string);
         // Remove acentos
         $string = preg_replace(

@@ -25,7 +25,7 @@ class Encrypter
 
     protected static function splitHash($hash)
     {
-        [$encryptedText, $iv] = explode(self::$delimiter, $hash);
+        [$encryptedText, $iv] = explode(self::$delimiter, (string) $hash);
         $iv = hex2bin($iv);
 
         return [$encryptedText, $iv];
@@ -33,12 +33,12 @@ class Encrypter
 
     protected static function joinHash($encrypted, $iv)
     {
-        $iv = bin2hex($iv);
+        $iv = bin2hex((string) $iv);
         return $encrypted . self::$delimiter . $iv;
     }
 
     public static function base64_encode($textToEncrypt)
     {
-        return base64_encode($textToEncrypt);
+        return base64_encode((string) $textToEncrypt);
     }
 }

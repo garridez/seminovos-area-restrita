@@ -37,11 +37,10 @@ class AbstractActionController extends ZendAbstractActionController
     /**
      * Retorna os dados de cadastro do usuário atual
      *  Se passado uma key específica, então retorna só este dado
-     * 
+     *
      * @param string $key Chave do campo que será retornado
-     * @return Array|null
      */
-    public function getCadastro($key = false)
+    public function getCadastro($key = false): ?array
     {
         $data = $this
             ->getContainer()

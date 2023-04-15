@@ -33,13 +33,13 @@ class BodyClassFactory implements FactoryInterface
         $params = $route->getParams();
 
         $controller = $params['controller'];
-        $controller = explode('\\', $controller);
+        $controller = explode('\\', (string) $controller);
         $controller = preg_replace('/Controller$/', '', end($controller));
         $controller = preg_replace('/(.)([A-Z])/', '$1-$2', $controller);
 
         return [
             // Nome da rota da requisição
-            'r-' . str_replace('/', '_', $route->getMatchedRouteName()),
+            'r-' . str_replace('/', '_', (string) $route->getMatchedRouteName()),
             // Nome da classe do controller
             'c-' . strtolower($controller),
             // Nome da action

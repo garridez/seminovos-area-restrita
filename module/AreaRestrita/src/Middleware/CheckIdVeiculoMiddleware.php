@@ -24,14 +24,12 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
     protected $authService;
     protected $apiClient;
     protected $routeMatch;
-    protected $container;
 
-    public function __construct(AuthServ $authService, ApiClient $apiClient, RouteMatch $routeMatch, $container)
+    public function __construct(AuthServ $authService, ApiClient $apiClient, RouteMatch $routeMatch, protected $container)
     {
         $this->authService = $authService;
         $this->apiClient = $apiClient;
         $this->routeMatch = $routeMatch;
-        $this->container = $container;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface

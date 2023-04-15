@@ -11,11 +11,8 @@ use Laminas\Diactoros\Response\JsonResponse;
 class TokenMiddleware implements MiddlewareInterface
 {
 
-    protected $tokens;
-
-    public function __construct($tokens)
+    public function __construct(protected $tokens)
     {
-        $this->tokens = $tokens;
     }
 
     public function process(ServerRequestI $request, DelegateI $delegate)
@@ -50,11 +47,10 @@ class TokenMiddleware implements MiddlewareInterface
 
     /**
      * Retorna os dados do token
-     * 
+     *
      * @param string $token
-     * @return boolean|array
      */
-    public function getTokenData($token)
+    public function getTokenData($token): bool|array
     {
 
         foreach ($this->tokens as $tokenData) {

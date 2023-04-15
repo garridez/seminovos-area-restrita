@@ -4,9 +4,9 @@ namespace SnBH\ApiModel\Model;
 
 class VeiculoTipo
 {
-    public const TIPO_CARRO = 1;
-    public const TIPO_CAMINHAO = 2;
-    public const TIPO_MOTO = 3;
+    final public const TIPO_CARRO = 1;
+    final public const TIPO_CAMINHAO = 2;
+    final public const TIPO_MOTO = 3;
 
     public static $idTipos = [
         1 => 'carro',
@@ -42,10 +42,9 @@ class VeiculoTipo
 
     /**
      * Essa função detect se é ID ou nome e sempre retorna o ID
-     * @param int|string $var
      * @return int
      */
-    public static function getIdByAny($var)
+    public static function getIdByAny(int|string $var)
     {
         $varInt = (int) $var;
         if (((string) $varInt) == $var) {

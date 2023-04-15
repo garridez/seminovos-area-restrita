@@ -22,8 +22,8 @@ return [
     'Laminas\Log',
     'Laminas\Form',
     'Laminas\Cache',
-    'Laminas\\Cache\\Storage\\Adapter\\Redis',
-    'Laminas\\Cache\\Storage\\Adapter\\Filesystem',
+    \Laminas\Cache\Storage\Adapter\Redis::class,
+    \Laminas\Cache\Storage\Adapter\Filesystem::class,
     'Laminas\Validator',
     
     //'TwbBundle',

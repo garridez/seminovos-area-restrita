@@ -57,7 +57,6 @@ class AuthAdapter implements AdapterInterface
      *  usuarioEmail
      *  usuarioSenha
      * Os campos podem mudar de acordo com a API
-     * @param array $data
      */
     public function setData(array $data)
     {

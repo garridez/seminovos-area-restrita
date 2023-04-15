@@ -29,7 +29,6 @@ class Cadastros extends ApiModelCadastros
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
-     * @param array $data
      * @param int $idCadastro
      * @return \SnBH\ApiClient\Response
      */

@@ -24,7 +24,7 @@ class ValidacaoController extends AbstractActionController
         if ($dataRes->status !== 200) {
             return new ViewModel(["sucesso" => false]);        
         }
-        $data = json_decode($dataRes->getData(), true);
+        $data = json_decode((string) $dataRes->getData(), true);
         
         $cadastros = $this->getApiClient()->cadastrosGet([
             'considerarInativo' => 1], $data['idCadastro'], false)->getData()[0];

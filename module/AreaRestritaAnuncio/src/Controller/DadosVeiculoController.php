@@ -44,7 +44,7 @@ class DadosVeiculoController extends AbstractActionController
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
-            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+            $tipoVeiculo = $tipos[strtolower((string) $this->params()->fromRoute('tipo'))];
         }
 
         $dadosForm = new Veiculo\DadosForm();
@@ -92,14 +92,14 @@ class DadosVeiculoController extends AbstractActionController
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
 
             if (isset($data['kilometragem'])) {
-                $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+                $data['kilometragem'] = str_replace('.', '', (string) $data['kilometragem']);
             }
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $auxTexto = str_replace("\r\n","",StringFuncs::removerAcentos($data['observacoes']));
+                $auxTexto = str_replace("\r\n","",(string) StringFuncs::removerAcentos($data['observacoes']));
                 if(strlen($auxTexto) > 700){
-                    $data['observacoes'] = mb_substr($data['observacoes'], 0, 710,'UTF8');
+                    $data['observacoes'] = mb_substr((string) $data['observacoes'], 0, 710,'UTF8');
                 }
             }
 
@@ -189,7 +189,7 @@ class DadosVeiculoController extends AbstractActionController
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
-            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+            $tipoVeiculo = $tipos[strtolower((string) $this->params()->fromRoute('tipo'))];
         }
 
         $dadosForm = new Veiculo\DadosForm();
@@ -224,7 +224,7 @@ class DadosVeiculoController extends AbstractActionController
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
-            $tipoVeiculo = $tipos[strtolower($this->params()->fromRoute('tipo'))];
+            $tipoVeiculo = $tipos[strtolower((string) $this->params()->fromRoute('tipo'))];
         }
 
         $precoForm = new Veiculo\PrecoForm();

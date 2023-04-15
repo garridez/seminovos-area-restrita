@@ -39,7 +39,7 @@ class VeiculoController extends AbstractActionController {
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
-            $tipoVeiculo = $tipos[strtolower($this->params()->fromPost('tipoVeiculo'))];
+            $tipoVeiculo = $tipos[strtolower((string) $this->params()->fromPost('tipoVeiculo'))];
         }
 
         $data = [
@@ -77,12 +77,12 @@ class VeiculoController extends AbstractActionController {
         }
 
         if (isset($data['kilometragem'])) {
-            $data['kilometragem'] = str_replace('.', '', $data['kilometragem']);
+            $data['kilometragem'] = str_replace('.', '', (string) $data['kilometragem']);
         }
 
         if (isset($data['observacoes']) && $data['observacoes']) {
             // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-            $data['observacoes'] = substr($data['observacoes'], 0, 700);
+            $data['observacoes'] = substr((string) $data['observacoes'], 0, 700);
         }
 
         // Se não for passado acessórios, envia "0" para apagar os existentes

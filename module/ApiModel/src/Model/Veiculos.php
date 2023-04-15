@@ -19,7 +19,7 @@ class Veiculos extends AbstractModel
      * 
      * @param int|array $idVeiculo Pode ser um id ou um array de id
      */
-    public function isOwner($idVeiculo)
+    public function isOwner(int|array $idVeiculo)
     {
         $idCadastro = $this->getIdentity();
 

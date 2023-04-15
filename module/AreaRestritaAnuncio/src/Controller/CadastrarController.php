@@ -40,7 +40,7 @@ class CadastrarController extends AbstractActionController
 
                 $data = $dadosForm->getData();
                 if ($data['dataNascimento']) {
-                    $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', $data['dataNascimento'])));
+                    $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', (string) $data['dataNascimento'])));
                 }
 
                 $data['tipoCadastro'] = 2;
@@ -70,13 +70,13 @@ class CadastrarController extends AbstractActionController
     }
     private function getContatosFromCpfCnpj($cpfOuCpnj, $mask = true)
     {
-        $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
-        $tipoCadastro = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', $cpfOuCpnj) ? 2 : 1;
+        $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', (string) $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
+        $tipoCadastro = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', (string) $cpfOuCpnj) ? 2 : 1;
         $considerarInativo = false;
 
         // CPF ou CNPJ retira a pontuação
         if($tipoCadastro == 2){
-            $cpfOuCpnj = preg_match_all('(\d)',$cpfOuCpnj, $matches);
+            $cpfOuCpnj = preg_match_all('(\d)',(string) $cpfOuCpnj, $matches);
             $cpfOuCpnj = implode($matches[0]);
         }else{
             $cpfOuCpnj = $cpfOuCpnj;
@@ -113,10 +113,10 @@ class CadastrarController extends AbstractActionController
 
         if($mask){
             // Mascara email
-            $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', $email);
+            $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', (string) $email);
 
             // Mascara telefone
-            $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', $telefone);
+            $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', (string) $telefone);
 
         }else{
             $dadosCadastroRetorno = $dadosCadastro;
@@ -211,10 +211,10 @@ class CadastrarController extends AbstractActionController
         $telefone = $dadosCadastro['telefone2'];
 
         // Mascara email
-        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', $email);
+        $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', (string) $email);
 
         // Mascara telefone
-        $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{3})(\d{1})/', '($1)$2$3***-***$6', $telefone);
+        $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{3})(\d{1})/', '($1)$2$3***-***$6', (string) $telefone);
 
         return new JsonModel(['status' => 200, 'email' => $email, 'telefone' => $telefone]);
     }
@@ -332,7 +332,7 @@ class CadastrarController extends AbstractActionController
 
         #verifica se o email informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
-            'cpfResponsavel' => preg_replace('/[^0-9]/', '', $cpf),
+            'cpfResponsavel' => preg_replace('/[^0-9]/', '', (string) $cpf),
             'checkEmail' => true, //variavél exclui os joins da CadastroDAO.class.php
             'considerarInativo' => 1
         ]);

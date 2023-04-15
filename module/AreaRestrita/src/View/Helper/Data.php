@@ -22,7 +22,7 @@ class Data
 
         if (!empty($datetime)) {
 
-            $data = explode("-", $datetime);
+            $data = explode("-", (string) $datetime);
             $dianum = explode(" ", $data[2]);
             $dia = date($dianum[0]);
             $mes = date($data[1]);
@@ -63,11 +63,11 @@ class Data
 
     public function converterDataBR($data)
     {
-        return date("d/m/Y", strtotime($data));
+        return date("d/m/Y", strtotime((string) $data));
     }
 
     public function converterDataHoraBR($data)
     {
-        return date("d/m/Y H:i:s", strtotime($data));
+        return date("d/m/Y H:i:s", strtotime((string) $data));
     }
 }

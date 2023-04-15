@@ -25,7 +25,7 @@ class AuthController extends AbstractActionController
         $sessionManager = $container->get(SessionManager::class);
         $sessionStorage = $sessionManager->getStorage();
         if ($redirect) {
-            $redirect = base64_decode($redirect);
+            $redirect = base64_decode((string) $redirect);
             $sessionStorage->redirect = $redirect;
         }
         if ($sessionStorage->redirect) {
@@ -165,7 +165,7 @@ class AuthController extends AbstractActionController
         if ($dataRes->status !== 200) {
             return $this->redirect()->toRoute('auth');
         }
-        $data = json_decode($dataRes->getData(), true);
+        $data = json_decode((string) $dataRes->getData(), true);
 
         /**
          * É enviado o "time" de quando o encrypt é criado

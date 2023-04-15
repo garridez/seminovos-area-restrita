@@ -10,16 +10,16 @@ use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Model\Planos;
 
 abstract class GranularidadeContator {
-    public const Dia = 'DATE(time)';
-    public const Semana = 'WEEK(DATE(time))';
-    public const Mes = 'MONTH(DATE(time))';
-    public const Ano = 'YEAR(DATE(time))';
+    final public const Dia = 'DATE(time)';
+    final public const Semana = 'WEEK(DATE(time))';
+    final public const Mes = 'MONTH(DATE(time))';
+    final public const Ano = 'YEAR(DATE(time))';
 }
 
 abstract class TabelasContador{
-    public const Acesso = 'acesso';
-    public const Impressao = 'impressao';
-    public const Contato = 'contato';
+    final public const Acesso = 'acesso';
+    final public const Impressao = 'impressao';
+    final public const Contato = 'contato';
 }
 
 class PainelController extends AbstractActionController

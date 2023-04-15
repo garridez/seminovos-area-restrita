@@ -7,11 +7,8 @@ use Laminas\View\Helper\AbstractHelper;
 class BodyClass extends AbstractHelper
 {
 
-    protected $class;
-
-    public function __construct($class)
+    public function __construct(protected $class)
     {
-        $this->class = $class;
     }
 
     public function __invoke()

@@ -10,7 +10,7 @@ namespace AreaRestrita\Controller;
 class CheckController extends AbstractActionController
 {
 
-    public function indexAction()
+    public function indexAction(): never
     {
         $this->incrementSubversion();
 
