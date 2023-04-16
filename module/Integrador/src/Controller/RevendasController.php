@@ -23,7 +23,7 @@ class RevendasController extends AbstractActionController {
             'cpfResponsavel',
         ];
         $diff = array_diff($requerid, array_keys($data));
-        if (!empty($diff)) {
+        if ($diff !== []) {
              return new JsonModel(['status' => 401, 'detail' =>"Os campos: '" . implode(', ', $diff) . "' são obrigatórios!"]);
         }
         
@@ -99,7 +99,7 @@ class RevendasController extends AbstractActionController {
     {
         $cadastro = $this->getApiClient()->cadastrosGet(['cnpj' => $cnpj, 'considerarInativo' => true], null, false)->getData();
         
-        return isset($cadastro[0]['idCadastro']) && $cadastro[0]['idCadastro'] ? true : false;
+        return isset($cadastro[0]['idCadastro']) && $cadastro[0]['idCadastro'];
     }
     
     protected function transformLabel($string, $tolower = true)

@@ -16,11 +16,9 @@ class ChatCriarAnuncioController extends AbstractActionController
     public function indexAction()
     {
         
-        $viewModel = new ViewModel([
+        //$this->layout('layout/criar-anuncio');
+        return new ViewModel([
             
         ]);
-
-        //$this->layout('layout/criar-anuncio');
-        return $viewModel;
     }
 }

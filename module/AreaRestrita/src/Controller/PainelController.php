@@ -48,7 +48,7 @@ class PainelController extends AbstractActionController
         
         $veiculosModel = $this->getContainer()->get(Veiculos::class); 
 
-        $veiculos = $veiculosModel->getAll(compact('idCadastro'));
+        $veiculos = $veiculosModel->getAll(['idCadastro' => $idCadastro]);
         
         $totalVeiculos = $veiculos['total'];
 
@@ -80,7 +80,7 @@ class PainelController extends AbstractActionController
             }
         }
 
-        return new ViewModel(compact('totalVeiculos', 'totalVeiculosAtivos', 'veiculos', 'valorPlanoRevenda'));
+        return new ViewModel(['totalVeiculos' => $totalVeiculos, 'totalVeiculosAtivos' => $totalVeiculosAtivos, 'veiculos' => $veiculos, 'valorPlanoRevenda' => $valorPlanoRevenda]);
 
     }
 
@@ -219,7 +219,7 @@ class PainelController extends AbstractActionController
         $veiculo['intervaloData'] = '';
         $veiculo['frase'] = $frase;
 
-        return new ViewModel(compact('veiculo', 'cliques', 'impressoes', 'contato', 'frase', 'contador'));        
+        return new ViewModel(['veiculo' => $veiculo, 'cliques' => $cliques, 'impressoes' => $impressoes, 'contato' => $contato, 'frase' => $frase, 'contador' => $contador]);        
     }
 
     public function tabelaFipeAction(){

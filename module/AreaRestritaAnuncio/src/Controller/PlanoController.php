@@ -28,13 +28,13 @@ class PlanoController extends AbstractActionController
                 2, # Turbo
                 3, # Nitro
             ];
-            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda) {
+            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda): bool {
                 return in_array($i['idPlano'], $planosAnuncioRevenda);
             });
         } else {
             $template = 'particular';
-            $dadosPlanos = array_filter($dadosPlanos, function($i) {
-                return in_array($i['status'], [1]);
+            $dadosPlanos = array_filter($dadosPlanos, function($i): bool {
+                return $i['status'] == 1;
             });
         }
 

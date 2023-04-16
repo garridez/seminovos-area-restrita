@@ -125,11 +125,11 @@ class PagamentoController extends AbstractActionController
             $dadosPagamento['validade_cartao'] = $dados['validade_cartao'] ?: $dados['expiry'];
             $dadosPagamento['cvc_cartao'] = $dados['cvc_cartao'] ?: $dados['cvc'];
 
-            $dadosPagamento['parcelas'] = !empty($dados['parcelas']) ? $dados['parcelas'] : $dadosPagamento['parcelas'];
+            $dadosPagamento['parcelas'] = empty($dados['parcelas']) ? $dadosPagamento['parcelas'] : $dados['parcelas'];
             if ($dadosPagamento['parcelas'] > 8) {
                 $dadosPagamento['parcelas'] = 8;
             }
-            $dadosPagamento['tipo_pagamento'] = !empty($dados['tipo_pagamento']) ? $dados['tipo_pagamento'] : 'credito';
+            $dadosPagamento['tipo_pagamento'] = empty($dados['tipo_pagamento']) ? 'credito' : $dados['tipo_pagamento'];
         }
         $controle = false;
         $files = null;
@@ -161,7 +161,7 @@ class PagamentoController extends AbstractActionController
 
         $routeParams = $this->params()->fromRoute();
         $urlHelper = $this->url();
-        $getUrlRedirect = function ($action) use($urlHelper, $routeParams, $idVeiculo) {
+        $getUrlRedirect = function ($action) use($urlHelper, $routeParams, $idVeiculo): string {
             $routeParams['action'] = $action;
             return $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo;
         };
@@ -225,16 +225,12 @@ class PagamentoController extends AbstractActionController
 
             mail('projetos@seminovosbh.com.br', $assunto, $message);
         }
-        if (isset($response['type']) && $response) {
-            switch ($response['type']) {
-                case 12001:
-                    $response['detail'] = <<<HTML
+        if (isset($response['type']) && $response && $response['type'] === 12001) {
+            $response['detail'] = <<<HTML
                     <div class="text-center"><b>Aguarde!</b></div>
                     Ainda estamos processando uma outra tentativa de pagamento.<br>
                     O processo pode demorar de 5 a 10 minutos dependendo da sua operadora de cartão de crédito
 HTML;
-                    break;
-            }
         }
         echo json_encode($response);
         die;

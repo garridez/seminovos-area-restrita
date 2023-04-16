@@ -306,7 +306,7 @@ class CadastrarController extends AbstractActionController
         ]);
 
         $emailDisponivel = false;
-        if(!sizeof($dadosCadastro)){
+        if(!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)){
             $emailDisponivel =  true;
         }
 
@@ -339,7 +339,7 @@ class CadastrarController extends AbstractActionController
 
         $cpfDisponivel = false;
         $emailVinculado = false;
-        if(!sizeof($dadosCadastro)){
+        if(!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)){
             $cpfDisponivel =  true;
         }else{
             $emailVinculado = $dadosCadastro[0]['email'];
@@ -460,7 +460,7 @@ class CadastrarController extends AbstractActionController
                 
                 $view = new ViewModel([
                     'formCarroBolso' => $dadosForm,
-                    'sucesso' => $retorno['status'] == 200 ? true : false
+                    'sucesso' => $retorno['status'] == 200
                 ]);
                 
                 $this->layout('layout/blank.phtml');

@@ -22,7 +22,7 @@ class SelectAnoModelo extends Select
         $listaAnos = $this->getAnoDe();
         $proximoAno = date('Y') + 1;
 
-        $mes = intval(date('m'));
+        $mes = (int) date('m');
 
         if($mes > 1) {
 

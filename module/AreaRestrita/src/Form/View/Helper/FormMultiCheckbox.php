@@ -11,7 +11,7 @@ use Laminas\Form\View\Helper\FormRow;
 
 class FormMultiCheckbox extends ZFFormMultiCheckbox
 {
-    public function _render(ElementInterface $oElement)
+    public function _render(ElementInterface $oElement): string
     {
         $aElementOptions = $oElement->getOptions();
         // For inline multi-checkbox
@@ -19,7 +19,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
             $this->setSeparator('');
             $oElement->setLabelAttributes(['class' => 'checkbox-inline']);
 
-            return sprintf('%s', parent::render($oElement));
+            return parent::render($oElement);
         }
 
         $this->setSeparator('</div><div class="checkbox">');
@@ -33,7 +33,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
         array $options,
         array $selectedOptions,
         array $attributes
-    ) {
+    ): string {
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper      = $this->getLabelHelper();
         $labelClose       = $labelHelper->closeTag();
@@ -45,7 +45,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
             $globalLabelAttributes = $element->getLabelAttributes();
         }
 
-        if (empty($globalLabelAttributes)) {
+        if ($globalLabelAttributes === []) {
             $globalLabelAttributes = $this->labelAttributes;
         }
 
@@ -114,7 +114,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
                 $closingBracket
             );
 
-            if (null !== ($translator = $this->getTranslator())) {
+            if (($translator = $this->getTranslator()) instanceof \Laminas\I18n\Translator\TranslatorInterface) {
                 $label = $translator->translate(
                     $label,
                     $this->getTranslatorTextDomain()

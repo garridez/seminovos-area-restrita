@@ -39,10 +39,8 @@ class AuthManager
 
         $options = array_merge($optionsDefault, $options);
 
-        if ($condicaoIdentity) {
-            if ($this->authService->getIdentity() != null) {
-                throw new \Exception('Already logged in');
-            }
+        if ($condicaoIdentity && $this->authService->getIdentity() != null) {
+            throw new \Exception('Already logged in');
         }
         if (!isset($options['emailOrCnpj']) && !isset($options['idCadastro'])) {
             throw new \Exception('emailOrCnpj ou idCadastro não passados');
@@ -59,11 +57,9 @@ class AuthManager
         ]);
         $result = $this->authService->authenticate();
 
-        if ($result->getCode() == Result::SUCCESS) {
-            if ($options['rememberMe']) {
-                // Session cookie will expire in 1 month (30 days).
-                $this->sessionManager->rememberMe(60 * 60 * 24 * 30);
-            }
+        if ($result->getCode() == Result::SUCCESS && $options['rememberMe']) {
+            // Session cookie will expire in 1 month (30 days).
+            $this->sessionManager->rememberMe(60 * 60 * 24 * 30);
         }
 
         return $result;

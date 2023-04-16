@@ -12,6 +12,10 @@ use Laminas\Form\View\Helper\FormRow;
 
 class FormRadio extends TwbBundleFormRadio
 {
+    /**
+     * @var mixed
+     */
+    public $labelAttributes;
     protected $separator = '</div><div class="radio radio-success mt-0 mb-0">';
     
     protected static $checkboxFormat = '<div class="radio radio-success mt-0 mb-0">%s</div>';
@@ -149,7 +153,7 @@ class FormRadio extends TwbBundleFormRadio
         array $options,
         array $selectedOptions,
         array $attributes
-    ) {
+    ): string {
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper      = $this->getLabelHelper();
         $labelClose       = $labelHelper->closeTag();
@@ -161,7 +165,7 @@ class FormRadio extends TwbBundleFormRadio
             $globalLabelAttributes = $element->getLabelAttributes();
         }
 
-        if (empty($globalLabelAttributes)) {
+        if ($globalLabelAttributes === []) {
             $globalLabelAttributes = $this->labelAttributes;
         }
 

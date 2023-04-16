@@ -50,7 +50,7 @@ class VeiculoFotosController extends AbstractActionController {
                 $fotosVeiculo = $this->getApiClient()
                         ->veiculosFotosGet(['idVeiculo' => $dataPost->idVeiculo])
                         ->json();
-                $ultimoOrdem = sizeof($fotosVeiculo['data']);
+                $ultimoOrdem = is_countable($fotosVeiculo['data']) ? count($fotosVeiculo['data']) : 0;
                 
                 if($ultimoOrdem == 15){
                     return new JsonModel([

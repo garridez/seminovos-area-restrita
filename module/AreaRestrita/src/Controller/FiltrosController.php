@@ -32,7 +32,7 @@ class FiltrosController extends AbstractActionController
 
         foreach ($data as &$tipos) {
             foreach ($tipos['marcas'] as &$marcas) {
-                usort($marcas['modelos'], function ($a, $b) {
+                usort($marcas['modelos'], function ($a, $b): int {
                     return strcmp((string) $a['nome'], (string) $b['nome']);
                 });
             }

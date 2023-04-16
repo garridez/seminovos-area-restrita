@@ -21,7 +21,7 @@ class MoveUpload
     {
         if (is_array($optionsOrObject)) {
             $this->renameUpload = new RenameUpload($optionsOrObject);
-        } else if ($optionsOrObject instanceof RenameUpload) {
+        } elseif ($optionsOrObject instanceof RenameUpload) {
             $this->renameUpload = $optionsOrObject;
         }
 

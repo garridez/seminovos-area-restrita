@@ -32,7 +32,7 @@ class CheckController extends AbstractActionController
     {
         $version = file_get_contents('version');
 
-        preg_match('/(?<version>^[0-9]+\.[0-9]+\.[0-9]+)(?<subVersion>.*$)/', $version, $matches);
+        preg_match('/(?<version>^\d+\.\d+\.\d+)(?<subVersion>.*$)/', $version, $matches);
         $version = $matches['version'];
         $subVersion = trim($matches['subVersion'], '-') ?: '0';
 
@@ -43,7 +43,7 @@ class CheckController extends AbstractActionController
                 $subVersion++;
                 file_put_contents('version', $version . '-' . $subVersion);
             }
-        } else if (is_numeric($subVersion) && $subVersion >= 5) {
+        } elseif (is_numeric($subVersion) && $subVersion >= 5) {
             file_put_contents('version', $version . '-' . 'a');
         }
     }

@@ -7,7 +7,7 @@ class LiveCache
 
     final public const REVALIDATE_HEADER = 'LIVE_CACHE_REVALIDATE';
 
-    protected function getBaseCachePath()
+    protected function getBaseCachePath(): string
     {
         return dirname(__DIR__) . '/data/cache/live-cache';
     }

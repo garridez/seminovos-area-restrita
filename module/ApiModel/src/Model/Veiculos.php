@@ -9,7 +9,7 @@ class Veiculos extends AbstractModel
 
     use \AreaRestrita\Model\Traits\TraitIdentity;
 
-    protected function getCacheKey()
+    protected function getCacheKey(): string
     {
         return 'isOwner_cache_' . $this->getIdentity() . md5(__METHOD__ . 'Cache');
     }
@@ -40,7 +40,7 @@ class Veiculos extends AbstractModel
                 'fastMode' => 1,
                 'fields' => ['idVeiculo']
             ])->getData();
-            $veiculos = array_map(function($item) {
+            $veiculos = array_map(function($item): int {
                 return (int) $item['idVeiculo'];
             }, $veiculos);
             $cache->setItem($cacheKey, $veiculos);
@@ -49,7 +49,7 @@ class Veiculos extends AbstractModel
         /**
          * Retorna true se todos os id de um continver no outro
          */
-        return count(array_intersect($idVeiculo, $veiculos)) == count($idVeiculo);
+        return count(array_intersect($idVeiculo, $veiculos)) === count($idVeiculo);
     }
 
     public function clearIsOwnerCache()

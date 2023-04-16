@@ -166,7 +166,7 @@ class XmlController extends AbstractActionController
                             // Verifica se existe no array de acessorios da API
                             foreach ($acessoriosApi as $acessorioApi) {
                                 if ($acessorioApi['acessorio'] == $acessorioXml) {
-                                    array_push($veiculo['listaAcessorios'], $acessorioApi['idAcessorio']);
+                                    $veiculo['listaAcessorios'][] = $acessorioApi['idAcessorio'];
                                     break;
                                 }
                             }
@@ -183,7 +183,7 @@ class XmlController extends AbstractActionController
                                 $modelos =  $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
                                 $veiculo['modelos'] = $modelos->data;
                                 break;
-                            } else if (preg_match("/($item->nodeValue)/i", str_replace(' ', '', (string) $marcaApi['marca']))) {
+                            } elseif (preg_match("/($item->nodeValue)/i", str_replace(' ', '', (string) $marcaApi['marca']))) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
@@ -224,22 +224,20 @@ class XmlController extends AbstractActionController
                                 if (preg_match("/[a-zA-Z0-9-]/", $modeloXml) && preg_match("/\s?^($modeloApiString)(.*)?/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
-
-                                // 2º tenta dar match na primeira palavra do modelo se ele tiver mais q 2 caracteres
-                                } else if (strlen($palavra1) >= 2 && preg_match("/\s?^($palavra1)/", $modeloXml)) {
+                                    // 2º tenta dar match na primeira palavra do modelo se ele tiver mais q 2 caracteres
+                                } elseif (strlen($palavra1) >= 2 && preg_match("/\s?^($palavra1)/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
-
-                                // 3º tenta dar match na segunda palavra do modelo
-                                } else if (isset($palavra2) && preg_match("/\s?($palavra2)/", $modeloXml)) {
+                                    // 3º tenta dar match na segunda palavra do modelo
+                                } elseif (isset($palavra2) && preg_match("/\s?($palavra2)/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
                                     // 4º tenta dar match na primeira palavra do modelo sem espaço se ele tiver mais q 2 caracteres
-                                } else if (preg_match("/[a-zA-Z0-9]/", $modeloXml) && preg_match("/\s?^($modeloApiSemEspaco)(.*)?/", $modeloXml)) {
+                                } elseif (preg_match("/[a-zA-Z0-9]/", $modeloXml) && preg_match("/\s?^($modeloApiSemEspaco)(.*)?/", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
-                                // 5º tenta dar match na primeira palavra do modelo de forma simples
-                                } else if (preg_match("/$palavra1/i", $modeloXml)) {
+                                    // 5º tenta dar match na primeira palavra do modelo de forma simples
+                                } elseif (preg_match("/$palavra1/i", $modeloXml)) {
                                     $veiculo['modeloCarro'] = $modeloApi['idModelo'];
                                     break;
                                 }
@@ -415,7 +413,7 @@ class XmlController extends AbstractActionController
 
                 file_put_contents($img, file_get_contents($url));
                 
-                array_push($arrayFotos, $img);
+                $arrayFotos[] = $img;
             }
 
             // Envia o veiculo
@@ -450,7 +448,7 @@ class XmlController extends AbstractActionController
                     $retorno = $apiClient->veiculosPost($veiculo)->json();
                     $retorno['status'] = 200;
 
-                    if ($retorno['status'] != 200) {
+                    if ($retorno['status'] !== 200) {
                         $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
                     } else {
                         $quantidadeVeiculosCadastrados++;
@@ -499,11 +497,10 @@ class XmlController extends AbstractActionController
 
     /**
      * Remove acentos e espaços em branco desnecessários
-     * 
+     *
      * @param String $string
-     * @return String
      */
-    public function removerAcentos($string)
+    public function removerAcentos($string): string
     {
         $string = trim($string);
 

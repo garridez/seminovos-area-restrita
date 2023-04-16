@@ -306,7 +306,7 @@ class MeusVeiculosController extends AbstractActionController
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
-                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] !=1){
+                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] != 1){
                         $temp_acoes["reativar"] = true;
                     }
                     if($statusPagamento == 1){
@@ -331,7 +331,7 @@ class MeusVeiculosController extends AbstractActionController
                     $frase = "Renove seu anúncio (Os anúncios só podem ser editados após renovação)";
                     $temp_acoes["vendido"] = true;
                     $temp_acoes["excluir"] = true;
-                    if ($veiculo['idPlano'] == 4 && $veiculo['veiculo_zero_km'] !=1) {
+                    if ($veiculo['idPlano'] == 4 && $veiculo['veiculo_zero_km'] != 1) {
                         $temp_acoes["reativar"] = true;
                         //$temp_acoes["renovar"] = true;
                         $temp_acoes["renovar_plano"] = true;
@@ -625,7 +625,6 @@ class MeusVeiculosController extends AbstractActionController
         return $viewModel;
     }
     public function chatAction(){
-        $viewModel = new ViewModel();
-        return $viewModel;
+        return new ViewModel();
     }
 }

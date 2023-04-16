@@ -5,7 +5,7 @@ namespace SnBH\Common\Helper;
 class StringFuncs
 {
 
-    public static function removerAcentos($string)
+    public static function removerAcentos($string): string
     {
         $string = trim((string) $string);
 

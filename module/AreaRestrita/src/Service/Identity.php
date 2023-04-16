@@ -15,7 +15,7 @@ class Identity
         $this->apiclient = $apiClient;
     }
 
-    public function hasIdentity()
+    public function hasIdentity(): bool
     {
         return (bool) $this->identity;
     }

@@ -258,7 +258,7 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(5);
         $maisInformacoesForm->populateValues($data);
 
-        $checkedTermo = (empty($data) ? false : true);
+        $checkedTermo = (!empty($data));
 
         $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
 
@@ -327,7 +327,8 @@ class DadosVeiculoController extends AbstractActionController
                     unlink($file);
                 }
                 if(isset($resUpload['data']['fotosInseridas'])) {
-                    for($i = 0; $i < sizeof($resUpload['data']['fotosInseridas']); $i++){
+                    $itemsCount = is_countable($resUpload['data']['fotosInseridas']) ? count($resUpload['data']['fotosInseridas']) : 0;
+                    for($i = 0; $i < $itemsCount; $i++){
                         $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
                     }
                 }
@@ -492,11 +493,11 @@ class DadosVeiculoController extends AbstractActionController
         ], $placa, false)->json();
 
         $placaDisponivel = false;
-        if(isset($veiculo) and $veiculo['status'] != 200){
+        if (isset($veiculo) && $veiculo['status'] != 200) {
             $placaDisponivel =  true;
-        }else if(!isset($veiculo['data'][0]['idVeiculo'])){
+        } elseif (!isset($veiculo['data'][0]['idVeiculo'])) {
             $placaDisponivel =  true;
-        }else{
+        } else{
             $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
         }
         

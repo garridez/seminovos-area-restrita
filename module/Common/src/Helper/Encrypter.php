@@ -31,7 +31,7 @@ class Encrypter
         return [$encryptedText, $iv];
     }
 
-    protected static function joinHash($encrypted, $iv)
+    protected static function joinHash($encrypted, $iv): string
     {
         $iv = bin2hex((string) $iv);
         return $encrypted . self::$delimiter . $iv;

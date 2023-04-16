@@ -61,12 +61,12 @@ class Data
         }
     }
 
-    public function converterDataBR($data)
+    public function converterDataBR($data): string
     {
         return date("d/m/Y", strtotime((string) $data));
     }
 
-    public function converterDataHoraBR($data)
+    public function converterDataHoraBR($data): string
     {
         return date("d/m/Y H:i:s", strtotime((string) $data));
     }

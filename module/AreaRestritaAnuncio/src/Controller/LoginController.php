@@ -46,7 +46,7 @@ class LoginController extends AbstractActionController
         ]);
         $this->checkApiError($res);
 
-        if (sizeof($res->getData())) {
+        if (is_countable($res->getData()) ? count($res->getData()) : 0) {
             $route = 'criar-anuncio/login';
         } else {
             $route = 'criar-anuncio/criar-cadastro';
