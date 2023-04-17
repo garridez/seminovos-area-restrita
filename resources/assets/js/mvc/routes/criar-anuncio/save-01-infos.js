@@ -73,7 +73,7 @@ module.exports.callback = ($) => {
                             })
                             return;
                         }
-                        
+
                         if(response.historicoCarro && response.historicoCarro !== null && Object.values(response.historicoCarro.dados_veiculo).length !== 0) {
                             if (Array.isArray(response.historicoCarro.dados_veiculo)) {
                                 var dados_veiculo = response.historicoCarro.dados_veiculo[0];
@@ -87,14 +87,14 @@ module.exports.callback = ($) => {
                             response.historicoCarro = response.historicoCarro || {};
                             response.historicoCarro.dados_veiculo = false;
                         }
-                        
+
                         if(response.historicoCarro && response.historicoCarro.dados_veiculo) {
 
                             let historico = response.historicoCarro;
                             let anoModelo = historico.dados_veiculo.ano_modelo;
 
                             if(historico.dados_veiculo.ano_fabricacao && (parseInt(historico.dados_veiculo.ano_fabricacao) || false)) {
-                                //seta ano de fabricacao                            
+                                //seta ano de fabricacao
                                 $("select[name='anoFabricacao']").val(historico.dados_veiculo.ano_fabricacao);
                                 //$("select[name='anoFabricacao'] option:selected").prop('disabled', false).removeClass("hide");
                                 //$("select[name='anoFabricacao'] option:not(:selected)").prop('disabled', true).addClass("hide");
@@ -303,6 +303,7 @@ module.exports.callback = ($) => {
                 stepsContainer.stepPlugin('goTo', '.step-dados');
                 if (e.responseJSON) {
                     HandleApiError(e.responseJSON);
+                    e.responseJSON.detail ? $('#blockWords').html(e.responseJSON.detail.split('<br/>').at(-1)) : ''
                 } else {
                     HandleApiError(false);
                 }
