@@ -20,7 +20,7 @@ module.exports.callback = ($) => {
       var anoVeiculo = parseInt($('.step-dados').find('select[name="anoModelo"]').val()) || 0;
       var anoAtual = new Date().getFullYear();
       var stepPreco = $('.step-preco');
-      if((anoAtual - anoVeiculo) <= 5){
+      if((anoAtual - anoVeiculo) <= 10){
         stepPreco.find('.control-financiamento').removeClass('d-none');
       }
     });
