@@ -301,7 +301,6 @@ module.exports.callback = ($) => {
                 formWithError = true;
                 dataWithError = form.serialize();
                 stepsContainer.stepPlugin('goTo', '.step-dados');
-                console.log(e.responseJSON, e.responseJSON.detail)
                 if (e.responseJSON) {
                     HandleApiError(e.responseJSON);
                     e.responseJSON.detail ? $('#blockWords').html(e.responseJSON.detail.split('<br/>').at(-1)) : ''
