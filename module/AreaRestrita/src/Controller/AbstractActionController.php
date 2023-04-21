@@ -40,7 +40,7 @@ class AbstractActionController extends ZendAbstractActionController
      *
      * @param string $key Chave do campo que será retornado
      */
-    public function getCadastro($key = false): ?array
+    public function getCadastro($key = false)
     {
         $data = $this
             ->getContainer()
