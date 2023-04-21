@@ -48,15 +48,7 @@ RUN set -eux; \
 
 
 
-RUN apt-get --allow-releaseinfo-change update && \
-    apt-get -yq install wget && \
-    wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
-    echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list && \
-    apt-get update && \
-    apt-get -yq install newrelic-php5 && \
-    newrelic-install install
-
-RUN apt-get install htop -y
+RUN newrelic-install install
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY server/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
