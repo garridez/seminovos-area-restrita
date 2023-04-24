@@ -52,7 +52,7 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->container->get(Veiculos::class);
         if ($veiculosModel->isOwner($idVeiculo)) {
-            return $delegate->process($request);
+            return $delegate->handle($request);
         }
         /**
          * @todo criar uma página melhor pra isso
