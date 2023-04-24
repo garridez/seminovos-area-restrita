@@ -172,8 +172,8 @@ class ParticularForm extends Form
             'options' => [
                 'label' => 'Whatsapp',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
             'attributes' => [
                 'value' => 1,
@@ -234,8 +234,8 @@ class ParticularForm extends Form
             'name' => 'telefone_3_is_wpp',
             'options' => [
                 'label' => 'Whatsapp',
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
         ]);
         $this->add([
