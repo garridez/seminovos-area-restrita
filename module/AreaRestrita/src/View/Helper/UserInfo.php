@@ -18,7 +18,7 @@ class UserInfo extends AbstractHelper
             return $this;
         }
         $d = $this->data;
-        return $$d[$key] ?? false;
+        return $d[$key] ?? false;
     }
 
     /**
