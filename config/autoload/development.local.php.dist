@@ -53,17 +53,19 @@ return [
             ],
         ],
     ],
-    'cache' => [
-        'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
-        'options' => [
-            'server' => $removeKey,
-            'ttl' => 300, # 5 Minutos
-            'cacheDir' => 'data/cache',
-            'namespace' => 'AreaRestritaDev',
+    'caches' => [
+        'cache' => [
+            'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
+            'options' => [
+                'server' => $removeKey,
+                'ttl' => 300, # 5 Minutos
+                'cacheDir' => 'data/cache',
+                'namespace' => 'AreaRestritaDev',
+            ],
+            'plugins' => [
+                ['name'=>'Serializer',],
+            ]
         ],
-        'plugins' => [
-            'Serializer',
-        ]
     ],
     'view_manager' => [
         'display_exceptions' => true,
