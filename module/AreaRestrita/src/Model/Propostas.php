@@ -35,13 +35,15 @@ class Propostas extends ApiModelVeiculos
                 'idAnuncio' => $idVeiculo,
                 'sort' => 'idProposta', /* TODO - falta implementar na API */
                 'direction' => 'DESC'
-        ], null, $cache);
+                ], null, $cache);
         $data = [];
         if ($res->status == 200) {
             $data = $res->getData();
-            uasort($data, function($a, $b) {
-                return (int) $a['idProposta'] < (int) $b['idProposta'];
-            });
+            if ($data) {
+                uasort($data, function ($a, $b) {
+                    return (int) $a['idProposta'] < (int) $b['idProposta'];
+                });
+            }
         }
 
         return $data;
