@@ -41,7 +41,7 @@ class Propostas extends ApiModelVeiculos
             $data = $res->getData();
             if ($data) {
                 uasort($data, function ($a, $b) {
-                    return (int) $a['idProposta'] < (int) $b['idProposta'];
+                    return (int) $a['idProposta'] <=> (int) $b['idProposta'];
                 });
             }
         }
