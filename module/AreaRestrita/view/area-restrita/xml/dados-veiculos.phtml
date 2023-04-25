@@ -24,7 +24,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
             <form id="form-importar" action="/xml/salvar" method="post">
                 <?php
                 foreach ($veiculosAll as $veiculo):
-                    $chave = rand();
+                    $chave = random_int(0, mt_getrandmax());
                     $urls = [];
 
                     ?>

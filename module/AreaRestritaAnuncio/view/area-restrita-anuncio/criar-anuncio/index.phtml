@@ -127,7 +127,7 @@ if(isset($this->idStatus)){
     <form>
         <input type="hidden" id="tipoCad" name="tipoCad" value="<?= $this->userInfo('tipoCadastro') ?>" class="tipoCadastro">
         <input type="hidden" id="tipoCadastro" name="tipoCadastro" value="<?= $this->userInfo('tipoCadastro') ?>" class="tipoCadastro">
-        <input type="hidden" id="tipoUsuarioCadastro" name="tipoUsuarioCadastro" value="<?= isset($veiculo['cadastro']['tipoCadastro']) ? $veiculo['cadastro']['tipoCadastro'] : 2 ?>" class="tipoCadastro">
+        <input type="hidden" id="tipoUsuarioCadastro" name="tipoUsuarioCadastro" value="<?= $veiculo['cadastro']['tipoCadastro'] ?? 2 ?>" class="tipoCadastro">
         <input type="hidden" id="idStatus" name="idStatus" value="<?= $status ?>" class="idStatus">
         <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
         <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">

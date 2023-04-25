@@ -221,7 +221,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
                                                     <div class="d-flex justify-content-between">
                                                         <div class="bold no-margin d-flex align-items-center link-danger">
-                                                            E-mails recebidos: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
+                                                            E-mails recebidos: <?= $veiculo['qdtPropostas'] ?? 0 ?>
                                                             <?php
                                                             /** @todo
                                                              *  <span class="fa fa-envelope fs-16 mr-1"></span>
@@ -238,7 +238,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                     </div>
                                                 </a>
                                             </div>
-                                        <?php endif; ?>
+<?php endif; ?>
                                         <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
@@ -401,7 +401,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                            title="Renovar anúncio">
                                             <button class="btn btn-sm btn-laranja text-white">renovar</button>
                                         </a>
-                                    <?php } ?>
+<?php } ?>
 
                                     <?php if ($veiculo["botoes"]["reativar"] ?? false) { ?>
                                         <a href="#" class="reativar anuncios btn-acao-reativar pt-2 w-100" data-confirm data-confirm-type="success"
@@ -442,10 +442,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 <div class="mt-2"><b>R$ 24,90</b></div>
                                 <div class="mt-1"><small>VALIDO POR 30 DIAS</small></div>
                             </a>
-                        <?php } ?>
+<?php } ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+<?php endforeach; ?>
             <div class="col-md-12">
                 <?php
                 if ($veiculos) {

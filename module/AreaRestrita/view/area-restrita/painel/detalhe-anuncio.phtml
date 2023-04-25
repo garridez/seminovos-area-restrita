@@ -149,7 +149,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                     <div class="row d-flex justify-content-between pl-3">
                                         <div class="bold no-margin d-flex align-items-center link-danger">
                                             <!-- <span class="fa fa-envelope fs-16 mr-1"></span> -- >
-                                            Propostas: <?= isset($veiculo['qdtPropostas']) ? $veiculo['qdtPropostas'] : 0 ?>
+                                            Propostas: <?= $veiculo['qdtPropostas'] ?? 0 ?>
                                             <?php
                                             /** @todo
                                              *  Trazer o numero de propostas
