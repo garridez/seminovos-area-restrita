@@ -73,8 +73,8 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Whatsapp',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
             'attributes' => [
                 'value' => 1,
@@ -116,8 +116,8 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Whatsapp',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
             'attributes' => [
                 'value' => 1,
@@ -159,8 +159,8 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Whatsapp',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
             'attributes' => [
                 'value' => 1,
@@ -202,8 +202,8 @@ class RevendaForm extends Form
             'options' => [
                 'label' => 'Whatsapp',
                 'use_hidden_element' => true,
-                'checked_value' => 1,
-                'unchecked_value' => 0,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
             ],
             'attributes' => [
                 'value' => 1,

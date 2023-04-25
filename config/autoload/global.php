@@ -11,6 +11,7 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
+
 use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\Session\Storage\SessionArrayStorage;
 
@@ -63,19 +64,19 @@ return [
         'upload' => 'data/temp/upload'
     ],
     'caches' => [
-    'cache' => [
-        'adapter' => Redis::class,
-        'options' => [
-            'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
-            'ttl' => 300, # 5 Minutos
-            'namespace' => 'AreaRestritaProd'
-        ],
-        'plugins' => [
-            [
-                'name' => 'Serializer',
+        'cache' => [
+            'adapter' => Redis::class,
+            'options' => [
+                'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
+                'ttl' => 300, # 5 Minutos
+                'namespace' => 'AreaRestritaProd'
+            ],
+            'plugins' => [
+                [
+                    'name' => 'Serializer',
+                ]
             ]
-        ]
-    ],
+        ],
     ],
     'session_config' => [
         'cookie_lifetime' => 60 * 60 * 24 * 31 * 12,

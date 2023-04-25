@@ -14,8 +14,11 @@ class UserInfo extends AbstractHelper
 
     public function __invoke($key = null)
     {
+        if ($key === null) {
+            return $this;
+        }
         $d = $this->data;
-        return $key !== null ? $d[$key] : $this;
+        return $d[$key] ?? false;
     }
 
     /**
