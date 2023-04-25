@@ -59,7 +59,7 @@ $this->headTitle("Página não encontrada");
               <hr/>
 
               <h2>Additional information:</h2>
-              <h3><?= get_class($this->exception) ?></h3>
+              <h3><?= $this->exception::class ?></h3>
               <dl>
                 <dt>File:</dt>
                 <dd>
@@ -83,7 +83,7 @@ $this->headTitle("Página não encontrada");
                     <?php $icount = 0 ?>
                     <?php while ($ex) : ?>
                         <li>
-                          <h3><?= get_class($ex) ?></h3>
+                          <h3><?= $ex::class ?></h3>
                           <dl>
                             <dt>File:</dt>
                             <dd>

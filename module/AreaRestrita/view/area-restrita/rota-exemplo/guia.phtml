@@ -27,7 +27,7 @@ $themes = [
  * @param array $array
  * @param array|string $sufix Igual ao prefix
  */
-function prefixArray($prefix, $sufix, $arrayToMerge = [])
+function prefixArray(array|string $prefix, array|string $sufix, $arrayToMerge = [])
 {
     global $themes;
     $newThemes = array_merge($themes, $arrayToMerge);
