@@ -8,7 +8,6 @@ if ($this->userInfo('tipoCadastro') == 1) {
         2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
         3 => ['flex', 'Flex',   '06', 'baixa', '', '', 'flex-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
     ];
-
     foreach ($arrayPlanos as $i => $plano):
         [$slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado] = $plano;
 
@@ -34,15 +33,12 @@ if ($this->userInfo('tipoCadastro') == 1) {
         </div>
         <?php
     endforeach;
-} else if ($this->userInfo('tipoCadastro') == 2) {
+} elseif ($this->userInfo('tipoCadastro') == 2) {
     $planos = $this->planos();
     usort($planos, function($a, $b) {
         return $a['ordem'] <=> $b['ordem'];
     });
     $planosUsados = $this->planosUsados();
-
-
-
     foreach ($planos as $i => $plano):
         $slug = preg_replace('/[^a-zA-Z ]/', '', StringFuncs::removerAcentos($plano['nomePlano']));
         $slug = preg_replace('/ +/', '-', $slug);

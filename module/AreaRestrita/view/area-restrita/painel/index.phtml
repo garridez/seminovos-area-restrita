@@ -5,7 +5,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
         2 => ['turbo', 'Turbo', '09', 'média', '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
         3 => ['basico', 'Básico', '06', 'baixa', '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
     ];
-} else if ($this->userInfo('tipoCadastro') == 2) {
+} elseif ($this->userInfo('tipoCadastro') == 2) {
     $arrayPlanos = [
         1 => ['nitro-home', 'Nitro Home', '12', 'máxima', '', 'R$ 49,90', 'nitro-home-value', $this->qtdAnuncios()->totalNitroHome, $this->qtdAnuncios()->totalNitroHomePublicados],
         2 => ['nitro', 'Nitro', '12', 'alta', '', 'R$ 39,90', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],

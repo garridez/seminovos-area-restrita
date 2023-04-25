@@ -47,7 +47,7 @@ return static function (RectorConfig $rectorConfig): void {
         Php71\Rector\FuncCall\CountOnNullRector::class,
         
         
-        Rector\CodeQuality\Rector\If_\ShortenElseIfRector::class,
+        #Rector\CodeQuality\Rector\If_\ShortenElseIfRector::class,
         #Rector\CodeQuality\Rector\If_\CombineIfRector::class,
         
         Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector::class,
