@@ -68,7 +68,7 @@ $banners = $this->banners;
                                     <?php endforeach; ?>
 
                                     <?php
-                                    if (count($banners) == 0) {
+                                    if ((is_array($banners) || $banners instanceof \Countable ? count($banners) : 0) == 0) {
                                     ?>
                                         <tr>
                                             <td colspan="3" align="center">Nenhum banner cadastrado ainda.</td>

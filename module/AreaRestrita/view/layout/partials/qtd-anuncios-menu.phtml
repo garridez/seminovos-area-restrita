@@ -10,7 +10,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
     ];
 
     foreach ($arrayPlanos as $i => $plano):
-        list($slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado) = $plano;
+        [$slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado] = $plano;
 
         ?>
         <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
