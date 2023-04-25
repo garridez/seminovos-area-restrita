@@ -4,9 +4,9 @@
 $isRevenda = $this->userInfo('tipoCadastro') == 1;
 $isParticular = !$isRevenda;
 
-$idPlanoAtual = $idPlanoAtual ?? false;
-$idStatusAnuncio = $idStatusAnuncio ?? false;
-$zeroKm = $zeroKm ?? false;
+$idPlanoAtual ??= false;
+$idStatusAnuncio ??= false;
+$zeroKm ??= false;
 
 usort($planos, function ($a, $b) {
     return $b['ordem'] <=> $a['ordem'];
@@ -60,7 +60,7 @@ if ($isRevenda) {
                 <div class="row grupo-planos">
                     <?php
                     $planoJaEscolhido = false;
-                    $prioridadePlano = $prioridadePlano ?? 5;
+                    $prioridadePlano ??= 5;
                     $planoGratis = false;
                     foreach ($planos as $k => $plano) :
                         if ($plano['valorPlano'] == '0.0') {
