@@ -107,7 +107,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                             <?php
                             if (!empty($dadosCadastro['idCidade'])) :
                                 echo $dadosCadastro['cidaNome'];
-                                echo!empty($dadosCadastro['idEstado']) ? '/' . $dadosCadastro['sigla'] : '';
+                                echo empty($dadosCadastro['idEstado']) ? '' : '/' . $dadosCadastro['sigla'];
                             endif;
                             ?>
                             <br>Email:

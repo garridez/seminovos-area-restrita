@@ -166,7 +166,7 @@ $nomePlano = mb_strtoupper((string) $nomePlano);
         <label
             class="btn btn-block btn-sm bg-light text-dark text-bold "
             for="radio-idPlano-<?= $plano['idPlano'] ?>"
-            <?= !$diminuirPlano ? 'data-plano-desativado' : '' ?>
+            <?= $diminuirPlano ? '' : 'data-plano-desativado' ?>
             <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
             <?= $planoAtual ? 'data-plano-atual' : '' ?>>
             <?= $planoAtual ? 'PLANO ATUAL' : 'SELECIONE' ?>
