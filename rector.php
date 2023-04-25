@@ -30,8 +30,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_82,
-        //SetList::CODE_QUALITY,
+        //LevelSetList::UP_TO_PHP_82,
+        SetList::CODE_QUALITY,
     ]);
 
     $rectorConfig->skip([
@@ -44,5 +44,18 @@ return static function (RectorConfig $rectorConfig): void {
         Php80\Rector\Switch_\ChangeSwitchToMatchRector::class,
         #
         Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector::class,
+        Php71\Rector\FuncCall\CountOnNullRector::class,
+        
+        
+        Rector\CodeQuality\Rector\If_\ShortenElseIfRector::class,
+        Rector\CodeQuality\Rector\If_\CombineIfRector::class,
+        
+        Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector::class,
+        Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector::class,
+        \Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector::class,
+        
+        Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector::class,
+        \Rector\CodeQuality\Rector\FuncCall\IntvalToTypeCastRector::class,
+        
     ]);
 };
