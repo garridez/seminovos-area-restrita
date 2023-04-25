@@ -48,7 +48,7 @@ return static function (RectorConfig $rectorConfig): void {
         
         
         Rector\CodeQuality\Rector\If_\ShortenElseIfRector::class,
-        Rector\CodeQuality\Rector\If_\CombineIfRector::class,
+        #Rector\CodeQuality\Rector\If_\CombineIfRector::class,
         
         Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector::class,
         //Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector::class,
