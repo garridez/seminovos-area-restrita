@@ -2,36 +2,36 @@
 /* @var $this \Laminas\View\Renderer\PhpRenderer */
 $placa = $this->placa;
 //var_dump($this->dadosCertificados);
-$dadosCertificados = $this->dadosCertificados ? $this->dadosCertificados : null;
+$dadosCertificados = $this->dadosCertificados ?: null;
 //var_dump($dadosCertificados['dadosBasicos']['data']['recall']); exit;
 if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertificados['dadosBasicos']['body']['data']) {
-    $dados = $dadosCertificados['dadosBasicos']['body']['data'] ? $dadosCertificados['dadosBasicos']['body']['data'] : null;
+    $dados = $dadosCertificados['dadosBasicos']['body']['data'] ?: null;
     //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
-    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] : null;
-    $dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ? $dadosCertificados['dadosRecall']['body']['data'] : null;
-    $sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] : null;
-    $leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['data']['leilao'] : null;
-    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] : null;
-    $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] : null;
+    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['data']['rouboFurto'] ?: null;
+    $dadosRecall = $dadosCertificados['dadosRecall']['body']['data'] ?: null;
+    $sinistro = $dadosCertificados['dadosBasicos']['body']['data']['indicioSinistro'] ?: null;
+    $leilao = $dadosCertificados['dadosBasicos']['body']['data']['leilao'] ?: null;
+    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['data']['baseEstadual'] ?: null;
+    $baseNacional = $dadosCertificados['dadosBasicos']['body']['data']['baseNacional'] ?: null;
 
 } else if (isset($dadosCertificados['dadosBasicos']['body']['responseJSON']) && $dadosCertificados['dadosBasicos']['body']['responseJSON']) {
-    $dados = $dadosCertificados['dadosBasicos']['body']['responseJSON'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON'] : null;
+    $dados = $dadosCertificados['dadosBasicos']['body']['responseJSON'] ?: null;
     //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
-    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['responseJSON']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['rouboFurto'] : null;
-    $dadosRecall = $dadosCertificados['dadosRecall']['body']['responseJSON'] ? $dadosCertificados['dadosRecall']['body']['responseJSON'] : null;
-    $sinistro = $dadosCertificados['dadosBasicos']['body']['responseJSON']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['indicioSinistro'] : null;
-    $leilao = $dadosCertificados['dadosBasicos']['body']['responseJSON']['leilao'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['leilao'] : null;
-    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseEstadual'] : null;
-    $baseNacional = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseNacional'] ? $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseNacional'] : null;
+    $dadosFurto = $dadosCertificados['dadosBasicos']['body']['responseJSON']['rouboFurto'] ?: null;
+    $dadosRecall = $dadosCertificados['dadosRecall']['body']['responseJSON'] ?: null;
+    $sinistro = $dadosCertificados['dadosBasicos']['body']['responseJSON']['indicioSinistro'] ?: null;
+    $leilao = $dadosCertificados['dadosBasicos']['body']['responseJSON']['leilao'] ?: null;
+    $baseEstadual = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseEstadual'] ?: null;
+    $baseNacional = $dadosCertificados['dadosBasicos']['body']['responseJSON']['baseNacional'] ?: null;
 } else if (isset($dadosCertificados['dadosBasicos']['data']) && $dadosCertificados['dadosBasicos']['data']) {
-    $dados = $dadosCertificados['dadosBasicos']['data'] ? $dadosCertificados['dadosBasicos']['data'] : null;
+    $dados = $dadosCertificados['dadosBasicos']['data'] ?: null;
     //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
-    $dadosFurto = $dadosCertificados['dadosBasicos']['data']['rouboFurto'] ? $dadosCertificados['dadosBasicos']['data']['rouboFurto'] : null;
-    $dadosRecall = $dadosCertificados['dadosBasicos']['data']['recall'] ? $dadosCertificados['dadosBasicos']['data']['recall'] : null;
-    $sinistro = $dadosCertificados['dadosBasicos']['data']['indicioSinistro'] ? $dadosCertificados['dadosBasicos']['data']['indicioSinistro'] : null;
-    $leilao = $dadosCertificados['dadosBasicos']['data']['leilao'] ? $dadosCertificados['dadosBasicos']['data']['leilao'] : null;
-    $baseEstadual = $dadosCertificados['dadosBasicos']['data']['baseEstadual'] ? $dadosCertificados['dadosBasicos']['data']['baseEstadual'] : null;
-    $baseNacional = $dadosCertificados['dadosBasicos']['data']['baseNacional'] ? $dadosCertificados['dadosBasicos']['data']['baseNacional'] : null;
+    $dadosFurto = $dadosCertificados['dadosBasicos']['data']['rouboFurto'] ?: null;
+    $dadosRecall = $dadosCertificados['dadosBasicos']['data']['recall'] ?: null;
+    $sinistro = $dadosCertificados['dadosBasicos']['data']['indicioSinistro'] ?: null;
+    $leilao = $dadosCertificados['dadosBasicos']['data']['leilao'] ?: null;
+    $baseEstadual = $dadosCertificados['dadosBasicos']['data']['baseEstadual'] ?: null;
+    $baseNacional = $dadosCertificados['dadosBasicos']['data']['baseNacional'] ?: null;
 
 }
 //var_dump($dadosFurto);

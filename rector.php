@@ -18,8 +18,11 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
         __DIR__ . '/config',
         __DIR__ . '/module',
-        //__DIR__ . '/node_modules',
         __DIR__ . '/public',
+    ]);
+    $rectorConfig->fileExtensions([
+        'php',
+        'phtml'
     ]);
 
     // register a single rule
@@ -27,8 +30,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_82,
-        SetList::CODE_QUALITY,
+        LevelSetList::UP_TO_PHP_56,
+        //SetList::CODE_QUALITY,
     ]);
 
     $rectorConfig->skip([

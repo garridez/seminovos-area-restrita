@@ -8,9 +8,7 @@
     $fields = $form->getElements();
 
     $fields['observacoes']->setAttributes(
-        array('class' => 'form-control', 'style' => 'height:100px;',
-            'placeholder' => 'Utilize este espaço para informar mais detalhes do veículo, seu histórico ou itens que não foram contemplados nas etapas anteriores.'
-    ));
+        ['class' => 'form-control', 'style' => 'height:100px;', 'placeholder' => 'Utilize este espaço para informar mais detalhes do veículo, seu histórico ou itens que não foram contemplados nas etapas anteriores.']);
 
     switch ($tipoVeiculo) {
         case 2:

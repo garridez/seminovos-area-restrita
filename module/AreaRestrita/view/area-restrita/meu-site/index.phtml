@@ -173,14 +173,11 @@ TAB;
                 <h4>
                   <i class="fa fa-times remove text-danger" aria-hidden="true"
                      title="Clique para remover"></i>
-                  <b>Link:</b> <?= $banner['href'] ? $banner['href'] : htmlentities('<nenhum>') ?>
+                  <b>Link:</b> <?= $banner['href'] ?: htmlentities('<nenhum>') ?>
                 </h4>
                 <span>Tipo:
                     <?php
-                    $tipos = array(
-                        1 => 'Principal',
-                        2 => 'Lateral',
-                    );
+                    $tipos = [1 => 'Principal', 2 => 'Lateral'];
                     echo $tipos[$banner['slot']];
 
                     ?>
