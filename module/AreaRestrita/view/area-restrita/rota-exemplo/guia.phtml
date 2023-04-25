@@ -276,7 +276,7 @@ function prefiAndRendArray(string $format, $prefix = '', $sufix = '', $arrayToMe
         }
         $svg = file_get_contents($path . $icon);
         preg_match_all('/id="(?P<id>[a-zA-Z-]{3,})"/', $svg, $matches);
-        $icons = $matches['id'] ? $matches['id'] : [$icon];
+        $icons = $matches['id'] ?: [$icon];
 
         ?>
 ?>

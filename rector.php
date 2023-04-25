@@ -22,7 +22,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->fileExtensions([
         'php',
-        'phtml'
+        'phtml',
+        'dist'
     ]);
 
     // register a single rule
@@ -30,7 +31,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        //LevelSetList::UP_TO_PHP_82,
+        LevelSetList::UP_TO_PHP_82,
         SetList::CODE_QUALITY,
     ]);
 
@@ -45,16 +46,5 @@ return static function (RectorConfig $rectorConfig): void {
         #
         Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector::class,
         Php71\Rector\FuncCall\CountOnNullRector::class,
-        
-        
-        #Rector\CodeQuality\Rector\If_\ShortenElseIfRector::class,
-        #Rector\CodeQuality\Rector\If_\CombineIfRector::class,
-        
-        #Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector::class,
-        //Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector::class,
-        #\Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector::class,
-        
-        //Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector::class,
-        
     ]);
 };

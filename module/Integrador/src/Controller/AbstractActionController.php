@@ -12,9 +12,8 @@ class AbstractActionController extends ZendAbstractActionController
 {
     /**
      * Retorna o idCadastro que foi passado por header
-     * @return int
      */
-    public function getIdCadastro()
+    public function getIdCadastro(): int
     {
         /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->request;
