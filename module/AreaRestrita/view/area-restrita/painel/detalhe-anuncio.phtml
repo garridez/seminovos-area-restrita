@@ -262,7 +262,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 <a href="#" class="renovar anuncios  btn-acao-renovar" data-confirm data-confirm-type="success" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>renovar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Renovar anúncio</span>") ?>" data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar" data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" title="Renovar anúncio">
                                     <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
                                 </a>
-                            <?php } ?>
+<?php } ?>
 
                             <?php if ($veiculo["botoes"]["reativar"] ?? false) { ?>
                                 <a href="#" class="reativar anuncios btn-acao-reativar" data-confirm data-confirm-type="success" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>") ?>" data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar" data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" title="Reativar anúncio">
@@ -328,7 +328,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                 </div>
             </div>
         </div>
-    
+
         <div class="row step step-grafico-clique">
             <div class="col-12">
                 <h5>Quantidade de vezes que este veiculo foi mostrado em resultados de busca</h5>
@@ -337,7 +337,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                 </div>
             </div>
         </div>
-    
+
         <div class="row step step-grafico-clique">
             <div class="col-12">
                 <h5>Cliques em Ver Telefone</h5>
@@ -346,6 +346,6 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                 </div>
             </div>
         </div>
-    
+
     </div>
 </div>
