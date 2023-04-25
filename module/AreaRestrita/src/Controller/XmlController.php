@@ -54,7 +54,7 @@ class XmlController extends AbstractActionController
         $inputs = $request->getPost()->toArray();
         $inputs['href'] = trim((string) $inputs['href']);
         // valida link XML
-        if (substr($inputs['href'], -3) != 'xml') {
+        if (!str_ends_with($inputs['href'], 'xml')) {
             die('Não é um arquivo .xml válido');
             // return $this->redirect()->toUrl('/xml');
         }

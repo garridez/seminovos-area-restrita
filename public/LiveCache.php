@@ -113,7 +113,7 @@ class LiveCache
     {
         $headers = [];
         foreach ($_SERVER as $k => $v) {
-            if (strpos($k, 'HTTP_') !== false) {
+            if (str_contains($k, 'HTTP_')) {
                 $k = str_replace('HTTP_', '', $k);
                 $headers[] = $k . ':' . $v;
                 $k = str_replace('_', '-', $k);
