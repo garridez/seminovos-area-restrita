@@ -34,7 +34,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                 <h1 class="col-5 text-white"><?= $this->qtdAnuncios()->totalAnuncios ?></h1>
                 <div class="col-7 text-left">
                     <span>Veiculos</span><br>
-                    R$ <?=  str_replace('.', ',', $this->valorPlanoRevenda) ?>
+                    R$ <?=  str_replace('.', ',', (string) $this->valorPlanoRevenda) ?>
                 </div>
             </div>
         </div>
@@ -341,7 +341,7 @@ $formatDate = new \AreaRestrita\View\Helper\Data();
                             </td>
                             <td class="d-table-cell">
                                 <div class="icon-1-5x text-success">
-                                    <a href="<?= strtolower($veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
+                                    <a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </a>
 

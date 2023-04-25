@@ -96,7 +96,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
                   elseif ($this->userInfo('tipoCadastro') == 2){
                     $new_nome = $this->userInfo('responsavelNome');
                   }
-                  $new_nome = explode(" ",$new_nome);
+                  $new_nome = explode(" ",(string) $new_nome);
                   $new_nome = $new_nome[0] . " " . ($new_nome[1] ?? '');
                 }else{
                   $new_nome = "Não informado";

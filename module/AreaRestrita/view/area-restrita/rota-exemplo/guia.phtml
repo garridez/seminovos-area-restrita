@@ -289,7 +289,7 @@ function prefiAndRendArray(string $format, $prefix = '', $sufix = '', $arrayToMe
         ?>
 
         <?php foreach ($icons as $icon): ?>
-            <?php $class = 'icon icon-' . str_replace('.svg', '', $icon); ?>
+            <?php $class = 'icon icon-' . str_replace('.svg', '', (string) $icon); ?>
             <hr>
             <div>
               <h4>

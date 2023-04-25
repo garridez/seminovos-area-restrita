@@ -33,7 +33,7 @@ if ($pagination) {
         $url = $routeParams . ($userNameRevenda ?? '');
     }
 
-    if (strpos($url, "&")) {
+    if (strpos((string) $url, "&")) {
 
         $prevUrl = $url . '&page=' . ($current - 1);
         $nextUrl = $url . '&page=' . ($current + 1);
@@ -41,7 +41,7 @@ if ($pagination) {
 
     } else {
 
-        $url = str_replace('?page=' . ($current), '', $url);
+        $url = str_replace('?page=' . ($current), '', (string) $url);
         $prevUrl = $url . '?page=' . ($current - 1);
         $nextUrl = $url . '?page=' . ($current + 1);
         $caracter = '?';
@@ -57,8 +57,8 @@ if ($pagination) {
     $url = $this->url($routeName, $routeParams);
     $toReplace = 'page-999999';
 
-    $prevUrl = str_replace($toReplace, 'page-' . ($current - 1), $url);
-    $nextUrl = str_replace($toReplace, 'page-' . ($current + 1), $url);
+    $prevUrl = str_replace($toReplace, 'page-' . ($current - 1), (string) $url);
+    $nextUrl = str_replace($toReplace, 'page-' . ($current + 1), (string) $url);
 
     $replaceInit = "page-1";
     $replacePag = "page-";
@@ -77,7 +77,7 @@ if ($pagination) {
         </li>
         <?php if ($current > 4): ?>
             <li class="page-item">
-                <a class="page-link" rel="prev" href="<?= str_replace($toReplace, $replaceInit, $url) ?>"
+                <a class="page-link" rel="prev" href="<?= str_replace($toReplace, $replaceInit, (string) $url) ?>"
                    title="Ir para primeira página">1</a>
             </li>
             <?php if ($current > 5): ?>
@@ -92,7 +92,7 @@ if ($pagination) {
                     <a class="page-link" rel="prev" href="<?= $url . $caracter . "page=" . $index ?>"
                        title="Página <?= $index ?>"><?= $index ?></a>
                 <?php } else { ?>
-                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, $url) ?>"
+                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, (string) $url) ?>"
                        title="Página <?= $index ?>"><?= $index ?></a>
                 <?php } ?>
             </li>
@@ -103,7 +103,7 @@ if ($pagination) {
                     <a class="page-link" rel="prev" href="<?= $url . $caracter . "page=" . $index ?>"
                        title="Página <?= $index ?>"><?= $index ?></a>
                 <?php } else { ?>
-                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, $url) ?>"
+                    <a class="page-link" rel="next" href="<?= str_replace($toReplace, $replacePag . $index, (string) $url) ?>"
                        title="Página <?= $index ?>"><?= $index ?></a>
                 <?php } ?>
             </li>

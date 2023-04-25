@@ -2,7 +2,7 @@
 $formatDate = new \AreaRestrita\View\Helper\Data();
 $urls = [
     'editarAnuncio' => $this->url('criar-anuncio', [
-        'tipo' => strtolower($veiculo['tipo']),
+        'tipo' => strtolower((string) $veiculo['tipo']),
         'idVeiculo' => $veiculo['idVeiculo']
     ]),
 ];

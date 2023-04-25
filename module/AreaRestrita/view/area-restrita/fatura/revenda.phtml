@@ -71,7 +71,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                         <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
                             <div class="font-montserrat bold all-caps mr-2">N° :</div>
                             <div class=""><?= date('Y'); ?>
-                                /<?= str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?>
+                                /<?= str_pad((string) $dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT); ?>
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
@@ -182,7 +182,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                                     ?></small>
                                 </p>
                             </td>
-                            <td class="text-center"><?= strtoupper($dadosPagamento['formaPagamento']) ?></td>
+                            <td class="text-center"><?= strtoupper((string) $dadosPagamento['formaPagamento']) ?></td>
                             <td class="text-center no-wrap">
                                 R$ <?= number_format($dadosPagamento['valor'], 2, ',', '.'); ?>
                             </td>
@@ -203,7 +203,7 @@ if (!empty($dadosPagamento['dataRenovacao'])) {
                         <h5 class="font-montserrat all-caps small no-margin hint-text bold">Data de
                             Pagamento</h5>
                         <h3 class="no-margin h3-print">
-                            <?= date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])); ?></h3>
+                            <?= date('d/m/Y', strtotime((string) $dadosPagamento['dataCadastro'])); ?></h3>
                     </div>
                     <div
                         class="col-md-4 col-print-4 text-right bg-master-darker col-sm-height padding-15 d-flex flex-column justify-content-center align-items-end">

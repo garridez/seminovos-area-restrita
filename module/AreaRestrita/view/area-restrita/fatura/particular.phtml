@@ -63,7 +63,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                         <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
                             <div class="font-montserrat bold all-caps mr-2">N° :</div>
                             <div class=""><?= date('Y'); ?>
-                                /<?= isset($dadosPagamento['idPagamento']) && $dadosPagamento['idPagamento'] != ""  ? str_pad($dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT) : "Não informado" ?>
+                                /<?= isset($dadosPagamento['idPagamento']) && $dadosPagamento['idPagamento'] != ""  ? str_pad((string) $dadosPagamento['idPagamento'], 6, 0, STR_PAD_LEFT) : "Não informado" ?>
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
@@ -151,13 +151,13 @@ $dadosVeiculo = $this->dadosVeiculo;
                                 <div class="hint-text">
                                     <small>
                                         Período de:
-                                        <?= isset($dadosPagamento['dataCadastro']) && $dadosPagamento['dataCadastro'] != ""  ? date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])) : "Não informado" ?>
+                                        <?= isset($dadosPagamento['dataCadastro']) && $dadosPagamento['dataCadastro'] != ""  ? date('d/m/Y', strtotime((string) $dadosPagamento['dataCadastro'])) : "Não informado" ?>
                                         até a venda do veículo *
                                     </small>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <?= isset($dadosPagamento['formaPagamento']) && $dadosPagamento['formaPagamento'] != ""  ? strtoupper($dadosPagamento['formaPagamento']) : "Não informado" ?>
+                                <?= isset($dadosPagamento['formaPagamento']) && $dadosPagamento['formaPagamento'] != ""  ? strtoupper((string) $dadosPagamento['formaPagamento']) : "Não informado" ?>
                             </td>
                             <td class="text-center no-wrap">
                                 R$
@@ -175,7 +175,7 @@ $dadosVeiculo = $this->dadosVeiculo;
                             Data de Pagamento
                         </h5>
                         <h3 class="no-margin h3-print">
-                            <?= isset($dadosPagamento['dataCadastro']) && $dadosPagamento['dataCadastro'] != ""  ? date('d/m/Y', strtotime($dadosPagamento['dataCadastro'])) : "Não informado" ?>
+                            <?= isset($dadosPagamento['dataCadastro']) && $dadosPagamento['dataCadastro'] != ""  ? date('d/m/Y', strtotime((string) $dadosPagamento['dataCadastro'])) : "Não informado" ?>
                         </h3>
                     </div>
                     <div

@@ -87,7 +87,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <div class="col-8">
                                                 <select name="veiculos[<?= $chave ?>][marca]" class="form-control" required>
                                                     <?php foreach ($marcas as $marca) { ?>
-                                                    <option value="<?= $marca['idMarca'] ?>" <?= isset($veiculo['idMarca']) && $marca['idMarca'] == $veiculo['idMarca'] ? 'selected' : '' ?> ><?= ucwords($marca['marca']) ?></option>
+                                                    <option value="<?= $marca['idMarca'] ?>" <?= isset($veiculo['idMarca']) && $marca['idMarca'] == $veiculo['idMarca'] ? 'selected' : '' ?> ><?= ucwords((string) $marca['marca']) ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>

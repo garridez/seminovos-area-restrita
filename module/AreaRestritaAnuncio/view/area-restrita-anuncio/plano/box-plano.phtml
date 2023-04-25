@@ -66,7 +66,7 @@ if ($isRevenda) {
     $diminuirPlano = true;
 }
 $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
-$nomePlano = mb_strtoupper($nomePlano);
+$nomePlano = mb_strtoupper((string) $nomePlano);
 ?>
 <div class="col-12 col-sm col-md col-lg mb-4">
     <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual' : '' ?>

@@ -111,7 +111,7 @@ foreach ($rotasAnuncio['veiculo'] as &$rota) {
 }
 
 if ($this->idVeiculo) {
-    $this->headTitle()->append(strtoupper($this->placa) . ' ' . $this->marca . ' ' . $this->modelo);
+    $this->headTitle()->append(strtoupper((string) $this->placa) . ' ' . $this->marca . ' ' . $this->modelo);
 } else {
     $this->headTitle()->append('Novo anúncio');
 }

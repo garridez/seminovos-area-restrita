@@ -464,7 +464,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                         <tr>
                             <td class="p-2">
                                 <span class="text-black description-print no-wrap">
-                                    <?php echo date('d/m/Y', strtotime(str_replace("/", "-", $dado['dataLeilao']))); ?>
+                                    <?php echo date('d/m/Y', strtotime(str_replace("/", "-", (string) $dado['dataLeilao']))); ?>
                                 </span>
                             </td>
                             <td class="p-2">
@@ -561,7 +561,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                         <tr>
                             <td class="p-1">
                                 <span class="text-black description-print no-wrap">
-                                    <?php echo date('d/m/Y', strtotime(str_replace('/','-',$roubo['dataOcorrencia']))); ?>
+                                    <?php echo date('d/m/Y', strtotime(str_replace('/','-',(string) $roubo['dataOcorrencia']))); ?>
                                 </span>
                             </td>
                             <td class="p-2">

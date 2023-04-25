@@ -92,7 +92,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
             foreach ($veiculos as $veiculo):
                 $urls = [
                     'editarAnuncio' => $this->url('criar-anuncio', [
-                        'tipo' => strtolower($veiculo['tipo']),
+                        'tipo' => strtolower((string) $veiculo['tipo']),
                         'idVeiculo' => $veiculo['idVeiculo']
                     ]),
                 ];

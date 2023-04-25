@@ -64,9 +64,9 @@ $fields['confirmacaoSenha']->setAttribute('minlength', '4');
                                     <?= $this->formLabel($fields['dataNascimento']) ?>
                                 </div>
                                 <div class="d-block d-md-none">
-                                    <?= str_replace('Data de Nascimento','Nascimento',$this->formLabel($fields['dataNascimento'])) ?>
+                                    <?= str_replace('Data de Nascimento','Nascimento',(string) $this->formLabel($fields['dataNascimento'])) ?>
                                 </div>
-                                <?= str_replace('class="', 'placeholder="31/12/1980" class="', $this->formElement($fields['dataNascimento'])) ?>
+                                <?= str_replace('class="', 'placeholder="31/12/1980" class="', (string) $this->formElement($fields['dataNascimento'])) ?>
                             </div>
                         </div>
                         <div class="row">

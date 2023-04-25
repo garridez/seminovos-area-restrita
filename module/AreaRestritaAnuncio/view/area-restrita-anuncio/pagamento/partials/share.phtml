@@ -1,6 +1,6 @@
 <?php
-$anoFabricacao = substr($this->veiculo['anoFabricacao'], -2);
-$anoModelo = substr($this->veiculo['anoModelo'], -2);
+$anoFabricacao = substr((string) $this->veiculo['anoFabricacao'], -2);
+$anoModelo = substr((string) $this->veiculo['anoModelo'], -2);
 
 $marcaModelo = $this->veiculo['marca'] . ' '
     . $this->veiculo['modelo'] . ' '

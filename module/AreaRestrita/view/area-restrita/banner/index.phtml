@@ -32,8 +32,8 @@ $banners = $this->banners;
                                 <tbody>
                                     <?php foreach ($banners as $banner): 
                                         // Verifica se é banner antigo
-                                        if (!preg_match("/{$siteHospedado[0]['dominio']}/", $banner['image'])) {
-                                            if (!preg_match("/\.\.\/\.\.\//", $banner['image'])) {
+                                        if (!preg_match("/{$siteHospedado[0]['dominio']}/", (string) $banner['image'])) {
+                                            if (!preg_match("/\.\.\/\.\.\//", (string) $banner['image'])) {
                                                 $banner['image'] = $siteHospedado[0]['dominio'] . '/banners/' . $banner['image'];
                                             } else {
                                                 $banner['image'] = 'default';
