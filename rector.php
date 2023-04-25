@@ -51,10 +51,10 @@ return static function (RectorConfig $rectorConfig): void {
         Rector\CodeQuality\Rector\If_\CombineIfRector::class,
         
         Rector\CodeQuality\Rector\Ternary\SwitchNegatedTernaryRector::class,
-        Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector::class,
-        \Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector::class,
+        //Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector::class,
+        #\Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector::class,
         
-        Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector::class,
+        //Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector::class,
         
     ]);
 };

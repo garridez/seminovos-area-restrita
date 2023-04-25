@@ -58,11 +58,7 @@ function prefixArray(array|string $prefix, array|string $sufix, $arrayToMerge = 
         $newValue = $coringaPrefix . $value . $coringaSufix;
 
         if ($prefixIsArray) {
-            if (isset($prefix[$value])) {
-                $newValue = $prefix[$value] . $newValue;
-            } else {
-                $newValue = $prefix['default'] . $newValue;
-            }
+            $newValue = isset($prefix[$value]) ? $prefix[$value] . $newValue : $prefix['default'] . $newValue;
         } else {
             $newValue = $prefix . $newValue;
         }
@@ -280,13 +276,10 @@ function prefiAndRendArray(string $format, $prefix = '', $sufix = '', $arrayToMe
         }
         $svg = file_get_contents($path . $icon);
         preg_match_all('/id="(?P<id>[a-zA-Z-]{3,})"/', $svg, $matches);
-        if (!$matches['id']) {
-            $icons = [$icon];
-        } else {
-            $icons = $matches['id'];
-        }
+        $icons = !$matches['id'] ? [$icon] : $matches['id'];
 
         ?>
+?>
 
         <?php foreach ($icons as $icon): ?>
             <?php $class = 'icon icon-' . str_replace('.svg', '', (string) $icon); ?>

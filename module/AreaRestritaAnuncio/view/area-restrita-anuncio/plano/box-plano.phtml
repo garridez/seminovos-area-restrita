@@ -34,11 +34,7 @@ $desabilitarPlanoRenda = false;
 $planoAtual = false;
 $planoJaEscolhido = true;
 
-if ($prioridadePlano >= $plano['prioridade']) {
-    $diminuirPlano = true;
-} else {
-    $diminuirPlano = false;
-}
+$diminuirPlano = $prioridadePlano >= $plano['prioridade'];
 if ($isRevenda && $plano['qtd']['publicado'] == $plano['qtd']['total']) {
     $desabilitarPlanoRenda = true;
 }
