@@ -9,7 +9,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
 
 ?>
 <input type="hidden" class="data-user-display-name" value="<?=$nome?>">
-<input type="hidden" class="data-total-veiculos" value="<?=is_array($veiculosAll) || $veiculosAll instanceof \Countable ? count($veiculosAll) : 0?>">
+<input type="hidden" class="data-total-veiculos" value="<?=is_countable($veiculosAll) ? count($veiculosAll) : 0?>">
 <input type="hidden" class="data-total-fotos" value="<?=$totalFotos?>">
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center px-3 px-md-0">
@@ -54,7 +54,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         ?>
                                 
                                         <div class="col-12 text-right">
-                                            <small>...mais <?= (is_array($veiculo['imagens']) || $veiculo['imagens'] instanceof \Countable ? count($veiculo['imagens']) : 0) - $numFotosPreview <= 0 ? 0 : (is_array($veiculo['imagens']) || $veiculo['imagens'] instanceof \Countable ? count($veiculo['imagens']) : 0) - $numFotosPreview ?> imagens</small>
+                                            <small>...mais <?= (is_countable($veiculo['imagens']) ? count($veiculo['imagens']) : 0) - $numFotosPreview <= 0 ? 0 : (is_countable($veiculo['imagens']) ? count($veiculo['imagens']) : 0) - $numFotosPreview ?> imagens</small>
                                         </div>
                                 </div>
                             </div>
