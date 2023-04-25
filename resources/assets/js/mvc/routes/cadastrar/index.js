@@ -50,7 +50,7 @@ module.exports.callback = ($) => {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                var modal = Alert.info('Sua conta foi criada!<br> Você recebera um e-mail para liberação do seu cadastro',
+                var modal = Alert.info(`<h4>Sua conta foi criada!<br>Você recebera um e-mail para liberação do seu cadastro</h4>`,
                         'Falta pouco', 20000);
                 function redirectEntrar() {
                     window.location.href = '/';
