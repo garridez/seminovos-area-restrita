@@ -154,12 +154,20 @@ class Module
                 }
             }
             $extras['realCallee'] = $realCallee;
-            if ($apiResponse->getTotalTime() > 1) {
-                $logger->info("Resposta lenta da API $timeRequest segundos para '{$requestParams->getMethod()} {$requestParams->getPath()}'", $extras);
+            $method = $requestParams->getMethod();
+            $path = $requestParams->getPath();
+
+            $maxTempoTotal = 1;
+
+            if ($path === '/veiculos-fotos' && ($method === 'POST' || $method === 'DELETE' )) {
+                $maxTempoTotal = 15;
+            }
+            if ($apiResponse->getTotalTime() > $maxTempoTotal) {
+                $logger->info("Resposta lenta da API $timeRequest segundos para '{$method} {$path}'", $extras);
             }
 
             if ($apiResponse->status != 200) {
-                $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$requestParams->getMethod()} {$requestParams->getPath()}' retornado", $extras);
+                $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$method} {$path}' retornado", $extras);
             }
         });
     }
