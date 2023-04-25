@@ -56,7 +56,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
 
                                 ?>
                             </li>
-                            <?php if (intval($this->userInfo('tipoCadastro')) == 2) : ?>
+                            <?php if ((int) $this->userInfo('tipoCadastro') == 2) : ?>
                                 <li>
                                     Renovado:
                                     <?php
@@ -225,7 +225,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         <div class=" d-flex mt-1">
                             <small class="hint-text"><?= $veiculo["frase"] ?></small>
                         </div>
-                        <?php if ($veiculo['idStatus'] == 2 && intval($this->userInfo('tipoCadastro')) == 2) : ?>
+                        <?php if ($veiculo['idStatus'] == 2 && (int) $this->userInfo('tipoCadastro') == 2) : ?>
                             <div class="d-flex mt-1">
                                 <small class="hint-text mt-1">
                                     <?php if ($veiculo["intervaloData"] == 0) { ?>

@@ -55,7 +55,6 @@ return static function (RectorConfig $rectorConfig): void {
         \Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector::class,
         
         Rector\CodeQuality\Rector\NotEqual\CommonNotEqualRector::class,
-        \Rector\CodeQuality\Rector\FuncCall\IntvalToTypeCastRector::class,
         
     ]);
 };
