@@ -33,6 +33,10 @@ function initServer(apiClient) {
                         .cadastrosGet([], idCadastro)
                         .then((response) => {
                             let data = response.getData()[0];
+                            if (!data) {
+                                console.error('idCadastro não encontrado:', idCadastro);
+                                return;
+                            }
                             socket.emit('user-data', {
                                 idCadastro: data.idCadastro,
                                 responsavelNome: data.responsavelNome,
