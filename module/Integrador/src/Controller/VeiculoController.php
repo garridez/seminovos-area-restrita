@@ -193,4 +193,27 @@ class VeiculoController extends AbstractActionController {
 
     }
 
+    public function fetch()
+    {
+        $placa = $this->params()->fromQuery('placa');
+
+        if (empty($placa) || strlen($placa) < 5) {
+            return new JsonModel([
+                'status' => 401,
+                'detail' => 'Falta parâmetro necessário'
+            ]);
+        }
+
+        /* @var $apiClient ApiClient */
+        $apiClient = $this->getContainer()->get(ApiClient::class);
+
+        $res = $apiClient->veiculosGet([
+            "ignorarCondicoesBasicas" => 1,
+            "flagPlaca" => 1
+        ], $placa, false)->json();
+
+        return new JsonModel($res);
+
+    }
+
 }
