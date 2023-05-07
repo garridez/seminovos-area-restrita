@@ -23,7 +23,7 @@ return [
     ],
     'ApiClient' => [
         'credentials' => [
-            'serverUrl' => 'http://api2.seminovosbh.com.br:81',
+            'serverUrl' => 'http://api2.seminovos.com.br',
             // 'serverUrl' => 'http://snbh-api',
             'headers' => [
                 'Accept' => 'application/vnd.seminovos-bh.v1+json'
