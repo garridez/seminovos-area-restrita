@@ -1,7 +1,7 @@
 <?php
 
 ob_start();
-if (!isset($_GET['manu-off']) && date('Y-m-d H:i:s') < '2023-05-07 05:00:00') {
+if (!isset($_GET['manu-off']) && date('Y-m-d H:i:s') < '2023-05-07 07:00:00') {
     require 'em-manutencao.php';
     exit;
 }

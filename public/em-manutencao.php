@@ -17,7 +17,7 @@
             <div class="col-12 text-center">
                 <h1>Em manutenção</h1>
                 <p>Estamos trabalhando para melhorar a sua experiência.</p>
-                <p>Voltaremos às 5 horas da manhã de hoje</p>
+                <p>Voltaremos às 7 horas da manhã de hoje</p>
                 <p>Volte <span class="minutos"></span></p>
             </div>
         </div>
@@ -26,7 +26,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/pt-br.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        var s = moment('2023-05-07 05:00:00').fromNow();
+        var s = moment('2023-05-07 07:00:00').fromNow();
 
         $('.minutos').text(s );
 
