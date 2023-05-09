@@ -114,6 +114,7 @@ class VeiculoFotosController extends AbstractActionController {
         if($retorno['status'] !== 200){
             return new JsonModel($retorno);
         }
+        $ordem = [];
         
         $fotosVeiculo = $this->getApiClient()
                         ->veiculosFotosGet(['idVeiculo' => $idVeiculo])
