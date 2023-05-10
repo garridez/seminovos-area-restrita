@@ -4200,16 +4200,16 @@
         },
         {
             "name": "snbh/api-client",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/seminovosbh/api-client.git",
-                "reference": "d2893c2986a7d91ec3481fd9b4692230ba059de5"
+                "reference": "d053a1ec83fa0298cfc1e798341eef03106ec2d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/api-client/get/d2893c2986a7d91ec3481fd9b4692230ba059de5.zip",
-                "reference": "d2893c2986a7d91ec3481fd9b4692230ba059de5",
+                "url": "https://bitbucket.org/seminovosbh/api-client/get/d053a1ec83fa0298cfc1e798341eef03106ec2d9.zip",
+                "reference": "d053a1ec83fa0298cfc1e798341eef03106ec2d9",
                 "shasum": ""
             },
             "require": {
@@ -4258,9 +4258,9 @@
             "description": "Cliente para a API da SeminovosBH",
             "homepage": "https://bitbucket.org/seminovosbh/api-client",
             "support": {
-                "source": "https://bitbucket.org/seminovosbh/api-client/src/d2893c2986a7d91ec3481fd9b4692230ba059de5/?at=2.0.1"
+                "source": "https://bitbucket.org/seminovosbh/api-client/src/d053a1ec83fa0298cfc1e798341eef03106ec2d9/?at=2.0.2"
             },
-            "time": "2023-04-14T19:31:07+00:00"
+            "time": "2023-05-10T08:22:44+00:00"
         },
         {
             "name": "snbh/api-client-module",
