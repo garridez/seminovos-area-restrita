@@ -4264,16 +4264,16 @@
         },
         {
             "name": "snbh/api-client-module",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/seminovosbh/api-client-module.git",
-                "reference": "0818a610572d420fcf27854928309b8938583b94"
+                "reference": "f3d2b18ef88992ed4de3a2060982f809877385fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/api-client-module/get/0818a610572d420fcf27854928309b8938583b94.zip",
-                "reference": "0818a610572d420fcf27854928309b8938583b94",
+                "url": "https://bitbucket.org/seminovosbh/api-client-module/get/f3d2b18ef88992ed4de3a2060982f809877385fe.zip",
+                "reference": "f3d2b18ef88992ed4de3a2060982f809877385fe",
                 "shasum": ""
             },
             "require": {
@@ -4295,9 +4295,9 @@
             "description": "Modulo para o Laminas Framework",
             "homepage": "https://bitbucket.org/seminovosbh/api-client-module",
             "support": {
-                "source": "https://bitbucket.org/seminovosbh/api-client-module/src/0818a610572d420fcf27854928309b8938583b94/?at=2.0.2"
+                "source": "https://bitbucket.org/seminovosbh/api-client-module/src/f3d2b18ef88992ed4de3a2060982f809877385fe/?at=2.0.3"
             },
-            "time": "2023-04-14T19:33:21+00:00"
+            "time": "2023-05-10T08:51:21+00:00"
         },
         {
             "name": "stella-maris/clock",
