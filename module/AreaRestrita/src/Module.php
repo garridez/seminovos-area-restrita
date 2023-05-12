@@ -70,7 +70,7 @@ class Module
 
     public function showChat($sm)
     {
-        define('SHOW_CHAT', 1);
+        define('SHOW_CHAT', 0);
         return;
         $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
 
