@@ -117,14 +117,19 @@ class MeusVeiculosController extends AbstractActionController
             return $dadosVeiculos;
         }
 
+        $idVeiculos = array_column($dadosVeiculos['data'], 'idVeiculo');
+        $dadosPropostas = $propostasModel->getAll($idVeiculos, 5 * 60) ?? [];
+        
+        $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function($acc, $row){
+            $acc[$row['idAnuncio']] = $acc[$row['idAnuncio']] ?? 0;
+            $acc[$row['idAnuncio']]++;
+            return $acc;
+        }, []);
+        
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
-
             $idVeiculo = $veiculo['idVeiculo'];
 
-            // Busca os dados das propostas
-            $dadosPropostas = $propostasModel->getAll($idVeiculo, 5 * 60) ?? [];
-
-            $dadosVeiculos['data'][$key]['qdtPropostas'] = is_countable($dadosPropostas) ? count($dadosPropostas) : 0;
+            $dadosVeiculos['data'][$key]['qdtPropostas'] = $idVeiculoQtdPropostas[$idVeiculo] ?? 0;
         }
 
         return $dadosVeiculos;
