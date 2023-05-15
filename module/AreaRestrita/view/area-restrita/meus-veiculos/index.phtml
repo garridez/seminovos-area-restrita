@@ -252,24 +252,9 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         </div>
                         <div class="col-12">
                             <div class="btn-group">
-                                <?php if ($veiculo["botoes"]["excluir"]) { ?>
-                                    <a href="#" class="anuncios btn-acao-vendido" data-confirm data-confirm-type="error"
-                                        data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> excluir</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
-                                        data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Excluir Anúncio</span>") ?>"
-                                        data-confirm-text="Sim, excluir"
-                                        data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>excluído</b>") ?>"
-                                        data-confirm-option-confirm="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"
-                                        data-reload-page="true"
-                                        title="Excluir anúncio">
-                                        <button class="btn btn-danger icon-2 btn-excluir-anuncio">
-                                            <i class=" fa fa-trash-o"></i><span>Excluir anúncio</span>
-                                        </button>
-                                    </a>
-                                <?php } ?>
-
                                 <?php if ($veiculo["botoes"]["editar_dados"]) { ?>
                                     <a href="<?= $urls['editarAnuncio'] ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-dados"
-                                        title="Editar Anúncio">
+                                       title="Editar Anúncio">
                                         <i class=" fa fa-pencil"></i><span>Editar anúncio</span>
                                     </a>
                                 <?php } ?>
@@ -284,15 +269,31 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
 
                                     ?>
                                     <a href="<?= $editarFotosUrl ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
-                                        title="Editar Fotos">
+                                       title="Editar Fotos">
                                         <i class=" fa fa-camera"></i><span>Editar fotos</span>
                                     </a>
                                 <?php } ?>
+
                                 <?php if ($veiculo["botoes"]["vendido"] ?? false) { ?>
                                     <a href="#" class="btn-acao-vendido ml-0 ml-md-4 vendido" data-confirm
                                         data-confirm-url="/meus-veiculos/vendido/<?= $veiculo['idVeiculo'] ?>"
                                         title="Marcar como vendido">
                                         <button class="btn btn-sm btn-complete ml-0 ml-md-2 ">Vendido</button>
+                                    </a>
+                                <?php } ?>
+
+                                <?php if ($veiculo["botoes"]["excluir"]) { ?>
+                                    <a href="#" class="anuncios btn-acao-vendido" data-confirm data-confirm-type="error"
+                                       data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> excluir</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>"
+                                       data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Excluir Anúncio</span>") ?>"
+                                       data-confirm-text="Sim, excluir"
+                                       data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>excluído</b>") ?>"
+                                       data-confirm-option-confirm="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>"
+                                       data-reload-page="true"
+                                       title="Excluir anúncio">
+                                        <button class="btn btn-danger icon-2 btn-excluir-anuncio">
+                                            <i class=" fa fa-trash-o"></i><span>Excluir anúncio</span>
+                                        </button>
                                     </a>
                                 <?php } ?>
                             </div>
