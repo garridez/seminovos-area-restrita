@@ -8,6 +8,7 @@ function stopEvent(e) {
 
 var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
 window.AutoFillCriarAnuncio = require('helpers/AutoFillCriarAnuncio');
+var Alert = require('components/Alerts');
 
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
@@ -310,6 +311,7 @@ function init() {
             placa.closest('.form-group').removeClass('required');
             placa.closest('.placa-container').removeClass('is-invalid').addClass('is-valid')
             placa.val('');
+            Alert.info(`<h5>Veículos marcados como 0km irão aparecer como 0km mesmo se for informada a quilometragem!</h5>`, 'Atenção')
         }else{
             if(!motoTrilha.is(':checked')){
                 placa.attr('required', true);
