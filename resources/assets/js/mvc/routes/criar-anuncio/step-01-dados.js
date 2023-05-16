@@ -21,7 +21,7 @@ module.exports.callback = ($) => {
       var anoVeiculo = parseInt($('.step-dados').find('select[name="anoModelo"]').val()) || 0;
       var anoAtual = new Date().getFullYear();
       var stepPreco = $('.step-preco');
-      if((anoAtual - anoVeiculo) <= 10){
+      if((anoAtual - anoVeiculo) <= 15){
         stepPreco.find('.control-financiamento').removeClass('d-none');
       }
     });
@@ -60,6 +60,8 @@ function init() {
     var portasOptions = portasSelect.find('option');
     var valvulasSelect = ctx.find('[name="idValvula"]');
     var valvulasOptions = valvulasSelect.find('option');
+    var combustivelSelect = ctx.find('[name="combustivel"]');
+    var combustivelOptions = combustivelSelect.find('option');
     var getValInt = function (element) {
         var val = parseInt($(element).val(), 10);
         if (Number.isNaN(val)) {
@@ -341,6 +343,15 @@ function init() {
             $("select[name='idMarca'] option").removeClass("hide");
         }
     });
+    
+//    combustivelSelect.change(function () {
+//        console.log($(this).find('option:selected').val());
+//        if($(this).find('option:selected').val() === '11') {
+//            console.log($(this).find('option:selected').val());
+//            motorSelect.removeAttr('required');
+//            motorSelect.closest('.form-group').removeClass('required');
+//        }
+//    });
 
     $('body').on('change',$("select[name='modeloCarro']"), function(){
         if($("select[name='idMarca'] option:selected").val() != ''){
