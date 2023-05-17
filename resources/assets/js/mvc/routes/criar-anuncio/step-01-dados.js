@@ -344,14 +344,14 @@ function init() {
         }
     });
     
-//    combustivelSelect.change(function () {
-//        console.log($(this).find('option:selected').val());
-//        if($(this).find('option:selected').val() === '11') {
-//            console.log($(this).find('option:selected').val());
-//            motorSelect.removeAttr('required');
-//            motorSelect.closest('.form-group').removeClass('required');
-//        }
-//    });
+    combustivelSelect.change(function () {
+        console.log($(this).find('option:selected').val());
+        if($(this).find('option:selected').val() === '11') {
+            console.log($(this).find('option:selected').val());
+            motorSelect.removeAttr('required');
+            motorSelect.closest('.form-group').removeClass('required');
+        }
+    });
 
     $('body').on('change',$("select[name='modeloCarro']"), function(){
         if($("select[name='idMarca'] option:selected").val() != ''){
