@@ -109,4 +109,17 @@ module.exports.callback = ($) => {
       }
     }
 
+    $('.show-password').on('click', function () {
+        let showPassword = $(this)
+        let icon = showPassword.find('i');
+
+        if (icon.hasClass('fa-eye')) {
+            icon.removeClass('fa-eye').addClass('fa-eye-slash')
+            showPassword.parent().find('input[type="password"]').prop('type', 'text')
+        } else {
+            icon.removeClass('fa-eye-slash').addClass('fa-eye')
+            showPassword.parent().find('input[type="text"]').prop('type', 'password')
+        }
+    })
+
 };
