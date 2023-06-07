@@ -29,32 +29,32 @@ module.exports.callback = $ => {
     menu.find();
 
 
-    (function () {
-        var title = $('title');
-        title.data('original', title.html());
+    // (function () {
+    //     var title = $('title');
+    //     title.data('original', title.html());
 
-        var prevSetAjaxLoadding = window.setAjaxLoadding;
-        window.setAjaxLoadding = false;
+    //     var prevSetAjaxLoadding = window.setAjaxLoadding;
+    //     window.setAjaxLoadding = false;
 
-        function updateCount() {
-            $.getJSON('/chat/nao-lidas', function (data) {
-                window.setAjaxLoadding = prevSetAjaxLoadding;
-                var iconMsgCount = $('.sidebar-menu ul li.menu-chat .icon-thumbnail i');
-                console.log(data)
+    //     function updateCount() {
+    //         $.getJSON('/chat/nao-lidas', function (data) {
+    //             window.setAjaxLoadding = prevSetAjaxLoadding;
+    //             var iconMsgCount = $('.sidebar-menu ul li.menu-chat .icon-thumbnail i');
+    //             console.log(data)
 
-                if (!data.total) {
-                    title.html(title.data('original'));
-                    iconMsgCount.html('');
-                    return;
-                }
+    //             if (!data.total) {
+    //                 title.html(title.data('original'));
+    //                 iconMsgCount.html('');
+    //                 return;
+    //             }
 
-                var titleText = title.data('original');
+    //             var titleText = title.data('original');
 
-                title.html('(' + data.total + ') ' + titleText);
-                iconMsgCount.html(' ' + data.total);
-            });
-        }
-        updateCount();
-        setInterval(updateCount, 15000);
-    })();
+    //             title.html('(' + data.total + ') ' + titleText);
+    //             iconMsgCount.html(' ' + data.total);
+    //         });
+    //     }
+    //     updateCount();
+    //     setInterval(updateCount, 15000);
+    // })();
 };
