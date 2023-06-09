@@ -2,9 +2,6 @@ version: 0.2
 
 env:
   variables:
-      APPLICATION_ENV: "production"
-      SNBH_API_HOST: "https://api2.seminovosbh.com.br"
-      SNBH_URL_AREA_RESTRITA: "https://meus-anuncios.seminovosbh.com.br"
       IMAGE_REPO_NAME: "area-restrita"
       IMAGE_TAG: "latest"
       AWS_ACCOUNT_ID: "041122835851"
@@ -12,12 +9,8 @@ env:
 
 phases:
   install:
-    runtime-versions:
-        docker: 18
     commands:
-      #- yum install curl -y
-      #- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-      - yum install git -y
+      - start=`date +%s`
       - git checkout master
       - PROJECT_TAG=$(git describe)
       - echo $PROJECT_TAG
@@ -44,3 +37,5 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$PROJECT_TAG
       - aws ecs update-service --force-new-deployment --service arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:service/Area-Restrita-Daemon --cluster arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:cluster/area-restrita
+      - end=`date +%s`
+      - echo $((end-start))
