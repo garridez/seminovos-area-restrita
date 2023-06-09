@@ -6,8 +6,6 @@ ENV NR_INSTALL_SILENT=1
 ENV NR_INSTALL_KEY=e9479f1a8574667a610b4cb062a9135144628e4f
 ENV NEW_RELIC_APP_NAME="area_restrita"
 
-COPY . .
-
 ARG SESSION_PHP_SAVE_HANDLER
 ARG SESSION_SAVE_PATH
 
@@ -17,8 +15,7 @@ session.save_path=\"$SESSION_SAVE_PATH\"" > /usr/local/etc/php/conf.d/snbh-sessi
 
 RUN echo "newrelic.appname=area_restrita" > /usr/local/etc/php/conf.d/snbh-newrelic.ini
 
-RUN echo "memory_limit=256M" > /usr/local/etc/php/conf.d/snbh-memory.ini
-RUN echo "max_input_vars=10000" > /usr/local/etc/php/conf.d/snbh-input_vars.ini
+COPY . .
 
 RUN set -eux; \
     # Reseta a pasta data e cria a versão do sistema \
@@ -26,17 +23,19 @@ RUN set -eux; \
     git checkout data; \
     chmod -R 777 data; \
     echo -n "$(git describe)" > version; \
-    chmod 777 version; \
-    #
+    chmod 777 version
+
+RUN set -eux; \
     # Instala dependencias do compsoer e apaga o cache
-    composer install \
-        --no-dev \
-        --no-interaction \
+    composer install       \
+        --no-dev            \
+        --no-interaction     \
         --optimize-autoloader \
-        --apcu-autoloader \
-        --no-progress; \
-    rm -rf ~/.composer/cache/*; \
-    #
+        --apcu-autoloader      \
+        --no-progress;          \
+    composer clear-cache
+
+RUN set -eux; \
     # Instala os pacotes de front e gera os assets 
     npm install; \
     npm run compile-icons; \
@@ -49,3 +48,4 @@ RUN newrelic-install install
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY server/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 COPY server/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY "server/php.ini/memory-limit.ini" "/usr/local/etc/php/conf.d/memory-limit-php.ini"
