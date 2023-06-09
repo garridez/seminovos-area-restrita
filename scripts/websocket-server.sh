@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run websocket-server &
+#npm run websocket-server &

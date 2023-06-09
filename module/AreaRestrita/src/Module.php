@@ -48,7 +48,6 @@ class Module
     {
         /* @var $sessionManager AuthService */
         $authService = $sm->get(AuthService::class);
- 
 
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);
@@ -62,8 +61,11 @@ class Module
             }
             $identity = $authService->getIdentity();
             if ($identity) {
-                $client->getRequest()->getHeaders()->addHeaderLine('Idcadastro', $identity);
-                $client->getRequest()->getHeaders()->addHeaderLine('Sessid', $sessionManager->getId());
+                $client
+                    ->getRequest()
+                    ->getHeaders()
+                    ->addHeaderLine('Idcadastro', $identity)
+                    ->addHeaderLine('Sessid', $sessionManager->getId());
             }
         });
     }
@@ -82,7 +84,7 @@ class Module
             62, // bonjardim@me.com
             210195, //sara@seminovosbh.com.br
             248584, //felipe@seminovosbh.com.br
-            321321, //raul@seminovosbh.com.br  
+            321321, //raul@seminovosbh.com.br
             327312, //wesley@seminovosbh.com.br
             335671, //joao@seminovosbh.com.br
         ];

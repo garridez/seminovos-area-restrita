@@ -36,11 +36,14 @@ RUN set -eux; \
     composer clear-cache
 
 RUN set -eux; \
-    # Instala os pacotes de front e gera os assets 
-    npm install; \
-    npm run compile-icons; \
-    npm run prod
-
+    # Instala os pacotes de front e gera os assets
+    YARN_CHECKSUM_BEHAVIOR=update yarn; \
+    rm yarn.lock; \
+    yarn install; \
+    yarn run prod; \
+    #
+    # Limpa os dados temporários
+    yarn cache clean
 
 
 RUN newrelic-install install
