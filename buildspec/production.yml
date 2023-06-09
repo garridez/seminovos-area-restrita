@@ -23,6 +23,10 @@ phases:
       - echo Pulling snbh-server-base image
       - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/snbh-server-base:8.2-node
       - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/snbh-server-base:8.2-node snbh-server-base:8.2-node
+
+      - echo Pulling "$IMAGE_REPO_NAME:$IMAGE_TAG" image
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE_REPO_NAME:$IMAGE_TAG
   build:
     commands:
       - echo Build started on `date`
