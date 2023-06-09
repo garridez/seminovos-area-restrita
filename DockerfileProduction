@@ -8,9 +8,6 @@ ENV NEW_RELIC_APP_NAME="area_restrita"
 
 COPY . .
 
-RUN docker-php-ext-configure intl \
-    && docker-php-ext-install intl
-
 ARG SESSION_PHP_SAVE_HANDLER
 ARG SESSION_SAVE_PATH
 
