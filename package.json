@@ -25,15 +25,12 @@
   "dependencies": {
     "@algolia/autocomplete-theme-classic": "^1.9.3",
     "animate-sass": "^0.8.2",
-    "axios": "^0.19.2",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
     "compress.js": "^1.1.2",
     "cross-env": "^5.2.1",
     "emojionearea": "^3.4.2",
-    "esm": "^3.2.25",
     "font-awesome": "^4.7.0",
-    "gulp": "^3.9.1",
     "icon-font-generator": "^2.1.11",
     "immutable": "^4.0.0-rc.12",
     "jquery": "^3.7.0",
@@ -46,11 +43,7 @@
     "popper.js": "^1.16.1",
     "postcss": "^8.4.24",
     "printthis": "^0.1.5",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-redux": "^7.2.3",
     "redis": "^2.8.0",
-    "redux": "^4.0.5",
     "sass": "^1.63.2",
     "sass-loader": "^12.6.0",
     "snbh-site": "git+ssh://git@bitbucket.org:seminovosbh/site_novo.git#master",
@@ -62,6 +55,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
+    "gulp": "^3.9.1",
     "livereload": "^0.9.3"
   }
 }
