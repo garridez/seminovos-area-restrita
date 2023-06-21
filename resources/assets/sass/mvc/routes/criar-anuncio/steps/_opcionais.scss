@@ -6,7 +6,21 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+        flex-direction: row;
         justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+        > div {
+            margin-right: 15px;
+            margin-bottom: 5px;
+            label {
+                input {
+                    vertical-align: sub;
+                    margin-right: 5px;
+                }
+            }
+        }
     }
     .airbags{
         display: flex;

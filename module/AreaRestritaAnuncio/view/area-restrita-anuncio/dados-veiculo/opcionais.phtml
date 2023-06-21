@@ -64,19 +64,9 @@ if($tipoVeiculo === 1){
                 <?php endif; ?>
                 <?php
                     $acessoriosHTML = $this->formMultiCheckbox($fields['checkboxacessorios']);
-
-                    $acessoriosHTML = str_replace('class="checkbox"', 'class="checkbox-custom"', (string) $acessoriosHTML);
-
-                    $acessoriosHTML = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $acessoriosHTML);
-
-                    $acessoriosHTML = explode('<div', $acessoriosHTML);
-                    if (trim($acessoriosHTML[0]) == '') {
-                        unset($acessoriosHTML[0]);
-                    }
-                    $t = "\t";
-                    foreach ($acessoriosHTML as $key => $acessorio) {
-                        echo $t . $t . '<div' . $acessorio . PHP_EOL;
-                    } 
+                    $acessoriosHTML = str_replace('<label>', "<div><label>", $acessoriosHTML);
+                    $acessoriosHTML = str_replace('</label>', "</label></div>\n", $acessoriosHTML);
+                    echo $acessoriosHTML;
                 ?>
             </div>
 
