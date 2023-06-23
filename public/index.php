@@ -38,7 +38,19 @@ if (file_exists('config/development.config.php')) {
 global $sm, $container, $application;
 
 $application = Application::init($appConfig);
-$container = $sm = $application->getServiceManager();
+$container = $sm = $serviceManager = $application->getServiceManager();
+
+if ($_SERVER['REQUEST_URI'] === '/show-configs-0d08b90f7c4c3687a0c22747300af643') {
+    echo '<pre>';
+    ini_set('xdebug.var_display_max_depth', 10);
+    ini_set('xdebug.var_display_max_children', 256);
+    ini_set('xdebug.var_display_max_data', 1024);
+    echo '<h2>$appConfig;</h2>' . "\n";
+    var_dump($appConfig);
+    echo '<h2>$serviceManager->get(\'config\');</h2>';
+    var_dump($serviceManager->get('config'));
+    die;
+}
 
 // Run the application!
 $application->run();
