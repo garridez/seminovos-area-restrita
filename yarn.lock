@@ -2471,7 +2471,7 @@ __metadata:
     laravel-mix: ^6.0.49
     livereload: ^0.9.3
     popper.js: ^1.16.1
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=7a7d01052f0dba5559130908ad9e910197f6c4d9"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
     sortablejs: ^1.15.0
     webpack: ^5.88.0
   languageName: unknown
@@ -9399,9 +9399,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=7a7d01052f0dba5559130908ad9e910197f6c4d9":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git":
   version: 1.0.0
-  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=7a7d01052f0dba5559130908ad9e910197f6c4d9"
+  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=464039779765482bf035c6c11ea7fce241e60129"
   dependencies:
     "@algolia/autocomplete-theme-classic": ^1.9.3
     autocomplete.js: ^0.38.1
@@ -9416,17 +9416,15 @@ __metadata:
     jquery-visible: ^1.2.0
     js-base64: ^2.6.4
     js-cookie: ^2.2.1
-    laravel-mix: ^6.0.49
     lodash: ^4.17.21
     postcss: ^8.4.24
     printthis: ^0.1.5
     sass: ^1.63.4
     sass-loader: 12.6.0
     sharer.js: ^0.4.2
-    webpack: ^5.87.0
     webpack-cli: ^5.1.4
     whatwg-fetch: ^3.6.2
-  checksum: efd3fbd5df4c6524da811e39637e479a44ea8d795e102fe3182c2ddafd32ea1856114d000003cd4f134447d0dcd4daa51d83d558fcfd79afa990ebe7bf51901d
+  checksum: 7739cff069ee5ab90aa5993464ce3c404667d848d4837b24f2295c9477244a4c1fa2b03e22098aab09a9b7534db3c993e94c9311d9a39a3fac59faff1c346593
   languageName: node
   linkType: hard
 
@@ -10734,7 +10732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.60.0, webpack@npm:^5.87.0":
+"webpack@npm:^5.60.0":
   version: 5.87.0
   resolution: "webpack@npm:5.87.0"
   dependencies:

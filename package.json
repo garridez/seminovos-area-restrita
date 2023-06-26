@@ -30,7 +30,7 @@
     "font-awesome": "^4.7.0",
     "jquery-validation": "^1.19.5",
     "popper.js": "^1.16.1",
-    "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=7a7d01052f0dba5559130908ad9e910197f6c4d9",
+    "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git",
     "sortablejs": "^1.15.0"
   },
   "devDependencies": {
