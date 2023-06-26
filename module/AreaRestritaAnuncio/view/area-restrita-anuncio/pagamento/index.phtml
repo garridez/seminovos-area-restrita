@@ -108,7 +108,25 @@
             <div class="col-md-4 checkout-metodos-container pt-3 pl-2 pt-md-0 pl-md-0">
                 <div class="text-left mb-3"><strong>FORMA DE PAGAMENTO</strong></div>
                 <div class="accordion" id="accordion-payment">
-                    <div class="card">
+                    <div class="card"><!--pix -->
+                        <div class="card-header" id="pix-label">
+
+                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
+                                    data-target=".pix">
+                                <strong>PIX</strong><br>
+                                <small class="text-capitalize">Ativação após confirmação de pagamento</small>
+                            </button>
+
+
+                        </div>
+                        <div class="pix collapse" aria-labelledby="pix-label"
+                             data-parent="#accordion-payment">
+                            <div class="card-body">
+                                <?= $this->partial('partials/pix.phtml') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card"><!--cartão de crédito -->
                         <div class="card-header" id="cartao-de-credito-label">
 
                             <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
@@ -126,40 +144,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="pix-label">
-
-                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
-                                data-target=".pix">
-                                <strong>PIX</strong><br>
-                                <small class="text-capitalize">Ativação após confirmação de pagamento</small>
-                            </button>
-
-
-                        </div>
-                        <div class="pix collapse" aria-labelledby="pix-label"
-                            data-parent="#accordion-payment">
-                            <div class="card-body">
-                                <?= $this->partial('partials/pix.phtml') ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="boleto-label">
-                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
-                                data-target="#boleto">
-                                <strong>Boleto Bancário</strong><br>
-                                <small class="text-capitalize">Ativação em até 3 dias úteis</small>
-                            </button>
-
-                        </div>
-                        <div id="boleto" class="collapse" aria-labelledby="boleto-label" data-parent="#accordion-payment">
-                            <div class="card-body">
-                                <?= $this->partial('partials/boleto.phtml') ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
+                    <div class="card"><!--transferencia -->
                         <div class="card-header" id="transferencia-label">
                             <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
                                 data-target="#transferencia">
@@ -182,6 +167,21 @@
                             data-parent="#accordion-payment">
                             <div class="card-body">
                                 <?= $this->partial('partials/transferencia.phtml') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card"><!--boleto -->
+                        <div class="card-header" id="boleto-label">
+                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
+                                    data-target="#boleto">
+                                <strong>Boleto Bancário</strong><br>
+                                <small class="text-capitalize">Ativação em até <strong>3 dias úteis</strong></small>
+                            </button>
+
+                        </div>
+                        <div id="boleto" class="collapse" aria-labelledby="boleto-label" data-parent="#accordion-payment">
+                            <div class="card-body">
+                                <?= $this->partial('partials/boleto.phtml') ?>
                             </div>
                         </div>
                     </div>
