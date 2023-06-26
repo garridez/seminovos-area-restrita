@@ -2463,7 +2463,7 @@ __metadata:
     "@babel/preset-react": ^7.22.5
     animate-sass: ^0.8.2
     chart.js: ^2.9.4
-    compress.js: ^1.1.2
+    compress.js: ^1.2.2
     font-awesome: ^4.7.0
     gulp: ^3.9.1
     icon-font-generator: ^2.1.11
@@ -2472,8 +2472,8 @@ __metadata:
     livereload: ^0.9.3
     popper.js: ^1.16.1
     snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=7a7d01052f0dba5559130908ad9e910197f6c4d9"
-    sortablejs: ^1.10.0-rc3
-    webpack: ^5.87.0
+    sortablejs: ^1.15.0
+    webpack: ^5.88.0
   languageName: unknown
   linkType: soft
 
@@ -3498,7 +3498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compress.js@npm:^1.1.2":
+"compress.js@npm:^1.2.2":
   version: 1.2.2
   resolution: "compress.js@npm:1.2.2"
   dependencies:
@@ -9462,7 +9462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sortablejs@npm:^1.10.0-rc3":
+"sortablejs@npm:^1.15.0":
   version: 1.15.0
   resolution: "sortablejs@npm:1.15.0"
   checksum: bb82223a663484640d317cad510ac987f26b7a443631040407224de1be069afcc6c39048b6d8527f10f269e33595e8128d7de2fac23517c8260470f77f932d55
@@ -10768,6 +10768,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: b7d0e390f9d30627e303d54b17cb87b62f49ecffe2d35481f830679904993bae208e23748ffe0e6091b6dd4810562b2f2e88bb0f23b96515d74fb1e3c2898210
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.88.0":
+  version: 5.88.0
+  resolution: "webpack@npm:5.88.0"
+  dependencies:
+    "@types/eslint-scope": ^3.7.3
+    "@types/estree": ^1.0.0
+    "@webassemblyjs/ast": ^1.11.5
+    "@webassemblyjs/wasm-edit": ^1.11.5
+    "@webassemblyjs/wasm-parser": ^1.11.5
+    acorn: ^8.7.1
+    acorn-import-assertions: ^1.9.0
+    browserslist: ^4.14.5
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.15.0
+    es-module-lexer: ^1.2.1
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.9
+    json-parse-even-better-errors: ^2.3.1
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.2.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.3.7
+    watchpack: ^2.4.0
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 9fd1568b34ec2e99ba97c8509a15ab2576ec80c396e7015551ec814b24cfc11de173acba3e114dafe95f1a6d460781b09d6201e6a1fb15110e1d01a09f61a283
   languageName: node
   linkType: hard
 
