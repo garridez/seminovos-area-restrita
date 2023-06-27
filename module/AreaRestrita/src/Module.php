@@ -101,6 +101,7 @@ class Module
 
     public function setMeasureApiResponseTime(ServiceManager $sm)
     {
+        return;
         /** @var Logger $logger */
         $logger = $sm->get('logger');
         /** @var ApiClient $apiClient */
