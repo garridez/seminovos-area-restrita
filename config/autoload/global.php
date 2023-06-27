@@ -84,10 +84,10 @@ return [
     ],
     'session_manager' => [
         'validators' => [
+            Laminas\Session\Validator\RemoteAddr::class,
+            Laminas\Session\Validator\HttpUserAgent::class,
         ],
-        'options' => [
-            'attach_default_validators' => false
-        ],
+        'options' => [ ],
     ],
     'session_storage' => [
         'type' => SessionArrayStorage::class
