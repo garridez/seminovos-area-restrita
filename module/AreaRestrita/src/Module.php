@@ -37,7 +37,6 @@ class Module
         global $container;
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this->onDispatchError(...));
         $container = $sm = $e->getApplication()->getServiceManager();
-        $this->setLogger($sm);
         $this->setMeasureApiResponseTime($sm);
         $this->translatorConfig();
         $this->showChat($sm);
@@ -100,17 +99,6 @@ class Module
         }
     }
 
-    public function setLogger(ServiceManager $sm)
-    {
-        $logger = $sm->get('logger');
-
-        Logger::registerErrorHandler($logger, true);
-        Logger::registerFatalErrorShutdownFunction($logger);
-        if (!IS_DEV) {
-            Logger::registerExceptionHandler($logger);
-        }
-    }
-
     public function setMeasureApiResponseTime(ServiceManager $sm)
     {
         /** @var Logger $logger */
@@ -164,11 +152,14 @@ class Module
             if ($path === '/veiculos-fotos' && ($method === 'POST' || $method === 'DELETE' )) {
                 $maxTempoTotal = 15;
             }
+            if ($path === '/veiculos' && ($method === 'POST' || $method === 'DELETE' || $method === 'PUT')) {
+                $maxTempoTotal = 5;
+            }
             if ($apiResponse->getTotalTime() > $maxTempoTotal) {
                 $logger->info("Resposta lenta da API $timeRequest segundos para '{$method} {$path}'", $extras);
             }
 
-            if ($apiResponse->status != 200) {
+            if ($apiResponse->status != 200 && $apiResponse->status != 405) {
                 $logger->err("API retornou {$apiResponse->status} ao invés de 200 para '{$method} {$path}' retornado", $extras);
             }
         });
