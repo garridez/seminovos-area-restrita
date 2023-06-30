@@ -47,6 +47,7 @@ class TokenController extends AbstractActionController {
         if ($result->getCode() === $result::SUCCESS) {
 
             $res = $this->getApiClient()->integracaoTokenPost(array('nome'=> "app", 'idCadastro' => $result->getIdentity()))->json();
+            $res["data"]["idCadastro"] = $result->getIdentity();
 
             return new JsonModel($res["data"]);
             
