@@ -123,7 +123,7 @@ class AuthController extends AbstractActionController
                 'rememberMe' => $rememberMe
             ]);
             if ($result->getCode() === $result::SUCCESS) {
-                \SnBH\Common\Logs\Login::success($result->getIdentity());
+                \SnBH\Common\Logs\Login::success($result->getIdentity(), $data['usuarioEmail']);
                 if ($redirect) {
                     $sessionStorage->redirect = null;
                     return $this->redirect()->toUrl($redirect);
