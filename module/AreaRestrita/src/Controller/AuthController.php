@@ -65,6 +65,7 @@ class AuthController extends AbstractActionController
         if (!isset($post['token']) || !$post['token']) {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
+            \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'captcha-not-sended');
             return $viewModel;
         }
 
@@ -85,12 +86,14 @@ class AuthController extends AbstractActionController
             if (!$result['success']) {
                 $viewModel->setVariable('loginError', true);
                 $viewModel->setVariable('captchaError', json_encode($result['error-codes']));
+                \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
                 return $viewModel;
             }
             
         } else {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
+            \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
             return $viewModel;
         }
 

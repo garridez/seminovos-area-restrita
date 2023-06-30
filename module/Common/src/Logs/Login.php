@@ -29,4 +29,13 @@ class Login extends AbstractLog
             ['email' => $email]
         );
     }
+
+    public static function captchaFail($email, $tipo)
+    {
+        static::doLog(
+            Logger::WARN,
+            'FAIL',
+            ['email' => $email, 'tipo' => 'captcha:'.$tipo]
+        );
+    }
 }
