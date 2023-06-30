@@ -7,6 +7,7 @@ use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Log\Logger;
 
 class AbstractActionController extends ZendAbstractActionController
 {
@@ -21,6 +22,11 @@ class AbstractActionController extends ZendAbstractActionController
     public function getApiClient(): ApiClient
     {
         return $this->getContainer()->get(ApiClient::class);
+    }
+    
+    public function getLogger():Logger {
+        global $logger;
+        return $logger;
     }
 
     /**

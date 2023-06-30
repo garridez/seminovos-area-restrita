@@ -39,11 +39,8 @@ return [
     'log' => [
         'logger' => [
             'writers' => [
-                's3' => [
-                    'name' => \AreaRestrita\Log\Writer\S3::class,
-                    'options' => [
-                        'formatter' => \Laminas\Log\Formatter\Json::class,
-                    ],
+                'NewRelic' => [
+                    'name' => SnBH\Logger\Writer\NewRelicWriter::class,
                 ],
             ],
             'processors' => [
@@ -57,6 +54,7 @@ return [
                     'name' => \AreaRestrita\Log\Processors\ApplicationNamespace::class,
                 ],
             ],
+            'processors' => [],
         ],
     ],
     'dir' => [

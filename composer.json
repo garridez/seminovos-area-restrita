@@ -11,6 +11,14 @@
     "homepage": "http://framework.zend.com/",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "config": {
+        "apcu-autoloader": true,
+        "sort-packages": true,
+        "vendor-dir": "../vendor",
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true
+        }
+    },
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.263",
@@ -21,7 +29,6 @@
         "laminas/laminas-eventmanager": "^3.10",
         "laminas/laminas-i18n": "^2.22",
         "laminas/laminas-i18n-resources": "^2.9",
-        "laminas/laminas-log": "^2.16",
         "laminas/laminas-mvc": "^3.6",
         "laminas/laminas-mvc-i18n": "^1.7",
         "laminas/laminas-mvc-middleware": "^2.3",
@@ -31,7 +38,11 @@
         "laminas/laminas-session": "^2.16",
         "laminas/laminas-stratigility": "^3.9",
         "laminas/laminas-zendframework-bridge": "^1.7",
-        "snbh/api-client-module": "^2.0"
+        "snbh/api-client-module": "^2.0",
+        "snbh/logger": "^1.0"
+    },
+    "require-dev": {
+        "rector/rector": "^0.17.1"
     },
     "autoload": {
         "psr-4": {
@@ -60,17 +71,9 @@
         },
         {
             "type": "vcs",
-            "url": "https://bitbucket.org/seminovosbh/client-users.git"
+            "url": "https://bitbucket.org/seminovosbh/logger.git"
         }
     ],
-    "config": {
-        "apcu-autoloader": true,
-        "sort-packages": true,
-        "vendor-dir": "../vendor",
-        "allow-plugins": {
-            "laminas/laminas-dependency-plugin": true
-        }
-    },
     "scripts": {
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
@@ -82,11 +85,9 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit",
+        "install-dev-host": "bash scripts/install-dev-host.sh run",
         "post-install-cmd": [
             "bash scripts/copy-vendor.sh"
         ]
-    },
-    "require-dev": {
-        "rector/rector": "^0.15.24"
     }
 }

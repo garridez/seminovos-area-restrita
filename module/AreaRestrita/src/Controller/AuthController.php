@@ -120,6 +120,7 @@ class AuthController extends AbstractActionController
                 'rememberMe' => $rememberMe
             ]);
             if ($result->getCode() === $result::SUCCESS) {
+                \SnBH\Common\Logs\Login::success($result->getIdentity());
                 if ($redirect) {
                     $sessionStorage->redirect = null;
                     return $this->redirect()->toUrl($redirect);
@@ -128,8 +129,9 @@ class AuthController extends AbstractActionController
             }
         }
 
-        $viewModel->setVariable('loginError', true);
+        \SnBH\Common\Logs\Login::fail($data['usuarioEmail']);
 
+        $viewModel->setVariable('loginError', true);
 
         return $viewModel;
     }
