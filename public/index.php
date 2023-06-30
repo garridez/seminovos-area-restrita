@@ -35,10 +35,11 @@ if (file_exists('config/development.config.php')) {
  * Disponibiliza globalmente o service manager e a aplicação como atalho
  */
 /** @var Laminas\ServiceManager\ServiceManager $container */
-global $sm, $container, $application;
+global $sm, $container, $application, $logger;
 
 $application = Application::init($appConfig);
 $container = $sm = $serviceManager = $application->getServiceManager();
+$logger = $sm->get('logger');
 
 if ($_SERVER['REQUEST_URI'] === '/show-configs-0d08b90f7c4c3687a0c22747300af643') {
     echo '<pre>';
