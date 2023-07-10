@@ -226,7 +226,7 @@ return [
                                             'route' => '/:action[/.*]',
                                             'route' => '/:action',
                                             'constraints' => [
-                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro|pagamento-pix',
+                                                'action' => 'concluido|gratis|comprovante|aguardando-pagamento|plano-renovado|processar|cancelar-pagamentos-em-aberto|retorno-cielo|retorno-pagseguro|pagamento-pix|pagamento-status|aprovado',
                                             ],
                                         ],
                                     ],

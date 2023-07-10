@@ -172,7 +172,7 @@ class DadosVeiculoController extends AbstractActionController
         }
 
         $checkedLeilao = (empty($veiculoDados) ?  false : $veiculoDados['flagLeilao']);
-        
+
         return new ViewModel([
             'checkedLeilao' => $checkedLeilao,
             'formDadosVeiculos' => $dadosForm,
@@ -500,7 +500,7 @@ class DadosVeiculoController extends AbstractActionController
         } else{
             $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
         }
-        
+
         //$placaDisponivel = true;
         return new JsonModel( [
             'status' => 200,
@@ -565,8 +565,8 @@ class DadosVeiculoController extends AbstractActionController
             }
             return new JsonModel($result->json());
         }
-    }    
-    
+    }
+
     public function clearCacheAction()
     {
         $idVeiculo = $this->params()->fromRoute('idVeiculo', false);

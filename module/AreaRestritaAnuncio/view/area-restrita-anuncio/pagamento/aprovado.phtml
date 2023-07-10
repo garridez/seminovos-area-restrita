@@ -1,0 +1,47 @@
+<script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.10.1/tsparticles.confetti.bundle.min.js"></script>
+<div class="container container-fixed-lg bg-white">
+    <div class="row">
+        <div class="col-12 m-t-20 text-center">
+            <h3 style="color:#da5228;">PARABÉNS!</h3>
+            <h4>O SEU ANÚNCIO FOI APROVADO COM SUCESSO.</h4>
+        </div>
+        <div class="col-md-12 text-center">
+            <img src="/img/pagamento/obrigado.jpg" />
+        </div>
+        <div class="col-12 offset-md-2 col-md-8 text-center pb-3 mb-2 border border-danger">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="w-25">
+                    <img src="/img/svg/ico_irregularidade.svg" class="modal-img">
+                </div>
+                <div class="w-75">
+                    <h3 class="text-danger"><b>CUIDADO COM GOLPES!</b></h3>
+                    <span>
+                        A Seminovos <b class='text-danger'>NÃO </b>faz contato por
+                        <b class='text-danger'>telefone </b> ou <b class='text-danger'>whatsapp </b>
+                        solicitando código de verificação de anúncio ou similar.<br>
+                        <span class="text-danger">
+                            CUIDADO PARA NÃO CAIR EM GOLPES<br>
+                        </span>
+                        Estamos à disposição para esclarecer
+                        <a href="/central-informacoes" class="text-danger" title="Central de informações" target="_blank">dúvidas</a><br>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto py-4" style="width: 75%;">
+
+
+            <div class="mensagem_pendente pl-3">
+                <?= $this->partial('partials/share', ['veiculo' => $this->veiculo]) ?>
+            </div>
+        </div>
+    </div>
+    <div class="mx-auto py-2" style="width: 75%; background-color: lightgray;">
+        <p class="mx-5">O seu anúncio pode levar até 60 minutos para ser publicado no nosso portal. Nesse tempo ele será checado pela nossa equipe que pode entrar em contato para conferencia de alguns dados se for necessário.</p>
+        <p class="mx-5">Assim que seu veículo for publicado nós te avisaremos! </p>
+    </div>
+    <div class="mx-auto py-4 text-center">
+        <p style="font-weight: bold;color:#333;">Obrigado por anunciar conosco.</p>
+        <p style="color:#acacac; font-size:14px;font-weight: bold;">Equipe SeminovosBH!</p>
+    </div>
+</div>

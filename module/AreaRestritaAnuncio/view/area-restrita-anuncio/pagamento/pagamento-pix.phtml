@@ -1,60 +1,69 @@
-<div class="container container-fixed-lg bg-white">
-    <div class="row">
-        <div class="col-12 m-t-20 text-center">
-            <h3 style="color:#da5228;">Aguardando Pagamento.</h3>
-        </div>
-        <div class="col-md-12 text-center">
-            <img src="/img/pagamento/obrigado.jpg" /> 
+<div class="container container-fixed-lg bg-white text-center">
+
+    <div class="col-12 m-t-20">
+        <h5>Seu código PIX está disponível para pagamento.</h5>
+        <div>
+            <b>Copie</b> ou <b>escaneie</b> o código <b>PIX</b> abaixo e finalize o pagamento no seu <b>aplicativo de pagamento</b>.
         </div>
     </div>
-    <div class="col-12 m-t-20 text-center">
-        <h4>Seu código PIX está disponível para pagamento.</h4>
-    </div>
-    <div class="col-12 offset-md-2 col-md-8 text-center pb-3 mb-2 border border-danger">
-        <?php /*<div class="col-12 col-md-12 m-t-20 text-center text-pix" style="font-size: 15px; font-weight: bold; word-wrap: break-word;">
-            <?php echo trim($_GET['code']); ?>
+    <div class="col-12 mt-2">
+
+        <div class="pix-timer ">
+            O código expira em:<br>
+            <span class="timer h2">--:--</span>
         </div>
-        */?>
+    </div>
+    <div class="col-12 offset-md-2 col-md-8 mb-2">
         <div class="qrcode-container">
-            <img class="qrcode-img" style="width:70%;height:auto;" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=<?php echo trim((string) $_GET['code']); ?>"/>
+            <img class="qrcode-img" style="width:100%; height:auto; max-width: 400px;" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=<?php echo trim((string) $_GET['code']); ?>"/>
         </div>
-        <div class="col-12 text-center align-center">
-            <button id="copy"
-                style="
-                font-family: 'PT Sans', sans-serif;
-                margin-top: 16px;
-                font-size: 16px;
-                text-decoration: none;
-                color:white;
-                padding-top:2.4%;
-                padding-bottom:2.4%;
-                background-color: #ED9902;
-                border-radius: 4px;
-                /*display: block;*/
-                width: 60%;
-                font-weight: bold;">
-                Copiar código
+        <div class="col-12 m-2">
+            <p id="text-code" style="font-size: 15px; font-weight: bold; overflow: scroll; padding: 15px 0; white-space: nowrap;">
+                <?php echo trim((string) $_GET['code']); ?>
+            </p>
+        </div>
+        <div class="col-12 align-center">
+            <button id="copy" class="btn btn-laranja text-white btn-lg btn-block">
+                Copiar código <i class="fa fa-clone" aria-hidden="true"></i>
             </button>
         </div>
-        <div class="col-12 m-t-20 text-center align-center">
-            <p style="font-weight: bold;color:red;">Pagamento processado pela empresa Zoop Tecnologia e Meios de Pagamentos Ltda.</p>
+        <div class="col-12 m-t-20 align-center">
+            <p>Pagamento processado através da <br><b>Zoop Tecnologia e Meios de Pagamentos Ltda.</b></p>
         </div>
     </div>
-    <div class="mx-auto py-2 mt-2" style="width: 75%; background-color: lightgray;">
-        <p class="mx-5 my-1">Após confirmação do pagamento no prazo de 10 minutos o anúncio será ativado.</p>
+    <div class="mx-auto py-2 mt-2">
+        <p class="mx-5 my-1">Após confirmação automática, seu anúncio será ativado na hora!</p>
     </div>
-    <div class="mx-auto py-4 text-center">
+    <div class="mx-auto py-4">
             <p style="font-weight: bold;color:#333;">Obrigado por anunciar conosco.</p>
             <p style="color:#acacac; font-size:14px;font-weight: bold;">Equipe SeminovosBH!</p>
     </div>
 </div>
 <script>
-let btn = document.querySelector('#copy');
+function selectText(){
+    if(window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById('text-code'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
+}
+var btn = document.querySelector('#copy');
 btn.addEventListener('click', function(e) {
-  navigator.clipboard.writeText('<?= trim((string) $_GET['code']) ?>');
+  try{
+    navigator.clipboard.writeText('<?= trim((string) $_GET['code']) ?>');
+  }catch(err){
+    newrelic && newrelic.noticeError(err);
+  }
   //alert("Código copiado");
   alerta('success', 'Seu código PIX foi copiado.', 'Atenção!', 5000);
-  document.execCommand('copy');
+  try{
+    document.execCommand('copy');
+  }catch(err){
+    
+    newrelic && newrelic.noticeError(err);
+  }
+  selectText();
 
 });
 

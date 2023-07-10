@@ -10,6 +10,7 @@ namespace AreaRestritaAnuncio\Controller;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Planos;
 use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\JsonModel;
 use SnBH\Common\Helper\MoveUpload;
 
 class PagamentoController extends AbstractActionController
@@ -52,11 +53,16 @@ class PagamentoController extends AbstractActionController
         return false;
     }
 
-    protected function getModelVeiculo()
+    protected function getModelVeiculo($idVeiculo = null)
     {
         return new ViewModel([
-            'veiculo' => $this->getVeiculoData()
+            'veiculo' => $this->getVeiculoData($idVeiculo)
         ]);
+    }
+
+    public function aprovadoAction()
+    {
+        return $this->getModelVeiculo($this->params()->fromRoute('idVeiculo'));
     }
 
     public function concluidoAction()
@@ -89,13 +95,35 @@ class PagamentoController extends AbstractActionController
         return $this->getModelVeiculo();
     }
 
+    public function pagamentoStatusAction()
+    {
+        $dados = $this->params()->fromRoute();
+
+        $dadosPag = $this->getApiClient()->pagamentosGet([
+            'idCadastro' => $this->getCadastro('idCadastro'),
+            'idVeiculo' => $dados['idVeiculo'],
+            'sort' => 'idPagamento',
+            'direction' => 'desc',
+            'registrosPagina' => 1,
+        ])->getData()[0] ?? [];
+
+        return new JsonModel([
+            'status' => 200,
+            'ultimoPagamento' => array_intersect_key($dadosPag, [
+                'status' => true,
+                'forma_pagamento'=> true,
+                'data_cadastro' => true
+            ]),
+        ]);
+    }
+
     public function processarAction()
     {
         $dadosPagamento = [];
         $comprovanteAnexo = [];
         $dados = $this->params()->fromPost();
         if (!$dados) {
-            throw new Exception('Certifique-se de que os dados foram enviados.');
+            throw new \Exception('Certifique-se de que os dados foram enviados.');
         }
         $cadastro = $this->getCadastro();
 
@@ -174,12 +202,12 @@ class PagamentoController extends AbstractActionController
             ->getBody();
             echo json_encode($response);
             die;
-            
+
         }*/
-        
+
         /*echo $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
-        
+
         $response = $this->getApiClient()
             ->pagamentosPost($dadosPagamento, null, false)
             ->json();

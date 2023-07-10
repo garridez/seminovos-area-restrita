@@ -111,15 +111,15 @@
                     <div class="card"><!--pix -->
                         <div class="card-header" id="pix-label">
 
-                            <button class="h-25 btn btn-link text-left collapsed" type="button" data-toggle="collapse"
+                            <button class="h-25 btn btn-link text-left" type="button" data-toggle="collapse"
                                     data-target=".pix">
                                 <strong>PIX</strong><br>
-                                <small class="text-capitalize">Ativação após confirmação de pagamento</small>
+                                <small class="text-capitalize">Ativação imediata</small>
                             </button>
 
 
                         </div>
-                        <div class="pix collapse" aria-labelledby="pix-label"
+                        <div class="pix collapse show" aria-labelledby="pix-label"
                              data-parent="#accordion-payment">
                             <div class="card-body">
                                 <?= $this->partial('partials/pix.phtml') ?>
@@ -140,6 +140,7 @@
                         <div class="cartao-de-credito collapse" aria-labelledby="cartao-de-credito-label"
                             data-parent="#accordion-payment">
                             <div class="card-body">
+                                <div><small>Não guardamos nenhuma informação do seu cartão de crédito!</small></div><br>
                                 <?= $this->partial('partials/cartao-de-credito.phtml') ?>
                             </div>
                         </div>

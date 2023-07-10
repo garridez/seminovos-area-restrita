@@ -1,5 +1,10 @@
 &{
     position: initial !important;
+
+    input[type="checkbox"] {
+        vertical-align: sub;
+    }
+
     &.modal-open{
         .modal-sobre-certificado{
             top: 0;
