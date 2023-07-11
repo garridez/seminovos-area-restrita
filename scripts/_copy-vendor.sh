@@ -3,7 +3,6 @@
 if [ "$1" == "run" ]; then
     if [ -d "../vendor" ]; then
         pwd
-        exit
         vendorDirPrev=$(composer config vendor-dir)
         
         echo "$vendorDirPrev"
@@ -12,9 +11,7 @@ if [ "$1" == "run" ]; then
             echo 'fazer nada'
             exit 0
         fi
-        
-                echo 'Removendo vendor..'
-        rm -rf vendor
+
         echo 'Copiando vendor..'
         cp -R ../vendor .
         
