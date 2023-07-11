@@ -189,7 +189,7 @@ return [
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
             Middleware\CheckIdVeiculoMiddleware::class => Middleware\Factory\CheckIdVeiculoMiddlewareFactory::class,
-            
+
             Middleware\Factory\MiddlewarePipeFactory::class => Middleware\Factory\MiddlewarePipeFactory::class
         ],
         'abstract_factories' => [
@@ -236,7 +236,7 @@ return [
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions' => true,
+        'display_exceptions' => false,
         'doctype' => 'HTML5',
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
