@@ -13,5 +13,5 @@ services:
             - "8093:80"
         environment:
             - APPLICATION_ENV=production
-            - SNBH_API_HOST=https://api2.seminovosbh.com.br
+            - SNBH_API_HOST=http://api2.seminovos.com.br
             - SNBH_URL_AREA_RESTRITA=https://meus-anuncios.seminovosbh.com.br
