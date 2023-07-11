@@ -49,10 +49,10 @@ class MeusVeiculosController extends AbstractActionController
     {
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
-        
+
         /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
-        
+        $request();
         $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
@@ -60,7 +60,7 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-        
+
         $dataAtual = new \DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
@@ -74,11 +74,11 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
-        
+
         $routeName = str_replace("/meus-veiculos", "", (string) $request->getRequestUri());
 
         $routeParams = "/meus-veiculos";
-        
+
         $paginationData = [
             'pages' => $dadosVeiculos['pages'],
             'total' => $dadosVeiculos['total'],
@@ -119,13 +119,13 @@ class MeusVeiculosController extends AbstractActionController
 
         $idVeiculos = array_column($dadosVeiculos['data'], 'idVeiculo');
         $dadosPropostas = $propostasModel->getAll($idVeiculos, 5 * 60) ?? [];
-        
+
         $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function($acc, $row){
             $acc[$row['idAnuncio']] = $acc[$row['idAnuncio']] ?? 0;
             $acc[$row['idAnuncio']]++;
             return $acc;
         }, []);
-        
+
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
             $idVeiculo = $veiculo['idVeiculo'];
 
@@ -428,7 +428,7 @@ class MeusVeiculosController extends AbstractActionController
         return $result;
 
     }
-    
+
     /*
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
      * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
@@ -516,16 +516,16 @@ class MeusVeiculosController extends AbstractActionController
         echo json_encode($dadosVeiculos);
         die;
     }
-    
+
     public function pesquisaAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
-        
+
         $request = $this->request;
-        
+
         /* @var $identity Identity */
         $identity = $this->getContainer()->get(Identity::class);
-        
+
         $data = [
             'idCadastro' => $identity->getIdentity(),
             'idVeiculo' => $idVeiculo
