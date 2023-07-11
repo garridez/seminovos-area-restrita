@@ -52,7 +52,7 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
-        $request();
+
         $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
