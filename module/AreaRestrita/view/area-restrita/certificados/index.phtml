@@ -26,7 +26,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
     $dados = $dadosCertificados['dadosBasicos']['data'] ?: null;
     //$dadosFurto = $dadosCertificados['dadosFurtos']['body']['data'] ? $dadosCertificados['dadosFurtos']['body']['data'] : null;
     $dadosFurto = $dadosCertificados['dadosBasicos']['data']['rouboFurto'] ?: null;
-    $dadosRecall = $dadosCertificados['dadosBasicos']['data']['recall'] ?: null;
+    $dadosRecall = isset($dadosCertificados['dadosBasicos']['data']['recall']) ? $dadosCertificados['dadosBasicos']['data']['recall'] : null;
     $sinistro = $dadosCertificados['dadosBasicos']['data']['indicioSinistro'] ?: null;
     $leilao = $dadosCertificados['dadosBasicos']['data']['leilao'] ?: null;
     $baseEstadual = $dadosCertificados['dadosBasicos']['data']['baseEstadual'] ?: null;
@@ -156,7 +156,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                             <p class="small no-margin bold">Combustível: <span class="semi-bold mt-0"><?= isset($dados['combustivel']) && $dados['combustivel']  ? $dados['combustivel'] : "Não informado" ?></span> </p>
                         </div>
                         <div class="text-left font-montserrat all-caps mr-3 mb-1">
-                            <p class="small no-margin bold">Município: <span class="semi-bold mt-0"><?= isset($dados['municipio']) && $dados['municipio']  ? $dados['municipio'] : "Não informado" ?></span> </p>
+                            <p class="small no-margin bold">Município: <span class="semi-bold mt-0"><?= isset($dados['nomeMunicipioEmplacamento']) && $dados['nomeMunicipioEmplacamento'] ? $dados['nomeMunicipioEmplacamento'] : (isset($dados['municipio']) && $dados['municipio'] ? $dados['municipio'] : "Não informado") ?></span> </p>
                         </div>
                     </div>
                     <div class="pt-print-3 d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
@@ -175,7 +175,7 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                             <p class="small no-margin bold">Ano Fabricação: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
                         </div>
                         <div class="font-montserrat bold all-caps mr-2 mb-1">
-                            <p class="small no-margin bold">Cor: <span class="semi-bold mt-0"><?= isset($dados['anoFabricacao']) && $dados['anoFabricacao']  ? $dados['anoFabricacao'] : "Não informado" ?></span> </p>
+                            <p class="small no-margin bold">Cor: <span class="semi-bold mt-0"><?= isset($dados['cor']) && $dados['cor']  ? $dados['cor'] : "Não informado" ?></span> </p>
                         </div>
                         <div class="font-montserrat bold all-caps mr-2 mb-1">
                             <p class="small no-margin bold">UF: <span class="semi-bold mt-0"><?= isset($dados['uf']) && $dados['uf']  ? $dados['uf'] : "Não informado" ?></span> </p>
@@ -261,11 +261,11 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
                         </div>
                     </div>
                     <div class="d-block d-md-block col-lg-6 p-0 p-md-2 col-print-6 justify-content-between mb-2 mb-md-0">
-                        <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
+                        <!-- <div class="d-flex justify-content-start mr-0 mr-md-2 justify-md-content-end">
                             <div class="font-montserrat bold all-caps mr-2 mb-1">
                                 <p class="small no-margin bold">DPVAT: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoDpvat']) && $baseEstadual['existeDebitoDpvat']  ? $baseEstadual['existeDebitoDpvat'] : "Não informado" ?></span> </p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="font-montserrat bold all-caps mr-2 mb-1">
                             <p class="small no-margin bold">Multas: <span class="semi-bold mt-0"><?= isset($baseEstadual['existeDebitoMulta']) && $baseEstadual['existeDebitoMulta']  ? $baseEstadual['existeDebitoMulta'] : "Não informado" ?></span> </p>
                         </div>
