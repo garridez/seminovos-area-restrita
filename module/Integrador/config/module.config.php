@@ -94,6 +94,28 @@ return [
                             'may_terminate' => false,
                         ],
                     ],
+                    'token' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/token',
+                            'defaults' => [
+                                'controller' => Controller\TokenController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
+                    'meus-veiculos-integ' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/meus-veiculos-integ',
+                            'defaults' => [
+                                'controller' => Controller\MeusVeiculosIntegradorController::class,
+                                'action' => 'dispatch',
+                            ],
+                            'may_terminate' => false,
+                        ],
+                    ],
                     'motor' => [
                         'type' => 'Segment',
                         'options' => [
@@ -151,6 +173,8 @@ return [
             Controller\MarcasController::class => InvokableFactory::class,
             Controller\ModelosController::class => InvokableFactory::class,
             Controller\AcessoriosController::class => InvokableFactory::class,
+            Controller\TokenController::class => InvokableFactory::class,
+            Controller\MeusVeiculosIntegradorController::class => InvokableFactory::class,
             Controller\MotorController::class => InvokableFactory::class,
             Controller\RevendasController::class => InvokableFactory::class,
             Controller\EstadosController::class => InvokableFactory::class,
