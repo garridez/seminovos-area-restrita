@@ -46,7 +46,7 @@ $this->headTitle();
     })(window,document,'script','dataLayer','GTM-5Z5MTSZ');</script>
     <?php endif;?>
   </head>
-  <body class="fixed-header l-blank">
+  <body class="fixed-header l-blank <?=$this->bodyClass()?>">
     <?= $this->content ?>
   </body>
 </html>
