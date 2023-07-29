@@ -83,22 +83,17 @@ module.exports = async function ($) {
         $.active = $.active || 1;
         console.log('Start upload');
         loading.open(true);
-        var ordemCount = 0;
+
         var $fotosContainer = $('.fotos-container');
         var reordenar = $fotosContainer.data('reordanado') || false;
         var $displayImgs = $fotosContainer.find('.display-img');
         $('.fotos-container').find('.display-img').animate({opacity: .1});
 
-//        var feedbackText = [];
-        console.log($displayImgs);
+        $displayImgs.each(function (i) { $(this).data('ordem', i + 1)});
 
         for (var img of $displayImgs) {
             var $img = $(img);
-            ordemCount++;
             console.log('\n');
-            console.log('ordemCount:', ordemCount);
-            // Seta a ordem como data
-            $img.data('ordem', ordemCount);
 
             var $imgToUpload = filterImgToUpload($img);
             var $imgToDelete = filterImgToDelete($img);
@@ -119,7 +114,6 @@ module.exports = async function ($) {
             if (reordenar && $imgToReorder.length) {
                 console.log('reordenar');
             }
-            ///console.log($imgToUpload, $imgToDelete, $imgToReorder, ordemCount);
 
 
 
@@ -153,6 +147,7 @@ module.exports = async function ($) {
                 dataNames.push(i);
             }
             console.log(dataNames);
+
 
             try {
                 await $.ajax({
