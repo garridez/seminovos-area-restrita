@@ -5,10 +5,10 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@algolia/autocomplete-theme-classic@npm:^1.9.3":
-  version: 1.9.3
-  resolution: "@algolia/autocomplete-theme-classic@npm:1.9.3"
-  checksum: 23b9b6ca752f7751f57b62a5f3061c189937063b1b2a7cb1fa823eefdfcb1fa9ffa6788d716c732245f21054de615fe56af57e23ea8a872bd2743d80fd24a7ca
+"@algolia/autocomplete-theme-classic@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "@algolia/autocomplete-theme-classic@npm:1.10.0"
+  checksum: faf251e9277da6a2d9edeed36340244bd299211871ad1b222fa984e7a266ae255eaaf043714fda383391500f4f2194f3359effd6d904337b3860fb242f49529b
   languageName: node
   linkType: hard
 
@@ -2471,9 +2471,9 @@ __metadata:
     laravel-mix: ^6.0.49
     livereload: ^0.9.3
     popper.js: ^1.16.1
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9"
     sortablejs: ^1.15.0
-    webpack: ^5.88.0
+    webpack: ^5.88.2
   languageName: unknown
   linkType: soft
 
@@ -8414,7 +8414,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.2.15, postcss@npm:^8.4.24":
+"postcss@npm:^8.2.15":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
   dependencies:
@@ -8422,6 +8422,17 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.25":
+  version: 8.4.27
+  resolution: "postcss@npm:8.4.27"
+  dependencies:
+    nanoid: ^3.3.6
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: 1cdd0c298849df6cd65f7e646a3ba36870a37b65f55fd59d1a165539c263e9b4872a402bf4ed1ca1bc31f58b68b2835545e33ea1a23b161a1f8aa6d5ded81e78
   languageName: node
   linkType: hard
 
@@ -9047,16 +9058,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.63.4":
-  version: 1.63.4
-  resolution: "sass@npm:1.63.4"
+"sass@npm:^1.63.6":
+  version: 1.64.1
+  resolution: "sass@npm:1.64.1"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 12bde5beff85a7018157d90c8b9d5aec8b56832f89fcfeca146f10936eecf97e669d22fd41f812b3407ed259bbb114d69c9ecbfc7ee9b15308211fb910cdf5eb
+  checksum: e908f96f3d5fa5869e2f2aec97548c93d6ef390680af89870fcae8bdbaee2392ac650fbeae8d2ef8e4c99cb9f81e6b3624e1cb659af6d6e746332a22233b5ad8
   languageName: node
   linkType: hard
 
@@ -9399,11 +9410,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9":
   version: 1.0.0
-  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=464039779765482bf035c6c11ea7fce241e60129"
+  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9"
   dependencies:
-    "@algolia/autocomplete-theme-classic": ^1.9.3
+    "@algolia/autocomplete-theme-classic": ^1.10.0
     autocomplete.js: ^0.38.1
     bootstrap: ^4.6.2
     bootstrap-slider: ^10.6.2
@@ -9417,14 +9428,14 @@ __metadata:
     js-base64: ^2.6.4
     js-cookie: ^2.2.1
     lodash: ^4.17.21
-    postcss: ^8.4.24
+    postcss: ^8.4.25
     printthis: ^0.1.5
-    sass: ^1.63.4
+    sass: ^1.63.6
     sass-loader: 12.6.0
     sharer.js: ^0.4.2
     webpack-cli: ^5.1.4
     whatwg-fetch: ^3.6.2
-  checksum: 7739cff069ee5ab90aa5993464ce3c404667d848d4837b24f2295c9477244a4c1fa2b03e22098aab09a9b7534db3c993e94c9311d9a39a3fac59faff1c346593
+  checksum: 3dafe8fbef82d363859d07f6d5dcae9faaa7affd541e71719c6442610bdd53c1f268d11a9339c26dc9392c4c9a7539ef99020fb2f36c6f1e983a1289938e7917
   languageName: node
   linkType: hard
 
@@ -10769,9 +10780,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.88.0":
-  version: 5.88.0
-  resolution: "webpack@npm:5.88.0"
+"webpack@npm:^5.88.2":
+  version: 5.88.2
+  resolution: "webpack@npm:5.88.2"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^1.0.0
@@ -10802,7 +10813,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 9fd1568b34ec2e99ba97c8509a15ab2576ec80c396e7015551ec814b24cfc11de173acba3e114dafe95f1a6d460781b09d6201e6a1fb15110e1d01a09f61a283
+  checksum: 79476a782da31a21f6dd38fbbd06b68da93baf6a62f0d08ca99222367f3b8668f5a1f2086b7bb78e23172e31fa6df6fa7ab09b25e827866c4fc4dc2b30443ce2
   languageName: node
   linkType: hard
 

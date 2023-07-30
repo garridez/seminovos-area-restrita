@@ -4,17 +4,17 @@ module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
 
     var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
-    $('.step-container').on('step:pre-exit:video', function(){
-      if($('#dados-basicos #flagCriando').val() == 1){
-        var ctx = $('.step-0, .step-1');
-        DataLayerGTMPopulate(ctx,'checkout_step_5');
-      }
+    $('.step-container').on('step:pre-exit:video', function () {
+        if ($('#dados-basicos #flagCriando').val() == 1) {
+            var ctx = $('.step-0, .step-1');
+            DataLayerGTMPopulate(ctx, 'checkout_step_5');
+        }
     });
-    $('.step-container').on('step:pre-exit:plano', function(){
-      if($('#dados-basicos #flagCriando').val() == 1){
-        var ctx = $('.step-0, .step-1');
-        DataLayerGTMPopulate(ctx,'checkout_step_6');
-      }
+    $('.step-container').on('step:pre-exit:plano', function () {
+        if ($('#dados-basicos #flagCriando').val() == 1) {
+            var ctx = $('.step-0, .step-1');
+            DataLayerGTMPopulate(ctx, 'checkout_step_6');
+        }
     });
 };
 function init() {
@@ -33,8 +33,8 @@ function init() {
     ];
 
     var handle = '.btn-move';
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      handle = '.btn-move';
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        handle = '.btn-move';
     }
     new sortablejs.Sortable($('.fotos-container > div')[0], {
         animation: 150,
@@ -57,20 +57,20 @@ function init() {
     });
     inputFoto.change(function () {
         showPhoto($(this).data('img-element'), this.files[0]);
-        compressPhoto($(this).data('img-element'), this.files[0]);
+        //compressPhoto($(this).data('img-element'), this.files[0]);
     });
     ctx.find('[name="fotos"]') // Input de multiplos arquivos
-            .change(function () {
-                var imgs = $('.fotos-container .display-img');
-                // Reseta as imagens
-                imgs.each(function () {
-                    $(this).attr('src', $(this).data('placeholder'));
-                });
-                $(this.files).each(function (i, file) {
-                    showPhoto(imgs.eq(i), file);
-                    compressPhoto(imgs.eq(i), file);
-                });
+        .change(function () {
+            var imgs = $('.fotos-container .display-img');
+            // Reseta as imagens
+            imgs.each(function () {
+                $(this).attr('src', $(this).data('placeholder'));
             });
+            $(this.files).each(function (i, file) {
+                showPhoto(imgs.eq(i), file);
+                //compressPhoto(imgs.eq(i), file);
+            });
+        });
 
 
     ctx.on('click', '.btn-upload-img', function (e) {
@@ -96,11 +96,11 @@ function init() {
         var posicaoRotacao = imagem.data('posicaoRotacao')
 
         // Seta o numero de vezes que a imagem vai ser rotacionada em 90graus
-        if(posicaoRotacao === 3){
+        if (posicaoRotacao === 3) {
             posicaoRotacao = 0
             imagem.data('posicaoRotacao', 0);
 
-        }else {
+        } else {
             posicaoRotacao = posicaoRotacao + 1;
             imagem.data('posicaoRotacao', posicaoRotacao);
         }
@@ -124,14 +124,10 @@ function init() {
      *      Se não for passado, então é colocado no lugar o placeholder
      * @return void
      */
-    function showPhoto(imgElement, file) {
-
+    async function showPhoto(imgElement, file) {
         imgElement = $(imgElement);
-        if (file === undefined) {
-            file = imgElement.data('placeholder');
-        }
 
-        if (typeof file === 'string') {
+        function setBackgroudImage(file) {
             var background = 'url("' + file + '")';
 
             if (imgElement.css('background-image') === background) {
@@ -139,7 +135,7 @@ function init() {
             }
             imgElement.animate({
                 opacity: 0
-            }, 200).data('file-data', false);
+            }, 200);
             // Animação pra suavizar a transição
             setTimeout(function () {
                 imgElement.css('background-image', background);
@@ -149,77 +145,124 @@ function init() {
                     }, 200);
                 }, 200);
             }, 200);
+        }
+
+        if (file === undefined) {
+            setBackgroudImage(imgElement.data('placeholder'));
+            imgElement.data('file-data', false);
             return;
         }
 
-        var reader = new FileReader();
-        reader.onload = function (e) {
+        if (typeof file === 'string') {
+            setBackgroudImage(file);
+            return;
+        }
 
-            //exibe os botões de ação
-            imgElement.parents('.foto').find('.controls').removeClass('d-none');
-            imgElement.parents('.foto').find('.btn-adicionar').addClass('d-none');
+        var fileDataUrl = await fileReaderPromise(file);
+        if (typeof fileDataUrl !== 'string') {
+            throw new Error('Não foi possível ler o arquivo');
+            return;
+        }
+        //exibe os botões de ação
+        imgElement.parents('.foto').find('.controls').removeClass('d-none');
+        imgElement.parents('.foto').find('.btn-adicionar').addClass('d-none');
 
-            showPhoto(imgElement, e.target.result);
-            if (imgElement.data('idfoto')) {
-                imgElement.data('delete', true);
-            }
-            imgElement
-                    .data('file-data', file)
-                    .data('uploaded', false);
-        };
-        reader.readAsDataURL(file);
+        setBackgroudImage(fileDataUrl);
+
+        if (imgElement.data('idfoto')) {
+            imgElement.data('delete', true);
+        }
+
+        imgElement
+            .data('file-data', file)
+            .data('uploaded', false);
+
+        var fileCompressed = await compressPhoto(file);
+
+        if (fileCompressed) {
+            imgElement.data('file-data', fileCompressed);
+            var fileDataUrl = await fileReaderPromise(fileCompressed);
+            setBackgroudImage(fileDataUrl);
+        }
+
+        var eventName = 'fotos:selecionada';
+        var event = $.Event(eventName);
+        event.target = imgElement.get(0);
+        imgElement
+            .trigger(eventName)
+            .closest('.fotos-container')
+            .trigger(event);
+
+
     }
-    async function compressPhoto(imgElement, imageFile) {
+    async function fileReaderPromise(file) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                resolve(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    async function compressPhoto(imageFile) {
         /**
          * Se for o Safari, não comprime
          * O Safari dá pau na hora de colocar a imagem gerada no FormData
          */
         if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
-            return;
+            return false;
         }
 
-        // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
-        try {
-            if (imageFile.name.match(/.heic$/) !== null) {
-                var heic2any = require('components/heic2any');
-                var resultBlob = await heic2any({
-                    blob: imageFile,
-                    toType: "image/jpg"
-                });
-                imageFile = new File([resultBlob], "heic" + ".jpg", {type: "image/jpeg", lastModified: new Date().getTime()});
-            }
-            var compress = new Compress();
-
-            compress.compress([imageFile], {
-                size: 4, // the max size in MB, defaults to 2MB
-                quality: 0.9, // the quality of the image, max is 1,
-                resize: true, // defaults to true, set false if you do not want to resize the image width and height
-                maxWidth: 1000,
-                maxHeight: 750
-            }).then(function (images) {
-                var img = images[0];
-                function dataURLtoFile(dataurl, filename) {
-                    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-                    while (n--) {
-                        u8arr[n] = bstr.charCodeAt(n);
-                    }
-                    return new File([u8arr], filename, {type: mime});
+        return new Promise(async function (resolve, reject) {
+            // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
+            try {
+                if (imageFile.name.match(/.heic$/) !== null) {
+                    var heic2any = require('components/heic2any');
+                    var resultBlob = await heic2any({
+                        blob: imageFile,
+                        toType: "image/jpg"
+                    });
+                    imageFile = new File([resultBlob], "heic" + ".jpg", { type: "image/jpeg", lastModified: new Date().getTime() });
                 }
+                var compress = new Compress();
 
-                var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
-                showPhoto(imgElement, file);
-                /** Debug * /
-                 console.log(`<b>Start Size:</b> ${img.initialSizeInMb} MB <br/>\n`
-                 + `<b>End Size:</b> ${img.endSizeInMb} MB <br/>\n`
-                 + `<b>Compression Cycles:</b> ${img.iterations} <br/>\n`
-                 + `<b>Size Reduced:</b> ${img.sizeReducedInPercent} % <br/>\n`
-                 + `<b>File Name:</b> ${img.alt}`);/**/
-            });
-        } catch (e) {
-            console.log('Falha ao compactar');
-            console.log(e);
-        }
+                compress.compress([imageFile], {
+                    size: 4, // the max size in MB, defaults to 2MB
+                    quality: 0.9, // the quality of the image, max is 1,
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                    maxWidth: 1000,
+                    maxHeight: 750
+                }).then(function (images) {
+                    var img = images[0];
+                    function dataURLtoFile(dataurl, filename) {
+                        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                        while (n--) {
+                            u8arr[n] = bstr.charCodeAt(n);
+                        }
+                        return new File([u8arr], filename, { type: mime });
+                    }
+
+                    var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
+                    resolve(file);
+                    var nF = new Intl.NumberFormat('pt-BR', {
+                        maximumFractionDigits: 2
+                    }).format;
+                    /** Debug * /
+                    console.table({
+                        startSize: nF(img.initialSizeInMb * 1000) + ' KB',
+                        endSize: nF(img.endSizeInMb * 1000) + ' KB',
+                        compressionCycles: img.iterations,
+                        sizeReduced: nF(img.sizeReducedInPercent) + ' %',
+                        fileName: img.alt,
+                    });/**/
+                });
+            } catch (e) {
+                resolve(false);
+                console.log('Falha ao compactar');
+                console.log(e);
+            }
+        })
     }
 }
 
@@ -256,7 +299,7 @@ function testImgUpload() {
         return new Promise(function (resolve) {
             getImgURL(url, (imgBlob) => {
                 let fileName = 'hasFilename.jpg';
-                let file = new File([imgBlob], fileName, {type: "image/jpeg", lastModified: new Date().getTime()}, 'utf-8');
+                let file = new File([imgBlob], fileName, { type: "image/jpeg", lastModified: new Date().getTime() }, 'utf-8');
                 let container = new DataTransfer();
                 container.items.add(file);
                 input.files = container.files;

@@ -14,7 +14,8 @@
     "prod": "mix --production",
     "production": "mix --production",
     "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -x \"node_modules,resources,vendor,data\"",
-    "websocket-server": "node websocket-server.js"
+    "websocket-server": "node websocket-server.js",
+    "upgrade": "yarn upgrade-interactive"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,6 @@
     "icon-font-generator": "^2.1.11",
     "laravel-mix": "^6.0.49",
     "livereload": "^0.9.3",
-    "webpack": "^5.88.0"
+    "webpack": "^5.88.2"
   }
 }

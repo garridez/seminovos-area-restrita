@@ -200,8 +200,27 @@
                 }
             }
         }
-        // .btn-to-rotate{
-        //     display: none;
-        // }
+        &.uploading {
+            .loader {
+                display: block;
+            }
+            .display-img {
+                opacity: 0.1 !important;
+            }
+        }
+        .loader {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            width: 30px;
+            height: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            &:before {
+                background-color: transparent;
+            }
+        }
     }
 }
