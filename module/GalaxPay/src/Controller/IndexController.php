@@ -10,12 +10,11 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
 
             $data = json_decode((string) $request->getContent(), true);
-            
+
             if ($data['confirmHash'] != WEBHOOK_GALAYPAY) {
                 return new JsonModel([
                         'status' => 401,
@@ -27,10 +26,10 @@ class IndexController extends AbstractActionController
                 'transaction' => $data['Transaction'],
                 'metodo' => 'galaxpay'
                 ])->json();
-            
+
             return new JsonModel($res);
         }
-        
+
         return new JsonModel([
             '405' => 'Parâmetros enviados inválidos.'
         ]);

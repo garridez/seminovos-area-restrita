@@ -8,6 +8,10 @@ use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionControl
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\JsonModel;
 
+/**
+ * @property Request $request
+ * @method Request getRequest()
+ */
 class AbstractActionController extends ZendAbstractActionController
 {
     /**
