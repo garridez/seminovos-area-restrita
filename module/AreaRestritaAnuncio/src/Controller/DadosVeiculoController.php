@@ -64,7 +64,6 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(false);
         }
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             /* @var $identity Identity */
@@ -378,7 +377,6 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(5);
         $videoForm->populateValues($data);
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             $post = $request->getPost();
