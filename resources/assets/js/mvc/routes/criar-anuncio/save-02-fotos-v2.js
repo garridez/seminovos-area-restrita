@@ -1,34 +1,34 @@
 function filterImgToUpload($img) {
     return $img
-            // Filtra deixando só as tags que contém uma imagem
-            .filter(function () {
-                return !!$(this).data('file-data');
-            })
-            // Filtras as imagens que já foram carregadas
-            .filter(function () {
-                return $(this).data('uploaded') !== true;
-            });
+        // Filtra deixando só as tags que contém uma imagem
+        .filter(function () {
+            return !!$(this).data('file-data');
+        })
+        // Filtras as imagens que já foram carregadas
+        .filter(function () {
+            return $(this).data('uploaded') !== true;
+        });
 }
 
 function filterImgToDelete($img) {
     return $img
-            // Filtra deixando só as tags que contém uma imagem
-            .filter(function () {
-                return !!$(this).data('delete');
-            })
-            // Filtras as imagens que já foram deletadas
-            .filter(function () {
-                return $(this).data('deleted') !== true;
-            });
+        // Filtra deixando só as tags que contém uma imagem
+        .filter(function () {
+            return !!$(this).data('delete');
+        })
+        // Filtras as imagens que já foram deletadas
+        .filter(function () {
+            return $(this).data('deleted') !== true;
+        });
 }
 function filterImgToReorder($img) {
     return $img
-            .filter(function () {
-                return !$(this).data('file-data');
-            })
-            .filter(function () {
-                return !!$(this).data('idfoto');
-            });
+        .filter(function () {
+            return !$(this).data('file-data');
+        })
+        .filter(function () {
+            return !!$(this).data('idfoto');
+        });
 }
 module.exports = async function ($) {
     var HandleApiError = require('components/HandleApiError');
@@ -71,7 +71,7 @@ module.exports = async function ($) {
         }
 
         loading.addFeedbackTexts([
-//            'Aguarde',
+            //            'Aguarde',
             'Processando fotos...',
             textAdicional.join('<br>')
         ]);
@@ -87,9 +87,9 @@ module.exports = async function ($) {
         var $fotosContainer = $('.fotos-container');
         var reordenar = $fotosContainer.data('reordanado') || false;
         var $displayImgs = $fotosContainer.find('.display-img');
-        $('.fotos-container').find('.display-img').animate({opacity: .1});
+        $('.fotos-container').find('.display-img').animate({ opacity: .1 });
 
-        $displayImgs.each(function (i) { $(this).data('ordem', i + 1)});
+        $displayImgs.each(function (i) { $(this).data('ordem', i + 1) });
 
         for (var img of $displayImgs) {
             var $img = $(img);
@@ -100,14 +100,11 @@ module.exports = async function ($) {
             var $imgToReorder = filterImgToReorder($img);
 
             if (!$imgToUpload.length && !$imgToDelete.length && !reordenar) {
-                //console.log('nada pra fazer');
-                $img.animate({opacity: 1});
-                console.log('Sem upload, delete e reordenar');
+                $img.animate({ opacity: 1 });
                 continue;
             }
             if (reordenar && !$imgToReorder.length && !$imgToUpload.length) {
-                console.log('Mandou reordenar mas não tem nada');
-                $img.animate({opacity: 1});
+                $img.animate({ opacity: 1 });
                 continue;
 
             }
@@ -115,14 +112,12 @@ module.exports = async function ($) {
                 console.log('reordenar');
             }
 
-
-
             var formData = new FormData();
             $('#dados-basicos form')
-                    .serializeArray()
-                    .forEach(function (e) {
-                        formData.append(e.name, e.value);
-                    });
+                .serializeArray()
+                .forEach(function (e) {
+                    formData.append(e.name, e.value);
+                });
 
             $imgToUpload.each(function () {
                 formData.append('ordem[]', $(this).data('ordem')); // Ordem para o upload
@@ -138,16 +133,10 @@ module.exports = async function ($) {
                 formData.append('reordem[' + ordem + ']', $(this).data('idfoto')); // Reordena tudo
             });
 
-            console.log(formData);
-
-
             var dataNames = [];
             for (var i of formData.entries()) {
-                //console.log(i);
                 dataNames.push(i);
             }
-            console.log(dataNames);
-
 
             try {
                 await $.ajax({
@@ -168,10 +157,6 @@ module.exports = async function ($) {
                         $imgToDelete.data('deleted', true);
 
                         $img.data('posicao-rotacao', 0);
-
-//                $('.fotos-container')
-//                        .closest('.step-container')
-//                        .stepPlugin('next');
                     },
                     error: function (e) {
                         if (e.responseJSON) {
@@ -185,18 +170,19 @@ module.exports = async function ($) {
             } catch (e) {
                 console.log('Deu erro');
             }
-            $img.animate({opacity: 1});
+            $img.animate({ opacity: 1 });
         }
-         try {
+
+        try {
             var idVeiculo = $('#dados-basicos form').find('#idVeiculo').val();
-            if(idVeiculo){
+            if (idVeiculo) {
                 $.get('/clear-cache/' + idVeiculo);
             }
         } catch (e) {
             console.log('Erro no clear cache');
         }
         $.active = 1;
-        $(document).triggerHandler('ajaxComplete', [{status: 200}]);
+        $(document).triggerHandler('ajaxComplete', [{ status: 200 }]);
 
         console.log('Terminou o loop');
 
@@ -209,8 +195,8 @@ module.exports = async function ($) {
         $fotosContainer.data('reordanado', false);
 
         $('.fotos-container')
-                .closest('.step-container')
-                .stepPlugin('next');
+            .closest('.step-container')
+            .stepPlugin('next');
     }
 
 

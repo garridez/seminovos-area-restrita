@@ -13,7 +13,11 @@ function showError(body, title, time) {
  */
 module.exports = function (apiResponse, time) {
     time = time || 15000;
-    if (typeof apiResponse === 'object' && apiResponse.status === 200) {
+    if (
+        typeof apiResponse === 'object'
+        && apiResponse.status >= 200
+        && apiResponse.status <= 299
+    ) {
         return true;
     }
     if (!apiResponse) {
