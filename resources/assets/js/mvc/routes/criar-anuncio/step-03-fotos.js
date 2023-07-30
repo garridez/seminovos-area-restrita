@@ -93,17 +93,21 @@ function init() {
     ctx.on('click', '.btn-to-rotate', function (e) {
         e.preventDefault();
         var imagem = $(this).closest('.foto').find('.display-img');
-        var posicaoRotacao = imagem.data('posicaoRotacao')
+        var posicaoRotacao = imagem.data('posicao-rotacao')
 
         // Seta o numero de vezes que a imagem vai ser rotacionada em 90graus
         if (posicaoRotacao === 3) {
             posicaoRotacao = 0
-            imagem.data('posicaoRotacao', 0);
+            imagem.data('posicao-rotacao', 0);
 
         } else {
             posicaoRotacao = posicaoRotacao + 1;
-            imagem.data('posicaoRotacao', posicaoRotacao);
+            imagem.data('posicao-rotacao', posicaoRotacao);
         }
+
+        imagem.data('uploaded', false);
+        imagem.data('force-process', true);
+
 
         imagem.css({
             'transition': 'all 0.7s ease',

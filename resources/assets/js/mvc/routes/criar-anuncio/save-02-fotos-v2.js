@@ -159,6 +159,13 @@ async function init() {
             window.setAjaxLoadding = ajaxLoaddingBackup;
             ajaxAsyncCount--;
         }
+        if ($img.data('force-process') === true) {
+            $img.data('uploaded', false);
+            $img.data('deleted', false);
+            if ($img.data('idfoto')) {
+                $img.data('delete', true);
+            }
+        }
 
         var $imgToUpload = filterImgToUpload($img);
         var $imgToDelete = filterImgToDelete($img);
@@ -213,12 +220,18 @@ async function init() {
                     if (!HandleApiError(data)) {
                         return;
                     }
+                    console.log(data);
                     console.log('upload ok');
                     // Marca as imagens como "já carregadas"
                     $img.data('uploaded', true);
                     $imgToDelete.data('deleted', true);
-
-                    $img.data('posicao-rotacao', 0);
+                    if (
+                        data.resUpload
+                        && data.resUpload.data
+                        && data.resUpload.data.fotosInseridas
+                        )  {
+                        $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
+                    }
                 },
                 error: function (e) {
                     if (e.responseJSON) {

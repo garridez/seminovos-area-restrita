@@ -279,7 +279,7 @@ class DadosVeiculoController extends AbstractActionController
     {
         ini_set('memory_limit', '1G');
         ini_set('post_max_size', '700M');
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
+        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->request;
         if ($request->isPost()) {
 
@@ -346,7 +346,8 @@ class DadosVeiculoController extends AbstractActionController
             \SnBH\Common\Helper\VeiculoClearCache::clearCache($dataPost->idVeiculo);
 
             $dataJson = [
-                'status' => 200
+                'status' => 200,
+                'resUpload' => $resUpload ?? [],
             ];
             if (isset($resUpload) && $resUpload['status'] !== 200) {
                 $dataJson = $resUpload;
