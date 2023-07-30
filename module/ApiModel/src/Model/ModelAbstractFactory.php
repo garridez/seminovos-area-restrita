@@ -50,6 +50,6 @@ class ModelAbstractFactory implements AbstractFactoryInterface
 
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        
+
     }
 }

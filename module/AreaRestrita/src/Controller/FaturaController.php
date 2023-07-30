@@ -19,7 +19,6 @@ use AreaRestrita\Model\Veiculos;
 class FaturaController extends AbstractActionController
 {
 
-    protected $container;
     protected $routeParams;
     protected $routeName;
     protected $idPlano;
@@ -27,7 +26,6 @@ class FaturaController extends AbstractActionController
     public function __construct()
     {
         global $container;
-        $this->container = $container;
 
         /**
          * Apenas para mostrar na view a rota

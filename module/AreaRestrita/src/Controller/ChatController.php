@@ -15,7 +15,7 @@ class ChatController extends AbstractActionController
 
     public function indexAction()
     {
-        
+
     }
 
     public function messagesAction()
@@ -100,7 +100,7 @@ class ChatController extends AbstractActionController
         ];
     }
 
-    public function mensagensVeiculoAction()
+    public function mensagensVeiculoAction(): never
     {
         $apiClient = $this->getApiClient();
         $idVeiculo = $this->params('idVeiculo');
@@ -114,7 +114,6 @@ class ChatController extends AbstractActionController
         } else {
             echo $res->getBody();
         }
-        die;
         die;
     }
 }

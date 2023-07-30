@@ -2,6 +2,7 @@
 
 namespace SnBH\Integrador\Controller;
 
+use Laminas\Http\PhpEnvironment\Request;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
