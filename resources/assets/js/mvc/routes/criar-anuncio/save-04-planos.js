@@ -40,9 +40,6 @@ module.exports.callback = ($) => {
     });
 
     $('.step-container').on('step:pre-change:plano', function (e) {
-      if($("#acao").val() == 'trocarPlano'){
-        $('.btn-voltar').addClass('hide d-none');
-      }
       if(window.fromCheckout){
         BtnContinuar.show();
         BtnContinuar.enable();
@@ -66,7 +63,6 @@ module.exports.callback = ($) => {
         }
 
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
-            $('.btn-voltar').addClass('hide d-none');
             $("#acao").val("trocarPlano");
         }
     });
