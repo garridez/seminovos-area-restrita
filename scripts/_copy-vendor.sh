@@ -13,7 +13,7 @@ if [ "$1" == "run" ]; then
         fi
 
         echo 'Copiando vendor..'
-        cp -R ../vendor .
+        #cp -R ../vendor .
         
         echo 'ok'
         composer config vendor-dir vendor
