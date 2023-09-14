@@ -216,7 +216,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </div>
                                     <?php endif; ?>
                                     <div class="w-100">
-                                        <?php if($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
+                                        <?php /*if($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA):*/ ?>
                                             <div class="bg-master-lightest mt-1 padding-15">
                                                 <a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">
                                                     <div class="d-flex justify-content-between">
@@ -238,7 +238,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                     </div>
                                                 </a>
                                             </div>
-<?php endif; ?>
+                                        <?php /*endif;*/ ?>
                                         <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
                                         <div class="bg-master-lightest mt-1 padding-15">
                                             <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
