@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.275.5",
+            "version": "3.281.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d46961b82e857f77059c0c78160719ecb26f6cc6"
+                "reference": "b83c543a9ff07fc1d9f11766ee77fc7f4deed2b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d46961b82e857f77059c0c78160719ecb26f6cc6",
-                "reference": "d46961b82e857f77059c0c78160719ecb26f6cc6",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b83c543a9ff07fc1d9f11766ee77fc7f4deed2b9",
+                "reference": "b83c543a9ff07fc1d9f11766ee77fc7f4deed2b9",
                 "shasum": ""
             },
             "require": {
@@ -80,11 +80,11 @@
                 "ext-pcre": "*",
                 "ext-simplexml": "*",
                 "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
-                "guzzlehttp/promises": "^1.4.0",
+                "guzzlehttp/promises": "^1.4.0 || ^2.0",
                 "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
                 "mtdowling/jmespath.php": "^2.6",
-                "php": ">=5.5",
-                "psr/http-message": "^1.0"
+                "php": ">=7.2.5",
+                "psr/http-message": "^1.0 || ^2.0"
             },
             "require-dev": {
                 "andrewsville/php-token-reflection": "^1.4",
@@ -99,7 +99,7 @@
                 "ext-sockets": "*",
                 "nette/neon": "^2.3",
                 "paragonie/random_compat": ">= 2",
-                "phpunit/phpunit": "^4.8.35 || ^5.6.3 || ^9.5",
+                "phpunit/phpunit": "^5.6.3 || ^8.5 || ^9.5",
                 "psr/cache": "^1.0",
                 "psr/simple-cache": "^1.0",
                 "sebastian/comparator": "^1.2.3 || ^4.0",
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.275.5"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.281.6"
             },
-            "time": "2023-07-07T18:20:11+00:00"
+            "time": "2023-09-13T18:07:28+00:00"
         },
         {
             "name": "brick/varexporter",
@@ -891,20 +891,20 @@
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-redis",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-redis.git",
-                "reference": "81aea68071958341bd53b1e8e1b593ab29c3c8b8"
+                "reference": "8673eb48126dfa21c1afb550a5a21a2be87e5c4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-redis/zipball/81aea68071958341bd53b1e8e1b593ab29c3c8b8",
-                "reference": "81aea68071958341bd53b1e8e1b593ab29c3c8b8",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-redis/zipball/8673eb48126dfa21c1afb550a5a21a2be87e5c4f",
+                "reference": "8673eb48126dfa21c1afb550a5a21a2be87e5c4f",
                 "shasum": ""
             },
             "require": {
-                "ext-redis": "^4.3 || ^5.0.2",
+                "ext-redis": "^5.0.2 || ^6.0",
                 "laminas/laminas-cache": "^3.0",
                 "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
             },
@@ -915,7 +915,7 @@
                 "boesing/psalm-plugin-stringf": "^1.2",
                 "laminas/laminas-cache-storage-adapter-benchmark": "^1.0",
                 "laminas/laminas-cache-storage-adapter-test": "^2.3",
-                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-serializer": "^2.13.0",
                 "psalm/plugin-phpunit": "^0.18.4",
                 "vimeo/psalm": "^5.1.0"
@@ -954,7 +954,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-18T14:05:21+00:00"
+            "time": "2023-09-13T21:41:32+00:00"
         },
         {
             "name": "laminas/laminas-cache-storage-deprecated-factory",
@@ -2870,16 +2870,16 @@
         },
         {
             "name": "laminas/laminas-serializer",
-            "version": "2.15.0",
+            "version": "2.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-serializer.git",
-                "reference": "a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f"
+                "reference": "63f0a14de4e50eee24a87788168ba48b7db9e687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f",
-                "reference": "a54801b20c94fdbbcbfb8e7611ca2d5fe0181c8f",
+                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/63f0a14de4e50eee24a87788168ba48b7db9e687",
+                "reference": "63f0a14de4e50eee24a87788168ba48b7db9e687",
                 "shasum": ""
             },
             "require": {
@@ -2892,7 +2892,7 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-math": "~3.6.0",
+                "laminas/laminas-math": "^3.6",
                 "laminas/laminas-servicemanager": "~3.19.0",
                 "phpunit/phpunit": "~9.6.0"
             },
@@ -2936,7 +2936,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-07-08T08:46:03+00:00"
+            "time": "2023-09-13T21:58:37+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -4815,5 +4815,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
