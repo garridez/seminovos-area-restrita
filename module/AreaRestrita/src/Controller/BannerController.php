@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -20,15 +21,8 @@ use Laminas\View\Model\ViewModel;
 class BannerController extends AbstractActionController
 {
 
-    protected $container;
     protected $routeParams;
     protected $routeName;
-
-    public function __construct()
-    {
-        global $container;
-        $this->container = $container;
-    }
 
     /**
      * Listagem dos banners ja cadastrados
@@ -42,17 +36,17 @@ class BannerController extends AbstractActionController
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
-        
-        $dadosSite = $dadosSiteHospedado[0]['idSiteHospedado']?? null;
-        
-        if($dadosSite){
+
+        $dadosSite = $dadosSiteHospedado[0]['idSiteHospedado'] ?? null;
+
+        if ($dadosSite) {
             $banners = $this->getApiClient()
-                        ->SiteHospedadoBannerGet(['idSiteHospedado' => $dadosSite])
-                        ->json();
+                ->SiteHospedadoBannerGet(['idSiteHospedado' => $dadosSite])
+                ->json();
         }
 
         return new ViewModel([
-            'banners' => $banners['dados']??[],
+            'banners' => $banners['dados'] ?? [],
             'siteHospedado' => $dadosSiteHospedado
         ]);
     }
@@ -81,7 +75,7 @@ class BannerController extends AbstractActionController
             return $this->redirect()->toUrl('/banners');
         }
 
-        $arrayFotos = array_map(function($img) {
+        $arrayFotos = array_map(function ($img) {
             return $img['tmp_name'];
         }, $request->getFiles()->toArray());
 
@@ -95,7 +89,7 @@ class BannerController extends AbstractActionController
         ];
 
         // Envia o banner
-        $retorno = $this->getApiClient()->SiteHospedadoBannerPost($imagem);
+        $this->getApiClient()->SiteHospedadoBannerPost($imagem);
 
         return $this->redirect()->toUrl('/banners');
     }

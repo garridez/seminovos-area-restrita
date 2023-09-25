@@ -52,11 +52,10 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
 
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
-        
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
+
         $request = $this->request;
-        
+
         $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
@@ -64,7 +63,7 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
 
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-        
+
         $dataAtual = new \DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
@@ -78,11 +77,11 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
-        
+
         $routeName = str_replace("/meus-veiculos", "", (string) $request->getRequestUri());
 
         $routeParams = "/meus-veiculos";
-        
+
         $paginationData = [
             'pages' => $dadosVeiculos['pages'],
             'total' => $dadosVeiculos['total'],
@@ -96,7 +95,7 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
 
         return new JsonModel(['paginationData' => $paginationData,
         'meusVeiculos' => $dadosVeiculos]);
-        
+
     }
 
     protected function retornaValidacaoRevenda($dadosVeiculos)
@@ -392,7 +391,7 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         return $result;
 
     }
-    
+
     /*
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
      * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
@@ -440,13 +439,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
 
         $idVeiculos = array_column($dadosVeiculos['data'], 'idVeiculo');
         $dadosPropostas = $propostasModel->getAll($idVeiculos, 5 * 60) ?? [];
-        
+
         $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function($acc, $row){
             $acc[$row['idAnuncio']] = $acc[$row['idAnuncio']] ?? 0;
             $acc[$row['idAnuncio']]++;
             return $acc;
         }, []);
-        
+
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
             $idVeiculo = $veiculo['idVeiculo'];
 

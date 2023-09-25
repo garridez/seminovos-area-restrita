@@ -3,7 +3,7 @@ services:
     snbh-area-restrita:
         build: 
             context: .
-            dockerfile: DockerfileProduction
+            dockerfile: Dockerfile
             args:
                 - SESSION_PHP_COOKIE_DOMAIN=
                 - SESSION_PHP_SAVE_HANDLER=redis

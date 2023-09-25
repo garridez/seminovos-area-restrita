@@ -22,7 +22,6 @@ class PlanoController extends AbstractActionController
             ->get(2, true, -1);
 
         if ($this->getCadastro('tipoCadastro') == '1') {
-            $template = 'revenda';
             $planosAnuncioRevenda = [
                 5, # Básico
                 2, # Turbo
@@ -32,7 +31,6 @@ class PlanoController extends AbstractActionController
                 return in_array($i['idPlano'], $planosAnuncioRevenda);
             });
         } else {
-            $template = 'particular';
             $dadosPlanos = array_filter($dadosPlanos, function($i): bool {
                 return $i['status'] == 1;
             });

@@ -64,7 +64,6 @@ class DadosVeiculoController extends AbstractActionController
             $dadosForm->setIsEdition(false);
         }
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             /* @var $identity Identity */
@@ -279,7 +278,7 @@ class DadosVeiculoController extends AbstractActionController
     {
         ini_set('memory_limit', '1G');
         ini_set('post_max_size', '700M');
-        /** @var \Laminas\Http\PhpEnvironment\Request $request */
+
         $request = $this->request;
         if ($request->isPost()) {
 
@@ -378,7 +377,6 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(5);
         $videoForm->populateValues($data);
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             $post = $request->getPost();
@@ -451,18 +449,10 @@ class DadosVeiculoController extends AbstractActionController
                 die;
             }
         } else {
-
-            $placa = $this->params('placa');
-            $tipoVeiculo = 1;
-
-//            $dadosForm->get('placa')->setValue($placa);
-//            $dadosForm->get('idTipo')->setValue($tipoVeiculo);
-
             return new ViewModel([
                 'formDadosVeiculos' => $dadosForm
             ]);
         }
-//        return new ViewModel();
     }
     /**
      * Verifica se a placa está disponível para cadastro

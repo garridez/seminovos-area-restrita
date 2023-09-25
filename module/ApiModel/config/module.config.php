@@ -13,7 +13,7 @@ return [
          * Put here the namespaces to 'ModelAbstractFactory' create
          */
         'model_factory_namespace_prefix' => [
-            Model::class
+            'SnBH\ApiModel\Model'
         ],
     ],
 ];

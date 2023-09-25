@@ -76,7 +76,7 @@ class CadastrarController extends AbstractActionController
 
         // CPF ou CNPJ retira a pontuação
         if($tipoCadastro == 2){
-            $cpfOuCpnj = preg_match_all('(\d)',(string) $cpfOuCpnj, $matches);
+            preg_match_all('(\d)',(string) $cpfOuCpnj, $matches);
             $cpfOuCpnj = implode($matches[0]);
         }else{
             $cpfOuCpnj = $cpfOuCpnj;
@@ -84,7 +84,7 @@ class CadastrarController extends AbstractActionController
         }
 
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         #verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
@@ -140,7 +140,6 @@ class CadastrarController extends AbstractActionController
 
         if($retorno['status'] != 200){
             return json_encode($retorno);
-            die;
         }
 
         return new JsonModel($retorno);
@@ -200,11 +199,7 @@ class CadastrarController extends AbstractActionController
 
             /* @var $enviarEmailModel EnviarEmail */
             $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
-            $retorno = $enviarEmailModel->post($dadosEmail);
-        }
-
-        if ($retorno instanceof \SnBH\ApiClient\Response) {
-            $retorno = $retorno->json();
+            $enviarEmailModel->post($dadosEmail);
         }
 
         $email = $dadosCadastro['email'];
@@ -222,7 +217,7 @@ class CadastrarController extends AbstractActionController
     /**
      * Envia o token para o cliente
      *
-     * @return Json
+     * @return JsonModel|array
      */
     public function rememberPassPhoneAction()
     {
@@ -237,7 +232,6 @@ class CadastrarController extends AbstractActionController
 
         if($retornoContato['status'] != 200){
             return new JsonModel($retornoContato);
-            die;
         }
 
         $telefone = $retornoContato['telefone'];
@@ -421,7 +415,7 @@ class CadastrarController extends AbstractActionController
 
         }
     }
-    
+
     public function carroBolsoAction()
     {
         $dadosForm = new CadastroCarroBolsoForm();
@@ -457,14 +451,14 @@ class CadastrarController extends AbstractActionController
                 $retorno = $enviarEmailModel->post($dadosEmail);
 
                 //return $this->redirect()->toUrl('https://seminovos.com');
-                
+
                 $view = new ViewModel([
                     'formCarroBolso' => $dadosForm,
                     'sucesso' => $retorno['status'] == 200
                 ]);
-                
+
                 $this->layout('layout/blank.phtml');
-                
+
                 return $view;
 
             } else {

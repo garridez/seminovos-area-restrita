@@ -41,9 +41,6 @@
         "snbh/api-client-module": "^2.0",
         "snbh/logger": "^1.0"
     },
-    "require-dev": {
-        "rector/rector": "^0.17.1"
-    },
     "autoload": {
         "psr-4": {
             "AreaRestritaAnuncio\\": "module/AreaRestritaAnuncio/src/",

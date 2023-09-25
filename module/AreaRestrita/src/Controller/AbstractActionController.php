@@ -3,12 +3,17 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
+use Laminas\Http\PhpEnvironment\Request;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Log\Logger;
 
+/**
+ * @property Request $request
+ * @method Request getRequest()
+ */
 class AbstractActionController extends ZendAbstractActionController
 {
 
@@ -23,7 +28,7 @@ class AbstractActionController extends ZendAbstractActionController
     {
         return $this->getContainer()->get(ApiClient::class);
     }
-    
+
     public function getLogger():Logger {
         global $logger;
         return $logger;

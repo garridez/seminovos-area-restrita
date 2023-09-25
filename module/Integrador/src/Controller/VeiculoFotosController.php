@@ -15,7 +15,6 @@ class VeiculoFotosController extends AbstractActionController {
 
     public function create() {
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
         if ($request->isPost()) {
             $dataPost = $request->getPost();
@@ -33,7 +32,7 @@ class VeiculoFotosController extends AbstractActionController {
                 'use_upload_name' => true,
                 'use_upload_extension' => true,
             ]);
-            
+
             $fotos = $request->getFiles()->fotos;
 
             // Se existe $fotos['tmp_name'] quer dizer que não é um array de fotos
@@ -51,14 +50,14 @@ class VeiculoFotosController extends AbstractActionController {
                         ->veiculosFotosGet(['idVeiculo' => $dataPost->idVeiculo])
                         ->json();
                 $ultimoOrdem = is_countable($fotosVeiculo['data']) ? count($fotosVeiculo['data']) : 0;
-                
+
                 if($ultimoOrdem == 15){
                     return new JsonModel([
                         'status'=> 405,
                         'detail' => 'Limite de fotos alcançado'
                         ]);
                 }
-                
+
                 foreach($fotos as $foto){
                     $ordem[] = $ultimoOrdem + 1;
                     $ultimoOrdem++;
@@ -68,7 +67,7 @@ class VeiculoFotosController extends AbstractActionController {
                     'idTipo' => 1,
                     'idVeiculo' => $dataPost->idVeiculo,
                     'ordem' => $ordem,
-                ];                
+                ];
 
                 $files = $moveUpload->move($fotos, true);
                 $data[$apiClient::KEY_FILES] = [
@@ -80,7 +79,7 @@ class VeiculoFotosController extends AbstractActionController {
                 foreach ($files as $file) {
                     unlink($file);
                 }
-                
+
                 if($resUpload['status'] !== 200){
                     return new JsonModel($resUpload);
                 }
@@ -100,11 +99,11 @@ class VeiculoFotosController extends AbstractActionController {
             return new JsonModel($dataJson);
         }
     }
-    
+
     public function delete() {
         $idFoto = $this->params('id');
         $idVeiculo = $this->params()->fromQuery('idVeiculo');
-        
+
         /* @var $veiculosFotosModel VeiculosFotos */
         $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
 
@@ -115,17 +114,17 @@ class VeiculoFotosController extends AbstractActionController {
             return new JsonModel($retorno);
         }
         $ordem = [];
-        
+
         $fotosVeiculo = $this->getApiClient()
                         ->veiculosFotosGet(['idVeiculo' => $idVeiculo])
                         ->json();
-        
+
         $auxOrdem = 1;
         foreach($fotosVeiculo['data'] as $foto){
                     $ordem[$auxOrdem] = $foto['idFoto'];
                     $auxOrdem++;
         }
-        
+
         $resReordem = $this->getApiClient()->veiculosFotosPut([
                     'reordem' => $ordem,
                     'metadata' => [
@@ -136,13 +135,13 @@ class VeiculoFotosController extends AbstractActionController {
         if($resReordem['status'] !== 200){
             return new JsonModel($retorno);
         }
-        
+
         $dataJson = [
                 'status' => 200,
                 'detail' => 'Foto deletada com sucesso.'
             ];
 
         return new JsonModel($dataJson);
-        
+
     }
 }

@@ -86,12 +86,12 @@ class FinanceiroController extends AbstractActionController
         $maisSite = (is_countable($dadosSiteHospedado) ? count($dadosSiteHospedado) : 0) > 0 ? ' <i title="+ R$ ' . number_format($valorAdicional, 2, ',', '.') . '"> + Site</i>' : '';
 
         $valorPlanoAtual = (float) ($valorPlano + $valorAdicional);
-        
+
         // Percentuais de descontos
         $descTrime = 5.0;
         $descSemes = 10.0;
         $descAnual = 15.0;
-        
+
         $idCadastrosComDescondoCOVID = [
             207703, # Golaço Automóveis
             342744, # RC EMPREENDIMENTOS AUTOMOTIVOS
@@ -105,7 +105,7 @@ class FinanceiroController extends AbstractActionController
             $descSemes = 15.0;
             $descAnual = 20.0;
         }
-        
+
 
         $dadosFinanceiro['valor'] = number_format($valorPlanoAtual, 2, ',', '.');
         $dadosFinanceiro['valorAdicionalString'] = $valorAdicionalString;
@@ -134,7 +134,7 @@ class FinanceiroController extends AbstractActionController
         $dadosFinanceiro['value_checkbox_anual'] = ($valorPlano * 12 - (($descAnual / 100.0) * $valor * 12)) + $dadosFinanceiro['adicional_anual'];
         $dadosFinanceiro['economia_anual'] = number_format(($descAnual / 100.0) * $valorPlano * 12, 2, ',', '.');
         $dadosFinanceiro['desconto_anual'] = $descAnual . '%';
-        
+
 //        var_dump($dadosFinanceiro);
 //        die;
 

@@ -8,12 +8,13 @@ class VeiculoTipo
     final public const TIPO_CAMINHAO = 2;
     final public const TIPO_MOTO = 3;
 
-    public static $idTipos = [
+    public static array $idTipos = [
         1 => 'carro',
         2 => 'caminhão',
         3 => 'moto'
     ];
-    public static $tipos = [
+
+    public static array $tipos = [
         'carro' => 1,
         'caminhão' => 2,
         'caminhao' => 2,
@@ -23,7 +24,7 @@ class VeiculoTipo
     /**
      * Retorna o ID do tipo pelo nome
      * @param string $name
-     * @return tipo
+     * @return string|false
      */
     public static function getByName($name)
     {
