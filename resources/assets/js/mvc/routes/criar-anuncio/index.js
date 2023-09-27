@@ -33,7 +33,8 @@ module.exports.callback = ($) => {
     $('.btn-voltar').on('click', function () {
         var stepContainer = $('.step-container [class*="step"].active')
                 .closest('.step-container');
-        if ($('.step-dados').is('.active')) {
+
+        if (!$('.step-dados').length || $('.step-dados').is('.active')) {
             window.location.href = '/';
         } else {
           stepContainer.stepPlugin('prev');
@@ -85,7 +86,7 @@ module.exports.callback = ($) => {
         /*var primeiraInteracao = localStorage.getItem($('[name="placa"]').val());
 
         var tipoCadastro = $('#tipoCad').val();
-        
+
         if(primeiraInteracao !== '1' && tipoCadastro !== '1') {
 
             alerta('info', 'GARANTA SEU DIREITO DE DIRIGIR!<br>CONSULTE AGORA ESPECIALISTA PRA AJUDÁ-LO ( LEI SECA, SUSPENSÃO/CASSAÇÃO DE CNH/INDICAÇÃO DE CONDUTOR FORA DO PRAZO).', 'CNH EM RISCO?');
