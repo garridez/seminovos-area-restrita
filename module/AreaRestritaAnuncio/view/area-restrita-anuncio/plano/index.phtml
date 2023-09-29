@@ -113,6 +113,8 @@ if ($isRevenda) {
                             </div>
                         </div>
                     <?php endif; ?>
+
+                    <?php if($isParticular):?>
                     <div class="alert-primary row-full">
                         <div class="container">
                             <div class=" row  justify-content-center text-justify p-4">
@@ -130,11 +132,9 @@ if ($isRevenda) {
                                             adicional).
                                         </li>
                                         <br/>
-                                        <?php if($isParticular):?>
                                         <li class="text-danger">
                                             * Caso o anunciante coloque como vendido ou remova o anúncio, o mesmo perderá o direito de renovação sem ônus.  
                                         </li>
-                                        <?php endif; ?>
                                     </ul>
                                 </div>
                                 <div class="col-12 col-md-5 border-left border-primary border-sm-0">
@@ -160,6 +160,7 @@ if ($isRevenda) {
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                     <div class="form-group ">
                         <input type="submit">
                     </div>
