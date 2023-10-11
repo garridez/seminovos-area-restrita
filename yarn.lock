@@ -189,6 +189,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-module-imports@npm:^7.22.15":
+  version: 7.22.15
+  resolution: "@babel/helper-module-imports@npm:7.22.15"
+  dependencies:
+    "@babel/types": ^7.22.15
+  checksum: ecd7e457df0a46f889228f943ef9b4a47d485d82e030676767e6a2fdcbdaa63594d8124d4b55fd160b41c201025aec01fc27580352b1c87a37c9c6f33d116702
+  languageName: node
+  linkType: hard
+
 "@babel/helper-module-imports@npm:^7.22.5":
   version: 7.22.5
   resolution: "@babel/helper-module-imports@npm:7.22.5"
@@ -292,10 +301,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-validator-identifier@npm:^7.22.20":
+  version: 7.22.20
+  resolution: "@babel/helper-validator-identifier@npm:7.22.20"
+  checksum: 136412784d9428266bcdd4d91c32bcf9ff0e8d25534a9d94b044f77fe76bc50f941a90319b05aafd1ec04f7d127cd57a179a3716009ff7f3412ef835ada95bdc
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.22.5":
   version: 7.22.5
   resolution: "@babel/helper-validator-identifier@npm:7.22.5"
   checksum: 7f0f30113474a28298c12161763b49de5018732290ca4de13cdaefd4fd0d635a6fe3f6686c37a02905fb1e64f21a5ee2b55140cf7b070e729f1bd66866506aea
+  languageName: node
+  linkType: hard
+
+"@babel/helper-validator-option@npm:^7.22.15":
+  version: 7.22.15
+  resolution: "@babel/helper-validator-option@npm:7.22.15"
+  checksum: 68da52b1e10002a543161494c4bc0f4d0398c8fdf361d5f7f4272e95c45d5b32d974896d44f6a0ea7378c9204988879d73613ca683e13bd1304e46d25ff67a8d
   languageName: node
   linkType: hard
 
@@ -1095,6 +1118,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/plugin-transform-react-jsx@npm:^7.22.15":
+  version: 7.22.15
+  resolution: "@babel/plugin-transform-react-jsx@npm:7.22.15"
+  dependencies:
+    "@babel/helper-annotate-as-pure": ^7.22.5
+    "@babel/helper-module-imports": ^7.22.15
+    "@babel/helper-plugin-utils": ^7.22.5
+    "@babel/plugin-syntax-jsx": ^7.22.5
+    "@babel/types": ^7.22.15
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 3899054e89550c3a0ef041af7c47ee266e2e934f498ee80fefeda778a6aa177b48aa8b4d2a8bf5848de977fec564571699ab952d9fa089c4c19b45ddb121df09
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-transform-react-jsx@npm:^7.22.5":
   version: 7.22.5
   resolution: "@babel/plugin-transform-react-jsx@npm:7.22.5"
@@ -1369,19 +1407,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.22.5":
-  version: 7.22.5
-  resolution: "@babel/preset-react@npm:7.22.5"
+"@babel/preset-react@npm:^7.22.15":
+  version: 7.22.15
+  resolution: "@babel/preset-react@npm:7.22.15"
   dependencies:
     "@babel/helper-plugin-utils": ^7.22.5
-    "@babel/helper-validator-option": ^7.22.5
+    "@babel/helper-validator-option": ^7.22.15
     "@babel/plugin-transform-react-display-name": ^7.22.5
-    "@babel/plugin-transform-react-jsx": ^7.22.5
+    "@babel/plugin-transform-react-jsx": ^7.22.15
     "@babel/plugin-transform-react-jsx-development": ^7.22.5
     "@babel/plugin-transform-react-pure-annotations": ^7.22.5
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: b977c7ee83e93f62d77e61929ca3d97e5291e026e2f025a1b8b7ac9186486ed56c7d5bc36f0becabe0c24e8c42a4e4f2243a3cf841384cfafc3204c5d3e6c619
+  checksum: c3ef99dfa2e9f57d2e08603e883aa20f47630a826c8e413888a93ae6e0084b5016871e463829be125329d40a1ba0a89f7c43d77b6dab52083c225cb43e63d10e
   languageName: node
   linkType: hard
 
@@ -1438,6 +1476,17 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.22.5
     to-fast-properties: ^2.0.0
   checksum: c13a9c1dc7d2d1a241a2f8363540cb9af1d66e978e8984b400a20c4f38ba38ca29f06e26a0f2d49a70bad9e57615dac09c35accfddf1bb90d23cd3e0a0bab892
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.22.15":
+  version: 7.23.0
+  resolution: "@babel/types@npm:7.23.0"
+  dependencies:
+    "@babel/helper-string-parser": ^7.22.5
+    "@babel/helper-validator-identifier": ^7.22.20
+    to-fast-properties: ^2.0.0
+  checksum: 215fe04bd7feef79eeb4d33374b39909ce9cad1611c4135a4f7fdf41fe3280594105af6d7094354751514625ea92d0875aba355f53e86a92600f290e77b0e604
   languageName: node
   linkType: hard
 
@@ -2460,18 +2509,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "area-restrita@workspace:."
   dependencies:
-    "@babel/preset-react": ^7.22.5
+    "@babel/preset-react": ^7.22.15
     animate-sass: ^0.8.2
     chart.js: ^2.9.4
     compress.js: ^1.2.2
     font-awesome: ^4.7.0
     gulp: ^3.9.1
     icon-font-generator: ^2.1.11
-    jquery-validation: ^1.19.5
+    jquery-validation: ^1.20.0
     laravel-mix: ^6.0.49
     livereload: ^0.9.3
     popper.js: ^1.16.1
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031"
     sortablejs: ^1.15.0
     webpack: ^5.88.2
   languageName: unknown
@@ -6242,12 +6291,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery-validation@npm:^1.19.5":
-  version: 1.19.5
-  resolution: "jquery-validation@npm:1.19.5"
+"jquery-validation@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "jquery-validation@npm:1.20.0"
   peerDependencies:
     jquery: ^1.7 || ^2.0 || ^3.1
-  checksum: 75e7a84b2eb5a23720f8ab8c60768c76043e871164cd8c2a6821452133293d891bf81c2b4d0cbbdddd4da9bca3c97c50268e2be873f6719260c3123fc2a6ad91
+  checksum: 203029d1bcf222bf35679e6a37302417acba3d04729f87410243d4298cb1ca019e1c1db96827bff6abda1198009d2bf157a3913aa343cef69bb650984252e912
   languageName: node
   linkType: hard
 
@@ -9410,9 +9459,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031":
   version: 1.0.0
-  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4b221e9da275b3ccbaecb7258d497202ab1e5be9"
+  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031"
   dependencies:
     "@algolia/autocomplete-theme-classic": ^1.10.0
     autocomplete.js: ^0.38.1
@@ -9435,7 +9484,7 @@ __metadata:
     sharer.js: ^0.4.2
     webpack-cli: ^5.1.4
     whatwg-fetch: ^3.6.2
-  checksum: 3dafe8fbef82d363859d07f6d5dcae9faaa7affd541e71719c6442610bdd53c1f268d11a9339c26dc9392c4c9a7539ef99020fb2f36c6f1e983a1289938e7917
+  checksum: 580ef2a864501344711792a181339a4d484c2b07cdc21e1e49e236e2cdfd48c065aabbd2bc52a2c61233250a299a3128e2724441da8c18453e8d0a5e91438107
   languageName: node
   linkType: hard
 
