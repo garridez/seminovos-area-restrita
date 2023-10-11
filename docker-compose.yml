@@ -10,6 +10,7 @@ services:
                 - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         image: snbh/area-restrita
         container_name: snbh-area-restrita
+        hostname: meus-anuncios
         ports:
             - "8093:80"
         environment:

@@ -9,6 +9,7 @@ services:
                 - SESSION_PHP_SAVE_HANDLER=redis
                 - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         container_name: snbh-area-restrita
+        hostname: meus-anuncios
         ports:
             - "8093:80"
             - "2053:80"
