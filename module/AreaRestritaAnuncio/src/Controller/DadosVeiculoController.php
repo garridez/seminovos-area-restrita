@@ -137,9 +137,9 @@ class DadosVeiculoController extends AbstractActionController
                     unset($data['listaAcessorios']);
                 }
 
-                if(isset($data['tipoCad']) && $data['tipoCad'] === '2') {
+                /*if(isset($data['tipoCad']) && $data['tipoCad'] === '2') {
                     unset($data['flagLeilao' ]);
-                }
+                }*/
 
                 // Essa opção está obsoleta na regra de negócio
                 $data['trocaVeiculoOpcoes'] = [];
