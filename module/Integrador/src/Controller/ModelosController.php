@@ -10,8 +10,8 @@ class ModelosController extends AbstractActionController {
 
     public function fetch() {
 
-        $request = $this->request;
-        $idCadastro = $this->getIdCadastro();
+        //$request = $this->request;
+        //$idCadastro = $this->getIdCadastro();
 
         $idMarca = $this->params()->fromQuery('idMarca');
 

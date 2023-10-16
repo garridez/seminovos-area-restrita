@@ -10,8 +10,8 @@ class MotorController extends AbstractActionController {
 
     public function fetch() {
 
-        $request = $this->request;
-        $idCadastro = $this->getIdCadastro();
+        //$request = $this->request;
+        //$idCadastro = $this->getIdCadastro();
 
         $res = $this->getApiClient()->motores([
                 'tipo' => 1

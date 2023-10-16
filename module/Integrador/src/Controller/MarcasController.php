@@ -10,8 +10,8 @@ class MarcasController extends AbstractActionController {
 
     public function fetch() {
 
-        $request = $this->request;
-        $idCadastro = $this->getIdCadastro();
+        //$request = $this->request;
+        //$idCadastro = $this->getIdCadastro();
 
         $idTipo = $this->params()->fromQuery('tipo');
 
