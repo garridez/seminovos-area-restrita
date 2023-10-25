@@ -78,5 +78,9 @@
         "dev-enable": "laminas-development-mode enable",
         "dev-status": "laminas-development-mode status",
         "test": "phpunit"
+    },
+    "require-dev": {
+        "psalm/plugin-phpunit": "^0.18.4",
+        "vimeo/psalm": "^5.15"
     }
 }

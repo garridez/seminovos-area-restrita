@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<psalm
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+
+    errorLevel="5"
+    phpVersion="8.2"
+    autoloader="vendor/autoload.php"
+    resolveFromConfigFile="true"
+    findUnusedBaselineEntry="false"
+    findUnusedCode="false"
+    threads="4"
+    cacheDirectory="data/cache/.psalm"
+    allowStringToStandInForClass="true"
+    >
+    <projectFiles>
+        <directory name="config" />
+        <directory name="module" />
+        <directory name="public" />
+
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+        <ignoreFiles allowMissingFiles="true">
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
+</psalm>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -7,8 +8,10 @@
 
 namespace SnBH\Integrador;
 
+use Laminas\Mvc\Middleware\PipeSpec;
 use Laminas\Router\Http\Literal;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use SnBH\Integrador\Middleware\TokenMiddleware;
 
 return [
     'router' => [
@@ -18,12 +21,13 @@ return [
                 'options' => [
                     'route' => '/integrador',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'index',
-                        'middleware' => [
-                            Middleware\TokenMiddleware::class,
-                            Middleware\DispatchMiddleware::class,
-                        ]
+                        'controller' => PipeSpec::class,
+                        'controllerHandler' => Controller\IndexController::class,
+                        'action' => 'dispatch',
+                        'middleware' => new PipeSpec(
+                            TokenMiddleware::class,
+                            Middleware\DispatchMiddleware::class
+                        ),
                     ],
                 ],
                 'may_terminate' => true,
@@ -33,8 +37,7 @@ return [
                         'options' => [
                             'route' => '/veiculo[/:id]',
                             'defaults' => [
-                                'controller' => Controller\VeiculoController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\VeiculoController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -44,8 +47,7 @@ return [
                         'options' => [
                             'route' => '/veiculo-fotos[/:id]',
                             'defaults' => [
-                                'controller' => Controller\VeiculoFotosController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\VeiculoFotosController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -55,8 +57,7 @@ return [
                         'options' => [
                             'route' => '/plano[/:id]',
                             'defaults' => [
-                                'controller' => Controller\PlanoController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\PlanoController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -66,8 +67,7 @@ return [
                         'options' => [
                             'route' => '/marcas',
                             'defaults' => [
-                                'controller' => Controller\MarcasController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\MarcasController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -77,8 +77,7 @@ return [
                         'options' => [
                             'route' => '/modelos',
                             'defaults' => [
-                                'controller' => Controller\ModelosController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\ModelosController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -88,8 +87,7 @@ return [
                         'options' => [
                             'route' => '/acessorios',
                             'defaults' => [
-                                'controller' => Controller\AcessoriosController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\AcessoriosController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -99,8 +97,7 @@ return [
                         'options' => [
                             'route' => '/token',
                             'defaults' => [
-                                'controller' => Controller\TokenController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\TokenController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -110,8 +107,7 @@ return [
                         'options' => [
                             'route' => '/meus-veiculos-integ',
                             'defaults' => [
-                                'controller' => Controller\MeusVeiculosIntegradorController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\MeusVeiculosIntegradorController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -121,8 +117,7 @@ return [
                         'options' => [
                             'route' => '/motor',
                             'defaults' => [
-                                'controller' => Controller\MotorController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\MotorController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -132,8 +127,7 @@ return [
                         'options' => [
                             'route' => '/revendas',
                             'defaults' => [
-                                'controller' => Controller\RevendasController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\RevendasController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -143,8 +137,7 @@ return [
                         'options' => [
                             'route' => '/estados',
                             'defaults' => [
-                                'controller' => Controller\EstadosController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\EstadosController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -154,8 +147,7 @@ return [
                         'options' => [
                             'route' => '/cidades',
                             'defaults' => [
-                                'controller' => Controller\CidadesController::class,
-                                'action' => 'dispatch',
+                                'controllerHandler' => Controller\CidadesController::class,
                             ],
                             'may_terminate' => false,
                         ],
@@ -179,6 +171,7 @@ return [
             Controller\RevendasController::class => InvokableFactory::class,
             Controller\EstadosController::class => InvokableFactory::class,
             Controller\CidadesController::class => InvokableFactory::class,
+            Controller\CadastrosController::class => InvokableFactory::class,
         ],
     ],
     'service_manager' => [
