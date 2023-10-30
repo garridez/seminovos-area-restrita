@@ -29,13 +29,13 @@
     "chart.js": "^2.9.4",
     "compress.js": "^1.2.2",
     "font-awesome": "^4.7.0",
-    "jquery-validation": "^1.19.5",
+    "jquery-validation": "^1.20.0",
     "popper.js": "^1.16.1",
-    "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git",
+    "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031",
     "sortablejs": "^1.15.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-react": "^7.22.15",
     "gulp": "^3.9.1",
     "icon-font-generator": "^2.1.11",
     "laravel-mix": "^6.0.49",

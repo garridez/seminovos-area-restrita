@@ -12,7 +12,7 @@ class RevendasController extends AbstractActionController {
     {
         $request = $this->request;
         $data = $request->getPost()->toArray();
-        
+
         $requerid = [
             'cnpj',
             'razaoSocial',
@@ -26,14 +26,14 @@ class RevendasController extends AbstractActionController {
         if ($diff !== []) {
              return new JsonModel(['status' => 401, 'detail' =>"Os campos: '" . implode(', ', $diff) . "' são obrigatórios!"]);
         }
-        
+
         if ($this->validarCnpjAction($data['cnpj'])) {
             return new JsonModel([
                 'status' => 401,
                 'detail' => 'CNPJ cadastrado junto a Seminovos',
             ]);
         }
-        
+
          $variablesDefault = [
             'tipoCadastro'      => 1,
             'razaoSocial'       => '',
@@ -82,8 +82,8 @@ class RevendasController extends AbstractActionController {
             'origem'            => 'externo'
         ];
         $dados = array_merge($variablesDefault, $data);
-        
-        
+
+
         //var_dump($this->getApiClient()->cadastrosPost($dados)->getBody()); exit;
 
         $res = $this->getApiClient()->cadastrosPost($dados)->json();
@@ -94,14 +94,31 @@ class RevendasController extends AbstractActionController {
 
         return new JsonModel($res);
     }
-    
+
+    public function fetch()
+    {
+        $params = [
+            'tipoCadastro' => 1,
+            'paginaAtual' => $this->params()->fromQuery('paginaAtual', 1),
+            'registrosPagina' => $this->params()->fromQuery('registrosPagina', 20),
+        ];
+        $apiClient = $this->getApiClient();
+        $res = $apiClient->cadastrosGet($params)->json();
+        # Remove password from response
+        $res['data'] = array_map(function ($item) {
+            unset($item['senha']);
+            return $item;
+        }, $res['data']);
+        return new JsonModel($res);
+    }
+
     public function validarCnpjAction($cnpj)
     {
         $cadastro = $this->getApiClient()->cadastrosGet(['cnpj' => $cnpj, 'considerarInativo' => true], null, false)->getData();
-        
+
         return isset($cadastro[0]['idCadastro']) && $cadastro[0]['idCadastro'];
     }
-    
+
     protected function transformLabel($string, $tolower = true)
     {
         $string = preg_replace("`\[.*\]`U","",(string) $string);

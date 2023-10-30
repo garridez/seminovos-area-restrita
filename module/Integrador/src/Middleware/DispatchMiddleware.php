@@ -2,11 +2,12 @@
 
 namespace SnBH\Integrador\Middleware;
 
-use Interop\Container\ContainerInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
 use Laminas\Mvc\MvcEvent;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class DispatchMiddleware implements MiddlewareInterface
 {
@@ -18,14 +19,17 @@ class DispatchMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestI $request, DelegateI $delegate): never
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $container = $this->container;
 
-        /* @var $application \Laminas\Mvc\Application */
+        /** @var \Laminas\Mvc\Application $application  */
         $application = $container->get('Application');
 
         $event = $application->getMvcEvent();
+        $routeParams = $event->getRouteMatch()->getParams();
+        $event->getRouteMatch()->setParam('controller', $routeParams['controllerHandler']);
+
         /**
          * Realiza manualmente o dispatch do DispatchListener
          *  para executar o controler de acordo com a rota

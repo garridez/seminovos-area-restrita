@@ -3,11 +3,9 @@ FROM snbh-server-base:8.2-node
 RUN docker-php-ext-enable redis
 
 #COPY . .
-VOLUME /home/www-data/node_modules
+#VOLUME /home/www-data/node_modules
 
-RUN apt-get install -y zlib1g-dev libicu-dev g++ \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install intl
+
 
 
 ARG SESSION_PHP_COOKIE_DOMAIN

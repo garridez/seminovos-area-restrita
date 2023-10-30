@@ -20,9 +20,10 @@ class AbstractActionController extends ZendAbstractActionController
      */
     public function getIdCadastro(): int
     {
-        /** @var \Laminas\Http\PhpEnvironment\Request $request */
         $request = $this->request;
-        return (int) $request->getHeader('X-SnBH-IdCadastro')->getFieldValue();
+        $headerIdCadastro = $request->getHeader('X-SnBH-IdCadastro');
+
+        return (int) $headerIdCadastro->getFieldValue();
     }
 
     public function getContainer(): ServiceManager
