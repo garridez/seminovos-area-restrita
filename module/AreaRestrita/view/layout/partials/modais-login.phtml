@@ -4,6 +4,7 @@
         <input type="hidden" name="tipoCadastro" disabled>
         <input type="hidden" name="cpfCnpj" disabled>
         <input type="hidden" name="idCadastro" disabled>
+        <input type="hidden" name="email" disabled>
     </form>
 </div>
 
@@ -59,12 +60,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button> */?>
                 <div class="modal-header">
-                    <span>Informe seu <b>CPF</b></span>
+                    <span>Informe seu <b>CPF</b> ou seu <b>E-MAIL</b></span>
                 </div>
                 <div class="modal-body mt-2">
                     <div class="">
                         <span>CPF</span>
-                        <input type="text" id="cpfOuCpnj" data-mask="000.000.000-00" name="cpfOuCpnj"  class="form-control" placeholder="000.000.000-00" required="required" minlength="10" maxlength="15">
+                        <input type="hidden" name="tokenResetarSenha" value="">
+                        <input type="text" id="cpfOuCpnj" data-mask="000.000.000-00" name="cpfOuCpnj"  class="form-control" placeholder="000.000.000-00" minlength="10" maxlength="15">
+                    </div>
+
+                    <div class="mt-2">
+                        <span>E-mail</span>
+                        <input type="email" id="email" name="email" class="form-control" minlength="10" maxlength="256">
                     </div>
                 </div>
                 <div class="modal-footer mt-3">

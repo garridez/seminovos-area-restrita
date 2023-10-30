@@ -123,8 +123,80 @@ class CadastrarController extends AbstractActionController
         }
 
         return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
+    }   
+
+    /**
+     * Get contact from email
+     */
+    private function getContatosFromEmail($email, $mask = true)
+    {
+        $tipoCadastro      = 3;
+        $considerarInativo = false;
+
+        /** @var Cadastros $cadastrosModel */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+
+        #verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
+        $dadosCadastro = $cadastrosModel->get([
+            'email' => $email,
+            'checkEmail' => true,
+            'considerarInativo' => $considerarInativo
+        ]);
+
+        if (!$dadosCadastro || !$dadosCadastro[0]) {
+            return [
+                'status' => 200,
+                'cpfCadastro' => false,
+                'tipoCadastro' => $tipoCadastro,
+                'detail' => 'E-mail não encontrado. Verifique e tente novamente',
+            ];
+        }
+
+        $dadosCadastro = $dadosCadastro[0];
+
+        $email = $dadosCadastro['email'] ?? null;
+        $telefone = $dadosCadastro['telefone2'] ? $dadosCadastro['telefone2'] : null;
+
+        if($mask){
+            // Mascara email
+            $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', (string) $email);
+
+            // Mascara telefone
+            $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', (string) $telefone);
+
+        }
+
+        return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastro];
     }
 
+    /**
+     * Verifica se o capcha para resetar senha é válido
+     */
+    public function resetPasswordCheckRecaptcha($token)
+    {  
+        $httpClient = new \Laminas\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+
+        $request = $httpClient->getRequest();
+        $httpClient->setMethod('POST');
+        $request->setPost(new \Laminas\Stdlib\Parameters([
+            'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
+            'response' => $token
+        ]));
+        
+        $resposta = $httpClient->send();
+                
+        if ($resposta->getStatusCode()) {
+            $result = json_decode($resposta->getBody(), true) ;
+            
+            if (!$result['success']) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
 
     public function getEmailTelefoneFromCpfOuCnpjAction()
     {
@@ -133,11 +205,34 @@ class CadastrarController extends AbstractActionController
         if (!$request->isPost()) {
             return [];
         }
+
         $post = $request->getPost();
-
         $cpfOuCpnj = $post['cpfOuCpnj'];
-        $retorno = $this->getContatosFromCpfCnpj($cpfOuCpnj);
+        $email     = $post['email'];
+        $token     = $post['tokenResetarSenha'];
 
+        $retorno = [];
+
+        if(is_null($token) || !$this->resetPasswordCheckRecaptcha($token)){
+            $retorno = [
+                'status' => 200,
+                'cpfCadastro' => false,
+                'tipoCadastro' => 5,
+                'detail' => 'Desafio do captcha inválido',
+            ];
+        } else if($cpfOuCpnj != '') {
+            $retorno = $this->getContatosFromCpfCnpj($cpfOuCpnj);
+        } else if($email != '') {
+            $retorno = $this->getContatosFromEmail($email);
+        } else { //retorno default
+            $retorno = [
+                'status' => 200,
+                'cpfCadastro' => false,
+                'tipoCadastro' => 4,
+                'detail' => 'E-mail não encontrado. Verifique e tente novamente',
+            ];
+        }
+        
         if($retorno['status'] != 200){
             return json_encode($retorno);
         }
@@ -156,7 +251,15 @@ class CadastrarController extends AbstractActionController
         $post = $request->getPost();
 
         $cpfOuCpnj = $post['cpfOuCpnj'];
-        $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
+        $email     = $post['email'];
+
+        $retorno = [];
+
+        if($cpfOuCpnj != '') {
+            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj);
+        } else if($email != '') {
+            $retornoContato = $this->getContatosFromEmail($email);
+        }
 
         $dadosCadastro = $retornoContato['dadosCadastro'];
 
@@ -164,7 +267,7 @@ class CadastrarController extends AbstractActionController
             echo json_encode([
                 'status' => 400,
                 'title' => 'Method Not Allowed',
-                'detail' => 'CPF ou CNPJ não encontrado. Verifique e tente novamente',
+                'detail' => 'CPF ou CNPJ ou E-mail não encontrado. Verifique e tente novamente',
             ]);
             die;
         }
