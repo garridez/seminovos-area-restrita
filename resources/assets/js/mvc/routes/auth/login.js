@@ -175,6 +175,10 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                     return;
                 }
                 $('#modalValidaToken').modal('show');
+
+                //limpa campos
+                $('#cpfOuCpnj').val('');
+                $('#resetPasswordEmail').val('');
             },
             error: function (e) {
                 if (e.responseJSON) {
@@ -201,9 +205,6 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
         var cpfOuCpnj = $formDadosBasicos.find('input[name="cpfCnpj"]').val();
         var email = $formDadosBasicos.find('input[name="email"]').val();
 
-        console.log(cpfOuCpnj);
-        console.log(email);
-
         $.ajax({
             type: 'POST',
             url: '/remember-pass',
@@ -220,6 +221,9 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                     title: 'Senha Enviada',
                     text: 'Nova senha enviada para o email:</br>' + data.email
                 });
+                //limpa campos
+                $('#cpfOuCpnj').val('');
+                $('#resetPasswordEmail').val('');
             },
             error: function (e) {
                 if (e.responseJSON) {

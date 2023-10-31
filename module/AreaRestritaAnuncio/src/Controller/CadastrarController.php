@@ -256,9 +256,9 @@ class CadastrarController extends AbstractActionController
         $retorno = [];
 
         if($cpfOuCpnj != '') {
-            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj);
+            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj,false);
         } else if($email != '') {
-            $retornoContato = $this->getContatosFromEmail($email);
+            $retornoContato = $this->getContatosFromEmail($email,false);
         }
 
         $dadosCadastro = $retornoContato['dadosCadastro'];
@@ -331,7 +331,13 @@ class CadastrarController extends AbstractActionController
         $post = $request->getPost();
 
         $cpfOuCpnj = $post['cpfOuCpnj'];
-        $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
+        $email = $post['email'];
+
+        if($cpfOuCpnj != '') {
+            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
+        } else if($email != '') {
+            $retornoContato = $this->getContatosFromEmail($email, false);
+        } 
 
         if($retornoContato['status'] != 200){
             return new JsonModel($retornoContato);
