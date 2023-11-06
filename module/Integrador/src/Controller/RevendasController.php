@@ -104,11 +104,7 @@ class RevendasController extends AbstractActionController {
         ];
         $apiClient = $this->getApiClient();
         $res = $apiClient->cadastrosGet($params)->json();
-        # Remove password from response
-        $res['data'] = array_map(function ($item) {
-            unset($item['senha']);
-            return $item;
-        }, $res['data']);
+
         return new JsonModel($res);
     }
 
