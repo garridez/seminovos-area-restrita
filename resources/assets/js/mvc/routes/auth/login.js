@@ -305,7 +305,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                     title: 'Nova senha cadastrada',
                     text: 'Utilize a nova senha para entrar'
                 }).on('hidden.bs.modal', function () {
-                    location.reload();
+                    window.location.href = "/";
                 });;
                 $formDadosBasicos.find('input').val('');
             },
