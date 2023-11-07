@@ -46,8 +46,17 @@ async function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $fotosContainer = $('.fotos-container');
 
+    var countDelay = 0;
+
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
-        uploadImage(this, false, false);
+        if (countDelay === 0) {
+            uploadImage(this, false, false);
+            return;
+        }
+        countDelay++;
+        setTimeout(function () {
+            uploadImage(this, false, false);
+        }.bind(this), countDelay * 1000);
 
     });
 
