@@ -50,6 +50,7 @@ async function init() {
 
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
         if (countDelay === 0) {
+            countDelay++;
             uploadImage(this, false, false);
             return;
         }
