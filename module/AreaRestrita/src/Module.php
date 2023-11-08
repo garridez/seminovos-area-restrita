@@ -53,7 +53,9 @@ class Module
         if (preg_match('/^\/(integrador|zoop)/', $path)) {
             return;
         }
-        
+
+        session_start();
+
         /* @var $sessionManager AuthService */
         $authService = $sm->get(AuthService::class);
 

@@ -1,4 +1,4 @@
-FROM snbh-server-base:8.2-node
+FROM 041122835851.dkr.ecr.us-west-2.amazonaws.com/area-restrita:8.2-node
 
 RUN docker-php-ext-enable redis
 
