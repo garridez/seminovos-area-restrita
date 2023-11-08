@@ -1,34 +1,34 @@
 version: 0.2
 
 env:
-  variables:
-      IMAGE_REPO_NAME: "area-restrita"
-      IMAGE_TAG: "latest"
-      AWS_ACCOUNT_ID: "041122835851"
-      AWS_DEFAULT_REGION: "us-west-2"
-      IMAGE_URI: "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME"
-
+    variables:
+        IMAGE_REPO_NAME: "area-restrita"
+        IMAGE_TAG: "latest"
+        AWS_ACCOUNT_ID: "041122835851"
+        AWS_DEFAULT_REGION: "us-west-2"
 phases:
-  install:
-    commands:
-      - git checkout master
-      - PROJECT_TAG=$(git describe)
-      - echo $PROJECT_TAG
-      # Caso não seja uma tag release, o script para.
-      - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
-  pre_build:
-    commands:
-      - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-  build:
-    commands:
-      - echo "Building the Docker image..."
-      - docker-compose -f docker-compose.production.yml build
-      - docker tag "$IMAGE_URI:$IMAGE_TAG" "$IMAGE_URI:$PROJECT_TAG"
-  post_build:
-    commands:
-      - echo "Pushing the Docker image..."
-      - docker push $IMAGE_URI:$IMAGE_TAG
-      - docker push $IMAGE_URI:$PROJECT_TAG
-      -
-      - aws ecs update-service --force-new-deployment --service arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:service/Area-Restrita-Daemon --cluster arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:cluster/area-restrita
+    install:
+        commands:
+            - git checkout master
+            - PROJECT_TAG=$(git describe)
+            - echo $PROJECT_TAG
+            # Caso não seja uma tag release, o script para.
+            - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
+            -   ECR_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+            - IMAGE_URI="$ECR_URI/$IMAGE_REPO_NAME"
+    pre_build:
+        commands:
+            - echo "Logging in to Amazon ECR..."
+            - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_URI
+    build:
+        commands:
+            - echo "Building the Docker image..."
+            - docker-compose -f docker-compose.production.yml build
+            - docker tag "$IMAGE_URI:$IMAGE_TAG" "$IMAGE_URI:$PROJECT_TAG"
+    post_build:
+        commands:
+            - echo "Pushing the Docker image..."
+            - docker push $IMAGE_URI:$IMAGE_TAG
+            - docker push $IMAGE_URI:$PROJECT_TAG
+            -
+            - aws ecs update-service --force-new-deployment --service arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:service/Area-Restrita-Daemon --cluster arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:cluster/area-restrita
