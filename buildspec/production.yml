@@ -16,6 +16,8 @@ phases:
             - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
             -   ECR_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
             - IMAGE_URI="$ECR_URI/$IMAGE_REPO_NAME"
+            - SERVICE_ARN="arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:service/Area-Restrita-Daemon"
+            - CLUSTER_ARN="arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:cluster/area-restrita"
     pre_build:
         commands:
             - echo "Logging in to Amazon ECR..."
@@ -31,4 +33,4 @@ phases:
             - docker push $IMAGE_URI:$IMAGE_TAG
             - docker push $IMAGE_URI:$PROJECT_TAG
             -
-            - aws ecs update-service --force-new-deployment --service arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:service/Area-Restrita-Daemon --cluster arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:cluster/area-restrita
+            - aws ecs update-service --force-new-deployment --service $SERVICE_ARN --cluster $CLUSTER_ARN
