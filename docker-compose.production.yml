@@ -8,7 +8,7 @@ services:
                 - SESSION_PHP_COOKIE_DOMAIN=seminovos.com.br
                 - SESSION_PHP_SAVE_HANDLER=redis
                 - SESSION_SAVE_PATH=tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1
-        image: 041122835851.dkr.ecr.us-west-2.amazonaws.com/area-restrita
+        image: 041122835851.dkr.ecr.us-west-2.amazonaws.com/area-restrita:latest
         container_name: snbh-area-restrita-production
         hostname: meus-anuncios
         ports:

@@ -24,7 +24,7 @@ phases:
     commands:
       - echo "Building the Docker image..."
       - docker-compose -f docker-compose.production.yml build
-      - docker tag $IMAGE_URI:$IMAGE_TAG $IMAGE_URI:$PROJECT_TAG
+      - docker tag "$IMAGE_URI:$IMAGE_TAG" "$IMAGE_URI:$PROJECT_TAG"
   post_build:
     commands:
       - echo "Pushing the Docker image..."
