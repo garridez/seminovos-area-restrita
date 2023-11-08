@@ -12,6 +12,7 @@ use SnBH\ApiClient\Event as ApiClientEvents;
 use SnBH\ApiClient\Response as ApiClientResponse;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\EventManager\Event as ZendEvent;
+use Laminas\Http\PhpEnvironment\Request;
 use Laminas\I18n\Translator\Loader\PhpArray;
 use Laminas\I18n\Translator\Resources as TranslatorResources;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
@@ -45,6 +46,14 @@ class Module
 
     public function apiUserHeader(ServiceManager $sm)
     {
+        /** @var Request */
+        $request = $sm->get('Request');
+        $path = $request->getUri()->getPath();
+
+        if (preg_match('/^\/(integrador|zoop)/', $path)) {
+            return;
+        }
+        
         /* @var $sessionManager AuthService */
         $authService = $sm->get(AuthService::class);
 

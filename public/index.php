@@ -1,14 +1,6 @@
 <?php
 
 ob_start();
-session_start();
-if (isset($_GET['manu-off'])) {
-    $_SESSION['manu-off'] = 1;
-}
-if (!isset($_SESSION['manu-off']) && date('Y-m-d H:i:s') < '2023-05-07 07:00:00') {
-    require 'em-manutencao.php';
-    exit;
-}
 
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação

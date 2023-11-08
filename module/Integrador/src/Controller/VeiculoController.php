@@ -158,14 +158,17 @@ class VeiculoController extends AbstractActionController {
 
         $idVeiculo = $this->params('id');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
-        /* @var $veiculosFotosModel VeiculosFotos */
+        /** @var VeiculosFotos $veiculosFotosModel */
         $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
 
         // Busca os dados das fotos do veiculo
         $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
+        if ($dadosVeiculoFotos['status'] != 200) {
+            return new JsonModel($dadosVeiculoFotos);
+        }
 
         $listaFotos = [];
         foreach ($dadosVeiculoFotos as $key => $dado) {
