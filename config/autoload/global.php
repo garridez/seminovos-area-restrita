@@ -77,8 +77,6 @@ return [
         ],
     ],
     'session_config' => [
-        'cookie_lifetime' => 60 * 60 * 24 * 31 * 12,
-        'gc_maxlifetime' => 60 * 60 * 24 * 5,
     ],
     'session_manager' => [
         'validators' => [
