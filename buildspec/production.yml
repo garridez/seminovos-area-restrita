@@ -18,7 +18,7 @@ phases:
       - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
   pre_build:
     commands:
-      - echo "Logging in to Amazon ECR...""
+      - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
@@ -27,7 +27,7 @@ phases:
       - docker tag $IMAGE_URI:$IMAGE_TAG $IMAGE_URI:$PROJECT_TAG
   post_build:
     commands:
-      - echo "Pushing the Docker image...""
+      - echo "Pushing the Docker image..."
       - docker push $IMAGE_URI:$IMAGE_TAG
       - docker push $IMAGE_URI:$PROJECT_TAG
       -
