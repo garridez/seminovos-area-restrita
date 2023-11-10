@@ -166,19 +166,17 @@ class VeiculoController extends AbstractActionController {
 
         // Busca os dados das fotos do veiculo
         $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
-        if ($dadosVeiculoFotos['status'] != 200) {
-            return new JsonModel($dadosVeiculoFotos);
-        }
 
-        $listaFotos = [];
-        foreach ($dadosVeiculoFotos as $key => $dado) {
-            $listaFotos[] = $dado['idFoto'];
+        if ($dadosVeiculoFotos) {
+            $listaFotos = [];
+            foreach ($dadosVeiculoFotos as $key => $dado) {
+                $listaFotos[] = $dado['idFoto'];
+            }
+            #deletar fotos do servidor
+            $veiculosFotosModel->delete([
+                'listaFotos' => $listaFotos
+            ]);
         }
-
-        #deletar fotos do servidor
-        $retorno = $veiculosFotosModel->delete([
-            'listaFotos' => $listaFotos
-        ]);
 
         #quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
         $dadosVeiculos = $veiculosModel->delete($idVeiculo);
