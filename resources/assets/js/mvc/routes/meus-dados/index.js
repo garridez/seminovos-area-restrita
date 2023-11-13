@@ -173,6 +173,7 @@ module.exports.callback = ($) => {
     });
 
     require('components/EstadoCidade')();
+
     var advancedAlerts = require('components/AdvancedAlerts');
     var resquestResponse = $("span[data-request-response]").data("request-response") || false;
     if (!resquestResponse) {

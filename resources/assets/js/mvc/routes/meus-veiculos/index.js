@@ -5,6 +5,29 @@ module.exports.callback = $ => {
     var advancedAlerts = require("components/AdvancedAlerts");
     var Confirms = require('components/Confirms');
     var FormAlerts = require('components/FormAlerts');
+    
+    /**
+     * @TODO pode remover depois da DIVULGAÇÃO
+     */
+
+    // Lógica para exibir modal AUTOCONECTA
+    var url = new URL(window.location.href);
+
+    // Verifica se o parâmetro 'exibirModal' está presente na URL
+    if (url.searchParams.has('exibirModal')) {
+        // O parâmetro 'exibirModal' está presente na URL
+        var valorExibirModal = url.searchParams.get('exibirModal');
+        
+        // Faça o que for necessário com o valor, por exemplo, exibir a modal com base nele
+        if (valorExibirModal === '1') {
+            advancedAlerts.success({
+                title: "<b>NOVIDADE!</b>",
+                text: "<img src='https://autoconecta.com.br/assets/images/dark-logo.png' style='max-width: 56%;height: auto;' alt='Imagem/Logo da AutoConecta'><br><p>A Seminovos em parceria com o <strong style='color: #2081C3;'>Auto Conecta</strong>, oferece aos nossos parceiros o REPASSE AUTO CERTO... Uma plataforma para cadastrar seus veículos de \"repasse\" e conecta você com todas as empresas parceiras ativas da Seminovos!</p></br><p>Fique tranquilo, essa ferramenta só lojistas tem acesso! Seu estoque de repasse, sendo visualizado por mais de 600 lojas.</p><a target='_blank' href='https://autoconecta.com.br/auth/login' style='margin-top: 30px;background-color: #2081C3;margin-bottom: -30px;border-color: #2081C3;' class='btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center btn-acao-trocar-plano'>CLIQUE PARA ACESSAR O REPASSE AUTO CERTO</a>",
+                time: 0,
+                close: "",
+            });
+        }
+    }
 
     if ($("div[data-veiculo-finalizar]").length) {
         advancedAlerts.warning({
