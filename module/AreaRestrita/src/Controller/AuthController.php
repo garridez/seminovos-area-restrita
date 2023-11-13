@@ -128,6 +128,11 @@ class AuthController extends AbstractActionController
                     $sessionStorage->redirect = null;
                     return $this->redirect()->toUrl($redirect);
                 }
+
+                if($data['tipoCadastro'] == 1) {
+                    return $this->redirect()->toRoute('restrito', [], ['query' => ['exibirModal' => 1]]);
+                } 
+                      
                 return $this->redirect()->toRoute('restrito');
             }
         }

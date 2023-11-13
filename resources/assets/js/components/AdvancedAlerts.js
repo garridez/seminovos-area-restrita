@@ -38,6 +38,10 @@ module.exports = advancedAlerts = {
             }, options.time);
         }
 
+        if(options.close == "") {
+            close = "";
+        }
+
         var modal = $.jsBsModal({
             contents: {
                 'close': '',
