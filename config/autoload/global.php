@@ -63,11 +63,11 @@ return [
     ],
     'caches' => [
         'cache' => [
-            'adapter' => Redis::class,
+            'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
             'options' => [
-                'server' => 'tcp://session.ugt1op.ng.0001.usw2.cache.amazonaws.com:6379?weight=1&timeout=1',
                 'ttl' => 300, # 5 Minutos
-                'namespace' => 'AreaRestritaProd'
+                'cacheDir' => 'data/cache',
+                'namespace' => 'area-restrita',
             ],
             'plugins' => [
                 [
