@@ -86,7 +86,7 @@ class HistoricoPagamentosController extends AbstractActionController
         ];
 
         return new ViewModel([
-            'historicoPagamentos' => $dadosHistoricoPagamentos['data'],
+            'historicoPagamentos' => $dadosHistoricoPagamentos['data'] ?? [],
             'arrayStatus' => $arrayStatus,
             'arrayFormaPagamento' => $arrayFormaPagamento,
             'tipoCadastro' => $tipoCadastro

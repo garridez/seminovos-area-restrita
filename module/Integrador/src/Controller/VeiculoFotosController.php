@@ -14,6 +14,7 @@ class VeiculoFotosController extends AbstractActionController {
 
 
     public function create() {
+        ini_set('memory_limit', '256M');
 
         $request = $this->request;
         if ($request->isPost()) {
@@ -93,7 +94,7 @@ class VeiculoFotosController extends AbstractActionController {
 
             $dataJson = [
                 'status' => 200,
-                'data' => $resUpload['data']
+                'data' => $resUpload['data'] ?? $resUpload
             ];
 
             return new JsonModel($dataJson);

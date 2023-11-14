@@ -97,6 +97,12 @@ class PagamentoController extends AbstractActionController
 
     public function pagamentoStatusAction()
     {
+        if (!$this->getCadastro('idCadastro')) {
+            $this->getResponse()->setStatusCode(401);
+            return new JsonModel([
+                'status' => 401,
+            ]);
+        }
         $dados = $this->params()->fromRoute();
 
         $dadosPag = $this->getApiClient()->pagamentosGet([
