@@ -25,7 +25,7 @@ return [
     \Laminas\Cache\Storage\Adapter\Redis::class,
     \Laminas\Cache\Storage\Adapter\Filesystem::class,
     'Laminas\Validator',
-    
+
     //'TwbBundle',
     'SnBH\ApiClientModule',
     'SnBH\ApiModel',
@@ -35,4 +35,5 @@ return [
     'SnBH\Integrador',
     'SnBH\GalaxPay',
     'SnBH\Zoop',
+    'SnBH\Importer',
 ];
