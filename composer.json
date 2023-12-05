@@ -49,7 +49,8 @@
             "SnBH\\Common\\": "module/Common/src/",
             "SnBH\\Integrador\\": "module/Integrador/src/",
             "SnBH\\GalaxPay\\": "module/GalaxPay/src/",
-            "SnBH\\Zoop\\": "module/Zoop/src/"
+            "SnBH\\Zoop\\": "module/Zoop/src/",
+            "SnBH\\Importer\\": "module/Importer/src/"
         }
     },
     "autoload-dev": {

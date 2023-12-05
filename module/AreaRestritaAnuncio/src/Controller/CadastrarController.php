@@ -23,7 +23,8 @@ class CadastrarController extends AbstractActionController
 {
 
     public function indexAction()
-    {
+    {   
+
 //        $dadosForm = new Cadastro\CadastroParticularForm();
         $dadosForm = new ParticularForm();
 

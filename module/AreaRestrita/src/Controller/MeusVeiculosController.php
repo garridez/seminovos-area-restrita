@@ -52,7 +52,7 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $request \Laminas\Http\PhpEnvironment\Request */
         $request = $this->request;
-
+ 
         $page = $request->getQuery('page') ?? 1;
 
         // Busca os dados do cadastro
@@ -75,9 +75,12 @@ class MeusVeiculosController extends AbstractActionController
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
 
+        
+
         $routeName = str_replace("/meus-veiculos", "", (string) $request->getRequestUri());
 
         $routeParams = "/meus-veiculos";
+
 
         $paginationData = [
             'pages' => $dadosVeiculos['pages'],
