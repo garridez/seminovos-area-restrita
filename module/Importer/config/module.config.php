@@ -8,7 +8,7 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            'integrador' => [
+            'importer' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/importer',
