@@ -21,7 +21,7 @@ function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     observacoesTextarea.keyup(function () {
         countSpan.html($(this).val().length);
-        if ($(this).val().length > 700) {
+        if ($(this).val().length > 650) {
             BtnContinuar.disable()
             countSpan.html($(this).val().length + ` - As observações não podem ultrapassar 700 caracteres`);
         } else {
