@@ -19,7 +19,7 @@ class PrecoForm extends Form
                 'label' => 'Observações sobre o veículo',
             ],
             'attributes' => [
-                'maxlength' => 700
+                'maxlength' => 650
             ]
         ]);
 
@@ -90,7 +90,7 @@ class PrecoForm extends Form
                 'unchecked_value' => '0',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'flagFinanciar',
