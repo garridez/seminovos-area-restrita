@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
         $this->apiClient      = $this->getApiClient();
         $this->serviceManager =  $this->getEvent()->getApplication()->getServiceManager();
     }
-    
+
     protected function getApiClient(): ApiClient
     {
         static $apiClient;
@@ -47,10 +47,10 @@ class IndexController extends AbstractActionController
     }
 
     public function indexAction()
-    {   
+    {
         $this->init();
 
-        
+
         try {
 
             $mailtoNumber = 0;
@@ -62,30 +62,30 @@ class IndexController extends AbstractActionController
                 $this->currentVeiculo = $veiculo;
 
                 $telefone = str_replace( ['(', ')', '-' , ' '] , '', $this->currentVeiculo['telefone'] );
-                
+
                 $cadastro = $this->apiClient->cadastrosGet([
-                    'email' =>  (IS_PROD) ? $this->currentVeiculo['email'] :   'mailto' . ++$mailtoNumber . '@webmotors.com.br',                    
+                    'email' =>  (IS_PROD) ? $this->currentVeiculo['email'] :   'mailto' . ++$mailtoNumber . '@webmotors.com.br',
                 ])->json();
 
                 //se cadastro não existe
-                if(empty($cadastro['data'])) { 
+                if(empty($cadastro['data'])) {
                     $this->importarCadastro($mailtoNumber);
                 } else {
                     $this->idCadastro = $cadastro['data']['0']['idCadastro'];
                 }
- 
+
                 $responseImportarVeiculo =  $this->importarVeiculo();
 
                 //se der erro por placa já cadsatrada continua o foreach
                 if(!$responseImportarVeiculo) {
                     continue;
                 }
-                
+
                 if( count($this->currentVeiculo['fotos']) > 0 ) {
                     $this->importarFotos();
                 }
-                
-                
+
+
                  $importer[] = [
                     'id' => $this->currentVeiculo['id'],
                     'id_cadastro' => $this->idCadastro,
@@ -126,7 +126,7 @@ class IndexController extends AbstractActionController
      * Importa Cadastro
      */
     private function importarCadastro($mailtoNumber = 0)
-    {   
+    {
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->serviceManager->get(Cadastros::class);
 
@@ -140,7 +140,7 @@ class IndexController extends AbstractActionController
             $cidade = trim(explode('-' , $this->currentVeiculo['cidade'])[0]);
             $cidade = $this->getInfoCidade($estado['idEstado'], $cidade);
 
-           
+
             $idCidade = $cidade['idCidade'];
             $idEstado = $estado['idEstado'];
             $estado   = $estado['estado'];
@@ -149,7 +149,7 @@ class IndexController extends AbstractActionController
         /**
          * @todo verifica cpf
          */
-        
+
         $postDto = [
             'tipoCadastro'         => 2,
             'responsavelNome'      => $this->currentVeiculo['dono'],
@@ -163,28 +163,28 @@ class IndexController extends AbstractActionController
             'idEstado'             => $idEstado,
             'estado'               => $estado,
             'cadastroSimplificado' => true
-        ];  
-        
+        ];
+
 
         $resPost = $cadastrosModel
                         ->post($postDto)
                         ->json();
 
         if(isset($resPost['status']) && $resPost['status'] != 200) {
-            throw new Exception('Error importing registration ' . $postDto['email'] . ". " . $resPost['detail'], 1); 
+            throw new Exception('Error importing registration ' . $postDto['email'] . ". " . $resPost['detail'], 1);
         }
 
-        $this->idCadastro =  $resPost['data'][0]['idCadastro'];        
+        $this->idCadastro =  $resPost['data'][0]['idCadastro'];
     }
 
 
     /**
      * Importa Veículos Com Acessórios
-     * 
+     *
      * @return bool | true se deu tudo certo /false se placa já cadastrada no sistema
      */
     private function importarVeiculo()
-    {   
+    {
         $combustivel = 1;
 
         if (isset($this->currentVeiculo['combustivel'])) {
@@ -251,33 +251,43 @@ class IndexController extends AbstractActionController
             'aceitaLigacao'   => 1,
             'aceitaChat'      => 1
         ];
-        
+
         $res = $this->apiClient->veiculosPost($data)->json();
 
         if ($res['status'] != 200) {
             if(isset($res['detail']) && $res['detail'] == "A placa informada: ".$this->currentVeiculo['placa'].", já está cadastrada em nosso sistema!") {
                 return false;
             } else {
-                throw new Exception('Error importing vehicle ' .$this->currentVeiculo['id'], 1); 
+                $title = $res['title'] ?? '';
+                $detail = $res['detail'] ?? '';
+                $messages = implode(' - ', $res['messages'] ?? []);
+
+
+
+                throw new Exception(
+                    'Error importing vehicle ' . $this->currentVeiculo['id']
+                        . " - $title - $detail - $messages",
+                    1
+                );
             }
-        } 
+        }
 
         $this->idVeiculo = $res['data'][0]['idVeiculo'];
 
         $res = $this->apiClient->veiculosPut([
             'idStatus' =>2,
-            ], $this->idVeiculo); 
-        
+            ], $this->idVeiculo);
+
         return true;
-    }   
+    }
 
 
     /**
      * Importa Fotos
      */
     private function importarFotos()
-    { 
-        
+    {
+
         $files = [];
         $ordem = [];
         $ordemCount = 0;
@@ -306,7 +316,7 @@ class IndexController extends AbstractActionController
 
         $res = $this->apiClient->veiculosPut([
             'idStatus' =>2,
-            ], $this->idVeiculo); 
+            ], $this->idVeiculo);
     }
 
 
@@ -328,11 +338,11 @@ class IndexController extends AbstractActionController
         if($this->currentVeiculo['transmissao'] == 'Automática'){
             array_push($listaAcessorios,11) ;
         }
- 
+
         return $listaAcessorios;
     }
 
-  
+
     /**
      * Retorna informações de um estado
      */
@@ -345,13 +355,13 @@ class IndexController extends AbstractActionController
 
         if(empty($response))
             return null;
-        
+
         return $response[0];
     }
 
     /**
      * Retorna um array com todas as cidades disponíveis
-     * 
+     *
      * @return array $cidades
      */
     private function getInfoCidade(int $estadoId, string $nomeCidade) : array
@@ -365,12 +375,12 @@ class IndexController extends AbstractActionController
 
         if(empty($response))
             return null;
-        
+
         return $response[0];
     }
 
     private function getDestinationFile($idVeiculo)
-    {   
+    {
         $path = '';
 
         $path = $this->serviceManager->get('config')['dir']['upload'];
