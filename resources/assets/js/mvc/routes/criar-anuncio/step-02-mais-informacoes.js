@@ -22,7 +22,7 @@ function init() {
     observacoesTextarea.keyup(function () {
         countSpan.html($(this).val().length);
         if ($(this).val().length > 650) {
-            countSpan.html($(this).val().length + ` - As observações não podem ultrapassar 700 caracteres`);
+            countSpan.html('<span style="color:red;font-size:13px;">Contém ' + $(this).val().length + ` caracteres - As observações não podem ultrapassar 650 caracteres</span>`);
         } else {
             BtnContinuar.enable();
         }
