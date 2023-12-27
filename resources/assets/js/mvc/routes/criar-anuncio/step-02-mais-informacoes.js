@@ -14,7 +14,7 @@ module.exports.callback = ($) => {
     });
 };
 
-function init() {
+function init() { 
     var ctx = $('.step-preco');
     var observacoesTextarea = ctx.find('textarea[name="observacoes"]');
     var countSpan = ctx.find('.wordcount span.count');
@@ -22,10 +22,9 @@ function init() {
     observacoesTextarea.keyup(function () {
         countSpan.html($(this).val().length);
         if ($(this).val().length > 650) {
-            BtnContinuar.disable()
             countSpan.html($(this).val().length + ` - As observações não podem ultrapassar 700 caracteres`);
         } else {
-            BtnContinuar.enable()
+            BtnContinuar.enable();
         }
     }).keyup();
 }

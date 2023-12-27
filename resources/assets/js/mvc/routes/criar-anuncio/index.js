@@ -94,6 +94,13 @@ module.exports.callback = ($) => {
         }
         */
 
+        //se a aba step-preco ficar ativa valida a quantidade de caracteres da observacao e desabilita o botão de continuar se necessario
+        setTimeout(function() {
+            if ($('.step-preco').hasClass('active') && $('textarea[name="observacoes"]').val().length > 650) {
+                BtnContinuar.disable(); 
+            }
+        }, 50);
+
         var inLastStep = $(this).data('in-last-step');
         var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
         form.find('[type="submit"]').first().click();
@@ -141,6 +148,8 @@ module.exports.callback = ($) => {
             .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
                 BtnContinuar.enable();
             });
+
+
     $('.anuncio-steps').on('steps-loaded', function () {
         var hash = window.location.hash;
         if (!hash || hash === '#') {
