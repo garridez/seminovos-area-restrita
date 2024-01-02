@@ -43,17 +43,6 @@ return [
                     'name' => SnBH\Logger\Writer\NewRelicWriter::class,
                 ],
             ],
-            'processors' => [
-                'Backtrace' => [
-                    'name' => Laminas\Log\Processor\Backtrace::class,
-                ],
-                'UserRequest' => [
-                    'name' => \AreaRestrita\Log\Processors\UserRequest::class,
-                ],
-                'ApplicationNamespace' => [
-                    'name' => \AreaRestrita\Log\Processors\ApplicationNamespace::class,
-                ],
-            ],
             'processors' => [],
         ],
     ],

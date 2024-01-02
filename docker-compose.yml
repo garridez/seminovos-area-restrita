@@ -15,9 +15,7 @@ services:
             - "8093:80"
         environment:
             - APPLICATION_ENV=development
-            - SNBH_API_HOST=http://dev.seminovos.com.br:8081
             - SNBH_API_HOST=http://snbh-api
-            - SNBH_API_HOST=http://api2-ipv4.seminovos.com.br
             - SNBH_URL_SITE=http://localhost:8091
             - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         volumes:

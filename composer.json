@@ -15,6 +15,7 @@
         "apcu-autoloader": true,
         "sort-packages": true,
         "vendor-dir": "vendor",
+        "optimize-autoloader": true,
         "allow-plugins": {
             "laminas/laminas-dependency-plugin": true
         }
@@ -78,6 +79,11 @@
         "dev-disable": "laminas-development-mode disable",
         "dev-enable": "laminas-development-mode enable",
         "dev-status": "laminas-development-mode status",
+        "static-analysis-report": [
+            "php vendor/bin/psalm --output-format=xml > data/cache/psalm-output.xml || exit 0",
+            "cat data/cache/psalm-output.xml | docker run --rm -i psalm-html-output:latest > public/psalm-report.html",
+            "echo Finish"
+        ],
         "test": "phpunit"
     },
     "require-dev": {

@@ -34,7 +34,7 @@ class VeiculoTipo
     /**
      * Retorna o nome do tipo pelo ID
      * @param int $id
-     * @return string
+     * @return string|false
      */
     public static function getById($id)
     {

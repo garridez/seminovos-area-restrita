@@ -276,15 +276,6 @@ return [
         ],
         'may_terminate' => true,
         'child_routes' => [
-            'excluir' => [
-                'type' => Http\Segment::class,
-                'options' => [
-                    'route' => '/excluir/:idVeiculo',
-                    'defaults' => [
-                        'action' => 'excluir',
-                    ],
-                ],
-            ],
             'pesquisa' => [
                 'type' => Http\Segment::class,
                 'options' => [
