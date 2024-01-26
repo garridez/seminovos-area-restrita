@@ -239,7 +239,6 @@ module.exports.callback = $ => {
                         <b class="text-primary">${veiculo.marca} ${veiculo.modelo}</b>
                         <b> placa </b> <b class="text-primary"> ${veiculo.placa} </b>?
                     </span>`),
-            confirmText: "Sim, eu vendi",
             confirmCallback: function(){
                 $(".modal").modal('hide');
                 $.getJSON(`/meus-veiculos/vendido/${veiculo.idVeiculo}`)
@@ -329,6 +328,7 @@ module.exports.callback = $ => {
     function reativarDataConfirm() {
         var $this = $(this);
         var $veiculo = $this.closest(".veiculo");
+
         $this.data("confirm-option-confirm", function () {
             $(".modal").modal('hide');
             var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
@@ -347,7 +347,26 @@ module.exports.callback = $ => {
                     $.getJSON($this.data("confirm-url"))
                             .done(function (data, jqXHR, type) {
                                 if (data.status !== 200) {
-                                    advancedAlerts.error({text: data.detail, title: "Houve um problema...", time: 10000});
+                                    advancedAlerts.warning({
+                                        title: "<span class='text-primary'>Atenção!</span>",
+                                        text: `
+                                            <p>`+data.detail+`</p>
+                                            <div style='display: flex; justify-content: center; gap: 10px;margin-top:-20px;' class='confirm-success'>
+                                                <button 
+                                                    style='margin-top: 30px;width:20%;' 
+                                                    class='btn btn-sm btn-secondary d-flex align-items-center justify-content-center' data-dismiss="modal">
+                                                    OK!
+                                                </button>
+                                                <a
+                                                   href='/carro/`+$veiculo.data('id-veiculo')+`?editar=planos#plano' 
+                                                   style='margin-top: 30px; width:40%;' 
+                                                   class='btn btn-sm btn-info text-white d-flex align-items-center justify-content-center'>
+                                                    TROCAR PLANO
+                                                </a>
+                                            </div>`,
+                                        time: 0,
+                                        close: "",
+                                    });
                                 } else {
                                     reloadPageContent();
                                     var text = $("<span>").html(`<b class="text-primary">${$veiculo.data("veiculo-marca")} ${$veiculo.data("veiculo-modelo")}</b>,
