@@ -75,7 +75,9 @@ class Module
                     ->getRequest()
                     ->getHeaders()
                     ->addHeaderLine('Idcadastro', $identity)
-                    ->addHeaderLine('Sessid', $sessionManager->getId());
+                    ->addHeaderLine('Sessid', $sessionManager->getId())
+                    ->addHeaderLine('Request-UID', REQUEST_UID)
+                    ->addHeaderLine('Request-Origin', 'area-restrita' . ($_SERVER['REQUEST_URI'] ?? ''));
             }
         });
     }

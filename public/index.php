@@ -2,6 +2,8 @@
 
 ob_start();
 
+define('REQUEST_UID', $_SERVER['HTTP_CF_RAY'] ?? bin2hex(openssl_random_pseudo_bytes(16)));
+
 register_shutdown_function(function() {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {
