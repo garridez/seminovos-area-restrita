@@ -17,6 +17,7 @@ class TokenMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        /** @var \Laminas\Diactoros\ServerRequest $request */
 
         $token = $request->getHeaderLine('X-SnBH-Token');
         $idCadastro = (int) $request->getHeaderLine('X-SnBH-IdCadastro');

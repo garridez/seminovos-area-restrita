@@ -29,7 +29,7 @@ class ExpiracaoRevendaFactory implements FactoryInterface
 
         $dataExpiracaoPlano = null;
         $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, "dataExpiracao");
-        $dataExpiracao = new \DateTime($dataExpiracaoPlano);
+        $dataExpiracao = new \DateTime($dataExpiracaoPlano ?: '');
         $intevaloData = $dataAtual->diff($dataExpiracao);
         $intevaloData = (int) ($intevaloData->format('%R%a') === '-0' ? -1 : $intevaloData->format('%R%a'));
         $dataExpiracao = $dataExpiracao->format('d/m/Y');
