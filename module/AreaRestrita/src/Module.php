@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -63,6 +64,24 @@ class Module
         $apiClient = $sm->get(ApiClient::class);
         /* @var $sessionManager SessionManager */
         $sessionManager = $sm->get(SessionManager::class);
+
+        if (!isset($_COOKIE['TUID'])) {
+            $identity = $authService->getIdentity();
+            $data = $apiClient->crypterPost([
+                'data' => $identity,
+                'randiv' => true
+            ], null, false)->getData();
+
+            setcookie(
+                'TUID',
+                $data,
+                time() + 60 * 60 * 24 * 30,
+                ini_get('session.cookie_path'),
+                ini_get('session.cookie_domain'),
+                (bool) ini_get('session.cookie_secure'),
+                (bool) ini_get('session.cookie_httponly')
+            );
+        }
 
         $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_PRE_SEND, function (ZendEvent $event) use ($authService, $sessionManager) {
             $client = $event->getTarget();
@@ -163,7 +182,7 @@ class Module
 
             $maxTempoTotal = 1;
 
-            if ($path === '/veiculos-fotos' && ($method === 'POST' || $method === 'DELETE' )) {
+            if ($path === '/veiculos-fotos' && ($method === 'POST' || $method === 'DELETE')) {
                 $maxTempoTotal = 15;
             }
             if ($path === '/veiculos' && ($method === 'POST' || $method === 'DELETE' || $method === 'PUT')) {

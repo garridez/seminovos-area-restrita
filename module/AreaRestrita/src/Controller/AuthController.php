@@ -15,7 +15,7 @@ class AuthController extends AbstractActionController
     {
         /* @var $container ServiceLocatorInterface */
         global $container;
-        
+
          /* @var $authService AuthenticationService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
@@ -77,10 +77,10 @@ class AuthController extends AbstractActionController
             'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
             'response' => $post['token']
         ]));
-        
+
         $resposta = $httpClient->send();
-        
-        
+
+
         if ($resposta->getStatusCode()) {
             $result = json_decode($resposta->getBody(), true) ;
             if (!$result['success']) {
@@ -89,7 +89,7 @@ class AuthController extends AbstractActionController
                 \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
                 return $viewModel;
             }
-            
+
         } else {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
@@ -113,7 +113,7 @@ class AuthController extends AbstractActionController
 
             $rememberMe = true;
 
-            /* @var $authManager AuthManager  */
+            /** @var AuthManager $authManager  */
             $authManager = $container->get(AuthManager::class);
 
             $result = $authManager->login([
@@ -131,8 +131,8 @@ class AuthController extends AbstractActionController
 
                 if($data['tipoCadastro'] == 1) {
                     return $this->redirect()->toRoute('restrito', [], ['query' => ['exibirModal' => 1]]);
-                } 
-                      
+                }
+
                 return $this->redirect()->toRoute('restrito');
             }
         }
@@ -161,7 +161,7 @@ class AuthController extends AbstractActionController
      * Recebe por parametro na url a os dados de login criptografados
      *  Se estiver tudo certo, faz o login sem usar senha
      *  Isso acontece principalmente quando o usuário recebe um email
-     * 
+     *
      * @return \Laminas\Http\Response
      */
     public function loginAutomaticoAction()
