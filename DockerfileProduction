@@ -22,7 +22,7 @@ RUN set -eux; \
     rm -rf data; \
     git checkout data; \
     chmod -R 777 data; \
-    echo -n "$(git describe)" > version; \
+    echo -n "$(git describe --tags)" > version; \
     chmod 777 version
 
 RUN set -eux; \

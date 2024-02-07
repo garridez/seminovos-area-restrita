@@ -17,7 +17,7 @@ phases:
       - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
       - apt update -y && apt install git -y
       - git checkout develop
-      - PROJECT_TAG=$(git describe)
+      - PROJECT_TAG=$(git describe --tags)
       - echo $PROJECT_TAG
       # Caso não seja uma tag release, o script para.
       #- expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1

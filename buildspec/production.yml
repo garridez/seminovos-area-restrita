@@ -10,7 +10,7 @@ phases:
     install:
         commands:
             - git checkout master
-            - PROJECT_TAG=$(git describe)
+            - PROJECT_TAG=$(git describe --tags)
             - echo $PROJECT_TAG
             # Caso não seja uma tag release, o script para.
             - expr match "$PROJECT_TAG" "^[0-9]*\.[0-9]*.[0-9]*$" || exit 1
