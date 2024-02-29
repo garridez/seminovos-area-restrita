@@ -21,7 +21,7 @@ services:
         volumes:
             - .:/home/www-data
     snbh-area-restrita-redis:
-        image: redis:7
+        image: redis:7-alpine
         container_name: snbh-area-restrita-redis
         ports:
         - "6378:6379"
