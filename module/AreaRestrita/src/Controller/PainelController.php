@@ -30,26 +30,26 @@ class PainelController extends AbstractActionController
 
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();
-        $idCadastro = $cadastro['idCadastro']; 
+        $idCadastro = $cadastro['idCadastro'];
 
 
         /* @var $planosModel Planos */
         $planosModel = $this->getContainer()->get(Planos::class);
 
         $dadosPlanos = $planosModel->get('revenda');
-       
+
         $key  = array_search( $cadastro['idPlano'], array_column($dadosPlanos, 'idPlanoRevenda'));
         $valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
-        
+
 
         // Busca os planos de acordo com o tipo
         $dadosPlanos = $planosModel->get('revenda');
-        
-        $veiculosModel = $this->getContainer()->get(Veiculos::class); 
+
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         $veiculos = $veiculosModel->getAll(['idCadastro' => $idCadastro]);
-        
+
         $totalVeiculos = $veiculos['total'];
 
         $idsVeiculos = [];
@@ -123,7 +123,7 @@ class PainelController extends AbstractActionController
     public function detalheAnuncioAction()
     {
         $idVeiculo = $this->params('idVeiculo');
-        
+
         $veiculoModel = $this->getContainer()->get(Veiculos::class);
 
         $veiculo = $veiculoModel->get($idVeiculo);
@@ -141,7 +141,7 @@ class PainelController extends AbstractActionController
             $cliques += $cnt['acesso'];
             $impressoes += $cnt['impressao'];
             $contato += $cnt['contato'];
-        }   
+        }
 
         $frase = "";
 
@@ -219,7 +219,7 @@ class PainelController extends AbstractActionController
         $veiculo['intervaloData'] = '';
         $veiculo['frase'] = $frase;
 
-        return new ViewModel(['veiculo' => $veiculo, 'cliques' => $cliques, 'impressoes' => $impressoes, 'contato' => $contato, 'frase' => $frase, 'contador' => $contador]);        
+        return new ViewModel(['veiculo' => $veiculo, 'cliques' => $cliques, 'impressoes' => $impressoes, 'contato' => $contato, 'frase' => $frase, 'contador' => $contador]);
     }
 
     public function tabelaFipeAction(){
@@ -228,9 +228,9 @@ class PainelController extends AbstractActionController
 
         $apiClient = $this->getContainer()->get(ApiClient::class);
         $data = $apiClient->versaoGet([
-            'idModelo' => $params['modeloCarro'], 
-            'ano' => $params['ano'], 
-            'idMarca' => $params['idMarca'] 
+            'idModelo' => $params['modeloCarro'],
+            'ano' => $params['ano'],
+            'idMarca' => $params['idMarca']
         ])->getData();
 
         return new JsonModel([

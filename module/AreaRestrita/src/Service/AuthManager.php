@@ -45,7 +45,7 @@ class AuthManager
         if (!isset($options['emailOrCnpj']) && !isset($options['idCadastro'])) {
             throw new \Exception('emailOrCnpj ou idCadastro não passados');
         }
-        /* @var $authAdapter \AreaRestrita\Service\AuthAdapter */
+        /** @var \AreaRestrita\Service\AuthAdapter */
         $authAdapter = $this->authService->getAdapter();
 
         $authAdapter->setData([

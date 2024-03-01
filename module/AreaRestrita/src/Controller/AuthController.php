@@ -108,7 +108,6 @@ class AuthController extends AbstractActionController
         $form->setData($post);
 
         if ($form->isValid()) {
-            /* @var $apiClient \SnBH\ApiClient\Client */
             $data = $form->getData();
 
             $rememberMe = true;

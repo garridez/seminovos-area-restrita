@@ -24,7 +24,7 @@ class LoginController extends AbstractActionController
     {
         $email = $this->params('email');
 
-        /* @var $identity Identity */
+        /** @var Identity $identity */
         $identity = $this->getContainer()->get(Identity::class);
         if ($identity->hasIdentity()) {
 

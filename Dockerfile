@@ -21,4 +21,5 @@ RUN echo "max_input_vars=10000" > /usr/local/etc/php/conf.d/snbh-input_vars.ini
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY server/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
+COPY server/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY server/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
