@@ -15,6 +15,17 @@ use Laminas\Router\Http;
 use Laminas\Mvc\Middleware\PipeSpec;
 
 return [
+    'repasse'=> [
+        'type' => Http\Segment::class,
+        'options' => [
+            'route' => 'repasse',
+            'defaults' => [
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\RepasseController::class,
+                'action' => 'index'
+            ],
+        ],
+    ],
     'rota-exemplo' => [
         'type' => Http\Segment::class,
         'options' => [

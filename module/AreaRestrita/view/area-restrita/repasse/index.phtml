@@ -1,0 +1,139 @@
+<?php
+/* @var $this \Laminas\View\Renderer\PhpRenderer */
+$this->headTitle('Repasse Auto Conecta');
+
+$veiculos = $this->veiculos;
+$meta = $this -> meta;
+
+?>
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="document" aria-labelledby="modalFotos" id="modalFotos" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-fotos" style="min-width: 1080px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-uppercase h4 text-cinza-escuro marca-modelo">Fotos</h4>
+        </div>
+        <div class="modal-body">
+                <div class="card-deck" id="deck-fotos">
+                </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="Contato" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Contato</h5>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+          <li id="nome" class="list-group-item">Nome: </li>
+          <li id="empresa" class="list-group-item">Empresa: </li>
+          <li id="cidade" class="list-group-item">Cidade/Estado: </li>
+          <li id="telefone" class="list-group-item">Telefone: </li>
+          <li id="detalhes" class="list-group-item">Detalhes do Veículo: </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-cinza text-white" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid container-anuncios">
+    <div class="row justify-content-center px-3 px-md-0">
+        <div class="col-sm-12 col-md-12 my-2 d-flex">
+            <h3>Repasse Auto Conecta</h3>
+        </div>
+    </div>
+    <form class="row px-3 px-md-0">
+        <div class="col-10 col-md-3">
+            <div class="form-group">
+                <label for="cidade">Filtrar por Cidade</label>
+                <input type="text" id="cidade" name="city">
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="form-group">
+                <label for="marcaModelo">Filtrar por Marca/modelo</label>
+                <input type="text" id="marcaModelo" name="search">
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <div class="form-group">
+                <label for="preco">Filtrar por Preço</label>
+                <input type="text" style="max-width: 50px;" placeholder="De" name="prcoDe" id="precoDe">
+                <input type="text" style="max-width: 50px;" placeholder="Até" name="precoAte" id="precoAte">
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <div class="form-group">
+                <label for="ano">Filtrar por Ano</label>
+                <input type="text" style="max-width: 50px;" placeholder="De" name="anoDe" id="anoDe">
+                <input type="text" style="max-width: 50px;" placeholder="Até" name="anoAte" id="anoAte">
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <button class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos" type="submit">Filtrar
+            </button>
+        </div>
+    </form>
+    <div class="row">
+        <div class="card-deck col-12">
+            <?php
+            foreach ($veiculos as $key => $veiculo): 
+            ?>
+            <div class="col-sm-4 mb-1">
+                <div class="card">
+                    <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="" class="card-img-top img-thumbnail img-fluid">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
+                        <div class="card-text">
+                            <h4 class="d-flex flex-wrap">
+                                <span class="mr-3 mr-md-0"> R$
+                                <?= number_format($veiculo['courier_value_sale'], 2, ',', '.') ?>
+                                </span>
+                            </h4>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Ano:
+                                <span class="text-uppercase"><?= $veiculo['creation_year'] ?></span> 
+                            </li>
+                            <li class="list-group-item">
+                                Placa:
+                                <span class="text-uppercase"><?= $veiculo['license_plate']?></span>
+                            </li>
+                            <li class="list-group-item">
+                                Data do Cadastro:
+                                <span class="text-uppercase"><?= $veiculo['created_at'] ?> </span>
+                            </li>
+                        </ul>
+                        <div class="btn-group">
+                            <a href="#modalFotos" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
+                            title="Fotos" data-toggle="modal" data-id-veiculo = "<?= $veiculo['id']?>">
+                            <i class=" fa fa-camera"></i><span> Fotos</span>
+                            </a>        
+                            <a href="#modalContato" class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos"
+                            title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['id']?>">
+                            <i class=" fa fa-user"></i><span> Contato</span>
+                            </a>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        
+    </div>
+    <div class="col-md-12">
+                <?php
+                if ($veiculos) {
+                    echo $this->partial('partials/pagination.phtml', $this->paginationData);
+                }
+                ?>
+    </div>
+</div>

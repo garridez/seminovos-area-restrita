@@ -16,6 +16,13 @@ $encryptedText = \SnBH\Common\Helper\Encrypter::base64_encode($textToEncrypt);
         </a>
     </div>
 </div>
+<li class="item-compartilhar" style="list-style: none;">
+                                    <a class="btn bg-cinza text-white" rel="nofollow" title="Compartilhar Anúncio"  data-id-veiculo="<?= $veiculo['idVeiculo'] ?>">
+                                    <i class="icon icon-share"></i>
+                                    <span class="d-none d-md-inline">Compartilhar</span>
+                                    </a>
+                                <?= $this->partial('partials/social-share.phtml', ['veiculo' => $veiculo]); ?>
+                                </li>
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center">
         <div class="col-12">

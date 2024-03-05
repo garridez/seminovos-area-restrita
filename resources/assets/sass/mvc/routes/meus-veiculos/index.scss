@@ -212,3 +212,56 @@
     }
   }
 }
+
+.item-compartilhar {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+  &.show .lista-compartilhar {
+      pointer-events: all;
+      opacity: 1;
+  }
+  .lista-compartilhar {
+      position: absolute;
+      z-index: 11;
+      background: #3c3c3c;
+      box-shadow: 1px 1px 3px #3c3c3c;
+      pointer-events: none;
+      bottom: 0px;
+      height: 219px;
+      width: 100%;
+      min-width: 170px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 200ms;
+      > div {
+          display: flex;
+          width: 100%;
+          &:hover {
+              cursor: pointer;
+              background-color: $primary;
+              box-shadow: 1px 1px 3px #3c3c3c;
+          }
+          button,
+          a {
+              display: flex;
+              background: transparent;
+              color: white;
+              border: none;
+              width: 100%;
+              padding: 7px 10px;
+              align-items: center;
+              justify-content: flex-start;
+              i {
+                  margin-right: 10px;
+                  text-align: left;
+                  width: 25%;
+              }
+              span {
+                  display: block;
+                  font-weight: 800;
+              }
+          }
+      }
+  }
+}
