@@ -1,0 +1,54 @@
+<?php
+
+$marcaModelo = $veiculo['marca'] . ' ' . $veiculo['modelo'];
+$currentUrl =  "http" . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$currentUrl = preg_replace('/\/[%a-zA-Z0-9]{20,}(\/|$)/', '/', $currentUrl);
+$urlCompartilar = "http" . "://$_SERVER[HTTP_HOST]/" . $veiculo['idVeiculo'];
+
+?>
+
+<div class="lista-compartilhar" data-device-sharer="desktop"  data-id-veiculo="<?= $veiculo['idVeiculo'] ?>">
+    <div class="share-link">
+        <a title="Copiar o Link para Àrea de Tranferência" data-sharer="copiar link" data-title="<?= $marcaModelo ?>" data-url="<?= $urlCompartilar ?>" rel="nofollow">
+            <i class="icon icon-clip"></i>
+            <span>Copiar Link</span>
+        </a>
+    </div>
+
+    <div class="share-email">
+        <button title="Enviar por e-mail" class="button" data-sharer="email" data-title="Olha esse <?= $marcaModelo ?> que achei na seminovos.com ." data-url="<?= $urlCompartilar ?>" data-subject="<?= $marcaModelo . ' na seminovos.com' ?>">
+            <i class="icon icon-mail"></i>
+            <span>Email</span>
+        </button>
+    </div>
+
+    <div class="share-imprimir">
+        <a class="btn-print" href="javascript:void(0)" title="Imprimir anúncio" data-sharer="imprimir" rel="nofollow">
+            <i class="icon icon-print"></i>
+            <span>Imprimir</span>
+        </a>
+    </div>
+
+    <div class="share-facebook" data-sharer="facebook">
+        <button title="Compartilhar no Facebook" class="button" data-sharer="facebook" data-url="<?= $urlCompartilar ?>" data-hashtags="<?= $veiculo['marca'] . ',' . $veiculo['modelo'] ?>,seminovosbh">
+            <i class="icon icon-facebook-alt"></i>
+            <span>Facebook</span>
+        </button>
+    </div>
+
+    <div class="share-twitter" data-sharer="twitter">
+        <button title="Compartilhar no Twitter" class="button" data-sharer="twitter" data-title="Se liga nesse <?= $marcaModelo ?> que eu achei na seminovos.com
+" data-url="<?= $urlCompartilar ?>
+" data-hashtags="<?= $veiculo['marca'] . ',' . $veiculo['modelo'] ?>,seminovosbh">
+            <i class="icon icon-twitter-alt"></i>
+            <span>Twitter</span>
+        </button>
+    </div>
+
+    <div class="share-whatsapp">
+        <a href="https://api.whatsapp.com/send?l=pt&text=Oi%20ví%20este%20anúncio%20no%20site%20da%20Seminovos.%20Confere%20aí%20<?= $urlCompartilar ?>" rel="nofollow" target="_BLANK" data-sharer="whatsapp-" rel="nofollow">
+            <i class="icon icon-whatsapp-alt"></i>
+            <span>WhatsApp</span>
+        </a>
+    </div>
+</div>

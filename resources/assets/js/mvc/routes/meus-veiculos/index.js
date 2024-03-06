@@ -69,6 +69,46 @@ module.exports.callback = $ => {
               }).on('hide.bs.modal', function () {
                   window.location = link;
               });
+            })
+            .on('click', '.item-compartilhar a', function (e) {
+                if (navigator && navigator.share) {
+                    navigator.share({
+                        title: 'Olha esse veículo que encontrei: ' + document.title,
+                        url: window.location.href
+                    }).then(() => {
+                        console.log('Thanks for sharing!');
+                    })
+                        .catch(console.error);
+                    return;
+                }
+                $ctx = $(this).closest('.item-compartilhar');
+        
+                if (!$ctx.hasClass('show')) {
+                    $ctx.addClass('show');
+                    $('body').on('click.closeToolTipCompartilhar', ':not(.item-compartilhar)', function (e) {
+                        if ($ctx.find($(e.target)).length > 0) {
+                            return;
+                        }
+                        $ctx.removeClass('show');
+                        $('body').off('click.closeToolTipCompartilhar');
+                    });
+                    return;
+                }
+        
+                $('body').off('click.closeToolTipCompartilhar');
+                $ctx.removeClass('show');
+            });
+        
+            $('body').on('click', '.lista-compartilhar .share-link a', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+        
+        
+        
+        
+                $(this).closest('.item-compartilhar').removeClass('show');
+                var msgToCopy = 'Encontrei esse veículo ' + $(this).data('title') + '\n ' + $(this).data('url');
+                copyToClipboard(msgToCopy);
             });
 
     if (location.hash !== '' && window.URLSearchParams) {
