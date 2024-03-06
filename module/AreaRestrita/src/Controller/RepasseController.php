@@ -40,7 +40,6 @@ class RepasseController extends AbstractActionController
         $page = $request->getQuery('page') ?? 1;
 
         $cidade = $request->getQuery('city');
-        echo $cidade;
 
         $anoDe = $request->getQuery('anoDe');
         $anoAte = $request->getQuery('anoAte');
@@ -49,8 +48,21 @@ class RepasseController extends AbstractActionController
 
         $filtroMarca = $request->getQuery('search');
 
+        $queryParams = [
+            'page=' => $page,
+            'per_page' => 10,
+            'city'=> $cidade,
+            'search' => $filtroMarca,
+            'price_min' => $precoDe,
+            'price_max' => $precoAte,
+            'year_to' => $anoDe,
+            'year_from' => $anoAte,
+        ];
+
+        $queryString = http_build_query($queryParams);
+
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles?page='. $page . '&per_page=10' . "&city=" . $cidade . '&search=' . $filtroMarca . '&price_min=' . $precoDe . '&price_max=' . $precoAte . '&year_to=' . $anoDe . '&year_from=' . $anoAte,
+        CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles?' . $queryString,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
