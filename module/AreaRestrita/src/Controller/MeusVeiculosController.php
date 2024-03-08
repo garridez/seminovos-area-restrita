@@ -15,6 +15,7 @@ use AreaRestrita\Service\Identity;
 use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\EnviarEmail;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
@@ -474,6 +475,10 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
+        $veiculo = $veiculosModel->get($idVeiculo);
+        /* @var $cadastrosModel Cadastros */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro'] ])[0];
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
@@ -481,7 +486,20 @@ class MeusVeiculosController extends AbstractActionController
             'idStatus' => 2,
             'flagReativar' => 1,
             ], $idVeiculo);
+        
+        ///envia email exclusao
+        $dadosEmail = [
+            'email' => $cadastro['email'],
+            'idVeiculo' => $veiculo['idVeiculo'],
+            'marca' => $veiculo['marca'],
+            'modelo' => $veiculo['modelo'],
+            'nome' => 'Seminovos BH',
+            'tipoEmail' => 'anuncio_renovado'
+        ];
 
+        /* @var $enviarEmailModel EnviarEmail*/
+        $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+        $enviarEmailModel->post($dadosEmail);
         echo json_encode($dadosVeiculos);
         die;
     }
@@ -552,9 +570,10 @@ class MeusVeiculosController extends AbstractActionController
 
         /* @var $veiculosModel Veiculos */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
+        $veiculo = $veiculosModel->get($idVeiculo);
         /* @var $cadastrosModel Cadastros */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro'] ])[0];
 
         if ($cadastrosModel->isRevenda()) {
 
@@ -585,6 +604,21 @@ class MeusVeiculosController extends AbstractActionController
                 'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
                 ], $idVeiculo);
         }
+
+        ///envia email exclusao
+        $dadosEmail = [
+            'email' => $cadastro['email'],
+            'idVeiculo' => $veiculo['idVeiculo'],
+            'marca' => $veiculo['marca'],
+            'modelo' => $veiculo['modelo'],
+            'nome' => 'Seminovos BH',
+            'tipoEmail' => 'anuncio_excluido'
+        ];
+
+        /* @var $enviarEmailModel EnviarEmail*/
+        $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+        $enviarEmailModel->post($dadosEmail);
+
         echo json_encode($dadosVeiculos);
         die;
     }
