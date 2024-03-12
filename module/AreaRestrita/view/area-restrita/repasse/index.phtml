@@ -72,8 +72,8 @@ $meta = $this -> meta;
         <div class="col-12 col-md-2">
             <div class="form-group">
                 <label for="ano">Filtrar por Ano</label>
-                <input type="text" style="max-width: 50px;" placeholder="De" name="anoDe" id="anoDe">
-                <input type="text" style="max-width: 50px;" placeholder="Até" name="anoAte" id="anoAte">
+                <input type="text" style="max-width: 67px;" placeholder="De" name="anoDe" id="anoDe">
+                <input type="text" style="max-width: 67px;" placeholder="Até" name="anoAte" id="anoAte">
             </div>
         </div>
         <div class="col-12 col-md-2">
@@ -82,13 +82,13 @@ $meta = $this -> meta;
         </div>
     </form>
     <div class="row">
-        <div class="card-deck col-12">
+        <div class="card-deck col-12 mt-2">
             <?php
             foreach ($veiculos as $key => $veiculo): 
             ?>
             <div class="col-sm-4 mb-1">
-                <div class="card">
-                    <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="" class="card-img-top img-thumbnail img-fluid">
+                <div class="card" style="height: 520px; width: 320px">
+                    <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
                     <div class="card-body">
                         <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
                         <div class="card-text">
