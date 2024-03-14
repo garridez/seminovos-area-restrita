@@ -487,19 +487,22 @@ class MeusVeiculosController extends AbstractActionController
             'flagReativar' => 1,
             ], $idVeiculo);
         
-        ///envia email exclusao
-        $dadosEmail = [
-            'email' => $cadastro['email'],
-            'idVeiculo' => $veiculo['idVeiculo'],
-            'marca' => $veiculo['marca'],
-            'modelo' => $veiculo['modelo'],
-            'nome' => 'Seminovos BH',
-            'tipoEmail' => 'anuncio_renovado'
-        ];
+        //envia somente email apenas para cadastros particular
+        if($cadastro['tipoCadastro'] == 2) { 
+            ///envia email exclusao
+            $dadosEmail = [
+                'email' => $cadastro['email'],
+                'idVeiculo' => $veiculo['idVeiculo'],
+                'marca' => $veiculo['marca'],
+                'modelo' => $veiculo['modelo'],
+                'nome' => 'Seminovos BH',
+                'tipoEmail' => 'anuncio_renovado'
+            ];
 
-        /* @var $enviarEmailModel EnviarEmail*/
-        $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
-        $enviarEmailModel->post($dadosEmail);
+            /* @var $enviarEmailModel EnviarEmail*/
+            $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+            $enviarEmailModel->post($dadosEmail);
+        }
         echo json_encode($dadosVeiculos);
         die;
     }
@@ -605,19 +608,22 @@ class MeusVeiculosController extends AbstractActionController
                 ], $idVeiculo);
         }
 
-        ///envia email exclusao
-        $dadosEmail = [
-            'email' => $cadastro['email'],
-            'idVeiculo' => $veiculo['idVeiculo'],
-            'marca' => $veiculo['marca'],
-            'modelo' => $veiculo['modelo'],
-            'nome' => 'Seminovos BH',
-            'tipoEmail' => 'anuncio_excluido'
-        ];
+        //envia somente email apenas para cadastros particular
+        if($cadastro['tipoCadastro'] == 2) { 
+            ///envia email exclusao
+            $dadosEmail = [
+                'email' => $cadastro['email'],
+                'idVeiculo' => $veiculo['idVeiculo'],
+                'marca' => $veiculo['marca'],
+                'modelo' => $veiculo['modelo'],
+                'nome' => 'Seminovos BH',
+                'tipoEmail' => 'anuncio_excluido'
+            ];
 
-        /* @var $enviarEmailModel EnviarEmail*/
-        $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
-        $enviarEmailModel->post($dadosEmail);
+            /* @var $enviarEmailModel EnviarEmail*/
+            $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
+            $enviarEmailModel->post($dadosEmail);
+        }
 
         echo json_encode($dadosVeiculos);
         die;
