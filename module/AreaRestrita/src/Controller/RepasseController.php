@@ -50,7 +50,7 @@ class RepasseController extends AbstractActionController
 
         $queryParams = [
             'page=' => $page,
-            'per_page' => 10,
+            'per_page' => 9,
             'city'=> $cidade,
             'search' => $filtroMarca,
             'price_min' => $precoDe,
