@@ -55,12 +55,12 @@ class VeiculoController extends AbstractActionController {
         file_put_contents('data/logs/' . date('Y-m-d-') . $idCadastro . '.log', json_encode($data) . "\n");
         
         $data['idPlano'] ??= 5;
-        
-        if($data['idPlano'] == 5 && $plano['totalBasico'] == $plano['totalBasicoPublicado']){
+
+        if($data['idPlano'] == 5 && $plano['totalBasico'] <= $plano['totalBasicoPublicado']){
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Básico']);
-        }elseif($data['idPlano'] == 2 && $plano['totalTurbo'] == $plano['totalTurboPublicados']){
+        }elseif($data['idPlano'] == 2 && $plano['totalTurbo'] <= $plano['totalTurboPublicados']){
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Turbo']);
-        }elseif($data['idPlano'] == 3 && $plano['totalNitro'] == $plano['totalNitroPublicados']){
+        }elseif($data['idPlano'] == 3 && $plano['totalNitro'] <= $plano['totalNitroPublicados']){
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Nitro']);
         }
 
