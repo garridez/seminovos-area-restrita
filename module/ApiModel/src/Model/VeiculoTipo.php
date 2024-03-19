@@ -46,7 +46,7 @@ class VeiculoTipo
     /**
      * Essa função detect se é ID ou nome e sempre retorna o ID
      *
-     * @return int
+     * @return int|string|false
      */
     public static function getIdByAny(int|string $var)
     {
@@ -54,6 +54,6 @@ class VeiculoTipo
         if (((string) $varInt) == $var) {
             return $var;
         }
-        return self::getByName($var);
+        return self::getByName((string) $var);
     }
 }

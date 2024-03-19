@@ -5,8 +5,9 @@ namespace AreaRestrita\Form\View\Helper;
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
 use TwbBundle\Form\View\Helper\TwbBundleFormRadio;
+use Laminas\Form\View\Helper\FormRadio as LaminasFormRadio;
 
-class FormRadio extends TwbBundleFormRadio
+class FormRadio extends LaminasFormRadio
 {
     /** @var mixed */
     public $labelAttributes;
@@ -14,14 +15,14 @@ class FormRadio extends TwbBundleFormRadio
 
     protected static $checkboxFormat = '<div class="radio radio-success mt-0 mb-0">%s</div>';
 
-    public function render(ElementInterface $oElement)
+    public function render(ElementInterface $element): string
     {
-        $aElementOptions = $oElement->getOptions();
+        $aElementOptions = $element->getOptions();
 
         if (isset($aElementOptions['disable-twb']) && $aElementOptions['disable-twb'] == true) {
             $sSeparator = $this->getSeparator();
             $this->setSeparator('');
-            $sReturn = parent::render($oElement);
+            $sReturn = parent::render($element);
             $this->setSeparator($sSeparator);
             return $sReturn;
         }
@@ -29,8 +30,8 @@ class FormRadio extends TwbBundleFormRadio
         if (isset($aElementOptions['inline']) && $aElementOptions['inline'] == true) {
             $sSeparator = $this->getSeparator();
             $this->setSeparator('');
-            $oElement->setLabelAttributes(['class' => 'radio-inline']);
-            $sReturn = sprintf('%s', parent::render($oElement));
+            $element->setLabelAttributes(['class' => 'radio-inline']);
+            $sReturn = sprintf('%s', parent::render($element));
             $this->setSeparator($sSeparator);
             return $sReturn;
         }
@@ -42,12 +43,12 @@ class FormRadio extends TwbBundleFormRadio
             }
 
             $this->setSeparator('');
-            $oElement->setLabelAttributes(['class' => $buttonClass]);
+            $element->setLabelAttributes(['class' => $buttonClass]);
 
-            return sprintf('<div class="btn-group" data-toggle="buttons">%s</div>', parent::render($oElement));
+            return sprintf('<div class="btn-group" data-toggle="buttons">%s</div>', parent::render($element));
         }
 
-        return sprintf(static::$checkboxFormat, parent::render($oElement));
+        return sprintf(static::$checkboxFormat, parent::render($element));
     }
 
 /*protected function renderOptions(

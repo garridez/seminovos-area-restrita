@@ -12,7 +12,7 @@ use Laminas\Form\Element;
 use Laminas\Log\Logger;
 use Laminas\Log\Writer\Stream;
 
-class FacebookLeadsController extends AbstractActionController 
+class FacebookLeadsController extends AbstractActionController
 {
     public function indexAction()
     {
@@ -21,13 +21,13 @@ class FacebookLeadsController extends AbstractActionController
         if($this->getRequest()->isPost()) {
             $leads = $this->getRequest()->getPost();
         }
-        
+
         $nomeArquivo =  '/data/facebook-leads.txt';
         $logger = new Logger();
         $write = new Stream(getcwd() . $nomeArquivo);
         $logger->addWriter($write);
         $logger->info($leads);
-        
+
         $response = $this->getResponse();
         $response->setStatusCode(200);
         $response->setContent(1_977_358_885);

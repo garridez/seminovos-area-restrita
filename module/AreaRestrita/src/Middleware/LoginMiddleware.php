@@ -21,11 +21,11 @@ class LoginMiddleware implements MiddlewareInterface
         $this->router = $router;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->authService->hasIdentity()) {
             // Executa o próximo middleware
-            return $delegate->handle($request);
+            return $handler->handle($request);
         }
 
         $url = $this->router->getRoute('auth')->assemble();

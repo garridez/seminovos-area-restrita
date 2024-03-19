@@ -29,13 +29,13 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         $this->routeMatch = $routeMatch;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $idVeiculo = (int) $this->routeMatch->getParam('idVeiculo', false);
 
         // Se não tem idVeiculo no como parametro, então continua para o próximo middleware
         if (!$idVeiculo) {
-            return $delegate->handle($request);
+            return $handler->handle($request);
         }
         // Quando está tentando editar um veículo mas não está logado
         if (!$this->authService->hasIdentity()) {
@@ -49,7 +49,7 @@ class CheckIdVeiculoMiddleware implements MiddlewareInterface
         /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->container->get(Veiculos::class);
         if ($veiculosModel->isOwner($idVeiculo)) {
-            return $delegate->handle($request);
+            return $handler->handle($request);
         }
         /**
          * @todo criar uma página melhor pra isso

@@ -19,10 +19,12 @@ class JsonController extends AbstractActionController
         $data = [];
         foreach ($cidadesData as $cidade) {
             $idEstado = $cidade['idEstado'];
-            unset($cidade['DDD'],
+            unset(
+                $cidade['DDD'],
                 $cidade['dDD'],
                 $cidade['sigla'],
-                $cidade['idEstado']);
+                $cidade['idEstado']
+            );
 
             $data[$idEstado][] = $cidade;
         }
@@ -30,7 +32,8 @@ class JsonController extends AbstractActionController
         if (isset($params['idEstado']) && isset($data[$params['idEstado']])) {
             $data = $data[$params['idEstado']];
             if ($params['idEstado'] == 11) {
-                array_unshift($data,
+                array_unshift(
+                    $data,
                     [
                         'idCidade' => '2700',
                         'cidade' => 'Belo Horizonte',
@@ -46,7 +49,8 @@ class JsonController extends AbstractActionController
                     [
                         'idCidade' => '',
                         'cidade' => '-',
-                ]);
+                    ]
+                );
             }
         }
 
@@ -54,18 +58,18 @@ class JsonController extends AbstractActionController
         return new JsonModel($data);
     }
 
-    protected function setHeaderCache()
+    protected function setHeaderCache(): void
     {
 
         $expires = new Header\Expires();
         $expires->setDate(date(DATE_W3C, time() + (60 * 60 * 24 * 31)));
 
         $cacheControl = new Header\CacheControl();
-        $cacheControl->addDirective('max-age', 2_592_000);
+        $cacheControl->addDirective('max-age', '2592000');
 
         $pragma = new Header\Pragma('cache');
 
-        /* @var $response \Laminas\Http\PhpEnvironment\Response */
+        /** @var \Laminas\Http\PhpEnvironment\Response $response */
         $response = $this->getResponse();
         $response->getHeaders()
             ->addHeader($expires)

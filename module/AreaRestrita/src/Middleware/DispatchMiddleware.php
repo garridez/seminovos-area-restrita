@@ -2,7 +2,7 @@
 
 namespace AreaRestrita\Middleware;
 
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\DispatchListener;
 use Laminas\Mvc\MvcEvent;
@@ -15,12 +15,12 @@ class DispatchMiddleware implements MiddlewareInterface
 {
     protected $container;
 
-    public function __construct(containerinterface $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $delegate): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $container = $this->container;
 
