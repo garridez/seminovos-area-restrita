@@ -12,25 +12,24 @@
  * file.
  */
 
-use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\Session\Storage\SessionArrayStorage;
 
 return [
     'SnBH' => [
         'urls' => [
-            'site' => getenv('SNBH_URL_SITE')
-        ]
+            'site' => getenv('SNBH_URL_SITE'),
+        ],
     ],
     'ApiClient' => [
         'credentials' => [
             'serverUrl' => 'http://api2.seminovos.com.br',
             // 'serverUrl' => 'http://snbh-api',
             'headers' => [
-                'Accept' => 'application/vnd.seminovos-bh.v1+json'
+                'Accept' => 'application/vnd.seminovos-bh.v1+json',
             ],
             'options' => [
-                'timeout' => 60 * 3
-            ]
+                'timeout' => 60 * 3,
+            ],
         ],
         'cache' => [
             'use_from_service_manager' => 'cache',
@@ -48,33 +47,32 @@ return [
     ],
     'dir' => [
         'temp' => 'data/temp',
-        'upload' => 'data/temp/upload'
+        'upload' => 'data/temp/upload',
     ],
     'caches' => [
         'cache' => [
             'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
             'options' => [
-                'ttl' => 300, # 5 Minutos
+                'ttl' => 300, // 5 Minutos
                 'cacheDir' => 'data/cache',
                 'namespace' => 'area-restrita',
             ],
             'plugins' => [
                 [
                     'name' => 'Serializer',
-                ]
-            ]
+                ],
+            ],
         ],
     ],
-    'session_config' => [
-    ],
+    'session_config' => [],
     'session_manager' => [
         'validators' => [
             Laminas\Session\Validator\RemoteAddr::class,
             Laminas\Session\Validator\HttpUserAgent::class,
         ],
-        'options' => [ ],
+        'options' => [],
     ],
     'session_storage' => [
-        'type' => SessionArrayStorage::class
+        'type' => SessionArrayStorage::class,
     ],
 ];

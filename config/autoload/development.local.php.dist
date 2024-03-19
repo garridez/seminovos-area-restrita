@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Local Configuration Override for DEVELOPMENT MODE.
  *
@@ -15,18 +16,23 @@
  * You may also create files matching the glob pattern `{,*.}{global,local}-development.php`.
  */
 
-$removeKey = new \Laminas\Stdlib\ArrayUtils\MergeRemoveKey();
+use AreaRestrita\Log\Processors\UserRequest;
+use AreaRestrita\Log\Writer\Local;
+use Laminas\Log\Formatter\Json;
+use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
+
+$removeKey = new MergeRemoveKey();
 
 return [
     'ApiClient' => [
         'credentials' => [
             'serverUrl' => getenv('SNBH_API_HOST'),
             'headers' => [
-                'Accept' => 'application/vnd.seminovos-bh.v1+json'
-            ]
+                'Accept' => 'application/vnd.seminovos-bh.v1+json',
+            ],
         ],
         'cache' => [
-            'use_from_service_manager' => 'cache'
+            'use_from_service_manager' => 'cache',
         ],
     ],
     'log' => [
@@ -34,20 +40,20 @@ return [
             'writers' => [
                 'NewRelic' => $removeKey,
                 'local' => [
-                    'name' => \AreaRestrita\Log\Writer\Local::class,
+                    'name' => Local::class,
                     'options' => [
-                        'formatter' => \Laminas\Log\Formatter\Json::class,
+                        'formatter' => Json::class,
                         'stream' => 'data/temp/logs/logger.txt',
                         'chmod' => 0777,
                     ],
-                ]
+                ],
             ],
             'processors' => [
                 'Backtrace' => [
                     'name' => Laminas\Log\Processor\Backtrace::class,
                 ],
                 'UserRequest' => [
-                    'name' => \AreaRestrita\Log\Processors\UserRequest::class,
+                    'name' => UserRequest::class,
                 ],
             ],
         ],
@@ -57,13 +63,13 @@ return [
             'adapter' => Laminas\Cache\Storage\Adapter\Filesystem::class,
             'options' => [
                 'server' => $removeKey,
-                'ttl' => 300, # 5 Minutos
+                'ttl' => 300, // 5 Minutos
                 'cacheDir' => 'data/cache',
                 'namespace' => 'AreaRestritaDev',
             ],
             'plugins' => [
-                ['name'=>'Serializer',],
-            ]
+                ['name' => 'Serializer'],
+            ],
         ],
     ],
     'view_manager' => [

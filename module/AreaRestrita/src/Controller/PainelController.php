@@ -9,19 +9,6 @@ use Laminas\View\Model\JsonModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Model\Planos;
 
-abstract class GranularidadeContator {
-    final public const Dia = 'DATE(time)';
-    final public const Semana = 'WEEK(DATE(time))';
-    final public const Mes = 'MONTH(DATE(time))';
-    final public const Ano = 'YEAR(DATE(time))';
-}
-
-abstract class TabelasContador{
-    final public const Acesso = 'acesso';
-    final public const Impressao = 'impressao';
-    final public const Contato = 'contato';
-}
-
 class PainelController extends AbstractActionController
 {
 

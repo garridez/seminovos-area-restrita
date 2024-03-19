@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Constantes para facilitar o acesso aos dados
  */
+
 define('APPLICATION_VERSION', file_get_contents('version'));
 define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
 
