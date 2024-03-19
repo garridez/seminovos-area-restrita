@@ -2,12 +2,11 @@
 
 namespace AreaRestrita\View\Helper;
 
-use SnBH\ApiModel\Model\Cadastros;
 use Laminas\View\Helper\AbstractHelper;
+use SnBH\ApiModel\Model\Cadastros;
 
 class UserInfo extends AbstractHelper
 {
-
     public function __construct(protected $data)
     {
     }
@@ -23,6 +22,7 @@ class UserInfo extends AbstractHelper
 
     /**
      * Retorna um array com todos os dados
+     *
      * @return array
      */
     public function getAll()

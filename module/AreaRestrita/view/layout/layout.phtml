@@ -1,5 +1,8 @@
 <?php
-/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
+
+use AreaRestrita\View\Helper\AutocompleteClass;
+
+/** @var AutocompleteClass $this */
 $this->headTitle()->setSeparator(' - ')->append('Meus Anúncios')->append('Seminovos.com.br');
 
 $assetSufix = APPLICATION_ENV === 'development' ? random_int(0, 64_456_645) . '-development' : APPLICATION_VERSION;
@@ -24,7 +27,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
     <meta content="" name="description" />
     <meta content="" name="author" />
     <link href="/css/app.css?<?= $assetSufix ?>" media="screen" rel="stylesheet" type="text/css">
-    <?php if (IS_PROD): ?>
+    <?php if (IS_PROD) : ?>
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -46,23 +49,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </a>
         </div>
         <?php
-      if ($this->userInfo('tipoCadastro') == 1) {
-    $arrayPlanos = [
-        1 => ['nitro',      'Nitro',      '15',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
-        2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
-        3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
-    ];
-    $data = [
-      "arrayPlanos" => $arrayPlanos,
-      "dataExpiracaoRevenda" => $this->expiracaoRevenda()->dataExpiracaoRevenda,
-      "diasParaExpirar" => $this->expiracaoRevenda()->diasParaExpirar,
-    ];
-    echo $this->partial('partials/menu-revenda.phtml',$data);
-} elseif ($this->userInfo('tipoCadastro') == 2) {
-    echo $this->partial('partials/menu-particular.phtml');
-}
+        if ($this->userInfo('tipoCadastro') == 1) {
+            $arrayPlanos = [
+                1 => ['nitro',      'Nitro',      '15',  'alta',    '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
+                2 => ['turbo',      'Turbo',      '09',  'média',   '', '', 'turbo-value', $this->qtdAnuncios()->totalTurbo, $this->qtdAnuncios()->totalTurboPublicados],
+                3 => ['basico',     'Básico',     '06',  'baixa',   '', '', 'basic-value', $this->qtdAnuncios()->totalBasico, $this->qtdAnuncios()->totalBasicoPublicado],
+            ];
+            $data = [
+                "arrayPlanos" => $arrayPlanos,
+                "dataExpiracaoRevenda" => $this->expiracaoRevenda()->dataExpiracaoRevenda,
+                "diasParaExpirar" => $this->expiracaoRevenda()->diasParaExpirar,
+            ];
+            echo $this->partial('partials/menu-revenda.phtml', $data);
+        } elseif ($this->userInfo('tipoCadastro') == 2) {
+            echo $this->partial('partials/menu-particular.phtml');
+        }
 
-      ?>
+        ?>
     </nav>
 
     <div class="page-container">
@@ -86,23 +89,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         aria-expanded="false">
                         <div class="p-r-10 fs-14 font-heading hidden-md-down">
                             <?php
-                if($this->userInfo('tipoCadastro')!== null){ 
-                  if($this->userInfo('tipoCadastro') == 1) {
-                    $new_nome = $this->userInfo('nomeFantasia');
-                  }
-                  elseif ($this->userInfo('tipoCadastro') == 2){
-                    $new_nome = $this->userInfo('responsavelNome');
-                  }
-                  if ($new_nome) {
-                    $new_nome = explode(" ",(string) $new_nome);
-                    $new_nome = $new_nome[0] . " " . ($new_nome[1] ?? '');
-                  } else {
-                    $new_nome = "Não informado";
-                  }
-                }else{
-                  $new_nome = "Não informado";
-                }
-                ?>
+                            if ($this->userInfo('tipoCadastro') !== null) {
+                                if ($this->userInfo('tipoCadastro') == 1) {
+                                    $new_nome = $this->userInfo('nomeFantasia');
+                                } elseif ($this->userInfo('tipoCadastro') == 2) {
+                                    $new_nome = $this->userInfo('responsavelNome');
+                                }
+                                if ($new_nome) {
+                                    $new_nome = explode(" ", (string) $new_nome);
+                                    $new_nome = $new_nome[0] . " " . ($new_nome[1] ?? '');
+                                } else {
+                                    $new_nome = "Não informado";
+                                }
+                            } else {
+                                $new_nome = "Não informado";
+                            }
+                            ?>
                             <span class="semi-bold d-block">
                                 <?= $new_nome ?>
                                 <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>

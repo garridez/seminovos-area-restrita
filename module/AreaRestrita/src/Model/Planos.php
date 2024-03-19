@@ -7,13 +7,12 @@ use SnBH\ApiModel\Model\Cadastros;
 
 class Planos extends AbstractModel
 {
-
     use Traits\TraitCadastro;
     use Traits\TraitIdentity;
 
     /**
      * Retorna os planos de acordo com o tipo de usuário atual
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -25,8 +24,8 @@ class Planos extends AbstractModel
         }
 
         return parent::get([
-                'tipoPlano' => Cadastros::TIPO_ID_STRING[$cadastro['tipoCadastro']]
-                ], null, $cacheable)->getData();
+            'tipoPlano' => Cadastros::TIPO_ID_STRING[$cadastro['tipoCadastro']],
+        ], null, $cacheable)->getData();
     }
 
     public function get($tipoPlano = null, $cache = true, $status = 1)
@@ -36,14 +35,14 @@ class Planos extends AbstractModel
         }
         $tipoPlano = Cadastros::TIPO_ID_STRING[(int) $tipoPlano];
 
-        if($tipoPlano === 'revenda'){
+        if ($tipoPlano === 'revenda') {
             $status = -1;
         }
 
         return parent::get([
-                'tipoPlano' => $tipoPlano,
-                'status' => $status
-                ], null, $cache)->getData();
+            'tipoPlano' => $tipoPlano,
+            'status' => $status,
+        ], null, $cache)->getData();
     }
 
     public function getPlanosUsados($cacheable = false)
@@ -55,9 +54,9 @@ class Planos extends AbstractModel
         }
 
         return parent::get([
-                'tipoCadastro' => $cadastro['tipoCadastro'],
-                'idCadastro' => $cadastro['idCadastro'],
-                'version2' => 1,
-                ], 'anuncios', $cacheable)->getData();
+            'tipoCadastro' => $cadastro['tipoCadastro'],
+            'idCadastro' => $cadastro['idCadastro'],
+            'version2' => 1,
+        ], 'anuncios', $cacheable)->getData();
     }
 }

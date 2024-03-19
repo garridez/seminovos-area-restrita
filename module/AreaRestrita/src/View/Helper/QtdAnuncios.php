@@ -6,6 +6,7 @@ use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Esse helper é pra mostrar os dados de quantidade de anúncios usados e disponiveis na view
+ *
  * @property int $totalGratuito Total de Gratuitos
  * @property int $totalGratuitoPublicado Total de Gratuito Publicado
  * @property int $totalBasico Total de Basicos
@@ -21,7 +22,6 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class QtdAnuncios extends AbstractHelper
 {
-
     public function __construct(protected $data)
     {
     }

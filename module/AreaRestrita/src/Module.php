@@ -2,17 +2,13 @@
 
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita;
 
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\ApiClient\Event as ApiClientEvents;
-use SnBH\ApiClient\Response as ApiClientResponse;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\EventManager\Event as ZendEvent;
+use Laminas\Http\Client;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\I18n\Translator\Loader\PhpArray;
 use Laminas\I18n\Translator\Resources as TranslatorResources;
@@ -21,12 +17,14 @@ use Laminas\Log\Logger;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Validator\AbstractValidator;
 use Laminas\Session\SessionManager;
+use Laminas\Validator\AbstractValidator;
+use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiClient\Event as ApiClientEvents;
+use SnBH\ApiClient\Response as ApiClientResponse;
 
 class Module
 {
-
     final public const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
     public function getConfig()
@@ -57,19 +55,19 @@ class Module
 
         session_start();
 
-        /* @var $sessionManager AuthService */
+        /** @var AuthService $sessionManager */
         $authService = $sm->get(AuthService::class);
 
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);
-        /* @var $sessionManager SessionManager */
+        /** @var SessionManager $sessionManager */
         $sessionManager = $sm->get(SessionManager::class);
 
         if (!isset($_COOKIE['TUID'])) {
             $identity = $authService->getIdentity();
             $data = $apiClient->crypterPost([
                 'data' => $identity,
-                'randiv' => true
+                'randiv' => true,
             ], null, false)->getData();
 
             setcookie(
@@ -85,7 +83,7 @@ class Module
 
         $apiClient->getEventManager()->attach(ApiClientEvents::EVENT_PRE_SEND, function (ZendEvent $event) use ($authService, $sessionManager) {
             $client = $event->getTarget();
-            if (!$client instanceof \Laminas\Http\Client) {
+            if (!$client instanceof Client) {
                 return;
             }
             $identity = $authService->getIdentity();
@@ -124,7 +122,7 @@ class Module
 
     public function onDispatchError(MvcEvent $e)
     {
-        /* @var $authService AuthService */
+        /** @var AuthService $authService */
         $authService = $e->getApplication()->getServiceManager()->get(AuthService::class);
         if (!$authService->hasIdentity()) {
             $e->getViewModel()->setTemplate('layout/blank');

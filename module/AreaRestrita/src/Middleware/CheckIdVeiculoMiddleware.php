@@ -2,17 +2,15 @@
 
 namespace AreaRestrita\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\ApiModel\Model\Veiculos;
 use Laminas\Authentication\AuthenticationService as AuthServ;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Router\Http\RouteMatch;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiModel\Model\Veiculos;
 
 /**
  * Esse middleware verifica se o veículo que está na URL é do usuário que está logado
@@ -20,7 +18,6 @@ use Laminas\Router\Http\RouteMatch;
  */
 class CheckIdVeiculoMiddleware implements MiddlewareInterface
 {
-
     protected $authService;
     protected $apiClient;
     protected $routeMatch;

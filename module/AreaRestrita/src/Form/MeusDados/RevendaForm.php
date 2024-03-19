@@ -2,12 +2,12 @@
 
 namespace AreaRestrita\Form\MeusDados;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator\Hostname;
 
 class RevendaForm extends Form
 {
-
     public function __construct($name = 'form_revendaSite', $options = [])
     {
         parent::__construct($name, $options);
@@ -21,7 +21,7 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -33,7 +33,7 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -47,7 +47,7 @@ class RevendaForm extends Form
                 'class' => 'form-control',
                 'data-mask' => '(00) 90000-0000',
                 'placeholder' => '(__) _____-____',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -64,7 +64,7 @@ class RevendaForm extends Form
                 ],
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -107,7 +107,7 @@ class RevendaForm extends Form
                 ],
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -150,7 +150,7 @@ class RevendaForm extends Form
                 ],
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -193,7 +193,7 @@ class RevendaForm extends Form
                 ],
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -228,7 +228,7 @@ class RevendaForm extends Form
                 'label' => 'E-mail Financeiro',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -240,7 +240,7 @@ class RevendaForm extends Form
             'attributes' => [
                 'required' => true,
                 // 'readonly' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -250,7 +250,7 @@ class RevendaForm extends Form
                 'label' => 'E-mail Secundário',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -261,7 +261,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'placeholder'=>'https://www.facebook.com/{pagina}',
+                'placeholder' => 'https://www.facebook.com/{pagina}',
             ],
         ]);
         $this->add([
@@ -272,7 +272,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'placeholder'=>'https://www.instagram.com/{usuario}',
+                'placeholder' => 'https://www.instagram.com/{usuario}',
             ],
         ]);
         $this->add([
@@ -283,7 +283,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'placeholder'=>'https://www.youtube.com/user/{canal}',
+                'placeholder' => 'https://www.youtube.com/user/{canal}',
             ],
         ]);
         $this->add([
@@ -294,7 +294,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'placeholder'=>'https://twitter.com/{usuario}',
+                'placeholder' => 'https://twitter.com/{usuario}',
             ],
         ]);
         $this->add([
@@ -305,7 +305,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -316,7 +316,7 @@ class RevendaForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -342,7 +342,7 @@ class RevendaForm extends Form
             'name' => 'responsavelNome',
             'required' => true,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+        // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'dataNascimento',
             'required' => false,
@@ -358,23 +358,23 @@ class RevendaForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
+                        'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],
             ],
         ]);
-        #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
+        // campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
             'name' => 'telefone_1',
             'required' => true,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+        // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_2',
             'required' => false,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+        // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_3',
             'required' => false,

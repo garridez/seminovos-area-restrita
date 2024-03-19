@@ -2,18 +2,18 @@
 
 namespace AreaRestrita\Form\Login;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
 use Laminas\Form\Factory as FormFactory;
+use Laminas\Form\Form;
 
 class ParticularForm extends Form
 {
-
     public function __construct($name = 'login-particular-form', $options = [])
     {
         parent::__construct($name, $options);
 
-        (new FormFactory)->configureForm($this,
+        (new FormFactory())->configureForm(
+            $this,
             [
                 'elements' => [
                     [
@@ -22,7 +22,7 @@ class ParticularForm extends Form
                             'name' => 'type',
                             'attributes' => [
                                 'value' => $name,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -31,7 +31,7 @@ class ParticularForm extends Form
                             'name' => 'tipoCadastro',
                             'attributes' => [
                                 'value' => 2,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -42,9 +42,9 @@ class ParticularForm extends Form
                                 'label' => 'E-mail',
                             ],
                             'attributes' => [
-                                'required'=> true,
-                                'minlength'=> 5,
-                            ]
+                                'required' => true,
+                                'minlength' => 5,
+                            ],
                         ],
                     ],
                     [
@@ -57,7 +57,7 @@ class ParticularForm extends Form
                             'attributes' => [
                                 'required' => true,
                                 'minlength' => 4,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -74,7 +74,7 @@ class ParticularForm extends Form
                     'usuarioSenha' => [
                         'required' => true,
                         'validators' => [
-                            ['name' => 'notempty',],
+                            ['name' => 'notempty'],
                         ],
                     ],
                     'usuarioEmail' => [

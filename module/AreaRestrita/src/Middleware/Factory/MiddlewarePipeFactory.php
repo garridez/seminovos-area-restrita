@@ -2,24 +2,25 @@
 
 namespace AreaRestrita\Middleware\Factory;
 
-use Laminas\Stratigility\MiddlewarePipe;
-use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\Factory\FactoryInterface;
 use AreaRestrita\Middleware;
+use interop\container\containerinterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\Stratigility\MiddlewarePipe;
 
 class MiddlewarePipeFactory implements FactoryInterface
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(containerinterface $container, $requestedName, $options = null)
     {
 //        var_dump(func_get_args());
 //        die;
         $pipe = new MiddlewarePipe();
-        foreach ([
-        Middleware\LoginMiddleware::class,
-        Middleware\CheckIdVeiculoMiddleware::class,
-        Middleware\DispatchMiddleware::class,
-        ] as $middlewareClass) {
+        foreach (
+            [
+                Middleware\LoginMiddleware::class,
+                Middleware\CheckIdVeiculoMiddleware::class,
+                Middleware\DispatchMiddleware::class,
+            ] as $middlewareClass
+        ) {
             $pipe->pipe($container->get($middlewareClass));
         }
 

@@ -3,25 +3,26 @@
 namespace AreaRestrita\Model\Traits;
 
 use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\ServiceManager;
 
 trait TraitIdentity
 {
-
     /**
      * Já deve estar setado pela classe que vai usar esse trait
      *
-     * @var \Laminas\ServiceManager\ServiceManager
+     * @var ServiceManager
      */
     protected $container;
 
     /**
      * Id do usuário loggado
+     *
      * @var int
      */
     private $identity;
 
     /**
-     * @return \Laminas\ServiceManager\ServiceManager
+     * @return ServiceManager
      */
     protected function getContainer()
     {
@@ -33,7 +34,7 @@ trait TraitIdentity
     protected function getIdentity()
     {
         if (!$this->identity) {
-            /* @var $authService AuthenticationService */
+            /** @var AuthenticationService $authService */
             $authService = $this->getContainer()->get(AuthenticationService::class);
             $this->identity = $authService->getIdentity();
         }

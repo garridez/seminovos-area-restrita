@@ -2,11 +2,11 @@
 
 namespace AreaRestrita\Model;
 
+use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\Veiculos as ApiModelVeiculos;
 
 class Veiculos extends ApiModelVeiculos
 {
-
     use Traits\TraitIdentity;
 
     /**
@@ -24,8 +24,9 @@ class Veiculos extends ApiModelVeiculos
      * Atualiza na api os dados do veiculo
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
+     *
      * @param int $idCadastro
-     * @return \SnBH\ApiClient\Response
+     * @return Response
      */
     public function put(array $data, $idVeiculo)
     {
@@ -35,14 +36,14 @@ class Veiculos extends ApiModelVeiculos
     public function getAll($page = null, $cache = false)
     {
         return parent::get([
-                'idCadastro' => $this->getIdentity(),
-                'ignorarCondicoesBasicas' => true,
-                'registrosPagina' => 100,
-                'paginaAtual' => $page,
-                'ordenarPor' => 5, // status
-                'ordem' => 'ASC',
-                'cache' => $cache ? 1 : 0,
-                ], null, $cache)->json();
+            'idCadastro' => $this->getIdentity(),
+            'ignorarCondicoesBasicas' => true,
+            'registrosPagina' => 100,
+            'paginaAtual' => $page,
+            'ordenarPor' => 5, // status
+            'ordem' => 'ASC',
+            'cache' => $cache ? 1 : 0,
+        ], null, $cache)->json();
     }
 
     public function get($idVeiculo, $useCache = false)

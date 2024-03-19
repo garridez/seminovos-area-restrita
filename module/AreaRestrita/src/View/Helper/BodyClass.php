@@ -6,7 +6,6 @@ use Laminas\View\Helper\AbstractHelper;
 
 class BodyClass extends AbstractHelper
 {
-
     public function __construct(protected $class)
     {
     }

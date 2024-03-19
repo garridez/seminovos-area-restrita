@@ -6,7 +6,6 @@ use Laminas\Log\Processor\ProcessorInterface;
 
 class UserRequest implements ProcessorInterface
 {
-
     public function process(array $event)
     {
         $userRequest = [
@@ -26,7 +25,6 @@ class UserRequest implements ProcessorInterface
         if (session_status() === PHP_SESSION_ACTIVE) {
             $userRequest['session_id'] = session_id();
         }
-
 
         $event['extra']['UserRequest'] = $userRequest;
 

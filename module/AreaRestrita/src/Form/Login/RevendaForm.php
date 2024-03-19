@@ -2,18 +2,18 @@
 
 namespace AreaRestrita\Form\Login;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
 use Laminas\Form\Factory as FormFactory;
+use Laminas\Form\Form;
 
 class RevendaForm extends Form
 {
-
     public function __construct($name = 'login-revenda-form', $options = [])
     {
         parent::__construct($name, $options);
 
-        (new FormFactory)->configureForm($this,
+        (new FormFactory())->configureForm(
+            $this,
             [
                 'elements' => [
                     [
@@ -22,7 +22,7 @@ class RevendaForm extends Form
                             'name' => 'type',
                             'attributes' => [
                                 'value' => $name,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -31,7 +31,7 @@ class RevendaForm extends Form
                             'name' => 'tipoCadastro',
                             'attributes' => [
                                 'value' => 1,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -42,10 +42,10 @@ class RevendaForm extends Form
                                 'label' => 'CNPJ',
                             ],
                             'attributes' => [
-                                'required'=> true,
+                                'required' => true,
                                 'minlength' => 5,
                                 'data-mask' => '00.000.000/0000-00',
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -56,9 +56,9 @@ class RevendaForm extends Form
                                 'label' => 'Senha',
                             ],
                             'attributes' => [
-                                'required'=> true,
+                                'required' => true,
                                 'minlength' => 4,
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -75,7 +75,7 @@ class RevendaForm extends Form
                     'usuarioSenha' => [
                         'required' => true,
                         'validators' => [
-                            ['name' => 'notempty',],
+                            ['name' => 'notempty'],
                         ],
                     ],
                 ],

@@ -6,12 +6,11 @@ use SnBH\ApiModel\Model\SiteHospedadoConteudo as ApiModelSiteHospedadoConteudo;
 
 class SiteHospedadoConteudo extends ApiModelSiteHospedadoConteudo
 {
-
     use Traits\TraitIdentity;
 
     /**
      * Retorna os dados do usuário logado
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -23,7 +22,7 @@ class SiteHospedadoConteudo extends ApiModelSiteHospedadoConteudo
     public function get($idSiteHospedado)
     {
         return parent::get([
-                'idSiteHospedado' => $idSiteHospedado
-            ])->getData();
+            'idSiteHospedado' => $idSiteHospedado,
+        ])->getData();
     }
 }

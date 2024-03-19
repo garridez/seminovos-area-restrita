@@ -8,6 +8,9 @@ use SnBH\Integrador\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
+    /**
+     * @return JsonModel
+     */
     public function indexAction()
     {
         $request = $this->request;

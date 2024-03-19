@@ -4,11 +4,11 @@ namespace AreaRestrita\Form\MeusDados;
 
 use Laminas\Form\Element;
 use Laminas\Form\Form;
+use Laminas\Validator\Hostname;
 use Laminas\Validator\ValidatorChain;
 
 class ParticularForm extends Form
 {
-
     public function __construct($name = 'form_particularSite', $options = [])
     {
         parent::__construct($name, $options);
@@ -23,22 +23,22 @@ class ParticularForm extends Form
                 'required' => true,
                 'readonly' => true,
                 'class' => 'form-control',
-                'placeholder' => 'Nome Sobrenome'
-            ]
+                'placeholder' => 'Nome Sobrenome',
+            ],
         ]);
 
         $this->add([
             'type' => Element\Date::class,
             'name' => 'dataNascimento',
             'options' => [
-                'label' => 'Data de Nascimento'
+                'label' => 'Data de Nascimento',
             ],
             'attributes' => [
                 'class' => 'form-control',
                 'required' => true,
                 'min' => date('Y-m-d', strtotime('-100 year')),
                 'max' => date('Y-m-d'),
-            ]
+            ],
         ]);
 
         $this->add([
@@ -51,7 +51,7 @@ class ParticularForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'seuemail@example.com.br',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -63,7 +63,7 @@ class ParticularForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'AA-00.000.000',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -77,7 +77,7 @@ class ParticularForm extends Form
                 'class' => 'form-control',
                 'placeholder' => '000.000.000-00',
                 'data-mask' => '000.000.000-00',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -118,8 +118,8 @@ class ParticularForm extends Form
             'attributes' => [
                 'required' => true,
                 'class' => 'form-control',
-                'value' => 11
-            ]
+                'value' => 11,
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -136,8 +136,8 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
-            ]
+                'class' => 'form-control',
+            ],
         ]);
 
         $this->add([
@@ -150,7 +150,7 @@ class ParticularForm extends Form
                 'class' => 'form-control',
                 'data-mask' => '(00) 0000-0000',
                 'placeholder' => '(__) ____-____',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -195,7 +195,7 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
 
@@ -226,7 +226,7 @@ class ParticularForm extends Form
                 ],
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -246,8 +246,8 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
-            ]
+                'class' => 'form-control',
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -257,8 +257,8 @@ class ParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
-            ]
+                'class' => 'form-control',
+            ],
         ]);
 
         $this->add([
@@ -280,7 +280,7 @@ class ParticularForm extends Form
             'name' => 'responsavelNome',
             'required' => true,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+        // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'dataNascimento',
             'required' => false,
@@ -296,7 +296,7 @@ class ParticularForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
+                        'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],
@@ -326,13 +326,13 @@ class ParticularForm extends Form
             'name' => 'idEstado',
             'required' => true,
         ]);
-        // Reseta o validador de idCidade
+    // Reseta o validador de idCidade
         $inputFilter->get('idCidade')->setValidatorChain(new ValidatorChain());
         $inputFilter->add([
             'name' => 'idCidade',
             'required' => true,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+    // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_2',
             'required' => false,
@@ -341,7 +341,7 @@ class ParticularForm extends Form
             'name' => 'operadora_1',
             'required' => false,
         ]);
-        #campo não obrigatório, porém sem o required igual a false não funciona
+    // campo não obrigatório, porém sem o required igual a false não funciona
         $inputFilter->add([
             'name' => 'operadora_3',
             'required' => false,

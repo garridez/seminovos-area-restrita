@@ -40,6 +40,7 @@
     </div>
 </div>
 <script>
+    dataLayer.push({'codTransacao': "<?=$_GET['idPagamento']?>"});
 function selectText(){
     if(window.getSelection) {
         var range = document.createRange();

@@ -6,7 +6,6 @@ use Laminas\View\Helper\AbstractHelper;
 
 class ArrayData extends AbstractHelper
 {
-
     public function __construct(protected $data)
     {
     }

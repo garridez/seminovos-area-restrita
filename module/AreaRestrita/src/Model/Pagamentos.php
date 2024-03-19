@@ -2,16 +2,16 @@
 
 namespace AreaRestrita\Model;
 
+use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\HistoricoPagamentosParticular as ApiModelPagamentos;
 
 class Pagamentos extends ApiModelPagamentos
 {
-
     use Traits\TraitIdentity;
 
     /**
      * Retorna os dados do usuário logado
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -24,8 +24,9 @@ class Pagamentos extends ApiModelPagamentos
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
+     *
      * @param int $idCadastro
-     * @return \SnBH\ApiClient\Response
+     * @return Response
      */
     public function put(array $data, $idCadastro = null)
     {
@@ -39,9 +40,9 @@ class Pagamentos extends ApiModelPagamentos
     public function get($idPagamento = null, $cache = false)
     {
         return parent::get([
-                'idCadastro' => $this->getIdentity(),
-                'sort' => 'idPagamento',
-                'direction' => 'DESC'
-                ], $idPagamento, $cache)->json();
+            'idCadastro' => $this->getIdentity(),
+            'sort' => 'idPagamento',
+            'direction' => 'DESC',
+        ], $idPagamento, $cache)->json();
     }
 }

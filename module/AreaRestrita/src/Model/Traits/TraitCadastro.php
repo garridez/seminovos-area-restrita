@@ -3,19 +3,20 @@
 namespace AreaRestrita\Model\Traits;
 
 use AreaRestrita\Model\Cadastros;
+use Laminas\ServiceManager\ServiceManager;
 
 trait TraitCadastro
 {
-
     /**
      * Já deve estar setado pela classe que vai usar esse trait
      *
-     * @var \Laminas\ServiceManager\ServiceManager
+     * @var ServiceManager
      */
     protected $container;
 
     /**
      * Dados de Cadastro
+     *
      * @var int
      */
     private $data;

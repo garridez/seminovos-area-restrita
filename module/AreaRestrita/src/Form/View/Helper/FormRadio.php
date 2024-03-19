@@ -2,22 +2,16 @@
 
 namespace AreaRestrita\Form\View\Helper;
 
-use InvalidArgumentException;
-use LogicException;
-use TwbBundle\Form\View\Helper\TwbBundleFormRadio;
-use Laminas\Form\ElementInterface;
-use Laminas\Form\Element\Radio;
 use Laminas\Form\Element\MultiCheckbox;
-use Laminas\Form\View\Helper\FormRow;
+use Laminas\Form\ElementInterface;
+use TwbBundle\Form\View\Helper\TwbBundleFormRadio;
 
 class FormRadio extends TwbBundleFormRadio
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $labelAttributes;
     protected $separator = '</div><div class="radio radio-success mt-0 mb-0">';
-    
+
     protected static $checkboxFormat = '<div class="radio radio-success mt-0 mb-0">%s</div>';
 
     public function render(ElementInterface $oElement)
@@ -42,21 +36,20 @@ class FormRadio extends TwbBundleFormRadio
         }
 
         if (isset($aElementOptions['btn-group']) && $aElementOptions['btn-group'] != false) {
-
             $buttonClass = 'btn btn-primary';
             if (is_array($aElementOptions['btn-group']) && isset($aElementOptions['btn-group']['btn-class'])) {
                 $buttonClass = $aElementOptions['btn-group']['btn-class'];
             }
 
-        	$this->setSeparator('');
-        	$oElement->setLabelAttributes(['class' => $buttonClass]);
+            $this->setSeparator('');
+            $oElement->setLabelAttributes(['class' => $buttonClass]);
 
-        	return sprintf('<div class="btn-group" data-toggle="buttons">%s</div>', parent::render($oElement));
+            return sprintf('<div class="btn-group" data-toggle="buttons">%s</div>', parent::render($oElement));
         }
 
         return sprintf(static::$checkboxFormat, parent::render($oElement));
     }
-    
+
 /*protected function renderOptions(
         MultiCheckbox $oElement,
         array $aOptions,
@@ -116,9 +109,9 @@ class FormRadio extends TwbBundleFormRadio
             if ($sLabel) {
                 $aLabelAttributes = $aGlobalLabelAttributes;
                 if (isset($aElementOptions['btn-group']) && $aElementOptions['btn-group'] == true) {
-                	if ($aInputAttributes['checked']) {
-                		$aLabelAttributes['class'] = ((isset($aLabelAttributes['class'])) ? $aLabelAttributes['class'] : '') . ' active';
-                	}
+                    if ($aInputAttributes['checked']) {
+                        $aLabelAttributes['class'] = ((isset($aLabelAttributes['class'])) ? $aLabelAttributes['class'] : '') . ' active';
+                    }
                 }
 
                 if (isset($aOptionspec['label_attributes'])) {
@@ -147,7 +140,7 @@ class FormRadio extends TwbBundleFormRadio
         }
         return $sMarkup;
     }*/
-    
+
     public function renderOptions(
         MultiCheckbox $element,
         array $options,
@@ -182,15 +175,15 @@ class FormRadio extends TwbBundleFormRadio
             $label           = '';
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
-            $selected        = (isset($inputAttributes['selected'])
+            $selected        = isset($inputAttributes['selected'])
                 && $inputAttributes['type'] != 'radio'
-                && $inputAttributes['selected']);
-            $disabled        = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
+                && $inputAttributes['selected'];
+            $disabled        = isset($inputAttributes['disabled']) && $inputAttributes['disabled'];
 
             if (is_scalar($optionSpec)) {
                 $optionSpec = [
                     'label' => $optionSpec,
-                    'value' => $key
+                    'value' => $key,
                 ];
             }
 
@@ -207,7 +200,7 @@ class FormRadio extends TwbBundleFormRadio
                 $disabled = $optionSpec['disabled'];
             }
             if (isset($optionSpec['label_attributes'])) {
-                $labelAttributes = (isset($labelAttributes))
+                $labelAttributes = isset($labelAttributes)
                     ? array_merge($labelAttributes, $optionSpec['label_attributes'])
                     : $optionSpec['label_attributes'];
             }

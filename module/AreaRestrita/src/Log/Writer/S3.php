@@ -3,11 +3,11 @@
 namespace AreaRestrita\Log\Writer;
 
 use Aws\Kinesis\KinesisClient;
+use Exception;
 use Laminas\Log\Writer\AbstractWriter;
 
 class S3 extends AbstractWriter
 {
-
     public static $tmpDir = 'data/temp/logs';
 
     protected function doWrite(array $event): void
@@ -26,9 +26,9 @@ class S3 extends AbstractWriter
             $kinesisClient->PutRecord([
                 'Data' => $data . PHP_EOL,
                 'StreamName' => 'applications-logs',
-                'PartitionKey' => '1'
+                'PartitionKey' => '1',
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $tmpDir = self::$tmpDir;
             if (!file_exists($tmpDir)) {
                 mkdir($tmpDir);

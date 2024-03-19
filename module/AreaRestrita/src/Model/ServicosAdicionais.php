@@ -2,16 +2,16 @@
 
 namespace AreaRestrita\Model;
 
+use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\ServicosAdicionais as ApiModelServicosAdicionais;
 
 class ServicosAdicionais extends ApiModelServicosAdicionais
 {
-
     use Traits\TraitIdentity;
 
     /**
      * Retorna os dados do usuário logado
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -24,14 +24,15 @@ class ServicosAdicionais extends ApiModelServicosAdicionais
      * Atualiza na api os dados de cadastro
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
+     *
      * @param array $data
      * @param int $idCadastro
-     * @return \SnBH\ApiClient\Response
+     * @return Response
      */
     public function get($idServicosAdicional)
     {
         return parent::get([
-                'idServicosAdicional' => $idServicosAdicional
-            ])->json();
+            'idServicosAdicional' => $idServicosAdicional,
+        ])->json();
     }
 }

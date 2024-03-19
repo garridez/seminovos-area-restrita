@@ -2,12 +2,10 @@
 
 namespace AreaRestrita\Form\View\Helper;
 
-use InvalidArgumentException;
-use LogicException;
-use \Laminas\Form\View\Helper\FormMultiCheckbox as ZFFormMultiCheckbox;
-use Laminas\Form\ElementInterface;
 use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
-use Laminas\Form\View\Helper\FormRow;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper\FormMultiCheckbox as ZFFormMultiCheckbox;
+use Laminas\I18n\Translator\TranslatorInterface;
 
 class FormMultiCheckbox extends ZFFormMultiCheckbox
 {
@@ -64,15 +62,15 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
             $label           = '';
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
-            $selected        = (isset($inputAttributes['selected'])
+            $selected        = isset($inputAttributes['selected'])
                 && $inputAttributes['type'] != 'radio'
-                && $inputAttributes['selected']);
-            $disabled        = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
+                && $inputAttributes['selected'];
+            $disabled        = isset($inputAttributes['disabled']) && $inputAttributes['disabled'];
 
             if (is_scalar($optionSpec)) {
                 $optionSpec = [
                     'label' => $optionSpec,
-                    'value' => $key
+                    'value' => $key,
                 ];
             }
 
@@ -89,7 +87,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
                 $disabled = $optionSpec['disabled'];
             }
             if (isset($optionSpec['label_attributes'])) {
-                $labelAttributes = (isset($labelAttributes))
+                $labelAttributes = isset($labelAttributes)
                     ? array_merge($labelAttributes, $optionSpec['label_attributes'])
                     : $optionSpec['label_attributes'];
             }
@@ -114,7 +112,7 @@ class FormMultiCheckbox extends ZFFormMultiCheckbox
                 $closingBracket
             );
 
-            if (($translator = $this->getTranslator()) instanceof \Laminas\I18n\Translator\TranslatorInterface) {
+            if (($translator = $this->getTranslator()) instanceof TranslatorInterface) {
                 $label = $translator->translate(
                     $label,
                     $this->getTranslatorTextDomain()

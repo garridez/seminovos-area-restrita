@@ -2,20 +2,16 @@
 
 namespace AreaRestrita\Middleware;
 
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Router\Http\TreeRouteStack;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Psr\Http\Message\ResponseInterface as ResponseI;
-use Interop\Container\ContainerInterface;
-use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\Authentication\AuthenticationService;
-use Laminas\Router\Http\TreeRouteStack;
 
 class LoginMiddleware implements MiddlewareInterface
 {
-
     protected $authService;
     protected $router;
 

@@ -6,12 +6,12 @@ use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Esse helper é pra mostrar os dados de quantidade de anúncios usados e disponiveis na view
+ *
  * @property date $dataExpiracaoRevenda Total de Gratuitos
  * @property int $diasParaExpirar Total de Gratuito Publicado
  */
 class ExpiracaoRevenda extends AbstractHelper
 {
-
     public function __construct(protected $data)
     {
     }
@@ -30,5 +30,4 @@ class ExpiracaoRevenda extends AbstractHelper
     {
         return $this->data;
     }
-
 }

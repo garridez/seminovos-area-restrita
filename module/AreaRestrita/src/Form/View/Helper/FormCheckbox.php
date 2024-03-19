@@ -5,29 +5,28 @@ namespace AreaRestrita\Form\View\Helper;
 use Laminas\Form\Element\Checkbox as CheckboxElement;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Exception;
+use Laminas\Form\View\Helper\FormLabel;
 
 class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
-
     public function render(ElementInterface $element): string
     {
         if ($element->getOption('disable-twb')) {
             return parent::render($element);
         }
 
-
         if (!$element instanceof CheckboxElement) {
             throw new Exception\InvalidArgumentException(sprintf(
-                        '%s requires that the element is of type Laminas\Form\Element\Checkbox',
-                        __METHOD__
+                '%s requires that the element is of type Laminas\Form\Element\Checkbox',
+                __METHOD__
             ));
         }
 
         $name = $element->getName();
         if ($name === null || $name === '') {
             throw new Exception\DomainException(sprintf(
-                        '%s requires that the element has an assigned name; none discovered',
-                        __METHOD__
+                '%s requires that the element has an assigned name; none discovered',
+                __METHOD__
             ));
         }
 
@@ -62,15 +61,15 @@ class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
             ];
 
             $rendered = sprintf(
-                    '<input type="hidden" %s%s',
-                    $this->createAttributesString($hiddenAttributes),
-                    $closingBracket
-                ) . $rendered;
+                '<input type="hidden" %s%s',
+                $this->createAttributesString($hiddenAttributes),
+                $closingBracket
+            ) . $rendered;
         }
 
         $label = $element->getLabel();
         if ($label) {
-            $formLabel = new \Laminas\Form\View\Helper\FormLabel();
+            $formLabel = new FormLabel();
             $rendered .= $formLabel($element);
         }
 

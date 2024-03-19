@@ -8,12 +8,13 @@ class ApplicationNamespace implements ProcessorInterface
 {
     /**
      * Adiciona no começo do array o nome da applicação
+     *
      * @return array
      */
     public function process(array $event)
     {
         return [
-            'application' => 'AreaRestrita'
-            ] + $event;
+            'application' => 'AreaRestrita',
+        ] + $event;
     }
 }

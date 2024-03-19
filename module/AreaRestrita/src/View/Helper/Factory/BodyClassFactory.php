@@ -4,14 +4,13 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\BodyClass;
-use Interop\Container\ContainerInterface;
+use interop\container\containerinterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class BodyClassFactory implements FactoryInterface
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(containerinterface $container, $requestedName, ?array $options = null)
     {
         $classs = array_merge(
             $this->getClassByRoute($container),
@@ -24,8 +23,8 @@ class BodyClassFactory implements FactoryInterface
     protected function getClassByRoute($container)
     {
         $route = $container->get('application')
-            ->getMvcEvent()
-            ->getRouteMatch();
+        ->getMvcEvent()
+        ->getRouteMatch();
         // is 404
         if ($route === null) {
             return [];
@@ -38,11 +37,11 @@ class BodyClassFactory implements FactoryInterface
         $controller = preg_replace('/(.)([A-Z])/', '$1-$2', $controller);
 
         return [
-            // Nome da rota da requisição
+        // Nome da rota da requisição
             'r-' . str_replace('/', '_', (string) $route->getMatchedRouteName()),
-            // Nome da classe do controller
+        // Nome da classe do controller
             'c-' . strtolower($controller),
-            // Nome da action
+        // Nome da action
             'a-' . $params['action'],
         ];
     }
@@ -56,7 +55,7 @@ class BodyClassFactory implements FactoryInterface
         $isRevenda = $container->get(Cadastros::class)->isRevenda();
 
         return [
-            't-' . ($isRevenda ? 'revenda' : 'particular')
+            't-' . ($isRevenda ? 'revenda' : 'particular'),
         ];
     }
 }

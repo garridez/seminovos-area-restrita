@@ -6,12 +6,11 @@ use SnBH\ApiModel\Model\VeiculosFotos as ApiModelVeiculosFotos;
 
 class VeiculosFotos extends ApiModelVeiculosFotos
 {
-
     use Traits\TraitIdentity;
 
     /**
      * Retorna os dados do usuário logado
-     * 
+     *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
      * @return array
      */
@@ -23,8 +22,8 @@ class VeiculosFotos extends ApiModelVeiculosFotos
     public function get($idVeiculo)
     {
         return parent::get([
-                'idVeiculo' => $idVeiculo
-            ])->getData();
+            'idVeiculo' => $idVeiculo,
+        ])->getData();
     }
 
     public function delete($dados)

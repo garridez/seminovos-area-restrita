@@ -5,31 +5,30 @@ namespace AreaRestrita\View\Helper\Factory;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\View\Helper\ExpiracaoRevenda;
-use Interop\Container\ContainerInterface;
-use SnBH\ApiClient\Client as ApiClient;
+use DateTime;
+use interop\container\containerinterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ExpiracaoRevendaFactory implements FactoryInterface
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(containerinterface $container, $requestedName, ?array $options = null)
     {
         $idCadastro = $container->get(AuthService::class)->getIdentity();
 
         $tipoCadastro = $container->get(Cadastros::class)->getCurrent(true)['tipoCadastro'];
 
         //pegar data de expiração do ultimo pagamento da revenda
-        /* @var $pagamentosModel Pagamentos */
+        /** @var Pagamentos $pagamentosModel */
         $pagamentosModel = $container->get(Pagamentos::class);
         // Busca os dados do pagamento
         $pagamentosVeiculos = $pagamentosModel->get(null, true);
         //var_dump($pagamentosVeiculos);
-        $dataAtual = new \DateTime(date('Y-m-d'));
+        $dataAtual = new DateTime(date('Y-m-d'));
 
         $dataExpiracaoPlano = null;
         $dataExpiracaoPlano = $this->getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, "dataExpiracao");
-        $dataExpiracao = new \DateTime($dataExpiracaoPlano ?: '');
+        $dataExpiracao = new DateTime($dataExpiracaoPlano ?: '');
         $intevaloData = $dataAtual->diff($dataExpiracao);
         $intevaloData = (int) ($intevaloData->format('%R%a') === '-0' ? -1 : $intevaloData->format('%R%a'));
         $dataExpiracao = $dataExpiracao->format('d/m/Y');
@@ -54,10 +53,10 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         $auxData = null; //new \DateTime('1969-01-01');
         $auxDataExpiracao = null;
 
-        foreach ($pagamentosVeiculos['data'] AS $pagamento) {
+        foreach ($pagamentosVeiculos['data'] as $pagamento) {
             if ($pagamento["idCadastro"] == $idCadastro && $pagamento["status"] == 2) {
-                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
-                $dataExpiracao = new \DateTime($pagamento["dataExpiracao"]);
+                $dataCadastro = new DateTime($pagamento["dataCadastro"]);
+                $dataExpiracao = new DateTime($pagamento["dataExpiracao"]);
 
                 if (($dataCadastro > $auxData) || ($dataExpiracao > $auxDataExpiracao)) {
                     $auxData = $dataCadastro;
@@ -69,5 +68,4 @@ class ExpiracaoRevendaFactory implements FactoryInterface
 
         return $result;
     }
-
 }

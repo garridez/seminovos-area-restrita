@@ -6,7 +6,6 @@ use Laminas\Log\Writer\AbstractWriter;
 
 class Local extends AbstractWriter
 {
-
     public static $tmpDir = 'data/logs';
 
     protected function doWrite(array $event): void

@@ -2,21 +2,20 @@
 
 namespace AreaRestrita\Middleware;
 
+use interop\container\containerinterface;
+use Laminas\Mvc\Application;
+use Laminas\Mvc\DispatchListener;
+use Laminas\Mvc\MvcEvent;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Interop\Container\ContainerInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface as DelegateI;
-use Psr\Http\Message\ServerRequestInterface as ServerRequestI;
-use Laminas\Mvc\MvcEvent;
 
 class DispatchMiddleware implements MiddlewareInterface
 {
-
     protected $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(containerinterface $container)
     {
         $this->container = $container;
     }
@@ -25,7 +24,7 @@ class DispatchMiddleware implements MiddlewareInterface
     {
         $container = $this->container;
 
-        /* @var $application \Laminas\Mvc\Application */
+        /** @var Application $application */
         $application = $container->get('Application');
 
         $event = $application->getMvcEvent();
@@ -33,7 +32,7 @@ class DispatchMiddleware implements MiddlewareInterface
          * Realiza manualmente o dispatch do DispatchListener
          *  para executar o controler de acordo com a rota
          */
-        /** @var \Laminas\Mvc\DispatchListener $dispatch */
+        /** @var DispatchListener $dispatch */
         $dispatch = $container->get('DispatchListener');
         $controller = $event->getRouteMatch()->getParam('controller_name');
         if ($controller) {
@@ -54,7 +53,6 @@ class DispatchMiddleware implements MiddlewareInterface
 
         $events = $application->getEventManager();
         $events->triggerEvent($event);
-
 
         $event->setName(MvcEvent::EVENT_FINISH);
         $event->stopPropagation(false); // Clear before triggering
