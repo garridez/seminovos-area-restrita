@@ -35,7 +35,6 @@ return [
     'AreaRestrita',
     'AreaRestritaAnuncio',
     'SnBH\Integrador',
-    'SnBH\GalaxPay',
     'SnBH\Zoop',
     'SnBH\Importer',
 ];
