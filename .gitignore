@@ -28,4 +28,5 @@ version
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+public/psalm-report.html
 

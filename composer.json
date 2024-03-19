@@ -17,12 +17,12 @@
         "vendor-dir": "vendor",
         "optimize-autoloader": true,
         "allow-plugins": {
-            "laminas/laminas-dependency-plugin": true
+            "laminas/laminas-dependency-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "require": {
         "php": "^8.2",
-        "aws/aws-sdk-php": "^3.263",
         "laminas/laminas-cache-storage-adapter-filesystem": "^2.3",
         "laminas/laminas-cache-storage-adapter-redis": "^2.5",
         "laminas/laminas-cache-storage-deprecated-factory": "^1.1",
@@ -87,7 +87,8 @@
         "test": "phpunit"
     },
     "require-dev": {
-        "psalm/plugin-phpunit": "^0.18.4",
+        "laminas/laminas-coding-standard": "^2.3",
+        "psalm/plugin-phpunit": "^0.19.0",
         "vimeo/psalm": "^5.15"
     }
 }
