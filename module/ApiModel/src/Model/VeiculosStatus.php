@@ -4,7 +4,6 @@ namespace SnBH\ApiModel\Model;
 
 class VeiculosStatus extends AbstractModel
 {
-
     final public const STATUS_AGUARDANDO_PAGAMENTO = 1;
     final public const STATUS_ATIVO = 2;
     final public const STATUS_CADASTRANDO = 3;
@@ -15,5 +14,4 @@ class VeiculosStatus extends AbstractModel
     final public const STATUS_VENDIDO = 8;
     final public const STATUS_FOTOS_ALTERADAS = 9;
     final public const STATUS_CADASTRANDO_GRATIS = 10;
-
 }

@@ -2,12 +2,12 @@
 
 namespace SnBH\ApiModel\Model;
 
+use AreaRestrita\Model\Traits\TraitIdentity;
 use Laminas\Cache\Storage\Adapter\Filesystem;
 
 class Veiculos extends AbstractModel
 {
-
-    use \AreaRestrita\Model\Traits\TraitIdentity;
+    use TraitIdentity;
 
     protected function getCacheKey(): string
     {
@@ -16,7 +16,7 @@ class Veiculos extends AbstractModel
 
     /**
      * Essa função verifica se o idVeiculo pertence ao idCadastro que está loggado
-     * 
+     *
      * @param int|array $idVeiculo Pode ser um id ou um array de id
      */
     public function isOwner(int|array $idVeiculo)
@@ -38,9 +38,9 @@ class Veiculos extends AbstractModel
             $veiculos = $this->get([
                 'idCadastro' => $idCadastro,
                 'fastMode' => 1,
-                'fields' => ['idVeiculo']
+                'fields' => ['idVeiculo'],
             ])->getData();
-            $veiculos = array_map(function($item): int {
+            $veiculos = array_map(function ($item): int {
                 return (int) $item['idVeiculo'];
             }, $veiculos);
             $cache->setItem($cacheKey, $veiculos);

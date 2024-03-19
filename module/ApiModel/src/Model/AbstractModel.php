@@ -3,9 +3,9 @@
 namespace SnBH\ApiModel\Model;
 
 use BadMethodCallException;
+use Laminas\ServiceManager\ServiceManager;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @method Response get(array $where = array(), int $id = null, boolean $cacheable = false) Realiza get no endpoint correspondente à class
@@ -16,7 +16,6 @@ use Laminas\ServiceManager\ServiceManager;
  */
 abstract class AbstractModel
 {
-
     protected $allowedHttpMethods = [
         'get' => 'Get',
         'post' => 'Post',
@@ -34,14 +33,12 @@ abstract class AbstractModel
 
     public function __construct(ApiClient $apiClient, ServiceManager $container)
     {
-
         $this->apiClient = $apiClient;
         $this->container = $container;
     }
 
     protected function doRequest()
     {
-        
     }
 
     public function __call($name, $arguments)
