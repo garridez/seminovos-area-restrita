@@ -3,11 +3,11 @@
 namespace SnBH\Zoop\Controller;
 
 use Laminas\View\Model\JsonModel;
+use SnBH\Common\Logs\Zoop;
 use SnBH\Integrador\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $request = $this->request;
@@ -16,34 +16,33 @@ class IndexController extends AbstractActionController
             $data = json_decode((string) $request->getContent(), true);
 
             if (!isset($data['payload']['object'])) {
-                \SnBH\Common\Logs\Zoop::fail($data);
+                Zoop::fail($data);
                 return new JsonModel([
-                        'status' => 401,
-                        'detail' => 'Formato invalido invalido.'
-                    ]);
+                    'status' => 401,
+                    'detail' => 'Formato invalido invalido.',
+                ]);
             }
 
             if (isset($data['payload']['object']['ping']) && $data['payload']['object']['ping']) {
-                \SnBH\Common\Logs\Zoop::ping();
+                Zoop::ping();
                 return new JsonModel([
-                        'status' => 200,
-                        'detail' => 'Ping efetuado.'
-                    ]);
+                    'status' => 200,
+                    'detail' => 'Ping efetuado.',
+                ]);
             }
 
-            \SnBH\Common\Logs\Zoop::ok($data);
+            Zoop::ok($data);
             $res = $this->getApiClient()->consultarPagamentoPost([
                 'transaction' => $data['payload']['object'],
-                'metodo' => 'zoop'
-                ])->json();
-
+                'metodo' => 'zoop',
+            ])->json();
 
             return new JsonModel($res);
         }
 
-        \SnBH\Common\Logs\Zoop::notPost();
+        Zoop::notPost();
         return new JsonModel([
-            '405' => 'Parâmetros enviados inválidos.'
+            '405' => 'Parâmetros enviados inválidos.',
         ]);
     }
 }
