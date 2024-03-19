@@ -13,7 +13,7 @@ class AuthController extends AbstractActionController
 
     public function loginAction()
     {
-        /* @var $container ServiceLocatorInterface */
+        /** @var ServiceLocatorInterface $container */
         global $container;
 
          /* @var $authService AuthenticationService */

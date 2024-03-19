@@ -6,13 +6,13 @@ use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\View\Helper\ExpiracaoRevenda;
 use DateTime;
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ExpiracaoRevendaFactory implements FactoryInterface
 {
-    public function __invoke(containerinterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $idCadastro = $container->get(AuthService::class)->getIdentity();
 

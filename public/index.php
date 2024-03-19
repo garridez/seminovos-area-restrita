@@ -1,24 +1,24 @@
 <?php
 
+use Laminas\Mvc\Application;
+use Laminas\Stdlib\ArrayUtils;
+
 ob_start();
 
 define('REQUEST_UID', $_SERVER['HTTP_CF_RAY'] ?? bin2hex(openssl_random_pseudo_bytes(16)));
 
-register_shutdown_function(function() {
+register_shutdown_function(function () {
     // Adiciona no cabeçalho da aplicação o tempo de resposta da aplicação
     if (!headers_sent()) {
         header('X-SnBH-Time-Application:' . round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 5));
         header('X-SnBH-Instance-Hostname:' . gethostname());
     }
 });
-use Laminas\Mvc\Application;
-use Laminas\Stdlib\ArrayUtils;
 
 chdir(dirname(__DIR__));
 
 // Composer autoloading
-//require 'vendor/autoload.php';
-require json_decode(file_get_contents('composer.json'), true)['config']['vendor-dir'].'/autoload.php';
+require 'vendor/autoload.php';
 
 $appConfig = require 'config/application.config.php';
 
@@ -28,8 +28,10 @@ if (file_exists('config/development.config.php')) {
 /**
  * Disponibiliza globalmente o service manager e a aplicação como atalho
  */
+// phpcs:disable
 /** @var Laminas\ServiceManager\ServiceManager $container */
 global $sm, $container, $application, $logger;
+// phpcs:enable
 
 $application = Application::init($appConfig);
 $container = $sm = $serviceManager = $application->getServiceManager();

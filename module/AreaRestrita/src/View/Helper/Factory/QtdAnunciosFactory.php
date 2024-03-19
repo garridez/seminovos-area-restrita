@@ -4,14 +4,14 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\QtdAnuncios;
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use SnBH\ApiClient\Client as ApiClient;
 
 class QtdAnunciosFactory implements FactoryInterface
 {
-    public function __invoke(containerinterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $idCadastro = $container->get(AuthService::class)->getIdentity();
 

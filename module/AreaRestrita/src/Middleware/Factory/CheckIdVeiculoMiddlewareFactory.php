@@ -3,14 +3,14 @@
 namespace AreaRestrita\Middleware\Factory;
 
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use SnBH\ApiClient\Client as ApiClient;
 
 class CheckIdVeiculoMiddlewareFactory implements FactoryInterface
 {
-    public function __invoke(containerinterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         $authService = $container->get(AuthenticationService::class);
         $apiClient = $container->get(ApiClient::class);

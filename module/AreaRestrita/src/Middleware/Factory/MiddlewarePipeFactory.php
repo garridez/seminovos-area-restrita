@@ -3,13 +3,13 @@
 namespace AreaRestrita\Middleware\Factory;
 
 use AreaRestrita\Middleware;
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Stratigility\MiddlewarePipe;
 
 class MiddlewarePipeFactory implements FactoryInterface
 {
-    public function __invoke(containerinterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
 //        var_dump(func_get_args());
 //        die;

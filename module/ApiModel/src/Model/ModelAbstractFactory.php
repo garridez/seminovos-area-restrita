@@ -2,7 +2,7 @@
 
 namespace SnBH\ApiModel\Model;
 
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use SnBH\ApiClient\Client as ApiClient;
@@ -12,13 +12,13 @@ class ModelAbstractFactory implements AbstractFactoryInterface
 {
     protected $namespacesPrefix;
 
-    public function __invoke(containerinterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         $apiClient = $container->get(ApiClient::class);
         return new $requestedName($apiClient, $container);
     }
 
-    public function canCreate(containerinterface $container, $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName)
     {
         $can = false;
 
@@ -32,7 +32,7 @@ class ModelAbstractFactory implements AbstractFactoryInterface
         return $can;
     }
 
-    public function getPrefix(containerinterface $container)
+    public function getPrefix(ContainerInterface $container)
     {
         if ($this->namespacesPrefix) {
             return $this->namespacesPrefix;
