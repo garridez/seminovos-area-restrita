@@ -1,10 +1,10 @@
 <?php
 
-use SnBH\Common\Form\Element;
-
 /**
  * @todo Fazer esses elementos funcionarem pelo "form_elements" e não pelo "service_manager"
  */
+
+use SnBH\Common\Form\Element;
 
 return [
     'service_manager' => [

@@ -6,6 +6,7 @@ use Laminas\Form\Element\Select;
 
 class SelectMotor extends Select
 {
+    /** @var array */
     protected $valueOptions = [
         '' => 'Selecione',
         37 => '0.8',
@@ -66,6 +67,10 @@ class SelectMotor extends Select
         55 => '7.7',
     ];
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'motor', $options = [])
     {
         $options = array_merge([

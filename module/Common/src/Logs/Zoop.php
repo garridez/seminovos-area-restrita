@@ -11,7 +11,7 @@ class Zoop extends AbstractLog
         return 'ZOOP';
     }
 
-    public static function ok($data)
+    public static function ok(mixed $data): void
     {
         static::doLog(
             Logger::INFO,
@@ -20,7 +20,7 @@ class Zoop extends AbstractLog
         );
     }
 
-    public static function ping()
+    public static function ping(): void
     {
         static::doLog(
             Logger::INFO,
@@ -29,7 +29,7 @@ class Zoop extends AbstractLog
         );
     }
 
-    public static function fail($payload)
+    public static function fail(mixed $payload): void
     {
         static::doLog(
             Logger::WARN,
@@ -38,7 +38,7 @@ class Zoop extends AbstractLog
         );
     }
 
-    public static function notPost()
+    public static function notPost(): void
     {
         static::doLog(
             Logger::WARN,

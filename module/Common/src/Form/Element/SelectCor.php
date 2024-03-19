@@ -6,14 +6,15 @@ use Laminas\Form\Element\Select;
 
 class SelectCor extends Select
 {
+    /** @var array */
     protected $valueOptions = [
         '' => 'Selecione',
-//        'Prata' => 'Prata',
-//        'Preto' => 'Preto',
-//        'Branco' => 'Branco',
-//        'Cinza' => 'Cinza',
-//        'Vermelho' => 'Vermelho',
-//        '' => '',
+        //        'Prata' => 'Prata',
+        //        'Preto' => 'Preto',
+        //        'Branco' => 'Branco',
+        //        'Cinza' => 'Cinza',
+        //        'Vermelho' => 'Vermelho',
+        //        '' => '',
         'Amarelo' => 'Amarelo',
         'Azul' => 'Azul',
         'Bege' => 'Bege',
@@ -32,8 +33,13 @@ class SelectCor extends Select
         'Vinho' => 'Vinho',
     ];
 
+    /** @var null|string|array */
     protected $emptyOption = 'Selecione';
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'cor', $options = [])
     {
         $options = array_merge([

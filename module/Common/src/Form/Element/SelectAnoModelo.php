@@ -6,7 +6,7 @@ use Laminas\Form\Element\Select;
 
 class SelectAnoModelo extends Select
 {
-    public function getAnoDe()
+    public function getAnoDe(): array
     {
         $listaAnos = [];
         $anoMaiorAtual = date('Y') + 1;
@@ -17,7 +17,7 @@ class SelectAnoModelo extends Select
         return $listaAnos;
     }
 
-    public function getAnoAte()
+    public function getAnoAte(): array
     {
         $listaAnos = $this->getAnoDe();
         $proximoAno = date('Y') + 1;
@@ -31,8 +31,13 @@ class SelectAnoModelo extends Select
         return ['' => 'Selecione'] + $listaAnos;
     }
 
+    /** @var array */
     protected $valueOptions = [];
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'anoModelo', $options = [])
     {
         $this->valueOptions = $this->getAnoAte();

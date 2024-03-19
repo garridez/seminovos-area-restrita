@@ -6,8 +6,13 @@ use Laminas\Form\Element\MultiCheckbox;
 
 class CheckboxAcessorios extends MultiCheckbox
 {
+    /** @var array */
     private $optionsVeiculoTipo = [];
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'acessorios', $options = [])
     {
         $options = array_merge([
@@ -30,12 +35,20 @@ class CheckboxAcessorios extends MultiCheckbox
         return $this;
     }
 
+    /**
+     * @param array $optionsVeiculoTipo
+     * @return $this
+     */
     public function setOptionsVeiculoTipo($optionsVeiculoTipo)
     {
         $this->optionsVeiculoTipo = $optionsVeiculoTipo;
         return $this;
     }
 
+    /**
+     * @param mixed $value
+     * @return $this
+     */
     public function setValue($value)
     {
         /**
@@ -45,5 +58,6 @@ class CheckboxAcessorios extends MultiCheckbox
             $value = array_column($value, 'idAcessorio');
         }
         parent::setValue($value);
+        return $this;
     }
 }

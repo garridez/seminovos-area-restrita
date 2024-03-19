@@ -11,7 +11,11 @@ class Login extends AbstractLog
         return 'LOGIN';
     }
 
-    public static function success($idCadastro, $email)
+    /**
+     * @param int $idCadastro
+     * @param string $email
+     */
+    public static function success($idCadastro, $email): void
     {
         static::doLog(
             Logger::INFO,
@@ -23,7 +27,10 @@ class Login extends AbstractLog
         );
     }
 
-    public static function fail($email)
+    /**
+     * @param string $email
+     */
+    public static function fail($email): void
     {
         static::doLog(
             Logger::WARN,
@@ -32,7 +39,11 @@ class Login extends AbstractLog
         );
     }
 
-    public static function captchaFail($email, $tipo)
+    /**
+     * @param string $email
+     * @param string $tipo
+     */
+    public static function captchaFail($email, $tipo): void
     {
         static::doLog(
             Logger::WARN,

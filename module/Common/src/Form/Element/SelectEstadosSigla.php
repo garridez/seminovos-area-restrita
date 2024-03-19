@@ -6,6 +6,7 @@ use Laminas\Form\Element\Select;
 
 class SelectEstadosSigla extends Select
 {
+    /** @var array */
     protected $valueOptions = [
         '' => 'Selecione',
         1 => 'AC',
@@ -37,6 +38,10 @@ class SelectEstadosSigla extends Select
         27 => 'TO',
     ];
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'idEstado', $options = [])
     {
         $options = array_merge([

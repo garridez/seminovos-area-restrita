@@ -6,6 +6,10 @@ use Laminas\Form\Element\Select;
 
 class SelectCombustivel extends Select
 {
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'idCombustivel', $options = [])
     {
         $options = array_merge([
@@ -18,7 +22,8 @@ class SelectCombustivel extends Select
     /**
      * Seta os tipos de combustiveis de com o tipo de veiculo
      *
-     * @param int $$tipoVeiculo
+     * @param int $tipoVeiculo
+     * @return $this
      */
     public function setCombustivelFromVeiculo($tipoVeiculo)
     {

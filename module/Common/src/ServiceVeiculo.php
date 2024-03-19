@@ -9,12 +9,14 @@ class ServiceVeiculo
 {
     use TraitIdentity;
 
-    /*
+    /**
      * Verifica se o veiculo consultado pertence ao usuário que está logado
+     *
+     * @param int $idVeiculo
      */
-
-    public function verificaCadastroVeiculo($idVeiculo)
+    public function verificaCadastroVeiculo($idVeiculo): bool
     {
+        // phpcs:ignore
         global $container;
 
         /** @var Veiculos $veiculosModel */

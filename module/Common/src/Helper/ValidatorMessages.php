@@ -9,6 +9,11 @@ use Laminas\Form\Form;
  */
 class ValidatorMessages
 {
+    /**
+     * @param array $messages
+     * @param string $format
+     * @return array
+     */
     public static function includeLabelToMessage($messages, Form $form, $format = '{label}: {message}')
     {
         foreach ($messages as $name => $messagesArray) {
@@ -18,12 +23,16 @@ class ValidatorMessages
             $input = $form->get($name);
             $label = $input->getLabel();
             foreach ($messagesArray as $k => $message) {
-                $messages[$name][$k] = str_replace(['{label}', '{message}'], [$label, $message], (string) $format);
+                $messages[$name][$k] = str_replace(['{label}', '{message}'], [$label, $message], $format);
             }
         }
         return $messages;
     }
 
+    /**
+     * @param array $messages
+     * @return string
+     */
     public static function toHTML($messages, ?Form $form = null)
     {
         if ($form) {

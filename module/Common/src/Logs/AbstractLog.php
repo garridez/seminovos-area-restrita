@@ -8,6 +8,12 @@ abstract class AbstractLog
 {
     abstract protected static function getChannel(): string;
 
+    /**
+     * @param int $priority
+     * @param string $message
+     * @param array $attributes
+     * @return void
+     */
     protected static function doLog($priority, $message, $attributes = [])
     {
         $extra = [
@@ -24,6 +30,7 @@ abstract class AbstractLog
 
     protected static function getLogger(): Logger
     {
+        // phpcs:ignore
         global $logger;
         return $logger;
     }

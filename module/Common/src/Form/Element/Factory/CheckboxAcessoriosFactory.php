@@ -2,13 +2,18 @@
 
 namespace SnBH\Common\Form\Element\Factory;
 
-use interop\container\containerinterface;
+use Psr\Container\ContainerInterface;
 use SnBH\ApiModel\Model\VeiculoTipo;
 use SnBH\Common\Form\Element\CheckboxAcessorios;
 
 class CheckboxAcessoriosFactory extends AbstractElementFactory
 {
-    public function __invoke(containerinterface $container, $requestedName, $options = null)
+    /**
+     * @param string             $requestedName
+     * @param array|null         $options
+     * @return CheckboxAcessorios
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         $checkboxAcessorios = new CheckboxAcessorios();
 
@@ -19,7 +24,7 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
         return $checkboxAcessorios;
     }
 
-    protected function getOptionsVeiculoTipo($container)
+    protected function getOptionsVeiculoTipo(ContainerInterface $container): array
     {
         $apiClient = $this->getApiClient($container);
         $idCaminhao = VeiculoTipo::getByName('caminhao');

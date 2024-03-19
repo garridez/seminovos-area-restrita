@@ -6,6 +6,7 @@ use Laminas\Form\Element\Select;
 
 class SelectValvula extends Select
 {
+    /** @var array */
     protected $valueOptions = [
         '' => 'Selecione',
         "10" => 6,
@@ -20,6 +21,10 @@ class SelectValvula extends Select
         "8" => 48,
     ];
 
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'idValvula', $options = [])
     {
         $options = array_merge([

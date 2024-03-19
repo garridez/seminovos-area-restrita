@@ -7,6 +7,10 @@ use SnBH\ApiClient\Client as ApiClient;
 
 class SelectMarca extends Select
 {
+    /**
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name = 'idMarca', $options = [])
     {
         $options = array_merge([
@@ -20,10 +24,12 @@ class SelectMarca extends Select
      * Seta os modelos de acordo com as marcas
      *
      * @global \Laminas\ServiceManager\ServiceManager $container
-     * @param int $idMarca
+     * @param int $idTipo
+     * @return $this
      */
     public function setMarcaFromTipo($idTipo)
     {
+        // phpcs:ignore
         global $container;
         /** @var ApiClient $apiClient */
         $apiClient = $container->get(ApiClient::class);

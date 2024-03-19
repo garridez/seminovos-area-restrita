@@ -7,8 +7,7 @@ use Laminas\Filter\File\RenameUpload;
 
 class MoveUpload
 {
-    /* @var $renameUpload RenameUpload */
-
+    /** @var RenameUpload $renameUpload */
     protected $renameUpload;
 
     /**
@@ -46,7 +45,7 @@ class MoveUpload
      * @param array $files Lista de arquivo vindo por upload
      * @param bool $returnFullPathResultOnly Se true, retorna apenas um array com o caminho
      */
-    public function move(array $files, $returnFullPathResultOnly = false)
+    public function move(array $files, $returnFullPathResultOnly = false): array
     {
         foreach ($files as &$file) {
             $file = $this->renameUpload->filter($file);
