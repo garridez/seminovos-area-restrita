@@ -2,15 +2,13 @@
 
 namespace SnBH\Common;
 
-use AreaRestrita\Controller\AbstractActionController;
-use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Traits\TraitIdentity;
 use AreaRestrita\Model\Veiculos;
 
 class ServiceVeiculo
 {
-
     use TraitIdentity;
+
     /*
      * Verifica se o veiculo consultado pertence ao usuário que está logado
      */
@@ -19,7 +17,7 @@ class ServiceVeiculo
     {
         global $container;
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $container->get(Veiculos::class);
 
         // Busca os dados do cadastro

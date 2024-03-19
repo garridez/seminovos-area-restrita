@@ -6,7 +6,6 @@ use Laminas\Form\Element\Select;
 
 class SelectPortas extends Select
 {
-
     protected $valueOptions = [
         '' => 'Selecione',
         1 => '1 Porta',
@@ -21,8 +20,8 @@ class SelectPortas extends Select
     {
         $options = array_merge([
             'label' => 'Portas',
-            'name' => 'carroPortas'
-            ], $options);
+            'name' => 'carroPortas',
+        ], $options);
 
         parent::__construct($name, $options);
     }

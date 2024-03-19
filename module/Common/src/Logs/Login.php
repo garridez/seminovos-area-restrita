@@ -6,7 +6,6 @@ use Laminas\Log\Logger;
 
 class Login extends AbstractLog
 {
-
     protected static function getChannel(): string
     {
         return 'LOGIN';
@@ -19,7 +18,7 @@ class Login extends AbstractLog
             'SUCCESS',
             [
                 'idCadastro' => $idCadastro,
-                'email' => $email
+                'email' => $email,
             ]
         );
     }

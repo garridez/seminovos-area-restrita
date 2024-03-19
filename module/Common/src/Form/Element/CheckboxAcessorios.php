@@ -6,21 +6,21 @@ use Laminas\Form\Element\MultiCheckbox;
 
 class CheckboxAcessorios extends MultiCheckbox
 {
-
     private $optionsVeiculoTipo = [];
 
     public function __construct($name = 'acessorios', $options = [])
     {
         $options = array_merge([
             'label' => 'Acessórios',
-            'name' => 'acessorios'
-            ], $options);
+            'name' => 'acessorios',
+        ], $options);
 
         parent::__construct($name, $options);
     }
 
     /**
      * Serve para definir os options dentro do select de acordo com o tipo de veículo
+     *
      * @param int $tipoVeiculo ID do tipo de veículo
      * @return $this
      */

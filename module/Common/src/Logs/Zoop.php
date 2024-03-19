@@ -6,7 +6,6 @@ use Laminas\Log\Logger;
 
 class Zoop extends AbstractLog
 {
-
     protected static function getChannel(): string
     {
         return 'ZOOP';
@@ -17,9 +16,10 @@ class Zoop extends AbstractLog
         static::doLog(
             Logger::INFO,
             'ok',
-            ['data'=>$data]
+            ['data' => $data]
         );
     }
+
     public static function ping()
     {
         static::doLog(

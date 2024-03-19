@@ -2,14 +2,13 @@
 
 namespace SnBH\Common\Form\Element\Factory;
 
-use SnBH\Common\Form\Element\CheckboxAcessorios;
-use Interop\Container\ContainerInterface;
+use interop\container\containerinterface;
 use SnBH\ApiModel\Model\VeiculoTipo;
+use SnBH\Common\Form\Element\CheckboxAcessorios;
 
 class CheckboxAcessoriosFactory extends AbstractElementFactory
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(containerinterface $container, $requestedName, $options = null)
     {
         $checkboxAcessorios = new CheckboxAcessorios();
 
@@ -25,10 +24,10 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
         $apiClient = $this->getApiClient($container);
         $idCaminhao = VeiculoTipo::getByName('caminhao');
         $acessoriosTipos = [
-            $idCaminhao => []
+            $idCaminhao => [],
         ];
-        
-        $cambios = [11,60,78];
+
+        $cambios = [11, 60, 78];
 
         foreach (VeiculoTipo::$idTipos as $idTipo => $tipoNome) {
             // Caminhão não tem acessórios
@@ -37,11 +36,11 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
             }
 
             $acessoriosData = $apiClient->acessorios([
-                    'idTipo' => $idTipo
-                    ], null, true)->getData();
+                'idTipo' => $idTipo,
+            ], null, true)->getData();
             $acessorios = [];
             foreach ($acessoriosData as $ac) {
-                if(!in_array($ac['idAcessorio'], $cambios)){
+                if (!in_array($ac['idAcessorio'], $cambios)) {
                     $acessorios[$ac['idAcessorio']] = $ac['acessorio'];
                 }
             }

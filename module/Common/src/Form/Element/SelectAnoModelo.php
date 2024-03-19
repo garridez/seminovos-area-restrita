@@ -24,13 +24,11 @@ class SelectAnoModelo extends Select
 
         $mes = (int) date('m');
 
-        if($mes > 1) {
-
+        if ($mes > 1) {
             return ['' => 'Selecione', $proximoAno => $proximoAno] + $listaAnos;
         }
 
         return ['' => 'Selecione'] + $listaAnos;
-
     }
 
     protected $valueOptions = [];
@@ -38,11 +36,11 @@ class SelectAnoModelo extends Select
     public function __construct($name = 'anoModelo', $options = [])
     {
         $this->valueOptions = $this->getAnoAte();
-        
+
         $options = array_merge([
             'label' => 'Ano Modelo',
-            'name' => 'anoModelo'
-            ], $options);
+            'name' => 'anoModelo',
+        ], $options);
 
         parent::__construct($name, $options);
     }

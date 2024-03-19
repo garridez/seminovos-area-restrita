@@ -4,7 +4,6 @@ namespace SnBH\Common\Helper;
 
 class Encrypter
 {
-
     public static $method = 'AES-256-CBC';
     public static $key = '?:>}`$%&*()+6%6wV6+D_9m;}2Q';
     public static $delimiter = '@#';

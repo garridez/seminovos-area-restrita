@@ -6,7 +6,6 @@ use Laminas\Form\Element\Select;
 
 class SelectEstados extends Select
 {
-
     protected $valueOptions = [
         '' => 'Selecione',
         1 => 'Acre',
@@ -42,9 +41,8 @@ class SelectEstados extends Select
     {
         $options = array_merge([
             'label' => 'Estado',
-            'name' => 'idEstado'
-            ], $options);
-
+            'name' => 'idEstado',
+        ], $options);
 
         parent::__construct($name, $options);
     }

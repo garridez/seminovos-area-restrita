@@ -2,12 +2,12 @@
 
 namespace SnBH\Common\Helper;
 
+use Laminas\ServiceManager\ServiceManager;
 use SnBH\ApiClient\Client as ApiClient;
 
 class VeiculoClearCache
 {
-
-    static public function clearCache($idVeiculo)
+    public static function clearCache($idVeiculo)
     {
         $host = 'http://snbh-site';
         if (APPLICATION_ENV === 'production') {
@@ -16,11 +16,11 @@ class VeiculoClearCache
         $url = "{$host}/{$idVeiculo}?clear-cache=1";
         @file_get_contents($url);
 
-        /** @var \Laminas\ServiceManager\ServiceManager $sm */
+        /** @var ServiceManager $sm */
         global $sm;
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);
-        $data = $apiClient->veiculosGet(['ignorarCondicoesBasicas' => 1], $idVeiculo) ->getData();
+        $data = $apiClient->veiculosGet(['ignorarCondicoesBasicas' => 1], $idVeiculo)->getData();
         if (!$data) {
             return;
         }

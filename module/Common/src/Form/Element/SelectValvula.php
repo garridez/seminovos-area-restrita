@@ -6,7 +6,6 @@ use Laminas\Form\Element\Select;
 
 class SelectValvula extends Select
 {
-
     protected $valueOptions = [
         '' => 'Selecione',
         "10" => 6,
@@ -25,7 +24,7 @@ class SelectValvula extends Select
     {
         $options = array_merge([
             'label' => 'Válvula',
-            'name' => 'idValvula'
+            'name' => 'idValvula',
         ], $options);
 
         parent::__construct($name, $options);

@@ -9,7 +9,6 @@ use Laminas\Form\Form;
  */
 class ValidatorMessages
 {
-
     public static function includeLabelToMessage($messages, Form $form, $format = '{label}: {message}')
     {
         foreach ($messages as $name => $messagesArray) {
@@ -25,7 +24,7 @@ class ValidatorMessages
         return $messages;
     }
 
-    public static function toHTML($messages, Form $form = null)
+    public static function toHTML($messages, ?Form $form = null)
     {
         if ($form) {
             $messages = self::includeLabelToMessage($messages, $form, '<b>{label}</b>: <i>{message}</i>');

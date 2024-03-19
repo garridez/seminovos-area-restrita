@@ -2,13 +2,12 @@
 
 namespace SnBH\Common\Form\Element\Factory;
 
+use interop\container\containerinterface;
 use SnBH\Common\Form\Element\SelectCidades;
-use Interop\Container\ContainerInterface;
 
 class SelectCidadeFactory extends AbstractElementFactory
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(containerinterface $container, $requestedName, $options = null)
     {
         $selectCidades = new SelectCidades();
 
@@ -22,8 +21,8 @@ class SelectCidadeFactory extends AbstractElementFactory
     protected function getOptions($container)
     {
         $cidades = $this->getApiClient($container)
-            ->cidadesGet([], null, 1)
-            ->getData();
+        ->cidadesGet([], null, 1)
+        ->getData();
 
         $options = [
             '' => 'Selecione',

@@ -2,13 +2,12 @@
 
 namespace SnBH\Common\Form\Element\Factory;
 
+use interop\container\containerinterface;
 use SnBH\Common\Form\Element\SelectMarca;
-use Interop\Container\ContainerInterface;
 
 class SelectMarcaFactory extends AbstractElementFactory
 {
-
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(containerinterface $container, $requestedName, $options = null)
     {
         $selectCidades = new SelectMarca();
 
@@ -22,10 +21,10 @@ class SelectMarcaFactory extends AbstractElementFactory
     protected function getOptions($container)
     {
         $marcas = $this->getApiClient($container)
-            ->marcasGet([
-                'idTipo' => 1
-                ], null, true)
-            ->getData();
+        ->marcasGet([
+            'idTipo' => 1,
+        ], null, true)
+        ->getData();
 
         $options = [
             '' => 'Selecione',

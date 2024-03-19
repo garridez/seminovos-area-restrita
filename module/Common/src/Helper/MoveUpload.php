@@ -2,6 +2,7 @@
 
 namespace SnBH\Common\Helper;
 
+use Exception;
 use Laminas\Filter\File\RenameUpload;
 
 class MoveUpload
@@ -13,9 +14,10 @@ class MoveUpload
     /**
      * Essa classe move os arquivos de upload para um diretório específico
      * Para maiores detalhes veja em
+     *
      * @see https://docs.zendframework.com/zend-filter/file/#renameupload
-     * 
-     * @param array|RenameUpload     $optionsOrObject Opções da classe RenameUpload ou ela mesmo instanciada
+     *
+     * @param array|RenameUpload     $optionsOrObject Opcoes da classe RenameUpload ou ela mesmo instanciada
      */
     public function __construct($optionsOrObject)
     {
@@ -26,7 +28,7 @@ class MoveUpload
         }
 
         if (!$this->renameUpload) {
-            throw new \Exception('O parametro $optionsOrObject deve ser uma string '
+            throw new Exception('O parametro $optionsOrObject deve ser uma string '
                 . 'de configuração da class ' . RenameUpload::class . ' ou uma instância dela');
         }
     }
@@ -38,11 +40,11 @@ class MoveUpload
 
     /**
      * O parametro recebido deve estar no formato conforme a seguinte classe retorna
+     *
      * @see \Laminas\Http\PhpEnvironment\Request::getFiles
-     * 
-     * 
-     * @param $files Lista de arquivo vindo por upload
-     * @param $returnFullPathResultOnly Se true, retorna apenas um array com o caminho 
+     *
+     * @param array $files Lista de arquivo vindo por upload
+     * @param bool $returnFullPathResultOnly Se true, retorna apenas um array com o caminho
      */
     public function move(array $files, $returnFullPathResultOnly = false)
     {

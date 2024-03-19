@@ -4,7 +4,6 @@ namespace SnBH\Common\Helper;
 
 class StringFuncs
 {
-
     public static function removerAcentos($string): string
     {
         $string = trim((string) $string);
@@ -17,11 +16,9 @@ class StringFuncs
 
         return strtolower($string);
     }
-    
+
     public static function removeCaractersEspecias($string)
     {
-
         return preg_replace('/([^a-zA-Z0-9])/', '', (string) $string);
     }
-    
 }

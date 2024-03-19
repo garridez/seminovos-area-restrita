@@ -6,7 +6,6 @@ use Laminas\Form\Element\Select;
 
 class SelectAnoFabricacao extends Select
 {
-
     public function getAnoDe()
     {
         $listaAnos = ['' => 'Selecione'];
@@ -25,8 +24,8 @@ class SelectAnoFabricacao extends Select
         $this->valueOptions = $this->getAnoDe();
         $options = array_merge([
             'label' => 'Ano Fabricação',
-            'name' => 'anoFabricacao'
-            ], $options);
+            'name' => 'anoFabricacao',
+        ], $options);
 
         parent::__construct($name, $options);
     }

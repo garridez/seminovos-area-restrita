@@ -6,12 +6,11 @@ use Laminas\Form\Element\Select;
 
 class SelectCidades extends Select
 {
-
     public function __construct($name = 'idCidade', $options = [])
     {
         $options = array_merge([
             'label' => 'Cidade',
-            ], $options);
+        ], $options);
 
         parent::__construct($name, $options);
     }

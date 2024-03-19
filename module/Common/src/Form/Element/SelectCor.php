@@ -6,7 +6,6 @@ use Laminas\Form\Element\Select;
 
 class SelectCor extends Select
 {
-
     protected $valueOptions = [
         '' => 'Selecione',
 //        'Prata' => 'Prata',
@@ -39,8 +38,8 @@ class SelectCor extends Select
     {
         $options = array_merge([
             'label' => 'Cor',
-            'name' => 'cor'
-            ], $options);
+            'name' => 'cor',
+        ], $options);
 
         parent::__construct($name, $options);
     }
