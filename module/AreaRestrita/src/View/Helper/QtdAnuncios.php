@@ -22,7 +22,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class QtdAnuncios extends AbstractHelper
 {
-    public function __construct(protected $data)
+    public function __construct(protected ?array $data)
     {
     }
 
@@ -31,13 +31,16 @@ class QtdAnuncios extends AbstractHelper
         return $this;
     }
 
+    /**
+     * @param string $name
+     */
     public function __get($name)
     {
-        return $this->data[$name];
+        return $this->data[$name] ?? null;
     }
 
-    public function getData()
+    public function getData(): array
     {
-        return $this->data;
+        return $this->data ?? [];
     }
 }

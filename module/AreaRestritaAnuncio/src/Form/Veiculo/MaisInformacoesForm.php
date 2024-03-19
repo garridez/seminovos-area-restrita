@@ -7,7 +7,10 @@ use Laminas\Form\Element;
 
 class MaisInformacoesForm extends Form
 {
-
+    /**
+     * @param string $name
+     * @param array $options
+     */
     public function __construct($name = 'form_maisInformacoesVeiculo', $options = [])
     {
         parent::__construct($name, $options);
@@ -100,7 +103,7 @@ class MaisInformacoesForm extends Form
         $this->configureInputFilter();
     }
 
-    protected function configureInputFilter()
+    protected function configureInputFilter(): void
     {
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
