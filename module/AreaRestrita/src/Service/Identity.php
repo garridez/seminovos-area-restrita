@@ -2,17 +2,12 @@
 
 namespace AreaRestrita\Service;
 
-use AreaRestrita\Service;
 use SnBH\ApiClient\Client as ApiClient;
 
 class Identity
 {
-
-    protected $apiclient;
-
-    public function __construct(protected $identity, ApiClient $apiClient)
+    public function __construct(protected mixed $identity, protected ApiClient $apiClient)
     {
-        $this->apiclient = $apiClient;
     }
 
     public function hasIdentity(): bool
@@ -20,7 +15,7 @@ class Identity
         return (bool) $this->identity;
     }
 
-    public function getIdentity()
+    public function getIdentity(): mixed
     {
         return $this->identity;
     }

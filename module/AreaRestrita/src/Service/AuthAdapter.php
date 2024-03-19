@@ -5,16 +5,15 @@ namespace AreaRestrita\Service;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result as AuthResult;
 use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiClient\Response;
 
 class AuthAdapter implements AdapterInterface
 {
-
-    protected $apiClient;
+    /** @var array */
     protected $data;
 
-    public function __construct(ApiClient $apiClient)
+    public function __construct(protected ApiClient $apiClient)
     {
-        $this->apiClient = $apiClient;
     }
 
     public function authenticate(): AuthResult
@@ -31,7 +30,7 @@ class AuthAdapter implements AdapterInterface
         $data = $this->data;
         $data['acao'] = 'login';
 
-        /* @var $loginResult \SnBH\ApiClient\Response */
+        /** @var Response $loginResult */
         $loginResult = $this->apiClient->loginPost($data);
 
         $code = $loginResult->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;

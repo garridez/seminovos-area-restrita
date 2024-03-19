@@ -2,16 +2,20 @@
 
 namespace AreaRestrita\Service;
 
-use SnBH\ApiClient\Client as ApiClient;
+use AreaRestrita\Service\AuthAdapter;
+use Exception;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\Authentication\Result;
 use Laminas\Session\SessionManager;
+use SnBH\ApiClient\Client as ApiClient;
 
 class AuthManager
 {
-
-    public function __construct(private readonly AuthService $authService, private readonly SessionManager $sessionManager, private readonly ApiClient $apiClient)
-    {
+    public function __construct(
+        private readonly AuthService $authService,
+        private readonly SessionManager $sessionManager,
+        private readonly ApiClient $apiClient
+    ) {
     }
 
     /**
@@ -24,7 +28,8 @@ class AuthManager
      *   rememberMe   // Opcional - Mantém a sessão ativa por 30 dias
      *
      * @param array $options
-     * @throws \Exception
+     * @param bool $condicaoIdentity
+     * @throws Exception
      */
     public function login($options, $condicaoIdentity = true): Result
     {
@@ -40,12 +45,12 @@ class AuthManager
         $options = array_merge($optionsDefault, $options);
 
         if ($condicaoIdentity && $this->authService->getIdentity() != null) {
-            throw new \Exception('Already logged in');
+            throw new Exception('Already logged in');
         }
         if (!isset($options['emailOrCnpj']) && !isset($options['idCadastro'])) {
-            throw new \Exception('emailOrCnpj ou idCadastro não passados');
+            throw new Exception('emailOrCnpj ou idCadastro não passados');
         }
-        /** @var \AreaRestrita\Service\AuthAdapter */
+        /** @var AuthAdapter $authAdapter */
         $authAdapter = $this->authService->getAdapter();
 
         $authAdapter->setData([
