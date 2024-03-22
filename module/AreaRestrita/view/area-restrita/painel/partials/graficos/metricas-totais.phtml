@@ -1,0 +1,163 @@
+<?php
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+?>
+<div class="metricas-por-data"></div>
+<?php
+
+
+/** */
+$veiculos = array_map(function ($veiculo) {
+    return [
+        'dataCadastro' => $veiculo['dataCadastro']
+    ];
+}, $veiculos);/**/
+
+
+usort($veiculos, fn ($a, $b) => $a['dataCadastro'] <=> $b['dataCadastro']);
+
+$firstDate = min(
+    array_key_first($metricasPorData['acesso']),
+    array_key_first($metricasPorData['impressao']),
+);
+$lastDate = max(
+    array_key_last($metricasPorData['acesso']),
+    array_key_last($metricasPorData['impressao']),
+);
+
+//var_dump($firstDate);
+//var_dump($veiculos);
+//die;
+$serieVeiculosPorData = [
+    'name' => 'Veículos ativos',
+    'yAxis' => 0,
+    'dashStyle' => 'longdash',
+    'color' => 'red',
+    'data' => [],
+];
+
+$totalVeiculosPorData = 0;
+
+$dateHelper = $this->dateHelper();
+
+foreach ($veiculos as $veiculo) {
+    $totalVeiculosPorData++;
+
+    if ($veiculo['dataCadastro'] < $firstDate) {
+        continue;
+    }
+
+    $x = $dateHelper->dateToJsTimestamp($veiculo['dataCadastro']);
+
+
+    $serieVeiculosPorData['data'][] = [
+        'x' => $x,
+        'y' => $totalVeiculosPorData
+    ];
+
+    continue;
+    $serieVeiculosPorData['data'][$x] ??= [
+        'x' => $x,
+        'y' => 0
+    ];
+    $totalVeiculosPorData++;
+    $serieVeiculosPorData['data'][$x]['y'] = $totalVeiculosPorData;
+}
+
+$serieVeiculosPorData['data'][] = [
+    'x' => $dateHelper->dateToJsTimestamp($lastDate),
+    'y' => $totalVeiculosPorData
+];
+
+
+$serieVeiculosPorData['data'] = array_values($serieVeiculosPorData['data']);
+
+
+
+
+$series = [
+    $serieVeiculosPorData
+];
+$seriesOptions = [
+    'acesso' => [
+        'name' => 'Clique',
+        'yAxis' => 1,
+        'color' => 'blue',
+        'data' => [],
+    ],
+    'impressao' => [
+        'name' => 'Impressão',
+        'yAxis' => 2,
+        'color' => 'green',
+        'data' => [],
+    ],
+];
+foreach ($seriesOptions as $metricaKey => $serieOptions) {
+    $series[$metricaKey]  ??= $serieOptions;
+
+    ksort($metricasPorData[$metricaKey]);
+
+    foreach ($metricasPorData[$metricaKey] as $date => $value) {
+        $series[$metricaKey]['data'][] = [
+            'x' => $dateHelper->dateToJsTimestamp($date),
+            'y' => $value
+        ];
+    }
+}
+?>
+<script>
+    (function() {
+        var series = <?= json_encode(array_values($series), JSON_PRETTY_PRINT); ?>;
+
+        Highcharts.chart(document.querySelector('.metricas-por-data'), {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Total cliques x impressões por data'
+            },
+            subtitle: {
+                text: 'Total de cliques e impressões dos seus veículos ativos'
+            },
+
+            xAxis: {
+                type: 'datetime',
+            },
+            yAxis: [{
+                    title: {
+                        text: 'Veiculos Ativos'
+                    },
+                    allowDecimals: false,
+                },
+                {
+                    title: {
+                        text: 'Cliques'
+                    },
+                    allowDecimals: false,
+                },
+                {
+                    title: {
+                        text: 'Impressoes'
+                    },
+                    opposite: true,
+                    allowDecimals: false,
+                },
+            ],
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        enabled: false
+                    },
+                },
+                series: {
+                    animation: false,
+                }
+            },
+            series: series,
+        });
+    })();
+</script>

@@ -19,6 +19,7 @@ use Laminas\View\Renderer\PhpRenderer;
  * @method ArrayData planos()
  * @method ArrayData planosUsados()
  * @method BodyClass bodyClass()
+ * @method Data dateHelper()
  */
 class AutocompleteClass extends PhpRenderer
 {

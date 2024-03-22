@@ -8,6 +8,7 @@
 namespace AreaRestrita;
 
 use AreaRestrita\Service\AuthenticationServiceFactory;
+use AreaRestrita\View\Helper\Data;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Cache\Service\StorageCacheFactory;
 use Laminas\Router\Http\Literal;
@@ -206,13 +207,15 @@ return [
             'planos' => View\Helper\Factory\PlanosFactory::class,
             'planosUsados' => View\Helper\Factory\PlanosUsadosFactory::class,
             Form\View\Helper\FormCheckbox::class => InvokableFactory::class,
-            Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class
+            Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class,
+            Data::class => InvokableFactory::class,
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
             'bodyClass' => View\Helper\BodyClass::class,
             'qtdAnuncios' => View\Helper\QtdAnuncios::class,
             'expiracaoRevenda' => View\Helper\ExpiracaoRevenda::class,
+            'dateHelper' => Data::class,
             'formcheckbox' => Form\View\Helper\FormCheckbox::class,
             'form_checkbox' => Form\View\Helper\FormCheckbox::class,
             'formCheckbox' => Form\View\Helper\FormCheckbox::class,

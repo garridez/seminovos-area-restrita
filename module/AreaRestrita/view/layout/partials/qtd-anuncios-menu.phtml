@@ -12,8 +12,8 @@ if ($this->userInfo('tipoCadastro') == 1) {
         [$slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado] = $plano;
 
         ?>
-        <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
-            <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+        <div class="justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
+            <div class="linha-plano size-2x plano-<?= $slug ?> m-0">
                 <div class="icon-plano m-0">
                     <span class="bar-1"></span>
                     <span class="bar-2"></span>
@@ -22,12 +22,9 @@ if ($this->userInfo('tipoCadastro') == 1) {
                     <span class="bar-4"></span>
                 </div>
             </div>
-            <div class="text-left ml-2">
+            <div class="text-left ml-2 title">
                 <div>
-                    <b><?= $plano ?></b>
-                </div>
-                <div>
-                    <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
+                    <b><?= $plano ?></b> <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
                 </div>
             </div>
         </div>
@@ -49,7 +46,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
 
         ?>
         <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
-            <div class="linha-plano size-3x plano-<?= $slug ?> m-0">
+            <div class="linha-plano size-2x plano-<?= $slug ?> m-0">
                 <div class="icon-plano m-0">
                     <span class="bar-1"></span>
                     <span class="bar-2"></span>
@@ -58,12 +55,9 @@ if ($this->userInfo('tipoCadastro') == 1) {
                     <span class="bar-4"></span>
                 </div>
             </div>
-            <div class="text-left ml-2">
+            <div class="text-left ml-2 title">
                 <div>
-                    <b><?= $plano['nomePlano'] ?></b>
-                </div>
-                <div>
-                    <?php echo $usados['publicado'] . "/" . $usados['total'] ?>
+                    <b><?= $plano['nomePlano'] ?></b> <?php echo $usados['publicado'] . "/" . $usados['total'] ?>
                 </div>
             </div>
         </div>

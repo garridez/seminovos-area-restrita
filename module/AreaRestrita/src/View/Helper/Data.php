@@ -2,13 +2,16 @@
 
 namespace AreaRestrita\View\Helper;
 
-class Data
+use Laminas\View\Helper\AbstractHelper;
+use DateTime;
+
+class Data extends AbstractHelper
 {
     public function __construct()
     {
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
-//        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-//        setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
+        //        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        //        setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
     }
 
@@ -103,5 +106,25 @@ class Data
     public function converterDataHoraBR($data): string
     {
         return date("d/m/Y H:i:s", strtotime((string) $data));
+    }
+
+    public function dias(string|DateTime $data): int
+    {
+        if ($data instanceof DateTime) {
+            $data = $data->format('Y-m-d');
+        }
+
+        $dataStr = strtotime($data);
+        $hoje = strtotime(date('Y-m-d'));
+        $diferenca = $hoje - $dataStr;
+        return (int)floor($diferenca / (60 * 60 * 24));
+    }
+
+    public function dateToJsTimestamp(string|DateTime $data): int
+    {
+        if (is_string($data)) {
+            $data = new DateTime($data);
+        }
+        return $data->getTimestamp() * 1000;
     }
 }

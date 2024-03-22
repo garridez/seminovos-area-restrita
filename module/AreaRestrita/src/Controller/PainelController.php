@@ -8,67 +8,106 @@ use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
 use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Model\Planos;
+use SnBH\ApiClient\Response;
+use SnBH\ApiModel\Model\VeiculosInfo;
 
 class PainelController extends AbstractActionController
 {
 
     public function indexAction()
     {
-
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();
         $idCadastro = $cadastro['idCadastro'];
 
 
-        /* @var $planosModel Planos */
+
+        /** @var Planos $planosModel */
         $planosModel = $this->getContainer()->get(Planos::class);
 
+
+        /** @var array $dadosPlanos */
         $dadosPlanos = $planosModel->get('revenda');
 
-        $key  = array_search( $cadastro['idPlano'], array_column($dadosPlanos, 'idPlanoRevenda'));
+        $key = array_search($cadastro['idPlano'], array_column($dadosPlanos, 'idPlanoRevenda'));
         $valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
-
-
-        // Busca os planos de acordo com o tipo
-        $dadosPlanos = $planosModel->get('revenda');
-
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
-        $veiculos = $veiculosModel->getAll(['idCadastro' => $idCadastro]);
+        $veiculos = $veiculosModel->getAll([
+            'idCadastro' => $idCadastro
+        ], 60 * 10);
 
         $totalVeiculos = $veiculos['total'];
 
         $idsVeiculos = [];
 
-        $totalVeiculosAtivos= 0;
+        $totalVeiculosAtivos = 0;
 
-        foreach($veiculos['data'] as $veiculo) {
-            if(in_array($veiculo['idStatus'], [2, 8, 9])) {
-                $totalVeiculosAtivos ++;
+        foreach ($veiculos['data'] as $veiculo) {
+            if (in_array($veiculo['idStatus'], [2, 8, 9])) {
+                $totalVeiculosAtivos++;
             }
             $idsVeiculos[] = $veiculo['idVeiculo'];
         }
-
+        /** @var ApiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        $contadorPorVeiculo = $apiClient->contadorGet(['idVeiculo' => $idsVeiculos])->getData();
+        /** @var array $metricas */
+        $metricas = $apiClient->veiculosMetricasGet([
+            'idVeiculo' => $idsVeiculos
+        ], null, 60 * 60 * 24)->getData();
 
-        //mescla as informações dos acessos, com os dados dos veículos
-        //var_dump($contadorPorVeiculo);die;
-        foreach($contadorPorVeiculo as $contador) {
-            foreach($veiculos['data'] as  $k => $veiculo) {
-                if((isset($veiculo['idVeiculo']) && isset($contador['idVeiculo'])) && $veiculo['idVeiculo'] == $contador['idVeiculo']) {
-                    $veiculos['data'][$k]['acesso'] = $contador['acesso'];
-                    $veiculos['data'][$k]['contato'] = $contador['contato'];
-                    $veiculos['data'][$k]['impressao'] = $contador['impressao'];
-                    break;
+        $metricasPorData = $apiClient->veiculosMetricasGet([
+            'idCadastro' => $idCadastro,
+            'agruparPor' => 'data'
+        ], null, 60 * 60 * 24)->getData();
+
+        $maisAcessados = $apiClient->maisAcessadosGet([
+            'qtd' => 30
+        ], null, 60 * 60 * 24)->getData();
+
+        $apiClient->setStatusRangeCacheable(200, 404);
+        foreach ($veiculos['data'] as $veiculo) {
+            $idVeiculo = $veiculo['idVeiculo'];
+        }
+
+        /** @var VeiculosInfo $veiculosInfoModel */
+        $veiculosInfoModel = $this->getContainer()->get(VeiculosInfo::class);
+
+        foreach ($veiculos['data'] as  $k => $veiculo) {
+            $idVeiculo = $veiculo['idVeiculo'];
+            $precoInfo = $veiculosInfoModel->get(
+                $veiculo['idModelo'],
+                $veiculo['anoFabricacao'],
+                $veiculo['anoModelo']
+            );
+            $fipeData = $apiClient->veiculosInfoGet([], $veiculo['idVeiculo'], 60 * 60 * 24);
+            $precoInfo['fipe'] = [];
+            if ($fipeData->status === 200) {
+                $precoInfo['fipe'] = $fipeData->getData();
+            }
+
+            $veiculos['data'][$k]['precoInfo'] = $precoInfo;
+
+            if ($idVeiculo && isset($metricas[$idVeiculo])) {
+                $veiculos['data'][$k]['metricas'] ??= [];
+                foreach ($metricas[$idVeiculo] as $metricaName => $metricas) {
+                    $veiculos['data'][$k]['metricas'][$metricaName] = $metricas;
                 }
             }
         }
 
-        return new ViewModel(['totalVeiculos' => $totalVeiculos, 'totalVeiculosAtivos' => $totalVeiculosAtivos, 'veiculos' => $veiculos, 'valorPlanoRevenda' => $valorPlanoRevenda]);
-
+        return new ViewModel([
+            'totalVeiculos' => $totalVeiculos,
+            'totalVeiculosAtivos' => $totalVeiculosAtivos,
+            'veiculos' => $veiculos,
+            'valorPlanoRevenda' => $valorPlanoRevenda,
+            'metricasPorData' => $metricasPorData,
+            'maisAcessados' => $maisAcessados,
+        ]);
     }
 
     public function contadorPorMarcaAction()
@@ -110,25 +149,30 @@ class PainelController extends AbstractActionController
     public function detalheAnuncioAction()
     {
         $idVeiculo = $this->params('idVeiculo');
-
+        /** @var Veiculos $veiculoModel */
         $veiculoModel = $this->getContainer()->get(Veiculos::class);
 
         $veiculo = $veiculoModel->get($idVeiculo);
 
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        $contador = $apiClient->contadorGet(['idVeiculo' => $idVeiculo])->getData();
+        $metricas = $apiClient->veiculosMetricasGet([
+            'idVeiculo' => $idVeiculo
+        ], null, 60 * 60 * 24)->getData()[$idVeiculo] ?? [
+            'acesso' => [
+                'total' => 0,
+                'data' => [],
+            ],
+            'impressao' => [
+                'total' => 0,
+                'data' => [],
+            ]
+        ];
 
-        $cliques = 0;
-        $impressoes = 0;
+        $cliques = $metricas['acesso']['total'] ?? 0;
+        $impressoes = $metricas['impressao']['total'] ?? 0;
         $contato = 0;
 
-        foreach($contador as $cnt) {
-
-            $cliques += $cnt['acesso'];
-            $impressoes += $cnt['impressao'];
-            $contato += $cnt['contato'];
-        }
 
         $frase = "";
 
@@ -206,10 +250,18 @@ class PainelController extends AbstractActionController
         $veiculo['intervaloData'] = '';
         $veiculo['frase'] = $frase;
 
-        return new ViewModel(['veiculo' => $veiculo, 'cliques' => $cliques, 'impressoes' => $impressoes, 'contato' => $contato, 'frase' => $frase, 'contador' => $contador]);
+        return new ViewModel([
+            'veiculo' => $veiculo,
+            'cliques' => $cliques,
+            'impressoes' => $impressoes,
+            'contato' => $contato,
+            'frase' => $frase,
+            'metricas' => $metricas
+        ]);
     }
 
-    public function tabelaFipeAction(){
+    public function tabelaFipeAction()
+    {
 
         $params = $this->params()->fromPost();
 
@@ -224,6 +276,5 @@ class PainelController extends AbstractActionController
             'success' => '200',
             'data' => $data
         ]);
-
     }
 }

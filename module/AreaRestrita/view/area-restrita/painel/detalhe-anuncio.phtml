@@ -1,14 +1,24 @@
 <?php
-$formatDate = new \AreaRestrita\View\Helper\Data();
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+
+use AreaRestrita\View\Helper\Data;
+use SnBH\Common\Helper\StringFuncs;
+
+$formatDate = new Data();
 $urls = [
     'editarAnuncio' => $this->url('criar-anuncio', [
         'tipo' => strtolower((string) $veiculo['tipo']),
-        'idVeiculo' => $veiculo['idVeiculo']
+        'idVeiculo' => $veiculo['idVeiculo'],
     ]),
 ];
 $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ?? "Não informado"
 ?>
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script>
+    <?= file_get_contents(__DIR__ . '/highcharts-lang.js') ?>
+</script>
 <div class="container-fluid painel-anuncio">
     <div class="row step step-titulo">
         <div class="col-12 row mb-3 bg-white p-0 justify-content-center plano-<?= $veiculo['idPlano'] ?> status-<?= $veiculo['idStatus'] ?> veiculo" data-id-veiculo="<?= $veiculo['idVeiculo'] ?>" data-veiculo-placa="<?= $veiculo['placa'] ?>" data-veiculo-marca="<?= $veiculo['marca'] ?>" data-veiculo-modelo="<?= $veiculo['modelo'] ?>" <?= $veiculo['idStatus'] == 3 || $veiculo['idStatus'] == 10 ? "data-veiculo-finalizar" : "" ?>>
@@ -27,7 +37,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             <?php if ($veiculo['codFipe'] == 0 || empty($veiculo['codFipe'])) : ?>
                                 <small class="small d-none d-md-block">
                                     <?= $veiculo['motor'] . ' ' ?>
-                                    <?= (!empty($veiculo['valvula']) && $veiculo['valvula'] != '0') ? $veiculo['valvula'] . 'V' : '' ?>
+                                    <?= !empty($veiculo['valvula']) && $veiculo['valvula'] != '0' ? $veiculo['valvula'] . 'V' : '' ?>
                                 </small>
                             <?php endif; ?>
                         </p>
@@ -80,16 +90,8 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         </ul>
 
                         <div class="btn-group">
-                            <?php if ($veiculo["botoes"]["excluir"]) { ?>
-                                <a href="#" class="anuncios btn-acao-vendido" data-confirm data-confirm-type="error" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'> excluir</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Excluir Anúncio</span>") ?>" data-confirm-text="Sim, excluir" data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>excluído</b>") ?>" data-confirm-option-confirm="/meus-veiculos/excluir/<?= $veiculo['idVeiculo'] ?>" title="Excluir anúncio">
-                                    <button class="btn btn-danger icon-2 btn-excluir-anuncio">
-                                        <i class=" fa fa-trash-o"></i>
-                                    </button>
-                                </a>
-                            <?php } ?>
-
                             <?php if ($veiculo["botoes"]["editar_dados"]) { ?>
-                                <a href="<?= $urls['editarAnuncio'] ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-dados" title="Editar Anúncio">
+                                <a href="<?= $urls['editarAnuncio'] ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-dados" title="Editar Anúncio" target="_blank">
                                     <i class=" fa fa-pencil"></i>
                                 </a>
                             <?php } ?>
@@ -103,7 +105,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 $editarFotosUrl .= '#fotos';
 
                                 ?>
-                                <a href="<?= $editarFotosUrl ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos" title="Editar Fotos">
+                                <a href="<?= $editarFotosUrl ?>" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos" title="Editar Fotos" target="_blank">
                                     <i class=" fa fa-camera"></i>
                                 </a>
                             <?php } ?>
@@ -117,14 +119,14 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                     <div class="col-12 col-md-12 col-lg-3 mt-2  p-0 m-0 row justify-content-center">
                         <!-- <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
                                     <div class="pl-3 bold no-margin">
-                                        <? //= $veiculo['cliques'] ? : 0 
+                                        <?php //= $veiculo['cliques'] ? : 0
                                         ?>
                                      cliques
                                     </div>
                                 </div>
                                 <div class="col-6 col-lg-12 mt-1 padding-15  bg-master-lightest">
                                     <div class="pl-3 bold no-margin">
-                                        <? //= $veiculo['acessos'] ? : 0 
+                                        <?php //= $veiculo['acessos'] ? : 0
                                         ?>
                                        acessos
                                     </div>
@@ -133,12 +135,12 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             <div class="col-12 col-lg-12 ">
                                 <div class="bg-master-lightest  mt-1 padding-15">
                                     <!--<a href="/meus-veiculos/propostas/<?= $veiculo['idVeiculo'] ?>" class="text-dark">-->
-                                        <div class="row d-flex justify-content-between pl-3">
-                                            <div class="bold no-margin d-flex align-items-center link-danger">
-                                                <span class="fa fa-circle text-warning fs-11 mr-1"></span>
-                                                Valor a Combinar
-                                            </div>
+                                    <div class="row d-flex justify-content-between pl-3">
+                                        <div class="bold no-margin d-flex align-items-center link-danger">
+                                            <span class="fa fa-circle text-warning fs-11 mr-1"></span>
+                                            Valor a Combinar
                                         </div>
+                                    </div>
                                     <!--</a>-->
                                 </div>
                             </div>
@@ -151,6 +153,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <!-- <span class="fa fa-envelope fs-16 mr-1"></span> -- >
                                             Propostas: <?= $veiculo['qdtPropostas'] ?? 0 ?>
                                             <?php
+
                                             /** @todo
                                              *  Trazer o numero de propostas
                                              *  Trazer bolinha verde quando há nova proposta
@@ -182,35 +185,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 <?= $veiculo['nomePlano'] ?>
                             <?php } ?>
                         </p>
-                        <div>
-                            <?php if ($veiculo["botoes"]["trocar_plano"]) { ?>
 
-                                <?php
-                                $editarPlanosUrl = $urls['editarAnuncio'];
-                                if ($veiculo['idStatus'] == SnBH\ApiModel\Model\VeiculosStatus::STATUS_ATIVO) {
-                                    $editarPlanosUrl .= '?editar=planos';
-                                }
-                                $editarPlanosUrl .= '#plano';
-
-                                ?>
-
-                                <a href="<?= $editarPlanosUrl ?>" class="btn btn-sm btn-info text-white d-flex align-items-center ml-2 btn-acao-trocar-plano"><?= $veiculo['idStatus'] == 3 ? 'Escolha um plano' : 'Trocar
-                                    Plano' ?></a>
-                            <?php } ?>
-                            <?php if ($veiculo["botoes"]["upgrade_plano"]) { ?>
-                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#plano&trocarPlano" class="btn btn-sm btn-info text-white d-flex align-items-center py-4 ml-2 btn-acao-upgrade-plano">Melhorar
-                                    meu Plano</a>
-                            <?php } ?>
-                            <?php if ($veiculo["botoes"]["renovar_plano"]) { ?>
-                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#checkout&trocarPlano&planoNitroHome" class="btn btn-sm btn-info text-white d-flex align-items-center btn-acao-renovar-plano">Renovar Plano</a>
-                            <?php } ?>
-                            <?php
-                            /** @todo
-                             *  Centralizar verticalmente
-                             */
-
-                            ?>
-                        </div>
                     </div>
                 </div>
 
@@ -240,51 +215,6 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         <?php endif; ?>
                         <div class="justify-content-end d-flex m-t-15 pb-2">
 
-                            <?php if ($veiculo["botoes"]["enviar_comprovante"]) { ?>
-                                <a href="<?= $urls['editarAnuncio'] ?>#plano&comprovante&<?= $veiculo["botoes"]["plano_comprovante"] ?>" class="btn btn-sm btn-cinza text-white d-flex align-items-center ml-2 btn-acao-enviar-comprovante">Enviar
-                                    comprovante</a>
-                            <?php } ?>
-
-                            <?php if ($veiculo["botoes"]["realizar_pagamento"]) { ?>
-                                <a href="<?= $urls['editarAnuncio'] ?>#plano" class="btn btn-sm bg-verde text-white d-flex align-items-center ml-2 btn-acao-realiza-pagamento">Pagar</a>
-                            <?php } ?>
-
-                            <?php if ($veiculo['botoes']['inativar'] ?? false) { ?>
-                                <a href="#" class="btn btn-sm btn-danger ml-2 anuncios btn-acao-inativar" data-confirm data-confirm-type="error" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>inativar</b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Inativar Anúncio</span>") ?>" data-confirm-text="Sim, Inativar o Anúncio" data-confirm-success-text="<?= $this->escapeHtmlAttr("Anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b> foi <b class='text-primary'>inativado</b>") ?>" data-confirm-option-confirm="/meus-veiculos/inativar/<?= $veiculo['idVeiculo'] ?>">Inativar</a>
-                            <?php } ?>
-                            <?php
-                            if ($veiculo["botoes"]["renovar"] ?? false) {
-                                /**
-                                 * @todo O renovar vai mesmo para o ativar?
-                                 */
-
-                            ?>
-                                <a href="#" class="renovar anuncios  btn-acao-renovar" data-confirm data-confirm-type="success" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>renovar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Renovar anúncio</span>") ?>" data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, renovar" data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" title="Renovar anúncio">
-                                    <button class="btn btn-sm btn-laranja text-white ml-2">renovar</button>
-                                </a>
-<?php } ?>
-
-                            <?php if ($veiculo["botoes"]["reativar"] ?? false) { ?>
-                                <a href="#" class="reativar anuncios btn-acao-reativar" data-confirm data-confirm-type="success" data-confirm-body="<?= $this->escapeHtmlAttr("<b class='text-primary'>$nome</b>, você confirma que deseja <b class='text-primary'>reativar </b> o anúncio <b class='text-primary'> {$veiculo['marca']}</b > <b class='text-primary'>{$veiculo['modelo']}</b> placa <b class='text-primary'>{$veiculo['placa']}</b>?") ?>" data-confirm-title="<?= $this->escapeHtmlAttr("<span class='text-primary'>Reativar anúncio</span>") ?>" data-confirm-img="/img/svg/ico_reativar.svg" data-confirm-text="Sim, reativar" data-confirm-url="/meus-veiculos/ativar/<?= $veiculo['idVeiculo'] ?>" title="Reativar anúncio">
-                                    <button class="btn btn-sm btn-laranja text-white ml-2">Reativar</button>
-                                </a>
-                            <?php } ?>
-                            <?php if ($veiculo["botoes"]["alerta"] ?? false) { ?>
-
-                                <a href="tel://(031) 3077-5888" class="btn btn-sm btn-laranja text-white d-flex align-items-center my-sm-2 w-100 justify-content-center  btn-acao-alerta">
-                                    <i class="fa fa-warning text-white"></i>
-                                    <span class="pl-2">
-                                        LIGUE PARA:
-                                        (31) 3077-5888
-                                    </span>
-                                </a>
-                            <?php } ?>
-                            <?php
-                            /** @todo
-                             *  ENVIAR COMPROVANTE
-                             */
-
-                            ?>
                         </div>
                     </div>
                 </div>
@@ -303,47 +233,119 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                 </div>
             </div>
             <a href="#" class="btn btn-laranja">ok</a> -->
-            Janeiro de 2020
+        </div>
+        <div class="col-6 col-md-4 card">
+            <div class="card-header text-center">Impressão no resultado de busca resultados de busca</div>
+            <div class="card-body"><?= StringFuncs::nF($this->metricas['impressao']['total']) ?></div>
         </div>
         <div class="col-6 col-sm col-md-4 card">
-            <div class="card-header">Vizualizações dos dados do veículo</div>
-            <div class="card-body"><?= $this->cliques ?></div>
+            <div class="card-header text-center">Vizualizações dos dados do veículo</div>
+            <div class="card-body"><?= $this->metricas['acesso']['total'] ?></div>
         </div>
+
         <div class="col-6 col-md-4 card">
-            <div class="card-header">Quantidade de vezes que este veiculo foi mostrado em resultados de busca</div>
-            <div class="card-body"><?= $this->impressoes ?></div>
-        </div>
-        <div class="col-6 col-md-4 card">
-            <div class="card-header">Cliques em ver telefone</div>
+            <div class="card-header text-center">Cliques em ver telefone</div>
             <div class="card-body"><?= $this->contato ?> </div>
         </div>
     </div>
 
-    <div class="conteudo" data-contador='<?= json_encode($this->contador) ?>'>
-        <div class="row step step-grafico-clique">
+    <div class="graficos">
+        <div class="row">
             <div class="col-12">
-                <h5>Vizualizações dos dados do veículo</h5>
-                <div class="grafico">
-                    <canvas class="grafacesso"></canvas>
-                </div>
-            </div>
-        </div>
+                <div id="container-highcharts"></div>
+                <script>
+                    var series = <?php
+                                    // ob_clean();
+                                    $seriesOptions = [
+                                        'acesso' => [
+                                            'name' => 'Clique',
+                                            'yAxis' => 1,
+                                            'data' => [],
+                                        ],
+                                        'impressao' => [
+                                            'name' => 'Impressão',
+                                            'yAxis' => 0,
+                                            'data' => [],
+                                        ],
+                                    ];
+                                    $series = [];
 
-        <div class="row step step-grafico-clique">
-            <div class="col-12">
-                <h5>Quantidade de vezes que este veiculo foi mostrado em resultados de busca</h5>
-                <div class="grafico">
-                    <canvas class="grafimpressao"></canvas>
-                </div>
-            </div>
-        </div>
+                                    //foreach ($this->metricas as $metrica => $data) {
+                                    foreach ($seriesOptions as $metricaKey => $serieOptions) {
+                                        $sum = 0;
+                                        foreach ($this->metricas[$metricaKey]['data'] as $key => $value) {
+                                            $series[$metricaKey]  ??= $serieOptions;
+                                            $sum += $value;
+                                            $series[$metricaKey]['data'][] = [
+                                                'x' => $this->dateHelper()->dateToJsTimestamp($key),
+                                                'y' => $sum,
+                                            ];
+                                        }
+                                    }
+                                    echo json_encode(array_values($series), JSON_PRETTY_PRINT);
+                                    ?>;
+                    Highcharts.chart('container-highcharts', {
+                        chart: {
+                            type: 'area'
+                        },
+                        title: {
+                            text: 'Cliques x Impressões'
+                        },
+                        /*subtitle: {
+                            text: 'Source: ' +
+                                '<a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" ' +
+                                'target="_blank">Wikipedia.com</a>'
+                        },
+                        /**/
+                        xAxis: {
+                            type: 'datetime',
+                            type: "datetime",
 
-        <div class="row step step-grafico-clique">
-            <div class="col-12">
-                <h5>Cliques em Ver Telefone</h5>
-                <div class="grafico">
-                    <canvas class="grafcontato"></canvas>
-                </div>
+                            /*labels: {
+                                formatter: function() {
+                                    console.log(this.value)
+                                    return Highcharts.dateFormat('%e/%b', this.value);
+                                }
+                            }*/
+                            //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                        },
+                        yAxis: {
+
+                            title: {
+                                text: ''
+                            }
+                        },
+                        yAxis: [{
+                                title: {
+                                    text: 'Impressoes'
+                                },
+                                opposite: true,
+                                allowDecimals: false,
+                            },
+                            {
+                                title: {
+                                    text: 'Cliques'
+                                },
+                                allowDecimals: false,
+                            }
+                        ],
+                        tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true
+                                },
+                            },
+                            series: {
+                                animation: false
+                            }
+                        },
+                        series: series,
+                    });
+                </script>
             </div>
         </div>
 

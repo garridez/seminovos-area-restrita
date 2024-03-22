@@ -3609,16 +3609,16 @@
         },
         {
             "name": "snbh/api-client",
-            "version": "2.0.3",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/seminovosbh/api-client.git",
-                "reference": "53d6ac952bef108de48f0721b6da39060217a021"
+                "reference": "d57cf98c5634e9d676e069abef5dff60b72344b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/seminovosbh/api-client/get/53d6ac952bef108de48f0721b6da39060217a021.zip",
-                "reference": "53d6ac952bef108de48f0721b6da39060217a021",
+                "url": "https://bitbucket.org/seminovosbh/api-client/get/d57cf98c5634e9d676e069abef5dff60b72344b8.zip",
+                "reference": "d57cf98c5634e9d676e069abef5dff60b72344b8",
                 "shasum": ""
             },
             "require": {
@@ -3629,10 +3629,9 @@
                 "php": "^8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^10.1",
-                "rector/rector": "^0.15.24",
-                "squizlabs/php_codesniffer": "^3.2",
-                "wimg/php-compatibility": "^8.1"
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpunit/phpunit": "^11.0",
+                "squizlabs/php_codesniffer": "^3.2"
             },
             "type": "library",
             "autoload": {
@@ -3655,7 +3654,13 @@
                     "vendor/bin/phpunit --colors=always"
                 ],
                 "test-coverage": [
-                    "phpunit --colors=always --coverage-clover clover.xml"
+                    "php -d xdebug.mode=coverage vendor/bin/phpunit --colors=always --coverage-html coverage"
+                ],
+                "post-install-cmd": [
+                    "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
+                ],
+                "post-update-cmd": [
+                    "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
                 ]
             },
             "authors": [
@@ -3667,9 +3672,9 @@
             "description": "Cliente para a API da SeminovosBH",
             "homepage": "https://bitbucket.org/seminovosbh/api-client",
             "support": {
-                "source": "https://bitbucket.org/seminovosbh/api-client/src/53d6ac952bef108de48f0721b6da39060217a021/?at=2.0.3"
+                "source": "https://bitbucket.org/seminovosbh/api-client/src/d57cf98c5634e9d676e069abef5dff60b72344b8/?at=2.1.0"
             },
-            "time": "2024-01-06T05:48:44+00:00"
+            "time": "2024-03-20T04:58:18+00:00"
         },
         {
             "name": "snbh/api-client-module",

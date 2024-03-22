@@ -1,0 +1,81 @@
+<?php
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+
+
+$dateHelper = $this->dateHelper();
+
+$renderChart = function (
+    $data,
+    $key,
+    $title
+) use ($dateHelper) {
+
+    $series = [];
+
+    foreach ($data as $date => $rows) {
+        foreach ($rows as $id => $row) {
+            $name = $row[$key];
+            $series[$name] ??= [
+                'name' => $name,
+                'data' => []
+            ];
+            $series[$name]['data'][] = [
+                'x' => $dateHelper->dateToJsTimestamp($date),
+                'y' => $row['qtd']
+
+            ];
+        }
+    }
+
+?>
+    <div class="metricas-por-data-<?= $key ?>"></div>
+    <script>
+        (function() {
+            var series = <?= json_encode(array_values($series), JSON_PRETTY_PRINT); ?>;
+
+            Highcharts.chart(document.querySelector('.metricas-por-data-<?= $key ?>'), {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: '<?= $title ?>'
+                },
+                subtitle: {
+                    text: 'No último mês na seminovos.com.br'
+                },
+
+                xAxis: {
+                    type: 'datetime',
+                },
+                yAxis: [{
+                    title: {
+                        text: 'Quantidade de buscas'
+                    },
+                }],
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                plotOptions: {
+                    line: {
+
+                        marker: {
+                            enabled: false
+                        },
+                    },
+                    series: {
+                        animation: false,
+
+                    }
+                },
+                series: series
+
+            });
+        })();
+    </script>
+<?php
+};
+
+$renderChart($maisAcessados['marca'], 'marca', 'Marcas mais buscadas');
+$renderChart($maisAcessados['modelo'], 'modelo', 'Modelos mais buscados');
