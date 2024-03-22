@@ -63,11 +63,12 @@ foreach ($veiculos as $veiculo) {
     $totalVeiculosPorData++;
     $serieVeiculosPorData['data'][$x]['y'] = $totalVeiculosPorData;
 }
-
-$serieVeiculosPorData['data'][] = [
-    'x' => $dateHelper->dateToJsTimestamp($lastDate),
-    'y' => $totalVeiculosPorData
-];
+if (is_string($lastDate)) {
+    $serieVeiculosPorData['data'][] = [
+        'x' => $dateHelper->dateToJsTimestamp($lastDate),
+        'y' => $totalVeiculosPorData
+    ];
+}
 
 
 $serieVeiculosPorData['data'] = array_values($serieVeiculosPorData['data']);
