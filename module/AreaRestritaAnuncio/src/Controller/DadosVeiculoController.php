@@ -89,7 +89,7 @@ class DadosVeiculoController extends AbstractActionController
             }
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
-
+            
             if (isset($data['kilometragem'])) {
                 $data['kilometragem'] = str_replace('.', '', (string) $data['kilometragem']);
             }
@@ -160,10 +160,14 @@ class DadosVeiculoController extends AbstractActionController
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
-            \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
-            // Limpa o cache do middleware
-            $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
-
+            
+            if(!is_null($idVeiculo)){
+                \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
+            
+                // Limpa o cache do middleware
+                $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
+            }
+            
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
