@@ -17,12 +17,12 @@ $veiculos = array_map(function ($veiculo) {
 usort($veiculos, fn ($a, $b) => $a['dataCadastro'] <=> $b['dataCadastro']);
 
 $firstDate = min(
-    array_key_first($metricasPorData['acesso']),
-    array_key_first($metricasPorData['impressao']),
+    array_key_first($metricasPorData['acesso'] ?? []),
+    array_key_first($metricasPorData['impressao'] ?? []),
 );
 $lastDate = max(
-    array_key_last($metricasPorData['acesso']),
-    array_key_last($metricasPorData['impressao']),
+    array_key_last($metricasPorData['acesso'] ?? []),
+    array_key_last($metricasPorData['impressao'] ?? []),
 );
 
 //var_dump($firstDate);
