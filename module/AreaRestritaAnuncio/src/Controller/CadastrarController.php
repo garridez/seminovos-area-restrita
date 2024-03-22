@@ -23,7 +23,7 @@ class CadastrarController extends AbstractActionController
 {
 
     public function indexAction()
-    {   
+    {
 
 //        $dadosForm = new Cadastro\CadastroParticularForm();
         $dadosForm = new ParticularForm();
@@ -124,7 +124,7 @@ class CadastrarController extends AbstractActionController
         }
 
         return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
-    }   
+    }
 
     /**
      * Get contact from email
@@ -174,7 +174,7 @@ class CadastrarController extends AbstractActionController
      * Verifica se o capcha para resetar senha é válido
      */
     public function resetPasswordCheckRecaptcha($token)
-    {  
+    {
         $httpClient = new \Laminas\Http\Client('https://www.google.com/recaptcha/api/siteverify');
 
         $request = $httpClient->getRequest();
@@ -183,12 +183,12 @@ class CadastrarController extends AbstractActionController
             'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
             'response' => $token
         ]));
-        
+
         $resposta = $httpClient->send();
-                
+
         if ($resposta->getStatusCode()) {
             $result = json_decode($resposta->getBody(), true) ;
-            
+
             if (!$result['success']) {
                 return false;
             }
@@ -233,7 +233,7 @@ class CadastrarController extends AbstractActionController
                 'detail' => 'E-mail não encontrado. Verifique e tente novamente',
             ];
         }
-        
+
         if($retorno['status'] != 200){
             return json_encode($retorno);
         }
@@ -338,7 +338,7 @@ class CadastrarController extends AbstractActionController
             $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
         } else if($email != '') {
             $retornoContato = $this->getContatosFromEmail($email, false);
-        } 
+        }
 
         if($retornoContato['status'] != 200){
             return new JsonModel($retornoContato);
@@ -542,7 +542,7 @@ class CadastrarController extends AbstractActionController
 
                 $data = $dadosForm->getData();
 
-                 $mensagem = '<br /><br /><strong>Parceria Seminovos.com</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+                 $mensagem = '<br /><br /><strong>Parceria seminovos.com.br</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
 
                 $dadosEmail = [
                     'mensagem' => $mensagem,
