@@ -13,7 +13,8 @@ RUN echo "session.cookie_domain=seminovos.com.br\n\
 session.save_handler=$SESSION_PHP_SAVE_HANDLER\n\
 session.save_path=\"$SESSION_SAVE_PATH\"" > /usr/local/etc/php/conf.d/snbh-session.ini
 
-RUN echo "newrelic.appname=area_restrita" > /usr/local/etc/php/conf.d/snbh-newrelic.ini
+RUN echo "newrelic.appname=area_restrita" > /usr/local/etc/php/conf.d/snbh-newrelic.ini; \
+    echo "newrelic.capture_params=On"    >> /usr/local/etc/php/conf.d/snbh-newrelic.ini
 
 COPY . .
 
