@@ -30,6 +30,7 @@
         "compress.js": "^1.2.2",
         "font-awesome": "^4.7.0",
         "jquery-validation": "^1.20.0",
+        "js-cookie": "^3.0.5",
         "popper.js": "^1.16.1",
         "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031",
         "sortable-tablesort": "^3.2.2",

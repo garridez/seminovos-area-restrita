@@ -34,8 +34,85 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "components/all";
 @import "mvc/routes/all";
 @import "mvc/layout/all";
+
 .debug {
-  outline: red solid 1px;
+    outline: red solid 1px;
 }
+
 @import "~snbh-site/resources/assets/sass/components/all";
 @import "~snbh-site/resources/assets/sass/components/webfont";
+@import "~sortable-tablesort/sortable.min.css";
+
+
+body.sidebar-collapsed {
+    .page-sidebar {
+        width: 60px !important;
+    }
+
+    .page-container {
+        .page-content-wrapper {
+            .content {
+                padding-left: 50px !important;
+            }
+        }
+    }
+
+    .sidebar-menu {
+        .menu-items {
+            >li {
+                a.btn {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+
+                .title {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.sidebar-menu {
+    .btn-sidebar-collapse {
+        position: fixed;
+        right: -15px;
+        color: white;
+        bottom: 10px;
+        font-size: 20px;
+        background-color: #323237;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        border-radius: 100%;
+        cursor: pointer;
+        padding-right: 3px;
+        padding-top: 1px;
+    }
+}
+
+body:not(.sidebar-collapsed) {
+    .sidebar-menu {
+        .btn-sidebar-collapse {
+            .btn-expand {
+                display: none;
+            }
+            .btn-collapse {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+body.sidebar-collapsed {
+    .sidebar-menu {
+        .btn-sidebar-collapse {
+            .btn-expand {
+                display: inline-block;
+            }
+            .btn-collapse {
+                display: none;
+            }
+        }
+    }
+}

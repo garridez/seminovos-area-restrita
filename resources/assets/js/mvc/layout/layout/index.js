@@ -7,6 +7,7 @@ module.exports.callback = $ => {
     require("components/pagesQuickView")($);
     require("components/pagesMobileView")($);
     require("components/pagesChat")($);
+    const jsCookie = require('js-cookie');
 
     if ($(window).width() < 992) {
         $("body").removeClass("desktop");
@@ -27,7 +28,17 @@ module.exports.callback = $ => {
 
     let menu = $(".menu-items");
     menu.find();
+    $('.sidebar-menu .btn-sidebar-collapse').click(function() {
+        $('body').toggleClass('sidebar-collapsed');
 
+        if ($('body').hasClass('sidebar-collapsed')) {
+            jsCookie.set('sidebar-collapsed', '1', {
+                expires: 365
+            });
+        } else {
+            jsCookie.remove('sidebar-collapsed');
+        }
+    });
 
     // (function () {
     //     var title = $('title');
