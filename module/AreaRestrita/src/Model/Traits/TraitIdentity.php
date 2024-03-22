@@ -12,7 +12,7 @@ trait TraitIdentity
      *
      * @var ServiceManager
      */
-    protected $container;
+    protected ServiceManager $container;
 
     /**
      * Id do usuário loggado

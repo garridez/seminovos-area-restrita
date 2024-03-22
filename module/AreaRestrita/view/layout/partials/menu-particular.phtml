@@ -1,67 +1,68 @@
 <?php
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
 global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 ?>
 <div class="sidebar-menu mt-md-5">
-  <!-- BEGIN SIDEBAR MENU ITEMS-->
-  <ul class="menu-items">
-    <li class="mt-md-5 m-b-20">
-      <div class="p-l-10 p-r-10">
-        <a class="btn-block btn btn-laranja text-capitalize" href="/criar-anuncio">
-          <span class="text-black title">
-            Novo Anúncio
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          </span>
-        </a>
-      </div>
-    </li>
-    <li class="m-t-30 hide">
-      <a href="<?= $this->url('restrito') ?>" class="detailed">
-        <span class="title">Home</span>
-      </a>
-      <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
-    </li>
-    <?php if (SHOW_CHAT): ?>
-    <li class="menu-chat">
-      <a href="<?= $this->url('restrito/chat') ?>">
-        <span class="title">Chat</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-comments" aria-hidden="true"></i></span>
-    </li>
-    <?php endif; ?>
-    <li class="">
-      <a href="<?= $this->url('restrito/meus-veiculos') ?>">
-        <span class="title">Meus Veículos</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-car" aria-hidden="true"></i></span>
-    </li>
-    <li class="">
-      <a href="<?= $this->url('restrito/historico-pagamentos') ?>">
-        <span class="title">Histórico Pagamentos</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
-    </li>
-    <li class="">
-      <a href="<?= $this->url('restrito/central-informacoes') ?>">
-        <span class="title">Central de Informações</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
-    </li>
-    <li class="qtd-anuncios-menu">
-        <?= $this->partial('partials/qtd-anuncios-menu.phtml') ?>
-    </li>
-    <li>
-      <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
-        <span class="title">Ir para o site</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
-    </li>
-    <li>
-      <a href="http://wa.me/5531996071787" target="_blank" title="Ir para o site">
-        <span class="title">Atendimento por WhatsApp</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-    </li>
-  </ul>
-  <div class="clearfix"></div>
+    <!-- BEGIN SIDEBAR MENU ITEMS-->
+    <ul class="menu-items">
+        <li class="mt-md-5 m-b-20">
+            <div class="p-l-10 p-r-10">
+                <a class="btn-block btn btn-laranja text-capitalize" href="/criar-anuncio">
+                    <span class="text-black title">
+                        Novo Anúncio
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </div>
+        </li>
+        <li class="m-t-30 hide">
+            <a href="<?= $this->url('restrito') ?>" class="detailed">
+                <span class="title">Home</span>
+            </a>
+            <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
+        </li>
+        <?php if (SHOW_CHAT) : ?>
+            <li class="menu-chat">
+                <a href="<?= $this->url('restrito/chat') ?>">
+                    <span class="title">Chat</span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-comments" aria-hidden="true"></i></span>
+            </li>
+        <?php endif; ?>
+        <li class="">
+            <a href="<?= $this->url('restrito/meus-veiculos') ?>">
+                <span class="title">Meus Veículos</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-car" aria-hidden="true"></i></span>
+        </li>
+        <li class="">
+            <a href="<?= $this->url('restrito/historico-pagamentos') ?>">
+                <span class="title">Histórico Pagamentos</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
+        </li>
+        <li class="">
+            <a href="<?= $this->url('restrito/central-informacoes') ?>">
+                <span class="title">Central de Informações</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
+        </li>
+        <li class="qtd-anuncios-menu">
+            <?= $this->partial('partials/qtd-anuncios-menu.phtml') ?>
+        </li>
+        <li>
+            <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
+                <span class="title">Ir para o site</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <a href="http://wa.me/5531996071787" target="_blank" title="Ir para o site">
+                <span class="title">Atendimento por WhatsApp</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
 </div>

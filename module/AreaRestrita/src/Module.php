@@ -65,6 +65,9 @@ class Module
 
         if (!isset($_COOKIE['TUID'])) {
             $identity = $authService->getIdentity();
+            if (!$identity) {
+                return;
+            }
             $data = $apiClient->crypterPost([
                 'data' => $identity,
                 'randiv' => true,

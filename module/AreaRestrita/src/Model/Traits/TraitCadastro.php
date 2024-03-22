@@ -12,7 +12,7 @@ trait TraitCadastro
      *
      * @var ServiceManager
      */
-    protected $container;
+    protected ServiceManager $container;
 
     /**
      * Dados de Cadastro

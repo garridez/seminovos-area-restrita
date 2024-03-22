@@ -28,13 +28,10 @@ abstract class AbstractModel
         'connect' => 'Connect',
         'propfind' => 'Propfind',
     ];
-    protected $apiClient;
-    protected $container;
 
-    public function __construct(ApiClient $apiClient, ServiceManager $container)
+
+    public function __construct(protected ApiClient $apiClient, protected  ServiceManager $container)
     {
-        $this->apiClient = $apiClient;
-        $this->container = $container;
     }
 
     protected function doRequest()
@@ -52,7 +49,7 @@ abstract class AbstractModel
         return call_user_func_array([$this->apiClient, $method], $arguments);
     }
 
-    protected function getEndPoint()
+    protected function getEndPoint(): string
     {
         $endPoint = explode('\\', static::class);
         return lcfirst(end($endPoint));

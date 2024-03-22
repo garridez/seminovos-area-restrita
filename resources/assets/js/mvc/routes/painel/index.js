@@ -2,10 +2,15 @@
 
 module.exports.seletor = '.c-painel.a-index';
 module.exports.callback = ($) => {
+    require('sortable-tablesort');
 
     var marcaModelo = require('components/MarcaModelo');
 
     marcaModelo($('.form-tabela-fipe'));
+
+    $('#filtar-meus-veiculos').on('click', function () {
+    });
+
     /*let datepicker = require('js-datepicker');
     $(".input").mask("00/00/0000");
     let picker = datepicker(".input.date-timer-picker", {
@@ -20,97 +25,97 @@ module.exports.callback = ($) => {
     });
     */
 
-    setTimeout(function(){
+    setTimeout(function () {
         $.ajax({
             'type': 'GET',
             'dataType': 'json',
             'url': '/painel/contador-por-marca',
-            success: function(retorno){
-                if(!retorno.data) {
+            success: function (retorno) {
+                if (!retorno.data) {
                     return false
                 }
                 contador = Object.values(retorno.data);
-    
+
                 contador.map(cnt => {
-    
+
                     let div1 = $("<div></div>").addClass("py-1");
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let img = $(`<img class="img-responsive" style="height:30px" src='/img/brands/${cnt.marca.toLowerCase()}.svg'>`);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html(parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
-                    
+
                     div3.append(span1).append(span2);
                     div2.append(img).append(div3);
                     div1.append(div2);
-    
+
                     $('.list-marcas').append(div1);
                 });
-    
+
             }
         })
     }, 0)
 
-    setTimeout(function(){
+    setTimeout(function () {
         $.ajax({
             'type': 'GET',
             'dataType': 'json',
             'url': '/painel/contador-por-modelo',
-            success: function(retorno){
-    
-                if(!retorno.data) {
+            success: function (retorno) {
+
+                if (!retorno.data) {
                     return false
                 }
                 contador = Object.values(retorno.data);
-    
+
                 contador.map(cnt => {
-    
+
                     let div1 = $("<div></div>").addClass("py-1");
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let b = $("<b></b>").html(cnt.modelo);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html(parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
-                    
+
                     div3.append(span1).append(span2);
                     div2.append(b).append(div3);
                     div1.append(div2);
-    
+
                     $('.list-modelos').append(div1);
                 });
-    
+
             }
         })
     }, 500)
 
-    setTimeout(function(){
+    setTimeout(function () {
         $.ajax({
             'type': 'GET',
             'dataType': 'json',
             'url': '/painel/contador-por-categoria',
-            success: function(retorno){
-    
-                if(!retorno.data) {
+            success: function (retorno) {
+
+                if (!retorno.data) {
                     return false
                 }
                 contador = Object.values(retorno.data);
-    
+
                 contador.map(cnt => {
-    
+
                     let div1 = $("<div></div>").addClass("py-1");
                     let div2 = $("<div></div>").addClass("d-flex justify-content-between align-items-center");
                     let small = $('<small></small>').html(cnt.categoria);
                     let div3 = $("<div></div>").addClass('busca');
-                    let span1 = $('<span></span>').addClass('num-busca').html( parseInt(cnt.acesso).toLocaleString('pt'));
+                    let span1 = $('<span></span>').addClass('num-busca').html(parseInt(cnt.acesso).toLocaleString('pt'));
                     let span2 = $('<span></span>').addClass('text-busca');
-                    
+
                     div3.append(span1).append(span2);
                     div2.append(small).append(div3);
                     div1.append(div2);
-    
+
                     $('.list-categorias').append(div1);
                 });
-    
+
             }
         })
     }, 1000)
@@ -123,18 +128,18 @@ module.exports.callback = ($) => {
         'Ordenar por': _ => { },
 
         'Mais recentes': (linhas) => {
-            
-            linhas.sort(function(a, b){
+
+            linhas.sort(function (a, b) {
 
                 a = $(a).find('.data-cadastro').html().trim();
                 a = a.split('\/').reverse().join('-');
                 a = new Date(a);
-                
+
                 b = $(b).find('.data-cadastro').html().trim();
                 b = b.split('\/').reverse().join('-');
                 b = new Date(b);
 
-                if(a === b) {
+                if (a === b) {
                     return 0
                 }
 
@@ -145,18 +150,18 @@ module.exports.callback = ($) => {
         },
 
         'Mais antigos': (linhas) => {
-            
-            linhas.sort(function(a, b){
+
+            linhas.sort(function (a, b) {
 
                 a = $(a).find('.data-cadastro').html().trim();
                 a = a.split('\/').reverse().join('-');
                 a = new Date(a);
-                
+
                 b = $(b).find('.data-cadastro').html().trim();
                 b = b.split('\/').reverse().join('-');
                 b = new Date(b);
 
-                if(a === b) {
+                if (a === b) {
                     return 0
                 }
 
@@ -167,15 +172,15 @@ module.exports.callback = ($) => {
         },
 
         'Mais clicados': (linhas) => {
-            
-            linhas.sort(function(a, b){
+
+            linhas.sort(function (a, b) {
 
                 a = $(a).find('.cliques').html().trim();
                 a = parseInt(a) || 0;
-                
+
                 b = $(b).find('.cliques').html().trim();
                 b = parseInt(b) || 0;
-                
+
                 return b - a;
             })
 
@@ -183,15 +188,15 @@ module.exports.callback = ($) => {
         },
 
         'Menos clicados': (linhas) => {
-            
-            linhas.sort(function(a, b){
+
+            linhas.sort(function (a, b) {
 
                 a = $(a).find('.cliques').html().trim();
                 a = parseInt(a) || 0;
-                
+
                 b = $(b).find('.cliques').html().trim();
                 b = parseInt(b) || 0;
-                
+
                 return a - b;
             })
 
@@ -211,11 +216,11 @@ module.exports.callback = ($) => {
             $(".status-veiculo[data-status='1']").closest('tr').fadeIn();
             $(".status-veiculo[data-status='2']").closest('tr').fadeOut();
         }
-    } 
+    }
 
-    $('.filtrar-veiculos').on('click', function(){
+    $('.filtrar-veiculos').on('click', function () {
 
-        if(typeof linhas === 'undefined') {
+        if (typeof linhas === 'undefined') {
             linhas = $('.tableveiculos').find('tbody tr').clone();
         }
 
@@ -229,7 +234,7 @@ module.exports.callback = ($) => {
     })
 
 
-    $('.form-tabela-fipe').submit(function(e) {
+    $('.form-tabela-fipe').submit(function (e) {
         e.preventDefault();
 
         data = $(this).serializeArray();
@@ -239,16 +244,16 @@ module.exports.callback = ($) => {
             type: 'POST',
             dataType: 'json',
             data,
-            success: function(retorno) {
+            success: function (retorno) {
 
                 var cards = [];
 
-                retorno.data.map( fipe => {
+                retorno.data.map(fipe => {
                     let card = $("<div></div>").addClass("col-md-5 card bg-secondary m-1");
                     let titulo = $("<small></small>").addClass("text-center");
                     titulo.append($("<strong></strong>").html(fipe.versao));
                     let valor = $("<h5></h5>").addClass("preco-fipe text-center border-bottom-0")
-                        .html("R$ " + (parseFloat(fipe.valor)||0).toLocaleString())
+                        .html("R$ " + (parseFloat(fipe.valor) || 0).toLocaleString())
                     card.append(titulo);
                     card.append(valor);
                     cards.push(card);
@@ -256,7 +261,7 @@ module.exports.callback = ($) => {
 
                 $(".preco-fipe").html(cards);
             },
-            error: function() {
+            error: function () {
 
             }
         })

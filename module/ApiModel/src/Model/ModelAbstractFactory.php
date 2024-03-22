@@ -10,7 +10,7 @@ use SnBH\ApiModel;
 
 class ModelAbstractFactory implements AbstractFactoryInterface
 {
-    protected $namespacesPrefix;
+    protected array $namespacesPrefix = [];
 
     public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
@@ -18,6 +18,10 @@ class ModelAbstractFactory implements AbstractFactoryInterface
         return new $requestedName($apiClient, $container);
     }
 
+    /**
+     * @param string $requestedName
+     * @return bool
+     */
     public function canCreate(ContainerInterface $container, $requestedName)
     {
         $can = false;
@@ -32,7 +36,7 @@ class ModelAbstractFactory implements AbstractFactoryInterface
         return $can;
     }
 
-    public function getPrefix(ContainerInterface $container)
+    public function getPrefix(ContainerInterface $container): array
     {
         if ($this->namespacesPrefix) {
             return $this->namespacesPrefix;

@@ -1,45 +1,46 @@
 {
-  "name": "area-restrita",
-  "version": "1.0.3",
-  "description": "## Introduction",
-  "main": "index.js",
-  "private": true,
-  "scripts": {
-    "compile-icons": "node_modules/.bin/icon-font-generator resources/assets/img/svg/icons/*.svg -o resources/assets/fonts/",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "mix",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "prod": "mix --production",
-    "production": "mix --production",
-    "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -x \"node_modules,resources,vendor,data\"",
-    "websocket-server": "node websocket-server.js",
-    "upgrade": "yarn upgrade-interactive"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
-  "dependencies": {
-    "animate-sass": "^0.8.2",
-    "chart.js": "^2.9.4",
-    "compress.js": "^1.2.2",
-    "font-awesome": "^4.7.0",
-    "jquery-validation": "^1.20.0",
-    "popper.js": "^1.16.1",
-    "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031",
-    "sortablejs": "^1.15.2"
-  },
-  "devDependencies": {
-    "@babel/preset-react": "^7.24.1",
-    "gulp": "^3.9.1",
-    "icon-font-generator": "^2.1.11",
-    "laravel-mix": "^6.0.49",
-    "livereload": "^0.9.3",
-    "webpack": "^5.90.3"
-  }
+    "name": "area-restrita",
+    "version": "1.0.3",
+    "description": "## Introduction",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+        "compile-icons": "node_modules/.bin/icon-font-generator resources/assets/img/svg/icons/*.svg -o resources/assets/fonts/",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "mix",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "prod": "mix --production",
+        "production": "mix --production",
+        "livereload": "node ./node_modules/livereload/bin/livereload.js . -ee \"phtml\" -x \"node_modules,resources,vendor,data\"",
+        "websocket-server": "node websocket-server.js",
+        "upgrade": "yarn upgrade-interactive"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://filipedp@bitbucket.org/seminovosbh/site_novo.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
+    "dependencies": {
+        "animate-sass": "^0.8.2",
+        "chart.js": "^2.9.4",
+        "compress.js": "^1.2.2",
+        "font-awesome": "^4.7.0",
+        "jquery-validation": "^1.20.0",
+        "popper.js": "^1.16.1",
+        "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031",
+        "sortable-tablesort": "^3.2.2",
+        "sortablejs": "^1.15.2"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.24.1",
+        "gulp": "^3.9.1",
+        "icon-font-generator": "^2.1.11",
+        "laravel-mix": "^6.0.49",
+        "livereload": "^0.9.3",
+        "webpack": "^5.91.0"
+    }
 }

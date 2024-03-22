@@ -1,139 +1,142 @@
-<?php /* @var $this \AreaRestrita\View\Helper\AutocompleteClass */ 
+<?php
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+
 $fraseExpiracao = "Expira <b>Hoje</b>";
 $bgExpiracao = "plano-expira-semana";
-if($diasParaExpirar < 0){
-  $fraseExpiracao = "Expirou em <br/><b>".$dataExpiracaoRevenda."</b>";
-  $bgExpiracao = "plano-expirou";
+if ($diasParaExpirar < 0) {
+    $fraseExpiracao = "Expirou em <br/><b>" . $dataExpiracaoRevenda . "</b>";
+    $bgExpiracao = "plano-expirou";
 }
-if($diasParaExpirar > 0){
-  $fraseExpiracao = "Expira em <br/><b>".$diasParaExpirar." dias</b>";
-  $bgExpiracao = "plano-expira-semana";
+if ($diasParaExpirar > 0) {
+    $fraseExpiracao = "Expira em <br/><b>" . $diasParaExpirar . " dias</b>";
+    $bgExpiracao = "plano-expira-semana";
 }
-if($diasParaExpirar > 7){
-  $fraseExpiracao = "Expirará em <br/><b>".$dataExpiracaoRevenda."</b>";
-  $bgExpiracao = "plano-expira-mes";
+if ($diasParaExpirar > 7) {
+    $fraseExpiracao = "Expirará em <br/><b>" . $dataExpiracaoRevenda . "</b>";
+    $bgExpiracao = "plano-expira-mes";
 }
 global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 ?>
 <div class="sidebar-menu mt-3">
-  <!-- BEGIN SIDEBAR MENU ITEMS-->
-  <ul class="menu-items mt-5 mt-0">
-    <?php if($this->userInfo('concessionaria') == 'N'): ?>
-    <li class="m-t-12 pt-3 <?= $bgExpiracao ?> aviso-expiracao">
-      <div class="icone d-flex justify-content-center mt-2">
-          <i class="fa fa-clock-o" aria-hidden="true"></i>
-      </div>
-      <h5 class="text-center">
-        O seu plano <?= $fraseExpiracao ?>
-      </h5>
-    </li>
-    <?php endif; ?>
-    <li class="m-t-30 m-b-20">
-      <div class="p-l-10 p-r-10">
-        <a class="btn-block btn btn-laranja text-capitalize" href="/criar-anuncio">
-          <span class="text-black title">
-            Novo Anúncio
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          </span>
-        </a>
-      </div>
-    </li>
-    <li class="m-t-30 hide">
-      <a href="<?= $this->url('restrito') ?>" class="detailed">
-        <span class="title">Home</span>
-      </a>
-      <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
-    </li>
-    <li class="">
-      <a href="<?= $this->url('restrito/banners') ?>">
-        <span class="title">Banners</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
-    </li>
-    <?php if (SHOW_CHAT): ?>
-    <li class="menu-chat">
-      <a href="<?= $this->url('restrito/chat') ?>">
-        <span class="title">Chat</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-comments" aria-hidden="true"></i></span>
-    </li>
-    <?php endif; ?>
-    <li class="">
-      <a href="<?= $this->url('restrito/meus-veiculos') ?>">
-        <span class="title">Meus Veículos</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-car b-transparent-white" aria-hidden="true"></i></span>
-    </li>
-<!--     <li class="">
+    <!-- BEGIN SIDEBAR MENU ITEMS-->
+    <ul class="menu-items mt-5 mt-0">
+        <?php if ($this->userInfo('concessionaria') == 'N') : ?>
+            <li class="m-t-12 pt-3 <?= $bgExpiracao ?> aviso-expiracao">
+                <div class="icone d-flex justify-content-center mt-2">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                </div>
+                <h5 class="text-center">
+                    O seu plano <?= $fraseExpiracao ?>
+                </h5>
+            </li>
+        <?php endif; ?>
+        <li class="m-t-30 m-b-20">
+            <div class="p-l-10 p-r-10">
+                <a class="btn-block btn btn-laranja text-capitalize" href="/criar-anuncio">
+                    <span class="text-black title">
+                        Novo Anúncio
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </div>
+        </li>
+        <li class="m-t-30 hide">
+            <a href="<?= $this->url('restrito') ?>" class="detailed">
+                <span class="title">Home</span>
+            </a>
+            <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
+        </li>
+        <li class="">
+            <a href="<?= $this->url('restrito/banners') ?>">
+                <span class="title">Banners</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
+        </li>
+        <?php if (SHOW_CHAT) : ?>
+            <li class="menu-chat">
+                <a href="<?= $this->url('restrito/chat') ?>">
+                    <span class="title">Chat</span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-comments" aria-hidden="true"></i></span>
+            </li>
+        <?php endif; ?>
+        <li class="">
+            <a href="<?= $this->url('restrito/meus-veiculos') ?>">
+                <span class="title">Meus Veículos</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-car b-transparent-white" aria-hidden="true"></i></span>
+        </li>
+        <!--     <li class="">
       <a href="<?= $this->url('restrito/repasse') ?>">
         <span class="title">Repasse Seminovos</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-car b-transparent-white" aria-hidden="true"></i></span>
     </li> -->
-    <li class="">
-      <a href="<?= $this->url('restrito/historico-pagamentos') ?>">
-        <span class="title">Histórico Pagamentos</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
-    </li>
-    <?php if($this->userInfo('concessionaria') === 'N'): ?>
-      <li class="">
-        <a href="<?= $this->url('restrito/financeiro') ?>">
-          <span class="title">Financeiro</span>
-        </a>
-        <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
-      </li>
-    <?php endif; ?>
-    <li class="">
-      <a href="<?= $this->url('restrito/contrato-revenda') ?>">
-        <span class="title">Contrato</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
-    </li>
-    <li class="">
-      <a href="<?= $this->url('restrito/central-informacoes') ?>">
-        <span class="title">Central de Informações</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
-    </li>
-    <?php
-    /*<li class="">
+        <li class="">
+            <a href="<?= $this->url('restrito/historico-pagamentos') ?>">
+                <span class="title">Histórico Pagamentos</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
+        </li>
+        <?php if ($this->userInfo('concessionaria') === 'N') : ?>
+            <li class="">
+                <a href="<?= $this->url('restrito/financeiro') ?>">
+                    <span class="title">Financeiro</span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
+            </li>
+        <?php endif; ?>
+        <li class="">
+            <a href="<?= $this->url('restrito/contrato-revenda') ?>">
+                <span class="title">Contrato</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
+        </li>
+        <li class="">
+            <a href="<?= $this->url('restrito/central-informacoes') ?>">
+                <span class="title">Central de Informações</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
+        </li>
+        <?php
+        /*<li class="">
       <a href="<?= $this->url('restrito/xml') ?>">
         <span class="title">Importar XML</span>
       </a>
       <span class="icon-thumbnail"><i class="fa fa-external-link b-transparent-white" aria-hidden="true"></i></span>
     </li>*/
 
-    // Desativado temporariamente
-    if(false && $this->userInfo('idPlano') >= 20): ?>
-    <li class="">
-      <a href="<?= $this->url('restrito/painel') ?>">
-        <span class="title">Relatórios</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </li>
-    <?php endif; ?>
-    <li class="qtd-anuncios-menu">
-        <?=
-        $this->partial('partials/qtd-anuncios-menu.phtml', [
-            'arrayPlanos' => $arrayPlanos
-        ])
+        // Desativado temporariamente
+        if (false && $this->userInfo('idPlano') >= 20) : ?>
+            <li class="">
+                <a href="<?= $this->url('restrito/painel') ?>">
+                    <span class="title">Relatórios</span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+            </li>
+        <?php endif; ?>
+        <li class="qtd-anuncios-menu">
+            <?=
+            $this->partial('partials/qtd-anuncios-menu.phtml', [
+                'arrayPlanos' => $arrayPlanos
+            ])
 
-        ?>
-    </li>
-    <li>
-        <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
-            <span class="title">Ir para o site</span>
-        </a>
-      <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
-    </li>
-    <li>
-      <a href="http://wa.me/5531995502814" target="_blank" title="Ir para o site">
-        <span class="title">Atendimento por WhatsApp</span>
-      </a>
-      <span class="icon-thumbnail"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-    </li>
-  </ul>
-  <div class="clearfix"></div>
+            ?>
+        </li>
+        <li>
+            <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
+                <span class="title">Ir para o site</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <a href="http://wa.me/5531995502814" target="_blank" title="Ir para o site">
+                <span class="title">Atendimento por WhatsApp</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
 </div>

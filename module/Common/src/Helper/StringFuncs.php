@@ -27,4 +27,28 @@ class StringFuncs
     {
         return preg_replace('/([^a-zA-Z0-9])/', '', (string) $string);
     }
+
+    public static function placaFormat(string $placa): string
+    {
+        $placa = strtoupper(trim($placa));
+        $placa = substr($placa, 0, 3) . '-' . substr($placa, 3, 4);
+        return $placa;
+    }
+
+    /**
+     * Atalho para number_format
+     */
+    public static function nF(
+        int|float $valor,
+        int $decimals = 0,
+        string $decimal_separator = ',',
+        string $thousands_separator = '.'
+    ): string {
+        return number_format(
+            $valor,
+            $decimals,
+            $decimal_separator,
+            $thousands_separator
+        );
+    }
 }
