@@ -15,12 +15,14 @@ use Laminas\View\Model\ViewModel;
 
 class FaturaController extends AbstractActionController
 {
-    protected $routeParams;
-    protected $routeName;
+    protected array $routeParams;
+
+    /** @var int|null */
     protected $idPlano;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
 
         /**
@@ -36,7 +38,7 @@ class FaturaController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function particularAction()
+    public function particularAction(): ViewModel
     {
         $idPagamento = $this->params('idPagamento');
 
@@ -46,7 +48,7 @@ class FaturaController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        /** @var Pagamentos $historicoPagamentosModel */
+        /** @var Pagamentos $pagamentosModel */
         $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         // Busca os dados do Pagamento/Fatura
@@ -65,7 +67,7 @@ class FaturaController extends AbstractActionController
         ]);
     }
 
-    public function revendaAction()
+    public function revendaAction(): ViewModel
     {
         $idPagamento = $this->params('idPagamento');
 
@@ -75,7 +77,7 @@ class FaturaController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        /** @var Pagamentos $historicoPagamentosModel */
+        /** @var Pagamentos $pagamentosModel */
         $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         // Busca os dados do Pagamento/Fatura

@@ -10,6 +10,9 @@ use Psr\Container\ContainerInterface;
 
 class BodyClassFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $classs = array_merge(
@@ -20,11 +23,11 @@ class BodyClassFactory implements FactoryInterface
         return new BodyClass(implode(' ', $classs));
     }
 
-    protected function getClassByRoute($container)
+    protected function getClassByRoute(ContainerInterface $container): array
     {
         $route = $container->get('application')
-        ->getMvcEvent()
-        ->getRouteMatch();
+            ->getMvcEvent()
+            ->getRouteMatch();
         // is 404
         if ($route === null) {
             return [];
@@ -37,16 +40,16 @@ class BodyClassFactory implements FactoryInterface
         $controller = preg_replace('/(.)([A-Z])/', '$1-$2', $controller);
 
         return [
-        // Nome da rota da requisição
+            // Nome da rota da requisição
             'r-' . str_replace('/', '_', (string) $route->getMatchedRouteName()),
-        // Nome da classe do controller
+            // Nome da classe do controller
             'c-' . strtolower($controller),
-        // Nome da action
+            // Nome da action
             'a-' . $params['action'],
         ];
     }
 
-    protected function getClassByTipoCadastro($container)
+    protected function getClassByTipoCadastro(ContainerInterface $container): array
     {
         if (!$container->get(AuthService::class)->hasIdentity()) {
             return [];

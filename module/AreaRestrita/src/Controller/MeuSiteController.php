@@ -11,15 +11,16 @@ use AreaRestrita\Model\SiteHospedadoBanner;
 use AreaRestrita\Model\SiteHospedadoConteudo;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
+use Psr\Container\ContainerInterface;
 
 class MeuSiteController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+    protected array $routeParams;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -36,7 +37,7 @@ class MeuSiteController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedadoModel = $this->getContainer()->get(SiteHospedado::class);

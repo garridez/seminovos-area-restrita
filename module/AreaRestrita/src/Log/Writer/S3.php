@@ -8,14 +8,14 @@ use Laminas\Log\Writer\AbstractWriter;
 
 class S3 extends AbstractWriter
 {
-    public static $tmpDir = 'data/temp/logs';
+    public static string $tmpDir = 'data/temp/logs';
 
     protected function doWrite(array $event): void
     {
         $this->persist($this->formatter->format($event), $event['priorityName']);
     }
 
-    protected function persist($data, $priorityName = '')
+    protected function persist(string $data, string $priorityName = '')
     {
         try {
             // As credenciais estão no env

@@ -2,7 +2,6 @@
 
 namespace AreaRestrita\Model;
 
-use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\Veiculos as ApiModelVeiculos;
 
 class Propostas extends ApiModelVeiculos
@@ -24,11 +23,9 @@ class Propostas extends ApiModelVeiculos
      * Retorna todas as propostas
      * A chave do array é idAnuncio, porém deverá ser passado o idVeiculo
      *
-     * @param array $data
      * @param int $idVeiculo
-     * @param string idProposta - campo que será realizado a ordenação dos resultados
-     * @param string DESC - campo que será realizado para determinar o tipo de ordenação
-     * @return Response
+     * @param bool $cache
+     * @return array
      */
     public function getAll($idVeiculo, $cache = false)
     {

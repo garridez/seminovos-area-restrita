@@ -12,6 +12,9 @@ use Psr\Container\ContainerInterface;
 
 class ExpiracaoRevendaFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $idCadastro = $container->get(AuthService::class)->getIdentity();
@@ -38,10 +41,13 @@ class ExpiracaoRevendaFactory implements FactoryInterface
         return new ExpiracaoRevenda($data);
     }
 
-    /*
+    /**
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
-     * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
-     * @return type $result
+     *
+     * @param array     $pagamentosVeiculos
+     * @param int       $idCadastro
+     * @param string    $variavel
+     * @return ?array $result
      */
     protected function getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, $variavel)
     {

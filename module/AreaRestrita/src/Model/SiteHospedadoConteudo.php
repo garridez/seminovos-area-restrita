@@ -19,6 +19,10 @@ class SiteHospedadoConteudo extends ApiModelSiteHospedadoConteudo
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
+    /**
+     * @param int $idSiteHospedado
+     * @return array
+     */
     public function get($idSiteHospedado)
     {
         return parent::get([

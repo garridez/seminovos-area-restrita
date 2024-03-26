@@ -11,16 +11,16 @@ use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Service\AuthManager;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client;
+use Psr\Container\ContainerInterface;
 
 class MeusDadosController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+    protected array $routeParams;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -37,7 +37,7 @@ class MeusDadosController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $requestResponse = false;
         /** @var Cadastros $cadastrosModel */
@@ -62,7 +62,6 @@ class MeusDadosController extends AbstractActionController
             $post = $request->getPost();
             $dadosForm->setData($post);
             if ($dadosForm->isValid()) {
-                /** @var Client $apiClient */
                 $data = $dadosForm->getData();
 
                 $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
@@ -98,7 +97,7 @@ class MeusDadosController extends AbstractActionController
         ]);
     }
 
-    public function alterarSenhaAction()
+    public function alterarSenhaAction(): ViewModel
     {
         $data = [];
         $request = $this->getRequest();

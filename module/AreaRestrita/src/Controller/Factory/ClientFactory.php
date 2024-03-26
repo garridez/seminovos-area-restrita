@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 /**
  * @link      http://github.com/laminas/laminas-servicemanager for the canonical source repository
  */

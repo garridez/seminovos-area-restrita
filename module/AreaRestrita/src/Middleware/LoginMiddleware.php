@@ -12,13 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LoginMiddleware implements MiddlewareInterface
 {
-    protected $authService;
-    protected $router;
-
-    public function __construct(AuthenticationService $authService, TreeRouteStack $router)
+    public function __construct(protected AuthenticationService $authService, protected TreeRouteStack $router)
     {
-        $this->authService = $authService;
-        $this->router = $router;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

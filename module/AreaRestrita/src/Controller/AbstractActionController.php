@@ -19,6 +19,7 @@ class AbstractActionController extends ZendAbstractActionController
 {
     public function getContainer(): ServiceManager
     {
+        // phpcs:ignore
         global $container;
 
         return $container;
@@ -31,6 +32,7 @@ class AbstractActionController extends ZendAbstractActionController
 
     public function getLogger(): Logger
     {
+        // phpcs:ignore
         global $logger;
         return $logger;
     }
@@ -39,7 +41,7 @@ class AbstractActionController extends ZendAbstractActionController
      * Verifica se o retorno da api é um erro.
      * Se sim, redireciona para  página de erro
      */
-    public function checkApiError(Response $apiResponse)
+    public function checkApiError(Response $apiResponse): void
     {
         if ($apiResponse->status !== 200) {
             throw new Exception();
@@ -50,20 +52,24 @@ class AbstractActionController extends ZendAbstractActionController
      * Retorna os dados de cadastro do usuário atual
      *  Se passado uma key específica, então retorna só este dado
      *
-     * @param string $key Chave do campo que será retornado
+     * @param string|false $key Chave do campo que será retornado
+     * @return array|string
      */
     public function getCadastro($key = false)
     {
         $data = $this
-        ->getContainer()
-        ->get(Cadastros::class)
-        ->getCurrent();
+            ->getContainer()
+            ->get(Cadastros::class)
+            ->getCurrent();
 
         return $key ? $data[$key] : $data;
     }
 
     /**
      * Retorna os dados do veículo que estiver na rota
+     *
+     * @param bool|int $cache
+     * @return array|bool
      */
     public function getVeiculo($cache = false)
     {

@@ -17,7 +17,7 @@ class XmlController extends AbstractActionController
     /**
      * Index para importar XML
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
@@ -36,7 +36,7 @@ class XmlController extends AbstractActionController
     /**
      * Tela para edição dos dados dos veículos contidos no xml
      *
-     * @return View
+     * @return ViewModel
      */
     public function dadosVeiculosAction()
     {
@@ -51,7 +51,7 @@ class XmlController extends AbstractActionController
             // return $this->redirect()->toUrl('/xml');
         }
 
-        /** @var siteHospedado $siteHospedadoModel */
+        /** @var Cadastros $cadastro */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
 
@@ -368,7 +368,7 @@ class XmlController extends AbstractActionController
         $nomePlano = '';
         $veiculos = $request->getPost()->toArray();
 
-        /** @var siteHospedado $siteHospedadoModel */
+        /** @var Cadastros $cadastro */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
         $idCadastro = $dadosCadastro['idCadastro'];
@@ -484,7 +484,7 @@ class XmlController extends AbstractActionController
     /**
      * Remove acentos e espaços em branco desnecessários
      *
-     * @param String $string
+     * @param string $string
      */
     public function removerAcentos($string): string
     {

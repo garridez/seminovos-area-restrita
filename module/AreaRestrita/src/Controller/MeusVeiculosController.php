@@ -18,15 +18,16 @@ use DateTime;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
+use Psr\Container\ContainerInterface;
 
 class MeusVeiculosController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+    protected array $routeParams;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -43,7 +44,7 @@ class MeusVeiculosController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
@@ -99,6 +100,10 @@ class MeusVeiculosController extends AbstractActionController
         return $viewModel;
     }
 
+    /**
+     * @param array $dadosVeiculos
+     * @return ?array
+     */
     protected function retornaQuantidadePropostasVeiculo($dadosVeiculos)
     {
         /** @var Propostas $propostasModel */
@@ -133,6 +138,10 @@ class MeusVeiculosController extends AbstractActionController
         return $dadosVeiculos;
     }
 
+    /**
+     * @param array $dadosVeiculos
+     * @return array
+     */
     protected function retornaValidacaoRevenda($dadosVeiculos)
     {
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
@@ -228,6 +237,10 @@ class MeusVeiculosController extends AbstractActionController
         return $dadosVeiculos;
     }
 
+    /**
+     * @param array $dadosVeiculos
+     * @return array
+     */
     protected function retornaValidacaoParticular($dadosVeiculos)
     {
         if (!isset($dadosVeiculos['data'])) {
@@ -321,7 +334,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["trocar_plano"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
-                   /* if ($veiculo['idPlano'] != 1) {
+                    /* if ($veiculo['idPlano'] != 1) {
                         $temp_acoes["editar_fotos"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
@@ -396,10 +409,13 @@ class MeusVeiculosController extends AbstractActionController
         return $dadosVeiculos;
     }
 
-    /*
+    /**
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
-     * @param array $pagamentosVeiculos, int $idVeiculo, string $variavel
-     * @return type $result
+     *
+     * @param array   $pagamentosVeiculos
+     * @param int     $idVeiculo
+     * @param string  $variavel
+     * @return ?array $result
      */
     protected function getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $idVeiculo, $variavel)
     {
@@ -424,10 +440,13 @@ class MeusVeiculosController extends AbstractActionController
         return $result;
     }
 
-    /*
+    /**
      * Verifica qual a ultima entrada de pagamento e captura a variavel solicitada desse
-     * @param array $pagamentosVeiculos, int $idCadastro, string $variavel
-     * @return type $result
+     *
+     * @param array   $pagamentosVeiculos
+     * @param int     $idCadastro
+     * @param string  $variavel
+     * @return ?array $result
      */
     protected function getVariavelltimoPagamentoCadastro($pagamentosVeiculos, $idCadastro, $variavel)
     {
@@ -452,13 +471,12 @@ class MeusVeiculosController extends AbstractActionController
         return $result;
     }
 
-    /*
+    /**
      * Função generica que faz as seguintes ações
      * reativar o veiculo quando for particular
      * renovar o veiculo quando for particular
      * ativar o veiculo quando for revenda
      */
-
     public function reativarAction(): never
     {
         $idVeiculo = $this->params('idVeiculo');
@@ -547,7 +565,7 @@ class MeusVeiculosController extends AbstractActionController
 
         $data += $request->getPost()->toArray();
 
-        /** @var Veiculos $veiculosModel */
+        /** @var PesquisaSatisfacao $pesquisaModel */
         $pesquisaModel = $this->getContainer()->get(PesquisaSatisfacao::class);
 
         // Busca os dados do cadastro
@@ -617,7 +635,7 @@ class MeusVeiculosController extends AbstractActionController
         die;
     }
 
-    public function veiculoAction()
+    public function veiculoAction(): ViewModel
     {
         $idVeiculo = $this->params('idVeiculo');
         $dadosVeiculo = [];
@@ -632,7 +650,7 @@ class MeusVeiculosController extends AbstractActionController
         ]);
     }
 
-    public function propostasAction()
+    public function propostasAction(): ViewModel
     {
         $idVeiculo = $this->params('idVeiculo');
 
@@ -654,14 +672,14 @@ class MeusVeiculosController extends AbstractActionController
         ]);
     }
 
-    public function qtdAnunciosMenuAction()
+    public function qtdAnunciosMenuAction(): ViewModel
     {
         $viewModel = new ViewModel();
         $viewModel->setTerminal(true);
         return $viewModel;
     }
 
-    public function chatAction()
+    public function chatAction(): ViewModel
     {
         return new ViewModel();
     }

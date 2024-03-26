@@ -19,6 +19,9 @@ class PesquisaSatisfacao extends ApiModelPesquisaSatisfacao
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
+    /**
+     * @return array
+     */
     public function post(array $data)
     {
         return parent::post($data)->getData();

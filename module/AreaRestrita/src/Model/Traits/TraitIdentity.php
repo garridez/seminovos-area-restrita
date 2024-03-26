@@ -5,6 +5,7 @@ namespace AreaRestrita\Model\Traits;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\ServiceManager;
 
+// phpcs:ignore
 trait TraitIdentity
 {
     /**
@@ -24,11 +25,15 @@ trait TraitIdentity
      */
     protected function getContainer()
     {
+        // phpcs:ignore
         global $container;
 
         return $container;
     }
 
+    /**
+     * @return int
+     */
     protected function getIdentity()
     {
         if (!$this->identity) {

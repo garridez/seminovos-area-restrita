@@ -9,6 +9,9 @@ use Psr\Container\ContainerInterface;
 
 class PlanosUsadosFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         /** @var Planos $planos */

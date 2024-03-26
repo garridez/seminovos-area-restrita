@@ -8,7 +8,7 @@ use Laminas\View\Model\JsonModel;
 
 class JsonController extends AbstractActionController
 {
-    public function cidadesAction()
+    public function cidadesAction(): JsonModel
     {
         $params = $this->params()->fromQuery();
         unset($params['idEstado']);

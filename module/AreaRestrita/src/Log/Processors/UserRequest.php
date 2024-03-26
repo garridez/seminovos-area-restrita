@@ -6,6 +6,9 @@ use Laminas\Log\Processor\ProcessorInterface;
 
 class UserRequest implements ProcessorInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function process(array $event)
     {
         $userRequest = [

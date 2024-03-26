@@ -8,6 +8,9 @@ class Estados extends AbstractModel
 {
     use Traits\TraitIdentity;
 
+    /**
+     * @return array
+     */
     public function get(array $data)
     {
         return parent::get($data)->getData();

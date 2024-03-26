@@ -12,7 +12,7 @@ use SnBH\ApiModel\Model\VeiculosInfo;
 
 class PainelController extends AbstractActionController
 {
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -47,7 +47,7 @@ class PainelController extends AbstractActionController
             }
             $idsVeiculos[] = $veiculo['idVeiculo'];
         }
-        /** @var ApiClient */
+        /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
         /** @var array $metricas */
@@ -60,6 +60,7 @@ class PainelController extends AbstractActionController
             'agruparPor' => 'data',
         ], null, 60 * 60 * 24)->getData();
 
+        /** @var array $maisAcessados */
         $maisAcessados = $apiClient->maisAcessadosGet([
             'qtd' => 30,
         ], null, 60 * 60 * 24)->getData();
@@ -105,7 +106,7 @@ class PainelController extends AbstractActionController
         ]);
     }
 
-    public function contadorPorMarcaAction()
+    public function contadorPorMarcaAction(): JsonModel
     {
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
@@ -117,7 +118,7 @@ class PainelController extends AbstractActionController
         ]);
     }
 
-    public function contadorPorModeloAction()
+    public function contadorPorModeloAction(): JsonModel
     {
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
@@ -129,7 +130,7 @@ class PainelController extends AbstractActionController
         ]);
     }
 
-    public function contadorPorCategoriaAction()
+    public function contadorPorCategoriaAction(): JsonModel
     {
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
@@ -141,7 +142,7 @@ class PainelController extends AbstractActionController
         ]);
     }
 
-    public function detalheAnuncioAction()
+    public function detalheAnuncioAction(): ViewModel
     {
         $idVeiculo = $this->params('idVeiculo');
         /** @var Veiculos $veiculoModel */
@@ -254,7 +255,7 @@ class PainelController extends AbstractActionController
         ]);
     }
 
-    public function tabelaFipeAction()
+    public function tabelaFipeAction(): JsonModel
     {
         $params = $this->params()->fromPost();
 

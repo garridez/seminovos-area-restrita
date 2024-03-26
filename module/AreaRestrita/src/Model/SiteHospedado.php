@@ -2,7 +2,6 @@
 
 namespace AreaRestrita\Model;
 
-use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\SiteHospedado as ApiModelSiteHospedado;
 
 class SiteHospedado extends ApiModelSiteHospedado
@@ -25,9 +24,7 @@ class SiteHospedado extends ApiModelSiteHospedado
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
      *
-     * @param array $data
-     * @param int $idCadastro
-     * @return Response
+     * @return array
      */
     public function get()
     {

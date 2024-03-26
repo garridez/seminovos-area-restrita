@@ -7,10 +7,16 @@ use SnBH\ApiModel\Model\Cadastros;
 
 class UserInfo extends AbstractHelper
 {
-    public function __construct(protected $data)
+    public function __construct(protected array $data)
     {
     }
 
+    /**
+     * Retorna o valor de um campo específico
+     *
+     * @param string|null $key
+     * @return mixed
+     */
     public function __invoke($key = null)
     {
         if ($key === null) {

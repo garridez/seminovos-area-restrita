@@ -6,14 +6,14 @@ use Laminas\Log\Writer\AbstractWriter;
 
 class Local extends AbstractWriter
 {
-    public static $tmpDir = 'data/logs';
+    public static string $tmpDir = 'data/logs';
 
     protected function doWrite(array $event): void
     {
         $this->persist($this->formatter->format($event), $event['priorityName']);
     }
 
-    protected function persist($data, $priorityName = '')
+    protected function persist(mixed $data, string|int $priorityName = ''): void
     {
         $tmpDir = self::$tmpDir;
         if (!file_exists($tmpDir)) {

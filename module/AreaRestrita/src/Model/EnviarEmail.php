@@ -8,6 +8,9 @@ class EnviarEmail extends ApiModelEnviarEmail
 {
     use Traits\TraitIdentity;
 
+    /**
+     * @return array
+     */
     public function post(array $data)
     {
         $res = parent::post($data);

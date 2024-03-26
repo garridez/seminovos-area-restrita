@@ -9,6 +9,9 @@ use Psr\Container\ContainerInterface;
 
 class MiddlewarePipeFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
 //        var_dump(func_get_args());

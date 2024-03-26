@@ -6,11 +6,11 @@ use Laminas\View\Helper\AbstractHelper;
 
 class ArrayData extends AbstractHelper
 {
-    public function __construct(protected $data)
+    public function __construct(protected array $data)
     {
     }
 
-    public function __invoke()
+    public function __invoke(): array
     {
         return $this->data;
     }

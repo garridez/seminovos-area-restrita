@@ -19,6 +19,10 @@ class VeiculosFotos extends ApiModelVeiculosFotos
         return parent::get([], $this->getIdentity(), $cacheable)->getData()[0];
     }
 
+    /**
+     * @param int $idVeiculo
+     * @return array
+     */
     public function get($idVeiculo)
     {
         return parent::get([
@@ -26,6 +30,10 @@ class VeiculosFotos extends ApiModelVeiculosFotos
         ])->getData();
     }
 
+    /**
+     * @param array $dados
+     * @return array
+     */
     public function delete($dados)
     {
         return parent::delete($dados)->json();

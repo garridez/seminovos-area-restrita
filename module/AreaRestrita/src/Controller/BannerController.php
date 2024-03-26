@@ -7,22 +7,19 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\SiteHospedado;
+use Laminas\Http\Response;
 use Laminas\View\Model\ViewModel;
 
 class BannerController extends AbstractActionController
 {
-    protected $routeParams;
-    protected $routeName;
-
     /**
      * Listagem dos banners ja cadastrados
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $banners = [];
-        $apiClient = $this->getApiClient();
 
-        /** @var SiteHospedado $siteHospedadoModel */
+        /** @var SiteHospedado $siteHospedado */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -44,17 +41,20 @@ class BannerController extends AbstractActionController
     /**
      * View de cadastro de banners
      */
-    public function cadastrarAction()
+    public function cadastrarAction(): ViewModel
     {
         return new ViewModel();
     }
 
+    /**
+     * @return Response
+     */
     public function salvarAction()
     {
         $request = $this->getRequest();
         $apiClient = $this->getApiClient();
 
-        /** @var SiteHospedado $siteHospedadoModel */
+        /** @var SiteHospedado $siteHospedado */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -82,12 +82,15 @@ class BannerController extends AbstractActionController
         return $this->redirect()->toUrl('/banners');
     }
 
+    /**
+     * @return Response
+     */
     public function excluirAction()
     {
         $key = $this->getRequest()->getPost()['key'];
         $idSiteHospedadoBanner = $this->getRequest()->getPost()['idSiteHospedadoBanner'];
 
-        /** @var SiteHospedado $siteHospedadoModel */
+        /** @var SiteHospedado $siteHospedado */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();

@@ -12,16 +12,19 @@ use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
+use Psr\Container\ContainerInterface;
 
 class FinanceiroController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+
+    protected array $routeParams;
+    /** @var int|null */
     protected $idPlano;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -38,7 +41,7 @@ class FinanceiroController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
@@ -71,7 +74,7 @@ class FinanceiroController extends AbstractActionController
 
         $valor = $dadosCadastro['icms'] == 'S' ? $valorPlano - ((4.3 / 100.0) * $valorPlano) : $valorPlano;
 
-        /** @var SiteHospedado $siteHospedadoModel */
+        /** @var SiteHospedado $siteHospedado */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -129,8 +132,8 @@ class FinanceiroController extends AbstractActionController
         $dadosFinanceiro['economia_anual'] = number_format(($descAnual / 100.0) * $valorPlano * 12, 2, ',', '.');
         $dadosFinanceiro['desconto_anual'] = $descAnual . '%';
 
-//        var_dump($dadosFinanceiro);
-//        die;
+        //        var_dump($dadosFinanceiro);
+        //        die;
 
         return new ViewModel([
             'financeiro' => $dadosFinanceiro,

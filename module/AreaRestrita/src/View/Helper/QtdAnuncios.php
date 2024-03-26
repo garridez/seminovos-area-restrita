@@ -26,13 +26,14 @@ class QtdAnuncios extends AbstractHelper
     {
     }
 
-    public function __invoke()
+    public function __invoke(): self
     {
         return $this;
     }
 
     /**
      * @param string $name
+     * @return mixed
      */
     public function __get($name)
     {

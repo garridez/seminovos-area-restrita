@@ -5,6 +5,7 @@ namespace AreaRestrita\Model\Traits;
 use AreaRestrita\Model\Cadastros;
 use Laminas\ServiceManager\ServiceManager;
 
+// phpcs:ignore
 trait TraitCadastro
 {
     /**
@@ -19,8 +20,12 @@ trait TraitCadastro
      */
     private $data;
 
+    /**
+     * @return array
+     */
     protected function getCadastroData()
     {
+        // phpcs:ignore
         global $container;
 
         if (!$this->data) {

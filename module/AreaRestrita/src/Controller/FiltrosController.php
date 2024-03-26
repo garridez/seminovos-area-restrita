@@ -8,7 +8,7 @@ use Laminas\View\Model\JsonModel;
 
 class FiltrosController extends AbstractActionController
 {
-    public function indexAction()
+    public function indexAction(): JsonModel
     {
         $data = $this->getApiClient()
             ->veiculosFiltrosGet(['motor' => 1], null, true)

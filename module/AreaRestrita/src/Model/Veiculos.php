@@ -2,7 +2,6 @@
 
 namespace AreaRestrita\Model;
 
-use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\Veiculos as ApiModelVeiculos;
 
 class Veiculos extends ApiModelVeiculos
@@ -25,14 +24,19 @@ class Veiculos extends ApiModelVeiculos
      * Se o parametro $idCadastro não for passado, será usado
      *  o $idCadastro da sessão
      *
-     * @param int $idCadastro
-     * @return Response
+     * @param int $idVeiculo
+     * @return array
      */
     public function put(array $data, $idVeiculo)
     {
         return parent::put($data, $idVeiculo)->json();
     }
 
+    /**
+     * @param int|null $page
+     * @param bool $cache
+     * @return array
+     */
     public function getAll($page = null, $cache = false)
     {
         return parent::get([
@@ -46,6 +50,11 @@ class Veiculos extends ApiModelVeiculos
         ], null, $cache)->json();
     }
 
+    /**
+     * @param int $idVeiculo
+     * @param bool $useCache
+     * @return array|false
+     */
     public function get($idVeiculo, $useCache = false)
     {
         $res = parent::get(['ignorarCondicoesBasicas' => true], $idVeiculo, $useCache);
@@ -55,11 +64,18 @@ class Veiculos extends ApiModelVeiculos
         return false;
     }
 
+    /**
+     * @param int $idVeiculo
+     * @return array
+     */
     public function delete($idVeiculo)
     {
         return parent::delete(null, $idVeiculo)->json();
     }
 
+    /**
+     * @return array
+     */
     public function post(array $data)
     {
         return parent::post($data)->getData();

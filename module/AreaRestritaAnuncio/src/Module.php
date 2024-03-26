@@ -10,7 +10,7 @@ class Module
 {
     final public const SESSION_NAMESPACE = self::class;
 
-    public function getConfig()
+    public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';
     }

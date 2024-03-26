@@ -4,15 +4,16 @@ namespace AreaRestrita\Controller;
 
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
+use Psr\Container\ContainerInterface;
 
 class CertificadosController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+    protected array $routeParams;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -29,7 +30,7 @@ class CertificadosController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $placa = $this->params('placa');
 

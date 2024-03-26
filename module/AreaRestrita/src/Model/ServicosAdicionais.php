@@ -2,7 +2,6 @@
 
 namespace AreaRestrita\Model;
 
-use SnBH\ApiClient\Response;
 use SnBH\ApiModel\Model\ServicosAdicionais as ApiModelServicosAdicionais;
 
 class ServicosAdicionais extends ApiModelServicosAdicionais
@@ -21,13 +20,8 @@ class ServicosAdicionais extends ApiModelServicosAdicionais
     }
 
     /**
-     * Atualiza na api os dados de cadastro
-     * Se o parametro $idCadastro não for passado, será usado
-     *  o $idCadastro da sessão
-     *
-     * @param array $data
-     * @param int $idCadastro
-     * @return Response
+     * @param int $idServicosAdicional
+     * @return array
      */
     public function get($idServicosAdicional)
     {

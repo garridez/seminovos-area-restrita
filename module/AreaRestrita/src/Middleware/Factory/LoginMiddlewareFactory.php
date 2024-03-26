@@ -9,6 +9,9 @@ use Psr\Container\ContainerInterface;
 
 class LoginMiddlewareFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         $authService = $container->get(AuthenticationService::class);

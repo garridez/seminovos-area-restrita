@@ -11,6 +11,9 @@ use SnBH\ApiClient\Client as ApiClient;
 
 class QtdAnunciosFactory implements FactoryInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $idCadastro = $container->get(AuthService::class)->getIdentity();

@@ -13,7 +13,7 @@ class Cadastros extends ApiModelCadastros
      * Retorna os dados do usuário logado
      *
      * @param bool $cacheable Determina se os dados vão vim do cache ou não
-     * @return array
+     * @return array|false
      */
     public function getCurrent($cacheable = true)
     {
@@ -52,11 +52,17 @@ class Cadastros extends ApiModelCadastros
         return $this->getCurrent()['tipoCadastro'] == self::TIPO_CADASTRO_REVENDA;
     }
 
+    /**
+     * @return array
+     */
     public function post(array $data)
     {
         return parent::post($data);
     }
 
+    /**
+     * @return array
+     */
     public function get(array $data)
     {
         return parent::get($data)->getData();

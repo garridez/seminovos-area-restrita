@@ -11,15 +11,16 @@ use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
+use Psr\Container\ContainerInterface;
 
 class HistoricoPagamentosController extends AbstractActionController
 {
-    protected $container;
-    protected $routeParams;
-    protected $routeName;
+    protected ContainerInterface $container;
+    protected array $routeParams;
 
     public function __construct()
     {
+        // phpcs:ignore
         global $container;
         $this->container = $container;
 
@@ -36,7 +37,7 @@ class HistoricoPagamentosController extends AbstractActionController
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         /** @var Pagamentos $historicoPagamentosModel */
         $historicoPagamentosModel = $this->getContainer()->get(Pagamentos::class);

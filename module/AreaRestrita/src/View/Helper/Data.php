@@ -15,6 +15,12 @@ class Data extends AbstractHelper
         date_default_timezone_set('America/Sao_Paulo');
     }
 
+    /**
+     * Retorna a data por extenso
+     *
+     * @param string $datetime
+     * @return string
+     */
     public function dataPorExtenso($datetime)
     {
         // TODO verificar o porque do setlocale não funciona e alterar a função para
@@ -26,7 +32,7 @@ class Data extends AbstractHelper
             $dia = date($dianum[0]);
             $mes = date($data[1]);
             $ano = date($data[0]);
-            $semana = date("w", mktime(0, 0, 0, $mes, $dia, $ano));
+            $semana = date("w", mktime(0, 0, 0, (int) $mes, (int) $dia, (int) $ano));
 
             switch ($mes) {
                 case 1:
@@ -98,11 +104,17 @@ class Data extends AbstractHelper
         }
     }
 
+    /**
+     * @param ?string $data
+     */
     public function converterDataBR($data): string
     {
         return date("d/m/Y", strtotime((string) $data));
     }
 
+    /**
+     * @param ?string $data
+     */
     public function converterDataHoraBR($data): string
     {
         return date("d/m/Y H:i:s", strtotime((string) $data));

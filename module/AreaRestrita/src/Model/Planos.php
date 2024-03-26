@@ -28,6 +28,12 @@ class Planos extends AbstractModel
         ], null, $cacheable)->getData();
     }
 
+    /**
+     * @param string|int|null $tipoPlano
+     * @param bool $cache
+     * @param int $status
+     * @return array
+     */
     public function get($tipoPlano = null, $cache = true, $status = 1)
     {
         if (!is_numeric($tipoPlano)) {
@@ -45,6 +51,10 @@ class Planos extends AbstractModel
         ], null, $cache)->getData();
     }
 
+    /**
+     * @param bool $cacheable
+     * @return array|false
+     */
     public function getPlanosUsados($cacheable = false)
     {
         $cadastro = $this->getCadastroData();

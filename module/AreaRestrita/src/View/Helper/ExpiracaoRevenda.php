@@ -12,21 +12,25 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class ExpiracaoRevenda extends AbstractHelper
 {
-    public function __construct(protected $data)
+    public function __construct(protected mixed $data)
     {
     }
 
-    public function __invoke()
+    public function __invoke(): self
     {
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function __get($name)
     {
         return $this->data[$name];
     }
 
-    public function getData()
+    public function getData(): mixed
     {
         return $this->data;
     }

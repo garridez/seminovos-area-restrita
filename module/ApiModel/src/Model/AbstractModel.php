@@ -9,14 +9,19 @@ use SnBH\ApiClient\Response;
 
 /**
  * @method Response get(array $where = array(), int $id = null, boolean $cacheable = false) Realiza get no endpoint correspondente à class
+ * @method array    get(array $where = array(), int $id = null, boolean $cacheable = false) Realiza get no endpoint correspondente à class
  * @method Response post(array $data, int $id = null, boolean $cacheable = false) Realiza post no endpoint correspondente à class
+ * @method array    post(array $data, int $id = null, boolean $cacheable = false) Realiza post no endpoint correspondente à class
  * @method Response put(array $data, int $id = null, boolean $cacheable = false) Realiza put no endpoint correspondente à class
+ * @method array    put(array $data, int $id = null, boolean $cacheable = false) Realiza put no endpoint correspondente à class
  * @method Response delete(null $paramNull, int $id, boolean $cacheable = false) Realiza delete no endpoint correspondente à class
+ * @method array    delete(null $paramNull, int $id, boolean $cacheable = false) Realiza delete no endpoint correspondente à class
  * @method Response patch(array $data, int $id = null, boolean $cacheable = false) Realiza patch no endpoint correspondente à class
+ * @method array    patch(array $data, int $id = null, boolean $cacheable = false) Realiza patch no endpoint correspondente à class
  */
 abstract class AbstractModel
 {
-    protected $allowedHttpMethods = [
+    protected array $allowedHttpMethods = [
         'get' => 'Get',
         'post' => 'Post',
         'put' => 'Put',
@@ -33,10 +38,17 @@ abstract class AbstractModel
     {
     }
 
+    /**
+     * @return void
+     */
     protected function doRequest()
     {
     }
 
+    /**
+     * @param string $name
+     * @param array $arguments
+     */
     public function __call($name, $arguments)
     {
         if (!isset($this->allowedHttpMethods[$name])) {

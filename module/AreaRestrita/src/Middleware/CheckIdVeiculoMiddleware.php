@@ -5,6 +5,7 @@ namespace AreaRestrita\Middleware;
 use Laminas\Authentication\AuthenticationService as AuthServ;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Router\Http\RouteMatch;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -18,12 +19,12 @@ use SnBH\ApiModel\Model\Veiculos;
  */
 class CheckIdVeiculoMiddleware implements MiddlewareInterface
 {
-    protected $authService;
-    protected $apiClient;
-    protected $routeMatch;
-
-    public function __construct(AuthServ $authService, ApiClient $apiClient, RouteMatch $routeMatch, protected $container)
-    {
+    public function __construct(
+        protected AuthServ $authService,
+        protected ApiClient $apiClient,
+        protected RouteMatch $routeMatch,
+        protected ContainerInterface $container
+    ) {
         $this->authService = $authService;
         $this->apiClient = $apiClient;
         $this->routeMatch = $routeMatch;

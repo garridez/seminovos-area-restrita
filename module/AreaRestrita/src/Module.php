@@ -27,7 +27,7 @@ class Module
 {
     final public const SESSION_NAMESPACE = 'LOGIN_SESSION';
 
-    public function getConfig()
+    public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';
     }

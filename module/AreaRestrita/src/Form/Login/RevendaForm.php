@@ -8,6 +8,10 @@ use Laminas\Form\Form;
 
 class RevendaForm extends Form
 {
+    /**
+     * @param string $name
+     * @param array $options
+     */
     public function __construct($name = 'login-revenda-form', $options = [])
     {
         parent::__construct($name, $options);
