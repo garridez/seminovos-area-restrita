@@ -2,12 +2,12 @@
 
 namespace AreaRestritaAnuncio\Form\Cadastro;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator\Hostname;
 
 class CadastroSimplesForm extends Form
 {
-
     public function __construct($name = 'form_cadastroSimples', $options = [])
     {
         parent::__construct($name, $options);
@@ -22,7 +22,7 @@ class CadastroSimplesForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'seuemail@example.com.br',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Email::class,
@@ -34,7 +34,7 @@ class CadastroSimplesForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'seuemail@example.com.br',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -47,7 +47,7 @@ class CadastroSimplesForm extends Form
                 'class' => 'form-control',
                 'placeholder' => '000.000.000-00',
                 'data-mask' => '000.000.000-00',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -78,7 +78,7 @@ class CadastroSimplesForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-                'class' => 'form-control'
+                'class' => 'form-control',
             ],
         ]);
         $this->add([
@@ -106,7 +106,7 @@ class CadastroSimplesForm extends Form
                 'placeholder' => 'Nome Sobrenome',
                 'autocomplete' => 'name',
                 'autocapitalize' => 'sentences',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -119,7 +119,7 @@ class CadastroSimplesForm extends Form
                 'class' => 'form-control',
                 'placeholder' => '******',
                 'autocomplete' => 'off',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -132,7 +132,7 @@ class CadastroSimplesForm extends Form
                 'class' => 'form-control',
                 'placeholder' => '******',
                 'autocomplete' => 'off',
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Submit::class,
@@ -164,7 +164,7 @@ class CadastroSimplesForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
+                        'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],
@@ -174,7 +174,7 @@ class CadastroSimplesForm extends Form
             'name' => 'cpfResponsavel',
             'required' => false,
         ]);
-        #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
+    // campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
             'name' => 'telefone_2',
             'required' => true,

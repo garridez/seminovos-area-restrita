@@ -1,21 +1,16 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Cadastros;
 
 class ContratoRevendaController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -28,7 +23,7 @@ class ContratoRevendaController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()

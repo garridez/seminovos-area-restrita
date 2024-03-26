@@ -1,8 +1,7 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
@@ -12,10 +11,8 @@ use Laminas\View\Model\JsonModel;
 
 class ChatController extends AbstractActionController
 {
-
     public function indexAction()
     {
-
     }
 
     public function messagesAction()
@@ -27,6 +24,7 @@ class ChatController extends AbstractActionController
         }
         return $this->getMessages($idCadastro);
     }
+
     public function naoLidasAction()
     {
         $idCadastro = $this->getCadastro('idCadastro');
@@ -42,6 +40,7 @@ class ChatController extends AbstractActionController
 
         return new JsonModel($res->getData());
     }
+
     protected function sendMessages($idCadastro)
     {
         /**
@@ -57,7 +56,7 @@ class ChatController extends AbstractActionController
     protected function getMessages($idCadastro)
     {
         $params = [
-            'idCadastro' => $idCadastro
+            'idCadastro' => $idCadastro,
         ];
         $idLastMessage = $this->params()->fromQuery('idLastMessage', false);
         if ($idLastMessage) {
@@ -88,7 +87,7 @@ class ChatController extends AbstractActionController
         }
         $firstkey = array_key_first($listChats);
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(true);

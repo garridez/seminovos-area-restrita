@@ -4,7 +4,6 @@ namespace AreaRestrita\Form\View\Helper;
 
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
-use TwbBundle\Form\View\Helper\TwbBundleFormRadio;
 use Laminas\Form\View\Helper\FormRadio as LaminasFormRadio;
 
 class FormRadio extends LaminasFormRadio

@@ -3,9 +3,9 @@
 namespace AreaRestrita\Middleware\Factory;
 
 use AreaRestrita\Middleware;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Stratigility\MiddlewarePipe;
+use Psr\Container\ContainerInterface;
 
 class MiddlewarePipeFactory implements FactoryInterface
 {

@@ -2,6 +2,7 @@
 
 namespace SnBH\Integrador\Middleware;
 
+use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -11,7 +12,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class DispatchMiddleware implements MiddlewareInterface
 {
-
     protected $container;
 
     public function __construct(ContainerInterface $container)
@@ -23,7 +23,7 @@ class DispatchMiddleware implements MiddlewareInterface
     {
         $container = $this->container;
 
-        /** @var \Laminas\Mvc\Application $application  */
+        /** @var Application $application  */
         $application = $container->get('Application');
 
         $event = $application->getMvcEvent();
@@ -49,7 +49,6 @@ class DispatchMiddleware implements MiddlewareInterface
 
         $events = $application->getEventManager();
         $events->triggerEvent($event);
-
 
         $event->setName(MvcEvent::EVENT_FINISH);
         $event->stopPropagation(false); // Clear before triggering

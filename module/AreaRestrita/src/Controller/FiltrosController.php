@@ -2,15 +2,14 @@
 
 namespace AreaRestrita\Controller;
 
-use Laminas\View\Model\JsonModel;
 use Laminas\Http\Header;
+use Laminas\Http\PhpEnvironment\Response;
+use Laminas\View\Model\JsonModel;
 
 class FiltrosController extends AbstractActionController
 {
-
     public function indexAction()
     {
-
         $data = $this->getApiClient()
             ->veiculosFiltrosGet(['motor' => 1], null, true)
             ->getData();
@@ -23,7 +22,7 @@ class FiltrosController extends AbstractActionController
 
         $pragma = new Header\Pragma('cache');
 
-        /* @var $response \Laminas\Http\PhpEnvironment\Response */
+        /** @var Response $response */
         $response = $this->getResponse();
         $response->getHeaders()
             ->addHeader($expires)

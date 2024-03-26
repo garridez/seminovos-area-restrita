@@ -3,6 +3,7 @@
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
+use Laminas\Mvc\MvcEvent;
 use Laminas\View\Model\ViewModel;
 
 /**
@@ -10,8 +11,7 @@ use Laminas\View\Model\ViewModel;
  */
 class FinalizarController extends AbstractActionController
 {
-
-    public function onDispatch(\Laminas\Mvc\MvcEvent $e)
+    public function onDispatch(MvcEvent $e)
     {
         if ($this->getCadastro('tipoCadastro') != 1) {
             die;

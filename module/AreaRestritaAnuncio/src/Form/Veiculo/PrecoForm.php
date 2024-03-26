@@ -2,12 +2,11 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
 
 class PrecoForm extends Form
 {
-
     public function __construct($name = 'form_precoVeiculo', $options = [])
     {
         parent::__construct($name, $options);
@@ -19,8 +18,8 @@ class PrecoForm extends Form
                 'label' => 'Observações sobre o veículo',
             ],
             'attributes' => [
-                'maxlength' => 650
-            ]
+                'maxlength' => 650,
+            ],
         ]);
 
         $this->add([
@@ -33,10 +32,10 @@ class PrecoForm extends Form
                 'required' => false,
                 'data-mask' => '000.000.000.000.000',
                 'data-mask-options' => json_encode([
-                    'reverse' => true
+                    'reverse' => true,
                 ]),
                 'placeholder' => '52.000',
-            ]
+            ],
         ]);
 
         $this->add([
@@ -48,12 +47,12 @@ class PrecoForm extends Form
             'attributes' => [
                 'required' => true,
                 'id' => "valor",
-                'data-mask' => '000.000.000.000.000,00' ,
+                'data-mask' => '000.000.000.000.000,00',
                 'data-mask-options' => json_encode([
-                    'reverse' => true
+                    'reverse' => true,
                 ]),
-                'placeholder'=>'Ex: 48.000,00',
-            ]
+                'placeholder' => 'Ex: 48.000,00',
+            ],
         ]);
         $this->add([
             'type' => Element\Checkbox::class,
@@ -130,9 +129,10 @@ class PrecoForm extends Form
         ]);
     }
 
-    public function setIsEdition(){
+    public function setIsEdition()
+    {
         // $this->get('flagLeilao')
-        //     ->setAttribute('readonly', true)
-        //     ->setAttribute('disabled', true);
+    //     ->setAttribute('readonly', true)
+    //     ->setAttribute('disabled', true);
     }
 }

@@ -2,40 +2,35 @@
 
 namespace SnBH\Integrador\Controller;
 
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\Common\Helper\MoveUpload;
-use Laminas\Mvc\MvcEvent;
-use SnBH\Common\ServiceVeiculo;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
-use SnBH\ApiModel\Model\PlanosRevenda;
-use SnBH\Integrador\Controller\PlanoController;
 use Laminas\View\Model\JsonModel;
+use SnBH\ApiClient\Client as ApiClient;
 
-class VeiculoController extends AbstractActionController {
-
-    public function create() {
-
+class VeiculoController extends AbstractActionController
+{
+    public function create()
+    {
         $request = $this->request;
         $idCadastro = $this->getIdCadastro();
-       
-        /* @var $apiClient ApiClient */
+
+        /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
-        
+
         $plano = $this->getApiClient()->planosGet([
-                    'idCadastro' => $idCadastro,
-                    'tipoCadastro' => 1,
-                        ], 'anuncios')
+            'idCadastro' => $idCadastro,
+            'tipoCadastro' => 1,
+        ], 'anuncios')
                 ->getData()[0];
 
         /**
-         * @TODO
+         * @todo
          * Criar um único lugar para recuperar o idTipo pelo nome
          */
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,
-            'moto' => 3
+            'moto' => 3,
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
@@ -48,19 +43,19 @@ class VeiculoController extends AbstractActionController {
             'idCadastro' => $idCadastro,
             'troca' => 4,
             'idStatus' => 2,
-            'origem' => 'Integrador'
+            'origem' => 'Integrador',
         ];
 
         $data += $request->getPost()->toArray();
         file_put_contents('data/logs/' . date('Y-m-d-') . $idCadastro . '.log', json_encode($data) . "\n");
-        
+
         $data['idPlano'] ??= 5;
 
-        if($data['idPlano'] == 5 && $plano['totalBasico'] <= $plano['totalBasicoPublicado']){
+        if ($data['idPlano'] == 5 && $plano['totalBasico'] <= $plano['totalBasicoPublicado']) {
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Básico']);
-        }elseif($data['idPlano'] == 2 && $plano['totalTurbo'] <= $plano['totalTurboPublicados']){
+        } elseif ($data['idPlano'] == 2 && $plano['totalTurbo'] <= $plano['totalTurboPublicados']) {
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Turbo']);
-        }elseif($data['idPlano'] == 3 && $plano['totalNitro'] <= $plano['totalNitroPublicados']){
+        } elseif ($data['idPlano'] == 3 && $plano['totalNitro'] <= $plano['totalNitroPublicados']) {
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Nitro']);
         }
 
@@ -99,19 +94,19 @@ class VeiculoController extends AbstractActionController {
         return new JsonModel([
             'status' => 200,
             'detail' => 'Veículo inserido com sucesso!',
-            'data' => ['idVeiculo' => $idVeiculo]
+            'data' => ['idVeiculo' => $idVeiculo],
         ]);
     }
-    
-    public function update() {
 
+    public function update()
+    {
         $idVeiculo = $this->params('id');
 
         parse_str(file_get_contents("php://input"), $_PUT);
         $data = $_PUT;
         $request = $this->request;
-        
-        /* @var $apiClient ApiClient */
+
+        /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
         if (!isset($data['flagIpva'])) {
@@ -121,11 +116,11 @@ class VeiculoController extends AbstractActionController {
         if (isset($data['versao']) && $data['versao'] == '-1') {
             $data['versao'] = '';
         }
-        
+
         if (isset($data['portas']) && $data['portas']) {
             $data['carroPortas'] = $data['portas'];
         }
-        
+
         if (isset($data['combustivel']) && $data['combustivel']) {
             $data['idCombustivel'] = $data['combustivel'];
         }
@@ -154,8 +149,8 @@ class VeiculoController extends AbstractActionController {
         ]);
     }
 
-    public function delete() {
-
+    public function delete()
+    {
         $idVeiculo = $this->params('id');
 
         /** @var Veiculos $veiculosModel */
@@ -171,26 +166,25 @@ class VeiculoController extends AbstractActionController {
             foreach ($dadosVeiculoFotos as $key => $dado) {
                 $listaFotos[] = $dado['idFoto'];
             }
-            #deletar fotos do servidor
+            // deletar fotos do servidor
             $veiculosFotosModel->delete([
-                'listaFotos' => $listaFotos
+                'listaFotos' => $listaFotos,
             ]);
         }
 
-        #quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
+        // quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
         $dadosVeiculos = $veiculosModel->delete($idVeiculo);
-        
-        if($dadosVeiculos['status'] !== 200){
+
+        if ($dadosVeiculos['status'] !== 200) {
             return new JsonModel($dadosVeiculos);
         }
-        
-        $dataJson = [
-               'status' => 200,
-               'detail' => $dadosVeiculos['detail']
-            ];
-        
-        return new JsonModel($dataJson);
 
+        $dataJson = [
+            'status' => 200,
+            'detail' => $dadosVeiculos['detail'],
+        ];
+
+        return new JsonModel($dataJson);
     }
 
     public function fetch()
@@ -200,20 +194,18 @@ class VeiculoController extends AbstractActionController {
         if (empty($placa) || strlen($placa) < 5) {
             return new JsonModel([
                 'status' => 401,
-                'detail' => 'Falta parâmetro necessário'
+                'detail' => 'Falta parâmetro necessário',
             ]);
         }
 
-        /* @var $apiClient ApiClient */
+        /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
         $res = $apiClient->veiculosGet([
             "ignorarCondicoesBasicas" => 1,
-            "flagPlaca" => 1
+            "flagPlaca" => 1,
         ], $placa, false)->json();
 
         return new JsonModel($res);
-
     }
-
 }

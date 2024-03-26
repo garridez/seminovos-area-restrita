@@ -3,12 +3,13 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
+use Exception;
 use Laminas\Http\PhpEnvironment\Request;
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\ApiClient\Response;
+use Laminas\Log\Logger;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Log\Logger;
+use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiClient\Response;
 
 /**
  * @property Request $request
@@ -16,7 +17,6 @@ use Laminas\Log\Logger;
  */
 class AbstractActionController extends ZendAbstractActionController
 {
-
     public function getContainer(): ServiceManager
     {
         global $container;
@@ -29,7 +29,8 @@ class AbstractActionController extends ZendAbstractActionController
         return $this->getContainer()->get(ApiClient::class);
     }
 
-    public function getLogger():Logger {
+    public function getLogger(): Logger
+    {
         global $logger;
         return $logger;
     }
@@ -41,7 +42,7 @@ class AbstractActionController extends ZendAbstractActionController
     public function checkApiError(Response $apiResponse)
     {
         if ($apiResponse->status !== 200) {
-            throw new \Exception;
+            throw new Exception();
         }
     }
 
@@ -54,9 +55,9 @@ class AbstractActionController extends ZendAbstractActionController
     public function getCadastro($key = false)
     {
         $data = $this
-            ->getContainer()
-            ->get(Cadastros::class)
-            ->getCurrent();
+        ->getContainer()
+        ->get(Cadastros::class)
+        ->getCurrent();
 
         return $key ? $data[$key] : $data;
     }
@@ -72,8 +73,8 @@ class AbstractActionController extends ZendAbstractActionController
             return [];
         }
         $data = $this->getApiClient()->veiculosGet([
-            'ignorarCondicoesBasicas' => true
-            ], $idVeiculo, $cache);
+            'ignorarCondicoesBasicas' => true,
+        ], $idVeiculo, $cache);
 
         if ($data->status !== 200) {
             return false;
@@ -90,8 +91,10 @@ class AbstractActionController extends ZendAbstractActionController
         }
         return [];
     }
+
     /**
      * Retorna se o cadasto do usuário atual é revenda
+     *
      * @return bool
      */
     public function isRevenda()

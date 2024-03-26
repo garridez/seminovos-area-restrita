@@ -2,12 +2,11 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
 
 class VideoForm extends Form
 {
-
     public function __construct($name = 'form_videoVeiculo', $options = [])
     {
         parent::__construct($name, $options);
@@ -20,7 +19,7 @@ class VideoForm extends Form
             ],
             'attributes' => [
                 'required' => false,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Submit::class,

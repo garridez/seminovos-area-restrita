@@ -6,9 +6,9 @@ use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\View\Helper\ExpiracaoRevenda;
 use DateTime;
-use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class ExpiracaoRevendaFactory implements FactoryInterface
 {

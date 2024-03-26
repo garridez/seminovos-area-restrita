@@ -1,25 +1,20 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
-use SnBH\ApiClient\Client as ApiClient;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
 
 class FinanceiroController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -33,7 +28,7 @@ class FinanceiroController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -45,13 +40,13 @@ class FinanceiroController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        /* @var $planosModel Planos */
+        /** @var Planos $planosModel */
         $planosModel = $this->getContainer()->get(Planos::class);
 
         // Busca os planos de acordo com o tipo
@@ -60,11 +55,11 @@ class FinanceiroController extends AbstractActionController
         $idPlano = $this->idPlano = $dadosCadastro['idPlano'];
 
         //filtra o array e retorna os dados de acordo com o idPlano
-        $dadosPlano = array_filter($dadosPlanos, function ($dadosPlanos) use($idPlano) {
+        $dadosPlano = array_filter($dadosPlanos, function ($dadosPlanos) use ($idPlano) {
             return $dadosPlanos['idPlanoRevenda'] == $idPlano;
         });
 
-        /* @var $servicosAdicionaisModel ServicosAdicionais */
+        /** @var ServicosAdicionais $servicosAdicionaisModel */
         $servicosAdicionaisModel = $this->getContainer()->get(ServicosAdicionais::class);
 
         // Busca os dados do ServicosAdicionais
@@ -76,7 +71,7 @@ class FinanceiroController extends AbstractActionController
 
         $valor = $dadosCadastro['icms'] == 'S' ? $valorPlano - ((4.3 / 100.0) * $valorPlano) : $valorPlano;
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -93,9 +88,9 @@ class FinanceiroController extends AbstractActionController
         $descAnual = 15.0;
 
         $idCadastrosComDescondoCOVID = [
-            207703, # Golaço Automóveis
-            342744, # RC EMPREENDIMENTOS AUTOMOTIVOS
-            271547, # Guariba Veículos
+            207703, // Golaço Automóveis
+            342744, // RC EMPREENDIMENTOS AUTOMOTIVOS
+            271547, // Guariba Veículos
             26126,
             269163,
         ];
@@ -105,7 +100,6 @@ class FinanceiroController extends AbstractActionController
             $descSemes = 15.0;
             $descAnual = 20.0;
         }
-
 
         $dadosFinanceiro['valor'] = number_format($valorPlanoAtual, 2, ',', '.');
         $dadosFinanceiro['valorAdicionalString'] = $valorAdicionalString;
@@ -139,7 +133,7 @@ class FinanceiroController extends AbstractActionController
 //        die;
 
         return new ViewModel([
-            'financeiro' => $dadosFinanceiro
+            'financeiro' => $dadosFinanceiro,
         ]);
     }
 }

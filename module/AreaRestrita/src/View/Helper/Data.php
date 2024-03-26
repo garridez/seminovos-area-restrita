@@ -2,8 +2,8 @@
 
 namespace AreaRestrita\View\Helper;
 
-use Laminas\View\Helper\AbstractHelper;
 use DateTime;
+use Laminas\View\Helper\AbstractHelper;
 
 class Data extends AbstractHelper
 {
@@ -117,7 +117,7 @@ class Data extends AbstractHelper
         $dataStr = strtotime($data);
         $hoje = strtotime(date('Y-m-d'));
         $diferenca = $hoje - $dataStr;
-        return (int)floor($diferenca / (60 * 60 * 24));
+        return (int) floor($diferenca / (60 * 60 * 24));
     }
 
     public function dateToJsTimestamp(string|DateTime $data): int

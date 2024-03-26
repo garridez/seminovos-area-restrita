@@ -2,8 +2,8 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
 
 class MaisInformacoesForm extends Form
 {
@@ -36,7 +36,6 @@ class MaisInformacoesForm extends Form
                 'unchecked_value' => '0',
             ],
         ]);
-
 
         $this->add([
             'type' => Element\Checkbox::class,

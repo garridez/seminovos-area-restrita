@@ -2,26 +2,17 @@
 
 namespace SnBH\Integrador\Controller;
 
-use SnBH\ApiClient\Client as ApiClient;
-use Laminas\Mvc\MvcEvent;
-use Laminas\View\Model\JsonModel;
-use Laminas\Authentication\AuthenticationService;
-use AreaRestrita\Service\AuthManager;
-use AreaRestrita\Model\Propostas;
-use SnBH\Common\ServiceVeiculo;
-use Laminas\View\Model\ViewModel;
-
-use AreaRestrita\Service\Identity;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
+use AreaRestrita\Model\Propostas;
 use AreaRestrita\Model\Veiculos;
-use AreaRestrita\Model\VeiculosFotos;
-use AreaRestrita\Model\PesquisaSatisfacao;
+use AreaRestrita\Service\Identity;
+use DateTime;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\JsonModel;
 
-class MeusVeiculosIntegradorController extends AbstractActionController {
-
+class MeusVeiculosIntegradorController extends AbstractActionController
+{
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -34,7 +25,7 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -44,15 +35,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         $this->routeParams['routeName'] = $routeMatch->getMatchedRouteName();
     }
 
-    public function fetch() {
-
+    public function fetch()
+    {
         $request = $this->request;
         $idCadastro = $this->params()->fromQuery('idCadastro');
 
-
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
-
 
         $request = $this->request;
 
@@ -61,13 +50,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->getAll($page);
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        $dataAtual = new \DateTime(date('Y-m-d'));
+        $dataAtual = new DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
-            /* @var $identity Identity */
+            /** @var Identity $identity */
             $identity = $this->getContainer()->get(Identity::class);
             $idCadastro = $identity->getIdentity();
 
@@ -89,28 +78,27 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
             'routeName' => $routeName,
             'routeParams' => $routeParams,
             'pagination' => true,
-            'paginationResultado' => true
+            'paginationResultado' => true,
         ];
 
-
-        return new JsonModel(['paginationData' => $paginationData,
-        'meusVeiculos' => $dadosVeiculos]);
-
+        return new JsonModel([
+            'paginationData' => $paginationData,
+            'meusVeiculos' => $dadosVeiculos,
+        ]);
     }
 
     protected function retornaValidacaoRevenda($dadosVeiculos)
     {
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+            $dataAtual = new DateTime(date('Y-m-d'));
 
-            $dataAtual = new \DateTime(date('Y-m-d'));
-
-            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $dataExpiracao = new DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
             $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
-            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $dataCadastro = new DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
@@ -201,37 +189,36 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+            $dataAtual = new DateTime(date('Y-m-d'));
 
-            $dataAtual = new \DateTime(date('Y-m-d'));
-
-            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $dataExpiracao = new DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
             $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
-            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $dataCadastro = new DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
-            $dataTrocaStatus = new \DateTime($veiculo["dataTrocaStatus"]);
+            $dataTrocaStatus = new DateTime($veiculo["dataTrocaStatus"]);
             $dataAtual->format('Y-m-d H:i:s');
-            $dataAtuall = new \DateTime(date('Y-m-d H:i:s'));
+            $dataAtuall = new DateTime(date('Y-m-d H:i:s'));
             $intervaloDataTrocaStatus = $dataTrocaStatus->diff($dataAtuall);
             $intervaloDataTrocaStatus = (int) $intervaloDataTrocaStatus->format('%R%a');
 
-            /* @var $pagamentosModel Pagamentos */
+            /** @var Pagamentos $pagamentosModel */
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
 
             $statusPagamento = null;
-            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "status");
 
             $planoPagamento = null;
-            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "idPlano");
 
             $formaPagamento = null;
-            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"formaPagamento");
+            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "formaPagamento");
 
             $frase = "";
             $temp_acoes = [
@@ -268,16 +255,16 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
-                    if($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])){
+                    if ($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])) {
                         $temp_acoes["certificado"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
-                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] != 1){
+                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] != 1) {
                         $temp_acoes["reativar"] = true;
                     }
-                    if($statusPagamento == 1){
+                    if ($statusPagamento == 1) {
                         $temp_acoes["enviar_comprovante"] = true;
                         $temp_acoes["plano_comprovante"] = $planoPagamento;
                     }
@@ -307,7 +294,7 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
                         $temp_acoes["upgrade_plano"] = true;
                     } elseif ($veiculo["veiculo_zero_km"] == 1) {
                         $temp_acoes["trocar_plano"] = true;
-                    }else{
+                    } else {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
@@ -375,13 +362,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
 
         $result = null;
-        $auxData = null;//new \DateTime('1969-01-01');
+        $auxData = null; //new \DateTime('1969-01-01');
 
-        foreach ($pagamentosVeiculos['data'] AS $pagamento){
-            if($pagamento["idVeiculo"] == $idVeiculo){
-                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+        foreach ($pagamentosVeiculos['data'] as $pagamento) {
+            if ($pagamento["idVeiculo"] == $idVeiculo) {
+                $dataCadastro = new DateTime($pagamento["dataCadastro"]);
 
-                if($dataCadastro > $auxData){
+                if ($dataCadastro > $auxData) {
                     $auxData = $dataCadastro;
                     $result = $pagamento[$variavel];
                 }
@@ -389,7 +376,6 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
 
         return $result;
-
     }
 
     /*
@@ -404,13 +390,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
 
         $result = null;
-        $auxData = null;//new \DateTime('1969-01-01');
+        $auxData = null; //new \DateTime('1969-01-01');
 
-        foreach ($pagamentosVeiculos['data'] AS $pagamento){
-            if($pagamento["idCadastro"] == $idCadastro){
-                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+        foreach ($pagamentosVeiculos['data'] as $pagamento) {
+            if ($pagamento["idCadastro"] == $idCadastro) {
+                $dataCadastro = new DateTime($pagamento["dataCadastro"]);
 
-                if($dataCadastro > $auxData){
+                if ($dataCadastro > $auxData) {
                     $auxData = $dataCadastro;
                     $result = $pagamento[$variavel];
                 }
@@ -418,14 +404,13 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
         }
 
         return $result;
-
     }
 
     protected function retornaQuantidadePropostasVeiculo($dadosVeiculos)
     {
-        /* @var $propostasModel Propostas */
+        /** @var Propostas $propostasModel */
         $propostasModel = $this->getContainer()->get(Propostas::class);
-        if(!isset($dadosVeiculos['data'])){
+        if (!isset($dadosVeiculos['data'])) {
             return;
         }
         /**
@@ -433,14 +418,14 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
          * A API de dev não conecta no banco de propostas
          * Então nem perde tempo procurando lá
          */
-        if(IS_DEV){
+        if (IS_DEV) {
             return $dadosVeiculos;
         }
 
         $idVeiculos = array_column($dadosVeiculos['data'], 'idVeiculo');
         $dadosPropostas = $propostasModel->getAll($idVeiculos, 5 * 60) ?? [];
 
-        $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function($acc, $row){
+        $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function ($acc, $row) {
             $acc[$row['idAnuncio']] = $acc[$row['idAnuncio']] ?? 0;
             $acc[$row['idAnuncio']]++;
             return $acc;
@@ -454,5 +439,4 @@ class MeusVeiculosIntegradorController extends AbstractActionController {
 
         return $dadosVeiculos;
     }
-
 }

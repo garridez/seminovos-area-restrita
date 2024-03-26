@@ -2,11 +2,8 @@
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Service\AuthManager;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
-use Laminas\Authentication\AuthenticationService;
 
 class CertificadosController extends AbstractActionController
 {
@@ -22,7 +19,7 @@ class CertificadosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -44,6 +41,5 @@ class CertificadosController extends AbstractActionController
             'placa' => $placa,
             'dadosCertificados' => $dados,
         ]);
-        
     }
 }

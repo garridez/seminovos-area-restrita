@@ -4,8 +4,8 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\UserInfo;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class UserInfoFactory implements FactoryInterface
 {

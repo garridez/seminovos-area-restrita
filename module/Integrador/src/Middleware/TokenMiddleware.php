@@ -3,6 +3,7 @@
 namespace SnBH\Integrador\Middleware;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -10,14 +11,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class TokenMiddleware implements MiddlewareInterface
 {
-
     public function __construct(protected $tokens)
     {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var \Laminas\Diactoros\ServerRequest $request */
+        /** @var ServerRequest $request */
 
         $token = $request->getHeaderLine('X-SnBH-Token');
         $idCadastro = (int) $request->getHeaderLine('X-SnBH-IdCadastro');
@@ -39,7 +39,7 @@ class TokenMiddleware implements MiddlewareInterface
             return $this->naoAutorizadoResponse();
         }
 
-        // O idCadastro passado deve ser igual ao idCadastro que está no banco
+    // O idCadastro passado deve ser igual ao idCadastro que está no banco
         if ($tokenData['idCadastro'] !== $idCadastro && !$acessoToken) {
             return $this->naoAutorizadoResponse();
         }
@@ -50,8 +50,7 @@ class TokenMiddleware implements MiddlewareInterface
             }
         }
 
-
-        // Tudo ok! Continua com a requisição
+    // Tudo ok! Continua com a requisição
         return $handler->handle($request);
     }
 
@@ -62,7 +61,6 @@ class TokenMiddleware implements MiddlewareInterface
      */
     public function getTokenData($token): bool|array
     {
-
         foreach ($this->tokens as $tokenData) {
             if ($tokenData['token'] === $token) {
                 return $tokenData;
@@ -75,7 +73,7 @@ class TokenMiddleware implements MiddlewareInterface
     {
         return new JsonResponse([
             'status' => 401,
-            'detail' => 'Nao autorizado'
-            ], 401);
+            'detail' => 'Nao autorizado',
+        ], 401);
     }
 }

@@ -1,8 +1,7 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
@@ -13,25 +12,23 @@ use Laminas\View\Model\ViewModel;
 
 class PlanoController extends AbstractActionController
 {
-
     public function indexAction()
     {
-
         $dadosPlanos = $this->getContainer()
             ->get(Planos::class)
             ->get(2, true, -1);
 
         if ($this->getCadastro('tipoCadastro') == '1') {
             $planosAnuncioRevenda = [
-                5, # Básico
-                2, # Turbo
-                3, # Nitro
+                5, // Básico
+                2, // Turbo
+                3, // Nitro
             ];
-            $dadosPlanos = array_filter($dadosPlanos, function($i) use($planosAnuncioRevenda): bool {
+            $dadosPlanos = array_filter($dadosPlanos, function ($i) use ($planosAnuncioRevenda): bool {
                 return in_array($i['idPlano'], $planosAnuncioRevenda);
             });
         } else {
-            $dadosPlanos = array_filter($dadosPlanos, function($i): bool {
+            $dadosPlanos = array_filter($dadosPlanos, function ($i): bool {
                 return $i['status'] == 1;
             });
         }

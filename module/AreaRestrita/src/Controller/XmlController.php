@@ -1,26 +1,19 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Pagamentos;
-use AreaRestrita\Model\Planos;
-use AreaRestrita\Model\ServicosAdicionais;
-use AreaRestrita\Model\SiteHospedado;
-use SnBH\ApiClient\Client as ApiClient;
+use DOMDocument;
+use Exception;
 use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\StringFuncs;
 
 class XmlController extends AbstractActionController
 {
-
     /**
      * Index para importar XML
      */
@@ -40,10 +33,9 @@ class XmlController extends AbstractActionController
         ]);
     }
 
-
     /**
      * Tela para edição dos dados dos veículos contidos no xml
-     * 
+     *
      * @return View
      */
     public function dadosVeiculosAction()
@@ -59,7 +51,7 @@ class XmlController extends AbstractActionController
             // return $this->redirect()->toUrl('/xml');
         }
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var siteHospedado $siteHospedadoModel */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
 
@@ -70,19 +62,19 @@ class XmlController extends AbstractActionController
             case 'simples':
                 $idPlano = 1;
                 break;
-            
+
             case 'turbo':
                 $idPlano = 2;
                 break;
-            
+
             case 'nitro':
                 $idPlano = 3;
                 break;
-            
+
             case 'nitro + home|nitro+home':
                 $idPlano = 4;
                 break;
-            
+
             case 'basico':
                 $idPlano = 5;
                 break;
@@ -90,35 +82,33 @@ class XmlController extends AbstractActionController
 
         // Busca os acessorios carro
         $acessoriosCarroApi = $this->getApiClient()->acessoriosGet(['idTipo' => 1], null, true);
-        // Remove acentos 
-        $acessoriosCarroApi->dataSemAceontos = 
-            array_map(function($array) {
+        // Remove acentos
+        $acessoriosCarroApi->dataSemAceontos =
+            array_map(function ($array) {
                 $array['acessorio'] = $this->removerAcentos($array['acessorio']);
                 return $array;
             }, $acessoriosCarroApi->data);
 
         // Busca os acessorios moto
         $acessoriosMotoApi = $this->getApiClient()->acessoriosGet(['idTipo' => 3]);
-        // Remove acentos 
-        $acessoriosMotoApi->data = 
-            array_map(function($array) {
+        // Remove acentos
+        $acessoriosMotoApi->data =
+            array_map(function ($array) {
                 $array['acessorio'] = $this->removerAcentos($array['acessorio']);
                 return $array;
             }, $acessoriosMotoApi->data);
 
-
         // Busca as Marcas
         $marcasApi = $this->getApiClient()->marcasGet([], null, true);
-        $marcasApi->data = 
-            array_map(function($array) {
+        $marcasApi->data =
+            array_map(function ($array) {
                 $array['marca'] = $this->removerAcentos($array['marca']);
                 return $array;
             }, $marcasApi->data);
 
         // Carrega o XML
-        $xmlDoc = new \DOMDocument();
+        $xmlDoc = new DOMDocument();
 
-        
         $xmlDoc->load($inputs['href']);
         //$xmlDoc->load(__DIR__.'/98cd7fb05e62816636310b55bda524445951.xml');
         $document = $xmlDoc->documentElement;
@@ -130,20 +120,20 @@ class XmlController extends AbstractActionController
             if (!$ad->childNodes) {
                 continue;
             }
-            
-            foreach ($ad->childNodes as $item) {                
+
+            foreach ($ad->childNodes as $item) {
                 switch ($item->nodeName) {
                     case 'TITLE': // caracteristica
                         $veiculo['caracteristica'] = $item->nodeValue;
                         break;
-                    
+
                     case 'CATEGORY': // Tipo veículo
                         $node = strtolower($item->nodeValue);
-                        $tipo = $node == 'carro' ? 1 : (($node == 'moto' || $node == 'motocicleta') ? 3 : 2);
+                        $tipo = $node == 'carro' ? 1 : ($node == 'moto' || $node == 'motocicleta' ? 3 : 2);
                         $veiculo['tipo'] = $tipo;
                         $veiculo['tipoVeiculo'] = $tipo;
                         break;
-                    
+
                     case 'DESCRIPTION': // observações
                         $veiculo['observacoes'] = $item->nodeValue;
                         break;
@@ -151,7 +141,7 @@ class XmlController extends AbstractActionController
                     case 'MOTOR': // MOTOR
                         $veiculo['motor'] = $item->nodeValue;
                         break;
-                    
+
                     case 'ACCESSORIES': // Acessorios
                         $veiculo['listaAcessorios'] = [];
 
@@ -173,27 +163,27 @@ class XmlController extends AbstractActionController
                         }
 
                         break;
-                    
+
                     case 'MAKE': // Marca
                         foreach ($marcasApi->data as $marcaApi) {
                             if (preg_match("/($item->nodeValue)/i", (string) $marcaApi['marca'])) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
-                                $modelos =  $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
+                                $modelos = $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
                                 $veiculo['modelos'] = $modelos->data;
                                 break;
                             } elseif (preg_match("/($item->nodeValue)/i", str_replace(' ', '', (string) $marcaApi['marca']))) {
                                 $veiculo['marca'] = $item->nodeValue;
                                 $veiculo['idMarca'] = $marcaApi['idMarca'];
                                 // Busca modelos
-                                $modelos =  $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
+                                $modelos = $this->getApiClient()->modelosGet(['idMarca' => $marcaApi['idMarca']], null, true);
                                 $veiculo['modelos'] = $modelos->data;
                                 break;
                             }
                         }
                         break;
-                    
+
                     case 'MODEL': // Modelo
                         $modeloXml = $item->nodeValue;
                         $map = [
@@ -201,7 +191,7 @@ class XmlController extends AbstractActionController
                             'evoque p240ff se' => 'Range Rover Evoque',
                             'lr evoque dynamic 5d' => 'Range Rover Evoque',
                         ];
-                        
+
                         if (isset($map[$modeloXml])) {
                             $modeloXml = $map[$modeloXml];
                         }
@@ -244,83 +234,83 @@ class XmlController extends AbstractActionController
                             }
                         }
                         break;
-                    
+
                     case 'YEAR': // Ano
                         $veiculo['anoModelo'] = $item->nodeValue;
                         break;
-                    
+
                     case 'FABRIC_YEAR': // Ano Fabricação
                         $veiculo['anoFabricacao'] = $item->nodeValue;
                         break;
-                    
+
                     case 'MILEAGE': // Ano Fabricação
                         $veiculo['kilometragem'] = $item->nodeValue;
                         $veiculo['veiculoZeroKm'] = $item->nodeValue == 0 ? 1 : 0;
                         break;
-                    
+
                     case 'PLATE': // Placa
                         $veiculo['placa'] = strtoupper($item->nodeValue);
                         break;
-                    
+
                     case 'DOORS': // Portas
                         $veiculo['portas'] = $item->nodeValue;
                         break;
-                    
+
                     case 'COLOR': // Cor
                         $veiculo['cor'] = $item->nodeValue;
                         break;
-                    
+
                     case 'PRICE': // Valor
                         $veiculo['valor'] = number_format($item->nodeValue, 2, ',', '.');
                         break;
-                    
+
                     case 'FUEL': // Combustivel
                         $fuel = $this->removerAcentos(strtolower($item->nodeValue));
                         switch ($fuel) {
-                            case (preg_match('/flex|bi combustivel|bi-combustivel/i', $fuel)?$fuel:!$fuel) :
+                            case preg_match('/flex|bi combustivel|bi-combustivel/i', $fuel) ? $fuel : !$fuel:
                                 $veiculo['combustivel'] = 2;
                                 break;
-                            
+
                             case 'alcool':
                                 $veiculo['combustivel'] = 1;
                                 break;
-                            
+
                             case 'diesel':
                                 $veiculo['combustivel'] = 3;
                                 break;
-                            
+
                             case 'gasolina':
                                 $veiculo['combustivel'] = 4;
                                 break;
-                            
+
                             case 'gas|kit gas|kit-gas':
                                 $veiculo['combustivel'] = 6;
                                 break;
-                            
+
                             case 'gasolina e gas|gasolina+gas|gasolina + gas|gasolina + kit gas|gasolina + kit-gas':
                                 $veiculo['combustivel'] = 5;
                                 break;
-                            
+
                             case 'tetra fuel|tetra-fuel|tetra|tetra combustivel':
                                 $veiculo['combustivel'] = 7;
                                 break;
-                            
+
                             case 'gasolina e eletrico|gasolina+eletrico|gasolina + eletrico|gasolina + elétrico|gasolina e elétrico':
                                 $veiculo['combustivel'] = 8;
                                 break;
-                            
+
                             case 'alcool e gas|alcool+gas|alcool + gas|alcool + kit gas|alcool + kit-gas':
                                 $veiculo['combustivel'] = 9;
                                 break;
-                            
+
                             case 'bi combustivel e gas|bi combustivel+gas|bi combustivel + gas|bi combustivel + kit gas|bi combustivel + kit-gas':
                                 $veiculo['combustivel'] = 10;
                                 break;
-                            
+
                             case 'eletrico|elétrico':
                                 $veiculo['combustivel'] = 11;
                                 break;
-                            
+
                             default:
                                 $veiculo['combustivel'] = 4;
                                 break;
@@ -329,7 +319,7 @@ class XmlController extends AbstractActionController
 
                     case 'IMAGES':
                         $count = 0;
-                        
+
                         foreach ($item->childNodes as $imagem) {
                             if ($count > 11) {
                                 continue;
@@ -348,7 +338,7 @@ class XmlController extends AbstractActionController
             // IPVA, Status ativo e ID Plano
             $veiculo['idPlano'] = $idPlano;
             $veiculo['nomePlano'] = $plano;
-                
+
             $veiculos[] = $veiculo;
         }
 
@@ -364,11 +354,9 @@ class XmlController extends AbstractActionController
         return $viewModel;
     }
 
-
-
     /**
      * Importa o XML
-     * 
+     *
      * @return ViewModel
      */
     public function salvarAction()
@@ -380,7 +368,7 @@ class XmlController extends AbstractActionController
         $nomePlano = '';
         $veiculos = $request->getPost()->toArray();
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var siteHospedado $siteHospedadoModel */
         $cadastro = $this->getContainer()->get(Cadastros::class);
         $dadosCadastro = $cadastro->getCurrent();
         $idCadastro = $dadosCadastro['idCadastro'];
@@ -397,22 +385,22 @@ class XmlController extends AbstractActionController
 
             if (isset($veiculo['observacoes']) && $veiculo['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $auxTexto = str_replace("\r\n","",(string) StringFuncs::removerAcentos($veiculo['observacoes']));
-                if(strlen($auxTexto) > 700){
-                    $veiculo['observacoes'] = mb_substr((string) $veiculo['observacoes'], 0, 700,'UTF8');
+                $auxTexto = str_replace("\r\n", "", (string) StringFuncs::removerAcentos($veiculo['observacoes']));
+                if (strlen($auxTexto) > 700) {
+                    $veiculo['observacoes'] = mb_substr((string) $veiculo['observacoes'], 0, 700, 'UTF8');
                 }
             }
-            
+
             // Faz upload das imagens
             $arrayFotos = [];
-            
+
             foreach ($veiculo['imagens'] as $url) {
                 $extensao = substr((string) $url, -4);
                 $name = uniqid();
                 $img = '/tmp/' . $name . $extensao;
 
                 file_put_contents($img, file_get_contents($url));
-                
+
                 $arrayFotos[] = $img;
             }
 
@@ -428,53 +416,51 @@ class XmlController extends AbstractActionController
 //                if ($quantidadeVeiculosCadastrados >= $quantidadeAnunciosPlano) {
 //                    $veiculosComErro[$veiculo['placa']] = "A quantidade de veículos cadastrados atingiu o limite do plano. ($quantidadeAnunciosPlano)";
 //                } else {
-//                
+//
 //                    unset($veiculo['modelos']);
 //                    unset($veiculo['imagens']);
 
                     // Salva o veículo
 
                     $veiculoExiste = $apiClient->veiculosGet([
-                        'ignorarCondicoesBasicas' => 1
+                        'ignorarCondicoesBasicas' => 1,
                     ], $veiculo['placa']);
 
-                    if ($veiculoExiste->status === 200) {
-                        $veiculoExiste = $veiculoExiste->getData();
-                        if($idCadastro == $veiculoExiste[0]['cadastro']['idCadastro']){
-                            $apiClient->veiculosDelete([], $veiculoExiste[0]['idVeiculo']);
-                        }
+                if ($veiculoExiste->status === 200) {
+                    $veiculoExiste = $veiculoExiste->getData();
+                    if ($idCadastro == $veiculoExiste[0]['cadastro']['idCadastro']) {
+                        $apiClient->veiculosDelete([], $veiculoExiste[0]['idVeiculo']);
                     }
+                }
 
                     $retorno = $apiClient->veiculosPost($veiculo)->json();
                     $retorno['status'] = 200;
 
-                    if ($retorno['status'] !== 200) {
-                        $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
-                    } else {
-                        $quantidadeVeiculosCadastrados++;
+                if ($retorno['status'] !== 200) {
+                    $veiculosComErro[$veiculo['placa']] = $retorno['detail'];
+                } else {
+                    $quantidadeVeiculosCadastrados++;
 
-                        // Salva imagens do veículo
+                    // Salva imagens do veículo
 
-                        $imagem = [
-                            'idVeiculo' => $retorno['data'][0]['idVeiculo'],
-                            'idTipo' => 1,
-                            'flagS3' => 0,
-                        ];                        
-                        $imagem[$apiClient::KEY_FILES] = [
-                            'fotos' => array_reverse($arrayFotos)
-                        ];
-                        // Faz upload da imagem
-                        $retorno = $apiClient->veiculosFotosPost($imagem)->json();
-                        foreach($arrayFotos as $foto){
-                            unlink($foto);
-                        }
+                    $imagem = [
+                        'idVeiculo' => $retorno['data'][0]['idVeiculo'],
+                        'idTipo' => 1,
+                        'flagS3' => 0,
+                    ];
+                    $imagem[$apiClient::KEY_FILES] = [
+                        'fotos' => array_reverse($arrayFotos),
+                    ];
+                    // Faz upload da imagem
+                    $retorno = $apiClient->veiculosFotosPost($imagem)->json();
+                    foreach ($arrayFotos as $foto) {
+                        unlink($foto);
                     }
+                }
 //                }
-
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $veiculosComErro[$veiculo['placa']] = $e->getMessage();
             }
-
         }
 
 //        $anunciosRestantes = $quantidadeAnunciosPlano - $quantidadeVeiculosCadastrados;
@@ -484,11 +470,11 @@ class XmlController extends AbstractActionController
 //            [
 //                $nomePlano => $anunciosRestantes,
 //                'tipoCadastro' => $dadosCadastro['tipoCadastro']
-//            ], 
+//            ],
 //            $dadosCadastro['idCadastro']);
 
         $view = new ViewModel([
-            'veiculosComErro' => $veiculosComErro
+            'veiculosComErro' => $veiculosComErro,
         ]);
         $view->setTemplate('area-restrita/xml/relatorio-xml.phtml');
 
@@ -506,7 +492,7 @@ class XmlController extends AbstractActionController
 
         $string = preg_replace(
             ["/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(ç)/", "/(Ç)/"],
-            explode(" ","a A e E i I o O u U n N c C"),
+            explode(" ", "a A e E i I o O u U n N c C"),
             $string
         );
 

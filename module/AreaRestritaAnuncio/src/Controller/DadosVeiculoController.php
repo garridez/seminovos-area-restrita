@@ -1,26 +1,25 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
 
-use AreaRestritaAnuncio\Form\Veiculo;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Service\Identity;
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\Common\Helper\MoveUpload;
+use AreaRestritaAnuncio\Form\Veiculo;
 use Laminas\Mvc\MvcEvent;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use SnBH\ApiClient\Client as ApiClient;
+use SnBH\Common\Helper\MoveUpload;
 use SnBH\Common\Helper\StringFuncs;
+use SnBH\Common\Helper\VeiculoClearCache;
 
 class DadosVeiculoController extends AbstractActionController
 {
-
     public function onDispatch(MvcEvent $e)
     {
         $res = parent::onDispatch($e);
@@ -33,14 +32,13 @@ class DadosVeiculoController extends AbstractActionController
     public function dadosAction()
     {
         /**
-         * @TODO
+         * @todo
          * Criar um único lugar para recuperar o idTipo pelo nome
-         *
          */
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,
-            'moto' => 3
+            'moto' => 3,
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
@@ -59,16 +57,16 @@ class DadosVeiculoController extends AbstractActionController
             $cambio = (int) $veiculoDados['idAcessorio'];
         }
 
-        //libera edição para revendas
-        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+    //libera edição para revendas
+        if (isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
             $dadosForm->setIsEdition(false);
         }
 
         $request = $this->request;
         if ($request->isPost()) {
-            /* @var $identity Identity */
+            /** @var Identity $identity */
             $identity = $this->getContainer()->get(Identity::class);
-            /* @var $apiClient ApiClient */
+            /** @var ApiClient $apiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
             $data = [
@@ -80,25 +78,25 @@ class DadosVeiculoController extends AbstractActionController
 
             $data += $request->getPost()->toArray();
 
-            if(!empty($data['outraVersao'])){
+            if (!empty($data['outraVersao'])) {
                 $data['versao'] = $data['outraVersao'];
             }
 
-            if(isset($data['versao']) && $data['versao'] == '-1'){
+            if (isset($data['versao']) && $data['versao'] == '-1') {
                 $data['versao'] = '';
             }
 
             $idVeiculo = isset($data['idVeiculo']) && $data['idVeiculo'] ? (int) $data['idVeiculo'] : null;
-            
+
             if (isset($data['kilometragem'])) {
                 $data['kilometragem'] = str_replace('.', '', (string) $data['kilometragem']);
             }
 
             if (isset($data['observacoes']) && $data['observacoes']) {
                 // Devido ao erro de codificação com alguns carecteres especiais, é truncado para 700
-                $auxTexto = str_replace("\r\n","",(string) StringFuncs::removerAcentos($data['observacoes']));
-                if(strlen($auxTexto) > 700){
-                    $data['observacoes'] = mb_substr((string) $data['observacoes'], 0, 710,'UTF8');
+                $auxTexto = str_replace("\r\n", "", (string) StringFuncs::removerAcentos($data['observacoes']));
+                if (strlen($auxTexto) > 700) {
+                    $data['observacoes'] = mb_substr((string) $data['observacoes'], 0, 710, 'UTF8');
                 }
             }
 
@@ -114,8 +112,8 @@ class DadosVeiculoController extends AbstractActionController
                 }
             }
 
-            if(isset($data['listaAcessorios'])){
-                $data['listaAcessorios'] = array_filter($data['listaAcessorios'], function($value){
+            if (isset($data['listaAcessorios'])) {
+                $data['listaAcessorios'] = array_filter($data['listaAcessorios'], function ($value) {
                     return $value !== '';
                 });
             }
@@ -130,15 +128,15 @@ class DadosVeiculoController extends AbstractActionController
                     'video',
                     'idAnuncioVeiculo',
                     'total',
-                    'termo'
+                    'termo',
                 ]));
 
-                if(isset($data['acao']) && $data['acao'] == 'publicar'){
+                if (isset($data['acao']) && $data['acao'] == 'publicar') {
                     unset($data['listaAcessorios']);
                 }
 
                 /*if(isset($data['tipoCad']) && $data['tipoCad'] === '2') {
-                    unset($data['flagLeilao' ]);
+                unset($data['flagLeilao' ]);
                 }*/
 
                 // Essa opção está obsoleta na regra de negócio
@@ -154,27 +152,27 @@ class DadosVeiculoController extends AbstractActionController
                     // Particular cria o anúncio por padrão no grátis
                     $data['idPlano'] = 1;
 
-                    if(!isset($data['motor'])){
+                    if (!isset($data['motor'])) {
                         $data['motor'] = 0;
                     }
                 }
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
-            
-            if(!is_null($idVeiculo)){
-                \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
-            
+
+            if (!is_null($idVeiculo)) {
+                VeiculoClearCache::clearCache($idVeiculo);
+
                 // Limpa o cache do middleware
                 $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
             }
-            
+
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
             return new JsonModel($res->json());
         }
 
-        $checkedLeilao = (empty($veiculoDados) ?  false : $veiculoDados['flagLeilao']);
+        $checkedLeilao = empty($veiculoDados) ? false : $veiculoDados['flagLeilao'];
 
         return new ViewModel([
             'checkedLeilao' => $checkedLeilao,
@@ -188,7 +186,7 @@ class DadosVeiculoController extends AbstractActionController
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,
-            'moto' => 3
+            'moto' => 3,
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
@@ -208,13 +206,13 @@ class DadosVeiculoController extends AbstractActionController
         }
 
         //libera edição para revendas
-        if(isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
+        if (isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
             $dadosForm->setIsEdition(false);
         }
 
         return new ViewModel([
             'formDadosVeiculos' => $dadosForm,
-            'cambio' => $cambio
+            'cambio' => $cambio,
         ]);
     }
 
@@ -223,7 +221,7 @@ class DadosVeiculoController extends AbstractActionController
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,
-            'moto' => 3
+            'moto' => 3,
         ];
         $tipoVeiculo = (int) $this->params()->fromPost('tipoVeiculo', 0);
         if ($tipoVeiculo === 0) {
@@ -236,12 +234,11 @@ class DadosVeiculoController extends AbstractActionController
 
         $this->layout()->setTemplate('none');
 
-        $checkedCombinarValor = (empty($data) ?  true : $data['combinarValor']);
-        $checkedExibirKm = (empty($data) ?  true : $data['flag_km']);
-        $checkedFlagFinanciar = (empty($data) ?  true : $data['flagFinanciar'] ?? 0);
+        $checkedCombinarValor = empty($data) ? true : $data['combinarValor'];
+        $checkedExibirKm = empty($data) ? true : $data['flag_km'];
+        $checkedFlagFinanciar = empty($data) ? true : $data['flagFinanciar'] ?? 0;
 
-
-        if($data['idVeiculo'] ?? false) {
+        if ($data['idVeiculo'] ?? false) {
             $precoForm->setIsEdition();
         }
 
@@ -251,7 +248,7 @@ class DadosVeiculoController extends AbstractActionController
             'checkedExibirKm' => $checkedExibirKm,
             'checkedFlagFinanciar' => $checkedFlagFinanciar,
             'checkedCombinarValor' => $checkedCombinarValor,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -261,13 +258,13 @@ class DadosVeiculoController extends AbstractActionController
         $data = $this->getVeiculo(5);
         $maisInformacoesForm->populateValues($data);
 
-        $checkedTermo = (!empty($data));
+        $checkedTermo = !empty($data);
 
-        $checkedProposta = (empty($data) ?  false : $data['aceitaProposta']);
+        $checkedProposta = empty($data) ? false : $data['aceitaProposta'];
 
-        $checkedLigacao = (empty($data) ?  false : $data['aceitaLigacao']);
+        $checkedLigacao = empty($data) ? false : $data['aceitaLigacao'];
 
-        $checkedChat = (empty($data) ?  false : $data['aceitaChat']);
+        $checkedChat = empty($data) ? false : $data['aceitaChat'];
 
         return new ViewModel([
             'formMaisInformacoesVeiculo' => $maisInformacoesForm,
@@ -285,7 +282,6 @@ class DadosVeiculoController extends AbstractActionController
 
         $request = $this->request;
         if ($request->isPost()) {
-
             $dataPost = $request->getPost();
             $apiClient = $this->getApiClient();
             $tempDir = $this->getContainer()->get('config')['dir']['upload'];
@@ -304,8 +300,8 @@ class DadosVeiculoController extends AbstractActionController
             // Delete
             if ($dataPost->fotosToDelete) {
                 $resDelete = $this->getApiClient()->veiculosFotosDelete([
-                        'listaFotos' => $dataPost->fotosToDelete
-                    ])->json();
+                    'listaFotos' => $dataPost->fotosToDelete,
+                ])->json();
                 $dataPost->reordem ??= [];
                 $auxReordem = array_diff($dataPost->reordem, $dataPost->fotosToDelete);
                 //$dataPost->reordem = array_filter(array_merge(array(0), array_values($auxReordem)));
@@ -322,31 +318,30 @@ class DadosVeiculoController extends AbstractActionController
 
                 $files = $moveUpload->move($request->getFiles()->fotos, true);
                 $data[$apiClient::KEY_FILES] = [
-                    'fotos' => $files
+                    'fotos' => $files,
                 ];
 
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
                 foreach ($files as $file) {
                     unlink($file);
                 }
-                if(isset($resUpload['data']['fotosInseridas'])) {
+                if (isset($resUpload['data']['fotosInseridas'])) {
                     $itemsCount = is_countable($resUpload['data']['fotosInseridas']) ? count($resUpload['data']['fotosInseridas']) : 0;
-                    for($i = 0; $i < $itemsCount; $i++){
+                    for ($i = 0; $i < $itemsCount; $i++) {
                         $auxReordem[$dataPost->ordem[$i]] = $resUpload['data']['fotosInseridas'][$i];
                     }
                 }
-
             }
 
             if ($dataPost->reordem) {
                 $resReordem = $this->getApiClient()->veiculosFotosPut([
                     'reordem' => $dataPost->reordem,
                     'metadata' => [
-                        'idVeiculo' => $dataPost->idVeiculo
+                        'idVeiculo' => $dataPost->idVeiculo,
                     ],
                 ])->json();
             }
-            \SnBH\Common\Helper\VeiculoClearCache::clearCache($dataPost->idVeiculo);
+            VeiculoClearCache::clearCache($dataPost->idVeiculo);
 
             $dataJson = [
                 'status' => 200,
@@ -371,7 +366,7 @@ class DadosVeiculoController extends AbstractActionController
         }
         return new ViewModel([
             'fotos' => $fotos,
-            'existeVeiculo' => isset($dadosVeiculo['idVeiculo']) &&  $dadosVeiculo['idVeiculo']
+            'existeVeiculo' => isset($dadosVeiculo['idVeiculo']) && $dadosVeiculo['idVeiculo'],
         ]);
     }
 
@@ -388,13 +383,13 @@ class DadosVeiculoController extends AbstractActionController
 
             $res = $apiClient->veiculosPut([
                 'video' => $post->video,
-                ], $post->idVeiculo);
+            ], $post->idVeiculo);
 
             return new JsonModel($res->json());
         }
 
         return new ViewModel([
-            'formVideoVeiculo' => $videoForm
+            'formVideoVeiculo' => $videoForm,
         ]);
     }
 
@@ -404,19 +399,17 @@ class DadosVeiculoController extends AbstractActionController
 
         $request = $this->getRequest();
 
-//        var_dump($request);exit;
+    //        var_dump($request);exit;
 
         if ($request->isPost()) {
-
             $post = $request->getPost();
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-
-                /* @var $veiculosModel Cadastros */
+                /** @var Cadastros $veiculosModel */
                 $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
-                /* @var $apiClient \SnBH\ApiClient\Client */
+                /** @var ApiClient $apiClient */
                 $data = $dadosForm->getData();
 
                 $data['anoFabricacao'] = $data['selectanofabricacao'];
@@ -424,12 +417,12 @@ class DadosVeiculoController extends AbstractActionController
                 $data['carroPortas'] = $data['selectportas'];
                 $data['cor'] = $data['selectcor'];
                 $data['idCombustivel'] = $data['selectcombustivel'];
-                $data['idStatus'] = 3; #Cadastrando
+                $data['idStatus'] = 3; // Cadastrando
                 $data['tipoVeiculo'] = 1;
                 $data['idCadastro'] = 253536;
                 $data['veiculo_zero_km'] = 0;
 
-                #campos que não existentes na tabela
+                // campos que não existentes na tabela
                 unset($data['selectanofabricacao']);
                 unset($data['selectanomodelo']);
                 unset($data['selectportas']);
@@ -454,48 +447,50 @@ class DadosVeiculoController extends AbstractActionController
             }
         } else {
             return new ViewModel([
-                'formDadosVeiculos' => $dadosForm
+                'formDadosVeiculos' => $dadosForm,
             ]);
         }
     }
+
     /**
      * Verifica se a placa está disponível para cadastro
      * Retorna TRUE se a placa estiver disponível
      * Retorna FALSE se a placa estiver indisponível
      */
-    public function placaDisponivelAction(){
+    public function placaDisponivelAction()
+    {
         $statusPermitidos = [
-                            /*1, // aguardando pagamento
-                            3, // cadastrando */
-                            7, // removido
-                            8, // vendido
-                        ];
-        $placa = $this->params()->fromRoute('placa',false);
-        if(!$placa){
-            return new JsonModel(['status'=> 405, 'detail'=> 'Placa não informada']);
+                        /*1, // aguardando pagamento
+                        3, // cadastrando */
+            7, // removido
+            8, // vendido
+        ];
+        $placa = $this->params()->fromRoute('placa', false);
+        if (!$placa) {
+            return new JsonModel(['status' => 405, 'detail' => 'Placa não informada']);
         }
-        /* @var $apiClient ApiClient */
+        /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
         $veiculo = $apiClient->veiculosGet([
             "ignorarCondicoesBasicas" => 1,
-            "flagPlaca" => 1
+            "flagPlaca" => 1,
         ], $placa, false)->json();
 
         $placaDisponivel = false;
         if (isset($veiculo) && $veiculo['status'] != 200) {
-            $placaDisponivel =  true;
+            $placaDisponivel = true;
         } elseif (!isset($veiculo['data'][0]['idVeiculo'])) {
-            $placaDisponivel =  true;
-        } else{
-            $placaDisponivel = in_array($veiculo['data'][0]['idStatus'],$statusPermitidos);
+            $placaDisponivel = true;
+        } else {
+            $placaDisponivel = in_array($veiculo['data'][0]['idStatus'], $statusPermitidos);
         }
 
         //$placaDisponivel = true;
-        return new JsonModel( [
+        return new JsonModel([
             'status' => 200,
             'placaDisponivel' => $placaDisponivel,
-            'historicoCarro' => $veiculo['data'][0]['historicoCarro']
+            'historicoCarro' => $veiculo['data'][0]['historicoCarro'],
         ]);
     }
 
@@ -504,10 +499,9 @@ class DadosVeiculoController extends AbstractActionController
         $request = $this->request;
 
         if ($request->isPost()) {
+            $post = $request->getPost()->toArray();
 
-            $post = $request->getPost()->toArray();;
-
-            /* @var $apiClient ApiClient */
+            /** @var ApiClient $apiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
             $versao = $apiClient->versaoGet($post)->json();
@@ -515,7 +509,6 @@ class DadosVeiculoController extends AbstractActionController
             echo json_encode($versao);
 
             die;
-
         }
     }
 
@@ -525,8 +518,7 @@ class DadosVeiculoController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
-            /* @var $apiClient ApiClient */
+            /** @var ApiClient $apiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
 
             $post = $request->getPost();
@@ -535,14 +527,14 @@ class DadosVeiculoController extends AbstractActionController
 
             $result = $apiClient->veiculosGet([
                 'ignorarCondicoesBasicas' => true,
-            ], (int)$idVeiculo, 5);
+            ], (int) $idVeiculo, 5);
 
             $veiculo = $result->getData();
 
             $arrayStatusAltera = ['1', '3', '10'];
 
-            if($veiculo[0]['idPlano'] == 1 && $post['idPlano']==1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)){
-                return new JsonModel(['status' => 405, 'detail' =>'Não é possível utilizar o plano grátis mais de uma vez', 'title'=>'Selecione outro Plano']);
+            if ($veiculo[0]['idPlano'] == 1 && $post['idPlano'] == 1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
+                return new JsonModel(['status' => 405, 'detail' => 'Não é possível utilizar o plano grátis mais de uma vez', 'title' => 'Selecione outro Plano']);
             }
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
@@ -563,7 +555,7 @@ class DadosVeiculoController extends AbstractActionController
         if (!$idVeiculo) {
             return;
         }
-        \SnBH\Common\Helper\VeiculoClearCache::clearCache($idVeiculo);
+        VeiculoClearCache::clearCache($idVeiculo);
         die;
     }
 }

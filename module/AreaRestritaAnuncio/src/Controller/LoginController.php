@@ -1,19 +1,17 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use AreaRestrita\Service\Identity;
+use Laminas\View\Model\ViewModel;
 
 class LoginController extends AbstractActionController
 {
-
     /**
      * @todo Implementar: Se receber o email por parametro, checa se o email existe no banco
      * Se existir, pede a senha para entrar
@@ -27,22 +25,19 @@ class LoginController extends AbstractActionController
         /** @var Identity $identity */
         $identity = $this->getContainer()->get(Identity::class);
         if ($identity->hasIdentity()) {
-
             return $this->redirect()->toRoute('criar-anuncio', [
-                    'tipo' => $this->params('tipo'),
+                'tipo' => $this->params('tipo'),
             ]);
         }
 
         if ($email === null) {
-            $this->redirect()->toRoute(/* Colocar a rota aqui */);
+            $this->redirect()->toRoute(); /* Colocar a rota aqui */
             die;
         }
 
-
-
         $apiClient = $this->getApiClient();
         $res = $apiClient->cadastrosGet([
-            'email' => $email
+            'email' => $email,
         ]);
         $this->checkApiError($res);
 
@@ -52,7 +47,6 @@ class LoginController extends AbstractActionController
             $route = 'criar-anuncio/criar-cadastro';
         }
 
-
         return $this->redirect()->toRoute($route, $this->params()->fromRoute());
     }
 
@@ -60,7 +54,7 @@ class LoginController extends AbstractActionController
     {
         $email = $this->params('email');
         return new ViewModel([
-            'email' => $email
+            'email' => $email,
         ]);
     }
 }

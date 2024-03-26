@@ -29,8 +29,7 @@ abstract class AbstractModel
         'propfind' => 'Propfind',
     ];
 
-
-    public function __construct(protected ApiClient $apiClient, protected  ServiceManager $container)
+    public function __construct(protected ApiClient $apiClient, protected ServiceManager $container)
     {
     }
 

@@ -2,12 +2,13 @@
 
 namespace SnBH\Integrador\Controller;
 
+use Exception;
 use Laminas\Http\PhpEnvironment\Request;
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\ApiClient\Response;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\JsonModel;
+use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiClient\Response;
 
 /**
  * @property Request $request
@@ -45,14 +46,13 @@ class AbstractActionController extends ZendAbstractActionController
     public function checkApiError(Response $apiResponse)
     {
         if ($apiResponse->status !== 200) {
-            throw new \Exception;
+            throw new Exception();
         }
     }
 
     public function dispatchAction()
     {
         switch ($this->getRequest()->getMethod()) {
-
             case 'POST':
                 return $this->create();
             case 'PUT':
@@ -72,12 +72,13 @@ class AbstractActionController extends ZendAbstractActionController
         return new JsonModel([
             'status' => 405,
             'title' => 'Method Not Allowed',
-            'detail' => sprintf('O metodo \'%s\' não implementado. Consulte a documentação', $this->getRequest()->getMethod())
+            'detail' => sprintf('O metodo \'%s\' não implementado. Consulte a documentação', $this->getRequest()->getMethod()),
         ]);
     }
 
     /**
      * POST
+     *
      * @return JsonModel
      */
     public function create()
@@ -87,6 +88,7 @@ class AbstractActionController extends ZendAbstractActionController
 
     /**
      * GET
+     *
      * @return JsonModel
      */
     public function fetch()
@@ -96,6 +98,7 @@ class AbstractActionController extends ZendAbstractActionController
 
     /**
      * PUT
+     *
      * @return JsonModel
      */
     public function update()
@@ -105,6 +108,7 @@ class AbstractActionController extends ZendAbstractActionController
 
     /**
      * PATCH
+     *
      * @return JsonModel
      */
     public function patch()
@@ -114,6 +118,7 @@ class AbstractActionController extends ZendAbstractActionController
 
     /**
      * DELETE
+     *
      * @return JsonModel
      */
     public function delete()

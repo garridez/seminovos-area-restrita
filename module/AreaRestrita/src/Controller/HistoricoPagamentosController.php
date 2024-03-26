@@ -1,23 +1,19 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Model\Pagamentos;
-use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Veiculos;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\ViewModel;
 
 class HistoricoPagamentosController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -30,7 +26,7 @@ class HistoricoPagamentosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -42,22 +38,20 @@ class HistoricoPagamentosController extends AbstractActionController
 
     public function indexAction()
     {
-
-        /* @var $historicoPagamentosModel Pagamentos */
+        /** @var Pagamentos $historicoPagamentosModel */
         $historicoPagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         $dadosHistoricoPagamentos = $historicoPagamentosModel->get();
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         $tipoCadastro = 1;
 
         if (!$cadastrosModel->isRevenda()) {
-            /* @var $veiculosModel Veiculos */
+            /** @var Veiculos $veiculosModel */
             $veiculosModel = $this->getContainer()->get(Veiculos::class);
             foreach ($dadosHistoricoPagamentos['data'] as $key => $row) {
-
                 // Busca os dados do cadastro
                 $dadosVeiculo = $veiculosModel->get($row['idVeiculo'], 120);
 
@@ -72,7 +66,7 @@ class HistoricoPagamentosController extends AbstractActionController
         $arrayStatus = [
             1 => 'Aguardando Pagamento',
             2 => 'Aprovado',
-            3 => 'Cancelado'
+            3 => 'Cancelado',
         ];
 
         $arrayFormaPagamento = [
@@ -82,14 +76,14 @@ class HistoricoPagamentosController extends AbstractActionController
             'boleto' => 'Boleto',
             'creditcard' => 'Cartão de Crédito',
             'card' => 'Cartão de Crédito',
-            'pix' => 'PIX'
+            'pix' => 'PIX',
         ];
 
         return new ViewModel([
             'historicoPagamentos' => $dadosHistoricoPagamentos['data'] ?? [],
             'arrayStatus' => $arrayStatus,
             'arrayFormaPagamento' => $arrayFormaPagamento,
-            'tipoCadastro' => $tipoCadastro
+            'tipoCadastro' => $tipoCadastro,
         ]);
     }
 }

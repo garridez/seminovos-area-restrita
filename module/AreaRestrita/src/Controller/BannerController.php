@@ -2,25 +2,15 @@
 
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Model\Cadastros;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Pagamentos;
-use AreaRestrita\Model\Planos;
-use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
-use SnBH\ApiClient\Client as ApiClient;
 use Laminas\View\Model\ViewModel;
 
 class BannerController extends AbstractActionController
 {
-
     protected $routeParams;
     protected $routeName;
 
@@ -32,7 +22,7 @@ class BannerController extends AbstractActionController
         $banners = [];
         $apiClient = $this->getApiClient();
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -47,10 +37,9 @@ class BannerController extends AbstractActionController
 
         return new ViewModel([
             'banners' => $banners['dados'] ?? [],
-            'siteHospedado' => $dadosSiteHospedado
+            'siteHospedado' => $dadosSiteHospedado,
         ]);
     }
-
 
     /**
      * View de cadastro de banners
@@ -60,13 +49,12 @@ class BannerController extends AbstractActionController
         return new ViewModel();
     }
 
-
     public function salvarAction()
     {
         $request = $this->getRequest();
         $apiClient = $this->getApiClient();
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();
@@ -85,7 +73,7 @@ class BannerController extends AbstractActionController
         $imagem['idSiteHospedadoBanner'] = 0;
 
         $imagem[$apiClient::KEY_FILES] = [
-            'fotos' => $arrayFotos
+            'fotos' => $arrayFotos,
         ];
 
         // Envia o banner
@@ -94,13 +82,12 @@ class BannerController extends AbstractActionController
         return $this->redirect()->toUrl('/banners');
     }
 
-
     public function excluirAction()
     {
         $key = $this->getRequest()->getPost()['key'];
         $idSiteHospedadoBanner = $this->getRequest()->getPost()['idSiteHospedadoBanner'];
 
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedado = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedado->get();

@@ -1,14 +1,11 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use Laminas\View\Model\ViewModel;
-use Laminas\Form\Element;
 use Laminas\Log\Logger;
 use Laminas\Log\Writer\Stream;
 
@@ -18,11 +15,11 @@ class FacebookLeadsController extends AbstractActionController
     {
         $leads = "requisição get.";
 
-        if($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost()) {
             $leads = $this->getRequest()->getPost();
         }
 
-        $nomeArquivo =  '/data/facebook-leads.txt';
+        $nomeArquivo = '/data/facebook-leads.txt';
         $logger = new Logger();
         $write = new Stream(getcwd() . $nomeArquivo);
         $logger->addWriter($write);
@@ -33,7 +30,5 @@ class FacebookLeadsController extends AbstractActionController
         $response->setContent(1_977_358_885);
 
         return $response;
-
     }
-
 }

@@ -4,9 +4,9 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\QtdAnuncios;
-use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
 
 class QtdAnunciosFactory implements FactoryInterface

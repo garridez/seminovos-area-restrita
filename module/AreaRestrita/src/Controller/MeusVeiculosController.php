@@ -1,29 +1,26 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Model\Propostas;
-use SnBH\Common\ServiceVeiculo;
-use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Service\Identity;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
 use AreaRestrita\Model\Pagamentos;
+use AreaRestrita\Model\PesquisaSatisfacao;
+use AreaRestrita\Model\Propostas;
 use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
-use AreaRestrita\Model\PesquisaSatisfacao;
+use AreaRestrita\Service\Identity;
+use DateTime;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\ViewModel;
 
 class MeusVeiculosController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -36,7 +33,7 @@ class MeusVeiculosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -48,10 +45,10 @@ class MeusVeiculosController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
+        /** @var Request $request */
         $request = $this->request;
 
         $page = $request->getQuery('page') ?? 1;
@@ -59,13 +56,13 @@ class MeusVeiculosController extends AbstractActionController
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->getAll($page);
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        $dataAtual = new \DateTime(date('Y-m-d'));
+        $dataAtual = new DateTime(date('Y-m-d'));
 
         if ($cadastrosModel->isRevenda()) {
-            /* @var $identity Identity */
+            /** @var Identity $identity */
             $identity = $this->getContainer()->get(Identity::class);
             $idCadastro = $identity->getIdentity();
 
@@ -76,12 +73,9 @@ class MeusVeiculosController extends AbstractActionController
 
         $dadosVeiculos = self::retornaQuantidadePropostasVeiculo($dadosVeiculos);
 
-
-
         $routeName = str_replace("/meus-veiculos", "", (string) $request->getRequestUri());
 
         $routeParams = "/meus-veiculos";
-
 
         $paginationData = [
             'pages' => $dadosVeiculos['pages'],
@@ -90,7 +84,7 @@ class MeusVeiculosController extends AbstractActionController
             'routeName' => $routeName,
             'routeParams' => $routeParams,
             'pagination' => true,
-            'paginationResultado' => true
+            'paginationResultado' => true,
         ];
 
         $viewModel = new ViewModel([
@@ -109,7 +103,7 @@ class MeusVeiculosController extends AbstractActionController
     {
         /** @var Propostas $propostasModel */
         $propostasModel = $this->getContainer()->get(Propostas::class);
-        if(!isset($dadosVeiculos['data'])){
+        if (!isset($dadosVeiculos['data'])) {
             return;
         }
         /**
@@ -117,14 +111,14 @@ class MeusVeiculosController extends AbstractActionController
          * A API de dev não conecta no banco de propostas
          * Então nem perde tempo procurando lá
          */
-        if(IS_DEV){
+        if (IS_DEV) {
             return $dadosVeiculos;
         }
 
         $idVeiculos = array_column($dadosVeiculos['data'], 'idVeiculo');
         $dadosPropostas = $propostasModel->getAll($idVeiculos, 5 * 60) ?? [];
 
-        $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function($acc, $row){
+        $idVeiculoQtdPropostas = array_reduce($dadosPropostas, function ($acc, $row) {
             $acc[$row['idAnuncio']] = $acc[$row['idAnuncio']] ?? 0;
             $acc[$row['idAnuncio']]++;
             return $acc;
@@ -143,15 +137,14 @@ class MeusVeiculosController extends AbstractActionController
     {
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+            $dataAtual = new DateTime(date('Y-m-d'));
 
-            $dataAtual = new \DateTime(date('Y-m-d'));
-
-            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $dataExpiracao = new DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
             $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
-            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $dataCadastro = new DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
@@ -242,37 +235,36 @@ class MeusVeiculosController extends AbstractActionController
         }
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
+            $dataAtual = new DateTime(date('Y-m-d'));
 
-            $dataAtual = new \DateTime(date('Y-m-d'));
-
-            $dataExpiracao = new \DateTime($veiculo["dataExpiracao"]);
+            $dataExpiracao = new DateTime($veiculo["dataExpiracao"]);
             $intevaloData = $dataAtual->diff($dataExpiracao);
             $intevaloData = (int) $intevaloData->format('%R%a');
             $dataExpiracao = $dataExpiracao->format('d/m/Y');
 
-            $dataCadastro = new \DateTime($veiculo["dataCadastro"]);
+            $dataCadastro = new DateTime($veiculo["dataCadastro"]);
             $intervaloDataCadastro = $dataCadastro->diff($dataAtual);
             $intervaloDataCadastro = (int) $intervaloDataCadastro->format('%R%a');
 
-            $dataTrocaStatus = new \DateTime($veiculo["dataTrocaStatus"]);
+            $dataTrocaStatus = new DateTime($veiculo["dataTrocaStatus"]);
             $dataAtual->format('Y-m-d H:i:s');
-            $dataAtuall = new \DateTime(date('Y-m-d H:i:s'));
+            $dataAtuall = new DateTime(date('Y-m-d H:i:s'));
             $intervaloDataTrocaStatus = $dataTrocaStatus->diff($dataAtuall);
             $intervaloDataTrocaStatus = (int) $intervaloDataTrocaStatus->format('%R%a');
 
-            /* @var $pagamentosModel Pagamentos */
+            /** @var Pagamentos $pagamentosModel */
             $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
             // Busca os dados do pagamento
             $pagamentosVeiculos = $pagamentosModel->get(null, 60);
 
             $statusPagamento = null;
-            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"status");
+            $statusPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "status");
 
             $planoPagamento = null;
-            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"idPlano");
+            $planoPagamento = (int) $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "idPlano");
 
             $formaPagamento = null;
-            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos,$veiculo['idVeiculo'],"formaPagamento");
+            $formaPagamento = $this->getVariavelltimoPagamentoVeiculo($pagamentosVeiculos, $veiculo['idVeiculo'], "formaPagamento");
 
             $frase = "";
             $temp_acoes = [
@@ -309,16 +301,16 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
-                    if($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])){
+                    if ($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])) {
                         $temp_acoes["certificado"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {
                         $temp_acoes["upgrade_plano"] = true;
                     }
-                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] != 1){
+                    if ($veiculo['idPlano'] != 1 && $intevaloData <= 2 && $veiculo['veiculo_zero_km'] != 1) {
                         $temp_acoes["reativar"] = true;
                     }
-                    if($statusPagamento == 1){
+                    if ($statusPagamento == 1) {
                         $temp_acoes["enviar_comprovante"] = true;
                         $temp_acoes["plano_comprovante"] = $planoPagamento;
                     }
@@ -348,7 +340,7 @@ class MeusVeiculosController extends AbstractActionController
                         $temp_acoes["upgrade_plano"] = true;
                     } elseif ($veiculo["veiculo_zero_km"] == 1) {
                         $temp_acoes["trocar_plano"] = true;
-                    }else{
+                    } else {
                         $temp_acoes["reativar"] = true;
                     }
                     break;
@@ -416,13 +408,13 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         $result = null;
-        $auxData = null;//new \DateTime('1969-01-01');
+        $auxData = null; //new \DateTime('1969-01-01');
 
-        foreach ($pagamentosVeiculos['data'] AS $pagamento){
-            if($pagamento["idVeiculo"] == $idVeiculo){
-                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+        foreach ($pagamentosVeiculos['data'] as $pagamento) {
+            if ($pagamento["idVeiculo"] == $idVeiculo) {
+                $dataCadastro = new DateTime($pagamento["dataCadastro"]);
 
-                if($dataCadastro > $auxData){
+                if ($dataCadastro > $auxData) {
                     $auxData = $dataCadastro;
                     $result = $pagamento[$variavel];
                 }
@@ -430,7 +422,6 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         return $result;
-
     }
 
     /*
@@ -445,13 +436,13 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         $result = null;
-        $auxData = null;//new \DateTime('1969-01-01');
+        $auxData = null; //new \DateTime('1969-01-01');
 
-        foreach ($pagamentosVeiculos['data'] AS $pagamento){
-            if($pagamento["idCadastro"] == $idCadastro){
-                $dataCadastro = new \DateTime($pagamento["dataCadastro"]);
+        foreach ($pagamentosVeiculos['data'] as $pagamento) {
+            if ($pagamento["idCadastro"] == $idCadastro) {
+                $dataCadastro = new DateTime($pagamento["dataCadastro"]);
 
-                if($dataCadastro > $auxData){
+                if ($dataCadastro > $auxData) {
                     $auxData = $dataCadastro;
                     $result = $pagamento[$variavel];
                 }
@@ -459,7 +450,6 @@ class MeusVeiculosController extends AbstractActionController
         }
 
         return $result;
-
     }
 
     /*
@@ -473,22 +463,22 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
         $veiculo = $veiculosModel->get($idVeiculo);
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro'] ])[0];
+        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro']])[0];
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 2,
             'flagReativar' => 1,
-            ], $idVeiculo);
-        
+        ], $idVeiculo);
+
         //envia somente email apenas para cadastros particular
-        if($cadastro['tipoCadastro'] == 2) { 
+        if ($cadastro['tipoCadastro'] == 2) {
             ///envia email exclusao
             $dadosEmail = [
                 'email' => $cadastro['email'],
@@ -496,10 +486,10 @@ class MeusVeiculosController extends AbstractActionController
                 'marca' => $veiculo['marca'],
                 'modelo' => $veiculo['modelo'],
                 'nome' => 'Seminovos BH',
-                'tipoEmail' => 'anuncio_renovado'
+                'tipoEmail' => 'anuncio_renovado',
             ];
 
-            /* @var $enviarEmailModel EnviarEmail*/
+            /** @var EnviarEmail $enviarEmailModel */
             $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
             $enviarEmailModel->post($dadosEmail);
         }
@@ -511,15 +501,15 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 5,
-            'clicks' => 0
-            ], $idVeiculo);
+            'clicks' => 0,
+        ], $idVeiculo);
 
         echo json_encode($dadosVeiculos);
         die;
@@ -529,14 +519,14 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         // Busca os dados do cadastro
         $dadosVeiculos = $veiculosModel->put([
             'idVeiculo' => $idVeiculo,
             'idStatus' => 8,
-            ], $idVeiculo);
+        ], $idVeiculo);
         echo json_encode($dadosVeiculos);
         die;
     }
@@ -547,17 +537,17 @@ class MeusVeiculosController extends AbstractActionController
 
         $request = $this->request;
 
-        /* @var $identity Identity */
+        /** @var Identity $identity */
         $identity = $this->getContainer()->get(Identity::class);
 
         $data = [
             'idCadastro' => $identity->getIdentity(),
-            'idVeiculo' => $idVeiculo
+            'idVeiculo' => $idVeiculo,
         ];
 
         $data += $request->getPost()->toArray();
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $pesquisaModel = $this->getContainer()->get(PesquisaSatisfacao::class);
 
         // Busca os dados do cadastro
@@ -571,16 +561,15 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
         $veiculo = $veiculosModel->get($idVeiculo);
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
-        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro'] ])[0];
+        $cadastro = $cadastrosModel->get(['idCadastro' => $veiculo['cadastro']['idCadastro']])[0];
 
         if ($cadastrosModel->isRevenda()) {
-
-            /* @var $veiculosFotosModel VeiculosFotos */
+            /** @var VeiculosFotos $veiculosFotosModel */
             $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
 
             // Busca os dados das fotos do veiculo
@@ -591,25 +580,24 @@ class MeusVeiculosController extends AbstractActionController
                 $listaFotos[] = $dado['idFoto'];
             }
 
-            #deletar fotos do servidor
+            // deletar fotos do servidor
             $retorno = $veiculosFotosModel->delete([
-                'listaFotos' => $listaFotos
+                'listaFotos' => $listaFotos,
             ]);
 
-            #quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
+            // quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
             $dadosVeiculos = $veiculosModel->delete($idVeiculo);
         } else {
-
             // Busca os dados do cadastro
             $dadosVeiculos = $veiculosModel->put([
                 'idVeiculo' => $idVeiculo,
                 'idStatus' => 7,
-                'dataRemocao' => date('Y-m-d', strtotime("+1 month"))
-                ], $idVeiculo);
+                'dataRemocao' => date('Y-m-d', strtotime("+1 month")),
+            ], $idVeiculo);
         }
 
         //envia somente email apenas para cadastros particular
-        if($cadastro['tipoCadastro'] == 2) { 
+        if ($cadastro['tipoCadastro'] == 2) {
             ///envia email exclusao
             $dadosEmail = [
                 'email' => $cadastro['email'],
@@ -617,10 +605,10 @@ class MeusVeiculosController extends AbstractActionController
                 'marca' => $veiculo['marca'],
                 'modelo' => $veiculo['modelo'],
                 'nome' => 'Seminovos BH',
-                'tipoEmail' => 'anuncio_excluido'
+                'tipoEmail' => 'anuncio_excluido',
             ];
 
-            /* @var $enviarEmailModel EnviarEmail*/
+            /** @var EnviarEmail $enviarEmailModel */
             $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
             $enviarEmailModel->post($dadosEmail);
         }
@@ -634,13 +622,13 @@ class MeusVeiculosController extends AbstractActionController
         $idVeiculo = $this->params('idVeiculo');
         $dadosVeiculo = [];
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
         // Busca os dados do cadastro
         $dadosVeiculo = $veiculosModel->get($idVeiculo);
 
         return new ViewModel([
-            'veiculo' => $dadosVeiculo
+            'veiculo' => $dadosVeiculo,
         ]);
     }
 
@@ -648,13 +636,13 @@ class MeusVeiculosController extends AbstractActionController
     {
         $idVeiculo = $this->params('idVeiculo');
 
-        /* @var $veiculosModel Veiculos */
+        /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         // Busca os dados do cadastro
         $dadosVeiculo = $veiculosModel->get($idVeiculo);
 
-        /* @var $propostasModel Propostas */
+        /** @var Propostas $propostasModel */
         $propostasModel = $this->getContainer()->get(Propostas::class);
 
         // Busca os dados das propostas
@@ -662,7 +650,7 @@ class MeusVeiculosController extends AbstractActionController
 
         return new ViewModel([
             'propostas' => $dadosPropostas,
-            'veiculo' => $dadosVeiculo
+            'veiculo' => $dadosVeiculo,
         ]);
     }
 
@@ -672,7 +660,9 @@ class MeusVeiculosController extends AbstractActionController
         $viewModel->setTerminal(true);
         return $viewModel;
     }
-    public function chatAction(){
+
+    public function chatAction()
+    {
         return new ViewModel();
     }
 }

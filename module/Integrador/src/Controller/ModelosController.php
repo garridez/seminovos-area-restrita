@@ -2,14 +2,12 @@
 
 namespace SnBH\Integrador\Controller;
 
-use SnBH\ApiClient\Client as ApiClient;
-use Laminas\Mvc\MvcEvent;
 use Laminas\View\Model\JsonModel;
 
-class ModelosController extends AbstractActionController {
-
-    public function fetch() {
-
+class ModelosController extends AbstractActionController
+{
+    public function fetch()
+    {
         //$request = $this->request;
         //$idCadastro = $this->getIdCadastro();
 
@@ -17,14 +15,14 @@ class ModelosController extends AbstractActionController {
 
         if (!isset($idMarca) && !$idMarca || empty($idMarca)) {
             return new JsonModel([
-                        'staus'=> 405,
-                        'detail' => 'É obrigatório o paramêtro idMarca'
-                        ]);
+                'staus' => 405,
+                'detail' => 'É obrigatório o paramêtro idMarca',
+            ]);
         }
 
         $res = $this->getApiClient()->modelos([
-                'idMarca' => $idMarca
-                ], null, 10000)->json();
+            'idMarca' => $idMarca,
+        ], null, 10000)->json();
 
         if ($res['status'] !== 200) {
             return new JsonModel($res);
@@ -32,5 +30,4 @@ class ModelosController extends AbstractActionController {
 
         return new JsonModel($res);
     }
-
 }

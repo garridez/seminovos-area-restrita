@@ -1,21 +1,20 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
 
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Model\Planos;
-use Laminas\View\Model\ViewModel;
+use Exception;
 use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\MoveUpload;
 
 class PagamentoController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $dadosVeiculo = $this->getVeiculo(5);
@@ -25,7 +24,7 @@ class PagamentoController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'planos' => $planos,
-            'valorPlanoAtual' => (double) isset($dadosVeiculo['valorPlano']) ? ($dadosVeiculo['valorPlano'] + 0.00) : 0.00,
+            'valorPlanoAtual' => (double) isset($dadosVeiculo['valorPlano']) ? $dadosVeiculo['valorPlano'] + 0.00 : 0.00,
             'idStatus' => $dadosVeiculo['idStatus'] ?? null,
             'idPlano' => $dadosVeiculo['idPlano'] ?? null,
         ]);
@@ -43,10 +42,10 @@ class PagamentoController extends AbstractActionController
         }
 
         $veiculo = $this->getApiClient()->veiculosGet([
-            'ignorarCondicoesBasicas' => 1
+            'ignorarCondicoesBasicas' => 1,
         ], $idVeiculo, 5);
 
-        if(isset($veiculo->getData()[0])){
+        if (isset($veiculo->getData()[0])) {
             return $veiculo->getData()[0];
         }
 
@@ -56,7 +55,7 @@ class PagamentoController extends AbstractActionController
     protected function getModelVeiculo($idVeiculo = null)
     {
         return new ViewModel([
-            'veiculo' => $this->getVeiculoData($idVeiculo)
+            'veiculo' => $this->getVeiculoData($idVeiculo),
         ]);
     }
 
@@ -117,8 +116,8 @@ class PagamentoController extends AbstractActionController
             'status' => 200,
             'ultimoPagamento' => array_intersect_key($dadosPag, [
                 'status' => true,
-                'forma_pagamento'=> true,
-                'data_cadastro' => true
+                'forma_pagamento' => true,
+                'data_cadastro' => true,
             ]),
         ]);
     }
@@ -129,7 +128,7 @@ class PagamentoController extends AbstractActionController
         $comprovanteAnexo = [];
         $dados = $this->params()->fromPost();
         if (!$dados) {
-            throw new \Exception('Certifique-se de que os dados foram enviados.');
+            throw new Exception('Certifique-se de que os dados foram enviados.');
         }
         $cadastro = $this->getCadastro();
 
@@ -149,11 +148,11 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['idAnuncioVeiculo'] = $dados['idAnuncioVeiculo'] ?? null;
         $dadosPagamento['idCadastro'] = $cadastro['idCadastro'];
         $dadosPagamento['idPlano'] = $dados['idPlano'] ?? null;
-        $dadosPagamento['flagCertificado'] = (isset($dados['certificado']) && !empty($dados['certificado'])) ? (int) $dados['certificado'] : null;
+        $dadosPagamento['flagCertificado'] = isset($dados['certificado']) && !empty($dados['certificado']) ? (int) $dados['certificado'] : null;
         $dadosPagamento['parcelas'] = 1;
 
         // dados para pagamento Cielo/cartão
-        if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card' ) {
+        if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') {
             $dadosPagamento['numero_cartao'] = $dados['numero_cartao'] ?: $dados['number'];
             $dadosPagamento['nome_cartao'] = $dados['nome_cartao'] ?: $dados['name'];
             $dadosPagamento['validade_cartao'] = $dados['validade_cartao'] ?: $dados['expiry'];
@@ -189,34 +188,34 @@ class PagamentoController extends AbstractActionController
 
             $arquivo = $files[0];
             $dadosPagamento[$apiClient::KEY_FILES] = [
-                'comprovanteAnexo' => $arquivo
+                'comprovanteAnexo' => $arquivo,
             ];
         }
 
         $routeParams = $this->params()->fromRoute();
         $urlHelper = $this->url();
-        $getUrlRedirect = function ($action) use($urlHelper, $routeParams, $idVeiculo): string {
+        $getUrlRedirect = function ($action) use ($urlHelper, $routeParams, $idVeiculo): string {
             $routeParams['action'] = $action;
             return $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo;
         };
         /**
          * retorno quando é boleto da revenda feito pelo itau.
          **/
-            /*if($cadastro['tipoCadastro'] == 1 && $dados['metodo'] == 'boleto'){
-            $response['html'] = $this->getApiClient()
-            ->pagamentosPost($dadosPagamento, null, false)
-            ->getBody();
-            echo json_encode($response);
-            die;
+        /*if($cadastro['tipoCadastro'] == 1 && $dados['metodo'] == 'boleto'){
+        $response['html'] = $this->getApiClient()
+        ->pagamentosPost($dadosPagamento, null, false)
+        ->getBody();
+        echo json_encode($response);
+        die;
 
         }*/
 
         /*echo $this->getApiClient()
-            ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
+        ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
 
         $response = $this->getApiClient()
-            ->pagamentosPost($dadosPagamento, null, false)
-            ->json();
+        ->pagamentosPost($dadosPagamento, null, false)
+        ->json();
 
         if ($files) {
             foreach ($files as $file) {
@@ -226,14 +225,14 @@ class PagamentoController extends AbstractActionController
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
             if (($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') && isset($dados['placaVeiculo']) && $dados['certificado']) {
-                $res = $apiClient->veiculosCertificadosPost(['placa'=> $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo, 'idCadastro' => $dadosPagamento['idCadastro']])->getData();
+                $res = $apiClient->veiculosCertificadosPost(['placa' => $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo, 'idCadastro' => $dadosPagamento['idCadastro']])->getData();
             }
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }
-            if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo'])  && $cadastro['tipoCadastro'] != 1) {
+            if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo']) && $cadastro['tipoCadastro'] != 1) {
                 $routeParams['action'] = 'pagamento-pix';
-                $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo.'&code='.$response['data']['qr_code'].'&idPagamento='.md5($response['data']['idPagamento']);
+                $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo . '&code=' . $response['data']['qr_code'] . '&idPagamento=' . md5($response['data']['idPagamento']);
             }
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
                 $response['data']['url'] = $getUrlRedirect('plano-renovado');

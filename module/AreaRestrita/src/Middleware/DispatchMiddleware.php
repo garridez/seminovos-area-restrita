@@ -2,10 +2,10 @@
 
 namespace AreaRestrita\Middleware;
 
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\DispatchListener;
 use Laminas\Mvc\MvcEvent;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

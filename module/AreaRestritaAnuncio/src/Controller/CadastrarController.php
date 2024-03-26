@@ -1,42 +1,39 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
 
-use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
-use AreaRestritaAnuncio\Form\Cadastro\CadastroCarroBolsoForm;
 use AreaRestrita\Controller\AbstractActionController;
 use AreaRestrita\Controller\AuthController;
 use AreaRestrita\Form\MeusDados\ParticularForm;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\EnviarEmail;
-use SnBH\Common\Helper\ValidatorMessages;
+use AreaRestritaAnuncio\Form\Cadastro\CadastroCarroBolsoForm;
+use AreaRestritaAnuncio\Form\Cadastro\CadastroSimplesForm;
+use Laminas\Http\Client;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use SnBH\Common\Helper\ValidatorMessages;
 
 class CadastrarController extends AbstractActionController
 {
-
     public function indexAction()
     {
-
 //        $dadosForm = new Cadastro\CadastroParticularForm();
         $dadosForm = new ParticularForm();
 
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $post = $request->getPost();
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-                /* @var $cadastrosModel Cadastros */
+                /** @var Cadastros $cadastrosModel */
                 $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
                 $data = $dadosForm->getData();
@@ -61,7 +58,7 @@ class CadastrarController extends AbstractActionController
             $dadosForm->get('email')->setValue($email);
 
             $view = new ViewModel([
-                'formCadastro' => $dadosForm
+                'formCadastro' => $dadosForm,
             ]);
 
             $this->layout('layout/blank.phtml');
@@ -69,6 +66,7 @@ class CadastrarController extends AbstractActionController
             return $view;
         }
     }
+
     private function getContatosFromCpfCnpj($cpfOuCpnj, $mask = true)
     {
         $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', (string) $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
@@ -76,24 +74,23 @@ class CadastrarController extends AbstractActionController
         $considerarInativo = false;
 
         // CPF ou CNPJ retira a pontuação
-        if($tipoCadastro == 2){
-            preg_match_all('(\d)',(string) $cpfOuCpnj, $matches);
+        if ($tipoCadastro == 2) {
+            preg_match_all('(\d)', (string) $cpfOuCpnj, $matches);
             $cpfOuCpnj = implode($matches[0]);
-        }else{
+        } else {
             $cpfOuCpnj = $cpfOuCpnj;
             $considerarInativo = true;
         }
 
-
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
+        // verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'tipoCadastro' => $tipoCadastro,
             $campoCpfOuCnpj => $cpfOuCpnj,
             'checkEmail' => true,
-            'considerarInativo' => $considerarInativo
+            'considerarInativo' => $considerarInativo,
         ]);
 
         if (!$dadosCadastro || !$dadosCadastro[0]) {
@@ -112,14 +109,13 @@ class CadastrarController extends AbstractActionController
         $telefone = $dadosCadastro['telefone2'] && $tipoCadastro == 2 ? $dadosCadastro['telefone2'] : null;
         $dadosCadastroRetorno = [];
 
-        if($mask){
+        if ($mask) {
             // Mascara email
             $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', (string) $email);
 
             // Mascara telefone
             $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', (string) $telefone);
-
-        }else{
+        } else {
             $dadosCadastroRetorno = $dadosCadastro;
         }
 
@@ -137,11 +133,11 @@ class CadastrarController extends AbstractActionController
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
+        // verifica se o CPF ou CPNJ informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'email' => $email,
             'checkEmail' => true,
-            'considerarInativo' => $considerarInativo
+            'considerarInativo' => $considerarInativo,
         ]);
 
         if (!$dadosCadastro || !$dadosCadastro[0]) {
@@ -158,13 +154,12 @@ class CadastrarController extends AbstractActionController
         $email = $dadosCadastro['email'] ?? null;
         $telefone = $dadosCadastro['telefone2'] ? $dadosCadastro['telefone2'] : null;
 
-        if($mask){
+        if ($mask) {
             // Mascara email
             $email = preg_replace('/(.{3})(.{1,3})?(.{2})?(.{3})?(.*)?@(.{2,3})([a-zA-Z0-9]{2,})?\.(.*)/', '$1***$3***$5@$6***.$8', (string) $email);
 
             // Mascara telefone
             $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', (string) $telefone);
-
         }
 
         return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastro];
@@ -175,19 +170,19 @@ class CadastrarController extends AbstractActionController
      */
     public function resetPasswordCheckRecaptcha($token)
     {
-        $httpClient = new \Laminas\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+        $httpClient = new Client('https://www.google.com/recaptcha/api/siteverify');
 
         $request = $httpClient->getRequest();
         $httpClient->setMethod('POST');
-        $request->setPost(new \Laminas\Stdlib\Parameters([
+        $request->setPost(new Parameters([
             'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
-            'response' => $token
+            'response' => $token,
         ]));
 
         $resposta = $httpClient->send();
 
         if ($resposta->getStatusCode()) {
-            $result = json_decode($resposta->getBody(), true) ;
+            $result = json_decode($resposta->getBody(), true);
 
             if (!$result['success']) {
                 return false;
@@ -214,16 +209,16 @@ class CadastrarController extends AbstractActionController
 
         $retorno = [];
 
-        if(is_null($token) || !$this->resetPasswordCheckRecaptcha($token)){
+        if (is_null($token) || !$this->resetPasswordCheckRecaptcha($token)) {
             $retorno = [
                 'status' => 200,
                 'cpfCadastro' => false,
                 'tipoCadastro' => 5,
                 'detail' => 'Desafio do captcha inválido',
             ];
-        } else if($cpfOuCpnj != '') {
+        } elseif ($cpfOuCpnj != '') {
             $retorno = $this->getContatosFromCpfCnpj($cpfOuCpnj);
-        } else if($email != '') {
+        } elseif ($email != '') {
             $retorno = $this->getContatosFromEmail($email);
         } else { //retorno default
             $retorno = [
@@ -234,7 +229,7 @@ class CadastrarController extends AbstractActionController
             ];
         }
 
-        if($retorno['status'] != 200){
+        if ($retorno['status'] != 200) {
             return json_encode($retorno);
         }
 
@@ -248,7 +243,6 @@ class CadastrarController extends AbstractActionController
             return [];
         }
 
-
         $post = $request->getPost();
 
         $cpfOuCpnj = $post['cpfOuCpnj'];
@@ -256,10 +250,10 @@ class CadastrarController extends AbstractActionController
 
         $retorno = [];
 
-        if($cpfOuCpnj != '') {
-            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj,false);
-        } else if($email != '') {
-            $retornoContato = $this->getContatosFromEmail($email,false);
+        if ($cpfOuCpnj != '') {
+            $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
+        } elseif ($email != '') {
+            $retornoContato = $this->getContatosFromEmail($email, false);
         }
 
         $dadosCadastro = $retornoContato['dadosCadastro'];
@@ -282,8 +276,8 @@ class CadastrarController extends AbstractActionController
 
         $retorno = $cadastrosModel->put([
             'tipoCadastro' => $retornoContato['tipoCadastro'],
-            'senha' => $novaSenha
-            ], $dadosCadastro['idCadastro'], null);
+            'senha' => $novaSenha,
+        ], $dadosCadastro['idCadastro'], null);
 
         if ($retorno->status == 200) {
             // Envia email pela nova api
@@ -298,10 +292,10 @@ class CadastrarController extends AbstractActionController
                 'emailRemetente' => 'senha@seminovos.com.br',
                 'nomeRemetente' => 'SeminovosBH',
                 'novaSenha' => $novaSenha,
-                'tipoEmail' => 'nova_senha'
+                'tipoEmail' => 'nova_senha',
             ];
 
-            /* @var $enviarEmailModel EnviarEmail */
+            /** @var EnviarEmail $enviarEmailModel */
             $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
             $enviarEmailModel->post($dadosEmail);
         }
@@ -334,19 +328,19 @@ class CadastrarController extends AbstractActionController
         $cpfOuCpnj = $post['cpfOuCpnj'];
         $email = $post['email'];
 
-        if($cpfOuCpnj != '') {
+        if ($cpfOuCpnj != '') {
             $retornoContato = $this->getContatosFromCpfCnpj($cpfOuCpnj, false);
-        } else if($email != '') {
+        } elseif ($email != '') {
             $retornoContato = $this->getContatosFromEmail($email, false);
         }
 
-        if($retornoContato['status'] != 200){
+        if ($retornoContato['status'] != 200) {
             return new JsonModel($retornoContato);
         }
 
         $telefone = $retornoContato['telefone'];
 
-        /* @var $enviarEmailModel EnviarEmail */
+        /** @var EnviarEmail $enviarEmailModel */
         $apiClient = $this->getApiClient();
 
         $retorno = $apiClient->smsPost(['telefone' => $telefone])->json();
@@ -369,7 +363,6 @@ class CadastrarController extends AbstractActionController
         return new JsonModel($retorno);
     }
 
-
     /**
      * Salva nova senha do usuário
      */
@@ -380,12 +373,11 @@ class CadastrarController extends AbstractActionController
 
         $retorno = $apiClient->smsDelete([
             'senha' => $request['senha'],
-            'idCadastro' => $request['idCadastro']
-            ])->json();
+            'idCadastro' => $request['idCadastro'],
+        ])->json();
 
         return new JsonModel($retorno);
     }
-
 
     /**
      * Verifica se a email está disponível para cadastro
@@ -394,31 +386,32 @@ class CadastrarController extends AbstractActionController
      */
     public function emailDisponivelAction()
     {
-        $email = $this->params()->fromRoute('email',false);
-        if(!$email){
-            return new JsonModel(['status'=> 405, 'detail'=> 'E-mail não informada']);
+        $email = $this->params()->fromRoute('email', false);
+        if (!$email) {
+            return new JsonModel(['status' => 405, 'detail' => 'E-mail não informada']);
         }
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o email informado já foi cadastrado no sistema
+        // verifica se o email informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'email' => $email,
             'checkEmail' => true,
-            'considerarInativo' => 1
+            'considerarInativo' => 1,
         ]);
 
         $emailDisponivel = false;
-        if(!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)){
-            $emailDisponivel =  true;
+        if (!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)) {
+            $emailDisponivel = true;
         }
 
-        return new JsonModel( [
+        return new JsonModel([
             'status' => 200,
-            'emailDisponivel' => $emailDisponivel
+            'emailDisponivel' => $emailDisponivel,
         ]);
     }
+
     /**
      * Verifica se a cpf está disponível para cadastro
      * Retorna TRUE se a cpf estiver disponível
@@ -426,39 +419,38 @@ class CadastrarController extends AbstractActionController
      */
     public function cpfDisponivelAction()
     {
-        $cpf = $this->params()->fromRoute('cpf',false);
-        if(!$cpf){
-            return new JsonModel(['status'=> 405, 'detail'=> 'CPF não informado']);
+        $cpf = $this->params()->fromRoute('cpf', false);
+        if (!$cpf) {
+            return new JsonModel(['status' => 405, 'detail' => 'CPF não informado']);
         }
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-        #verifica se o email informado já foi cadastrado no sistema
+        // verifica se o email informado já foi cadastrado no sistema
         $dadosCadastro = $cadastrosModel->get([
             'cpfResponsavel' => preg_replace('/[^0-9]/', '', (string) $cpf),
             'checkEmail' => true, //variavél exclui os joins da CadastroDAO.class.php
-            'considerarInativo' => 1
+            'considerarInativo' => 1,
         ]);
 
         $cpfDisponivel = false;
         $emailVinculado = false;
-        if(!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)){
-            $cpfDisponivel =  true;
-        }else{
+        if (!(is_countable($dadosCadastro) ? count($dadosCadastro) : 0)) {
+            $cpfDisponivel = true;
+        } else {
             $emailVinculado = $dadosCadastro[0]['email'];
         }
 
-        return new JsonModel( [
+        return new JsonModel([
             'status' => 200,
             'cpfDisponivel' => $cpfDisponivel,
-            'emailVinculado' => $emailVinculado
+            'emailVinculado' => $emailVinculado,
         ]);
     }
 
     public function cadastroSimplesAction()
     {
-
         $dadosForm = new CadastroSimplesForm();
 
         $request = $this->getRequest();
@@ -470,7 +462,7 @@ class CadastrarController extends AbstractActionController
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-                /* @var $cadastrosModel Cadastros */
+                /** @var Cadastros $cadastrosModel */
                 $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
                 $data = $dadosForm->getData();
@@ -483,7 +475,7 @@ class CadastrarController extends AbstractActionController
 
                 if (!$data['cpfResponsavel']) {
                      unset($data['cpfResponsavel']);
-                 }
+                }
 
                 $resPost = $cadastrosModel->post($data);
                 if ($resPost->status === 200) {
@@ -496,9 +488,8 @@ class CadastrarController extends AbstractActionController
                     ]));
                     return $this->forward()
                         ->dispatch(AuthController::class, [
-                        'action' => 'login',
-                    ]);
-
+                            'action' => 'login',
+                        ]);
                 }
                 $this->layout('layout/blank.phtml');
                 return new ViewModel([
@@ -514,15 +505,13 @@ class CadastrarController extends AbstractActionController
                 die;
             }
         } else {
-
             $view = new ViewModel([
-                'formCadastro' => $dadosForm
+                'formCadastro' => $dadosForm,
             ]);
 
             $this->layout('layout/blank.phtml');
 
             return $view;
-
         }
     }
 
@@ -539,7 +528,6 @@ class CadastrarController extends AbstractActionController
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
-
                 $data = $dadosForm->getData();
 
                  $mensagem = '<br /><br /><strong>Parceria seminovos.com.br</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
@@ -553,10 +541,10 @@ class CadastrarController extends AbstractActionController
                     'nomeRemetente' => 'SeminovosBH',
                     'layout' => 'blank-nova',
                     'tipoEmail' => 'personalizado_novo',
-                    'bcc' => ['felipe@seminovos.com.br']
+                    'bcc' => ['felipe@seminovos.com.br'],
                 ];
 
-                /* @var $enviarEmailModel EnviarEmail */
+                /** @var EnviarEmail $enviarEmailModel */
                 $enviarEmailModel = $this->getContainer()->get(EnviarEmail::class);
                 $retorno = $enviarEmailModel->post($dadosEmail);
 
@@ -564,13 +552,12 @@ class CadastrarController extends AbstractActionController
 
                 $view = new ViewModel([
                     'formCarroBolso' => $dadosForm,
-                    'sucesso' => $retorno['status'] == 200
+                    'sucesso' => $retorno['status'] == 200,
                 ]);
 
                 $this->layout('layout/blank.phtml');
 
                 return $view;
-
             } else {
                 echo json_encode([
                     'status' => 405,
@@ -580,15 +567,13 @@ class CadastrarController extends AbstractActionController
                 die;
             }
         } else {
-
             $view = new ViewModel([
-                'formCarroBolso' => $dadosForm
+                'formCarroBolso' => $dadosForm,
             ]);
 
             $this->layout('layout/blank.phtml');
 
             return $view;
-
         }
     }
 }

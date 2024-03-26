@@ -4,9 +4,9 @@ namespace AreaRestrita\View\Helper\Factory;
 
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\View\Helper\BodyClass;
-use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService as AuthService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class BodyClassFactory implements FactoryInterface
 {

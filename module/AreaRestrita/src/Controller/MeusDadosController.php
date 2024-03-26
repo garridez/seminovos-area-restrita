@@ -1,23 +1,20 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use AreaRestrita\Service\AuthManager;
-use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
 use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
-use Laminas\Authentication\AuthenticationService;
+use AreaRestrita\Service\AuthManager;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\ViewModel;
+use SnBH\ApiClient\Client;
 
 class MeusDadosController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -30,7 +27,7 @@ class MeusDadosController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -43,7 +40,7 @@ class MeusDadosController extends AbstractActionController
     public function indexAction()
     {
         $requestResponse = false;
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         // Busca os dados do cadastro
@@ -65,20 +62,19 @@ class MeusDadosController extends AbstractActionController
             $post = $request->getPost();
             $dadosForm->setData($post);
             if ($dadosForm->isValid()) {
-
-                /* @var $apiClient \SnBH\ApiClient\Client */
+                /** @var Client $apiClient */
                 $data = $dadosForm->getData();
 
                 $data['tipoCadastro'] = $cadastrosModel->isRevenda() ? 1 : 2;
 
-                #campos não existentes na tabela
+                // campos não existentes na tabela
                 unset($data['confirmacaoSenha']);
                 unset($data['submit']);
 
-                #campos que não podem ser alterados
+                // campos que não podem ser alterados
                 unset($data['responsavelNome']);
                 unset($data['dataNascimento']);
-                if(!isset($data['flagEdicao'])){
+                if (!isset($data['flagEdicao'])) {
                     unset($data['cpf']);
                 }
                 unset($data['nomeFantasia']);
@@ -98,7 +94,7 @@ class MeusDadosController extends AbstractActionController
             'tipoCadastro' => $tipoCadastro,
             'formCadastro' => $dadosForm,
             'idCidade' => $dadosCadastro['idCidade'],
-            'requestResponse' => $requestResponse
+            'requestResponse' => $requestResponse,
         ]);
     }
 
@@ -108,11 +104,10 @@ class MeusDadosController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
-            /* @var $cadastrosModel Cadastros */
+            /** @var Cadastros $cadastrosModel */
             $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
-            /* @var $authManager AuthManager  */
+            /** @var AuthManager $authManager */
             $authManager = $this->container->get(AuthManager::class);
 
             $post = $request->getPost();
@@ -128,13 +123,13 @@ class MeusDadosController extends AbstractActionController
                 $login = $dadosCadastro['cnpj'];
             }
 
-            #valida a senha atual do usuraio
+            // valida a senha atual do usuraio
             $result = $authManager->login([
                 'emailOrCnpj' => $login,
                 'usuarioSenha' => $post['senhaAtual'],
                 'tipoCadastro' => $tipoCadastro,
-                'rememberMe' => false
-                ], false);
+                'rememberMe' => false,
+            ], false);
 
             if ($result->getCode() !== $result::SUCCESS) {
                 return new ViewModel(["erroSenha" => 1]);

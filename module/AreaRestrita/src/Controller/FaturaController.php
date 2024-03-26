@@ -1,24 +1,20 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
-use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\Veiculos;
+use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\ViewModel;
 
 class FaturaController extends AbstractActionController
 {
-
     protected $routeParams;
     protected $routeName;
     protected $idPlano;
@@ -30,7 +26,7 @@ class FaturaController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -44,13 +40,13 @@ class FaturaController extends AbstractActionController
     {
         $idPagamento = $this->params('idPagamento');
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        /* @var $historicoPagamentosModel Pagamentos */
+        /** @var Pagamentos $historicoPagamentosModel */
         $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         // Busca os dados do Pagamento/Fatura
@@ -73,19 +69,19 @@ class FaturaController extends AbstractActionController
     {
         $idPagamento = $this->params('idPagamento');
 
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(false);
 
-        /* @var $historicoPagamentosModel Pagamentos */
+        /** @var Pagamentos $historicoPagamentosModel */
         $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
 
         // Busca os dados do Pagamento/Fatura
         $dadosPagamento = $pagamentosModel->get($idPagamento);
 
-        /* @var $planosModel Planos */
+        /** @var Planos $planosModel */
         $planosModel = $this->getContainer()->get(Planos::class);
 
         // Busca os planos de acordo com o tipo
@@ -104,7 +100,7 @@ class FaturaController extends AbstractActionController
         return new ViewModel([
             'dadosCadastro' => $dadosCadastro,
             'dadosPagamento' => $dadosPagamento['data'][0],
-            'nomePlano' => $nomePlano
+            'nomePlano' => $nomePlano,
         ]);
     }
 }

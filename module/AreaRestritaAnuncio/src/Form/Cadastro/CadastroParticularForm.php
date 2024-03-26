@@ -2,12 +2,12 @@
 
 namespace AreaRestritaAnuncio\Form\Cadastro;
 
-use Laminas\Form\Form;
 use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Validator\Hostname;
 
 class CadastroParticularForm extends Form
 {
-
     public function __construct($name = 'form_cadastroParticular', $options = [])
     {
         parent::__construct($name, $options);
@@ -20,7 +20,7 @@ class CadastroParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Email::class,
@@ -30,7 +30,7 @@ class CadastroParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -40,7 +40,7 @@ class CadastroParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -50,7 +50,7 @@ class CadastroParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Password::class,
@@ -60,7 +60,7 @@ class CadastroParticularForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Submit::class,
@@ -91,13 +91,13 @@ class CadastroParticularForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
+                        'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],
             ],
         ]);
-        #campo não obrigatório, porém na função put se o campo estiver vazio não funciona
+    // campo não obrigatório, porém na função put se o campo estiver vazio não funciona
         $inputFilter->add([
             'name' => 'telefone_1',
             'required' => true,

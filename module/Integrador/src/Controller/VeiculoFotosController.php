@@ -2,18 +2,14 @@
 
 namespace SnBH\Integrador\Controller;
 
-use SnBH\ApiClient\Client as ApiClient;
-use SnBH\Common\Helper\MoveUpload;
-use Laminas\Mvc\MvcEvent;
-use SnBH\Common\ServiceVeiculo;
-use AreaRestrita\Model\Veiculos;
 use AreaRestrita\Model\VeiculosFotos;
 use Laminas\View\Model\JsonModel;
+use SnBH\Common\Helper\MoveUpload;
 
-class VeiculoFotosController extends AbstractActionController {
-
-
-    public function create() {
+class VeiculoFotosController extends AbstractActionController
+{
+    public function create()
+    {
         ini_set('memory_limit', '256M');
 
         $request = $this->request;
@@ -39,27 +35,26 @@ class VeiculoFotosController extends AbstractActionController {
             // Se existe $fotos['tmp_name'] quer dizer que não é um array de fotos
             if (isset($fotos['tmp_name'])) {
                 return new JsonModel([
-                    'status'=> 405,
-                    'detail' => 'O campo fotos deve ser um array.'
+                    'status' => 405,
+                    'detail' => 'O campo fotos deve ser um array.',
                 ]);
             }
 
             // Upload
             if ($fotos) {
-
                 $fotosVeiculo = $this->getApiClient()
                         ->veiculosFotosGet(['idVeiculo' => $dataPost->idVeiculo])
                         ->json();
                 $ultimoOrdem = is_countable($fotosVeiculo['data']) ? count($fotosVeiculo['data']) : 0;
 
-                if($ultimoOrdem == 15){
+                if ($ultimoOrdem == 15) {
                     return new JsonModel([
-                        'status'=> 405,
-                        'detail' => 'Limite de fotos alcançado'
-                        ]);
+                        'status' => 405,
+                        'detail' => 'Limite de fotos alcançado',
+                    ]);
                 }
 
-                foreach($fotos as $foto){
+                foreach ($fotos as $foto) {
                     $ordem[] = $ultimoOrdem + 1;
                     $ultimoOrdem++;
                 }
@@ -72,7 +67,7 @@ class VeiculoFotosController extends AbstractActionController {
 
                 $files = $moveUpload->move($fotos, true);
                 $data[$apiClient::KEY_FILES] = [
-                    'fotos' => $files
+                    'fotos' => $files,
                 ];
 
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
@@ -81,37 +76,37 @@ class VeiculoFotosController extends AbstractActionController {
                     unlink($file);
                 }
 
-                if($resUpload['status'] !== 200){
+                if ($resUpload['status'] !== 200) {
                     return new JsonModel($resUpload);
                 }
-
-            }else{
+            } else {
                 return new JsonModel([
-                    'status'=> 405,
-                    'detail' => 'Formato invalido para as fotos enviadas'
+                    'status' => 405,
+                    'detail' => 'Formato invalido para as fotos enviadas',
                 ]);
             }
 
             $dataJson = [
                 'status' => 200,
-                'data' => $resUpload['data'] ?? $resUpload
+                'data' => $resUpload['data'] ?? $resUpload,
             ];
 
             return new JsonModel($dataJson);
         }
     }
 
-    public function delete() {
+    public function delete()
+    {
         $idFoto = $this->params('id');
         $idVeiculo = $this->params()->fromQuery('idVeiculo');
 
-        /* @var $veiculosFotosModel VeiculosFotos */
+        /** @var VeiculosFotos $veiculosFotosModel */
         $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
 
-        #deletar fotos do servidor
+        // deletar fotos do servidor
         $retorno = $veiculosFotosModel->delete(['listaFotos' => [$idFoto]]);
 
-        if($retorno['status'] !== 200){
+        if ($retorno['status'] !== 200) {
             return new JsonModel($retorno);
         }
         $ordem = [];
@@ -121,28 +116,27 @@ class VeiculoFotosController extends AbstractActionController {
                         ->json();
 
         $auxOrdem = 1;
-        foreach($fotosVeiculo['data'] as $foto){
+        foreach ($fotosVeiculo['data'] as $foto) {
                     $ordem[$auxOrdem] = $foto['idFoto'];
                     $auxOrdem++;
         }
 
         $resReordem = $this->getApiClient()->veiculosFotosPut([
-                    'reordem' => $ordem,
-                    'metadata' => [
-                        'idVeiculo' => $idVeiculo
-                    ],
-                ])->json();
+            'reordem' => $ordem,
+            'metadata' => [
+                'idVeiculo' => $idVeiculo,
+            ],
+        ])->json();
 
-        if($resReordem['status'] !== 200){
+        if ($resReordem['status'] !== 200) {
             return new JsonModel($retorno);
         }
 
         $dataJson = [
-                'status' => 200,
-                'detail' => 'Foto deletada com sucesso.'
-            ];
+            'status' => 200,
+            'detail' => 'Foto deletada com sucesso.',
+        ];
 
         return new JsonModel($dataJson);
-
     }
 }

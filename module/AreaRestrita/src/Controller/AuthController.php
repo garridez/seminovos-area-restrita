@@ -5,18 +5,21 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Form\Login;
 use AreaRestrita\Service\AuthManager;
 use Laminas\Authentication\AuthenticationService;
-use Laminas\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\Http\Client;
+use Laminas\Http\Response;
 use Laminas\Session\SessionManager;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\ViewModel;
 
 class AuthController extends AbstractActionController
 {
-
     public function loginAction()
     {
         /** @var ServiceLocatorInterface $container */
         global $container;
 
-         /* @var $authService AuthenticationService */
+         /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
 
@@ -42,7 +45,7 @@ class AuthController extends AbstractActionController
         ]);
         $this->layout('layout/login.phtml');
 
-        /* @var $authService AuthenticationService */
+        /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
 
         if ($authService->hasIdentity()) {
@@ -53,14 +56,11 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('restrito');
         }
 
-
-
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $viewModel;
         }
         $post = $request->getPost();
-
 
         if (!isset($post['token']) || !$post['token']) {
             $viewModel->setVariable('loginError', true);
@@ -69,27 +69,25 @@ class AuthController extends AbstractActionController
             return $viewModel;
         }
 
-        $httpClient = new \Laminas\Http\Client('https://www.google.com/recaptcha/api/siteverify');
+        $httpClient = new Client('https://www.google.com/recaptcha/api/siteverify');
 
         $request = $httpClient->getRequest();
         $httpClient->setMethod('POST');
-        $request->setPost(new \Laminas\Stdlib\Parameters([
+        $request->setPost(new Parameters([
             'secret' => '6Lcm0A8fAAAAAKHOaaBQDQYUIX4jV07KiYcrvlE_',
-            'response' => $post['token']
+            'response' => $post['token'],
         ]));
 
         $resposta = $httpClient->send();
 
-
         if ($resposta->getStatusCode()) {
-            $result = json_decode($resposta->getBody(), true) ;
+            $result = json_decode($resposta->getBody(), true);
             if (!$result['success']) {
                 $viewModel->setVariable('loginError', true);
                 $viewModel->setVariable('captchaError', json_encode($result['error-codes']));
                 \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
                 return $viewModel;
             }
-
         } else {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
@@ -97,7 +95,7 @@ class AuthController extends AbstractActionController
             return $viewModel;
         }
 
-        /* @var $form \Laminas\Form\Form */
+        /** @var Form $form */
         $form = null;
         foreach ([$particularForm, $revendaForm] as $form) {
             if ($form->getName() === $post['type']) {
@@ -119,7 +117,7 @@ class AuthController extends AbstractActionController
                 'emailOrCnpj' => $data['usuarioEmail'],
                 'usuarioSenha' => $data['usuarioSenha'],
                 'tipoCadastro' => $data['tipoCadastro'],
-                'rememberMe' => $rememberMe
+                'rememberMe' => $rememberMe,
             ]);
             if ($result->getCode() === $result::SUCCESS) {
                 \SnBH\Common\Logs\Login::success($result->getIdentity(), $data['usuarioEmail']);
@@ -128,7 +126,7 @@ class AuthController extends AbstractActionController
                     return $this->redirect()->toUrl($redirect);
                 }
 
-                if($data['tipoCadastro'] == 1) {
+                if ($data['tipoCadastro'] == 1) {
                     return $this->redirect()->toRoute('restrito', [], ['query' => ['exibirModal' => 1]]);
                 }
 
@@ -147,7 +145,7 @@ class AuthController extends AbstractActionController
     {
         global $container;
 
-        /* @var $authService AuthenticationService */
+    /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
 
@@ -161,14 +159,14 @@ class AuthController extends AbstractActionController
      *  Se estiver tudo certo, faz o login sem usar senha
      *  Isso acontece principalmente quando o usuário recebe um email
      *
-     * @return \Laminas\Http\Response
+     * @return Response
      */
     public function loginAutomaticoAction()
     {
         $encryptedText = $this->params('dados');
 
         $dataRes = $this->getApiClient()->crypterGet([
-            'data' => $encryptedText
+            'data' => $encryptedText,
         ]);
 
         if ($dataRes->status !== 200) {
@@ -185,7 +183,7 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('auth');
         }
 
-        /* @var $authService AuthenticationService */
+        /** @var AuthenticationService $authService */
         $authService = $this->getContainer()->get(AuthenticationService::class);
 
         if ($authService->hasIdentity()) {
@@ -195,7 +193,7 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('auth');
         }
 
-        /* @var $authManager AuthManager  */
+        /** @var AuthManager $authManager */
         $authManager = $this->getContainer()->get(AuthManager::class);
 
         $result = $authManager->login([

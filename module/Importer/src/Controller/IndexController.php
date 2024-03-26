@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SnBH\Importer\Controller;
 
 use AreaRestrita\Model\Cadastros;
@@ -10,14 +9,14 @@ use Exception;
 use Laminas\Mvc\Controller\AbstractActionController;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\Common\Helper\StringFuncs;
+use Throwable;
 
 class IndexController extends AbstractActionController
 {
-
     protected array $currentVeiculo;
     protected array $cidades;
-    protected $idCadastro = null;
-    protected $idVeiculo  = null;
+    protected $idCadastro;
+    protected $idVeiculo;
 
     protected $serviceManager;
     protected $apiClient;
@@ -32,7 +31,7 @@ class IndexController extends AbstractActionController
 
         //init laminas utilities
         $this->apiClient      = $this->getApiClient();
-        $this->serviceManager =  $this->getEvent()->getApplication()->getServiceManager();
+        $this->serviceManager = $this->getEvent()->getApplication()->getServiceManager();
     }
 
     protected function getApiClient(): ApiClient
@@ -50,9 +49,7 @@ class IndexController extends AbstractActionController
     {
         $this->init();
 
-
         try {
-
             $mailtoNumber = 0;
             $importer     = [];
 
@@ -61,50 +58,48 @@ class IndexController extends AbstractActionController
                 $this->idVeiculo      = null;
                 $this->currentVeiculo = $veiculo;
 
-                $telefone = str_replace( ['(', ')', '-' , ' '] , '', $this->currentVeiculo['telefone'] );
+                $telefone = str_replace(['(', ')', '-', ' '], '', $this->currentVeiculo['telefone']);
 
                 $cadastro = $this->apiClient->cadastrosGet([
-                    'email' =>  (IS_PROD) ? $this->currentVeiculo['email'] :   'mailto' . ++$mailtoNumber . '@webmotors.com.br',
+                    'email' => IS_PROD ? $this->currentVeiculo['email'] : 'mailto' . ++$mailtoNumber . '@webmotors.com.br',
                 ])->json();
 
                 //se cadastro não existe
-                if(empty($cadastro['data'])) {
+                if (empty($cadastro['data'])) {
                     $this->importarCadastro($mailtoNumber);
                 } else {
                     $this->idCadastro = $cadastro['data']['0']['idCadastro'];
                 }
 
-                $responseImportarVeiculo =  $this->importarVeiculo();
+                $responseImportarVeiculo = $this->importarVeiculo();
 
                 //se der erro por placa já cadsatrada continua o foreach
-                if(!$responseImportarVeiculo) {
+                if (!$responseImportarVeiculo) {
                     continue;
                 }
 
-                if( count($this->currentVeiculo['fotos']) > 0 ) {
+                if (count($this->currentVeiculo['fotos']) > 0) {
                     $this->importarFotos();
                 }
 
-
                  $importer[] = [
-                    'id' => $this->currentVeiculo['id'],
-                    'id_cadastro' => $this->idCadastro,
-                    'id_veiculo' => $this->idVeiculo,
-                    'email' => $this->currentVeiculo['email']
+                     'id' => $this->currentVeiculo['id'],
+                     'id_cadastro' => $this->idCadastro,
+                     'id_veiculo' => $this->idVeiculo,
+                     'email' => $this->currentVeiculo['email'],
                  ];
             }
             echo json_encode([
                 'importer' => $importer,
                 'status'   => 200,
-                'message'  => 'Foram importados ' . count($importer) . 'veículos.'
-            ],  JSON_PRETTY_PRINT);
-
-        } catch (\Throwable $th) {
+                'message'  => 'Foram importados ' . count($importer) . 'veículos.',
+            ], JSON_PRETTY_PRINT);
+        } catch (Throwable $th) {
             echo json_encode([
                 'code' => $th->getCode(),
                 'message' => $th->getMessage(),
-                'line' => $th->getLine()
-            ],  JSON_PRETTY_PRINT);
+                'line' => $th->getLine(),
+            ], JSON_PRETTY_PRINT);
         }
     }
 
@@ -121,25 +116,23 @@ class IndexController extends AbstractActionController
         return $veiculos;
     }
 
-
     /**
      * Importa Cadastro
      */
     private function importarCadastro($mailtoNumber = 0)
     {
-        /* @var $cadastrosModel Cadastros */
+        /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->serviceManager->get(Cadastros::class);
 
-        $estado = trim(explode('-' , $this->currentVeiculo['cidade'])[1]);
+        $estado = trim(explode('-', $this->currentVeiculo['cidade'])[1]);
         $estado = $this->getInfoEstado($estado);
 
-        if(is_null($estado)) {
+        if (is_null($estado)) {
             $idCidade = null;
             $idEstado = null;
         } else {
-            $cidade = trim(explode('-' , $this->currentVeiculo['cidade'])[0]);
+            $cidade = trim(explode('-', $this->currentVeiculo['cidade'])[0]);
             $cidade = $this->getInfoCidade($estado['idEstado'], $cidade);
-
 
             $idCidade = $cidade['idCidade'];
             $idEstado = $estado['idEstado'];
@@ -157,26 +150,24 @@ class IndexController extends AbstractActionController
             'telefone_1_is_wpp'    => 0,
             'telefone_2'           => $this->currentVeiculo['telefone'],
             'telefone_2_is_wpp'    => 0,
-            'email'                => (IS_PROD) ? $this->currentVeiculo['email'] :   'mailto' . $mailtoNumber . '@webmotors.com.br',
+            'email'                => IS_PROD ? $this->currentVeiculo['email'] : 'mailto' . $mailtoNumber . '@webmotors.com.br',
             'senha'                => 'snBH2023',
             'idCidade'             => $idCidade,
             'idEstado'             => $idEstado,
             'estado'               => $estado,
-            'cadastroSimplificado' => true
+            'cadastroSimplificado' => true,
         ];
-
 
         $resPost = $cadastrosModel
                         ->post($postDto)
                         ->json();
 
-        if(isset($resPost['status']) && $resPost['status'] != 200) {
+        if (isset($resPost['status']) && $resPost['status'] != 200) {
             throw new Exception('Error importing registration ' . $postDto['email'] . ". " . $resPost['detail'], 1);
         }
 
-        $this->idCadastro =  $resPost['data'][0]['idCadastro'];
+        $this->idCadastro = $resPost['data'][0]['idCadastro'];
     }
-
 
     /**
      * Importa Veículos Com Acessórios
@@ -236,7 +227,7 @@ class IndexController extends AbstractActionController
             'kilometragem'    => $this->currentVeiculo['odometro'],
             'flagIpva'        => 0,
             'video'           => '',
-            'versao'          => isset($this->currentVeiculo['versao']) ? $this->currentVeiculo['versao'] : '',
+            'versao'          => $this->currentVeiculo['versao'] ?? '',
             'observacoes'     => '',
             'marca'           => $this->currentVeiculo['idMarca'],
             'idModelo'        => $this->currentVeiculo['idModelo'],
@@ -244,25 +235,23 @@ class IndexController extends AbstractActionController
             'anoModelo'       => $this->currentVeiculo['anoModelo'],
             'valor'           => $this->currentVeiculo['preco'],
             'idCombustivel'   => $combustivel,
-            'cor'             =>  $this->currentVeiculo['cor'],
+            'cor'             => $this->currentVeiculo['cor'],
             'idPlano'         => 1,
             'listaAcessorios' => $this->getListaAcessorios(),
             'originVehicle'   => 'ImportWebMotors',
             'aceitaLigacao'   => 1,
-            'aceitaChat'      => 1
+            'aceitaChat'      => 1,
         ];
 
         $res = $this->apiClient->veiculosPost($data)->json();
 
         if ($res['status'] != 200) {
-            if(isset($res['detail']) && $res['detail'] == "A placa informada: ".$this->currentVeiculo['placa'].", já está cadastrada em nosso sistema!") {
+            if (isset($res['detail']) && $res['detail'] == "A placa informada: " . $this->currentVeiculo['placa'] . ", já está cadastrada em nosso sistema!") {
                 return false;
             } else {
                 $title = $res['title'] ?? '';
                 $detail = $res['detail'] ?? '';
                 $messages = implode(' - ', $res['messages'] ?? []);
-
-
 
                 throw new Exception(
                     'Error importing vehicle ' . $this->currentVeiculo['id']
@@ -275,29 +264,27 @@ class IndexController extends AbstractActionController
         $this->idVeiculo = $res['data'][0]['idVeiculo'];
 
         $res = $this->apiClient->veiculosPut([
-            'idStatus' =>2,
-            ], $this->idVeiculo);
+            'idStatus' => 2,
+        ], $this->idVeiculo);
 
         return true;
     }
-
 
     /**
      * Importa Fotos
      */
     private function importarFotos()
     {
-
         $files = [];
         $ordem = [];
         $ordemCount = 0;
 
         //download the image
-        foreach ($this->currentVeiculo['fotos'] as $key => $foto){
+        foreach ($this->currentVeiculo['fotos'] as $key => $foto) {
             // Caminho completo do arquivo de destino
             $filename = basename($foto);
-            $files[] = $destinationFile = $this->getDestinationFile($this->idVeiculo).$filename;
-            $ordem[] =  $ordemCount++;
+            $files[] = $destinationFile = $this->getDestinationFile($this->idVeiculo) . $filename;
+            $ordem[] = $ordemCount++;
             // Baixa a imagem e a salva localmente
             file_put_contents($destinationFile, file_get_contents($foto));
         }
@@ -308,53 +295,52 @@ class IndexController extends AbstractActionController
             'ordem' => $ordem,
         ];
 
-        $data[$this->apiClient::KEY_FILES] = [
+        $data[$this->ApiClient::KEY_FILES] = [
             'fotos' => $files,
         ];
 
         $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
 
         $res = $this->apiClient->veiculosPut([
-            'idStatus' =>2,
-            ], $this->idVeiculo);
+            'idStatus' => 2,
+        ], $this->idVeiculo);
     }
-
 
     /**
      * Gera um array contendo a lista de acessórios do veículo para posterior envio à API.
      */
-    private function getListaAcessorios() : ?array
+    private function getListaAcessorios(): ?array
     {
         $listaAcessorios = [];
 
-        if( isset($this->currentVeiculo['accessorios']) && !empty($this->currentVeiculo['accessorios']) ) {
-            foreach($this->currentVeiculo['accessorios'] as $acessorio) {
-                if(isset($acessorio['id'])) {
+        if (isset($this->currentVeiculo['accessorios']) && !empty($this->currentVeiculo['accessorios'])) {
+            foreach ($this->currentVeiculo['accessorios'] as $acessorio) {
+                if (isset($acessorio['id'])) {
                     array_push($listaAcessorios, $acessorio['id']);
                 }
             }
         }
 
-        if($this->currentVeiculo['transmissao'] == 'Automática'){
-            array_push($listaAcessorios,11) ;
+        if ($this->currentVeiculo['transmissao'] == 'Automática') {
+            array_push($listaAcessorios, 11);
         }
 
         return $listaAcessorios;
     }
 
-
     /**
      * Retorna informações de um estado
      */
-    public function getInfoEstado(string $estado) : array
+    public function getInfoEstado(string $estado): array
     {
         $estadosModel = $this->serviceManager->get(Estados::class);
         $response = $estadosModel->get([
-            'sigla' => $estado
+            'sigla' => $estado,
         ]);
 
-        if(empty($response))
+        if (empty($response)) {
             return null;
+        }
 
         return $response[0];
     }
@@ -364,17 +350,17 @@ class IndexController extends AbstractActionController
      *
      * @return array $cidades
      */
-    private function getInfoCidade(int $estadoId, string $nomeCidade) : array
+    private function getInfoCidade(int $estadoId, string $nomeCidade): array
     {
-
         $cidadesModel = $this->serviceManager->get(Cidades::class);
         $response = $cidadesModel->get([
             'idEstado' => $estadoId,
-            'cidaNome' => StringFuncs::removerAcentos($nomeCidade)
+            'cidaNome' => StringFuncs::removerAcentos($nomeCidade),
         ]);
 
-        if(empty($response))
+        if (empty($response)) {
             return null;
+        }
 
         return $response[0];
     }

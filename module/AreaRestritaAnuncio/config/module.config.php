@@ -1,27 +1,21 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio;
 
-
-use AreaRestritaAnuncio\Controller\CadastrarController;
-use AreaRestrita\Controller\Factory\AbstractFactory;
-use AreaRestrita\Controller\Factory\AbstractFactoryClient;
+use AreaRestrita\Middleware;
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
 use AreaRestrita\Middleware\DispatchMiddleware;
-use AreaRestrita\Middleware\LoginMiddleware;
-use AreaRestrita\Middleware;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'session_containers' => [
-        Module::SESSION_NAMESPACE
+        Module::SESSION_NAMESPACE,
     ],
     'router' => [
         'routes' => [
@@ -32,8 +26,8 @@ return [
                     'route' => '/criar-anuncio-flow',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action' => 'criar-anuncio-flow'
-                    ]
+                        'action' => 'criar-anuncio-flow',
+                    ],
                 ],
             ],
             'selecionar-tipo' => [
@@ -43,8 +37,8 @@ return [
                     'route' => '/criar-anuncio',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action' => 'selecionar-tipo'
-                    ]
+                        'action' => 'selecionar-tipo',
+                    ],
                 ],
             ],
             'criar-anuncio' => [
@@ -63,8 +57,8 @@ return [
                         'middleware' => [
                             CheckIdVeiculoMiddleware::class,
                             DispatchMiddleware::class,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'child_routes' => [
                     'check-login' => [
@@ -78,7 +72,7 @@ return [
                                 'controller' => Controller\LoginController::class,
                                 'action' => 'check-login',
                             ],
-                        ]
+                        ],
                     ],
                     'login' => [
                         'type' => Segment::class,
@@ -91,7 +85,7 @@ return [
                                 'controller' => Controller\LoginController::class,
                                 'action' => 'login',
                             ],
-                        ]
+                        ],
                     ],
                     'criar-cadastro' => [
                         'type' => Segment::class,
@@ -130,8 +124,7 @@ return [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '',
-                            'defaults' => [
-                            ],
+                            'defaults' => [],
                         ],
                         'child_routes' => [
                             'dados' => [
@@ -148,8 +141,8 @@ return [
                                         'options' => [
                                             'route' => ':action',
                                             'constraints' => [
-                                                'action' => 'dados|preco|mais-informacoes|fotos|video|opcionais'
-                                            ]
+                                                'action' => 'dados|preco|mais-informacoes|fotos|video|opcionais',
+                                            ],
                                         ],
                                     ],
                                 ],
@@ -185,7 +178,7 @@ return [
                                             Middleware\LoginMiddleware::class,
                                             Middleware\CheckIdVeiculoMiddleware::class,
                                             Middleware\DispatchMiddleware::class,
-                                        ]
+                                        ],
                                     ],
                                 ],
                             ],
@@ -253,7 +246,6 @@ return [
                                     ],
                                 ],
                             ],
-
                         ],
                     ],
                 ],
@@ -297,7 +289,7 @@ return [
                     'route' => '/remember-pass-phone',
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
-                        'action' => 'rememberPassPhone'
+                        'action' => 'rememberPassPhone',
                     ],
                 ],
             ],
@@ -307,7 +299,7 @@ return [
                     'route' => '/validate-token',
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
-                        'action' => 'validateToken'
+                        'action' => 'validateToken',
                     ],
                 ],
             ],
@@ -317,7 +309,7 @@ return [
                     'route' => '/remember-pass',
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
-                        'action' => 'rememberPass'
+                        'action' => 'rememberPass',
                     ],
                 ],
             ],
@@ -327,7 +319,7 @@ return [
                     'route' => '/email-telefone-from-cpf-cnpj',
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
-                        'action' => 'getEmailTelefoneFromCpfOuCnpj'
+                        'action' => 'getEmailTelefoneFromCpfOuCnpj',
                     ],
                 ],
             ],
@@ -337,7 +329,7 @@ return [
                     'route' => '/remember-pass-save',
                     'defaults' => [
                         'controller' => Controller\CadastrarController::class,
-                        'action' => 'rememberPassSave'
+                        'action' => 'rememberPassSave',
                     ],
                 ],
             ],
@@ -347,7 +339,7 @@ return [
                     'route' => '/clear-cache[/:idVeiculo]',
                     'defaults' => [
                         'controller' => Controller\DadosVeiculoController::class,
-                        'action' => 'clear-cache'
+                        'action' => 'clear-cache',
                     ],
                 ],
             ],
@@ -358,8 +350,8 @@ return [
                     'route' => '/criar-anuncio-v2',
                     'defaults' => [
                         'controller' => Controller\ChatCriarAnuncioController::class,
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ],
             ],
         ],
@@ -375,7 +367,7 @@ return [
             Controller\PagamentoController::class => InvokableFactory::class,
             Controller\PlanoController::class => InvokableFactory::class,
             Controller\ServicosAdicionaisController::class => InvokableFactory::class,
-            Controller\ChatCriarAnuncioController::class => InvokableFactory::class
+            Controller\ChatCriarAnuncioController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [

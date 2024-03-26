@@ -1,8 +1,7 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
@@ -10,15 +9,11 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Model\SiteHospedado;
 use AreaRestrita\Model\SiteHospedadoBanner;
 use AreaRestrita\Model\SiteHospedadoConteudo;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
-use AreaRestrita\Form as Form;
-use AreaRestrita\Form\MeusDados;
-use AreaRestrita\Model\Cadastros;
 
 class MeuSiteController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -31,7 +26,7 @@ class MeuSiteController extends AbstractActionController
         /**
          * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -43,17 +38,17 @@ class MeuSiteController extends AbstractActionController
 
     public function indexAction()
     {
-        /* @var $siteHospedadoModel siteHospedado */
+        /** @var SiteHospedado $siteHospedadoModel */
         $siteHospedadoModel = $this->getContainer()->get(SiteHospedado::class);
 
         $dadosSiteHospedado = $siteHospedadoModel->get();
 
-        /* @var $siteHospedadoConteudoModel SiteHospedadoConteudo */
+        /** @var SiteHospedadoConteudo $siteHospedadoConteudoModel */
         $siteHospedadoConteudoModel = $this->getContainer()->get(SiteHospedadoConteudo::class);
 
         $dadosSiteHospedadoConteudo = $siteHospedadoConteudoModel->get($dadosSiteHospedado[0]['idSiteHospedado']);
 
-        /* @var $siteHospedadoBannerModel SiteHospedadoBanner */
+        /** @var SiteHospedadoBanner $siteHospedadoBannerModel */
         $siteHospedadoBannerModel = $this->getContainer()->get(SiteHospedadoBanner::class);
 
         $dadosSiteHospedadoBanner = $siteHospedadoBannerModel->get($dadosSiteHospedado[0]['idSiteHospedado']);

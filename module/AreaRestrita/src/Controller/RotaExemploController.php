@@ -1,18 +1,16 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita\Controller;
 
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
-use SnBH\ApiClient\Client as ApiClient;
 
 class RotaExemploController extends AbstractActionController
 {
-
     protected $container;
     protected $routeParams;
     protected $routeName;
@@ -23,9 +21,9 @@ class RotaExemploController extends AbstractActionController
         $this->container = $container;
 
         /**
-         * Apenas para mostrar na view a rota 
+         * Apenas para mostrar na view a rota
          */
-        /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
+        /** @var RouteMatch $routeMatch */
         $routeMatch = $container
             ->get('Application')
             ->getMvcEvent()
@@ -37,7 +35,6 @@ class RotaExemploController extends AbstractActionController
 
     public function todasRotasAction()
     {
-
         return new ViewModel([
             'router' => $this->getEvent()->getRouter(),
             'routeParams' => $this->routeParams,
@@ -46,7 +43,6 @@ class RotaExemploController extends AbstractActionController
 
     public function indexAction()
     {
-
         return new ViewModel([
             'parametro' => $this->params('parametro'),
             'routeParams' => $this->routeParams,
@@ -56,20 +52,19 @@ class RotaExemploController extends AbstractActionController
     public function subRotaAction()
     {
         return new ViewModel([
-            'routeParams' => $this->routeParams
+            'routeParams' => $this->routeParams,
         ]);
     }
 
     public function outraSubRotaAction()
     {
         return new ViewModel([
-            'routeParams' => $this->routeParams
+            'routeParams' => $this->routeParams,
         ]);
     }
 
     public function guiaAction()
     {
-        return new ViewModel([
-        ]);
+        return new ViewModel([]);
     }
 }

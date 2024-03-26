@@ -3,30 +3,24 @@
 namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\Cadastros;
-use AreaRestrita\Model\Veiculos;
-use Laminas\View\Model\ViewModel;
-use Laminas\View\Model\JsonModel;
-use SnBH\ApiClient\Client as ApiClient;
 use AreaRestrita\Model\Planos;
-use SnBH\ApiClient\Response;
+use AreaRestrita\Model\Veiculos;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
+use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiModel\Model\VeiculosInfo;
 
 class PainelController extends AbstractActionController
 {
-
     public function indexAction()
     {
-
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();
         $idCadastro = $cadastro['idCadastro'];
 
-
-
         /** @var Planos $planosModel */
         $planosModel = $this->getContainer()->get(Planos::class);
-
 
         /** @var array $dadosPlanos */
         $dadosPlanos = $planosModel->get('revenda');
@@ -38,7 +32,7 @@ class PainelController extends AbstractActionController
         $veiculosModel = $this->getContainer()->get(Veiculos::class);
 
         $veiculos = $veiculosModel->getAll([
-            'idCadastro' => $idCadastro
+            'idCadastro' => $idCadastro,
         ], 60 * 10);
 
         $totalVeiculos = $veiculos['total'];
@@ -58,16 +52,16 @@ class PainelController extends AbstractActionController
 
         /** @var array $metricas */
         $metricas = $apiClient->veiculosMetricasGet([
-            'idVeiculo' => $idsVeiculos
+            'idVeiculo' => $idsVeiculos,
         ], null, 60 * 60 * 24)->getData();
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
-            'agruparPor' => 'data'
+            'agruparPor' => 'data',
         ], null, 60 * 60 * 24)->getData();
 
         $maisAcessados = $apiClient->maisAcessadosGet([
-            'qtd' => 30
+            'qtd' => 30,
         ], null, 60 * 60 * 24)->getData();
 
         $apiClient->setStatusRangeCacheable(200, 404);
@@ -78,7 +72,7 @@ class PainelController extends AbstractActionController
         /** @var VeiculosInfo $veiculosInfoModel */
         $veiculosInfoModel = $this->getContainer()->get(VeiculosInfo::class);
 
-        foreach ($veiculos['data'] as  $k => $veiculo) {
+        foreach ($veiculos['data'] as $k => $veiculo) {
             $idVeiculo = $veiculo['idVeiculo'];
             $precoInfo = $veiculosInfoModel->get(
                 $veiculo['idModelo'],
@@ -119,7 +113,7 @@ class PainelController extends AbstractActionController
 
         return new JsonModel([
             'success' => 'SUCCESS',
-            'data' =>  $contador,
+            'data' => $contador,
         ]);
     }
 
@@ -127,11 +121,11 @@ class PainelController extends AbstractActionController
     {
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
-        $contador =  $apiClient->contadorGet(['modelo' => true])->getData();
+        $contador = $apiClient->contadorGet(['modelo' => true])->getData();
 
         return new JsonModel([
             'success' => 'SUCCESS',
-            'data' =>  $contador,
+            'data' => $contador,
         ]);
     }
 
@@ -143,7 +137,7 @@ class PainelController extends AbstractActionController
 
         return new JsonModel([
             'success' => 'SUCCESS',
-            'data' =>  $contador,
+            'data' => $contador,
         ]);
     }
 
@@ -158,7 +152,7 @@ class PainelController extends AbstractActionController
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
         $metricas = $apiClient->veiculosMetricasGet([
-            'idVeiculo' => $idVeiculo
+            'idVeiculo' => $idVeiculo,
         ], null, 60 * 60 * 24)->getData()[$idVeiculo] ?? [
             'acesso' => [
                 'total' => 0,
@@ -167,13 +161,12 @@ class PainelController extends AbstractActionController
             'impressao' => [
                 'total' => 0,
                 'data' => [],
-            ]
+            ],
         ];
 
         $cliques = $metricas['acesso']['total'] ?? 0;
         $impressoes = $metricas['impressao']['total'] ?? 0;
         $contato = 0;
-
 
         $frase = "";
 
@@ -257,25 +250,24 @@ class PainelController extends AbstractActionController
             'impressoes' => $impressoes,
             'contato' => $contato,
             'frase' => $frase,
-            'metricas' => $metricas
+            'metricas' => $metricas,
         ]);
     }
 
     public function tabelaFipeAction()
     {
-
         $params = $this->params()->fromPost();
 
         $apiClient = $this->getContainer()->get(ApiClient::class);
         $data = $apiClient->versaoGet([
             'idModelo' => $params['modeloCarro'],
             'ano' => $params['ano'],
-            'idMarca' => $params['idMarca']
+            'idMarca' => $params['idMarca'],
         ])->getData();
 
         return new JsonModel([
             'success' => '200',
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }

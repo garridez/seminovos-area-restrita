@@ -1,8 +1,7 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestritaAnuncio\Controller;
@@ -12,7 +11,6 @@ use Laminas\View\Model\ViewModel;
 
 class CriarAnuncioController extends AbstractActionController
 {
-
     public function indexAction()
     {
         /**
@@ -24,7 +22,7 @@ class CriarAnuncioController extends AbstractActionController
         $tipos = [
             'carro' => 1,
             'caminhao' => 2,
-            'moto' => 3
+            'moto' => 3,
         ];
         $adicionalData = [];
         $params = $this->params();
@@ -35,15 +33,15 @@ class CriarAnuncioController extends AbstractActionController
             $data = $this->getApiClient()
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
-                    ], (int) $idVeiculo, false)
+                ], (int) $idVeiculo, false)
                 ->json();
             // Essa chamada serve para colocar em cache os dados do veículo
             // Assim a busca dos próximos steps fica mais rápida
             $this->getApiClient()
                 ->veiculosGet([
                     'ignorarCondicoesBasicas' => true,
-                    ], (int) $idVeiculo, 5);
-            
+                ], (int) $idVeiculo, 5);
+
             if ($data['status'] !== 200) {
                 /**
                  * @todo Redirecionar para algum lugar e informar o erro
@@ -62,7 +60,7 @@ class CriarAnuncioController extends AbstractActionController
         $viewModel = new ViewModel([
             'routeParams' => $params->fromRoute(),
             'tipoVeiculo' => $tipos[strtolower((string) $this->params()->fromRoute('tipo'))],
-            ] + $adicionalData);
+        ] + $adicionalData);
 
         $this->layout('layout/criar-anuncio');
         return $viewModel;

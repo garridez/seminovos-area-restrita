@@ -4,7 +4,7 @@ namespace AreaRestritaAnuncio\Form\Cadastro;
 
 use Laminas\Form\Element;
 use Laminas\Form\Form;
-use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\Hostname;
 
 class CadastroCarroBolsoForm extends Form
 {
@@ -21,10 +21,10 @@ class CadastroCarroBolsoForm extends Form
             'attributes' => [
                 'required' => true,
                 'class' => 'form-control',
-                'placeholder' => 'Nome Sobrenome'
-            ]
+                'placeholder' => 'Nome Sobrenome',
+            ],
         ]);
-        
+
         $this->add([
             'type' => Element\Email::class,
             'name' => 'email',
@@ -35,9 +35,9 @@ class CadastroCarroBolsoForm extends Form
                 'required' => true,
                 'class' => 'form-control',
                 'placeholder' => 'seuemail@example.com.br',
-            ]
+            ],
         ]);
-        
+
         $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_2',
@@ -51,7 +51,7 @@ class CadastroCarroBolsoForm extends Form
                 'placeholder' => '(__) _____-____',
             ],
         ]);
-        
+
         $this->configureInputFilter();
     }
 
@@ -62,7 +62,7 @@ class CadastroCarroBolsoForm extends Form
             'name' => 'responsavelNome',
             'required' => true,
         ]);
-        
+
         $inputFilter->add([
             'name' => 'email',
             'required' => true,
@@ -74,7 +74,7 @@ class CadastroCarroBolsoForm extends Form
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'allow' => \Laminas\Validator\Hostname::ALLOW_DNS,
+                        'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => false,
                     ],
                 ],

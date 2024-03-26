@@ -3,11 +3,11 @@
 namespace AreaRestrita\Controller;
 
 use Laminas\Http\Header;
+use Laminas\Http\PhpEnvironment\Response;
 use Laminas\View\Model\JsonModel;
 
 class JsonController extends AbstractActionController
 {
-
     public function cidadesAction()
     {
         $params = $this->params()->fromQuery();
@@ -54,13 +54,11 @@ class JsonController extends AbstractActionController
             }
         }
 
-
         return new JsonModel($data);
     }
 
     protected function setHeaderCache(): void
     {
-
         $expires = new Header\Expires();
         $expires->setDate(date(DATE_W3C, time() + (60 * 60 * 24 * 31)));
 
@@ -69,11 +67,11 @@ class JsonController extends AbstractActionController
 
         $pragma = new Header\Pragma('cache');
 
-        /** @var \Laminas\Http\PhpEnvironment\Response $response */
+        /** @var Response $response */
         $response = $this->getResponse();
         $response->getHeaders()
-            ->addHeader($expires)
-            ->addHeader($pragma)
-            ->addHeader($cacheControl);
+        ->addHeader($expires)
+        ->addHeader($pragma)
+        ->addHeader($cacheControl);
     }
 }

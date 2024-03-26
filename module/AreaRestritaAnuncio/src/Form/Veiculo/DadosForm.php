@@ -2,7 +2,8 @@
 
 namespace AreaRestritaAnuncio\Form\Veiculo;
 
-use SnBH\ApiClient\Client as ApiClient;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
 use SnBH\ApiModel\Model\VeiculoTipo;
 use SnBH\Common\Form\Element\CheckboxAcessorios;
 use SnBH\Common\Form\Element\SelectAnoFabricacao;
@@ -14,13 +15,9 @@ use SnBH\Common\Form\Element\SelectModelo;
 use SnBH\Common\Form\Element\SelectMotor;
 use SnBH\Common\Form\Element\SelectPortas;
 use SnBH\Common\Form\Element\SelectValvula;
-use Laminas\Form\Element;
-use Laminas\Form\Form;
-use Laminas\Validator;
 
 class DadosForm extends Form
 {
-
     public function __construct($name = 'form_dadosVeiculo', $options = [])
     {
         parent::__construct($name, $options);
@@ -41,7 +38,7 @@ class DadosForm extends Form
                 'placeholder' => 'abc1234',
                 'required' => true,
                 'minlength' => 7,
-            ]
+            ],
         ]);
 
         $this->add([
@@ -73,7 +70,7 @@ class DadosForm extends Form
                 'label' => 'Carro proveniente de leilão?',
                 'use_hidden_element' => true,
                 'checked_value' => '1',
-                'unchecked_value' => '0'
+                'unchecked_value' => '0',
             ],
         ]);
 
@@ -98,7 +95,7 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Select::class,
@@ -111,7 +108,7 @@ class DadosForm extends Form
             ],
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         /*$this->add([
             'type' => Element\Text::class,
@@ -128,7 +125,7 @@ class DadosForm extends Form
             'name' => 'motor',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => Element\Text::class,
@@ -140,10 +137,10 @@ class DadosForm extends Form
                 'required' => true,
                 'data-mask' => '0000cc',
                 'data-mask-options' => json_encode([
-                    'reverse' => true
+                    'reverse' => true,
                 ]),
                 'placeholder' => 'ex: 500cc',
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectValvula::class,
@@ -151,42 +148,42 @@ class DadosForm extends Form
             'attributes' => [
                 'required' => false,
                 'data-init-plugin' => 'select2',
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectAnoFabricacao::class,
             'name' => 'anoFabricacao',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectAnoModelo::class,
             'name' => 'anoModelo',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectPortas::class,
             'name' => 'portas',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectCor::class,
             'name' => 'cor',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
         $this->add([
             'type' => SelectCombustivel::class,
             'name' => 'combustivel',
             'attributes' => [
                 'required' => true,
-            ]
+            ],
         ]);
 
         $this->add([
@@ -199,7 +196,7 @@ class DadosForm extends Form
                 'unchecked_value' => '0',
             ],
         ]);
-        
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'adaptado',
@@ -216,7 +213,6 @@ class DadosForm extends Form
         $checkboxAcessorios = $container->get(CheckboxAcessorios::class);
         $checkboxAcessorios->setName('checkboxacessorios');
         $this->add($checkboxAcessorios);
-
 
         $this->add([
             'type' => Element\Submit::class,
@@ -253,8 +249,8 @@ class DadosForm extends Form
             'required' => true,
         ]);
         /*$inputFilter->add([
-            'name' => 'idValvula',
-            'required' => true,
+        'name' => 'idValvula',
+        'required' => true,
         ]);*/
         $inputFilter->add([
             'name' => 'anoFabricacao',
@@ -288,6 +284,7 @@ class DadosForm extends Form
 
     /**
      * Seta o tipo de veículo dentro dos inputs relevantes
+     *
      * @param int $tipoVeiculo
      */
     public function setTipoVeiculo($tipoVeiculo)
@@ -297,7 +294,7 @@ class DadosForm extends Form
         $removerCamposPorTipo = [
             VeiculoTipo::TIPO_CARRO => [
                 'motoCilindradas',
-                'motoTrilha'
+                'motoTrilha',
             ],
             VeiculoTipo::TIPO_CAMINHAO => [
                 'idValvula',
@@ -305,13 +302,13 @@ class DadosForm extends Form
                 'acessorios',
                 'motoCilindradas',
                 'motoTrilha',
-                'adaptado'
+                'adaptado',
             ],
             VeiculoTipo::TIPO_MOTO => [
                 'idValvula',
                 'motor',
                 'portas',
-                'adaptado'
+                'adaptado',
             ],
         ];
         if (isset($removerCamposPorTipo[$tipoVeiculo])) {
@@ -326,7 +323,7 @@ class DadosForm extends Form
      */
     public function setIsEdition($isEdition)
     {
-        $isEdition = (boolean) $isEdition;
+        $isEdition = (bool) $isEdition;
         $readonly = [
             'idMarca',
             'placa',
@@ -340,13 +337,13 @@ class DadosForm extends Form
             'portas',
             'combustivel',
             'motoCilindradas',
-            'flagLeilao'
+            'flagLeilao',
         ];
         foreach ($readonly as $name) {
             if ($this->has($name)) {
                 $this->get($name)
-                    ->setAttribute('readonly', $isEdition)
-                    ->setAttribute('disabled', $isEdition);
+                ->setAttribute('readonly', $isEdition)
+                ->setAttribute('disabled', $isEdition);
             }
         }
     }

@@ -3,9 +3,9 @@
 namespace AreaRestrita\Middleware\Factory;
 
 use AreaRestrita\Middleware\CheckIdVeiculoMiddleware;
-use Psr\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
 
 class CheckIdVeiculoMiddlewareFactory implements FactoryInterface

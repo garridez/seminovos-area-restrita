@@ -9,8 +9,6 @@ trait TraitCadastro
 {
     /**
      * Já deve estar setado pela classe que vai usar esse trait
-     *
-     * @var ServiceManager
      */
     protected ServiceManager $container;
 
