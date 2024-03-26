@@ -16,6 +16,7 @@ class PainelController extends AbstractActionController
 
     public function indexAction()
     {
+
         /** @var Cadastros $cadastrosModel */
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         $cadastro = $cadastrosModel->getCurrent();

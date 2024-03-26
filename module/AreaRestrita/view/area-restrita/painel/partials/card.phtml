@@ -1,19 +1,26 @@
-<div class="col-6 col-sm-4 col-md-2 card bg-dark m--0 mb-2">
-    <div class="card-header row text-center text-white">
-        <b><?= $header ?></b>
-    </div>
-    <div class="card-body row text-white p-0">
-        <?php if ($textB) : ?>
-            <div class="col-6 border-right-c border-s-2">
-                <?= $textA ?>
+<?php
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+
+?>
+<div class="col-6 col-sm-4 col-md-3  m--0 mb-2">
+    <div class="card bg--dark">
+        <div class="card-header row text-center">
+            <b><?= $header ?></b>
+        </div>
+        <div class="card-body row p--0">
+            <div class="col-6 border-right-c border-s-1 border-1-10">
+                <div class="h4"><?= $textA['title'] ?></div>
+                <br>
+                <div class="h4"><?= $textA['body'] ?></div>
             </div>
             <div class="col-6 text-center">
-                <?= $textB ?>
+                <div class="h4"><?= $textB['title'] ?></div>
+                <br>
+                <div class="h4"><?= $textB['body'] ?></div>
             </div>
-        <?php else : ?>
-            <?= $textA ?>
-        <?php endif; ?>
 
+        </div>
     </div>
 
 </div>

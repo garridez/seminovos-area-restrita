@@ -2,5 +2,5 @@
 
 if [ "$APPLICATION_ENV" = 'development' ]; then
     yarn
-    npm run watch &
+    yarn run watch &
 fi

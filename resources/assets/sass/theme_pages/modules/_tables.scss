@@ -2,7 +2,7 @@
 [16. Tables and Datatables]
 */
 
-/* Generic Tables 
+/* Generic Tables
 ------------------------------------
 */
 .table {
@@ -41,7 +41,7 @@
                 background: #fff;
                 border-bottom: 1px solid fade-out($color-master-light, .3);
                 border-top: 0px;
-                padding:20px;
+                //padding:20px;
                 font-size: 13.5px;
                 .btn-tag {
                     background:fade-out($color-master-dark, .93);
@@ -97,7 +97,7 @@
                     border-top: 0;
                 }
             }
-        }       
+        }
     }
     &.table-condensed {
         table-layout: fixed;
@@ -194,7 +194,7 @@
     margin-bottom: 0 !important;
 }
 
-/* Data-tables 
+/* Data-tables
 ------------------------------------
 */
 .table.dataTable.no-footer{
@@ -242,7 +242,7 @@
 .dataTables_wrapper .dataTables_paginate ul > li.next > a,
 .dataTables_wrapper .dataTables_paginate ul > li.prev > a{
     opacity: 1;
-} 
+}
 .dataTables_wrapper .dataTables_paginate ul > li.disabled a{
     opacity: .35;
     &:hover{
@@ -320,8 +320,8 @@ table.dataTable thead .sorting_desc_disabled:after{
     opacity: 1;
 }
 
-table.dataTable.table-condensed .sorting:after, 
-table.dataTable.table-condensed .sorting_asc:after, 
+table.dataTable.table-condensed .sorting:after,
+table.dataTable.table-condensed .sorting_asc:after,
 table.dataTable.table-condensed .sorting_desc:after{
     top: 12px;
 }

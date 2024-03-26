@@ -15,14 +15,14 @@ $use-pulse: true;
 @import "~bootstrap/scss/functions";
 @import "~snbh-site/resources/assets/sass/variables";
 @import "~snbh-site/resources/assets/sass/bootstrap";
-@import "~snbh-site/resources/assets/sass/components/all";
+//@import "~snbh-site/resources/assets/sass/components/all";
 @import "~snbh-site/resources/assets/sass/mvc/layouts/print";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/spinners";
-@import "~bootstrap/scss/dropdown";
-@import "~bootstrap/scss/tables";
-@import "~bootstrap/scss/utilities/text";
+//@import "~bootstrap/scss/dropdown";
+//@import "~bootstrap/scss/tables";
+//@import "~bootstrap/scss/utilities/text";
 //@import '~js-datepicker/src/datepicker';
 
 @import "theme_pages/themes/corporate/corporate";
@@ -46,7 +46,7 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 
 body.sidebar-collapsed {
     .page-sidebar {
-        width: 60px !important;
+        width: 64px !important;
     }
 
     .page-container {
@@ -63,6 +63,9 @@ body.sidebar-collapsed {
                 a.btn {
                     padding-left: 0;
                     padding-right: 0;
+                }
+                .icon-thumbnail {
+                    margin-right: 0;
                 }
 
                 .title {
@@ -115,4 +118,15 @@ body.sidebar-collapsed {
             }
         }
     }
+}
+
+
+[title]:not([title=""]):not(.btn) {
+    text-decoration: underline dotted;
+    &:not(a) {
+        cursor: help;
+    }
+}
+.menu-items [title]{
+    text-decoration: none !important;
 }

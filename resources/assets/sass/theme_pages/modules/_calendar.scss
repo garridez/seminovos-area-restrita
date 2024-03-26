@@ -163,7 +163,7 @@ Events / .event-container
                 .day-wrapper .week-date{
                     .day{
                         & > a{
-                            color: rgba(0, 0, 0, 0.6);	
+                            color: rgba(0, 0, 0, 0.6);
                         }
                     }
 
@@ -229,9 +229,9 @@ Events / .event-container
                         text-transform: uppercase;
                         text-align: center;
                         font-family: 'Montserrat';
-                        font-size: 10px;	
+                        font-size: 10px;
                         letter-spacing: 0.06em;
-                        font-size: 10.5px;	
+                        font-size: 10.5px;
                     }
                 }
             }
@@ -314,7 +314,7 @@ Events / .event-container
                 }
                 .grid .tble{
                     height: 100%;
-                    width: 100%;	
+                    width: 100%;
                 }
                 .event-container .event-title{
                     font-size: 12px;
@@ -333,7 +333,7 @@ Events / .event-container
                     width: 100%;
                     &.active{
                         display: inline-block;
-                    }		
+                    }
                 }
                 .trow{
                     display: block;
@@ -359,7 +359,7 @@ Events / .event-container
                     background: #fff;
                     .tcell{
                         padding: 10px;
-                        height: $cell-height/2 * 1px;
+                        height: calc($cell-height/2) * 1px;
                         position: relative;
                         .weekday{
                             font-size: 12px;
@@ -406,7 +406,7 @@ Events / .event-container
                         background: #fff;
                         padding: 0 10px;
                         .cell-inner{
-                            height: $cell-height/2 * 1px;
+                            height: calc($cell-height/2) * 1px;
                             position: relative;
                             &:first-child{
                                 border-bottom: 1px dotted $color-master-light;
@@ -427,7 +427,7 @@ Events / .event-container
                         }
                         &.disable{
                             background-color: $color-master-lightest;
-                        }	
+                        }
                     }
                 }
                 .loading{
@@ -535,9 +535,9 @@ Events / .event-container
             }
             &.slot-15{
                 .tble .trow .tcell {
-                    height: 100/4 * 1px;
+                    height: 25px;
                     .cell-inner{
-                        height: 100/4 * 1px;
+                        height: 25px;
                         border-bottom: 1px dotted $color-master-light;
                         &:last-child{
                             border-bottom: 1px solid $color-master-light;
@@ -550,7 +550,7 @@ Events / .event-container
             }
         }
         .allday-cell{
-            height: $cell-height/2 * 1px;
+            height: calc($cell-height/2) * 1px;
             display: inline-block;
             width: 50px;
             float:left;
@@ -635,7 +635,7 @@ Responsive Util
                     &.active{
                         display: inline-block;
                         background-color:#fff;
-                    }		
+                    }
                 }
                 .trow{
                     display: block;

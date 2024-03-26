@@ -381,6 +381,7 @@ body {
                     text-overflow: ellipsis;
                     width: 100%;
                 }
+
             }
             & > li {
                 display: block;
@@ -400,6 +401,15 @@ body {
                         padding-left: 5px !important;
                     }
                 }
+                &:nth-last-child(-n + 2) {
+                    position: absolute;
+                    bottom: 80px;
+                }
+                &:last-child {
+                    position: absolute;
+                    bottom: 30px;
+                }
+
 
                 & > a {
                     font-family: Arial, sans-serif;

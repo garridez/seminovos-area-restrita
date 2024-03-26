@@ -11,6 +11,6 @@ class VeiculosInfo extends AbstractModel
             'modelo' => $idModelo,
             'anoDe' => $anoDe,
             'anoAte' => $anoAte
-        ], null, 60 * 60 * 12)->getData();
+        ], null, 60 * 60 * 24)->getData();
     }
 }

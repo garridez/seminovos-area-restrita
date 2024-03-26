@@ -3,6 +3,7 @@
 /** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
 
 use AreaRestrita\View\Helper\Data;
+use SnBH\Common\Helper\NumberFuncs;
 use SnBH\Common\Helper\StringFuncs;
 
 if ($this->userInfo('tipoCadastro') == 1) {
@@ -42,51 +43,57 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
 
 <div class="container-fluid painel-revenda">
     <div class="row step step-geral justify-content-between">
+        <div class="col-12">
+            <h3>Estatísticas</h3>
+        </div>
         <?php
 
         echo $this->partial('partials/card.phtml', [
             'header' => 'PLANO',
-            'textA' =>
-            "Total anúncios<br>
-                <h2 class=\"text-white\">" . $this->qtdAnuncios()->totalAnuncios . "</h2>",
-            'textB' => "<span class=\"text-white\">R$ " . (StringFuncs::nF($this->valorPlanoRevenda, 2)) . "</span>",
-        ]);
-
-        echo $this->partial('partials/card.phtml', [
-            'header' => 'QUANTIDADE BÁSICOS',
-            'textA' =>
-            "Possui
-                <div class=\"text-white h3\">{$this->qtdAnuncios()->totalBasico}</div>",
-            'textB' =>
-            "Faltam
-                    <div class=\"text-white h3\">" . ($this->qtdAnuncios()->totalBasico - $this->qtdAnuncios()->totalBasicoPublicado) . "</div>",
-        ]);
-
-        echo $this->partial('partials/card.phtml', [
-            'header' => 'QUANTIDADE TURBO',
-            'textA' =>
-            "Possui
-                <div class=\"text-white h3\">" . $this->qtdAnuncios()->totalTurbo . "</div>",
-            'textB' =>
-            "Faltam
-                <div class=\"text-white h3\">" . ($this->qtdAnuncios()->totalTurbo - $this->qtdAnuncios()->totalTurboPublicados) . "</div>",
+            'textA' => [
+                'title' => 'Ativos/Total',
+                'body' => $this->totalVeiculosAtivos . '/' . $this->qtdAnuncios()->totalAnuncios,
+            ],
+            'textB' => [
+                'title' => 'Valor',
+                'body' => 'R$ ' . StringFuncs::nF($this->valorPlanoRevenda, 2),
+            ],
         ]);
 
         echo $this->partial('partials/card.phtml', [
             'header' => 'QUANTIDADE NITRO',
-            'textA' =>
-            "Possui
-                <div class=\"text-white h3\">" . $this->qtdAnuncios()->totalNitro . "</div>",
-            'textB' =>
-            "Faltam
-                <div class=\"text-white h3\">" . ($this->qtdAnuncios()->totalNitro - $this->qtdAnuncios()->totalNitroPublicados) . "</div>",
+            'textA' => [
+                'title' => 'Possui',
+                'body' => $this->qtdAnuncios()->totalNitro,
+            ],
+            'textB' => [
+                'title' => 'Disponíveis',
+                'body' => ($this->qtdAnuncios()->totalNitro - $this->qtdAnuncios()->totalNitroPublicados)
+            ],
         ]);
 
         echo $this->partial('partials/card.phtml', [
-            'header' => 'VEÍCULOS ATIVOS',
-            'textA' =>
-            "<h1 class=\"col-12 text-white\">" . $this->totalVeiculosAtivos . "</h1>",
-            'textB' => false,
+            'header' => 'QUANTIDADE TURBO',
+            'textA' => [
+                'title' => 'Possui',
+                'body' => $this->qtdAnuncios()->totalTurbo,
+            ],
+            'textB' => [
+                'title' => 'Disponíveis',
+                'body' => ($this->qtdAnuncios()->totalTurbo - $this->qtdAnuncios()->totalTurboPublicados),
+            ],
+        ]);
+
+        echo $this->partial('partials/card.phtml', [
+            'header' => 'QUANTIDADE FLEX',
+            'textA' => [
+                'title' => 'Possui',
+                'body' => $this->qtdAnuncios()->totalBasico,
+            ],
+            'textB' => [
+                'title' => 'Disponíveis',
+                'body' => ($this->qtdAnuncios()->totalBasico - $this->qtdAnuncios()->totalBasicoPublicado),
+            ],
         ]);
         ?>
     </div>
@@ -105,212 +112,9 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
             <?= $this->partial('partials/graficos/mais-acessados.phtml', [
                 'maisAcessados' => $maisAcessados,
             ]) ?>
-            <br>
-            <div class="d-none">
-                <figure class="highcharts-figure">
-                    <div id="container"></div>
-                </figure>
-
-                <script>
-                    (function() {
-                        var data = {
-                            "Fiat": [{
-                                "x": "2024-02-04",
-                                "y": 5244
-                            }, {
-                                "x": "2024-02-03",
-                                "y": 4819
-                            }, {
-                                "x": "2024-02-02",
-                                "y": 5501
-                            }, {
-                                "x": "2024-02-01",
-                                "y": 5990
-                            }, {
-                                "x": "2024-01-31",
-                                "y": 6310
-                            }, {
-                                "x": "2024-01-30",
-                                "y": 6412
-                            }, {
-                                "x": "2024-01-29",
-                                "y": 6684
-                            }, {
-                                "x": "2024-01-28",
-                                "y": 5538
-                            }, {
-                                "x": "2024-01-27",
-                                "y": 5478
-                            }],
-                            "Volkswagen": [{
-                                "x": "2024-02-04",
-                                "y": 4064
-                            }, {
-                                "x": "2024-02-03",
-                                "y": 3813
-                            }, {
-                                "x": "2024-02-02",
-                                "y": 4279
-                            }, {
-                                "x": "2024-02-01",
-                                "y": 4417
-                            }, {
-                                "x": "2024-01-31",
-                                "y": 4817
-                            }, {
-                                "x": "2024-01-30",
-                                "y": 5164
-                            }, {
-                                "x": "2024-01-29",
-                                "y": 5261
-                            }, {
-                                "x": "2024-01-28",
-                                "y": 4500
-                            }, {
-                                "x": "2024-01-27",
-                                "y": 4262
-                            }],
-                            "Chevrolet": [{
-                                "x": "2024-02-04",
-                                "y": 3542
-                            }, {
-                                "x": "2024-02-03",
-                                "y": 3265
-                            }, {
-                                "x": "2024-02-02",
-                                "y": 3773
-                            }, {
-                                "x": "2024-02-01",
-                                "y": 3886
-                            }, {
-                                "x": "2024-01-31",
-                                "y": 4103
-                            }, {
-                                "x": "2024-01-30",
-                                "y": 4253
-                            }, {
-                                "x": "2024-01-29",
-                                "y": 4271
-                            }, {
-                                "x": "2024-01-28",
-                                "y": 3877
-                            }, {
-                                "x": "2024-01-27",
-                                "y": 3717
-                            }],
-                            "Honda": [{
-                                "x": "2024-02-04",
-                                "y": 2904
-                            }, {
-                                "x": "2024-02-03",
-                                "y": 2738
-                            }, {
-                                "x": "2024-02-02",
-                                "y": 3030
-                            }, {
-                                "x": "2024-02-01",
-                                "y": 3073
-                            }, {
-                                "x": "2024-01-31",
-                                "y": 3419
-                            }, {
-                                "x": "2024-01-30",
-                                "y": 3406
-                            }, {
-                                "x": "2024-01-29",
-                                "y": 3569
-                            }, {
-                                "x": "2024-01-28",
-                                "y": 3130
-                            }, {
-                                "x": "2024-01-27",
-                                "y": 3033
-                            }],
-                            "Toyota": [{
-                                "x": "2024-02-04",
-                                "y": 2342
-                            }, {
-                                "x": "2024-02-03",
-                                "y": 2255
-                            }, {
-                                "x": "2024-02-02",
-                                "y": 2445
-                            }, {
-                                "x": "2024-02-01",
-                                "y": 2627
-                            }, {
-                                "x": "2024-01-31",
-                                "y": 2779
-                            }, {
-                                "x": "2024-01-30",
-                                "y": 2770
-                            }, {
-                                "x": "2024-01-29",
-                                "y": 2989
-                            }, {
-                                "x": "2024-01-28",
-                                "y": 2761
-                            }, {
-                                "x": "2024-01-27",
-                                "y": 2522
-                            }]
-                        };
-                        var series = [];
-                        for (var key in data) {
-                            series.push({
-                                name: key,
-                                data: data[key].map(function(point) {
-                                    return {
-                                        x: new Date(point.x).getTime(),
-                                        y: point.y
-                                    };
-
-                                    return [point.x, point.y];
-                                }),
-                            });
-                        }
-
-                        Highcharts.chart('container', {
-                            chart: {
-                                type: 'line'
-                            },
-                            title: {
-                                text: 'Marcas mais buscadas'
-                            },
-                            xAxis: {
-                                type: 'datetime',
-                            },
-                            yAxis: {
-
-                                title: {
-                                    text: 'Número de buscas'
-                                }
-                            },
-                            plotOptions: {
-                                line: {
-                                    dataLabels: {
-                                        enabled: true
-                                    },
-                                },
-                                series: {
-                                    animation: false
-                                }
-                            },
-                            series: series
-
-                        });
-                        console.log(series)
-                    })();
-                </script>
-            </div>
         </div>
     </div>
     <div class="row step step-seminovos d-none">
-        <div class="col-12 col-md-8">
-            <h5>
-                Informações portal SEMINOVOSBH
-            </h5>
-        </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-end pr-md-0">
             <div class="form-group mt-2">
                 <div class='input-group date'>
@@ -412,19 +216,19 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                 <label for="filtar-meus-veiculos">Filtrar:</label>
                 <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa ou veículo">
             </div>
-            <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered sortable">
+            <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
                         <th></th>
-                        <th>Placa</th>
-                        <th>Veículo</th>
-                        <th>Preço</th>
-                        <th>Data cadastro</th>
-                        <th>Plano</th>
-                        <th>Tempo cadastro</th>
-                        <th>Cliques</th>
-                        <th>Impressões</th>
+                        <th><span title="Clique para ordenar por &quot;Placa&quot;">Placa</span></th>
+                        <th><span title="Clique para ordenar por &quot;Veículo&quot;">Veículo</span></th>
+                        <th><span title="Clique para ordenar por &quot;Preço&quot;">Preço</span></th>
+                        <th><span title="Clique para ordenar por &quot;Data cadastro&quot;">Data cadastro</span></th>
+                        <th><span title="Clique para ordenar por &quot;Plano&quot;">Plano</span></th>
+                        <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
+                        <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
+                        <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
                         <th class="d-none d--md-table-cell">Cliques Telefone</th>
                         <th></th>
                         <th></th>
@@ -455,45 +259,46 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                             <td class="text-right" data-sort="<?= $veiculo['valor'] ?>">
                                 <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
                                 <br>
-                                <small title="Média Seminovos">
-                                    <?php
-                                    if ($veiculo['precoInfo']['mediaValor']) {
-                                        echo 'R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2);
-                                    } else {
-                                        echo '<span class="text-muted">Média indisponível</span>';
-                                    }
-                                    ?>
-                                </small>
                                 <?php
                                 if ($veiculo['precoInfo']['mediaValor']) {
+                                    $textMedia =  '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
+                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
+
                                     if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
                                         echo '<span title="Preço acima da média da Seminovos">';
-                                        echo $arrowUp;
-                                        echo '</span>';
+                                        echo $textMedia;
+                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
                                     } else {
                                         echo '<span title="Preço abaixo da média da Seminovos">';
-                                        echo $arrowDown;
-                                        echo '</span>';
+                                        echo $textMedia;
+                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
                                     }
+                                    echo '</span>';
+                                } else {
+                                    echo '<span class="text-muted">Média indisponível</span>';
                                 }
                                 ?>
                                 <br>
-                                <?php if ($veiculo['precoInfo']['fipe']) : ?>
-                                    <small><?= 'R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) ?></small>
-                                    <?php
+                                <?php if ($veiculo['precoInfo']['fipe']) :
+                                    $textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
+                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
                                     if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
                                         echo '<span title="Preço acima da tabela FIPE">';
-                                        echo $arrowUp;
-                                        echo '</span>';
+                                        echo $textFipe;
+                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
+                                        //echo $arrowUp;
                                     } else {
                                         echo '<span title="Preço abaixo da tabela FIPE">';
-                                        echo $arrowDown;
-                                        echo '</span>';
+                                        echo $textFipe;
+                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
+                                        //echo $arrowDown;
                                     }
-                                    ?>
-                                <?php else : ?>
-                                    <small class="text-muted">FIPE indisponível</small>
-                                <?php endif ?>
+                                    echo '</span>';
+                                ?>
+                                <?php else :
+                                    echo '<small class="text-muted">FIPE indisponível</small>';
+                                endif;
+                                ?>
                             </td>
                             <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
                             <td data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">

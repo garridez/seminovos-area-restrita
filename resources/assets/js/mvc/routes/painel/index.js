@@ -61,6 +61,7 @@ module.exports.callback = ($) => {
     */
 
     setTimeout(function () {
+        return;
         $.ajax({
             'type': 'GET',
             'dataType': 'json',
@@ -92,6 +93,7 @@ module.exports.callback = ($) => {
     }, 0)
 
     setTimeout(function () {
+        return;
         $.ajax({
             'type': 'GET',
             'dataType': 'json',
@@ -124,6 +126,7 @@ module.exports.callback = ($) => {
     }, 500)
 
     setTimeout(function () {
+        return;
         $.ajax({
             'type': 'GET',
             'dataType': 'json',

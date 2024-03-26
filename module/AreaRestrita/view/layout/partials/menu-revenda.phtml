@@ -48,13 +48,6 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
             </a>
             <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
         </li>
-        <li>
-            <a href="<?= $this->url('restrito/banners') ?>" title="Banners">
-                <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
-                <span class="title">Banners</span>
-            </a>
-
-        </li>
         <?php if (SHOW_CHAT) : ?>
             <li class="menu-chat">
                 <a href="<?= $this->url('restrito/chat') ?>" title="Chat">
@@ -118,6 +111,12 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
                 </a>
             </li>
         <?php endif; ?>
+        <li>
+            <a href="<?= $this->url('restrito/banners') ?>" title="Banners">
+                <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
+                <span class="title">Banners</span>
+            </a>
+        </li>
         <li class="qtd-anuncios-menu">
             <?=
             $this->partial('partials/qtd-anuncios-menu.phtml', [
@@ -128,7 +127,9 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         </li>
         <li>
             <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
-                <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail">
+                    <img src="/favicon.ico">
+                </span>
                 <span class="title">Ir para o site</span>
             </a>
         </li>

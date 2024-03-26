@@ -1,116 +1,128 @@
-&.c-painel.a-index{
-.painel-revenda{
-    h4{
-        font-size:1.2rem;
-    }
-    h5{
-        color:$black;
-        font-size:1.2rem;
-        font-weight: 600;
-    }
-    .step{
-        margin-bottom: 0.8rem;
-        &:last-child{
-            margin-bottom: 0;
+&.c-painel.a-index {
+    .painel-revenda {
+        h4 {
+            font-size: 1.2rem;
         }
-        h5{
-            border-bottom: 1px solid rgba($black,0.4);
-            @include media-breakpoint-down(sm) {
-                padding-left:1rem;
-                padding-bottom:0.7rem;
-                text-align: center;
-            }
+
+        h5 {
+            color: $black;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
-    }
-    .step-plano{
-        text-align: center;
-        background-color: $white;
-        padding: 0.2rem 0.5rem;
-        .btn-invert{
-            border: 1px solid $black;
-            border-radius: 0.4rem;
-            display: flex;
-            height: auto;
-            &:hover{
-                border: 1px solid $primary;
-                color: $primary;
+
+        .step {
+            margin-bottom: 0.8rem;
+
+            &:last-child {
+                margin-bottom: 0;
             }
-        }
-    }
-    .step-seminovos{
-        .list{
-            background-color: $white;
-            border-right: 1px solid #f0f0f0;
-            padding: 0 15px;
-            &:last-child{
-                border-right: 0;
-            }
-            .list-header{
-                font-size: 1.4rem;
-                padding: 0.5rem 0;
-                font-weight: 600;
-            }
-            .busca{
-                .num-busca{
-                    font-size:1.2rem;
-                    font-weight: 500;
+
+            h5 {
+                border-bottom: 1px solid rgba($black, 0.4);
+
+                @include media-breakpoint-down(sm) {
+                    padding-left: 1rem;
+                    padding-bottom: 0.7rem;
+                    text-align: center;
                 }
             }
         }
-    }
-    .step-geral{
-        .card{
-            padding:0;
-            margin-bottom: 0;
-            .card-header{
-                border-bottom: 3px solid #f0f0f0;
-                padding-top:10px;
-                span{
-                    text-align: center;
-                    font-size:1rem;
+
+        .step-plano {
+            text-align: center;
+            background-color: $white;
+            padding: 0.2rem 0.5rem;
+
+            .btn-invert {
+                border: 1px solid $black;
+                border-radius: 0.4rem;
+                display: flex;
+                height: auto;
+
+                &:hover {
+                    border: 1px solid $primary;
+                    color: $primary;
+                }
+            }
+        }
+
+        .step-seminovos {
+            .list {
+                background-color: $white;
+                border-right: 1px solid #f0f0f0;
+                padding: 0 15px;
+
+                &:last-child {
+                    border-right: 0;
+                }
+
+                .list-header {
+                    font-size: 1.4rem;
+                    padding: 0.5rem 0;
                     font-weight: 600;
-                    display:flex;
-                    justify-content: center;
-                    &:first-child{
-                        justify-content: start;
+                }
+
+                .busca {
+                    .num-busca {
+                        font-size: 1.2rem;
+                        font-weight: 500;
                     }
                 }
             }
-            .card-body{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                .qtd{
-                    font-size: 3rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                }
-                .prct{
+        }
 
+        .step-geral {
+            .card {
+                padding: 0;
+                margin-bottom: 0;
+
+                .card-header {
+                    border-bottom: 3px solid #f0f0f0;
+                    padding-top: 10px;
+
+                    span {
+                        text-align: center;
+                        font-size: 1rem;
+                        font-weight: 600;
+                        display: flex;
+                        justify-content: center;
+
+                        &:first-child {
+                            justify-content: start;
+                        }
+                    }
+                }
+
+                .card-body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    .qtd {
+                        font-size: 3rem;
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .prct {}
+                }
+            }
+        }
+
+        .step-meus-veiculos {
+            .tableveiculos {
+                .icon-1-5x {
+                    font-size: 1.5rem;
+                }
+
+                tbody > tr > td,
+                th {
+                    text-align: center;
+                    vertical-align: middle;
+                    //padding: 15px 10px;
                 }
             }
         }
     }
-    .step-meus-veiculos{
-        .tableveiculos{
-            .icon-1-5x{
-                font-size:1.5rem;
-            }
-            thead{
-                background-color: $white;
-            }
-            tbody>tr>td,th{
-                &:first-child{
-                    padding-left: 15px;
-                }
-                &:last-child{
-                    padding-right: 15px;
-                }
-                text-align: center;
-                padding: 15px 10px;
-            }
-        }
-    }
-}
 }

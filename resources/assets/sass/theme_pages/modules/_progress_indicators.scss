@@ -125,7 +125,7 @@
 .progress-info.progress-striped .bar, .progress-striped .bar-info {
     background-color: $color-info;
 }
-/* Circular Progress : indeterminate 
+/* Circular Progress : indeterminate
 ------------------------------------
 */
 .progress-circle-indeterminate{
@@ -153,7 +153,7 @@
         background-image: url('#{$base-img-url}/progress/progress-circle-complete.svg');
     }
 }
-/* Circular Progress 
+/* Circular Progress
 ------------------------------------
 */
 .progress-circle {
@@ -201,14 +201,14 @@
         }
     }
     .pie {
-        clip: rect(0, $size, $size, $size / 2);
+        clip: rect(0, $size, $size, calc($size / 2));
         height: $size;
         position: absolute;
         width: $size;
         .half-circle {
             border: $border solid $color-master;
             border-radius: 50%;
-            clip: rect(0, $size / 2, $size, 0);
+            clip: rect(0, calc($size / 2), $size, 0);
             height: $size;
             position: absolute;
             width: $size;
