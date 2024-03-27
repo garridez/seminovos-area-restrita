@@ -106,7 +106,12 @@ class Module
 
     public function showChat($sm): void
     {
-        $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
+        try {
+            $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
+        } catch (\Exception $e) {
+            define('SHOW_CHAT', 0);
+            return;
+        }
 
         if (!$cadastro) {
             define('SHOW_CHAT', 0);

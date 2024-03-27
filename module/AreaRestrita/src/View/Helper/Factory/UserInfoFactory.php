@@ -18,6 +18,6 @@ class UserInfoFactory implements FactoryInterface
         $cadastrosModel = $container->get(Cadastros::class);
         $data = $cadastrosModel->getCurrent();
 
-        return new UserInfo($data);
+        return new UserInfo($data ?: []);
     }
 }
