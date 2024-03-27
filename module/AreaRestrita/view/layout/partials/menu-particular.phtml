@@ -54,7 +54,9 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         </li>
         <li>
             <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
-                <span class="icon-thumbnail"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail">
+                    <img src="/favicon.ico">
+                </span>
                 <span class="title">Ir para o site</span>
             </a>
         </li>

@@ -45,7 +45,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
         ];
 
         ?>
-        <div class="mx-3 justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
+        <div class="justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2" title="<?php echo  "{$usados['publicado']} ativo(s) / {$usados['total']} cadastrado(s)"  ?>">
             <div class="linha-plano size-2x plano-<?= $slug ?> m-0">
                 <div class="icon-plano m-0">
                     <span class="bar-1"></span>
@@ -57,7 +57,8 @@ if ($this->userInfo('tipoCadastro') == 1) {
             </div>
             <div class="text-left ml-2 title">
                 <div>
-                    <b><?= $plano['nomePlano'] ?></b> <?php echo $usados['publicado'] . "/" . $usados['total'] ?>
+                    <b><?= $plano['nomePlano'] ?></b>
+                    <?php echo $usados['publicado'] . "/" . $usados['total'] ?>
                 </div>
             </div>
         </div>
