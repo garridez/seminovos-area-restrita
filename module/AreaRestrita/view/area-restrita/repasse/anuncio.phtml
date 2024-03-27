@@ -1,0 +1,74 @@
+<?php
+/* @var $this \Laminas\View\Renderer\PhpRenderer */
+$this->headTitle('Criar Novo Anúncio');
+$email  = $this->userInfo('email');
+?>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 d-flex">
+            <h3>Novo Anúncio</h3>
+        </div>
+    </div>
+    <input type="hidden" name="email" id="email" value="<?= $email?>">
+    <form action="" method="POST" id="save">
+
+            <div class="row d-flex justify-content-center mt-2">
+                <div class="form-group">
+                    <label for="license-plate">Placa:</label>
+                    <input type="text" name="license-plate" placeholder="Digite a placa do veículo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table no-border teste table-license-plate-api" style="display: none;">
+                    <thead>
+                        <tr class="header-table">
+                        <th>Marca</th>
+                        <th class="text-center">Modelo</th>
+                        <th class="text-center">Cor</th>
+                        <th class="text-center">Combustível</th>
+                        <th class="text-center">Cidade</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Valor Fipe</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x no-border-y">
+                        <tr>
+                        <td class="table-license-plate-api-brand"></td>
+                        <td class="text-center table-license-plate-api-model"></td>
+                        <td class="text-center table-license-plate-api-color"></td>
+                        <td class="text-center table-license-plate-api-fuel"></td>
+                        <td class="text-center table-license-plate-api-city"></td>
+                        <td class="text-center table-license-plate-api-state"></td>
+                        <td class="text-center table-license-plate-api-fipe-price"></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-2">
+                <div class="form-group">
+                    <label for="price">Preço: </label>
+                    <input type="text" name="valor" id="valor">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-2">
+                <div class="form-group">
+                    <label for="description">Descrição do Anúncio:</label>    
+                    <textarea class="form-control" required="required" name="description" cols="50" rows="10" placeholder="Informe aqui os detalhes do veículo"></textarea>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-2 mb-5">
+                <label for="enviar-fotos" class="mx-3">Enviar Fotos do Veículo:</label>
+                <input type="file" name="enviar-fotos[]" multiple>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-block btn-trans btn-info btn-rad"><i class="fa fa-save"></i> SALVAR</button>
+                </div>
+            </div>
+        </div>
+    </form>
