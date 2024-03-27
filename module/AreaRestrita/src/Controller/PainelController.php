@@ -53,17 +53,17 @@ class PainelController extends AbstractActionController
         /** @var array $metricas */
         $metricas = $apiClient->veiculosMetricasGet([
             'idVeiculo' => $idsVeiculos,
-        ], null, 60 * 60 * 24)->getData();
+        ], null, 60 * 60 * 24)->getData() ?? [];
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'data',
-        ], null, 60 * 60 * 24)->getData();
+        ], null, 60 * 60 * 24)->getData() ?? [];
 
         /** @var array $maisAcessados */
         $maisAcessados = $apiClient->maisAcessadosGet([
             'qtd' => 30,
-        ], null, 60 * 60 * 24)->getData();
+        ], null, 60 * 60 * 24)->getData() ?? [];
 
         $apiClient->setStatusRangeCacheable(200, 404);
         foreach ($veiculos['data'] as $veiculo) {
