@@ -32,7 +32,7 @@ class Module
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    public function onBootstrap(MvcEvent $e)
+    public function onBootstrap(MvcEvent $e): void
     {
         global $container;
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this->onDispatchError(...));
@@ -43,7 +43,7 @@ class Module
         $this->apiUserHeader($sm);
     }
 
-    public function apiUserHeader(ServiceManager $sm)
+    public function apiUserHeader(ServiceManager $sm): void
     {
         /** @var Request */
         $request = $sm->get('Request');
@@ -53,7 +53,9 @@ class Module
             return;
         }
 
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE){
+            session_start();
+        }
 
         /** @var AuthService $sessionManager */
         $authService = $sm->get(AuthService::class);
@@ -102,10 +104,8 @@ class Module
         });
     }
 
-    public function showChat($sm)
+    public function showChat($sm): void
     {
-        define('SHOW_CHAT', 0);
-        return;
         $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
 
         if (!$cadastro) {
@@ -119,11 +119,24 @@ class Module
             321321, //raul@seminovosbh.com.br
             327312, //wesley@seminovosbh.com.br
             335671, //joao@seminovosbh.com.br
+            81287,
+            120854,
+            269236,
+            290014,
+            293083,
+            304786,
+            317461,
+            327800,
+            332453,
+            335526,
+            386468,
+            396553,
+            436942,
         ];
         define('SHOW_CHAT', in_array($cadastro['idCadastro'], $idCadastrosPermitidos));
     }
 
-    public function onDispatchError(MvcEvent $e)
+    public function onDispatchError(MvcEvent $e): void
     {
         /** @var AuthService $authService */
         $authService = $e->getApplication()->getServiceManager()->get(AuthService::class);
@@ -132,7 +145,7 @@ class Module
         }
     }
 
-    public function setMeasureApiResponseTime(ServiceManager $sm)
+    public function setMeasureApiResponseTime(ServiceManager $sm): void
     {
         return;
         /** @var Logger $logger */
@@ -203,7 +216,7 @@ class Module
      * Configura o translaro para os validadores de formulário
      * É travado em português por motivos óbveis
      */
-    public function translatorConfig()
+    public function translatorConfig(): void
     {
         $I18ntranslator = new I18nTranslator();
         $translator = new MvcTranslator($I18ntranslator);

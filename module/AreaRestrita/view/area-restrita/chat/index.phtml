@@ -1,16 +1,7 @@
 <div class="container-fluid px-2 px-md-3">
     <div class="row">
         <section class="chat-root col-md-12">
-            <div class="loading-container">
-                <div class="text-center">
-                    <div class="spinner-border text-laranja" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <div class="feedback-text text-white animated pulse infinite">
-                        Carregando...
-                    </div>
-                </div>
-            </div>
+            <iframe src="<?= $_ENV['SNBH_URL_CHAT'] ?? 'https://chat.seminovos.com.br/' ?>">
         </section>
     </div>
 </div>

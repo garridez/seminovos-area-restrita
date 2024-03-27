@@ -1,6 +1,7 @@
 body {
   @import "AuthController/all";
   @import "criar-anuncio/all";
+  @import "chat/all";
   @import "meus-veiculos/all";
   @import "fatura/all";
   @import "financeiro/all";
@@ -11,7 +12,7 @@ body {
   @import "pages/all";
   @import "restrito-certificados/all";
   &.c-meus-dados{
-    @import "meus-dados/all";    
+    @import "meus-dados/all";
   }
   @import "restrito-banners/all";
 }
