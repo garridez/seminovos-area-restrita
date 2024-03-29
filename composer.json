@@ -38,7 +38,6 @@
         "laminas/laminas-serializer": "^2.14",
         "laminas/laminas-session": "^2.16",
         "laminas/laminas-stratigility": "^3.9",
-        "laminas/laminas-zendframework-bridge": "^1.7",
         "snbh/api-client-module": "^2.0",
         "snbh/logger": "^1.0"
     },
