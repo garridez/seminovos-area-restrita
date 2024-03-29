@@ -27,20 +27,21 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.5.1",
         "animate-sass": "^0.8.2",
-        "chart.js": "^2.9.4",
         "compress.js": "^1.2.2",
+        "jquery": "^3.7.1",
         "jquery-validation": "^1.20.0",
         "js-cookie": "^3.0.5",
         "popper.js": "^1.16.1",
-        "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=2a13bde423250b072704abee307e825904e4b031",
+        "printthis": "^0.1.5",
+        "snbh-site": "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=a3d07878ecb838e304836179e57cb6820a2ed477",
         "sortable-tablesort": "^3.2.2",
         "sortablejs": "^1.15.2"
     },
     "devDependencies": {
-        "@babel/preset-react": "^7.24.1",
         "@types/jquery": "^3.5.29",
         "laravel-mix": "^6.0.49",
         "livereload": "^0.9.3",
+        "postcss": "^8.4.38",
         "ts-loader": "^9.5.1",
         "typescript": "^5.4.3",
         "webpack": "^5.91.0"
