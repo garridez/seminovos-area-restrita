@@ -18,6 +18,7 @@ use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\SessionManager;
+use Laminas\Session\Validator\RemoteAddr;
 use Laminas\Validator\AbstractValidator;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Event as ApiClientEvents;
@@ -34,6 +35,7 @@ class Module
 
     public function onBootstrap(MvcEvent $e): void
     {
+        RemoteAddr::setUseProxy(true);
         global $container;
         $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this->onDispatchError(...));
         $container = $sm = $e->getApplication()->getServiceManager();
