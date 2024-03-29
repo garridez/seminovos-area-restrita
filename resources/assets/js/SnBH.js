@@ -38,10 +38,10 @@ const SnBH = {
             }
         },
         requireAndRegister: function () {
-            
+
             var self = this;
             var webpackContext = require
-                    .context('./mvc', true, /\.js$/);
+                    .context('./mvc', true, /\.(j|t)s$/);
             var uniquePaths = [];
 
             webpackContext.keys()

@@ -114,113 +114,21 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
             ]) ?>
         </div>
     </div>
-    <div class="row step step-seminovos d-none">
-        <div class="col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-end pr-md-0">
-            <div class="form-group mt-2">
-                <div class='input-group date'>
-                    <!-- <input type='text' class="form-control input date-timer-picker" />
-                    <span class="input-group-addon text-black">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span> -->
-                    Janeiro de 2020
-                </div>
-            </div>
-            <!-- <a href="#" class="btn btn-laranja">ok</a> -->
-        </div>
-        <div class="col-12 col-md-4 list list-marcas border-right border-dark">
-            <div class="list-header">
-                Marcas mais clicadas
-            </div>
-            <!--  -->
-        </div>
-        <div class="col-12 col-md-4 list list-modelos border-right border-dark">
-            <div class="list-header">
-                Modelos mais clicados
-            </div>
-        </div>
-        <div class="col-12 col-md-4 list list-categorias">
-            <div class="list-header">
-                Categorias mais clicadas
-            </div>
-        </div>
-    </div>
-    <div class="row step step-tabela-fipe d-none">
-        <div class="col-12 col-md-8">
-            <h5>
-                Tabela Fipe
-            </h5>
-        </div>
-        <div class="col-12">
-            <form class="row form-tabela-fipe">
-                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 mt-md-2 mt-xl-0 mt-2">
-                    <select name="tipoVeiculo" placeholder="Selecione Marca" class="form-control" required>
-                        <option value="1">Carro</option>
-                        <option value="2">Caminhão</option>
-                        <option value="3">Moto</option>
-                    </select>
-                </div>
-
-                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 mt-md-2 mt-xl-0 mt-2">
-                    <select name="idMarca" placeholder="Selecione Marca" class="form-control" required></select>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3 mt-md-2 mt-xl-0 mt-2">
-                    <select name="modeloCarro" placeholder="Selecione Modelo" class="form-control" required></select>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2  mt-xl-0 mt-md-2 mt-2">
-                    <select type="text" name="ano" placeholder="Selecione Ano" class="form-control" require>
-                        <option value="">Selecione</option>
-                        <?php
-                        for ($i = date('Y'); $i >= 1931; $i--) {
-                            echo "<option value='$i'>$i</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <div class="col-sm-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 mt-xl-0 mt-md-2 mt-2">
-                    <button class="btn btn-success">Buscar</button>
-                </div>
-
-                <div class="col-12 mt-2 preco-fipe row">
-
-                </div>
-            </form>
-        </div>
-
-    </div>
+    <hr>
     <div class="row step step-meus-veiculos">
         <div class="col-12 col-md-8">
-            <h5>
-                Meus Veículos
-            </h5>
-        </div>
-        <div class="col-12 col-md-4 pr-md-0">
-            <div class="form-group d-flex justify-content-end">
-                <select name="ordenacao" class="form-control">
-                    <option value="Ordenar por">Ordenar por</option>
-                    <option value="Mais recentes">Mais recentes</option>
-                    <option value="Mais antigos">Mais antigos</option>
-                    <option value="Mais clicados">Mais clicados</option>
-                    <option value="Menos clicados">Menos clicados</option>
-                </select>
-                <select name="status" class="form-control">
-                    <option value="Status">Status</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
-                </select>
-                <button class="btn btn-laranja filtrar-veiculos">ok</button>
-            </div>
+            <h3>Meus Veículos</h3>
         </div>
         <div class="col-12">
             <div class="form-group col-md-4">
                 <label for="filtar-meus-veiculos">Filtrar:</label>
-                <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa ou veículo">
+                <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa, veículo ou plano">
             </div>
             <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
-                        <th></th>
+                        <th class="no-sort"></th>
                         <th><span title="Clique para ordenar por &quot;Placa&quot;">Placa</span></th>
                         <th><span title="Clique para ordenar por &quot;Veículo&quot;">Veículo</span></th>
                         <th><span title="Clique para ordenar por &quot;Preço&quot;">Preço</span></th>
@@ -230,8 +138,8 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                         <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
                         <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
                         <th class="d-none d--md-table-cell">Cliques Telefone</th>
-                        <th></th>
-                        <th></th>
+                        <th class="no-sort"></th>
+                        <th class="no-sort"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -256,7 +164,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                             <td class="data-marca-modelo">
                                 <?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
                             </td>
-                            <td class="text-right" data-sort="<?= $veiculo['valor'] ?>">
+                            <td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
                                 <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
                                 <br>
                                 <?php
@@ -301,7 +209,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                 ?>
                             </td>
                             <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
-                            <td data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
+                            <td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
                                 <?= $veiculo['nomePlano'] ?? '' ?>
                             </td>
                             <td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
@@ -361,7 +269,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                             <td>
                                 <div class="icon-1-5x text-success">
                                     <a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                     </a>
 
                                 </div>

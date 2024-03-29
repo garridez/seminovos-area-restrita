@@ -41,6 +41,7 @@ ul.steps-list{
     }
     li {
         display: inline;
+        text-decoration: none !important;
         &:not(:last-child)::after{
             content: " ";
             display: inline-block;

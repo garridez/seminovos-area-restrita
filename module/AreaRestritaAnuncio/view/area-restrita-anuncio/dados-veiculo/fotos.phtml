@@ -29,7 +29,7 @@ unset($foto, $fotosNewKeys);
                         <small class="align-center">
                             As fotos serão salvas após clicar no botão <b>*continuar/finalizar</b>
                         </small>
-                    </div>    
+                    </div>
                 </div>
             </div> */?>
 
@@ -44,13 +44,13 @@ unset($foto, $fotosNewKeys);
                         <label class="form-control-lg" for="fotos">
                             Clique em um dos espaços abaixo para selecionar <b>uma foto</b>
                         </label>
-                    </div> 
+                    </div>
                     <div class="h1 text-center">ou</div> -->
                     <div class="mult-imagens w-100 d-flex justify-content-end">
                         <label class="d-flex m-0" for="fotos" title="Enviar multiplas fotos">
                             <div class="icones">
-                                <i class="fa fa-picture-o" aria-hidden="true"></i>
-                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                <i class="fa fa-picture" aria-hidden="true"></i>
+                                <i class="fa fa-picture" aria-hidden="true"></i>
                             </div>
                             Multiplas imagens
                             <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
@@ -72,7 +72,7 @@ unset($foto, $fotosNewKeys);
                                     $count++;
                                     $default['imagem'] = "/img/placeholder_criar_anuncio/carro_$count.png";
                                     $foto = $fotos[$count] ?? $default;
-                                    $isDefault = ($fotos[$count] ?? false) ? false : true; 
+                                    $isDefault = ($fotos[$count] ?? false) ? false : true;
                                     $foto_ = $foto['imagem'];
                                     ?>
                                     <div class="foto col-6 col-md-3 col-sm-6 py-2">
@@ -88,7 +88,7 @@ unset($foto, $fotosNewKeys);
                                         </div>
 
                                         <div class="foto-container">
-                                            <?/*<div class="fundo <?= $foto['idFoto'] ? 'd-none' :''?>"> 
+                                            <?/*<div class="fundo <?= $foto['idFoto'] ? 'd-none' :''?>">
                                                 <img class="display-img img-thumbnail" src="" alt="" srcset="">
                                             </div>*/?>
                                             <div class="display-img img-thumbnail" style="background-image: url('<?= $foto_ ?>')"

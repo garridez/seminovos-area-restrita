@@ -1,10 +1,10 @@
 {
-    "danger": "\\f101",
-    "delivery": "\\f102",
-    "endereco": "\\f103",
-    "funil": "\\f104",
-    "megafone": "\\f105",
-    "type-car": "\\f106",
-    "type-moto": "\\f107",
-    "type-truck": "\\f108"
+    "danger": 61697,
+    "delivery": 61698,
+    "endereco": 61699,
+    "funil": 61700,
+    "megafone": 61701,
+    "type-car": 61702,
+    "type-moto": 61703,
+    "type-truck": 61704
 }

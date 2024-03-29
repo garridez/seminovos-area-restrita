@@ -25,7 +25,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <?php if ($this->userInfo('concessionaria') == 'N') : ?>
             <li class="m-t-12 pt-3 <?= $bgExpiracao ?> aviso-expiracao">
                 <div class="icone d-flex justify-content-center mt-2">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    <i class="fa fa-clock" aria-hidden="true"></i>
                 </div>
                 <h5 class="text-center">
                     O seu plano <?= $fraseExpiracao ?>
@@ -84,13 +84,13 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <?php endif; ?>
         <li>
             <a href="<?= $this->url('restrito/contrato-revenda') ?>" title="Contrato">
-                <span class="icon-thumbnail"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail"><i class="fa fa-address-book" aria-hidden="true"></i></span>
                 <span class="title">Contrato</span>
             </a>
         </li>
         <li>
             <a href="<?= $this->url('restrito/central-informacoes') ?>" title="Central de Informações">
-                <span class="icon-thumbnail"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail"><i class="fa fa-newspaper" aria-hidden="true"></i></span>
                 <span class="title">Central de Informações</span>
             </a>
         </li>
@@ -113,7 +113,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <?php endif; ?>
         <li>
             <a href="<?= $this->url('restrito/banners') ?>" title="Banners">
-                <span class="icon-thumbnail"><i class="fa fa-picture-o b-transparent-white" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail"><i class="fa fa-image b-transparent-white" aria-hidden="true"></i></span>
                 <span class="title">Banners</span>
             </a>
         </li>
@@ -135,7 +135,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         </li>
         <li>
             <a href="http://wa.me/5531995502814" target="_blank" title="Atendimento por WhatsApp">
-                <span class="icon-thumbnail"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span>
                 <span class="title">Atendimento por WhatsApp</span>
             </a>
         </li>

@@ -12,6 +12,7 @@ mix-manifest.json
 node_modules
 public/assets
 public/pages
+public/webfonts
 public/css/*
 !public/css/.gitkeep
 public/fonts/*

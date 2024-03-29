@@ -292,7 +292,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                        data-reload-page="true"
                                        title="Excluir anúncio">
                                         <button class="btn btn-danger icon-2 btn-excluir-anuncio">
-                                            <i class=" fa fa-trash-o"></i><span>Excluir anúncio</span>
+                                            <i class=" fa fa-trash"></i><span>Excluir anúncio</span>
                                         </button>
                                     </a>
                                 <?php } ?>
@@ -323,7 +323,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 </a>
                                             <?php } ?>
                                             <?php if ($veiculo["botoes"]["upgrade_plano"]) { ?>
-                                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#plano&trocarPlano" 
+                                                <a href="<?= $urls['editarAnuncio'] ?>?editar=planos#plano&trocarPlano"
                                                 class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center py-4 btn-acao-upgrade-plano">
                                                 Melhorar meu Plano
                                                 </a>
@@ -440,7 +440,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                         <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
                         <?php #if (false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=certificado#servicos-adicionais&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
-                                <div><span>Adquira seu Certificado de Procedência Digital</span></div>                                
+                                <div><span>Adquira seu Certificado de Procedência Digital</span></div>
                                 <div class="mt-2"><b>R$ 24,90</b></div>
                                 <div class="mt-1"><small>VALIDO POR 30 DIAS</small></div>
                             </a>

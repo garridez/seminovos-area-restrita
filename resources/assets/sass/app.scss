@@ -27,8 +27,9 @@ $use-pulse: true;
 
 @import "theme_pages/themes/corporate/corporate";
 
-$fa-font-path: "../../../node_modules/font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
+//$fa-font-path: "../../../node_modules/font-awesome/fonts";
+//@import "~font-awesome/scss/font-awesome";
+@import "~@fortawesome/fontawesome-free/css/all";
 
 @import "tools/mixins";
 @import "components/all";
@@ -129,4 +130,9 @@ body.sidebar-collapsed {
 }
 .menu-items [title]{
     text-decoration: none !important;
+}
+
+
+.sortable thead th:not(.no-sort)::after {
+    color: inherit;
 }
