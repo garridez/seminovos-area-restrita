@@ -38,8 +38,6 @@ RUN set -eux; \
 
 RUN set -eux; \
     # Instala os pacotes de front e gera os assets
-    YARN_CHECKSUM_BEHAVIOR=update yarn; \
-    rm yarn.lock; \
     yarn install; \
     yarn run prod; \
     #
