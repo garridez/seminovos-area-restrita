@@ -1,7 +1,5 @@
 "use strict";
 
-const HandleApiError = require('components/HandleApiError');
-
 function filterImgToUpload($img) {
     return $img
         // Filtra deixando só as tags que contém uma imagem
@@ -42,6 +40,7 @@ module.exports = async function () {
 };
 
 async function init() {
+    const HandleApiError = require('components/HandleApiError');
     var loading = require('components/Loading');
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $fotosContainer = $('.fotos-container');

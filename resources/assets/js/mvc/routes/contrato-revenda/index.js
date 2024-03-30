@@ -1,4 +1,4 @@
-require('SnBH').autoRun.registerCallback('body', function ($) {
-//    $('#form-login').validate();
-});
 
+module.exports.seletor = '.c-contrato-revenda';
+module.exports.callback = ($) => {
+};

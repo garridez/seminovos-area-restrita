@@ -4,7 +4,7 @@ module.exports.seletor = '.c-cadastrar.a-index';
 module.exports.callback = ($) => {
     require('components/EstadoCidade')();
 
-    var Verificadores = require('./Verificadores');
+    var Verificadores = require('components/Verificadores');
     var HandleApiError = require('components/HandleApiError');
     var Alert = require('components/Alerts');
     var advancedAlerts = require('components/AdvancedAlerts');

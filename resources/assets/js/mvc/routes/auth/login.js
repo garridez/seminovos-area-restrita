@@ -1,4 +1,7 @@
-require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
+
+module.exports.seletor = '.c-auth.a-login';
+
+module.exports.callback = ($) => {
     require('bootstrap/js/dist/modal');
     var HandleApiError = require('components/HandleApiError');
     var Alert = require('components/Alerts');
@@ -134,7 +137,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             data: $(this).serialize(),
             dataType: 'json',
             success: function (data) {
-                
+
                 if (!HandleApiError(data)) {
                     return;
                 }
@@ -327,13 +330,13 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
     $('[name="email"]').on('input', function () {
         $('[name="cpfOuCpnj"]').val('');
     });
-    
+
 
     /**
      * Atualiza o token do reCaptcha, quando necessário
      */
     function refreshReCaptcha()
-    {   
+    {
         var elementosParaRemover = document.querySelectorAll('[data-msg="Acabou a festa!"]');
         elementosParaRemover.forEach(function(elemento) {
             elemento.parentNode.removeChild(elemento);
@@ -361,11 +364,11 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
 
     /**
      * Exibe mensagens de erro se cadastro para recuperar e-mail não foi encontrado
-     * 
-     * @param {*} data 
+     *
+     * @param {*} data
      */
     function resetPasswordHandleError(tipoCadastro)
-    {   
+    {
         switch (tipoCadastro) {
             case 2:
                 title = "CPF não encontrado";
@@ -395,7 +398,7 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
                 title = "Atenção";
                 text = `Desafio do capcha inválido!`;
                 break;
-        
+
             default:
                 break;
         }
@@ -410,11 +413,11 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
 
     /**
      * Mostra modal para recuperação da senha
-     * 
-     * @param {*} cpfCnpj 
-     * @param {*} email 
+     *
+     * @param {*} cpfCnpj
+     * @param {*} email
      */
-    function resetPasswordShowModal(data, cpfCnpj , email) 
+    function resetPasswordShowModal(data, cpfCnpj , email)
     {
         $('#modalRecuperarSenha').find('.sms,.token,.email').removeClass('d-flex').removeClass('d-none');
 
@@ -466,4 +469,4 @@ require('SnBH').autoRun.registerCallback('.c-auth.a-login', function ($) {
             console.log("Error: " + error);
         });
   }*/
-});
+};
