@@ -1,0 +1,88 @@
+<?php
+/* @var $this \Laminas\View\Renderer\PhpRenderer */
+$this->headTitle('Editar Anúncio');
+
+$veiculo = $this-> veiculo;
+$email = $this->userInfo('email');
+
+?>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 my-2 d-flex">
+            <h3>Editar Anúncio</h3>
+        </div>
+    </div>
+    <input type="hidden" name="email" id="email" value="<?= $email?>">
+    <input type="hidden" name="idVeiculo" id="idVeiculo" value="<?= $veiculo['data']['id']?>">
+    <input type="hidden" name="placa" id="placa" value="<?= $veiculo['data']['license_plate'] ?>">
+    <input type="hidden" name="marca" id="marca" value="<?= $veiculo['data']['courier_brand']?>">
+    <input type="hidden" name="modelo" id="modelo" value="<?= $veiculo['data']['courier_model']?>">
+    <input type="hidden" name="anoFabrica" id="anoFabrica" value="<?= $veiculo['data']['creation_year'] ?>">
+    <input type="hidden" name="anoModelo" id="anoModelo" value="<?= $veiculo['data']['model_year'] ?>">
+    
+    <div class="row d-flex justify-content-center mt-2">
+        <h4>Placa: <?= $veiculo['data']['license_plate'] ?> </h4>
+    </div>
+    <form action="" method="POST" id="edit">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table no-border teste table-license-plate-api">
+                    <thead>
+                        <tr class="header-table">
+                        <th>Marca</th>
+                        <th class="text-center">Modelo</th>
+                        <th class="text-center">Ano de Fabricação</th>
+                        <th class="text-center">Modelo Ano</th>
+                        <th class="text-center">Data de Publicação do Anúncio</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x no-border-y">
+                        <tr>
+                        <td><?= $veiculo['data']['courier_brand'] ?></td>
+                        <td class="text-center"><?= $veiculo['data']['courier_model'] ?></td>
+                        <td class="text-center"><?= $veiculo['data']['creation_year'] ?></td>
+                        <td class="text-center"><?= $veiculo['data']['model_year'] ?></td>
+                        <td class="text-center"><?= $veiculo['data']['created_at'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-4">
+            <div class="form-group">
+                <label for="price">Preço: </label>
+                <input type="text" name="valor" id="valor" value="<?= $veiculo['data']['courier_value_sale'] ?>">
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-2">
+            <div class="form-group">
+                <label for="description">Descrição do Anúncio:</label>    
+                <textarea class="form-control" required="required" name="description" cols="50" rows="10" placeholder="Informe aqui os detalhes do veículo"><?= $veiculo['data']['description'] ?></textarea>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-2 mb-5">
+            <label for="enviar-fotos" class="mx-3">Enviar Fotos do Veículo:</label>
+            <input type="file" name="enviar-fotos[]" multiple>
+        </div>
+        
+        <?php if ($veiculo['data']['status'] == 1): ?>
+        <div class="row my-1">
+            <div class="col-md-12">
+                <button id="sold" class="btn btn-block btn-trans btn-success btn-rad"><i class="fa fa-check"></i> MARCAR COMO VENDIDO</button>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="row my-1">
+            <div class="col-md-12">
+                <button id="delete" class="btn btn-block btn-trans btn-danger btn-rad"><i class="fa fa-trash"></i> EXCLUIR ANÚNCIO</button>
+            </div>
+        </div>
+        <div class="row my-1">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-block btn-trans btn-info btn-rad"><i class="fa fa-save"></i> SALVAR ALTERAÇÕES</button>
+            </div>
+        </div>
+    </form>
+</div>

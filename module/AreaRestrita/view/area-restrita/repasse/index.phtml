@@ -1,6 +1,7 @@
 <?php
 /** @var \Laminas\View\Renderer\PhpRenderer $this */
-$this->headTitle('Repasse Auto Conecta');
+$this->headTitle('Repasse Seminovos');
+
 
 $veiculos = $this->veiculos;
 $meta = $this -> meta;
@@ -45,8 +46,12 @@ $meta = $this -> meta;
 
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center px-3 px-md-0">
-        <div class="col-sm-12 col-md-12 my-2 d-flex">
-            <h3>Repasse Auto Conecta</h3>
+        <div class="col-sm-12 col-md-6 my-2 d-flex">
+            <h3>Repasse Seminovos</h3>
+        </div>
+        <div class="col-sm-12 col-md-6 my-2 d-flex align-items-center justify-content-end">
+        <a href="repasse/meus-anuncios" class="btn btn-info mx-2">Meus Anúncios</button>
+        <a href="repasse/anuncio" class="btn btn-info">Novo Anúncio</a>
         </div>
     </div>
     <form class="row px-3 px-md-0">
@@ -76,7 +81,7 @@ $meta = $this -> meta;
                 <input type="text" style="max-width: 67px;" placeholder="Até" name="anoAte" id="anoAte">
             </div>
         </div>
-        <div class="col-12 col-md-2">
+        <div class="col-12 col-md-2 d-flex align-items-center">
             <button class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos" type="submit">Filtrar
             </button>
         </div>
@@ -84,11 +89,15 @@ $meta = $this -> meta;
     <div class="row">
         <div class="card-deck col-12 mt-2">
             <?php
-            foreach ($veiculos as $key => $veiculo): 
+            foreach ($veiculos as $key => $veiculo):
             ?>
             <div class="col-sm-4 mb-1">
                 <div class="card" style="height: 520px; width: 320px">
+                    <?php if (!$veiculo['pictures']): ?>
+                    <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
+                    <?php else: ?>
                     <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
+                    <?php endif; ?>
                     <div class="card-body">
                         <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
                         <div class="card-text">
@@ -101,7 +110,7 @@ $meta = $this -> meta;
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 Ano:
-                                <span class="text-uppercase"><?= $veiculo['creation_year'] ?></span> 
+                                <span class="text-uppercase"><?= $veiculo['creation_year'] ?></span>
                             </li>
                             <li class="list-group-item">
                                 Placa:
@@ -116,18 +125,18 @@ $meta = $this -> meta;
                             <a href="#modalFotos" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
                             title="Fotos" data-toggle="modal" data-id-veiculo = "<?= $veiculo['id']?>">
                             <i class=" fa fa-camera"></i><span> Fotos</span>
-                            </a>        
+                            </a>
                             <a href="#modalContato" class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos"
                             title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['id']?>">
                             <i class=" fa fa-user"></i><span> Contato</span>
-                            </a>                
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
-        
+
     </div>
     <div class="col-md-12">
                 <?php

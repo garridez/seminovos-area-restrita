@@ -30,4 +30,5 @@ version
 !.yarn/sdks
 !.yarn/versions
 public/psalm-report.html
+public/webpack-report.html
 

@@ -25,6 +25,45 @@ return [
                 'action' => 'index'
             ],
         ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'anuncio' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/anuncio',
+                    'defaults' => [
+                        'action' => 'anuncio',
+                    ],
+                ],
+            ],
+            'meus-anuncios' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/meus-anuncios',
+                    'defaults' => [
+                        'action' => 'meus-anuncios',
+                    ],
+                ],
+            ],
+            'editar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/:idRepasse/editar',
+                    'defaults' => [
+                        'action' => 'editar',
+                    ],
+                ],                
+            ],
+            'license-plate' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/license-plate',
+                    'defaults' => [
+                        'action' => 'license-plate',
+                    ],
+                ],
+            ],
+        ]
     ],
     'rota-exemplo' => [
         'type' => Http\Segment::class,
