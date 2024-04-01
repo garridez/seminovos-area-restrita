@@ -175,7 +175,7 @@ class VeiculoController extends AbstractActionController
         // quando o tipoCadastro for 1 (revenda) a API já irá deletar registro das tabelas veiculos, anuncios_veiculos e veiculos_fotos
         $dadosVeiculos = $veiculosModel->delete($idVeiculo);
 
-        if ($dadosVeiculos['status'] !== 200) {
+        if (isset($dadosVeiculos['status']) && $dadosVeiculos['status'] !== 200) {
             return new JsonModel($dadosVeiculos);
         }
 
