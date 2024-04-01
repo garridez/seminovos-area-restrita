@@ -95,7 +95,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 } elseif ($this->userInfo('tipoCadastro') == 2) {
                                     $new_nome = $this->userInfo('responsavelNome');
                                 }
-                                if ($new_nome) {
+                                if (isset($new_nome) && $new_nome) {
                                     $new_nome = explode(" ", (string) $new_nome);
                                     $new_nome = $new_nome[0] . " " . ($new_nome[1] ?? '');
                                 } else {
