@@ -36,7 +36,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
             <div class="p-l-10 p-r-10">
                 <a class="btn-block btn btn-laranja text-capitalize" href="/criar-anuncio" title="Novo AnÃºncio">
                     <span class="text-black">
-                        <span class="title">Novo AnÃºncio</span>
+                        <span class="title">Novo Anúncio</span>
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </span>
                 </a>
@@ -44,9 +44,9 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         </li>
         <li class="m-t-30 hide">
             <a href="<?= $this->url('restrito') ?>" class="detailed">
+                <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
                 <span class="title">Home</span>
             </a>
-            <span class="bg-success icon-thumbnail"><i class="fa fa-home"></i></span>
         </li>
         <?php if (SHOW_CHAT) : ?>
             <li class="menu-chat">
@@ -59,25 +59,25 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <li>
             <a href="<?= $this->url('restrito/meus-veiculos') ?>" title="Meus VeÃ­culos">
                 <span class="icon-thumbnail"><i class="fa fa-car b-transparent-white" aria-hidden="true"></i></span>
-                <span class="title">Meus VeÃ­culos</span>
+                <span class="title">Meus Veículos</span>
             </a>
         </li>
         <li>
             <a href="<?= $this->url('restrito/repasse') ?>">
+                <span class="icon-thumbnail"><i class="fa fa-arrow-right-arrow-left" aria-hidden="true"></i></span>
                 <span class="title">Repasse Seminovos</span>
             </a>
-            <span class="icon-thumbnail"><i class="fa fa-car b-transparent-white" aria-hidden="true"></i></span>
         </li>
         <li>
             <a href="<?= $this->url('restrito/historico-pagamentos') ?>" title="HistÃ³rico Pagamentos">
                 <span class="icon-thumbnail"><i class="fa fa-history"></i></span>
-                <span class="title">HistÃ³rico Pagamentos</span>
+                <span class="title">Histórico Pagamentos</span>
             </a>
         </li>
         <?php if ($this->userInfo('concessionaria') === 'N') : ?>
             <li>
                 <a href="<?= $this->url('restrito/financeiro') ?>" title="Financeiro">
-                    <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
+                    <span class="icon-thumbnail"><i class="fa fa-money-bill" aria-hidden="true"></i></span>
                     <span class="title">Financeiro</span>
                 </a>
             </li>
@@ -91,7 +91,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <li>
             <a href="<?= $this->url('restrito/central-informacoes') ?>" title="Central de InformaÃ§Ãµes">
                 <span class="icon-thumbnail"><i class="fa fa-newspaper" aria-hidden="true"></i></span>
-                <span class="title">Central de InformaÃ§Ãµes</span>
+                <span class="title">Central de Informações</span>
             </a>
         </li>
         <?php
@@ -107,7 +107,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
             <li>
                 <a href="<?= $this->url('restrito/painel') ?>">
                     <span class="icon-thumbnail"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-                    <span class="title">RelatÃ³rios</span>
+                    <span class="title">Relatórios</span>
                 </a>
             </li>
         <?php endif; ?>
