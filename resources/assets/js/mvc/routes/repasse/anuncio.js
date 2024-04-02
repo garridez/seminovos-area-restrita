@@ -11,7 +11,6 @@ module.exports.callback = async ($) => {
 
             $.ajax(settings).done(function (response) {
                 if (response.status == 200) {
-                  console.log(response)
                     $(".table-license-plate-api-brand").text(response.data[0].historicoCarro.dados_veiculo.marca);
                     $(".table-license-plate-api-model").text(response.data[0].historicoCarro.dados_veiculo.modelo);
                     $(".table-license-plate-api-color").text(response.data[0].historicoCarro.dados_veiculo.cor);
