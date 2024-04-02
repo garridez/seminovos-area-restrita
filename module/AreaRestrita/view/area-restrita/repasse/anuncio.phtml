@@ -16,7 +16,7 @@ $email  = $this->userInfo('email');
             <div class="row d-flex justify-content-center mt-2">
                 <div class="form-group">
                     <label for="license-plate">Placa:</label>
-                    <input type="text" name="license-plate" placeholder="Digite a placa do veículo">
+                    <input class="form-control" type="text" name="license-plate" placeholder="Digite a placa do veículo">
                 </div>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@ $email  = $this->userInfo('email');
             <div class="row d-flex justify-content-center mt-2">
                 <div class="form-group">
                     <label for="price">Preço: </label>
-                    <input type="text" name="valor" id="valor">
+                    <input type="text" class="form-control" name="valor" id="valor">
                 </div>
             </div>
             <div class="row d-flex justify-content-center mt-2">
@@ -60,9 +60,9 @@ $email  = $this->userInfo('email');
                     <textarea class="form-control" required="required" name="description" cols="50" rows="10" placeholder="Informe aqui os detalhes do veículo"></textarea>
                 </div>
             </div>
-            <div class="row d-flex justify-content-center mt-2 mb-5">
-                <label for="enviar-fotos" class="mx-3">Enviar Fotos do Veículo:</label>
-                <input type="file" name="enviar-fotos[]" multiple>
+            <div class="row d-flex justify-content-center mt-2 mb-5 form-group col-md-12">
+                <label for="enviar-fotos">Enviar Fotos do Veículo:</label>
+                <input type="file" class="form-control form-control-lg form-control-file justify-content-center" name="enviar-fotos[]" multiple>
             </div>
 
             <div class="row">
