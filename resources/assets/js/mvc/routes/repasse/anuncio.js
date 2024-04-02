@@ -11,6 +11,7 @@ module.exports.callback = async ($) => {
 
             $.ajax(settings).done(function (response) {
                 if (response.status == 200) {
+                  console.log(response)
                     $(".table-license-plate-api-brand").text(response.data[0].historicoCarro.dados_veiculo.marca);
                     $(".table-license-plate-api-model").text(response.data[0].historicoCarro.dados_veiculo.modelo);
                     $(".table-license-plate-api-color").text(response.data[0].historicoCarro.dados_veiculo.cor);
@@ -20,14 +21,14 @@ module.exports.callback = async ($) => {
                     $(".table-license-plate-api-fipe-price").text(response.data[0].historicoCarro.fipe.valor_fipe);
                     $(".table-license-plate-api").show();
 
-                    var email = $("input[name='email']").val();
-                    var marca = response.data[0].historicoCarro.dados_veiculo.marca;
-                    var modelo = response.data[0].historicoCarro.dados_veiculo.modelo;
-                    var anoModelo = response.data[0].historicoCarro.dados_veiculo.ano_modelo;
-                    var anoFabrica = response.data[0].historicoCarro.dados_veiculo.ano_fabricacao;
-                    var valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
-                    var numero = valorFipe.replace("R$ ", "").replace(".", "").replace(",", ".");
-                    var numeroFipe = parseFloat(numero);
+                    email = $("input[name='email']").val();
+                    marca = response.data[0].historicoCarro.dados_veiculo.marca;
+                    modelo = response.data[0].historicoCarro.dados_veiculo.modelo;
+                    anoModelo = response.data[0].historicoCarro.dados_veiculo.ano_modelo;
+                    anoFabrica = response.data[0].historicoCarro.dados_veiculo.ano_fabricacao;
+                    valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
+                    numero = valorFipe.replace("R$ ", "").replace(".", "").replace(",", ".");
+                    numeroFipe = parseFloat(numero);
                 }
             });
         }
