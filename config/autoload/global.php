@@ -67,7 +67,7 @@ return [
     'session_config' => [],
     'session_manager' => [
         'validators' => [
-            Laminas\Session\Validator\RemoteAddr::class,
+            //Laminas\Session\Validator\RemoteAddr::class,
             Laminas\Session\Validator\HttpUserAgent::class,
         ],
         'options' => [],
