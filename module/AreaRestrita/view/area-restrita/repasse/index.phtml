@@ -49,56 +49,64 @@ $meta = $this -> meta;
         <div class="col-sm-12 col-md-6 my-2 d-flex">
             <h3>Repasse Seminovos</h3>
         </div>
-        <div class="col-sm-12 col-md-6 my-2 d-flex align-items-center justify-content-end">
-        <a href="repasse/meus-anuncios" class="btn btn-info mx-2">Meus Anúncios</button>
-        <a href="repasse/anuncio" class="btn btn-info">Novo Anúncio</a>
+        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse/meus-anuncios" class="col-sm-12 btn btn-info">Meus Anúncios</a>
+        </div>
+        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
         </div>
     </div>
     <form class="row px-3 px-md-0">
-        <div class="col-10 col-md-3">
+        <div class="col-sm-12 col-md-3">
             <div class="form-group">
                 <label for="cidade">Filtrar por Cidade</label>
-                <input type="text" id="cidade" name="city">
+                <input type="text" class="form-control" id="cidade" name="city">
             </div>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-sm-12 col-md-3">
             <div class="form-group">
                 <label for="marcaModelo">Filtrar por Marca/modelo</label>
-                <input type="text" id="marcaModelo" name="search">
+                <input type="text" class="form-control" id="marcaModelo" name="search">
             </div>
         </div>
-        <div class="col-12 col-md-2">
+        <div class="col-sm-12 col-md-2">
             <div class="form-group">
                 <label for="preco">Filtrar por Preço</label>
-                <input type="text" style="max-width: 50px;" placeholder="De" name="prcoDe" id="precoDe">
-                <input type="text" style="max-width: 50px;" placeholder="Até" name="precoAte" id="precoAte">
+                <div class="form-inline">
+                    <input type="text" class="form-control col-md-6" placeholder="De" name="precoDe" id="precoDe">
+                    <input type="text" class="form-control col-md-6" placeholder="Até" name="precoAte" id="precoAte">
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-2">
+        <div class="col-sm-12 col-md-2">
             <div class="form-group">
                 <label for="ano">Filtrar por Ano</label>
-                <input type="text" style="max-width: 67px;" placeholder="De" name="anoDe" id="anoDe">
-                <input type="text" style="max-width: 67px;" placeholder="Até" name="anoAte" id="anoAte">
+                <div class="form-inline">
+                    <input type="text" class="form-control col-md-6" placeholder="De" name="anoDe" id="anoDe">
+                    <input type="text" class="form-control col-md-6" placeholder="Até" name="anoAte" id="anoAte">
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-2 d-flex align-items-center">
-            <button class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos" type="submit">Filtrar
+        <div class="col-sm-12 col-md-2 d-flex align-items-center">
+            <button class="btn btn-primary col-sm-12" type="submit">Filtrar
             </button>
         </div>
     </form>
     <div class="row">
-        <div class="card-deck col-12 mt-2">
+        <div class="card-deck col-12 mt-2 row-cols-md-3 row-cols-1">
             <?php
             foreach ($veiculos as $key => $veiculo):
             ?>
-            <div class="col-sm-4 mb-1">
-                <div class="card" style="height: 520px; width: 320px">
-                    <?php if (!$veiculo['pictures']): ?>
-                    <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
-                    <?php else: ?>
-                    <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
-                    <?php endif; ?>
-                    <div class="card-body">
+            <div class="col mb-1">
+                <div class="card h-100">
+                    <div style="position: relative; padding-top: 100%; width: 100%">
+                        <?php if (!$veiculo['pictures']): ?>
+                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">
+                        <?php else: ?>
+                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">    
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
                         <div class="card-text">
                             <h4 class="d-flex flex-wrap">
@@ -121,12 +129,12 @@ $meta = $this -> meta;
                                 <span class="text-uppercase"><?= $veiculo['created_at'] ?> </span>
                             </li>
                         </ul>
-                        <div class="btn-group">
-                            <a href="#modalFotos" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
+                        <div class="btn-group mt-auto">
+                            <a href="#modalFotos" class="btn btn-laranja text-white"
                             title="Fotos" data-toggle="modal" data-id-veiculo = "<?= $veiculo['id']?>">
                             <i class=" fa fa-camera"></i><span> Fotos</span>
                             </a>
-                            <a href="#modalContato" class="btn bg-cinza ml-1 text-white icon-2 btn-acao-editar-fotos"
+                            <a href="#modalContato" class="btn btn-laranja text-white"
                             title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['id']?>">
                             <i class=" fa fa-user"></i><span> Contato</span>
                             </a>
