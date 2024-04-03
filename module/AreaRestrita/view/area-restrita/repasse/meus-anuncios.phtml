@@ -12,9 +12,11 @@ $meta = $this -> meta;
         <div class="col-sm-12 col-md-6 my-2 d-flex">
             <h3>Meus Anúncios</h3>
         </div>
-        <div class="col-sm-12 col-md-6 my-2 d-flex align-items-center justify-content-end">
-        <a href="/repasse" class="btn btn-info mx-2">Todos os Anúncios</button>
-        <a href="/repasse/anuncio" class="btn btn-info">Novo Anúncio</a>
+        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse" class="col-sm-12 btn btn-info">Todos os Anúncios</a>
+        </div>
+        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
         </div>
     </div>
     <?php if($meta['total'] == 0):  ?>
@@ -23,17 +25,19 @@ $meta = $this -> meta;
     </div>
     <?php else: ?>
         <div class="row">
-        <div class="card-deck col-12 mt-2">
+        <div class="card-deck col-12 mt-2 row-cols-md-3 row-cols-1">
             <?php
             foreach ($veiculos as $key => $veiculo): 
             ?>
-            <div class="col-sm-4 mb-1">
-                <div class="card" style="height: 520px; width: 320px">
-                    <?php if (!$veiculo['pictures']): ?>
-                    <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
-                    <?php else: ?>
-                    <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="height: 190px;">
-                    <?php endif; ?>
+            <div class="col mb-1">
+                <div class="card h-100">
+                    <div style="position: relative; padding-top: 100%; width: 100%">
+                        <?php if (!$veiculo['pictures']): ?>
+                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">
+                        <?php else: ?>
+                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">
+                        <?php endif; ?>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
                         <div class="card-text">
@@ -58,7 +62,7 @@ $meta = $this -> meta;
                             </li>
                         </ul>
                         <div class="btn-group">
-                            <a href="/repasse/<?= $veiculo['id'] ?>/editar" class="btn bg-cinza text-white icon-2 btn-acao-editar-fotos"
+                            <a href="/repasse/<?= $veiculo['id'] ?>/editar" class="btn text-white btn-laranja"
                             title="Editar">
                             <i class=" fa fa-edit"></i><span> Editar</span>
                             </a>
