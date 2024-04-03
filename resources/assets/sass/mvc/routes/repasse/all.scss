@@ -1,0 +1,8 @@
+&.c-repasse {
+    &.a-index {
+        @import "index";
+    }
+    &.a-anuncio {
+        @import "anuncio";
+    }
+}
