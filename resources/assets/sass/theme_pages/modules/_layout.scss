@@ -366,6 +366,8 @@ body {
             -webkit-overflow-scrolling: touch;
             height: calc(100% - 10px);
             width: 100%;
+            display: flex;
+            flex-direction: column;
             li{
                 &:hover, &.open, &.active{
                     & > .icon-thumbnail{
@@ -397,19 +399,13 @@ body {
                 &.qtd-anuncios-menu {
                     margin-left: 10px;
                     margin-right: 10px;
+                    display: flex;
+                    flex-grow: 1;
+                    flex-direction: column;
                     > div {
                         padding-left: 5px !important;
                     }
                 }
-                &:nth-last-child(-n + 2) {
-                    position: absolute;
-                    bottom: 80px;
-                }
-                &:last-child {
-                    position: absolute;
-                    bottom: 30px;
-                }
-
 
                 & > a {
                     font-family: Arial, sans-serif;
