@@ -25,7 +25,7 @@
     "license": "ISC",
     "homepage": "https://bitbucket.org/seminovosbh/site_novo#readme",
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.5.1",
+        "@fortawesome/fontawesome-free": "^6.5.2",
         "animate-sass": "^0.8.2",
         "compress.js": "^1.2.2",
         "jquery": "^3.7.1",
@@ -39,12 +39,12 @@
     },
     "devDependencies": {
         "@types/jquery": "^3.5.29",
-        "@types/webpack-bundle-analyzer": "^4",
+        "@types/webpack-bundle-analyzer": "^4.7.0",
         "laravel-mix": "^6.0.49",
         "livereload": "^0.9.3",
         "postcss": "^8.4.38",
         "ts-loader": "^9.5.1",
-        "typescript": "^5.4.3",
+        "typescript": "^5.4.4",
         "webpack": "^5.91.0",
         "webpack-bundle-analyzer": "^4.10.1"
     }
