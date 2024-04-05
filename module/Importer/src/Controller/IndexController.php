@@ -295,7 +295,7 @@ class IndexController extends AbstractActionController
             'ordem' => $ordem,
         ];
 
-        $data[$this->ApiClient::KEY_FILES] = [
+        $data[$this->apiClient::KEY_FILES] = [
             'fotos' => $files,
         ];
 
