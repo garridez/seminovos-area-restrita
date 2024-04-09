@@ -17,7 +17,12 @@ module.exports.callback = async ($) => {
                     $(".table-license-plate-api-fuel").text(response.data[0].historicoCarro.dados_veiculo.combustivel);
                     $(".table-license-plate-api-city").text(response.data[0].historicoCarro.dados_veiculo.cidade);
                     $(".table-license-plate-api-state").text(response.data[0].historicoCarro.dados_veiculo.estado);
-                    $(".table-license-plate-api-fipe-price").text(response.data[0].historicoCarro.fipe.valor_fipe);
+                    if(!response.data[0].historicoCarro.fipe){
+                        $(".table-license-plate-api-fipe-price").text("Indisponível");
+                    }
+                    else{
+                        $(".table-license-plate-api-fipe-price").text(response.data[0].historicoCarro.fipe.valor_fipe);
+                    }
                     $(".table-license-plate-api").show();
 
                     email = $("input[name='email']").val();
@@ -25,9 +30,15 @@ module.exports.callback = async ($) => {
                     modelo = response.data[0].historicoCarro.dados_veiculo.modelo;
                     anoModelo = response.data[0].historicoCarro.dados_veiculo.ano_modelo;
                     anoFabrica = response.data[0].historicoCarro.dados_veiculo.ano_fabricacao;
-                    valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
-                    numero = valorFipe.replace("R$ ", "").replace(".", "").replace(",", ".");
-                    numeroFipe = parseFloat(numero);
+                    if(!response.data[0].historicoCarro.fipe){
+                        valorFipe = 0;
+                        numeroFipe = 0;
+                    }
+                    else{
+                        valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
+                        numero = valorFipe.replace("R$ ", "").replace(".", "").replace(",", ".");
+                        numeroFipe = parseFloat(numero);
+                    }
                 }
             });
         }
