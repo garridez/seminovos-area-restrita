@@ -8,8 +8,8 @@ $meta = $this -> meta;
 
 ?>
 
-<div class="modal fade bd-example-modal-xl" tabindex="-1" role="document" aria-labelledby="modalFotos" id="modalFotos" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-fotos" style="min-width: 1080px;">
+<div class="modal fade" tabindex="-1" role="document" aria-labelledby="modalFotos" id="modalFotos" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-fotos modal-dialog-scrollable">
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title text-uppercase h4 text-cinza-escuro marca-modelo">Fotos</h4>
@@ -45,24 +45,24 @@ $meta = $this -> meta;
 </div>
 
 <div class="container-fluid container-anuncios">
-    <div class="row justify-content-center px-3 px-md-0">
+    <div class="row justify-content-center px-2 px-md-0">
         <div class="col-sm-12 col-md-6 my-2 d-flex">
             <h3>Repasse Seminovos</h3>
         </div>
-        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
-            <a href="repasse/meus-anuncios" class="col-sm-12 btn btn-info">Meus Anúncios</a>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse/meus-anuncios" class="col-12 btn btn-info">Meus Anúncios</a>
         </div>
-        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
-            <a href="repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="repasse/anuncio" class="col-12 btn btn-info">Novo Anúncio</a>
         </div>
     </div>
 
     <form>
         <div class="form-row">
             <div class="col-12 col-md-6">
-                <div class="form-row">
+                <div class="form-row mx-1 mx-md-0">
                     <div class="col">
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label for="cidade">Filtrar por Cidade</label>
                             <input type="text" class="form-control" id="cidade" name="city"
                                 placeholder="Ex.: Belo Horizonte">
@@ -74,8 +74,8 @@ $meta = $this -> meta;
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
-                <div class="form-row">
+            <div class="col-12 col-lg-5">
+                <div class="form-row mx-1">
                     <div class="form-group col">
                         <label for="preco">Filtrar por Preço</label>
                         <div class="form-row">
@@ -100,53 +100,16 @@ $meta = $this -> meta;
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-1 d-flex align-items-end">
-                <div class="form-group w-100">
-                    <button class="btn btn-primary btn-block" type="submit">Filtrar</button>
+            <div class="col-12 col-lg-2 col-xl-1 d-flex align-items-end">
+                <div class="form-group w-100 mx-2 mx-md-0">
+                    <button class="btn btn-primary btn-block p-1" type="submit">Filtrar</button>
                 </div>
             </div>
-        </div>
-    </form>
-
-    <form class="row px-3 px-md-0">
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label for="cidade">Filtrar por Cidade</label>
-                <input type="text" class="form-control" id="cidade" name="city">
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label for="marcaModelo">Filtrar por Marca/modelo</label>
-                <input type="text" class="form-control" id="marcaModelo" name="search">
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-2">
-            <div class="form-group">
-                <label for="preco">Filtrar por Preço</label>
-                <div class="form-inline">
-                    <input type="text" class="form-control col-md-6" placeholder="De" name="precoDe" id="precoDe">
-                    <input type="text" class="form-control col-md-6" placeholder="Até" name="precoAte" id="precoAte">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-2">
-            <div class="form-group">
-                <label for="ano">Filtrar por Ano</label>
-                <div class="form-inline">
-                    <input type="text" class="form-control col-md-6" placeholder="De" name="anoDe" id="anoDe">
-                    <input type="text" class="form-control col-md-6" placeholder="Até" name="anoAte" id="anoAte">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-2 d-flex align-items-center">
-            <button class="btn btn-primary col-sm-12" type="submit">Filtrar
-            </button>
         </div>
     </form>
     <hr>
     <div class="row">
-        <div class="card-deck col-12 mt-2 row-cols-md-5 row-cols-2 d-flex flex-wrap">
+        <div class="card-deck col-12 mt-2 row-cols-md-4 row-cols-1 d-flex flex-wrap">
             <?php
             foreach ($veiculos as $key => $veiculo):
             ?>
@@ -183,12 +146,12 @@ $meta = $this -> meta;
                             </li>
                         </ul>
                         <div class="btn-group d-flex justify-content-around">
-                            <a href="#modalFotos" class="btn btn-laranja text-white"
+                            <a href="#modalFotos" class="btn btn-laranja text-white mx-1 p-1 w-100"
                                 title="Fotos" data-toggle="modal" data-id-veiculo = "<?= $veiculo['id']?>">
                                 <i class=" fa fa-camera"></i>
                                 <span>Fotos</span>
                             </a>
-                            <a href="#modalContato" class="btn btn-laranja text-white"
+                            <a href="#modalContato" class="btn btn-laranja text-white p-1 w-100"
                                 title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['id']?>">
                                 <i class=" fa fa-user"></i>
                                 <span>Contato</span>

@@ -4,19 +4,36 @@ $this->headTitle('Meus Anúncios');
 
 $veiculos = $this->veiculos;
 $meta = $this -> meta;
+$email = $this->userInfo('email');
 
 ?>
 
+<div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="ExcluirModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Anúncio</h5>
+      </div>
+      <div class="modal-body" id="textoModal">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-laranja text-white" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="delete" class="btn btn-danger text-white">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid">
-    <div class="row">
+    <div class="row justify-content-center px-2 px-md-0">
         <div class="col-sm-12 col-md-6 my-2 d-flex">
             <h3>Meus Anúncios</h3>
         </div>
-        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
-            <a href="repasse" class="col-sm-12 btn btn-info">Todos os Anúncios</a>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="/repasse" class="col-sm-12 btn btn-info">Todos os Anúncios</a>
         </div>
-        <div class="col-sm-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
-            <a href="repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="/repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
         </div>
     </div>
     <?php if($meta['total'] == 0):  ?>
@@ -25,17 +42,17 @@ $meta = $this -> meta;
     </div>
     <?php else: ?>
         <div class="row">
-        <div class="card-deck col-12 mt-2 row-cols-md-3 row-cols-1">
+        <div class="card-deck col-12 mt-2 row-cols-md-4 row-cols-1">
             <?php
             foreach ($veiculos as $key => $veiculo): 
             ?>
             <div class="col mb-1">
-                <div class="card h-100">
-                    <div style="position: relative; padding-top: 100%; width: 100%">
+                <div class="card h-100 d-flex">
+                    <div class="card-img-container">
                         <?php if (!$veiculo['pictures']): ?>
-                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">
+                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
                         <?php else: ?>
-                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover">
+                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
                         <?php endif; ?>
                     </div>
                     <div class="card-body">
@@ -61,10 +78,19 @@ $meta = $this -> meta;
                                 <span class="text-uppercase"><?= $veiculo['created_at'] ?> </span>
                             </li>
                         </ul>
-                        <div class="btn-group">
-                            <a href="/repasse/<?= $veiculo['id'] ?>/editar" class="btn text-white btn-laranja"
+                        <div class="btn-group d-flex justify-content-arround">
+                            <a href="/repasse/<?= $veiculo['id'] ?>/editar" class="btn text-white btn-laranja w-100 mx-1 p-1"
                             title="Editar">
                             <i class=" fa fa-edit"></i><span> Editar</span>
+                            </a>
+                            <a href="#excluirModal" class="btn text-white btn-danger w-100 mx-1 p-1"
+                            title="Excluir" data-toggle="modal"
+                            data-id-veiculo="<?= $veiculo['id']?>"
+                            data-marca-veiculo="<?= $veiculo['courier_brand']?>"
+                            data-modelo-veiculo="<?= $veiculo['courier_model']?>"
+                            data-email="<?= $email?>"
+                            > 
+                            <i class="fa fa-trash"></i><span> Excluir</span>
                             </a>
 
                             <?php if ($veiculo['status'] == 2): ?>
