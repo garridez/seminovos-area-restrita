@@ -246,7 +246,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                 }
                                 ?>
                             </td>
-                            <td data-sort="<?= $impressaoTotal ?>">
+                            <td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
                                 <?php
                                 echo StringFuncs::nF($impressaoTotal);
                                 if ($impressaoTotal) {

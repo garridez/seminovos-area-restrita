@@ -52,7 +52,8 @@ class PainelController extends AbstractActionController
 
         /** @var array $metricas */
         $metricas = $apiClient->veiculosMetricasGet([
-            'idVeiculo' => $idsVeiculos,
+            'idCadastro' => $idCadastro,
+            'agruparPor' => 'veiculo',
         ], null, 60 * 60 * 24)->getData() ?? [];
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
@@ -90,8 +91,8 @@ class PainelController extends AbstractActionController
 
             if ($idVeiculo && isset($metricas[$idVeiculo])) {
                 $veiculos['data'][$k]['metricas'] ??= [];
-                foreach ($metricas[$idVeiculo] as $metricaName => $metricas) {
-                    $veiculos['data'][$k]['metricas'][$metricaName] = $metricas;
+                foreach ($metricas[$idVeiculo] as $metricaName => $metricasRow) {
+                    $veiculos['data'][$k]['metricas'][$metricaName] = $metricasRow;
                 }
             }
         }
