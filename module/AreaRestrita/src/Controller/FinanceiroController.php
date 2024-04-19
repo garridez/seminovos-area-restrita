@@ -89,7 +89,7 @@ class FinanceiroController extends AbstractActionController
         $descTrime = 5.0;
         $descSemes = 10.0;
         $descAnual = 15.0;
-
+        /** ! Removido desconto COVID
         $idCadastrosComDescondoCOVID = [
             207703, // Golaço Automóveis
             342744, // RC EMPREENDIMENTOS AUTOMOTIVOS
@@ -102,7 +102,7 @@ class FinanceiroController extends AbstractActionController
             $descTrime = 10.0;
             $descSemes = 15.0;
             $descAnual = 20.0;
-        }
+        }*/
 
         $dadosFinanceiro['valor'] = number_format($valorPlanoAtual, 2, ',', '.');
         $dadosFinanceiro['valorAdicionalString'] = $valorAdicionalString;
