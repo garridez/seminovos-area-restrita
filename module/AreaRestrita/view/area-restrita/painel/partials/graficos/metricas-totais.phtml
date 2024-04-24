@@ -94,6 +94,9 @@ $seriesOptions = [
     ],
 ];
 foreach ($seriesOptions as $metricaKey => $serieOptions) {
+    if (!isset($metricasPorData[$metricaKey])) {
+        continue;
+    }
     $series[$metricaKey]  ??= $serieOptions;
 
     ksort($metricasPorData[$metricaKey]);
