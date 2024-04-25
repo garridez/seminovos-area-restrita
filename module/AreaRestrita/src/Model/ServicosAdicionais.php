@@ -25,8 +25,6 @@ class ServicosAdicionais extends ApiModelServicosAdicionais
      */
     public function get($idServicosAdicional)
     {
-        return parent::get([
-            'idServicosAdicional' => $idServicosAdicional,
-        ])->json();
+        return parent::get(null, $idServicosAdicional)->json();
     }
 }
