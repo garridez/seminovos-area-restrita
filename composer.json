@@ -23,6 +23,7 @@
     },
     "require": {
         "php": "^8.2",
+        "chillerlan/php-qrcode": "^5.0",
         "laminas/laminas-cache-storage-adapter-filesystem": "^2.3",
         "laminas/laminas-cache-storage-adapter-redis": "^2.5",
         "laminas/laminas-cache-storage-deprecated-factory": "^1.1",
