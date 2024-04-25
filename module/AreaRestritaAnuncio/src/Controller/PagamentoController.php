@@ -12,6 +12,7 @@ use Exception;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use SnBH\Common\Helper\MoveUpload;
+use chillerlan\QRCode\QRCode;
 
 class PagamentoController extends AbstractActionController
 {
@@ -151,6 +152,7 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['flagCertificado'] = isset($dados['certificado']) && !empty($dados['certificado']) ? (int) $dados['certificado'] : null;
         $dadosPagamento['parcelas'] = 1;
 
+
         // dados para pagamento Cielo/cartão
         if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') {
             $dadosPagamento['numero_cartao'] = $dados['numero_cartao'] ?: $dados['number'];
@@ -264,6 +266,10 @@ class PagamentoController extends AbstractActionController
                     Ainda estamos processando uma outra tentativa de pagamento.<br>
                     O processo pode demorar de 5 a 10 minutos dependendo da sua operadora de cartão de crédito
 HTML;
+        }
+        if ($dados['metodo'] == 'pix' && isset($response['data']['qr_code'])){
+            $qrCode = new QRCode();
+            $response['data']['img_qr_code'] = $qrCode->render($response['data']['qr_code']);
         }
         echo json_encode($response);
         die;
