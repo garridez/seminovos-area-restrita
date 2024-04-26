@@ -44,8 +44,8 @@
         "livereload": "^0.9.3",
         "postcss": "^8.4.38",
         "ts-loader": "^9.5.1",
-        "typescript": "^5.4.4",
+        "typescript": "^5.4.5",
         "webpack": "^5.91.0",
-        "webpack-bundle-analyzer": "^4.10.1"
+        "webpack-bundle-analyzer": "^4.10.2"
     }
 }

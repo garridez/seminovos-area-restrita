@@ -79,8 +79,8 @@ class MeusVeiculosController extends AbstractActionController
         $routeParams = "/meus-veiculos";
 
         $paginationData = [
-            'pages' => $dadosVeiculos['pages'],
-            'total' => $dadosVeiculos['total'],
+            'pages' => $dadosVeiculos['pages'] ?? 0,
+            'total' => $dadosVeiculos['total'] ?? 0,
             'current' => $page ?? 1,
             'routeName' => $routeName,
             'routeParams' => $routeParams,
