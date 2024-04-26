@@ -1,3 +1,9 @@
+<?php
+/* QR Code */
+use chillerlan\QRCode\QRCode;
+$qrCode = new QRCode();
+?>
+
 <div class="container container-fixed-lg bg-white text-center">
 
     <div class="col-12 m-t-20">
@@ -15,7 +21,7 @@
     </div>
     <div class="col-12 offset-md-2 col-md-8 mb-2">
         <div class="qrcode-container">
-            <img class="qrcode-img" style="width:100%; height:auto; max-width: 400px;" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=<?php echo trim((string) $_GET['code']); ?>"/>
+            <img class="qrcode-img" style="width:100%; height:auto; max-width: 400px;" src="<?php echo $qrCode->render(trim((string) $_GET['code'])); ?>"/>
         </div>
         <div class="col-12 m-2">
             <p id="text-code" style="font-size: 15px; font-weight: bold; overflow: scroll; padding: 15px 0; white-space: nowrap;">
