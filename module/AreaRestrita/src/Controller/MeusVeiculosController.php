@@ -144,6 +144,10 @@ class MeusVeiculosController extends AbstractActionController
      */
     protected function retornaValidacaoRevenda($dadosVeiculos)
     {
+        if (!isset($dadosVeiculos['data'])) {
+            return $dadosVeiculos;
+        }
+
         /** Adicionado verificações para cada tipo de plano e status do anuncio */
         foreach ($dadosVeiculos['data'] as $key => $veiculo) {
             $dataAtual = new DateTime(date('Y-m-d'));
