@@ -8,18 +8,22 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\Form;
 use Laminas\Http\Client;
 use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\SessionManager;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
 
 class AuthController extends AbstractActionController
 {
+    /**
+     * @return Response|ViewModel
+     */
     public function loginAction()
     {
-        /** @var ServiceLocatorInterface $container */
+        /** @var ServiceManager $container */
         global $container;
 
-         /** @var AuthenticationService $authService */
+        /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
 
@@ -65,7 +69,7 @@ class AuthController extends AbstractActionController
         if (!isset($post['token']) || !$post['token']) {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
-            \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'captcha-not-sended');
+            \SnBH\Common\Logs\Login::captchaFail($post['usuarioEmail'], 'captcha-not-sended');
             return $viewModel;
         }
 
@@ -85,13 +89,13 @@ class AuthController extends AbstractActionController
             if (!$result['success']) {
                 $viewModel->setVariable('loginError', true);
                 $viewModel->setVariable('captchaError', json_encode($result['error-codes']));
-                \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
+                \SnBH\Common\Logs\Login::captchaFail($post['usuarioEmail'], 'not-success');
                 return $viewModel;
             }
         } else {
             $viewModel->setVariable('loginError', true);
             $viewModel->setVariable('captchaError', true);
-            \SnBH\Common\Logs\Login::captchaFail($post->usuarioEmail, 'not-success');
+            \SnBH\Common\Logs\Login::captchaFail($post['usuarioEmail'], 'not-success');
             return $viewModel;
         }
 
@@ -134,18 +138,23 @@ class AuthController extends AbstractActionController
             }
         }
 
-        \SnBH\Common\Logs\Login::fail($data['usuarioEmail']);
+        if (isset($data) && $data) {
+            \SnBH\Common\Logs\Login::fail($data['usuarioEmail']);
+        }
 
         $viewModel->setVariable('loginError', true);
 
         return $viewModel;
     }
 
+    /**
+     * @return Response
+     */
     public function logoutAction()
     {
         global $container;
 
-    /** @var AuthenticationService $authService */
+        /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
         $authService->clearIdentity();
 
@@ -159,7 +168,7 @@ class AuthController extends AbstractActionController
      *  Se estiver tudo certo, faz o login sem usar senha
      *  Isso acontece principalmente quando o usuário recebe um email
      *
-     * @return Response
+     * @return Response|null
      */
     public function loginAutomaticoAction()
     {

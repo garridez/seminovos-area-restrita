@@ -5,6 +5,7 @@ namespace AreaRestrita\Controller;
 use AreaRestrita\Model\Cadastros;
 use Exception;
 use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Response as PhpEnvironmentResponse;
 use Laminas\Log\Logger;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Laminas\ServiceManager\ServiceManager;
@@ -14,6 +15,7 @@ use SnBH\ApiClient\Response;
 /**
  * @property Request $request
  * @method Request getRequest()
+ * @method PhpEnvironmentResponse getResponse()
  */
 class AbstractActionController extends ZendAbstractActionController
 {

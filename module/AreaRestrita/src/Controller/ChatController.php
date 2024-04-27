@@ -11,10 +11,9 @@ use Laminas\View\Model\JsonModel;
 
 class ChatController extends AbstractActionController
 {
-    public function indexAction()
-    {
-    }
-
+    /**
+     * @return JsonModel
+     */
     public function messagesAction()
     {
         $idCadastro = $this->getCadastro('idCadastro');
@@ -25,6 +24,9 @@ class ChatController extends AbstractActionController
         return $this->getMessages($idCadastro);
     }
 
+    /**
+     * @return JsonModel
+     */
     public function naoLidasAction()
     {
         $idCadastro = $this->getCadastro('idCadastro');
@@ -41,7 +43,10 @@ class ChatController extends AbstractActionController
         return new JsonModel($res->getData());
     }
 
-    protected function sendMessages($idCadastro)
+    /**
+     * @param string|int $idCadastro
+     */
+    protected function sendMessages($idCadastro): JsonModel
     {
         /**
          * @todo verificar se o ID veículo é do cara mesmo
@@ -53,7 +58,10 @@ class ChatController extends AbstractActionController
         return new JsonModel($res);
     }
 
-    protected function getMessages($idCadastro)
+    /**
+     * @param string|int $idCadastro
+     */
+    protected function getMessages($idCadastro): JsonModel
     {
         $params = [
             'idCadastro' => $idCadastro,
@@ -80,7 +88,10 @@ class ChatController extends AbstractActionController
         return new JsonModel($data);
     }
 
-    protected function addUserData(&$listChats)
+    /**
+     * @param array $listChats
+     */
+    protected function addUserData(&$listChats): void
     {
         if (!$listChats) {
             return;
@@ -91,6 +102,10 @@ class ChatController extends AbstractActionController
         $cadastrosModel = $this->getContainer()->get(Cadastros::class);
         // Busca os dados do cadastro
         $dadosCadastro = $cadastrosModel->getCurrent(true);
+
+        if ($dadosCadastro === false) {
+            return;
+        }
 
         $listChats[$firstkey]['meusDados'] = [
             'idCadastro' => $dadosCadastro['idCadastro'],

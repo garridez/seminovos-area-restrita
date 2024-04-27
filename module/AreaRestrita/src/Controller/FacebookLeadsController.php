@@ -6,12 +6,13 @@
 
 namespace AreaRestrita\Controller;
 
+use Laminas\Http\PhpEnvironment\Response;
 use Laminas\Log\Logger;
 use Laminas\Log\Writer\Stream;
 
 class FacebookLeadsController extends AbstractActionController
 {
-    public function indexAction()
+    public function indexAction(): Response
     {
         $leads = "requisição get.";
 

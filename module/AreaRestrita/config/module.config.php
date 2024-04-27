@@ -10,7 +10,6 @@ namespace AreaRestrita;
 use AreaRestrita\Service\AuthenticationServiceFactory;
 use AreaRestrita\View\Helper\Data;
 use Laminas\Authentication\AuthenticationService;
-use Laminas\Cache\Service\StorageCacheFactory;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -155,7 +154,6 @@ return [
     'controllers' => [
         'factories' => [
             Controller\AuthController::class => InvokableFactory::class,
-            Controller\AuthOldController::class => InvokableFactory::class,
             Controller\ChatController::class => InvokableFactory::class,
             Controller\CheckController::class => InvokableFactory::class,
             Controller\ContratoRevendaController::class => InvokableFactory::class,
@@ -259,7 +257,7 @@ return [
     ],
     'SnBH\ApiModel' => [
         'model_factory_namespace_prefix' => [
-            Model::class
+            'AreaRestrita\Model'
         ]
     ]
 ];

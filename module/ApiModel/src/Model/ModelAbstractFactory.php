@@ -2,11 +2,10 @@
 
 namespace SnBH\ApiModel\Model;
 
-use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Psr\Container\ContainerInterface;
 use SnBH\ApiClient\Client as ApiClient;
-use SnBH\ApiModel;
 
 class ModelAbstractFactory implements AbstractFactoryInterface
 {
@@ -42,16 +41,12 @@ class ModelAbstractFactory implements AbstractFactoryInterface
             return $this->namespacesPrefix;
         }
         $config = $container->get('Config');
-        $this->namespacesPrefix = (array) $config[ApiModel::class]['model_factory_namespace_prefix'];
+        $this->namespacesPrefix = (array) $config['SnBH\ApiModel']['model_factory_namespace_prefix'];
         return $this->namespacesPrefix;
     }
 
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         return $this->canCreate($serviceLocator, $requestedName);
-    }
-
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
     }
 }

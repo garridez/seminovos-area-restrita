@@ -7,15 +7,11 @@
 namespace AreaRestrita\Controller\Factory;
 
 use AreaRestrita\Module;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Container\ContainerInterface;
 use UsersClient\Client;
 
 class ClientFactory
 {
-    /**
-     * @throws GuzzleException
-     */
     public static function create(ContainerInterface $container): Client
     {
         $sessionAuth = [];
