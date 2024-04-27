@@ -162,7 +162,8 @@ class VeiculoController extends AbstractActionController
         // Busca os dados das fotos do veiculo
         $dadosVeiculoFotos = $veiculosFotosModel->get($idVeiculo);
 
-        if ($dadosVeiculoFotos && $dadosVeiculoFotos['status'] != 404) {
+        if ($dadosVeiculoFotos) {
+            $listaFotos = [];
             foreach ($dadosVeiculoFotos as $key => $dado) {
                 $listaFotos[] = $dado['idFoto'];
             }
