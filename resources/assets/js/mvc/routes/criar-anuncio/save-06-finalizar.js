@@ -41,7 +41,7 @@ module.exports.callback = ($) => {
                 }
 
                 if(data.detail == "Veiculo Ativado Com Revenda Inativa!") {
-                    text = 'Seu anúncio foi ativado com sucesso. No entanto, observamos que sua revenda encontra-se <span style="color:red;">inativa</span> no momento.<br><br>Para resolver esta situação e retomar as vendas o quanto antes, por favor acesse a área financeira através do botão abaixo ou entre em contato conosco pelo telefone (31) 3077-5888.<br><br>Obrigado, Equipe Seminovos.<a href="/financeiro" class="btn btn-info btn-block btn-finalizar h-100 mt-3" title="Acessar Financeiro">Acessar Financeiro</a>';
+                    text = 'Seu anúncio foi ativado com sucesso. No entanto, observamos que sua revenda encontra-se <span style="color:red;">inativa</span> no momento.<br><br>Para resolver esta situação e retomar as vendas o quanto antes, por favor acesse a área financeira através do botão abaixo ou entre em contato conosco pelo telefone (31) 99550-2814.<br><br>Obrigado, Equipe Seminovos.<a href="/financeiro" class="btn btn-info btn-block btn-finalizar h-100 mt-3" title="Acessar Financeiro">Acessar Financeiro</a>';
                     time = 25000;
                 }
 
