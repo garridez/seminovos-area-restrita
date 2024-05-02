@@ -1,17 +1,16 @@
-window.$ = require('jquery');
+import * as $ from 'jquery';
+import SnBH from './SnBH';
+window.$ = $;
 //require('./ads.js');
 
-
-require('jquery')(function () {
+$(function () {
     // Inicia a aplicação
-    var SnBH = require('./SnBH')
-            .autoRun
-            .requireAndRegister();
+    SnBH.autoRun.requireAndRegister();
     /**
      * @todo quando puder fazer um anúncio sem login, remove isso
      */
     if (window.SnBHRunning !== true) {
         window.SnBHRunning = true;
-        SnBH.run();
+        SnBH.autoRun.run();
     }
 });

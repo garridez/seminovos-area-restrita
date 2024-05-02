@@ -11,8 +11,7 @@
         padding-left: 0;
         padding-right: 0;
         & > a.active {
-            &:hover,
-                &:focus {
+            &:hover {
                 border-color: $color-master-light;
                 color: $color-master;
                 background-color: $color-master-light;
@@ -109,7 +108,7 @@
     }
 }
 
-/* Tabs : Simple 
+/* Tabs : Simple
 ------------------------------------
 */
 
@@ -344,7 +343,7 @@
     }
 }
 
-/* Tabs : Fill-up 
+/* Tabs : Fill-up
 ------------------------------------
 */
 
@@ -524,9 +523,9 @@
             width: 100%;
             position: relative;
             bottom: 3px;
-            z-index: 120;    
+            z-index: 120;
             content: "";
-            clear: both;    
+            clear: both;
         }
         &  ~ .tab-content{
             position: relative;

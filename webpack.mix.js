@@ -1,10 +1,25 @@
-let mix = require('laravel-mix');
-let webpack = require('webpack');
-let path = require('path');
-var plugins = [];
+const tsNode = require('ts-node');
+const tsConfigPaths = require('tsconfig-paths');
 
-var isProd = mix.inProduction();
+tsNode.register({
+    esm: 'node',
+    project: './tsconfig.json',
+});
 
+tsConfigPaths.register({
+    baseUrl: './',
+    paths: {},
+});
+
+require('tsx/cjs');
+
+const mix = require('laravel-mix');
+const webpack = require('webpack');
+const path = require('path');
+const glob = require('glob');
+const plugins = [];
+
+const isProd = mix.inProduction();
 
 if (!isProd) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -22,23 +37,24 @@ if (!isProd) {
 }
 
 mix.webpackConfig({
-    plugins: [
-        ...plugins
-    ],
+    plugins: [...plugins],
     resolve: {
-        modules: [path.resolve(__dirname, 'resources/assets/js'), 'node_modules'],
+        modules: [
+            path.resolve(__dirname, 'resources/assets/js'),
+            'node_modules',
+        ],
         alias: {
             SnBH: path.resolve('resources/assets/js/SnBH.js')
-        }
+        },
     },
     stats: {
-        cachedModules: true
-    }
+        cachedModules: true,
+    },
 });
 
 mix.options({
     publicPath: 'public',
-    processCssUrls: false
+    processCssUrls: false,
 });
 
 mix.webpackConfig({
@@ -50,9 +66,31 @@ mix.webpackConfig({
     optimization: {
         splitChunks: {
             chunks: 'async',
-        }
+        },
     },
 });
+
+const mvcPartials = glob.sync('resources/assets/js/mvc-partial/*/**/*.{tsx,js,ts}');
+const mvcPartialsSelectorsGroup = {};
+
+console.log('MVC Partial');
+for (let filename of mvcPartials) {
+    const moduleData = require(filename);
+    console.log(moduleData.seletor + ': ' + filename);
+    mvcPartialsSelectorsGroup[moduleData.seletor] = mvcPartialsSelectorsGroup[moduleData.seletor] || [];
+    mvcPartialsSelectorsGroup[moduleData.seletor].push(filename);
+}
+
+for (let selector in mvcPartialsSelectorsGroup) {
+    let filename = mvcPartialsSelectorsGroup[selector];
+    mix.ts(
+        [
+            ...filename,
+            'resources/assets/js/mvc-partial/runner.ts',
+        ],
+        'public/js/mvc-partial/' + selector + '.js',
+    );
+}
 
 mix.ts('resources/assets/js/Main.js', 'public/js/app.js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
@@ -61,4 +99,3 @@ mix.copy('resources/assets/img', 'public/img');
 mix.copy('resources/assets/fonts', 'public/fonts');
 mix.copy('node_modules/snbh-site/resources/assets/img/svg', 'public/img/svg');
 mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
-
