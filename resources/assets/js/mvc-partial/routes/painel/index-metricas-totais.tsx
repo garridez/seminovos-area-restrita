@@ -1,4 +1,4 @@
-import highstock, { SeriesOptionsType, Options } from 'highcharts/highstock';
+import highcharts, { SeriesOptionsType, Options } from 'highcharts';
 import accessibility from 'highcharts/modules/accessibility';
 import exporting from 'highcharts/modules/exporting';
 import exportingData from 'highcharts/modules/export-data';
@@ -34,10 +34,10 @@ export default () => {
         $this.addClass('active');
     });
 
-    highChartsLangPTBR(highstock);
-    accessibility(highstock);
-    exporting(highstock);
-    exportingData(highstock);
+    highChartsLangPTBR(highcharts);
+    accessibility(highcharts);
+    exporting(highcharts);
+    exportingData(highcharts);
 
     const metricasSerie = window.metricasSerie;
     var i = 0;
@@ -104,6 +104,6 @@ function getChart(chartOptions: Options, serie: SeriesOptionsType) {
     console.log(options);
 
     return (
-        <HighchartsReact highcharts={highstock} constructorType={'stockChart'} options={options} />
+        <HighchartsReact highcharts={highcharts} constructorType={'stockChart'} options={options} />
     );
 }
