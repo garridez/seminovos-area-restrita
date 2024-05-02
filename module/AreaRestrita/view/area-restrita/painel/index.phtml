@@ -1,10 +1,11 @@
 <?php
 
-/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
-
+use AreaRestrita\View\Helper\AutocompleteClass;
 use AreaRestrita\View\Helper\Data;
 use SnBH\Common\Helper\NumberFuncs;
 use SnBH\Common\Helper\StringFuncs;
+
+/** @var AutocompleteClass $this */
 
 if ($this->userInfo('tipoCadastro') == 1) {
     $arrayPlanos = [
@@ -30,13 +31,12 @@ $veiculos = $this->veiculos['data'];
 
 usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
 
-
 ?>
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script><!---->
 <script>
     <?= file_get_contents(__DIR__ . '/highcharts-lang.js') ?>
 </script>
@@ -68,7 +68,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
             ],
             'textB' => [
                 'title' => 'Disponíveis',
-                'body' => ($this->qtdAnuncios()->totalNitro - $this->qtdAnuncios()->totalNitroPublicados)
+                'body' => $this->qtdAnuncios()->totalNitro - $this->qtdAnuncios()->totalNitroPublicados,
             ],
         ]);
 
@@ -80,7 +80,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
             ],
             'textB' => [
                 'title' => 'Disponíveis',
-                'body' => ($this->qtdAnuncios()->totalTurbo - $this->qtdAnuncios()->totalTurboPublicados),
+                'body' => $this->qtdAnuncios()->totalTurbo - $this->qtdAnuncios()->totalTurboPublicados,
             ],
         ]);
 
@@ -92,7 +92,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
             ],
             'textB' => [
                 'title' => 'Disponíveis',
-                'body' => ($this->qtdAnuncios()->totalBasico - $this->qtdAnuncios()->totalBasicoPublicado),
+                'body' => $this->qtdAnuncios()->totalBasico - $this->qtdAnuncios()->totalBasicoPublicado,
             ],
         ]);
         ?>
@@ -100,18 +100,24 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
 
     <div class="row">
         <div class="col-12">
-            <?= $this->partial('partials/graficos/metricas-totais.phtml', [
-                'veiculos' => $veiculos,
-                'metricasPorData' => $metricasPorData
-            ]) ?>
+            <?= $this->partial(
+                'partials/graficos/metricas-totais.phtml',
+                [
+                    'veiculos' => $veiculos,
+                    'metricasPorData' => $metricasPorData,
+                ]
+            ) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <?= $this->partial('partials/graficos/mais-acessados.phtml', [
-                'maisAcessados' => $maisAcessados,
-            ]) ?>
+            <?= $this->partial(
+                'partials/graficos/mais-acessados.phtml',
+                [
+                    'maisAcessados' => $maisAcessados,
+                ]
+            ) ?>
         </div>
     </div>
     <hr>
@@ -137,7 +143,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                         <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
                         <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
                         <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
-                        <th class="d-none d--md-table-cell">Cliques Telefone</th>
+                        <th><span title="Clique para ordenar por &quot;Clique em Ver Telfone&quot;">Ver Telefone</span></th>
                         <th class="no-sort"></th>
                         <th class="no-sort"></th>
                     </tr>
@@ -150,6 +156,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
 
                         $acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
                         $impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
+                        $telefoneTotal = $veiculo['metricas']['telefone']['total'] ?? 0;
                         ?>
                         <tr>
                             <td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
@@ -169,7 +176,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                 <br>
                                 <?php
                                 if ($veiculo['precoInfo']['mediaValor']) {
-                                    $textMedia =  '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
+                                    $textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
                                     $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
 
                                     if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
@@ -202,8 +209,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                         //echo $arrowDown;
                                     }
                                     echo '</span>';
-                                ?>
-                                <?php else :
+                                else :
                                     echo '<small class="text-muted">FIPE indisponível</small>';
                                 endif;
                                 ?>
@@ -220,7 +226,7 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                 $diffValues = [
                                     'anos' => (int) $diff->format('%Y'),
                                     'meses' => (int) $diff->format('%m'),
-                                    'dias' => (int) $diff->format('%d')
+                                    'dias' => (int) $diff->format('%d'),
                                 ];
                                 if ($diffValues['anos']) {
                                     echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
@@ -253,6 +259,12 @@ usort($veiculos, fn ($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano'])
                                     echo '<br>';
                                     echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
                                 }
+                                ?>
+                            </td>
+                            <td class="data-telefone-total" data-sort="<?= $telefoneTotal ?>">
+                                <?php
+                                echo StringFuncs::nF($telefoneTotal);
+
                                 ?>
                             </td>
                             <td class="d-none cliques">
