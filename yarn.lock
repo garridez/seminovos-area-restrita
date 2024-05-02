@@ -2123,6 +2123,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.merge@npm:^4.6.9":
+  version: 4.6.9
+  resolution: "@types/lodash.merge@npm:4.6.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10/d0dd6654547c9d8d905184d14aa5c2a37a1ed1c3204f5ab20b7d591a05f34859ef09d3b72c065e94ca1989abf9109eb8230f67c4d64a5768b1d65b9ed8baf8e7
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.0
+  resolution: "@types/lodash@npm:4.17.0"
+  checksum: 10/2053203292b5af99352d108656ceb15d39da5922fc3fb8186e1552d65c82d6e545372cc97f36c95873aa7186404d59d9305e9d49254d4ae55e77df1e27ab7b5d
+  languageName: node
+  linkType: hard
+
 "@types/mime@npm:*":
   version: 3.0.4
   resolution: "@types/mime@npm:3.0.4"
@@ -2825,6 +2841,7 @@ __metadata:
     "@fortawesome/fontawesome-free": "npm:^6.5.2"
     "@types/eslint": "npm:^8.56.10"
     "@types/jquery": "npm:^3.5.29"
+    "@types/lodash.merge": "npm:^4.6.9"
     "@types/react": "npm:^18.3.1"
     "@types/react-dom": "npm:^18.3.0"
     "@types/webpack-bundle-analyzer": "npm:^4.7.0"
@@ -2847,6 +2864,7 @@ __metadata:
     js-cookie: "npm:^3.0.5"
     laravel-mix: "npm:^6.0.49"
     livereload: "npm:^0.9.3"
+    lodash.merge: "npm:^4.6.2"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.4.38"
     prettier: "npm:^3.2.5"
