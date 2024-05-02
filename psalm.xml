@@ -27,7 +27,13 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-
+    <issueHandlers>
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <file name="module/*/view/*/*/*.phtml" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+    </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>

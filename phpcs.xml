@@ -10,6 +10,7 @@
     <rule ref="LaminasCodingStandard">
 
         <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSame"/>
+        <exclude name="Generic.Files.InlineHTML.Found"/>
         <exclude name="Generic.Formatting.SpaceAfterNot.Incorrect"/>
         <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFallbackGlobalName"/>
         <exclude name="SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator"/>
@@ -27,6 +28,9 @@
 
     <rule ref="WebimpressCodingStandard.Formatting.StringClassReference.Found">
         <exclude-pattern>*config.php</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.MissingVariable">
+        <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
 
     <!-- Paths to check -->
