@@ -6,7 +6,9 @@ Highcharts.setOptions({
             defaultChartTitle: 'Gráfico sem título',
             drillUpButton: 'Retornar a {buttonText}',
             graphicContainerLabel: 'Contêiner gráfico',
-            resetZoomButton: 'Redefinir zoom',
+            zoom: {
+                resetZoomButton: 'Redefinir zoom',
+            },
             svgContainerLabel: 'Contêiner SVG para gráfico intitulado {chartTitle}',
             svgContainerTitle: '',
             thousandsSep: ','
