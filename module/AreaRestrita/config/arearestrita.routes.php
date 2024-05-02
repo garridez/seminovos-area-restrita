@@ -1,28 +1,18 @@
 <?php
 
-/**
- *
- * Todas rotas internas do sistema deve ficar aqui.
- * As rotas adicionadas aqui serão rotas filha da rota 'restrito'
- * Como a rota 'restrito' já possui um middleware de autenticação, todas as
- *  rotas filhas estão protegidas.
- *
- * @see https://framework.zend.com/manual/2.4/en/modules/zend.mvc.routing.html
- *
- */
 use AreaRestrita\Controller as Ctrl;
-use Laminas\Router\Http;
 use Laminas\Mvc\Middleware\PipeSpec;
+use Laminas\Router\Http;
 
 return [
-    'repasse'=> [
+    'repasse' => [
         'type' => Http\Segment::class,
         'options' => [
             'route' => 'repasse',
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\RepasseController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
         'may_terminate' => true,
@@ -52,7 +42,7 @@ return [
                     'defaults' => [
                         'action' => 'editar',
                     ],
-                ],                
+                ],
             ],
             'license-plate' => [
                 'type' => Http\Literal::class,
@@ -63,7 +53,7 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
     ],
     'rota-exemplo' => [
         'type' => Http\Segment::class,
@@ -73,7 +63,7 @@ return [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\RotaExemploController::class,
                 'action' => 'index',
-                'parametro' => 'Valor Padrão do parametro'
+                'parametro' => 'Valor Padrão do parametro',
             ],
         ],
         'may_terminate' => true,
@@ -81,7 +71,7 @@ return [
             'parametro-opcional' => [
                 'type' => Http\Segment::class,
                 'options' => [
-                    'route' => '/[:parametro]'
+                    'route' => '/[:parametro]',
                 ],
             ],
             'todas-rotas' => [
@@ -129,7 +119,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\MeusDadosController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
@@ -140,7 +130,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\ChatController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
         'may_terminate' => true,
@@ -193,7 +183,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\ContratoRevendaController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
@@ -204,7 +194,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\HistoricoPagamentosController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
@@ -215,7 +205,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\FaturaController::class,
-                'action' => 'particular'
+                'action' => 'particular',
             ],
         ],
     ],
@@ -226,7 +216,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\FaturaController::class,
-                'action' => 'revenda'
+                'action' => 'revenda',
             ],
         ],
     ],
@@ -237,7 +227,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\FinanceiroController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
@@ -248,7 +238,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\BannerController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
         'may_terminate' => true,
@@ -280,7 +270,7 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
     ],
     /*'xml' => [
         'type' => Http\Literal::class,
@@ -321,7 +311,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\MeusVeiculosController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
         'may_terminate' => true,
@@ -425,7 +415,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\MeuSiteController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
@@ -436,7 +426,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\MeusDadosController::class,
-                'action' => 'alterar-senha'
+                'action' => 'alterar-senha',
             ],
         ],
     ],
@@ -447,7 +437,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\PagesController::class,
-                'action' => 'central-informacoes'
+                'action' => 'central-informacoes',
             ],
         ],
     ],
@@ -458,7 +448,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\PainelController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
         'may_terminate' => true,
@@ -468,11 +458,11 @@ return [
                 'options' => [
                     'route' => '/:idVeiculo',
                     'constraints' => [
-                            'idVeiculo' => '[0-9]+',
+                        'idVeiculo' => '[0-9]+',
                     ],
                     'defaults' => [
-                        'action' => 'detalhe-anuncio'
-                    ]
+                        'action' => 'detalhe-anuncio',
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -481,13 +471,13 @@ return [
                         'options' => [
                             'route' => '/grafico-contagem-diaria/:tipo',
                             'constraints' => [
-                                'tipo' => 'acesso|contato|impressao'
+                                'tipo' => 'acesso|contato|impressao',
                             ],
                             'defaults' => [
-                                'action' => 'grafico-contagem-diaria'
+                                'action' => 'grafico-contagem-diaria',
                             ],
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
             ],
             'contadorPorMarca' => [
@@ -495,8 +485,8 @@ return [
                 'options' => [
                     'route' => '/contador-por-marca',
                     'defaults' => [
-                        'action' => 'contador-por-marca'
-                    ]
+                        'action' => 'contador-por-marca',
+                    ],
                 ],
             ],
             'contadorPorModelo' => [
@@ -504,8 +494,8 @@ return [
                 'options' => [
                     'route' => '/contador-por-modelo',
                     'defaults' => [
-                        'action' => 'contador-por-modelo'
-                    ]
+                        'action' => 'contador-por-modelo',
+                    ],
                 ],
             ],
             'contadorPorCategoria' => [
@@ -513,8 +503,8 @@ return [
                 'options' => [
                     'route' => '/contador-por-categoria',
                     'defaults' => [
-                        'action' => 'contador-por-categoria'
-                    ]
+                        'action' => 'contador-por-categoria',
+                    ],
                 ],
             ],
             'tabela-fipe' => [
@@ -522,9 +512,9 @@ return [
                 'options' => [
                     'route' => '/tabela-fipe',
                     'defaults' => [
-                        'action' =>'tabela-fipe'
-                    ]
-                ]
+                        'action' => 'tabela-fipe',
+                    ],
+                ],
             ],
         ],
     ],
@@ -535,7 +525,7 @@ return [
             'defaults' => [
                 'controller' => PipeSpec::class,
                 'controller_name' => Ctrl\CertificadosController::class,
-                'action' => 'index'
+                'action' => 'index',
             ],
         ],
     ],
