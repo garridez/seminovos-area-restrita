@@ -23,28 +23,27 @@ const isProd = mix.inProduction();
 
 if (!isProd) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-    plugins.push(new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-        reportFilename: 'webpack-report.html',
-        defaultSizes: 'gzip',
-        generateStatsFile: false,
-        statsFilename: 'webpack-stats.json',
-        statsOptions: null,
-        logLevel: 'info',
-        excludeAssets: [],
-    }));
+    plugins.push(
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: 'webpack-report.html',
+            defaultSizes: 'gzip',
+            generateStatsFile: false,
+            statsFilename: 'webpack-stats.json',
+            statsOptions: null,
+            logLevel: 'info',
+            excludeAssets: [],
+        }),
+    );
 }
 
 mix.webpackConfig({
     plugins: [...plugins],
     resolve: {
-        modules: [
-            path.resolve(__dirname, 'resources/assets/js'),
-            'node_modules',
-        ],
+        modules: [path.resolve(__dirname, 'resources/assets/js'), 'node_modules',],
         alias: {
-            SnBH: path.resolve('resources/assets/js/SnBH.js')
+            SnBH: path.resolve('resources/assets/js/SnBH.js'),
         },
     },
     stats: {
@@ -70,7 +69,7 @@ mix.webpackConfig({
     },
 });
 
-const mvcPartials = glob.sync('resources/assets/js/mvc-partial/*/**/*.{tsx,js,ts}');
+const mvcPartials = glob.sync('resources/assets/js/mvc-partial/*/*/*.{tsx,js,ts}');
 const mvcPartialsSelectorsGroup = {};
 
 console.log('MVC Partial');
@@ -84,11 +83,8 @@ for (let filename of mvcPartials) {
 for (let selector in mvcPartialsSelectorsGroup) {
     let filename = mvcPartialsSelectorsGroup[selector];
     mix.ts(
-        [
-            ...filename,
-            'resources/assets/js/mvc-partial/runner.ts',
-        ],
-        'public/js/mvc-partial/' + selector + '.js',
+        [...filename, 'resources/assets/js/mvc-partial/runner.ts'],
+        'public/js/mvc-partial/' + selector + '.js'
     );
 }
 

@@ -68,10 +68,13 @@ body.sidebar-collapsed {
                 .icon-thumbnail {
                     margin-right: 0;
                 }
-
                 .title {
                     display: none;
                 }
+                &.aviso-expiracao {
+                    display: none;
+                }
+
             }
         }
     }
