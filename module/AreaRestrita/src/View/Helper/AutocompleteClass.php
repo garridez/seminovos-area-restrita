@@ -20,6 +20,8 @@ use Laminas\View\Renderer\PhpRenderer;
  * @method ArrayData planosUsados()
  * @method BodyClass bodyClass()
  * @method Data dateHelper()
+ * @method JsMcvPartial jsMcvPartial()
+ * @method string partial($name = null, $values = null)
  */
 class AutocompleteClass extends PhpRenderer
 {

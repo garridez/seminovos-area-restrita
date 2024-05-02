@@ -8,6 +8,7 @@ use AreaRestrita\Model\Veiculos;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
+use SnBH\ApiClient\Response as ApiResponse;
 use SnBH\ApiModel\Model\VeiculosInfo;
 
 class PainelController extends AbstractActionController
@@ -54,11 +55,13 @@ class PainelController extends AbstractActionController
         $metricas = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'veiculo',
+            'incluirHistorico' => true,
         ], null, 60 * 60 * 24)->getData() ?? [];
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'data',
+            'incluirHistorico' => true,
         ], null, 60 * 60 * 24)->getData() ?? [];
 
         /** @var array $maisAcessados */
@@ -81,6 +84,7 @@ class PainelController extends AbstractActionController
                 $veiculo['anoFabricacao'],
                 $veiculo['anoModelo']
             );
+            /** @var ApiResponse $fipeData */
             $fipeData = $apiClient->veiculosInfoGet([], $veiculo['idVeiculo'], 60 * 60 * 24);
             $precoInfo['fipe'] = [];
             if ($fipeData->status === 200) {
