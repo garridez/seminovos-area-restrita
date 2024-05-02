@@ -1,22 +1,25 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace AreaRestrita;
 
 use AreaRestrita\Service\AuthenticationServiceFactory;
 use AreaRestrita\View\Helper\Data;
+use AreaRestrita\View\Helper\Factory\JsMcvPartialFactory;
+use AreaRestrita\View\Helper\JsMcvPartial;
 use Laminas\Authentication\AuthenticationService;
+use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
+use Laminas\Mvc\Middleware\PipeSpec;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'session_containers' => [
-        Module::SESSION_NAMESPACE
+        Module::SESSION_NAMESPACE,
     ],
     'router' => [
         'routes' => [
@@ -25,10 +28,9 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => \Laminas\Mvc\Middleware\PipeSpec::class,
+                        'controller' => PipeSpec::class,
                         'controller_name' => Controller\MeusVeiculosController::class,
                         'action' => 'index',
-
                         'middleware' => Middleware\Factory\MiddlewarePipeFactory::class,
                     ],
                 ],
@@ -56,7 +58,7 @@ return [
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
             'logout' => [
                 'type' => Literal::class,
@@ -96,7 +98,7 @@ return [
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
             'facebookLeads' => [
                 'type' => Literal::class,
@@ -104,9 +106,9 @@ return [
                     'route' => '/facebook-leads',
                     'defaults' => [
                         'controller' => Controller\FacebookLeadsController::class,
-                        'action' => 'index'
-                    ]
-                ]
+                        'action' => 'index',
+                    ],
+                ],
             ],
             'filtros' => [
                 'type' => Literal::class,
@@ -114,7 +116,7 @@ return [
                     'route' => '/filtros',
                     'defaults' => [
                         'controller' => Controller\FiltrosController::class,
-                        'action' => 'index'
+                        'action' => 'index',
                     ],
                 ],
             ],
@@ -124,7 +126,7 @@ return [
                     'route' => '/check',
                     'defaults' => [
                         'controller' => Controller\CheckController::class,
-                        'action' => 'index'
+                        'action' => 'index',
                     ],
                 ],
             ],
@@ -146,7 +148,7 @@ return [
                                 'action' => 'cidades',
                             ],
                         ],
-                    ]
+                    ],
                 ],
             ],
         ],
@@ -168,7 +170,7 @@ return [
             Controller\MeuSiteController::class => InvokableFactory::class,
             Controller\MeusDadosController::class => InvokableFactory::class,
             Controller\MeusVeiculosController::class => InvokableFactory::class,
-            Controller\RepasseController::class=> InvokableFactory::class,
+            Controller\RepasseController::class => InvokableFactory::class,
             Controller\RotaExemploController::class => InvokableFactory::class,
             Controller\TermosController::class => InvokableFactory::class,
             Controller\PainelController::class => InvokableFactory::class,
@@ -189,12 +191,11 @@ return [
             Middleware\LoginMiddleware::class => Middleware\Factory\LoginMiddlewareFactory::class,
             Middleware\DispatchMiddleware::class => Middleware\Factory\MiddlewareGenericFactory::class,
             Middleware\CheckIdVeiculoMiddleware::class => Middleware\Factory\CheckIdVeiculoMiddlewareFactory::class,
-
-            Middleware\Factory\MiddlewarePipeFactory::class => Middleware\Factory\MiddlewarePipeFactory::class
+            Middleware\Factory\MiddlewarePipeFactory::class => Middleware\Factory\MiddlewarePipeFactory::class,
         ],
         'abstract_factories' => [
-            \Laminas\Cache\Service\StorageCacheAbstractServiceFactory::class,
-        ]
+            StorageCacheAbstractServiceFactory::class,
+        ],
     ],
     'view_helpers' => [
         'factories' => [
@@ -207,10 +208,12 @@ return [
             Form\View\Helper\FormCheckbox::class => InvokableFactory::class,
             Form\View\Helper\FormMultiCheckbox::class => InvokableFactory::class,
             Data::class => InvokableFactory::class,
+            JsMcvPartial::class => JsMcvPartialFactory::class,
         ],
         'aliases' => [
             'userInfo' => View\Helper\UserInfo::class,
             'bodyClass' => View\Helper\BodyClass::class,
+            'jsMcvPartial' => JsMcvPartial::class,
             'qtdAnuncios' => View\Helper\QtdAnuncios::class,
             'expiracaoRevenda' => View\Helper\ExpiracaoRevenda::class,
             'dateHelper' => Data::class,
@@ -257,7 +260,7 @@ return [
     ],
     'SnBH\ApiModel' => [
         'model_factory_namespace_prefix' => [
-            'AreaRestrita\Model'
-        ]
-    ]
+            'AreaRestrita\Model',
+        ],
+    ],
 ];
