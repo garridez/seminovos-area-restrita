@@ -25,7 +25,7 @@ class QtdAnunciosFactory implements FactoryInterface
         $data = $apiClient->planosGet([
             'idCadastro' => $idCadastro,
             'tipoCadastro' => $tipoCadastro,
-        ], 'anuncios')
+        ], 'anuncios', 60)
             ->getData();
 
         return new QtdAnuncios($data[0]);
