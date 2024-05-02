@@ -106,8 +106,13 @@ class Module
         });
     }
 
+    /**
+     * @param ServiceManager $sm
+     */
     public function showChat($sm): void
     {
+        define('SHOW_CHAT', 1);
+        return;
         try {
             $cadastro = $sm->get(Model\Cadastros::class)->getCurrent();
         } catch (\Exception $e) {
