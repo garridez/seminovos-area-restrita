@@ -56,12 +56,14 @@ class PainelController extends AbstractActionController
             'idCadastro' => $idCadastro,
             'agruparPor' => 'veiculo',
             'incluirHistorico' => true,
+            'dias' => 30,
         ], null, 60 * 60 * 24)->getData() ?? [];
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'data',
             'incluirHistorico' => true,
+            'dias' => 30,
         ], null, 60 * 60 * 24)->getData() ?? [];
 
         /** @var array $maisAcessados */
