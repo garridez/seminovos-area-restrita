@@ -39,8 +39,8 @@ if ($this->checkedLigacao !== '0') {
                     <span class="slider round"></span>
                 </label>
             </div>
-            
-            <?php /*
+
+            <?php if (SHOW_CHAT): ?>
             <div class="field d-flex justify-content-between align-items-center">
                 <b class="mr-2">
                     Aceita contato por chat?
@@ -50,8 +50,7 @@ if ($this->checkedLigacao !== '0') {
                     <span class="slider round"></span>
                 </label>
             </div>
-             * 
-             */ ?>
+            <?php endif; ?>
 
             <?php if ($this->userInfo()->isParticular()) : ?>
                 <div class="field d-flex justify-content-between align-items-center">
@@ -82,7 +81,7 @@ if ($this->checkedLigacao !== '0') {
                 </div>
             <?php endif; ?>
 
-        
+
             <div class="collapse" id="delivery-detalhes-collapse">
                 <div class="px-3 py-0">
                     <span>Ao marcar como <b class="text-verde">"SIM"</b> esta opção, é adicionada ao anúncio do veículo a seguinte mensagem:</span>
@@ -95,8 +94,8 @@ if ($this->checkedLigacao !== '0') {
             <div class="mb-1 mt-3">
                 <small class="text-uppercase text-reset d-flex flex-wrap">
                     Leia atentamente as informações contidas no
-                    <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja mr-1">termo de responsabilidade</a> 
-                    e 
+                    <a href="/../termos/pessoa-fisica" target="_blank" class="text-laranja mr-1">termo de responsabilidade</a>
+                    e
                     <a href="/../termos/politica-de-privacidade" target="_blank" class="text-laranja ml-1">política de privacidade.</a>
                 </small>
             </div>
