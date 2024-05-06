@@ -5,6 +5,9 @@ module.exports.callback = ($) => {
     var advancedAlerts = require('components/AdvancedAlerts');
     var Confirms = require('components/Confirms');
     var FormAlerts = require('components/FormAlerts');
+    const jsCookie = require('js-cookie');
+
+    modalRepasse();
 
     if ($('div[data-veiculo-finalizar]').length) {
         advancedAlerts.warning({
@@ -519,5 +522,55 @@ module.exports.callback = ($) => {
                 reloadPage: $this.data('reload-page'),
             }),
         );
+    }
+
+    function modalRepasse() {
+        if (!$('body').is('.t-revenda')) {
+            return;
+        }
+        var modalRepasseCookie = 'modalRepasse';
+        if (!jsCookie.get(modalRepasseCookie)) {
+            $.jsBsModal({
+                contents: {
+                    close: false,
+                    'modal-title': false,
+                    'modal-body': `
+                    <div class="text-center">
+                        <img src="/img/repasse/repasse-seminovos.jpg" />
+                    </div>
+                    <div class="text-center mt-4">
+                        Com o Repasse Seminovos, sua loja poderá publicar seu estoque de repasses em
+                        uma área restrita apenas para revendedores.
+                        <br><br>
+                        <b>
+                            Se lembra do correio de veículos?<br>
+                            Funciona da mesma forma!
+                        </b>
+                        <br><br>
+                        Você terá acesso a todo estoque das lojas cadastradas na Seminovos,
+                        com informações completas em sua área restritra.
+                        <br><br>
+                        <b>
+                        Publique agora mesmo de forma prática e rápida!
+                        <br><br>
+
+                        <small>
+                            Em caso de dúvidas,<br>
+                            entre em contato conosco:<br>
+                            <a href="http://wa.me/5531995502814" target="_blank" title="Atendimento por WhatsApp">
+                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> (31) 99550-2814
+                            </a>
+                        </small>
+                    </div>
+                `,
+                    'modal-footer': [
+                        '<a href="#" class="btn btn--laranja text--white" data-dismiss="modal">Fechar</a>',
+                        '<a href="/repasse" class="btn btn-laranja text-white">Acessar Repasse</a>',
+                    ],
+                },
+            }).on('hidden.bs.modal', function () {
+                jsCookie.set(modalRepasseCookie, 1, { expires: 1 });
+            });
+        }
     }
 };

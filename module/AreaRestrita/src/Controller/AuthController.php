@@ -131,7 +131,7 @@ class AuthController extends AbstractActionController
                 }
 
                 if ($data['tipoCadastro'] == 1) {
-                    return $this->redirect()->toRoute('restrito', [], ['query' => ['exibirModal' => 1]]);
+                    return $this->redirect()->toRoute('restrito', [], []);
                 }
 
                 return $this->redirect()->toRoute('restrito');
