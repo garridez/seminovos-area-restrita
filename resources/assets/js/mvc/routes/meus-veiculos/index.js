@@ -553,7 +553,10 @@ module.exports.callback = ($) => {
                         <b>
                         Publique agora mesmo de forma prática e rápida!
                         <br><br>
-
+                        <a href="https://www.youtube.com/shorts/V4i_AW3OMkk" class="btn btn-laranja text-white" target="_BLANK">
+                            Veja como funciona o Repasse Seminovos
+                        </a>
+                        <br><br>
                         <small>
                             Em caso de dúvidas,<br>
                             entre em contato conosco:<br>
