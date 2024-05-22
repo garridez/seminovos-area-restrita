@@ -34,6 +34,9 @@ module.exports.callback = async ($) => {
                         valorFipe = 0;
                         numeroFipe = 0;
                     }
+                    if(response.data[0].historicoCarro.fipe.valor_fipe == 0){
+                        numeroFipe = 0;
+                    }
                     else{
                         valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
                         numero = valorFipe.replace("R$ ", "").replace(".", "").replace(",", ".");
