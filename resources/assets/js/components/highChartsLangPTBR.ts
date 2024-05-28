@@ -161,7 +161,20 @@ export default function highChartsLangPTBR(Highcharts: any) {
             rangeSelectorZoom: 'Zoom',
             resetZoom: 'Redefinir zoom',
             resetZoomTitle: 'Redefinir zoom para nível 1:1',
-            shortMonths: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            shortMonths: [
+                'Jan',
+                'Fev',
+                'Mar',
+                'Abr',
+                'Mai',
+                'Jun',
+                'Jul',
+                'Ago',
+                'Set',
+                'Out',
+                'Nov',
+                'Dez',
+            ],
             shortWeekdays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
             stockTools: {
                 gui: {

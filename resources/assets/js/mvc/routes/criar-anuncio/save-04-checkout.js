@@ -25,7 +25,5 @@ module.exports.callback = ($) => {
         handlers.transferenciaFinalizar();
         handlers.transferenciaUpload();
     }
-    $('.step-container')
-            .on('step:change:checkout', init);
-
+    $('.step-container').on('step:change:checkout', init);
 };

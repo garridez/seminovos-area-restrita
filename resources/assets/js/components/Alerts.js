@@ -1,4 +1,3 @@
-
 require('components/JsBsModal');
 
 var $ = require('jquery');
@@ -6,7 +5,7 @@ var alerts;
 
 module.exports = alerts = {
     options: {
-        time: 5000
+        time: 5000,
     },
     alert: function (type, text, title, time) {
         if (title === null || title === undefined) {
@@ -25,7 +24,6 @@ module.exports = alerts = {
             if (count < 0) {
                 clearInterval(intervalID);
             }
-
         }, 1000);
 
         setTimeout(function () {
@@ -34,13 +32,11 @@ module.exports = alerts = {
 
         var modal = $.jsBsModal({
             contents: {
-                'close': '',
+                close: '',
                 'modal-title': title,
                 'modal-body': text,
-                'modal-footer': [
-                    close
-                ],
-            }
+                'modal-footer': [close],
+            },
         }).on('hidden.bs.modal', function () {
             modal.modal('dispose').remove();
         });

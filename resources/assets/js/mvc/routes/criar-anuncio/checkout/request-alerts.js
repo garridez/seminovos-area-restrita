@@ -37,7 +37,6 @@ module.exports = {
         this.ctx.find('#accordion-payment').slideUp();
         this.ctx.find('.processando').slideDown();
         this.ctx.find('.error-output').slideUp();
-
     },
     erro: function (text) {
         this.init();
@@ -46,7 +45,7 @@ module.exports = {
         this.ctx.find('.processando').slideUp();
         this.ctx.find('.error-output').slideDown();
 
-        if (text && typeof text === "object") {
+        if (text && typeof text === 'object') {
             if (text.detail) {
                 text = text.detail;
             } else if (text.title) {
@@ -54,12 +53,11 @@ module.exports = {
             } else {
                 text = false;
             }
-
         }
         if (!text) {
             text = 'Erro ao processar pagamento.<br>Tente novamente mais tarde';
         }
 
         this.ctx.find('.error-message').html(text);
-    }
+    },
 };

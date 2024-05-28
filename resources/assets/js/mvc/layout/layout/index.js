@@ -1,39 +1,39 @@
-module.exports.seletor = ".l-layout";
+module.exports.seletor = '.l-layout';
 
-module.exports.callback = $ => {
-    require("bootstrap/js/dist/util.js");
-    require("bootstrap/js/dist/collapse");
-    require("bootstrap/js/dist/dropdown");
-    require("components/pagesQuickView")($);
-    require("components/pagesMobileView")($);
-    require("components/pagesChat")($);
+module.exports.callback = ($) => {
+    require('bootstrap/js/dist/util.js');
+    require('bootstrap/js/dist/collapse');
+    require('bootstrap/js/dist/dropdown');
+    require('components/pagesQuickView')($);
+    require('components/pagesMobileView')($);
+    require('components/pagesChat')($);
     const jsCookie = require('js-cookie');
 
     if ($(window).width() < 992) {
-        $("body").removeClass("desktop");
-        $("body").addClass("mobile");
+        $('body').removeClass('desktop');
+        $('body').addClass('mobile');
     } else {
-        $("body").addClass("desktop");
-        $("body").removeClass("mobile");
+        $('body').addClass('desktop');
+        $('body').removeClass('mobile');
     }
-    $(".toggle-sidebar").click(e => {
-        if ($("body").hasClass("sidebar-open")) {
-            $("body").removeClass("sidebar-open");
-            $(".page-sidebar").removeClass("visible");
+    $('.toggle-sidebar').click((e) => {
+        if ($('body').hasClass('sidebar-open')) {
+            $('body').removeClass('sidebar-open');
+            $('.page-sidebar').removeClass('visible');
         } else {
-            $("body").addClass("sidebar-open");
-            $(".page-sidebar").addClass("visible");
+            $('body').addClass('sidebar-open');
+            $('.page-sidebar').addClass('visible');
         }
     });
 
-    let menu = $(".menu-items");
+    let menu = $('.menu-items');
     menu.find();
-    $('.sidebar-menu .btn-sidebar-collapse').click(function() {
+    $('.sidebar-menu .btn-sidebar-collapse').click(function () {
         $('body').toggleClass('sidebar-collapsed');
 
         if ($('body').hasClass('sidebar-collapsed')) {
             jsCookie.set('sidebar-collapsed', '1', {
-                expires: 365
+                expires: 365,
             });
         } else {
             jsCookie.remove('sidebar-collapsed');

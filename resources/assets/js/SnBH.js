@@ -9,11 +9,7 @@ export default {
         registerCallback: function (seletor, callback, prepend) {
             seletor = seletor && seletor.trim();
 
-            if (
-                'string' === typeof seletor &&
-                seletor !== '' &&
-                typeof callback === 'function'
-            ) {
+            if ('string' === typeof seletor && seletor !== '' && typeof callback === 'function') {
                 this.registered[seletor] = this.registered[seletor] || [];
 
                 if (prepend) {

@@ -1,4 +1,3 @@
-
 module.exports.seletor = '.c-meus-dados.a-index';
 
 module.exports.callback = ($) => {
@@ -12,22 +11,22 @@ module.exports.callback = ($) => {
     var originalEmail = emailInput.val() || '';
     var originalEmailSecundario = emailSecundarioInput.val() || '';
 
-    $(emailInput).keypress(function(){
-      var email = emailInput.val() || '';
-      if(originalEmail == email) return;
+    $(emailInput).keypress(function () {
+        var email = emailInput.val() || '';
+        if (originalEmail == email) return;
 
-      $btnSubmit.addClass('to-validade');
+        $btnSubmit.addClass('to-validade');
     });
 
     var cpfInput = $ctxForm.find("input[name='cpfResponsavel']");
     var cpfOriginal = cpfInput.val() || '';
-    $ctxForm.find("input[name='cpfResponsavel']").on('change',function(e){
-      if(cpfInput.val() != cpfOriginal){
-        $btnSubmit.addClass('to-validade-cpf');
-      }
+    $ctxForm.find("input[name='cpfResponsavel']").on('change', function (e) {
+        if (cpfInput.val() != cpfOriginal) {
+            $btnSubmit.addClass('to-validade-cpf');
+        }
     });
 
-    var validarEmail = function(emailInput){
+    var validarEmail = function (emailInput) {
         email = emailInput.val();
 
         if (email == '') return;
@@ -35,26 +34,24 @@ module.exports.callback = ($) => {
         $('.loading-container').removeClass('hide');
 
         $.ajax({
-            type: "GET",
-            url: "/carro/email-disponivel/"+email,
-            dataType: "json",
+            type: 'GET',
+            url: '/carro/email-disponivel/' + email,
+            dataType: 'json',
             success: (response) => {
                 emailInput
                     .removeClass('is-invalid is-valid')
                     .addClass(response.emailDisponivel ? 'is-valid' : 'is-invalid');
                 if (!response.emailDisponivel) {
-
-                    $btnSubmit
-                        .attr('title', 'Verifique os dados antes de continuar');
+                    $btnSubmit.attr('title', 'Verifique os dados antes de continuar');
 
                     advancedAlerts.error({
-                        title: "E-mail já cadastrado",
-                        text: "E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.",
-                        time: 10000
+                        title: 'E-mail já cadastrado',
+                        text: 'E-mail já cadastrado no sistema, confira o e-mail ou entre em contato.',
+                        time: 10000,
                     });
-                    
+
                     $('.loading-container').addClass('hide');
-                    
+
                     emailInput.val('');
 
                     return;
@@ -64,31 +61,27 @@ module.exports.callback = ($) => {
 
                 $('.loading-container').addClass('hide');
 
-                $btnSubmit
-                    .removeClass('to-validade');
-                
-                
+                $btnSubmit.removeClass('to-validade');
+
                 //   $btnSubmit.click();
             },
-            error: function (e) {}
+            error: function (e) {},
         });
-    }
+    };
 
     emailInput.on('blur', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-      validarEmail(emailInput);
+        validarEmail(emailInput);
     });
 
     emailSecundarioInput.on('blur', function (e) {
         e.preventDefault();
         e.stopPropagation();
-          
-        validarEmail(emailSecundarioInput);
-      });
-   
 
+        validarEmail(emailSecundarioInput);
+    });
 
     // $ctxForm.on('click','button.to-validade',function (e) {
     //   e.preventDefault();
@@ -130,64 +123,63 @@ module.exports.callback = ($) => {
     //   });
     // });
 
-    $ctxForm.on('click','button.to-validade-cpf',function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+    $ctxForm.on('click', 'button.to-validade-cpf', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-      $('.loading-container').removeClass('hide');
+        $('.loading-container').removeClass('hide');
 
-      var cpf = cpfInput.val() || '';
-      $.ajax({
-        type: "GET",
-        url: "/carro/cpf-disponivel/"+cpf,
-        dataType: "json",
-        success: function (response) {
-            if (!response.cpfDisponivel) {
+        var cpf = cpfInput.val() || '';
+        $.ajax({
+            type: 'GET',
+            url: '/carro/cpf-disponivel/' + cpf,
+            dataType: 'json',
+            success: function (response) {
+                if (!response.cpfDisponivel) {
+                    var concat = '*******';
 
-                var concat = '*******';
+                    var email = response.emailVinculado;
+                    var emailMask = response.emailVinculado.split('@');
 
-                var email = response.emailVinculado;
-                var emailMask = response.emailVinculado.split('@');
+                    var emailName = emailMask[0].slice(0, 3) + concat;
+                    var emailDomain = '@' + emailMask[1].slice(0, 2) + concat;
 
-                var emailName =  emailMask[0].slice(0,3) + concat;
-                var emailDomain =  '@' + emailMask[1].slice(0,2) + concat;
+                    emailMask = emailMask[1].split('.').splice(1);
 
-                emailMask = emailMask[1].split('.').splice(1);
+                    var emailLocation = '.' + emailMask.join('.');
+                    var emailMasked = emailName + emailDomain + emailLocation;
 
-                var emailLocation = '.' + emailMask.join('.');
-                var emailMasked = emailName + emailDomain + emailLocation;
-
-                advancedAlerts.error({
-                    title: "CPF já cadastrado",
-                    text: `O CPF informado já está cadastrado com o email: ${emailMasked}`,
-                    time: 10000
-                });
+                    advancedAlerts.error({
+                        title: 'CPF já cadastrado',
+                        text: `O CPF informado já está cadastrado com o email: ${emailMasked}`,
+                        time: 10000,
+                    });
+                    $('.loading-container').addClass('hide');
+                    return;
+                }
+                $btnSubmit.removeClass('to-validade-cpf');
                 $('.loading-container').addClass('hide');
-                return;
-            }
-            $btnSubmit.removeClass('to-validade-cpf');
-            $('.loading-container').addClass('hide');
-        },
-        error: function (e) {}
-      });
+            },
+            error: function (e) {},
+        });
     });
 
     require('components/EstadoCidade')();
 
     var advancedAlerts = require('components/AdvancedAlerts');
-    var resquestResponse = $("span[data-request-response]").data("request-response") || false;
+    var resquestResponse = $('span[data-request-response]').data('request-response') || false;
     if (!resquestResponse) {
         return;
     }
     if (resquestResponse !== 200) {
         advancedAlerts.error({
-            title: $("<span class='text-primary'>").html("Erro"),
-            text: "Não conseguimos processar sua requisição, tente novamente mais tarde"
+            title: $("<span class='text-primary'>").html('Erro'),
+            text: 'Não conseguimos processar sua requisição, tente novamente mais tarde',
         });
         return;
     }
     advancedAlerts.success({
-        text: $("<span>").html("Dados salvos com <b class='text-primary'>sucesso</b>"),
-        title: $("<span class='text-primary'>").html("Sucesso"),
+        text: $('<span>').html("Dados salvos com <b class='text-primary'>sucesso</b>"),
+        title: $("<span class='text-primary'>").html('Sucesso'),
     });
 };

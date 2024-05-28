@@ -1,4 +1,3 @@
-
 module.exports = function () {
     var loading = require('components/Loading');
     var stepsUrl = $('div.anuncio-steps [data-url]');

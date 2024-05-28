@@ -24,46 +24,41 @@ module.exports.callback = ($) => {
     stepsContainer.on('step:change', setHashState);
     anuncioSteps.on('steps-loaded', setStepIconActive);
 
-    stepsContainer
-            .stepPlugin()
-            .on('submit', 'form', function (e) {
-                $(this).closest('.step-container').stepPlugin('next');
-                return stopEvent(e);
-            });
+    stepsContainer.stepPlugin().on('submit', 'form', function (e) {
+        $(this).closest('.step-container').stepPlugin('next');
+        return stopEvent(e);
+    });
     $('.btn-voltar').on('click', function () {
-        var stepContainer = $('.step-container [class*="step"].active')
-                .closest('.step-container');
+        var stepContainer = $('.step-container [class*="step"].active').closest('.step-container');
 
         if (!$('.step-dados').length || $('.step-dados').is('.active')) {
             window.location.href = '/';
         } else {
-          stepContainer.stepPlugin('prev');
+            stepContainer.stepPlugin('prev');
         }
         checkLastStep();
     });
 
-    function alerta (type, text, title) {
+    function alerta(type, text, title) {
         if (title === null || title === undefined) {
             title = '';
         }
 
-        var close = $('<button class="btn btn" data-dismiss="modal">')
-            .html('<span class="text-danger">Fechar</span> ');
+        var close = $('<button class="btn btn" data-dismiss="modal">').html(
+            '<span class="text-danger">Fechar</span> ',
+        );
 
-        var maisInfo = $('<a class="btn btn-success" href="https://wa.me/5531971740697?text=Olá,%20Sou %20cliente%20da%20Seminovos%20e%20gostaria%20de%20mais%20informações!" target="blank">')
-            .html('<span class="text-close">Quero Saber Mais!</span>');
-
+        var maisInfo = $(
+            '<a class="btn btn-success" href="https://wa.me/5531971740697?text=Olá,%20Sou %20cliente%20da%20Seminovos%20e%20gostaria%20de%20mais%20informações!" target="blank">',
+        ).html('<span class="text-close">Quero Saber Mais!</span>');
 
         var modal = $.jsBsModal({
             contents: {
-                'close': '',
+                close: '',
                 'modal-title': title,
                 'modal-body': text,
-                'modal-footer': [
-                    close,
-                    maisInfo
-                ],
-            }
+                'modal-footer': [close, maisInfo],
+            },
         }).on('hidden.bs.modal', function () {
             modal.modal('dispose').remove();
         });
@@ -95,14 +90,19 @@ module.exports.callback = ($) => {
         */
 
         //se a aba step-preco ficar ativa valida a quantidade de caracteres da observacao e desabilita o botão de continuar se necessario
-        setTimeout(function() {
-            if ($('.step-preco').hasClass('active') && $('textarea[name="observacoes"]').val().length > 650) {
-                BtnContinuar.disable(); 
+        setTimeout(function () {
+            if (
+                $('.step-preco').hasClass('active') &&
+                $('textarea[name="observacoes"]').val().length > 650
+            ) {
+                BtnContinuar.disable();
             }
         }, 50);
 
         var inLastStep = $(this).data('in-last-step');
-        var form = stepsContainer.find('[class*="step-"].active:visible:not(.step-container) form').first();
+        var form = stepsContainer
+            .find('[class*="step-"].active:visible:not(.step-container) form')
+            .first();
         form.find('[type="submit"]').first().click();
         if (form[0] && !form[0].checkValidity()) {
             return;
@@ -121,7 +121,7 @@ module.exports.callback = ($) => {
             }
             // Espera todos os ajax terminarem com sucesso para então redirecionar
             $(document).ajaxComplete(function (ev, jqXHR) {
-                if (($.active - 1) !== 0) {
+                if ($.active - 1 !== 0) {
                     return;
                 }
                 if (jqXHR.status > 399) {
@@ -131,24 +131,22 @@ module.exports.callback = ($) => {
                     return;
                 }
                 redirect();
-
             });
         }
     });
 
     stepsContainer
-            .on('step:change:checkout step:change:finalizar', function (e) {
-                BtnContinuar.disable();
-                BtnContinuar.hide();
-            })
-            .on('step:change:servicos-adicionais', function (e) {
-                BtnContinuar.enable();
-                BtnContinuar.show();
-            })
-            .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
-                BtnContinuar.enable();
-            });
-
+        .on('step:change:checkout step:change:finalizar', function (e) {
+            BtnContinuar.disable();
+            BtnContinuar.hide();
+        })
+        .on('step:change:servicos-adicionais', function (e) {
+            BtnContinuar.enable();
+            BtnContinuar.show();
+        })
+        .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
+            BtnContinuar.enable();
+        });
 
     $('.anuncio-steps').on('steps-loaded', function () {
         var hash = window.location.hash;
@@ -162,13 +160,9 @@ module.exports.callback = ($) => {
             var $this = $(this);
             if ($this.find(hash).length) {
                 $this.stepPlugin('goTo', hash);
-                $this.closest('[class*="step-"]:not(.anuncio-steps)')
-                        .each(function () {
-                            $(this)
-                                    .parent()
-                                    .closest('.step-container')
-                                    .stepPlugin('goTo', this);
-                        });
+                $this.closest('[class*="step-"]:not(.anuncio-steps)').each(function () {
+                    $(this).parent().closest('.step-container').stepPlugin('goTo', this);
+                });
             } else {
                 var lastStep = $this.stepPlugin('getSteps').last();
                 $this.stepPlugin('goTo', lastStep);
@@ -182,7 +176,6 @@ module.exports.callback = ($) => {
     //require('./autofill').init();
 };
 function allStepsInlast() {
-
     var inLastStep = true;
 
     $('.step-container').each(function () {
@@ -193,7 +186,6 @@ function allStepsInlast() {
     return inLastStep;
 }
 function checkLastStep() {
-
     var btn = $('.step-controls .btn-continuar');
     var text = 'Continuar';
     var inLast = allStepsInlast();
@@ -203,7 +195,6 @@ function checkLastStep() {
         btn.addClass('btn-laranja').attr('disabled', false);
     }
     btn.text(text).attr('title', text).data('in-last-step', inLast);
-
 }
 function setStepIconActive() {
     var $anuncioSteps = $('.anuncio-steps');
@@ -228,12 +219,13 @@ function setStepIconActive() {
     $anuncioSteps.find('[class*="step-"].active').each(function () {
         var labelStep = $(this).data('step-label');
         if (labelStep) {
-            stepsIcons.removeClass('active')
-                    .filter(function () {
-                        var labels = $(this).data('step').split(',');
-                        return labels.indexOf(labelStep) !== -1;
-                    })
-                    .addClass('active');
+            stepsIcons
+                .removeClass('active')
+                .filter(function () {
+                    var labels = $(this).data('step').split(',');
+                    return labels.indexOf(labelStep) !== -1;
+                })
+                .addClass('active');
         }
     });
 }

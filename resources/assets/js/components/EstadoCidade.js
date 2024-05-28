@@ -1,4 +1,3 @@
-
 module.exports = function () {
     var $ = require('jquery');
 
@@ -7,16 +6,17 @@ module.exports = function () {
         var idEstado = $this.val();
         var cidadesSelect = $this.closest('form').find('[name="idCidade"]');
         var addOption = function (value, html) {
-            $('<option>').val(value)
-                    .html(html)
-                    .attr('disabled', html === '-')
-                    .appendTo(cidadesSelect);
+            $('<option>')
+                .val(value)
+                .html(html)
+                .attr('disabled', html === '-')
+                .appendTo(cidadesSelect);
         };
         $.ajax({
             url: 'json/cidades.json',
             dataType: 'json',
             data: {
-                idEstado: idEstado
+                idEstado: idEstado,
             },
             success: function (data) {
                 cidadesSelect.html('');
@@ -26,8 +26,11 @@ module.exports = function () {
                 });
 
                 var optionIdCidade = $('#cidadeSelected').val();
-                $(`select[name="idCidade"] option[value="${optionIdCidade}"]`).prop('selected',true);
-            }
+                $(`select[name="idCidade"] option[value="${optionIdCidade}"]`).prop(
+                    'selected',
+                    true,
+                );
+            },
         });
     });
 

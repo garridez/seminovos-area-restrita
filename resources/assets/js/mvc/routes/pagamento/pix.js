@@ -1,4 +1,3 @@
-
 module.exports.seletor = '.c-pagamento.a-pagamento-pix';
 module.exports.callback = async ($) => {
     var AdvancedAlerts = require('../../../components/AdvancedAlerts');
@@ -16,7 +15,7 @@ module.exports.callback = async ($) => {
         var data = await response.json();
         console.log(data);
         return data;
-    };
+    }
 
     async function refreshStatus() {
         var status = await getStatus();
@@ -28,9 +27,9 @@ module.exports.callback = async ($) => {
                 console.log(pagDataCadastro);
                 break;
             case '2':
-                console.log('Pagamento confirmado')
+                console.log('Pagamento confirmado');
                 const tipo = window.location.pathname.split('/').filter(Boolean)[0];
-                        window.location.href = `/${tipo}/${idVeiculo}/checkout/aprovado`;
+                window.location.href = `/${tipo}/${idVeiculo}/checkout/aprovado`;
                 break;
             case '3':
                 AdvancedAlerts.warning({
@@ -42,8 +41,7 @@ module.exports.callback = async ($) => {
                     closeCallback: () => {
                         const tipo = window.location.pathname.split('/').filter(Boolean)[0];
                         window.location.href = `/${tipo}/${idVeiculo}?editar=planos#plano&trocarPlano`;
-                    }
-
+                    },
                 });
                 return;
         }
@@ -52,12 +50,9 @@ module.exports.callback = async ($) => {
         }, 1000);
     }
 
-
     refreshStatus();
 
-
     //console.log('ok');
-
 
     setInterval(() => {
         if (!pagDataCadastro) {
@@ -75,10 +70,8 @@ module.exports.callback = async ($) => {
 
         //pagDataCadastro.setSeconds(pagDataCadastro.getSeconds() - 1);
         var minutesStr = minutes.toString().padStart(2, '0');
-        var secondsStr  = (seconds % 60).toString().padStart(2, '0');
+        var secondsStr = (seconds % 60).toString().padStart(2, '0');
 
         $('.pix-timer .timer').text(`${minutesStr}:${secondsStr}`);
     }, 1000);
-
-}
-
+};

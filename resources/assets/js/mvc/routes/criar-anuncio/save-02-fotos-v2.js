@@ -1,27 +1,31 @@
-"use strict";
+'use strict';
 
 function filterImgToUpload($img) {
-    return $img
-        // Filtra deixando só as tags que contém uma imagem
-        .filter(function () {
-            return !!$(this).data('file-data');
-        })
-        // Filtras as imagens que já foram carregadas
-        .filter(function () {
-            return $(this).data('uploaded') !== true;
-        });
+    return (
+        $img
+            // Filtra deixando só as tags que contém uma imagem
+            .filter(function () {
+                return !!$(this).data('file-data');
+            })
+            // Filtras as imagens que já foram carregadas
+            .filter(function () {
+                return $(this).data('uploaded') !== true;
+            })
+    );
 }
 
 function filterImgToDelete($img) {
-    return $img
-        // Filtra deixando só as tags que contém uma imagem
-        .filter(function () {
-            return !!$(this).data('delete');
-        })
-        // Filtras as imagens que já foram deletadas
-        .filter(function () {
-            return $(this).data('deleted') !== true;
-        });
+    return (
+        $img
+            // Filtra deixando só as tags que contém uma imagem
+            .filter(function () {
+                return !!$(this).data('delete');
+            })
+            // Filtras as imagens que já foram deletadas
+            .filter(function () {
+                return $(this).data('deleted') !== true;
+            })
+    );
 }
 function filterImgToReorder($img) {
     return $img
@@ -54,10 +58,12 @@ async function init() {
             return;
         }
         countDelay++;
-        setTimeout(function () {
-            uploadImage(this, false, false);
-        }.bind(this), countDelay * 1000);
-
+        setTimeout(
+            function () {
+                uploadImage(this, false, false);
+            }.bind(this),
+            countDelay * 1000,
+        );
     });
 
     $('.step-container').on('step:pre-exit:fotos', function (e) {
@@ -90,15 +96,16 @@ async function init() {
         loading.addFeedbackTexts([
             //            'Aguarde',
             'Processando fotos...',
-            textAdicional.join('<br>')
+            textAdicional.join('<br>'),
         ]);
         uploadProcessBatch();
         return false;
     });
     function setImagesOrder() {
         var $displayImgs = $fotosContainer.find('.display-img');
-        $displayImgs.each(function (i) { $(this).data('ordem', i + 1) });
-
+        $displayImgs.each(function (i) {
+            $(this).data('ordem', i + 1);
+        });
     }
 
     function awaitAjaxAsyncCount() {
@@ -143,10 +150,7 @@ async function init() {
 
         $fotosContainer.data('reordanado', false);
 
-
-        $('.fotos-container')
-            .closest('.step-container')
-            .stepPlugin('next');
+        $('.fotos-container').closest('.step-container').stepPlugin('next');
     }
 
     async function uploadImage(img, reordenar = false, showLoading = true) {
@@ -155,9 +159,7 @@ async function init() {
 
         var ajaxLoaddingBackup = window.setAjaxLoadding;
 
-
         window.setAjaxLoadding = showLoading;
-
 
         var $img = $(img);
         var $containerFoto = $img.closest('.foto');
@@ -180,10 +182,9 @@ async function init() {
         var $imgToDelete = filterImgToDelete($img);
         var $imgToReorder = filterImgToReorder($img);
 
-
         if (!$imgToUpload.length && !$imgToDelete.length && !reordenar) {
             removeLoading();
-            return
+            return;
         }
         if (reordenar && !$imgToReorder.length && !$imgToUpload.length) {
             removeLoading();
@@ -235,10 +236,10 @@ async function init() {
                     $img.data('uploaded', true);
                     $imgToDelete.data('deleted', true);
                     if (
-                        data.resUpload
-                        && data.resUpload.data
-                        && data.resUpload.data.fotosInseridas
-                        )  {
+                        data.resUpload &&
+                        data.resUpload.data &&
+                        data.resUpload.data.fotosInseridas
+                    ) {
                         $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
                     }
                 },
@@ -249,15 +250,11 @@ async function init() {
                         HandleApiError(false);
                     }
                     console.log('upload com erro');
-                }
+                },
             });
         } catch (e) {
             console.log('Deu erro');
         }
         removeLoading();
     }
-
-
-
-};
-
+}

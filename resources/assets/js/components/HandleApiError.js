@@ -1,7 +1,6 @@
 function showError(body, title, time) {
     var Alert = require('components/Alerts');
     Alert.error(body, title, time);
-
 }
 /**
  * A função verifica a resposta da API está ok
@@ -13,11 +12,7 @@ function showError(body, title, time) {
  */
 module.exports = function (apiResponse, time) {
     time = time || 15000;
-    if (
-        typeof apiResponse === 'object'
-        && apiResponse.status >= 200
-        && apiResponse.status <= 299
-    ) {
+    if (typeof apiResponse === 'object' && apiResponse.status >= 200 && apiResponse.status <= 299) {
         return true;
     }
     if (!apiResponse) {
@@ -32,7 +27,6 @@ module.exports = function (apiResponse, time) {
         body += apiResponse.detail;
     } else {
         body += 'Houve um problema ao processar sua solicitação.<br>Tente novamente.';
-
     }
     var messages = apiResponse.messages;
     if (messages) {
@@ -49,5 +43,4 @@ module.exports = function (apiResponse, time) {
     }
     showError(body, title, time);
     return false;
-
 };

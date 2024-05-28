@@ -1,4 +1,3 @@
-
 require('components/JsBsModal');
 
 var $ = require('jquery');
@@ -14,31 +13,30 @@ module.exports = {
             return this._instance;
         }
         var modalContent =
-                '<div class="text-center">'
-                + ' <div class="spinner-border text-laranja" style="width: 3rem; height: 3rem;" role="status">'
-                + '  <span class="sr-only">Loading...</span>'
-                + ' </div>'
-                + ' <div class="feedback-text text-white animated pulse infinite">Carregando...</div>'
-                + '</div>';
+            '<div class="text-center">' +
+            ' <div class="spinner-border text-laranja" style="width: 3rem; height: 3rem;" role="status">' +
+            '  <span class="sr-only">Loading...</span>' +
+            ' </div>' +
+            ' <div class="feedback-text text-white animated pulse infinite">Carregando...</div>' +
+            '</div>';
 
         var instance = $.jsBsModal({
             autoShow: false,
             contents: {
                 'modal-content': modalContent,
-                'close': false,
+                close: false,
                 'modal-header': false,
-            }
+            },
         });
 
         instance.attr('title', 'Carregando...');
-        instance.find('.modal-content')
-                .addClass('loading-container');
+        instance.find('.modal-content').addClass('loading-container');
         this._configureDisplayText(instance);
         instance.modal({
             backdrop: 'static',
-            keyboard: false
+            keyboard: false,
         });
-        return this._instance = instance;
+        return (this._instance = instance);
     },
     open: function (persistent) {
         if (persistent !== undefined) {
@@ -83,7 +81,7 @@ module.exports = {
         return this._getModal();
     },
     /**
-     * 
+     *
      * @param string|array texts Texto ou um array texto
      * @returns {undefined}
      */
@@ -125,5 +123,4 @@ module.exports = {
             clearInterval(interval);
         });
     },
-
 };

@@ -5,9 +5,11 @@ module.exports = function () {
         if (!$(this).valid()) {
             return;
         }
-        requestPagamento([{
-                'name': 'metodo',
-                'value': 'pix'
-            }]);
+        requestPagamento([
+            {
+                name: 'metodo',
+                value: 'pix',
+            },
+        ]);
     });
 };

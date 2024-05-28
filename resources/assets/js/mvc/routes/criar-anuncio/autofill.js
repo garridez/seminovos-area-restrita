@@ -12,7 +12,7 @@ function randStr(length, type) {
     return result;
 }
 function sleep(ms = 1000) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 module.exports = {
@@ -51,15 +51,14 @@ module.exports = {
             placaAleatoria: true,
             placa: 'LZL5173',
             cartao: {
-                validade_cartao: '12/25'
-            }
+                validade_cartao: '12/25',
+            },
         };
         options = $.extend({}, defaultOptions, options);
 
         if (options.placaAleatoria === true) {
             options.placa = randStr(3) + randStr(4, 'num');
         }
-
 
         function continuar() {
             setTimeout(function () {
@@ -74,7 +73,6 @@ module.exports = {
         });
         // Metodo para agilizar o desenvolvimento
         async function populate() {
-
             var form = $('#form_dadosVeiculo');
 
             form.find('[name="placa"]').val(options.placa);
@@ -89,10 +87,9 @@ module.exports = {
             form.find('[name="anoModelo"]').val('2015').change();
             await sleep(1000);
             form.find('[name="motor"]').val('3');
-                        
+
             await sleep(1000);
             form.find('[name="outraVersao"]').val('Outra versão');
-            
 
             form.find('[name="versao"]').val('3');
             form.find('[name="idValvula"]').val('2');
@@ -103,15 +100,14 @@ module.exports = {
             form.find('[name="versao"]').val('-1');
             form.find('[name="idValvula"]').val('1');
             form.find('[name="checkboxacessorios[]"] [value="11"]').prop('selected', true);
-//            console.log('para')
-//            return;
+            //            console.log('para')
+            //            return;
 
             $('[name="valor"]').val('15000');
             $('[name="observacoes"]').val('Observação de teste');
             $('#form_maisInformacoesVeiculo [type="checkbox"][name="termo"]').click();
 
-
-            $('[name="idTroca"]').filter('[value="1"]').prop("checked", true);
+            $('[name="idTroca"]').filter('[value="1"]').prop('checked', true);
             $('#radio-idPlano-2').click();
 
             setTimeout(function () {
@@ -123,9 +119,6 @@ module.exports = {
                 $('#accordion-payment [name="termos"]').click();
                 //ctx.find('.btn-submit-pagt').click();
             }, 500); // Pagamentos
-
-
-
         }
 
         function avancar() {
@@ -137,18 +130,17 @@ module.exports = {
                 if (stopContinuar) {
                     return;
                 }
-                var sp = $('.step-container [class*="step"].active')
-                        .closest('.step-container');
+                var sp = $('.step-container [class*="step"].active').closest('.step-container');
                 var currentIndex = sp.stepPlugin('getCurrentStepIndex');
                 var currentStep = sp.stepPlugin('getSteps', currentIndex);
 
-                var classes = currentStep.attr("class");
+                var classes = currentStep.attr('class');
                 if (classes) {
                     classes = classes.split(' ');
 
                     if (options.pararNoStep && classes.indexOf(options.pararNoStep) !== -1) {
                         stopContinuar = true;
-                        console.log('parado pelo step')
+                        console.log('parado pelo step');
                         return;
                     }
                 }

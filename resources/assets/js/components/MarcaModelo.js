@@ -23,7 +23,7 @@ metodos = {
     getModelos: function () {
         var marca = this.getInputVal('idMarca');
         var marcas = this.getMarcas();
-        var marcaSelecionada = marcas.find( n => n.id == marca.value);
+        var marcaSelecionada = marcas.find((n) => n.id == marca.value);
         return marcaSelecionada && marcaSelecionada.modelos ? marcaSelecionada.modelos : [];
     },
     getMotores: function () {
@@ -49,7 +49,7 @@ metodos = {
 
         return {
             value: value,
-            input: input
+            input: input,
         };
     },
 
@@ -71,14 +71,14 @@ metodos = {
             var self = this;
 
             metodos
-                    .makeOptions(marcaInput.input, marcas, 'nome', 'id')
-                    .prepend('<option selected value="">Selecione a marca</option>')
-                    .val(marcaInput.value)
-                    .unbind('change')
-                    .change(function () {
-                        self.modelos();
-                    })
-                    .change();
+                .makeOptions(marcaInput.input, marcas, 'nome', 'id')
+                .prepend('<option selected value="">Selecione a marca</option>')
+                .val(marcaInput.value)
+                .unbind('change')
+                .change(function () {
+                    self.modelos();
+                })
+                .change();
         },
         modelos: function () {
             var modelos = metodos.getModelos();
@@ -87,17 +87,17 @@ metodos = {
                 return;
             }
             metodos
-                    .makeOptions(modeloInput.input, modelos, 'nome', 'id')
-                    .prepend($('<option>Selecione o modelo</option>').prop('selected', true));
+                .makeOptions(modeloInput.input, modelos, 'nome', 'id')
+                .prepend($('<option>Selecione o modelo</option>').prop('selected', true));
             var value = modeloInput.value;
             if (value) {
                 modeloInput.input
-                        .find('option')
-                        .filter(function () {
-                            return value === $(this).val();
-                        })
-                        .parent()
-                        .val(value);
+                    .find('option')
+                    .filter(function () {
+                        return value === $(this).val();
+                    })
+                    .parent()
+                    .val(value);
             }
         },
     },
@@ -116,16 +116,24 @@ metodos = {
         var optionsString = '';
         var destaques = false;
 
-        $.each(options, function (i, v) {            
-            var disabled = "";
+        $.each(options, function (i, v) {
+            var disabled = '';
             //Teste para ver se a string do campo é inváilda tipo "-" ou "   "
-            if(!/\w/.test(v[keyHtml])){
-                disabled = "disabled";
+            if (!/\w/.test(v[keyHtml])) {
+                disabled = 'disabled';
             }
-            var option = '<option '+ disabled +' value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
+            var option =
+                '<option ' + disabled + ' value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
             if (v.destaque !== undefined && v.destaque !== false) {
                 destaques = destaques || {};
-                destaques[v.destaque] = '<option '+ disabled +' data="destaque" value="' + v[keyValue] + '">' + v[keyHtml] + '</option>';
+                destaques[v.destaque] =
+                    '<option ' +
+                    disabled +
+                    ' data="destaque" value="' +
+                    v[keyValue] +
+                    '">' +
+                    v[keyHtml] +
+                    '</option>';
             }
             optionsString += option;
         });
@@ -143,7 +151,7 @@ metodos = {
 var filtro = {
     isInited: false,
     init: function (form, filterData) {
-        if ((!form || form.length === 0) || this.isInited) {
+        if (!form || form.length === 0 || this.isInited) {
             return;
         }
         this.isInited = true;
@@ -158,27 +166,26 @@ var filtro = {
         });
         // Configura os input radio "uncheckebles"
         var resetUncheckableData = function ($form) {
-            return $form.find('input[data-uncheckable]')
-                    .each(function () {
-                        $(this).data('checked', this.checked);
-                    });
+            return $form.find('input[data-uncheckable]').each(function () {
+                $(this).data('checked', this.checked);
+            });
         };
         resetUncheckableData($form)
-                .parent()
-                .on('click', 'label', function (e) {
-                    var $input = $(this).parent().find('input[data-uncheckable]');
-                    var input = $input.get(0);
-                    if ($input.data('checked')) {
-                        input.checked = false;
-                    } else {
-                        input.checked = true;
-                    }
+            .parent()
+            .on('click', 'label', function (e) {
+                var $input = $(this).parent().find('input[data-uncheckable]');
+                var input = $input.get(0);
+                if ($input.data('checked')) {
+                    input.checked = false;
+                } else {
+                    input.checked = true;
+                }
 
-                    resetUncheckableData($form);
-                    e.preventDefault();
-                    return false;
-                });
-    }
+                resetUncheckableData($form);
+                e.preventDefault();
+                return false;
+            });
+    },
 };
 
 module.exports = filtro.init;

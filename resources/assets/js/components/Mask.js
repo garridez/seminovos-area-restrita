@@ -1,4 +1,3 @@
-
 function parseValueOfObject(maskOptions) {
     if (typeof maskOptions !== 'object') {
         return maskOptions;
@@ -30,22 +29,24 @@ function setMask($) {
             maskOptions = parseValueOfObject(maskOptions);
         }
         $this.mask(mask, maskOptions);
-        $this.keyup(function () {
-            var $this = $(this);
-            var name = $this.attr('name');
-            if (name.indexOf('telefone') !== -1 || name.indexOf('celular') !== -1) {
-                if ($this.val().length === 15) {
-                    $this.mask('(00) 90000-0000', maskOptions);
-                } else {
-                    $this.mask('(00) 0000-00009', maskOptions);
+        $this
+            .keyup(function () {
+                var $this = $(this);
+                var name = $this.attr('name');
+                if (name.indexOf('telefone') !== -1 || name.indexOf('celular') !== -1) {
+                    if ($this.val().length === 15) {
+                        $this.mask('(00) 90000-0000', maskOptions);
+                    } else {
+                        $this.mask('(00) 0000-00009', maskOptions);
+                    }
                 }
-            }
-        }).trigger('keyup');
+            })
+            .trigger('keyup');
     });
 }
 module.exports = function () {
     var $ = require('jquery');
-    $.jMaskGlobals =  $.jMaskGlobals || {}
+    $.jMaskGlobals = $.jMaskGlobals || {};
     $.jMaskGlobals.dataMask = false;
 
     require('jquery-mask-plugin');
@@ -56,6 +57,4 @@ module.exports = function () {
             setMask($);
         }, 100);
     });
-
-
 };

@@ -2869,7 +2869,7 @@ __metadata:
     printthis: "npm:^0.1.5"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=f64b6a367c4571c209d6ce5f582a0000da0e3739"
     sortable-tablesort: "npm:^3.2.3"
     sortablejs: "npm:^1.15.2"
     ts-loader: "npm:^9.5.1"
@@ -8420,7 +8420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=f64b6a367c4571c209d6ce5f582a0000da0e3739":
   version: 1.0.0
   resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=f64b6a367c4571c209d6ce5f582a0000da0e3739"
   dependencies:

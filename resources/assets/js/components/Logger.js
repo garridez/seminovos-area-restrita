@@ -11,21 +11,19 @@
 var $ = require('jquery');
 var div;
 $(function () {
-    div = $('<div>')
-            .addClass('debug-js')
-            .css({
-                outline: '1px solid blue',
-                position: 'fixed',
-                zIndex: '99999',
-                top: '0',
-                left: '0',
-                width: '100%',
-                backgroundColor: 'rgba(255,255,255,0.8)',
-                maxHeight: '500px',
-                height: '100px',
-                overflow: 'auto',
-                whiteSpace: 'pre'
-            });
+    div = $('<div>').addClass('debug-js').css({
+        outline: '1px solid blue',
+        position: 'fixed',
+        zIndex: '99999',
+        top: '0',
+        left: '0',
+        width: '100%',
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        maxHeight: '500px',
+        height: '100px',
+        overflow: 'auto',
+        whiteSpace: 'pre',
+    });
     $('body').append(div);
 });
 module.exports = function (variable, label) {

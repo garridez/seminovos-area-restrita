@@ -13,13 +13,16 @@ function init() {
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
         if (window.fromCheckout) {
-          BtnContinuar.get().removeClass('hide d-none');
-          BtnContinuar.enable();
+            BtnContinuar.get().removeClass('hide d-none');
+            BtnContinuar.enable();
         }
     });
-    
+
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
-        if ($('#dados-basicos .placaVeiculo').val() == '' && $('#dados-basicos #flagCriando').val() == 1) {
+        if (
+            $('#dados-basicos .placaVeiculo').val() == '' &&
+            $('#dados-basicos #flagCriando').val() == 1
+        ) {
             $('.btn-continuar').click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
             $('.step-container .step-servicos-adicionais').remove();
@@ -48,13 +51,15 @@ function init() {
 
         $('[data-adicionar-action]').prop('checked', $this.is(':checked'));
         $('#dados-basicos .certificado').val($this.is(':checked') ? 1 : '');
-
-
     });
-    
+
     $('.step-container').on('step:change:servicos-adicionais', function (e) {
-        if (location.hash && location.hash.indexOf('addCertificado') !== -1 && location.hash.indexOf('planoCem') !== -1) {
-            $("#acao").val("addCertificado");
+        if (
+            location.hash &&
+            location.hash.indexOf('addCertificado') !== -1 &&
+            location.hash.indexOf('planoCem') !== -1
+        ) {
+            $('#acao').val('addCertificado');
         }
     });
 }

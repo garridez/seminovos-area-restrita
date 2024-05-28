@@ -1,4 +1,3 @@
-
 module.exports = (function (window, document) {
     var googletag = window.googletag || {};
     googletag.cmd = googletag.cmd || [];
@@ -29,8 +28,7 @@ module.exports = (function (window, document) {
         pushCmds();
     }
     function pushCmds() {
-        googletag.cmd.push(function cmdDefinePubads() {
-        });
+        googletag.cmd.push(function cmdDefinePubads() {});
         googletag.cmd.push(function cmdDefinePubads() {
             pubads = googletag.pubads();
         });
@@ -74,15 +72,19 @@ module.exports = (function (window, document) {
         });
         googletag.cmd.push(function cmdResize() {
             var resizeTimeout;
-            window.addEventListener('resize', function () {
-                if (resizeTimeout) {
-                    clearTimeout(resizeTimeout);
-                }
-                resizeTimeout = setTimeout(function () {
-                    resizeTimeout = null;
-                    pubads.refresh();
-                }, 1000);
-            }, false);
+            window.addEventListener(
+                'resize',
+                function () {
+                    if (resizeTimeout) {
+                        clearTimeout(resizeTimeout);
+                    }
+                    resizeTimeout = setTimeout(function () {
+                        resizeTimeout = null;
+                        pubads.refresh();
+                    }, 1000);
+                },
+                false,
+            );
         });
     }
 
@@ -116,7 +118,7 @@ module.exports = (function (window, document) {
         slots[adPath] = slots[adPath] || {};
         slots[adPath][e.id] = {
             slot: slot,
-            element: e instanceof Element || e instanceof HTMLDocument ? e : null
+            element: e instanceof Element || e instanceof HTMLDocument ? e : null,
         };
         return e;
     }
@@ -124,12 +126,27 @@ module.exports = (function (window, document) {
     function getSlotsDefinition() {
         var tamanhosPossives = [
             [88, 31],
-            [120, 240], [120, 600], [120, 60], [120, 90], [125, 125], [160, 600], [180, 150],
-            [200, 200], [234, 60], [240, 400], [250, 250],
-            [300, 100], [300, 250], [300, 600], [320, 50], [336, 280], [320, 100],
+            [120, 240],
+            [120, 600],
+            [120, 60],
+            [120, 90],
+            [125, 125],
+            [160, 600],
+            [180, 150],
+            [200, 200],
+            [234, 60],
+            [240, 400],
+            [250, 250],
+            [300, 100],
+            [300, 250],
+            [300, 600],
+            [320, 50],
+            [336, 280],
+            [320, 100],
             [468, 60],
             [728, 90],
-            [970, 250], [970, 90]
+            [970, 250],
+            [970, 90],
         ];
 
         var getSizesByRange = function (minW, maxW, minH, maxH, orderByW) {
@@ -143,10 +160,7 @@ module.exports = (function (window, document) {
             $each(tamanhosPossives, function (size) {
                 var w = size[0];
                 var h = size[1];
-                if (
-                    w <= maxW && w >= minW &&
-                    h <= maxH && h >= minH
-                ) {
+                if (w <= maxW && w >= minW && h <= maxH && h >= minH) {
                     sizes.push(size);
                 }
             });
@@ -157,11 +171,9 @@ module.exports = (function (window, document) {
             var wFirst = function (a, b) {
                 return a[0] <= b[0] ? 1 : -1;
             };
-            return sizes
-                .sort(orderByW ? hFirst : wFirst)
-                .sort(orderByW ? wFirst : hFirst);
+            return sizes.sort(orderByW ? hFirst : wFirst).sort(orderByW ? wFirst : hFirst);
         };
-        
+
         return {
             meus_anucios: {
                 topo: function () {
@@ -173,10 +185,10 @@ module.exports = (function (window, document) {
                             [[754, 0], getSizesByRange(0, 750, 0, 100)],
                             [[494, 0], getSizesByRange(0, 470, 0, 100)],
                             [[328, 0], getSizesByRange(0, 300, 0, 100)],
-                            [[0, 0], getSizesByRange(0, 300, 0, 200)]
-                        ]
+                            [[0, 0], getSizesByRange(0, 300, 0, 200)],
+                        ],
                     };
-                }
+                },
             },
             login: {
                 lateral: function () {
@@ -185,10 +197,10 @@ module.exports = (function (window, document) {
                         size: getSizesByRange(0, 1000, 0, 100),
                         sizeMapping: [
                             [[994, 0], getSizesByRange(0, 160, 300, 600)],
-                            [[0, 0], []]
-                        ]
+                            [[0, 0], []],
+                        ],
                     };
-                }
+                },
             },
         };
     }
@@ -220,12 +232,15 @@ module.exports = (function (window, document) {
             document.body.appendChild(div);
 
             var browserWidth = function () {
-                return window.innerWidth && document.documentElement.clientWidth ? Math.min(window.innerWidth, document.documentElement.clientWidth) : window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+                return window.innerWidth && document.documentElement.clientWidth
+                    ? Math.min(window.innerWidth, document.documentElement.clientWidth)
+                    : window.innerWidth ||
+                          document.documentElement.clientWidth ||
+                          document.getElementsByTagName('body')[0].clientWidth;
             };
             setInterval(function () {
                 var text = browserWidth();
                 if (ww.innerText !== text + '') {
-
                     ww.innerText = text;
                 }
                 if (bs.innerText !== innerWidth + '') {
@@ -234,6 +249,4 @@ module.exports = (function (window, document) {
             }, 500);
         });
     }
-
-
-}(window, document));
+})(window, document);

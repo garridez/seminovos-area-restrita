@@ -40,10 +40,10 @@ export default () => {
     exportingData(highcharts);
 
     const metricasSerie = window.metricasSerie;
-    var i = 0;
+    let i = 0;
 
-    var navLis: JSX.Element[] = [];
-    var charts: JSX.Element[] = [];
+    const navLis: JSX.Element[] = [];
+    const charts: JSX.Element[] = [];
 
     let label: keyof MetricasSerie;
     for (label in metricasSerie) {

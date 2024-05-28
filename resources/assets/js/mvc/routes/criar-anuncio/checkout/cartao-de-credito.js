@@ -5,27 +5,26 @@ module.exports = function () {
     require('jquery-validation/dist/localization/messages_pt_BR');
 
     var requestPagamento = require('./request-pagamento');
-    var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
+    var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     var formCC = $('.pagamento-cc-form');
 
-    formCC.find('[name="validade_cartao"]').mask("00/00");
-    formCC.find('[name="cvc_cartao"]').mask("999?", optional);
-    formCC.find('[name="numero_cartao"]')
-            .mask("9999 9999 9999 9??? ????", optional);
+    formCC.find('[name="validade_cartao"]').mask('00/00');
+    formCC.find('[name="cvc_cartao"]').mask('999?', optional);
+    formCC.find('[name="numero_cartao"]').mask('9999 9999 9999 9??? ????', optional);
     formCC.validate({
         rules: {
             numero_cartao: {
                 required: true,
-                creditcard: true
-            }
+                creditcard: true,
+            },
         },
         messages: {
-            termos: 'É preciso ler e aceitar os termos para continuar'
+            termos: 'É preciso ler e aceitar os termos para continuar',
         },
         submitHandler: function (form, event) {
             event.preventDefault();
             requestPagamento($(form).serializeArray());
             return false;
-        }
+        },
     });
 };

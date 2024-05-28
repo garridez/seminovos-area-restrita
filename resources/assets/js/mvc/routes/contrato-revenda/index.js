@@ -1,4 +1,2 @@
-
 module.exports.seletor = '.c-contrato-revenda';
-module.exports.callback = ($) => {
-};
+module.exports.callback = ($) => {};

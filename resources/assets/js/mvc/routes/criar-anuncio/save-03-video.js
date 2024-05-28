@@ -6,15 +6,18 @@ module.exports.callback = ($) => {
     var stepsContainer = $('.step-container');
     var urlSaved = '';
     $('.anuncio-steps').on('steps-loaded', function () {
-        $("form[name='form_videoVeiculo']").find("input[name='video']").keyup(function () {
-            let result = parseVideo($(this).val());
-            if (result.type == "youtube") {
-                $(".preview-video").removeClass("d-flex");
-                $(".preview-video").addClass("d-none");
-                $("#videoWindow").removeClass("d-none");
-                $("#videoWindow").attr('src', "https://www.youtube.com/embed/" + result.id);
-            }
-        }).trigger('keyup');
+        $("form[name='form_videoVeiculo']")
+            .find("input[name='video']")
+            .keyup(function () {
+                let result = parseVideo($(this).val());
+                if (result.type == 'youtube') {
+                    $('.preview-video').removeClass('d-flex');
+                    $('.preview-video').addClass('d-none');
+                    $('#videoWindow').removeClass('d-none');
+                    $('#videoWindow').attr('src', 'https://www.youtube.com/embed/' + result.id);
+                }
+            })
+            .trigger('keyup');
     });
 
     stepsContainer.on('step:pre-exit:video', function (e, stepParams) {
@@ -42,9 +45,7 @@ module.exports.callback = ($) => {
                     return;
                 }
                 urlSaved = url;
-                stepVideo
-                        .closest('.step-container')
-                        .stepPlugin('next');
+                stepVideo.closest('.step-container').stepPlugin('next');
             },
             error: function (e) {
                 if (e.responseJSON) {
@@ -52,15 +53,13 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         });
         // O evento não espera o ajax terminar, pois não é um dado crítico
         // E melhora a fluidez da criação do anúncio
         return stopEvent(e);
     });
-
 };
-
 
 /**
  * @see https://gist.github.com/yangshun/9892961
@@ -78,7 +77,9 @@ function parseVideo(url) {
     // - Also supports relative URLs:
     //   - //player.vimeo.com/video/25451551
 
-    url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/|shorts\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
+    url.match(
+        /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/|shorts\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
+    );
 
     if (RegExp.$3.indexOf('youtu') > -1) {
         var type = 'youtube';
@@ -88,6 +89,6 @@ function parseVideo(url) {
 
     return {
         type: type,
-        id: RegExp.$6
+        id: RegExp.$6,
     };
 }

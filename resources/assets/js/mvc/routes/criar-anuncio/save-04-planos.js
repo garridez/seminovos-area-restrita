@@ -1,4 +1,3 @@
-
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
@@ -9,67 +8,71 @@ module.exports.callback = ($) => {
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({
-            text:'Não é possível diminuir o plano',
-            title:$('<span class="text-primary">').html('Atenção!')
+            text: 'Não é possível diminuir o plano',
+            title: $('<span class="text-primary">').html('Atenção!'),
         });
         stopEvent(e);
     });
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-atual]', function (e) {
         var idStatus = $('#dados-basicos input[name="idStatus"]').val();
-        if(idStatus != 10){
+        if (idStatus != 10) {
             advancedAlerts.warning({
-                text:`Plano já ativo, selecione outro plano ou clique em voltar`,
-                title:$('<span class="text-primary">').html('Atenção!')
+                text: `Plano já ativo, selecione outro plano ou clique em voltar`,
+                title: $('<span class="text-primary">').html('Atenção!'),
             });
             stopEvent(e);
         }
     });
 
-    $('.anuncio-steps').on('click', '.step-plano label[data-plano-revenda-desativado]', function (e) {
-        advancedAlerts.warning({
-            text:'Você atingiu o limite de anúncio disponíveis para este plano',
-            title:$('<span class="text-primary">').html('Atenção!')
-        });
-        stopEvent(e);
-    });
+    $('.anuncio-steps').on(
+        'click',
+        '.step-plano label[data-plano-revenda-desativado]',
+        function (e) {
+            advancedAlerts.warning({
+                text: 'Você atingiu o limite de anúncio disponíveis para este plano',
+                title: $('<span class="text-primary">').html('Atenção!'),
+            });
+            stopEvent(e);
+        },
+    );
 
-    $('.anuncio-steps').on('click', '.step-plano label', function(e){
-      BtnContinuar.show();
-      BtnContinuar.enable();
+    $('.anuncio-steps').on('click', '.step-plano label', function (e) {
+        BtnContinuar.show();
+        BtnContinuar.enable();
     });
 
     $('.step-container').on('step:pre-change:plano', function (e) {
-      if(window.fromCheckout){
-        BtnContinuar.show();
-        BtnContinuar.enable();
-      }
+        if (window.fromCheckout) {
+            BtnContinuar.show();
+            BtnContinuar.enable();
+        }
     });
 
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
         BtnContinuar.disable();
-        $(".plano-box input[type='radio']").on("change",function(){
-            if($(this).is(":checked")){
+        $(".plano-box input[type='radio']").on('change', function () {
+            if ($(this).is(':checked')) {
                 BtnContinuar.enable();
             }
         });
 
         if (location.hash && location.hash.indexOf('comprovante') !== -1) {
             var idPlano = location.hash.match(/\d+/)[0];
-            $("#idPlano").val(idPlano);
-            $("#radio-idPlano-"+idPlano).click();
+            $('#idPlano').val(idPlano);
+            $('#radio-idPlano-' + idPlano).click();
             $('.step-container').stepPlugin('goTo', '.step-checkout');
         }
 
         if (location.hash && location.hash.indexOf('trocarPlano') !== -1) {
-            $("#acao").val("trocarPlano");
+            $('#acao').val('trocarPlano');
         }
     });
 
     $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
-        let plano = "planos" + $("#idPlano").val();
-        let planoSelecionado =  $("#" + plano);
+        let plano = 'planos' + $('#idPlano').val();
+        let planoSelecionado = $('#' + plano);
 
         $('[id^="planos"]').each((i, obj) => {
             $(obj).hide();
@@ -79,7 +82,7 @@ module.exports.callback = ($) => {
         planoSelecionado.show();
         planoSelecionado.addClass('plano-selecionado');
 
-        let valorTotal = 0.00;
+        let valorTotal = 0.0;
         if (location.hash.indexOf('addCertificado') === -1) {
             valorTotal += parseFloat(planoSelecionado.find('input[data-valor-plano]').val());
         } else {
@@ -89,9 +92,10 @@ module.exports.callback = ($) => {
         var servicoAdicionalCertificado = $('#servico-adicional-certificado');
         if (servicoAdicionalCertificado.is(':checked')) {
             valorTotal += parseFloat(servicoAdicionalCertificado.data('valor'));
-
         }
-        $('.valor-total').find('[data-valor-total]').html(valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        $('.valor-total')
+            .find('[data-valor-total]')
+            .html(valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
     });
 
     $('.step-container').on('step:pre-exit:plano', function (e) {
@@ -103,7 +107,7 @@ module.exports.callback = ($) => {
 
         var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
         var ctx = $('.step-0, .step-1, .step-plano');
-        DataLayerGTMPopulate(ctx,'checkout_step_7');
+        DataLayerGTMPopulate(ctx, 'checkout_step_7');
         // Se for grátis
         if (idPlano === 1) {
             // Salvar todo o formulario anterior as fotos aqui
@@ -111,14 +115,14 @@ module.exports.callback = ($) => {
             var dataSerialized = form.serialize();
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
 
                 /**
                  * @TODO Corrigir o "/carro" para o valor correto
                  */
-                url: "/carro/gratis",
+                url: '/carro/gratis',
                 data: dataSerialized,
-                dataType: "json",
+                dataType: 'json',
                 success: function (data) {
                     if (!HandleApiError(data)) {
                         return;
@@ -131,7 +135,7 @@ module.exports.callback = ($) => {
                     } else {
                         HandleApiError(false);
                     }
-                }
+                },
             });
 
             return stopEvent(e);

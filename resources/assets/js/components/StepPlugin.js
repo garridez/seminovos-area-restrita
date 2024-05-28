@@ -4,7 +4,6 @@
 var $ = require('jquery');
 module.exports = Plugin;
 
-
 var pluginName = 'stepPlugin';
 var defaults = {
     root: '.step-container',
@@ -13,7 +12,7 @@ var defaults = {
     activeClass: 'active',
     scrollOffset: 60,
     nestingPropagation: true,
-    debug: false
+    debug: false,
 };
 
 function Plugin(element, options) {
@@ -25,7 +24,6 @@ function Plugin(element, options) {
 }
 
 $.extend(Plugin.prototype, {
-
     inLastStep: function () {
         var index = this.getCurrentStepIndex() + 1;
         return index >= this.getSteps().length;
@@ -46,19 +44,17 @@ $.extend(Plugin.prototype, {
     },
     getStepIndex: function (indexOrSelector) {
         var step = this.getSteps(indexOrSelector);
-        return this.getSteps()
-                .index(step);
+        return this.getSteps().index(step);
     },
     getCurrentStepIndex: function () {
         var index = false;
         var activeClass = this.opts.activeClass;
-        this.getSteps()
-                .each(function (i) {
-                    if ($(this).hasClass(activeClass)) {
-                        index = i;
-                        return false;
-                    }
-                });
+        this.getSteps().each(function (i) {
+            if ($(this).hasClass(activeClass)) {
+                index = i;
+                return false;
+            }
+        });
         return index;
     },
     /**
@@ -67,7 +63,7 @@ $.extend(Plugin.prototype, {
      * @returns {boolean}
      */
     goToIndex: function (index, withEvents) {
-        withEvents = withEvents === undefined ? true : withEvents
+        withEvents = withEvents === undefined ? true : withEvents;
         if (typeof index !== 'number') {
             this._log(index, "!== 'number'");
             index = this.getStepIndex(index);
@@ -83,8 +79,7 @@ $.extend(Plugin.prototype, {
                 return false;
             }
             if (!this.inLastStep()) {
-                this.getSteps()
-                        .removeClass(activeClass);
+                this.getSteps().removeClass(activeClass);
             }
             return true;
         }
@@ -98,14 +93,17 @@ $.extend(Plugin.prototype, {
 
         var scrollOffset = this.opts.scrollOffset;
         this.getSteps()
-                .removeClass(activeClass)
-                .eq(index)
-                .addClass(activeClass)
-                .each(function () {
-                    $("html, body").animate({
-                        scrollTop: $(this).offset().top - scrollOffset
-                    }, 400);
-                });
+            .removeClass(activeClass)
+            .eq(index)
+            .addClass(activeClass)
+            .each(function () {
+                $('html, body').animate(
+                    {
+                        scrollTop: $(this).offset().top - scrollOffset,
+                    },
+                    400,
+                );
+            });
         if (withEvents) {
             this._triggerEvent('exit', initialIndex);
             this._triggerEvent('change', this.getCurrentStepIndex());
@@ -122,9 +120,7 @@ $.extend(Plugin.prototype, {
             if (this.goToIndex(currentIndex) === false) {
                 return false;
             }
-            return this.$ctx
-                    .parent()
-                    .closest(this.opts.root)[pluginName]('next');
+            return this.$ctx.parent().closest(this.opts.root)[pluginName]('next');
         }
 
         this.goToIndex(this.getCurrentStepIndex() + 1, withEvents);
@@ -138,8 +134,8 @@ $.extend(Plugin.prototype, {
             console.log.apply(this, arguments);
         }
     },
-    _triggerEvent: function (event, index, nextIndex) { 
-        var eventRes = {};// Event Result
+    _triggerEvent: function (event, index, nextIndex) {
+        var eventRes = {}; // Event Result
         var stepElementTarget = this.getSteps().eq(index);
         var stepElementDeep = null;
 
@@ -147,10 +143,10 @@ $.extend(Plugin.prototype, {
             stepElementDeep = stepElementTarget.find('.active');
         }
         var extraParams = {
-            'stepIndex': index,
-            'stepElementTarget': stepElementTarget,
-            'stepElementDeep': stepElementDeep,
-            'stepChangeTo': nextIndex
+            stepIndex: index,
+            stepElementTarget: stepElementTarget,
+            stepElementDeep: stepElementDeep,
+            stepChangeTo: nextIndex,
         };
         this._log('Event triggered:', 'step:' + event);
 
@@ -168,11 +164,10 @@ $.extend(Plugin.prototype, {
         }
         // Se pelo menos 1 for falso, então é retornado falso
         return !(eventRes.a === false || eventRes.b === false || eventRes.c === false);
-    }
+    },
 });
 
-
-$.fn[ pluginName ] = function () {
+$.fn[pluginName] = function () {
     var __arguments = arguments;
     var options = __arguments[0];
 
@@ -193,7 +188,6 @@ $.fn[ pluginName ] = function () {
             value = instance[options].apply(instance, args);
             return false;
         }
-
     });
     return returnValue ? value : chain;
 };

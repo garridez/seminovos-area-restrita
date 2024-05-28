@@ -20,7 +20,7 @@ module.exports = function (formData, ajaxParams) {
     }
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
     var dataRedirectPagamento = {
-      urlAguardando : `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
+        urlAguardando: `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
     };
     var ajaxDefaultParams = {
         url: '/carro/checkout/processar',
@@ -52,9 +52,9 @@ module.exports = function (formData, ajaxParams) {
                 var ctx = $('#dados-basicos form, .step-0, .step-1, .step-plano');
                 DataLayerGTMPopulate(ctx, 'purchase', data);
 
-                if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
-                  window.location = httpResponse.data.url;
-                  return;
+                if (httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1) {
+                    window.location = httpResponse.data.url;
+                    return;
                 }
 
                 window.open(httpResponse.data.url, '_blank');
@@ -66,7 +66,7 @@ module.exports = function (formData, ajaxParams) {
         error: function (e) {
             requestAlerts.erro(e);
             console.log(e);
-        }
+        },
     };
     var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
 
@@ -75,36 +75,42 @@ module.exports = function (formData, ajaxParams) {
         solicitando código de verificação de anúncio ou similar.<br><br>
         CUIDADO PARA NÃO CAIR EM GOLPES<br><br>
         Estamos à disposição para esclarecer dúvidas<br>`;
-    advancedAlerts.error({
-        text: text,
-        title: $("<span>").html(`<span class='text-primary'>Alerta </span>importante`),
-        time: false,
-        img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
-        closeText: "ESTOU CIENTE",
-    }).on('hide.bs.modal', function () {
-        $.ajax(ajaxParams);
-    });
+    advancedAlerts
+        .error({
+            text: text,
+            title: $('<span>').html(`<span class='text-primary'>Alerta </span>importante`),
+            time: false,
+            img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
+            closeText: 'ESTOU CIENTE',
+        })
+        .on('hide.bs.modal', function () {
+            $.ajax(ajaxParams);
+        });
 
-    function modalPagamentoBoleto(data){
-      var text = `
+    function modalPagamentoBoleto(data) {
+        var text = `
       <div class="w-100 text-center flex-wrap">
         <div>
           <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
         </div>
         <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
       </div>`;
-      var downloadBtn = $(`<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`)
-        .on('click',function(e){
-          setTimeout(function(){
-            window.location = data.urlAguardando;
-          }, 1000);
+        var downloadBtn = $(
+            `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
+        ).on('click', function (e) {
+            setTimeout(function () {
+                window.location = data.urlAguardando;
+            }, 1000);
         });
-  
-      advancedAlerts.success({
-        text: text,
-        title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
-        time: false,
-        closeText: `download`
-      }).find('.modal-footer').html(downloadBtn);
-    };
+
+        advancedAlerts
+            .success({
+                text: text,
+                title: $('<span>').html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+                time: false,
+                closeText: `download`,
+            })
+            .find('.modal-footer')
+            .html(downloadBtn);
+    }
 };

@@ -5,60 +5,65 @@
  *
  */
 
-
 require('bootstrap/js/dist/modal.js');
-var jQuery = require('jquery');
+
+import jQuery from 'jquery';
+
 (function ($) {
     'use strict';
-    var pluginName = 'jsBsModal',
-            htmls = {
-                'modal': '<div class="modal fade" tabindex="-1" role="dialog">',
-                'modal-dialog': '<div class="modal-dialog" role="document">',
-                'modal-content': '<div class="modal-content">',
-                'modal-header': '<div class="modal-header">',
-                'close': `<button type="button" class="btn-close btn btn-light d-flex justify-content-center" data-dismiss="modal">&times;</button>`,                
-                'modal-title': '<h4 class="modal-title">',
-                'modal-body': '<div class="modal-body">',
-                'modal-footer': '<div class="modal-footer">'
+    var pluginName = 'jsBsModal';
+    var htmls = {
+        modal: '<div class="modal fade" tabindex="-1" role="dialog">',
+        'modal-dialog': '<div class="modal-dialog" role="document">',
+        'modal-content': '<div class="modal-content">',
+        'modal-header': '<div class="modal-header">',
+        close: `<button
+                        type="button"
+                        class="btn-close
+                        btn btn-light d-flex
+                        justify-content-center"
+                        data-dismiss="modal"
+                    >
+                        &times;
+                    </button>`,
+        'modal-title': '<h4 class="modal-title">',
+        'modal-body': '<div class="modal-body">',
+        'modal-footer': '<div class="modal-footer">',
+    };
+    var structureHTML = {
+        name: 'modal',
+        childs: {
+            name: 'modal-dialog',
+            childs: {
+                name: 'modal-content',
+                childs: [
+                    {
+                        name: 'modal-header',
+                        childs: [{ name: 'close' }, { name: 'modal-title' }],
+                    },
+                    { name: 'modal-body' },
+                    { name: 'modal-footer' },
+                ],
             },
-            structureHTML = {
-                name: 'modal',
-                childs: {
-                    name: 'modal-dialog',
-                    childs: {
-                        name: 'modal-content',
-                        childs: [
-                            {
-                                name: 'modal-header',
-                                childs: [
-                                    {name: 'close'},
-                                    {name: 'modal-title'}
-                                ]
-                            },
-                            {name: 'modal-body'},
-                            {name: 'modal-footer'}
-                        ]
-                    }
-                }
-            },
-            optionsDefault = {
-                autoShow: true,
-                structureHTML: structureHTML,
-                contents: {
-                    'modal': '', // HTML to preprend. Accepts: jQuery Obj, element and string
-                    'modal-dialog': '', // false or undefined to exclude element
-                    'modal-content': '',
-                    'modal-header': '',
-                    'close': '',
-                    'modal-title': false,
-                    'modal-body': false,
-                    'modal-footer': false
-                }
-            };
+        },
+    };
+    var optionsDefault = {
+        autoShow: true,
+        structureHTML: structureHTML,
+        contents: {
+            modal: '', // HTML to preprend. Accepts: jQuery Obj, element and string
+            'modal-dialog': '', // false or undefined to exclude element
+            'modal-content': '',
+            'modal-header': '',
+            close: '',
+            'modal-title': false,
+            'modal-body': false,
+            'modal-footer': false,
+        },
+    };
 
     function makeHtml(structureHTML, options) {
-
-        if ($.isArray(structureHTML)) {
+        if (Array.isArray(structureHTML)) {
             var elements = [];
             $.each(structureHTML, function (i, v) {
                 elements.push(makeHtml(v, options));
@@ -67,7 +72,9 @@ var jQuery = require('jquery');
         }
 
         if (htmls[structureHTML.name] === undefined) {
-            throw new Error('"' + structureHTML.name + '" is not valid.\n' + 'Valids: ' + Object.keys(htmls).join(', '));
+            throw new Error(
+                `"${structureHTML.name}" is not valid.\nValids: ` + Object.keys(htmls).join(', '),
+            );
         }
 
         var content = options.contents[structureHTML.name];
@@ -111,4 +118,4 @@ var jQuery = require('jquery');
         return jsBsModalInit(options);
     };
     $[pluginName].htmls = htmls;
-}(jQuery));
+})(jQuery);

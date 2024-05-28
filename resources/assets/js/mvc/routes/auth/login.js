@@ -1,4 +1,3 @@
-
 module.exports.seletor = '.c-auth.a-login';
 
 module.exports.callback = ($) => {
@@ -10,23 +9,19 @@ module.exports.callback = ($) => {
     var ShowPassword = require('components/ShowPassword');
     ShowPassword($("input[type='password']"));
 
-    $("body").on("click", "input.radioTipoCadastro[data-cookie]", function (e) {
+    $('body').on('click', 'input.radioTipoCadastro[data-cookie]', function (e) {
         let $this = $(this);
-        let cookieDate = new Date;
+        let cookieDate = new Date();
         cookieDate.setFullYear(cookieDate.getFullYear() + 1);
-        document.cookie = `login-tipoCadastro=${$this.data("cookie")}; expires=${cookieDate.toGMTString()};`;
+        document.cookie = `login-tipoCadastro=${$this.data('cookie')}; expires=${cookieDate.toGMTString()};`;
     });
-
 
     var $ctx = $('.login-area');
     var $formDivs = $('.container-form-particular, .container-form-revenda');
     $formDivs.filter('.hide').hide().removeClass('hide');
     $ctx.find('.switch-field input').change(function () {
         let seletectedForm = '.' + $(this).val();
-        $formDivs
-            .slideUp()
-            .filter(seletectedForm)
-            .slideDown();
+        $formDivs.slideUp().filter(seletectedForm).slideDown();
     });
 
     // var match = document.cookie.match(/login-tipoCadastro=(?<tipoCadastro>[a-z]+)/)
@@ -50,16 +45,13 @@ module.exports.callback = ($) => {
             'missing-input-response': 'Desafio do captchanão enviado',
             'invalid-input-response': 'Desafio do captcha inválido',
             'bad-request': 'Requisção do captcha errada',
-            'timeout-or-duplicate': 'Seu captcha está inválido'
-
+            'timeout-or-duplicate': 'Seu captcha está inválido',
         };
         var msg = $('input[name=captcha-error').val();
         if (msg !== '1') {
             try {
                 var listErros = JSON.parse(msg);
-            } catch (e) {
-
-            }
+            } catch (e) {}
             var listErrosMsg = [];
             if (listErros) {
                 for (var i of listErros) {
@@ -89,34 +81,36 @@ module.exports.callback = ($) => {
         $('.loading-container').slideDown();
     });
 
-
     var grecaptchaIntervalID = setInterval(function () {
         if (grecaptcha === undefined || grecaptcha.ready === undefined) {
             return;
         }
         clearInterval(grecaptchaIntervalID);
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
-                action: 'submit'
-            }).then(function (token) {
-                $('.container-form-particular').slideDown();
-                $('.loading-container').slideUp();
-                $('form', '.container-form-particular, .container-form-revenda')
-                    .find('[type="submit"]')
-                    .after($('<input/>')
-                        .attr('name', 'token')
-                        .attr('type', 'hidden')
-                        .attr('data-msg', 'Acabou a festa!')
-                        .val(token));
-                $('input[name="tokenResetarSenha"]').val(token);
-            });
+            grecaptcha
+                .execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
+                    action: 'submit',
+                })
+                .then(function (token) {
+                    $('.container-form-particular').slideDown();
+                    $('.loading-container').slideUp();
+                    $('form', '.container-form-particular, .container-form-revenda')
+                        .find('[type="submit"]')
+                        .after(
+                            $('<input/>')
+                                .attr('name', 'token')
+                                .attr('type', 'hidden')
+                                .attr('data-msg', 'Acabou a festa!')
+                                .val(token),
+                        );
+                    $('input[name="tokenResetarSenha"]').val(token);
+                });
         });
     }, 50);
 
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');
     var AdvancedAlerts = require('components/AdvancedAlerts');
-
 
     $('form[name="formContatosCpfCpnj"]').submit(function (e) {
         e.preventDefault();
@@ -137,7 +131,6 @@ module.exports.callback = ($) => {
             data: $(this).serialize(),
             dataType: 'json',
             success: function (data) {
-
                 if (!HandleApiError(data)) {
                     return;
                 }
@@ -147,7 +140,7 @@ module.exports.callback = ($) => {
                 if (!data.cpfCadastro) {
                     resetPasswordHandleError(data.tipoCadastro);
                     return;
-                } else{
+                } else {
                     resetPasswordShowModal(data, cpfCnpj, email);
                 }
             },
@@ -157,7 +150,7 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         });
     });
 
@@ -170,8 +163,8 @@ module.exports.callback = ($) => {
             type: 'POST',
             url: '/remember-pass-phone',
             data: {
-                'cpfOuCpnj': cpfOuCpnj,
-                'email': email
+                cpfOuCpnj: cpfOuCpnj,
+                email: email,
             },
             success: function (data) {
                 if (!HandleApiError(data)) {
@@ -189,11 +182,10 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         }).always(function () {
             $('#modalRecuperarSenha').modal('hide');
         });
-
     });
 
     $('#modalRecuperarSenha').on('click', '.options .token a', function (e) {
@@ -212,17 +204,17 @@ module.exports.callback = ($) => {
             type: 'POST',
             url: '/remember-pass',
             data: {
-                'cpfOuCpnj': cpfOuCpnj,
-                'email': email
+                cpfOuCpnj: cpfOuCpnj,
+                email: email,
             },
             dataType: 'json',
             success: function (data) {
                 if (!HandleApiError(data)) {
                     return;
-                };
+                }
                 AdvancedAlerts.success({
                     title: 'Senha Enviada',
-                    text: 'Nova senha enviada para o email:</br>' + data.email
+                    text: 'Nova senha enviada para o email:</br>' + data.email,
                 });
                 //limpa campos
                 $('#cpfOuCpnj').val('');
@@ -234,7 +226,7 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         }).always(function () {
             $('#modalRecuperarSenha').modal('hide');
         });
@@ -256,7 +248,7 @@ module.exports.callback = ($) => {
                 if (data.data.token != token) {
                     AdvancedAlerts.error({
                         title: 'Erro',
-                        text: 'Token Inválido'
+                        text: 'Token Inválido',
                     });
                     return;
                 }
@@ -269,7 +261,7 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         }).always(function () {
             $('#modalValidaToken').modal('hide');
         });
@@ -286,7 +278,7 @@ module.exports.callback = ($) => {
         if (senha != senhaConf) {
             AdvancedAlerts.error({
                 title: 'Erro',
-                text: 'As senhas não conferem'
+                text: 'As senhas não conferem',
             });
             return;
         }
@@ -295,8 +287,8 @@ module.exports.callback = ($) => {
             type: 'POST',
             url: '/remember-pass-save',
             data: {
-                'senha': senha,
-                'idCadastro': idCadastro
+                senha: senha,
+                idCadastro: idCadastro,
             },
             dataType: 'json',
             success: function (data) {
@@ -306,10 +298,10 @@ module.exports.callback = ($) => {
                 $('#modalNovaSenha').modal('hide');
                 AdvancedAlerts.success({
                     title: 'Nova senha cadastrada',
-                    text: 'Utilize a nova senha para entrar'
+                    text: 'Utilize a nova senha para entrar',
                 }).on('hidden.bs.modal', function () {
-                    window.location.href = "/";
-                });;
+                    window.location.href = '/';
+                });
                 $formDadosBasicos.find('input').val('');
             },
             error: function (e) {
@@ -318,7 +310,7 @@ module.exports.callback = ($) => {
                 } else {
                     HandleApiError(false);
                 }
-            }
+            },
         });
     });
 
@@ -331,35 +323,36 @@ module.exports.callback = ($) => {
         $('[name="cpfOuCpnj"]').val('');
     });
 
-
     /**
      * Atualiza o token do reCaptcha, quando necessário
      */
-    function refreshReCaptcha()
-    {
+    function refreshReCaptcha() {
         var elementosParaRemover = document.querySelectorAll('[data-msg="Acabou a festa!"]');
-        elementosParaRemover.forEach(function(elemento) {
+        elementosParaRemover.forEach(function (elemento) {
             elemento.parentNode.removeChild(elemento);
         });
 
         setTimeout(() => {
             console.log('timeout');
-            grecaptcha.execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
-                action: 'submit'
-            }).then(function (token) {
-                $('.container-form-particular').slideDown();
-                $('.loading-container').slideUp();
-                $('form', '.container-form-particular, .container-form-revenda')
-                    .find('[type="submit"]')
-                    .after($('<input/>')
-                        .attr('name', 'token')
-                        .attr('type', 'hidden')
-                        .attr('data-msg', 'Acabou a festa!')
-                        .val(token));
-                $('input[name="tokenResetarSenha"]').val(token);
-            });
+            grecaptcha
+                .execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
+                    action: 'submit',
+                })
+                .then(function (token) {
+                    $('.container-form-particular').slideDown();
+                    $('.loading-container').slideUp();
+                    $('form', '.container-form-particular, .container-form-revenda')
+                        .find('[type="submit"]')
+                        .after(
+                            $('<input/>')
+                                .attr('name', 'token')
+                                .attr('type', 'hidden')
+                                .attr('data-msg', 'Acabou a festa!')
+                                .val(token),
+                        );
+                    $('input[name="tokenResetarSenha"]').val(token);
+                });
         }, 1000);
-
     }
 
     /**
@@ -367,35 +360,34 @@ module.exports.callback = ($) => {
      *
      * @param {*} data
      */
-    function resetPasswordHandleError(tipoCadastro)
-    {
+    function resetPasswordHandleError(tipoCadastro) {
         switch (tipoCadastro) {
             case 2:
-                title = "CPF não encontrado";
+                title = 'CPF não encontrado';
                 text = `O CPF informado não existe em nossos cadastrados.<br/><br/>
                 <div><a href="/me-cadastrar" title="Criar uma conta" class="btn link-laranja">
                 Cadastre-se </a></div><br/>`;
                 break;
             case 1:
-                title = "CNPJ não encontrado";
+                title = 'CNPJ não encontrado';
                 text = `O CNPJ informado não existe em nossos cadastrados.<br/><br/>
                 <div><a href="https://seminovos.com.br/cadastrar-revenda" title="Criar uma conta" class="btn link-laranja">
                 Cadastre-se </a></div><br/>`;
                 break;
             case 3:
-                title = "E-mail não encontrado";
+                title = 'E-mail não encontrado';
                 text = `O E-mail informado não existe em nossos cadastrados.<br/><br/>
                 <div><a href="/me-cadastrar" title="Criar uma conta" class="btn link-laranja">
                 Cadastre-se </a></div><br/>`;
                 break;
             case 4:
-                title = "Informe seu CPF ou E-mail";
+                title = 'Informe seu CPF ou E-mail';
                 text = `Por favor, preencha pelo menos um dos campos de CPF ou E-mail.<br/><br/>
                 <div><a href="/me-cadastrar" title="Criar uma conta" class="btn link-laranja">
                 Cadastre-se </a></div><br/>`;
                 break;
             case 5:
-                title = "Atenção";
+                title = 'Atenção';
                 text = `Desafio do capcha inválido!`;
                 break;
 
@@ -406,7 +398,7 @@ module.exports.callback = ($) => {
         advancedAlerts.error({
             title: title,
             text: text,
-            time: 10000
+            time: 10000,
         });
         return;
     }
@@ -417,9 +409,11 @@ module.exports.callback = ($) => {
      * @param {*} cpfCnpj
      * @param {*} email
      */
-    function resetPasswordShowModal(data, cpfCnpj , email)
-    {
-        $('#modalRecuperarSenha').find('.sms,.token,.email').removeClass('d-flex').removeClass('d-none');
+    function resetPasswordShowModal(data, cpfCnpj, email) {
+        $('#modalRecuperarSenha')
+            .find('.sms,.token,.email')
+            .removeClass('d-flex')
+            .removeClass('d-none');
 
         $('[data-retorno-telefone]').text(data.telefone);
         $('[data-retorno-email]').text(data.email);

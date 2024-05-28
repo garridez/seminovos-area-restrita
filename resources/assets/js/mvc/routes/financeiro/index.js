@@ -1,4 +1,3 @@
-
 module.exports.seletor = '.c-financeiro.a-index';
 module.exports.callback = ($) => {
     require('bootstrap/js/dist/util.js');
@@ -14,120 +13,126 @@ module.exports.callback = ($) => {
 
     var HandleApiError = require('components/HandleApiError');
 
-    var optional = {translation: {'?': {pattern: /[0-9]/, optional: true}}};
+    var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     var formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
 
     var advancedAlerts = require('components/AdvancedAlerts');
 
-    formCC.find('[name="validade_cartao"]').mask("00/00");
-    formCC.find('[name="cvc_cartao"]').mask("999?", optional);
-    formCC.find('[name="numero_cartao"]')
-            .mask("9999 9999 9999 9??? ????", optional);
+    formCC.find('[name="validade_cartao"]').mask('00/00');
+    formCC.find('[name="cvc_cartao"]').mask('999?', optional);
+    formCC.find('[name="numero_cartao"]').mask('9999 9999 9999 9??? ????', optional);
 
+    $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(
+        function (e) {
+            e.preventDefault();
+            var data = $(this).serializeArray();
+            var tempo_contrato = $('.tab-content')
+            .find("input[name='tempo_contrato']:checked")
+            .data('tempo_contrato');
 
+            data.push({
+                name: 'tempo_contrato',
+                value: tempo_contrato,
+            });
 
-    $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(function (e) {
-        e.preventDefault();
-        var data = $(this).serializeArray();
-        var tempo_contrato = $(".tab-content")
-                .find("input[name='tempo_contrato']:checked")
-                .data('tempo_contrato');
+            var Loading = require('components/Loading');
+            Loading.addFeedbackTexts(
+            'Validando informações...',
+            'Realizando pagamento ...'
+                false,
+            );
 
-        data.push({
-            name: 'tempo_contrato',
-            value: tempo_contrato,
-        });
+            Loading.open();
+            $btnSubmit = $(this).find('button[type="submit"]');
+            var dataRedirectPagamento = {};
+            dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
 
+            var ajaxDefaultParams = {
+                url: '/carro/checkout/processar',
+                cache: false,
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (httpResponse) {
+                    if (httpResponse.html) {
+                        $('.retorno-boleto').html(httpResponse.html);
+                        return;
+                    }
+                    if (
+                        httpResponse.data &&
+                        httpResponse.data.hasOwnProperty('qr_code') &&
+                        httpResponse.data.qr_code
+                    ) {
+                        $('.qrcode-img').attr('src', httpResponse.data.img_qr_code);
+                        $('.text-pix').html(httpResponse.data.qr_code);
+                        $('.form-pix').hide();
+                        $('.retorno-pix').show();
+                        Loading.close();
+                        return;
+                    }
+                    if (httpResponse.type === 15002) {
+                        /**
+                         * @todo implementar essa função
+                         */
+                        pagamentoEmAndamento();
+                    }
+                    if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
+                        HandleApiError(httpResponse);
+                        return;
+                    }
 
-        var Loading = require('components/Loading');
-        Loading.addFeedbackTexts([
-          'Validando informações...',
-          'Realizando pagamento ...'
-        ], false);
-
-        Loading.open();
-        $btnSubmit = $(this).find('button[type="submit"]');
-        var dataRedirectPagamento = {};
-        dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
-
-        var ajaxDefaultParams = {
-            url: '/carro/checkout/processar',
-            cache: false,
-            data: data,
-            type: 'POST',
-            dataType: 'json',
-            success: function (httpResponse) {
-                if (httpResponse.html) {
-                    $('.retorno-boleto').html(httpResponse.html);
-                    return;
-                }
-                if (httpResponse.data && httpResponse.data.hasOwnProperty('qr_code') && httpResponse.data.qr_code) {
-                    $('.qrcode-img').attr('src', httpResponse.data.img_qr_code);
-                    $('.text-pix').html(httpResponse.data.qr_code);
-                    $('.form-pix').hide();
-                    $('.retorno-pix').show();
-                    Loading.close();
-                    return;
-                }
-                if (httpResponse.type === 15002) {
                     /**
-                     * @todo implementar essa função
+                     * Caso seja necessário redirecionar o cliente para alguma tela de pagamento
+                     * como PagSeguro ou se escolhido a opção 'débito' da Cielo
+                     *
+                     * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
+                     * @return void
                      */
-                    pagamentoEmAndamento();
-                }
-                if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
-                    HandleApiError(httpResponse);
-                    return;
-                }
+                    if (
+                        httpResponse.data &&
+                        httpResponse.data.hasOwnProperty('redirect') &&
+                        httpResponse.data.redirect
+                    ) {
+                    if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
+                            window.location = httpResponse.data.url;
+                            return;
+                    }
 
-                /**
-                 * Caso seja necessário redirecionar o cliente para alguma tela de pagamento
-                 * como PagSeguro ou se escolhido a opção 'débito' da Cielo
-                 *
-                 * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
-                 * @return void
-                 */
-                if (httpResponse.data && httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
-                  if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
-                    window.location = httpResponse.data.url;
-                    return;
-                  }
-
-                  window.open(httpResponse.data.url, '_blank');
-                  dataRedirectPagamento.url = httpResponse.data.url || '';
-                  modalPagamentoBoleto(dataRedirectPagamento);
-                } else {
-                    var title = "Pagamento aprovado!";
-                    var text = $(`  <div>
+                        window.open(httpResponse.data.url, '_blank');
+                        dataRedirectPagamento.url = httpResponse.data.url || '';
+                    modalPagamentoBoleto(dataRedirectPagamento);
+                    } else {
+                        var title = 'Pagamento aprovado!';
+                        var text = $(`  <div>
                                         <div>É nescessário aguardar a atualização do site, <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
                                     </div>
                                 `);
-                    var closeText = "Li e concordo";
-                    var time = 0;
-                    advancedAlerts.success({
-                        title,
-                        text,
-                        closeText,
-                        time
-                    });
+                        var closeText = 'Li e concordo';
+                        var time = 0;
+                        advancedAlerts.success({
+                            title,
+                            text,
+                            closeText,
+                            time,
+                        });
 
-                    $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
-                }
-                $btnSubmit.prop('disabled',true);
-                Loading.close();
-            },
-            error: function (e) {
-                HandleApiError(e.responseText);
-                Loading.close();
-            }
-        };
-        var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
-        $.ajax(ajaxParams);
+                        $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
+                    }
+                    $btnSubmit.prop('disabled', true);
+                    Loading.close();
+                },
+                error: function (e) {
+                    HandleApiError(e.responseText);
+                    Loading.close();
+                },
+            };
+            var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
+            $.ajax(ajaxParams);
+        },
+    );
 
-    });
-
-    function modalPagamentoBoleto(data){
+    function modalPagamentoBoleto(data) {
         var text = `
         <div class="w-100 text-center flex-wrap">
             <div>
@@ -135,40 +140,44 @@ module.exports.callback = ($) => {
             </div>
             <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
         </div>`;
-        var downloadBtn = $(`<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`)
-            .on('click',function(e){
-                setTimeout(function(){
-                    window.location = data.urlAguardando;
-                }, 1000);
-        });
+        var downloadBtn = $(
+            `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
+        ).on('click', function (e) {
+            setTimeout(function () {
+                window.location = data.urlAguardando;
+            }, 1000);
+            });
 
-        advancedAlerts.success({
-            text: text,
-            title: $("<span>").html(`<span class='text-primary'>Aguardando Pagamento </span>`),
-            time: false,
-            closeText: `download`
-        }).find('.modal-footer').html(downloadBtn);
-    };
+        advancedAlerts
+            .success({
+                text: text,
+                title: $('<span>').html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+                time: false,
+                closeText: `download`,
+            })
+            .find('.modal-footer')
+            .html(downloadBtn);
+    }
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function (e) {
         var target = $(this).data('target').replace('#tab-', '');
-        var state = ({
-            'planos': {
+        var state = {
+            planos: {
                 prev: false,
                 next: true,
-                finish: false
+                finish: false,
             },
-            'pagamento': {
+            pagamento: {
                 prev: true,
                 next: false,
-                finish: false
+                finish: false,
             },
-            'finalizar': {
+            finalizar: {
                 prev: false,
                 next: false,
-                finish: true
+                finish: true,
             },
-        })[target];
+        }[target];
 
         $('.pager .next')[!state.next ? 'addClass' : 'removeClass']('hide');
         $('.pager .previous')[!state.prev ? 'addClass' : 'removeClass']('hide');
@@ -183,8 +192,10 @@ module.exports.callback = ($) => {
         var plano = $(clickado).find('#plano').html();
         var desconto = $(clickado).find('#desconto').html();
         var economia = $(clickado).find('#economia').html();
-        var valor = parseFloat($(clickado).find('#valor').html().replace('.', '').replace(',', '.').replace(' ', ''));
-        var valorFormatado = valor.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+        var valor = parseFloat(
+            $(clickado).find('#valor').html().replace('.', '').replace(',', '.').replace(' ', ''),
+        );
+        var valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
         resultado.find('#desconto').html(desconto);
         resultado.find('#economia').html(economia);
@@ -209,13 +220,13 @@ module.exports.callback = ($) => {
         },
         finalizar: function () {
             return true;
-        }
+        },
     };
 
     $('#rootwizard').on('click', 'a', function (e) {
         var $this = $(this);
         var direction = $this.data('nav-dir');
-        if (direction === 'finish'){
+        if (direction === 'finish') {
             return true;
         }
 
@@ -230,38 +241,40 @@ module.exports.callback = ($) => {
 
         if (tabsCallback[idTab]()) {
             $('.nav-main-financeiro [data-target="#tab-' + idTab + '"]')
-                    .closest('li')[direction]()
-                    .find('a').tab('show');
+                .closest('li')[direction]()
+                .find('a').tab('show');
         }
     });
 };
 
 var optionsParcelas = (valor, plano) => {
     var generateOption = function (i) {
-        return $("<option>").attr("value", i + 1).text(i + 1 + "x de R$ " + ((valor / (i + 1)).toFixed(2)));
+        return $('<option>')
+            .attr('value', i + 1)
+            .text(i + 1 + 'x de R$ ' + (valor / (i + 1)).toFixed(2));
     };
-    var parcelas = $("#parcelas");
+    var parcelas = $('#parcelas');
     parcelas.html('');
     switch (plano) {
-        case "Plano Mensal":
-                parcelas.append(generateOption(0));
+        case 'Plano Mensal':
+            parcelas.append(generateOption(0));
             break;
-        case "Plano Trimestral":
+        case 'Plano Trimestral':
             for (let i = 0; i < 3; i++) {
                 parcelas.append(generateOption(i));
             }
             break;
-        case "Plano Semestral":
+        case 'Plano Semestral':
             for (let i = 0; i < 6; i++) {
                 parcelas.append(generateOption(i));
             }
             break;
-        case "Plano Anual":
+        case 'Plano Anual':
             for (let i = 0; i < 8; i++) {
                 parcelas.append(generateOption(i));
             }
             break;
-        case "Plano Anual":
+        case 'Plano Anual':
             for (let i = 0; i < 8; i++) {
                 parcelas.append(generateOption(i));
             }
