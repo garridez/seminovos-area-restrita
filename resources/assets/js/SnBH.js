@@ -35,8 +35,7 @@ export default {
             }
         },
         requireAndRegister: function () {
-            var self = this;
-            var webpackContext = require.context('./mvc', true, /\.(j|t)s$/);
+            const webpackContext = require.context('./mvc', true, /\.(j|t)s$/);
             var uniquePaths = [];
 
             webpackContext
@@ -49,17 +48,17 @@ export default {
                     uniquePaths.push(fileNormalized);
                     return true;
                 })
-                .forEach(function (file) {
+                .forEach((file) => {
                     let module = webpackContext(file);
                     if (module.seletor) {
-                        self.registerCallback(
+                        this.registerCallback(
                             module.seletor,
                             module.callback || module,
                             !!module.prepend,
                         );
                     }
                 });
-            return self;
+            return this;
         },
     },
 };
