@@ -1,15 +1,14 @@
 module.exports.seletor = '.c-meus-dados.a-index';
 
 module.exports.callback = ($) => {
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
     var $ctxForm = $('form[name="form_particularSite"]');
 
-    var emailInput = $ctxForm.find("input[name='email']");
-    var emailSecundarioInput = $ctxForm.find("input[name='email_secundario']");
+    var emailInput = $ctxForm.find('input[name="email"]');
+    var emailSecundarioInput = $ctxForm.find('input[name="email_secundario"]');
 
     var $btnSubmit = $ctxForm.find('button[type="submit"]');
     var originalEmail = emailInput.val() || '';
-    var originalEmailSecundario = emailSecundarioInput.val() || '';
 
     $(emailInput).keypress(function () {
         var email = emailInput.val() || '';
@@ -18,16 +17,16 @@ module.exports.callback = ($) => {
         $btnSubmit.addClass('to-validade');
     });
 
-    var cpfInput = $ctxForm.find("input[name='cpfResponsavel']");
+    var cpfInput = $ctxForm.find('input[name="cpfResponsavel"]');
     var cpfOriginal = cpfInput.val() || '';
-    $ctxForm.find("input[name='cpfResponsavel']").on('change', function (e) {
+    $ctxForm.find('input[name="cpfResponsavel"]').on('change', function (e) {
         if (cpfInput.val() != cpfOriginal) {
             $btnSubmit.addClass('to-validade-cpf');
         }
     });
 
     var validarEmail = function (emailInput) {
-        email = emailInput.val();
+        var email = emailInput.val();
 
         if (email == '') return;
 
@@ -55,8 +54,6 @@ module.exports.callback = ($) => {
                     emailInput.val('');
 
                     return;
-                } else {
-                    emailValidado = true;
                 }
 
                 $('.loading-container').addClass('hide');
@@ -65,7 +62,6 @@ module.exports.callback = ($) => {
 
                 //   $btnSubmit.click();
             },
-            error: function (e) {},
         });
     };
 
@@ -137,8 +133,6 @@ module.exports.callback = ($) => {
             success: function (response) {
                 if (!response.cpfDisponivel) {
                     var concat = '*******';
-
-                    var email = response.emailVinculado;
                     var emailMask = response.emailVinculado.split('@');
 
                     var emailName = emailMask[0].slice(0, 3) + concat;
@@ -160,26 +154,24 @@ module.exports.callback = ($) => {
                 $btnSubmit.removeClass('to-validade-cpf');
                 $('.loading-container').addClass('hide');
             },
-            error: function (e) {},
         });
     });
 
-    require('components/EstadoCidade')();
+    require('../../../components/EstadoCidade')();
 
-    var advancedAlerts = require('components/AdvancedAlerts');
     var resquestResponse = $('span[data-request-response]').data('request-response') || false;
     if (!resquestResponse) {
         return;
     }
     if (resquestResponse !== 200) {
         advancedAlerts.error({
-            title: $("<span class='text-primary'>").html('Erro'),
+            title: $('<span class="text-primary">').html('Erro'),
             text: 'Não conseguimos processar sua requisição, tente novamente mais tarde',
         });
         return;
     }
     advancedAlerts.success({
-        text: $('<span>').html("Dados salvos com <b class='text-primary'>sucesso</b>"),
-        title: $("<span class='text-primary'>").html('Sucesso'),
+        text: $('<span>').html('Dados salvos com <b class="text-primary">sucesso</b>'),
+        title: $('<span class="text-primary">').html('Sucesso'),
     });
 };

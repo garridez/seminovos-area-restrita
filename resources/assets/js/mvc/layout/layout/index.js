@@ -4,9 +4,9 @@ module.exports.callback = ($) => {
     require('bootstrap/js/dist/util.js');
     require('bootstrap/js/dist/collapse');
     require('bootstrap/js/dist/dropdown');
-    require('components/pagesQuickView')($);
-    require('components/pagesMobileView')($);
-    require('components/pagesChat')($);
+    require('../../../components/pagesQuickView')($);
+    require('../../../components/pagesMobileView')($);
+    require('../../../components/pagesChat')($);
     const jsCookie = require('js-cookie');
 
     if ($(window).width() < 992) {

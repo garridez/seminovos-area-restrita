@@ -2,7 +2,7 @@ module.exports.seletor = '.c-painel.a-index';
 module.exports.callback = ($: JQueryStatic) => {
     require('sortable-tablesort');
 
-    require('components/MarcaModelo')($('.form-tabela-fipe'));
+    require('../../../components/MarcaModelo')($('.form-tabela-fipe'));
 
     $('#filtar-meus-veiculos').on('keyup', function () {
         const values = ($(this).val() + '')

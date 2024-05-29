@@ -1,10 +1,10 @@
 module.exports.seletor = '.c-cadastrar.a-cadastro-simples';
 
 module.exports.callback = ($) => {
-    var Loading = require('components/Loading');
-    var Alert = require('components/Alerts');
+    var Loading = require('../../../components/Loading');
+    var Alert = require('../../../components/Alerts');
 
-    var Verificadores = require('components/Verificadores');
+    var Verificadores = require('../../../components/Verificadores');
 
     var ctx = $('form[name="form_cadastroSimples"]');
 

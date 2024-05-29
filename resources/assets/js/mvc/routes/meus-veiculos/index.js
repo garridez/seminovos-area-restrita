@@ -1,10 +1,10 @@
 module.exports.seletor = '.c-meus-veiculos.a-index';
 
 module.exports.callback = ($) => {
-    require('components/JsBsModal');
-    var advancedAlerts = require('components/AdvancedAlerts');
-    var Confirms = require('components/Confirms');
-    var FormAlerts = require('components/FormAlerts');
+    require('../../../components/JsBsModal');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var Confirms = require('../../../components/Confirms');
+    var FormAlerts = require('../../../components/FormAlerts');
     const jsCookie = require('js-cookie');
 
     modalRepasse();
@@ -12,7 +12,9 @@ module.exports.callback = ($) => {
     if ($('div[data-veiculo-finalizar]').length) {
         advancedAlerts.warning({
             title: 'Você possui anúncios não finalizados',
-            text: 'Você possui anúncios para concluir,<br/> conclua os anúncios com status <br/>CADASTRANDO ou CADASTRANDO GRÁTIS.',
+            text:
+                'Você possui anúncios para concluir,<br/>' +
+                ' conclua os anúncios com status <br/>CADASTRANDO ou CADASTRANDO GRÁTIS.',
             time: 12000,
         });
     }
@@ -52,7 +54,7 @@ module.exports.callback = ($) => {
                     window.location = link;
                 });
         })
-        .on('click', '.item-compartilhar a', function (e) {
+        .on('click', '.item-compartilhar a', function () {
             if (navigator && navigator.share) {
                 navigator
                     .share({
@@ -65,7 +67,7 @@ module.exports.callback = ($) => {
                     .catch(console.error);
                 return;
             }
-            $ctx = $(this).closest('.item-compartilhar');
+            const $ctx = $(this).closest('.item-compartilhar');
 
             if (!$ctx.hasClass('show')) {
                 $ctx.addClass('show');
@@ -94,7 +96,8 @@ module.exports.callback = ($) => {
         $(this).closest('.item-compartilhar').removeClass('show');
         var msgToCopy =
             'Encontrei esse veículo ' + $(this).data('title') + '\n ' + $(this).data('url');
-        copyToClipboard(msgToCopy);
+        console.log(msgToCopy);
+        //copyToClipboard(msgToCopy);
     });
 
     if (location.hash !== '' && window.URLSearchParams) {
@@ -154,8 +157,8 @@ module.exports.callback = ($) => {
 
     function pesquisaSatisfacaoDataForm(veiculo) {
         var $form = $('<form>');
-        var $span = $("<small class='bold text-primary'>").html(`Dê a sua opnião, é rapidinho!`);
-        var $select = $("<select name='vendaVeiculo' class='form-control' required>");
+        var $span = $('<small class="bold text-primary">').html('Dê a sua opnião, é rapidinho!');
+        var $select = $('<select name="vendaVeiculo" class="form-control" required>');
         var selectOptions = [
             { value: '', text: 'Selecione' },
             { value: '1', text: 'Vendi pela Seminovos BH' },
@@ -163,16 +166,16 @@ module.exports.callback = ($) => {
             { value: '3', text: 'Vendi por outro meio' },
             { value: '4', text: 'Outro motivo' },
         ];
-        selectOptions.forEach(function (e, i) {
+        selectOptions.forEach(function (e) {
             $select.append($(`<option value="${e.value}">${e.text}</option>`));
         });
 
         var $conjuntoSelect = $(
-            "<div class='form-group d-flex align-items-center mt-4 required'></div>",
+            '<div class="form-group d-flex align-items-center mt-4 required"></div>',
         )
             .append(
                 $(
-                    "<span class='no-wrap mr-3'>Sobre a <b class='text-primary'>venda do veículo</b>:</span>",
+                    '<span class="no-wrap mr-3">Sobre a <b class="text-primary">venda do veículo</b>:</span>',
                 ),
             )
             .append($select);
@@ -193,8 +196,8 @@ module.exports.callback = ($) => {
             { value: 2, text: 'Ruim' },
             { value: 1, text: 'Péssimo' },
         ];
-        var $estrelas = $("<div class='rate'>");
-        estrelas.forEach(function (e, i) {
+        var $estrelas = $('<div class="rate">');
+        estrelas.forEach(function (e) {
             $estrelas
                 .append(
                     $(
@@ -205,10 +208,10 @@ module.exports.callback = ($) => {
         });
 
         var $conjuntoEstrelas = $(
-            "<div class='position-relative form-group d-flex align-items-start mt-2 required'></div>",
+            '<div class="position-relative form-group d-flex align-items-start mt-2 required"></div>',
         )
             .append(
-                $("<span class='no-wrap'>Sobre a <b class='text-laranja'>Seminovos</b>:</span>"),
+                $('<span class="no-wrap">Sobre a <b class="text-laranja">Seminovos</b>:</span>'),
             )
             .append($estrelas);
 
@@ -221,10 +224,10 @@ module.exports.callback = ($) => {
         $rowColEstrelas.find('.estrelas').replaceWith($conjuntoEstrelas);
 
         var $observacao = $(
-            "<textarea maxlength='255' name='observacoes' class='form-control'></textarea>",
+            '<textarea maxlength="255" name="observacoes" class="form-control"></textarea>',
         );
-        var $conjuntoObservacoes = $("<div class='form-group text-left mt-2'></div>")
-            .append($("<span class='no-wrap'>Observações:</span>"))
+        var $conjuntoObservacoes = $('<div class="form-group text-left mt-2"></div>')
+            .append($('<span class="no-wrap">Observações:</span>'))
             .append($observacao);
 
         $form
@@ -251,7 +254,7 @@ module.exports.callback = ($) => {
                             });
                         } else {
                             advancedAlerts.success({
-                                text: `Agradecemos a sua resposta!`,
+                                text: 'Agradecemos a sua resposta!',
                                 closeCallback: function () {
                                     $('.modal').modal('hide');
                                 },
@@ -276,7 +279,7 @@ module.exports.callback = ($) => {
         var displayName = $('.data-user-display-name').val();
 
         Confirms.info({
-            title: $("<span class='text-primary'>Marcar como vendido</span>"),
+            title: $('<span class="text-primary">Marcar como vendido</span>'),
             text: $(`<span>
                         <b class="text-primary">${displayName}</b>, você confirma que deseja
                         <b class="text-primary">marcar como vendido</b> o anúncio
@@ -286,7 +289,7 @@ module.exports.callback = ($) => {
             confirmCallback: function () {
                 $('.modal').modal('hide');
                 $.getJSON(`/meus-veiculos/vendido/${veiculo.idVeiculo}`)
-                    .done(function (data, jqXHR, type) {
+                    .done(function (data) {
                         if (data.status !== 200) {
                             advancedAlerts.error({
                                 text: data.detail,
@@ -304,7 +307,7 @@ module.exports.callback = ($) => {
                             reloadPageContent();
                         }
                     })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
+                    .fail(function () {
                         advancedAlerts.error({
                             text: 'Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.',
                             title: 'Houve um problema...',
@@ -330,7 +333,7 @@ module.exports.callback = ($) => {
             .click(function () {
                 $(this).attr('disabled', true);
                 $.getJSON(url)
-                    .done(function (data, jqXHR, type) {
+                    .done(function (data) {
                         if (data.status !== 200) {
                             advancedAlerts.error({
                                 text: data.detail,
@@ -358,7 +361,7 @@ module.exports.callback = ($) => {
                             reloadPageContent();
                         }
                     })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
+                    .fail(function () {
                         advancedAlerts.error({
                             text: 'Não conseguir uma resposta para sua solicitação. <br> Tente novamente mais tarde.',
                             title: 'Houve um problema...',
@@ -397,48 +400,51 @@ module.exports.callback = ($) => {
             (31)3077-5888`;
             advancedAlerts.error({
                 text: text,
-                title: $('<span>').html(`<span class='text-primary'>Alerta </span>importante`),
+                title: $('<span>').html('<span class="text-primary">Alerta </span>importante'),
                 time: false,
                 img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
                 closeText: 'ESTOU CIENTE',
                 closeCallback: function () {
                     $.getJSON($this.data('confirm-url'))
-                        .done(function (data, jqXHR, type) {
+                        .done(function (data) {
                             if (data.status !== 200) {
+                                var url =
+                                    '/carro/' +
+                                    $veiculo.data('id-veiculo') +
+                                    '?editar=planos#plano';
+                                let aClasses =
+                                    'btn btn-sm btn-info text-white d-flex ' +
+                                    'align-items-center justify-content-center';
+                                let btnClasses =
+                                    'btn btn-sm btn-secondary d-flex align-items-center justify-content-center';
+                                let divStyle = 'justify-content:center;gap:10px;margin-top:-20px;';
                                 advancedAlerts.warning({
-                                    title: "<span class='text-primary'>Atenção!</span>",
+                                    title: '<span class="text-primary">Atenção!</span>',
                                     text:
-                                        `
-                                            <p>` +
-                                        data.detail +
-                                        `</p>
-                                            <div style='display: flex; justify-content: center; gap: 10px;margin-top:-20px;' class='confirm-success'>
-                                                <button
-                                                    style='margin-top: 30px;width:20%;'
-                                                    class='btn btn-sm btn-secondary d-flex align-items-center justify-content-center' data-dismiss="modal">
-                                                    OK!
-                                                </button>
-                                                <a
-                                                   href='/carro/` +
-                                        $veiculo.data('id-veiculo') +
-                                        `?editar=planos#plano'
-                                                   style='margin-top: 30px; width:40%;'
-                                                   class='btn btn-sm btn-info text-white d-flex align-items-center justify-content-center'>
-                                                    TROCAR PLANO
-                                                </a>
-                                            </div>`,
+                                        `<p>${data.detail}</p>` +
+                                        `<div style="${divStyle}"  class="confirm-success d-flex">` +
+                                        '' +
+                                        `<button
+                                            style="margin-top: 30px;width:20%;"
+                                            class="${btnClasses}"
+                                            data-dismiss="modal">OK!</button>` +
+                                        '' +
+                                        `<a href="${url}" style="margin-top: 30px; width:40%;" class="${aClasses}">
+                                                TROCAR PLANO
+                                        </a>` +
+                                        '</div>',
                                     time: 0,
                                     close: '',
                                 });
                             } else {
                                 reloadPageContent();
-                                var text = $('<span>')
-                                    .html(`<b class="text-primary">${$veiculo.data('veiculo-marca')} ${$veiculo.data('veiculo-modelo')}</b>,
-                                                            <b class="text-primary">${$veiculo.data('veiculo-placa')}</b>
-                                                            reativado com <b class="text-primary">sucesso.</b>`);
+                                var text = $('<span>').html(`<b class="text-primary">
+                                        ${$veiculo.data('veiculo-marca')} ${$veiculo.data('veiculo-modelo')}</b>,
+                                        <b class="text-primary">${$veiculo.data('veiculo-placa')}</b>
+                                        reativado com <b class="text-primary">sucesso.</b>`);
                                 advancedAlerts.success({
                                     text: text,
-                                    title: $("<span class='text-primary'>").html('Sucesso'),
+                                    title: $('<span class="text-primary">').html('Sucesso'),
                                 });
                             }
                             $('.modal').modal('hide');
@@ -469,26 +475,26 @@ module.exports.callback = ($) => {
             (31)3077-5888`;
             advancedAlerts.error({
                 text: text,
-                title: $('<span>').html(`<span class='text-primary'>Alerta </span>importante`),
+                title: $('<span>').html('<span class="text-primary">Alerta </span>importante'),
                 time: false,
                 img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
                 closeText: 'ESTOU CIENTE',
                 closeCallback: function () {
                     $.getJSON($this.data('confirm-url'))
-                        .done(function (data, jqXHR, type) {
+                        .done(function (data) {
                             if (data.status !== 200) {
                                 advancedAlerts.error({
                                     text: data.detail,
                                     title: 'Houve um problema...',
                                 });
                             } else {
-                                var text = $('<span>')
-                                    .html(`<b class="text-primary">${$veiculo.data('veiculo-marca')} ${$veiculo.data('veiculo-modelo')}</b>,
-                                                            <b class="text-primary">${$veiculo.data('veiculo-placa')}</b>
-                                                            reativado com <b class="text-primary">sucesso.</b>`);
+                                var text = $('<span>').html(`<b class="text-primary">
+                                    ${$veiculo.data('veiculo-marca')} ${$veiculo.data('veiculo-modelo')}</b>,
+                                    <b class="text-primary">${$veiculo.data('veiculo-placa')}</b>
+                                    reativado com <b class="text-primary">sucesso.</b>`);
                                 advancedAlerts.success({
                                     text: text,
-                                    title: $("<span class='text-primary'>").html('Sucesso'),
+                                    title: $('<span class="text-primary">').html('Sucesso'),
                                 });
                             }
                             $('.modal').modal('hide');

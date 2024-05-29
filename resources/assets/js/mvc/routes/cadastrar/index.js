@@ -9,11 +9,11 @@ module.exports.callback = ($) => {
         //$('[name="idCidade"]').val('2922');
     }, 1000);
 
-    require('components/EstadoCidade')();
+    require('../../../components/EstadoCidade')();
 
-    var Verificadores = require('components/Verificadores');
-    var HandleApiError = require('components/HandleApiError');
-    var Alert = require('components/Alerts');
+    var Verificadores = require('../../../components/Verificadores');
+    var HandleApiError = require('../../../components/HandleApiError');
+    var Alert = require('../../../components/Alerts');
     require('../../../components/AdvancedAlerts');
 
     var ctx = $('form[name="form_particularSite"]');

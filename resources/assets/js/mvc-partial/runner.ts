@@ -1,5 +1,4 @@
 if (typeof window !== 'undefined' && require) {
-    // @ts-ignore
     for (const key in require.cache) {
         const module: any = require.cache[key];
 

@@ -1,5 +1,5 @@
 module.exports = function () {
-    var loading = require('components/Loading');
+    var loading = require('../../../components/Loading');
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
     if ($('#idVeiculo').val() !== '') {
@@ -10,7 +10,7 @@ module.exports = function () {
         ]);
     }
     loading.open(true);
-    stepsUrl.each(function (i) {
+    stepsUrl.each(function () {
         var ctx = $(this);
         $.get(ctx.data('url'), function (data) {
             ctx.html(data);

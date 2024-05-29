@@ -1,5 +1,6 @@
-module.exports.seletor = '.c-financeiro.a-index';
-module.exports.callback = ($) => {
+import Alerts from '../../../components/Alerts';
+export const seletor = '.c-financeiro.a-index';
+export const callback = ($) => {
     require('bootstrap/js/dist/util.js');
     require('bootstrap/js/dist/index.js');
     require('bootstrap/js/dist/tab');
@@ -11,13 +12,18 @@ module.exports.callback = ($) => {
     require('jquery-validation/dist/additional-methods');
     require('jquery-validation/dist/localization/messages_pt_BR');
 
-    var HandleApiError = require('components/HandleApiError');
+    var pagamentoEmAndamento = function () {
+        var requestAlerts = require('./../criar-anuncio/checkout/request-alerts');
+        requestAlerts.erro('Existe uma transação em andamento! Aguarde');
+    };
+
+    var HandleApiError = require('../../../components/HandleApiError');
 
     var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     var formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
 
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
 
     formCC.find('[name="validade_cartao"]').mask('00/00');
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
@@ -28,23 +34,19 @@ module.exports.callback = ($) => {
             e.preventDefault();
             var data = $(this).serializeArray();
             var tempo_contrato = $('.tab-content')
-            .find("input[name='tempo_contrato']:checked")
-            .data('tempo_contrato');
+                .find('input[name="tempo_contrato"]:checked')
+                .data('tempo_contrato');
 
             data.push({
                 name: 'tempo_contrato',
                 value: tempo_contrato,
             });
 
-            var Loading = require('components/Loading');
-            Loading.addFeedbackTexts(
-            'Validando informações...',
-            'Realizando pagamento ...'
-                false,
-            );
+            var Loading = require('../../../components/Loading');
+            Loading.addFeedbackTexts('Validando informações...', 'Realizando pagamento ...', false);
 
             Loading.open();
-            $btnSubmit = $(this).find('button[type="submit"]');
+            var $btnSubmit = $(this).find('button[type="submit"]');
             var dataRedirectPagamento = {};
             dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
 
@@ -89,23 +91,20 @@ module.exports.callback = ($) => {
                      * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
                      * @return void
                      */
-                    if (
-                        httpResponse.data &&
-                        httpResponse.data.hasOwnProperty('redirect') &&
-                        httpResponse.data.redirect
-                    ) {
-                    if(httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1){
+                    if (httpResponse.data && httpResponse.data.redirect) {
+                        if (httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1) {
                             window.location = httpResponse.data.url;
                             return;
-                    }
+                        }
 
                         window.open(httpResponse.data.url, '_blank');
                         dataRedirectPagamento.url = httpResponse.data.url || '';
-                    modalPagamentoBoleto(dataRedirectPagamento);
+                        modalPagamentoBoleto(dataRedirectPagamento);
                     } else {
                         var title = 'Pagamento aprovado!';
                         var text = $(`  <div>
-                                        <div>É nescessário aguardar a atualização do site, <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
+                                        <div>É nescessário aguardar a atualização do site,
+                                        <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
                                     </div>
                                 `);
                         var closeText = 'Li e concordo';
@@ -141,25 +140,29 @@ module.exports.callback = ($) => {
             <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
         </div>`;
         var downloadBtn = $(
-            `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
-        ).on('click', function (e) {
+            `<a href="${data.url}" target="_BLANK" ` +
+                'download="boleto_pagamento.pdf" class="btn btn-primary">' +
+                '<i class="fa fa-download mr-3" aria-hidden="true"></i>' +
+                'Baixar Boleto' +
+                '</a>',
+        ).on('click', function () {
             setTimeout(function () {
                 window.location = data.urlAguardando;
             }, 1000);
-            });
+        });
 
         advancedAlerts
             .success({
                 text: text,
-                title: $('<span>').html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+                title: $('<span>').html('<span class="text-primary">Aguardando Pagamento </span>'),
                 time: false,
-                closeText: `download`,
+                closeText: 'download',
             })
             .find('.modal-footer')
             .html(downloadBtn);
     }
 
-    $('.nav-main-financeiro li a').on('shown.bs.tab', function (e) {
+    $('.nav-main-financeiro li a').on('shown.bs.tab', function () {
         var target = $(this).data('target').replace('#tab-', '');
         var state = {
             planos: {
@@ -185,7 +188,7 @@ module.exports.callback = ($) => {
     });
 
     $('.table-condensed').on('change', function () {
-        var clickado = $('.tab-content').find("input[name='tempo_contrato']:checked").closest('tr');
+        var clickado = $('.tab-content').find('input[name="tempo_contrato"]:checked').closest('tr');
         var resultado = $('#resultado');
         var pagamento = $('#tab-pagamento');
 
@@ -210,7 +213,7 @@ module.exports.callback = ($) => {
     var tabsCallback = {
         planos: function () {
             if (!$('form.form-planos')[0].checkValidity()) {
-                require('components/Alerts').warning('Escolha a periodicidade do seu plano');
+                Alerts.warning('Escolha a periodicidade do seu plano');
                 return false;
             }
             return true;
@@ -241,8 +244,10 @@ module.exports.callback = ($) => {
 
         if (tabsCallback[idTab]()) {
             $('.nav-main-financeiro [data-target="#tab-' + idTab + '"]')
-                .closest('li')[direction]()
-                .find('a').tab('show');
+                .closest('li')
+                [direction]()
+                .find('a')
+                .tab('show');
         }
     });
 };
@@ -274,12 +279,6 @@ var optionsParcelas = (valor, plano) => {
                 parcelas.append(generateOption(i));
             }
             break;
-        case 'Plano Anual':
-            for (let i = 0; i < 8; i++) {
-                parcelas.append(generateOption(i));
-            }
-            break;
-
         default:
             break;
     }

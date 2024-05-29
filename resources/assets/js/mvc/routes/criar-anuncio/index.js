@@ -10,7 +10,7 @@ function stopEvent(e) {
     return false;
 }
 module.exports.callback = ($) => {
-    require('components/StepPlugin');
+    require('../../../components/StepPlugin');
     require('./load-content-steps')();
 
     var stepsContainer = $('.step-container');
@@ -77,19 +77,10 @@ module.exports.callback = ($) => {
             return;
         }
 
-        //verifica se é a primeira vez que passa por aqui, abrindo modal advogado
-        /*var primeiraInteracao = localStorage.getItem($('[name="placa"]').val());
-
-        var tipoCadastro = $('#tipoCad').val();
-
-        if(primeiraInteracao !== '1' && tipoCadastro !== '1') {
-
-            alerta('info', 'GARANTA SEU DIREITO DE DIRIGIR!<br>CONSULTE AGORA ESPECIALISTA PRA AJUDÁ-LO ( LEI SECA, SUSPENSÃO/CASSAÇÃO DE CNH/INDICAÇÃO DE CONDUTOR FORA DO PRAZO).', 'CNH EM RISCO?');
-            localStorage.setItem($('[name="placa"]').val(), '1');
-        }
-        */
-
-        //se a aba step-preco ficar ativa valida a quantidade de caracteres da observacao e desabilita o botão de continuar se necessario
+        /*
+         * se a aba step-preco ficar ativa valida a quantidade de caracteres da observacao
+         * e desabilita o botão de continuar se necessario
+         */
         setTimeout(function () {
             if (
                 $('.step-preco').hasClass('active') &&
@@ -109,7 +100,7 @@ module.exports.callback = ($) => {
         }
 
         if (inLastStep) {
-            var Loading = require('components/Loading');
+            var Loading = require('../../../components/Loading');
             var redirect = function () {
                 Loading.open();
                 window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();
@@ -136,15 +127,15 @@ module.exports.callback = ($) => {
     });
 
     stepsContainer
-        .on('step:change:checkout step:change:finalizar', function (e) {
+        .on('step:change:checkout step:change:finalizar', function () {
             BtnContinuar.disable();
             BtnContinuar.hide();
         })
-        .on('step:change:servicos-adicionais', function (e) {
+        .on('step:change:servicos-adicionais', function () {
             BtnContinuar.enable();
             BtnContinuar.show();
         })
-        .on('step:pre-exit:checkout step:pre-exit:finalizar', function (e) {
+        .on('step:pre-exit:checkout step:pre-exit:finalizar', function () {
             BtnContinuar.enable();
         });
 

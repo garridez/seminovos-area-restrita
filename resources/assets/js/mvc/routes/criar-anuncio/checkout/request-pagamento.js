@@ -9,9 +9,9 @@ module.exports = function (formData, ajaxParams) {
     var pagamentoEmAndamento = require('./pagamento-em-andamento');
     requestAlerts.processando();
 
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var advancedAlerts = require('../../../../components/AdvancedAlerts');
 
-    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+    var DataLayerGTMPopulate = require('../../../../helpers/DataLayerGTMPopulate');
 
     var data = $('#dados-basicos form').serializeArray();
 
@@ -78,7 +78,7 @@ module.exports = function (formData, ajaxParams) {
     advancedAlerts
         .error({
             text: text,
-            title: $('<span>').html(`<span class='text-primary'>Alerta </span>importante`),
+            title: $('<span>').html('<span class="text-primary">Alerta </span>importante'),
             time: false,
             img: $('<img src="/img/svg/ico_irregularidade.svg" class="modal-img">'),
             closeText: 'ESTOU CIENTE',
@@ -96,7 +96,8 @@ module.exports = function (formData, ajaxParams) {
         <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
       </div>`;
         var downloadBtn = $(
-            `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary"><i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
+            `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary">` +
+                `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
         ).on('click', function (e) {
             setTimeout(function () {
                 window.location = data.urlAguardando;
@@ -106,9 +107,9 @@ module.exports = function (formData, ajaxParams) {
         advancedAlerts
             .success({
                 text: text,
-                title: $('<span>').html(`<span class='text-primary'>Aguardando Pagamento </span>`),
+                title: $('<span>').html('<span class="text-primary">Aguardando Pagamento </span>'),
                 time: false,
-                closeText: `download`,
+                closeText: 'download',
             })
             .find('.modal-footer')
             .html(downloadBtn);

@@ -5,7 +5,7 @@
  */
 
 module.exports = function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
-    var { isDev } = require('components/Env');
+    var { isDev } = require('../components/Env');
     if (isDev) {
         return;
     }

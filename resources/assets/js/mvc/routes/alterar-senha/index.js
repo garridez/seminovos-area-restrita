@@ -1,13 +1,13 @@
 module.exports.seletor = '.c-meus-dados.a-alterar-senha';
 
 module.exports.callback = ($) => {
-    var ShowPassword = require('components/ShowPassword');
-    ShowPassword($("input[type='password']"));
+    var ShowPassword = require('../../../components/ShowPassword');
+    ShowPassword($('input[type="password"]'));
 
-    let atualSenha = $("input[name='senhaAtual']");
-    let novaSenha = $("input[name='senha']");
-    let confNovaSenha = $("input[name='confirmacaoSenha']");
-    var AdvancedAlerts = require('components/AdvancedAlerts');
+    let atualSenha = $('input[name="senhaAtual"]');
+    let novaSenha = $('input[name="senha"]');
+    let confNovaSenha = $('input[name="confirmacaoSenha"]');
+    var AdvancedAlerts = require('../../../components/AdvancedAlerts');
     if ($(atualSenha).hasClass('is-valid')) {
         AdvancedAlerts.info({
             title: 'Sucesso',
@@ -34,7 +34,7 @@ module.exports.callback = ($) => {
             if (novaSenha.val() === confNovaSenha.val()) {
                 alterarErros(confNovaSenha, 'Ok essa é uma senha boa', '');
                 validar(confNovaSenha);
-                $("button[type='submit']").prop('disabled', false);
+                $('button[type="submit"]').prop('disabled', false);
             }
         }
         if (novaSenha.val() !== atualSenha.val()) {
