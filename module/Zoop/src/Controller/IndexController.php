@@ -45,7 +45,8 @@ class IndexController extends AbstractActionController
 
         Zoop::notPost();
         return new JsonModel([
-            '405' => 'Parâmetros enviados inválidos.',
+            'status' => '405',
+            'detail' => 'Parâmetros enviados inválidos.',
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace SnBH\Integrador\Controller;
 use Exception;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Laminas\Http\PhpEnvironment\Response as PhpEnvironmentResponse;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\JsonModel;
 use SnBH\ApiClient\Client as ApiClient;
@@ -12,6 +13,7 @@ use SnBH\ApiClient\Response;
 
 /**
  * @property Request $request
+ * @property PhpEnvironmentResponse $response
  * @method Request getRequest()
  */
 class AbstractActionController extends ZendAbstractActionController

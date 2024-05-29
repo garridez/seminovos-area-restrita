@@ -53,7 +53,7 @@ class Cadastros extends ApiModelCadastros
     }
 
     /**
-     * @return array
+     * @return Response
      */
     public function post(array $data)
     {

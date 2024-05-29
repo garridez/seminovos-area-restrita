@@ -11,7 +11,7 @@ class SelectAnoModelo extends Select
         $listaAnos = [];
         $anoMaiorAtual = date('Y') + 1;
         for ($ano = $anoMaiorAtual; $ano >= 1925; $ano--) {
-            $listaAnos[$ano] = $ano;
+            $listaAnos[(int) $ano] = $ano;
         }
 
         return $listaAnos;

@@ -22,6 +22,7 @@ use Laminas\View\Renderer\PhpRenderer;
  * @method Data dateHelper()
  * @method JsMcvPartial jsMcvPartial()
  * @method string partial($name = null, $values = null)
+ * @method string serverUrl(string|bool $requestUri = null)
  */
 class AutocompleteClass extends PhpRenderer
 {

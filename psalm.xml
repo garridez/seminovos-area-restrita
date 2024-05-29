@@ -7,7 +7,7 @@
 
     errorLevel="5"
     phpVersion="8.2"
-    autoloader="vendor/autoload.php"
+    autoloader="config/psalm-autoload.php"
     resolveFromConfigFile="true"
     findUnusedBaselineEntry="false"
     findUnusedCode="false"

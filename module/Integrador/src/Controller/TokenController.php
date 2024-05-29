@@ -3,7 +3,9 @@
 namespace SnBH\Integrador\Controller;
 
 use AreaRestrita\Service\AuthManager;
+use Exception;
 use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Model\JsonModel;
 
 class TokenController extends AbstractActionController
