@@ -1,4 +1,3 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
 function stopEvent(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -6,12 +5,13 @@ function stopEvent(e) {
     return false;
 }
 
-var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
-window.AutoFillCriarAnuncio = require('helpers/AutoFillCriarAnuncio');
-var Alert = require('components/Alerts');
+var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
+window.AutoFillCriarAnuncio = require('../../../helpers/AutoFillCriarAnuncio');
+var Alert = require('../../../components/Alerts');
 import HandleApiError from '../../../components/HandleApiError';
 
-module.exports.callback = ($) => {
+export const seletor = '.c-criar-anuncio.a-index';
+export const callback = ($) => {
     $('.step-container').on('steps-loaded', init);
     $('.step-container').on('step:pre-exit:dados', function () {
         if ($('#dados-basicos #flagCriando').val() == 1) {
@@ -41,7 +41,7 @@ module.exports.callback = ($) => {
 };
 
 function init() {
-    var Confirms = require('components/Confirms');
+    var Confirms = require('../../../components/Confirms');
     var ctx = $('.step-dados');
     var veiculoZeroKm = ctx.find('[name="veiculo_zero_km"]');
     var motoTrilha = ctx.find('[name="motoTrilha"]');
@@ -51,7 +51,6 @@ function init() {
     var tipoCadastro = $('input[name="tipoUsuarioCadastro"]').val();
     var marca = ctx.find('[name="idMarca"]');
     var modelo = ctx.find('[name="modeloCarro"]');
-    var anoFabricacaoOptions = anoFabricacao.find('option');
     var anoModelo = ctx.find('[name="anoModelo"]');
     var versao = ctx.find('[name="versao"]');
     var anoModeloOptions = anoModelo.find('option');
@@ -62,7 +61,6 @@ function init() {
     var valvulasSelect = ctx.find('[name="idValvula"]');
     var valvulasOptions = valvulasSelect.find('option');
     var combustivelSelect = ctx.find('[name="combustivel"]');
-    var combustivelOptions = combustivelSelect.find('option');
     var getValInt = function (element) {
         var val = parseInt($(element).val(), 10);
         if (Number.isNaN(val)) {
@@ -359,7 +357,7 @@ function init() {
         });
     });
 
-    $ctx.find('.airbags select').on('change', function (e) {
+    $ctx.find('.airbags select').on('change', function () {
         $(this).removeClass('selected');
         if ($(this).val() == '') {
             return;

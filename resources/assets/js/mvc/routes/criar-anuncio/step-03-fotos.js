@@ -1,9 +1,12 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
+import sortablejs from 'sortablejs';
+import Compress from 'compress.js';
 
-module.exports.callback = ($) => {
+export const seletor = '.c-criar-anuncio.a-index';
+
+export const callback = ($) => {
     $('.step-container').on('steps-loaded', init);
 
-    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+    var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
     $('.step-container').on('step:pre-exit:video', function () {
         if ($('#dados-basicos #flagCriando').val() == 1) {
             var ctx = $('.step-0, .step-1');
@@ -22,8 +25,6 @@ function init() {
     if (!ctx.length) {
         return;
     }
-    var sortablejs = require('sortablejs');
-    var Compress = require('compress.js').default;
 
     var rotate = ['rotate(0deg)', 'rotate(90deg)', 'rotate(180deg)', 'rotate(270deg)'];
 
@@ -37,7 +38,7 @@ function init() {
         animation: 150,
         swap: true,
         handle: handle,
-        onChange: function (/**Event*/ evt) {
+        onChange: function () {
             $('.fotos-container').data('reordanado', true);
         },
     });
@@ -162,7 +163,6 @@ function init() {
         var fileDataUrl = await fileReaderPromise(file);
         if (typeof fileDataUrl !== 'string') {
             throw new Error('Não foi possível ler o arquivo');
-            return;
         }
         //exibe os botões de ação
         imgElement.parents('.foto').find('.controls').removeClass('d-none');
@@ -180,7 +180,7 @@ function init() {
 
         if (fileCompressed) {
             imgElement.data('file-data', fileCompressed);
-            var fileDataUrl = await fileReaderPromise(fileCompressed);
+            let fileDataUrl = await fileReaderPromise(fileCompressed);
             setBackgroudImage(fileDataUrl);
         }
 
@@ -190,7 +190,7 @@ function init() {
         imgElement.trigger(eventName).closest('.fotos-container').trigger(event);
     }
     async function fileReaderPromise(file) {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 resolve(e.target.result);
@@ -207,50 +207,51 @@ function init() {
             return false;
         }
 
-        return new Promise(async function (resolve, reject) {
-            // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
-            try {
-                if (imageFile.name.match(/.heic$/) !== null) {
-                    var heic2any = require('components/heic2any');
-                    var resultBlob = await heic2any({
-                        blob: imageFile,
-                        toType: 'image/jpg',
-                    });
-                    imageFile = new File([resultBlob], 'heic' + '.jpg', {
-                        type: 'image/jpeg',
-                        lastModified: new Date().getTime(),
-                    });
-                }
-                var compress = new Compress();
+        return new Promise(function (resolve) {
+            (async () => {
+                // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
+                try {
+                    if (imageFile.name.match(/.heic$/) !== null) {
+                        var heic2any = require('../../../components/heic2any');
+                        var resultBlob = await heic2any({
+                            blob: imageFile,
+                            toType: 'image/jpg',
+                        });
+                        imageFile = new File([resultBlob], 'heic' + '.jpg', {
+                            type: 'image/jpeg',
+                            lastModified: new Date().getTime(),
+                        });
+                    }
+                    var compress = new Compress();
 
-                compress
-                    .compress([imageFile], {
-                        size: 4, // the max size in MB, defaults to 2MB
-                        quality: 0.9, // the quality of the image, max is 1,
-                        resize: true, // defaults to true, set false if you do not want to resize the image width and height
-                        maxWidth: 1000,
-                        maxHeight: 750,
-                    })
-                    .then(function (images) {
-                        var img = images[0];
-                        function dataURLtoFile(dataurl, filename) {
-                            var arr = dataurl.split(','),
-                                mime = arr[0].match(/:(.*?);/)[1],
-                                bstr = atob(arr[1]),
-                                n = bstr.length,
-                                u8arr = new Uint8Array(n);
-                            while (n--) {
-                                u8arr[n] = bstr.charCodeAt(n);
+                    compress
+                        .compress([imageFile], {
+                            size: 4, // the max size in MB, defaults to 2MB
+                            quality: 0.9, // the quality of the image, max is 1,
+                            resize: true,
+                            maxWidth: 1000,
+                            maxHeight: 750,
+                        })
+                        .then(function (images) {
+                            var img = images[0];
+                            function dataURLtoFile(dataurl, filename) {
+                                var arr = dataurl.split(','),
+                                    mime = arr[0].match(/:(.*?);/)[1],
+                                    bstr = atob(arr[1]),
+                                    n = bstr.length,
+                                    u8arr = new Uint8Array(n);
+                                while (n--) {
+                                    u8arr[n] = bstr.charCodeAt(n);
+                                }
+                                return new File([u8arr], filename, { type: mime });
                             }
-                            return new File([u8arr], filename, { type: mime });
-                        }
 
-                        var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
-                        resolve(file);
-                        var nF = new Intl.NumberFormat('pt-BR', {
-                            maximumFractionDigits: 2,
-                        }).format;
-                        /** Debug * /
+                            var file = dataURLtoFile(img.prefix + img.data, 'min_' + img.alt);
+                            resolve(file);
+                            var nF = new Intl.NumberFormat('pt-BR', {
+                                maximumFractionDigits: 2,
+                            }).format;
+                            /** Debug * /
                     console.table({
                         startSize: nF(img.initialSizeInMb * 1000) + ' KB',
                         endSize: nF(img.endSizeInMb * 1000) + ' KB',
@@ -258,16 +259,17 @@ function init() {
                         sizeReduced: nF(img.sizeReducedInPercent) + ' %',
                         fileName: img.alt,
                     });/**/
-                    });
-            } catch (e) {
-                resolve(false);
-                console.log('Falha ao compactar');
-                console.log(e);
-            }
+                        });
+                } catch (e) {
+                    resolve(false);
+                    console.log('Falha ao compactar');
+                    console.log(e);
+                }
+            })();
         });
     }
 }
-
+/* eslint @typescript-eslint/no-unused-vars: 0 */
 function testImgUpload() {
     var inputFoto = $('.step-fotos').find('[name="foto"]');
     if (location.href.indexOf('insert') !== -1) {

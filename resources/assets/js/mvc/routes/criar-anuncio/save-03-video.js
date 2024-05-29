@@ -1,13 +1,13 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
-    var HandleApiError = require('components/HandleApiError');
-    var stopEvent = require('helpers/StopEvent');
+    var HandleApiError = require('../../../components/HandleApiError');
+    var stopEvent = require('../../../helpers/StopEvent');
     var stepsContainer = $('.step-container');
     var urlSaved = '';
     $('.anuncio-steps').on('steps-loaded', function () {
-        $("form[name='form_videoVeiculo']")
-            .find("input[name='video']")
+        $('form[name="form_videoVeiculo"]')
+            .find('input[name="video"]')
             .keyup(function () {
                 let result = parseVideo($(this).val());
                 if (result.type == 'youtube') {
@@ -20,7 +20,7 @@ module.exports.callback = ($) => {
             .trigger('keyup');
     });
 
-    stepsContainer.on('step:pre-exit:video', function (e, stepParams) {
+    stepsContainer.on('step:pre-exit:video', function (e) {
         var stepVideo = $('.step-video');
         var video = stepVideo.find('form [name="video"]');
         var url = video.val().trim();
@@ -78,13 +78,15 @@ function parseVideo(url) {
     //   - //player.vimeo.com/video/25451551
 
     url.match(
+        /* eslint max-len: 0 */
+        /* eslint no-useless-escape: 0 */
         /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/|shorts\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
     );
-
+    var type;
     if (RegExp.$3.indexOf('youtu') > -1) {
-        var type = 'youtube';
+        type = 'youtube';
     } else if (RegExp.$3.indexOf('vimeo') > -1) {
-        var type = 'vimeo';
+        type = 'vimeo';
     }
 
     return {

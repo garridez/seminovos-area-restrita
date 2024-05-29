@@ -1,10 +1,10 @@
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
-    var stopEvent = require('helpers/StopEvent');
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var stopEvent = require('../../../helpers/StopEvent');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
     var BtnContinuar = require('./helpers/BtnContinuar');
-    var HandleApiError = require('components/HandleApiError');
+    var HandleApiError = require('../../../components/HandleApiError');
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({
@@ -18,7 +18,7 @@ module.exports.callback = ($) => {
         var idStatus = $('#dados-basicos input[name="idStatus"]').val();
         if (idStatus != 10) {
             advancedAlerts.warning({
-                text: `Plano já ativo, selecione outro plano ou clique em voltar`,
+                text: 'Plano já ativo, selecione outro plano ou clique em voltar',
                 title: $('<span class="text-primary">').html('Atenção!'),
             });
             stopEvent(e);
@@ -37,12 +37,12 @@ module.exports.callback = ($) => {
         },
     );
 
-    $('.anuncio-steps').on('click', '.step-plano label', function (e) {
+    $('.anuncio-steps').on('click', '.step-plano label', function () {
         BtnContinuar.show();
         BtnContinuar.enable();
     });
 
-    $('.step-container').on('step:pre-change:plano', function (e) {
+    $('.step-container').on('step:pre-change:plano', function () {
         if (window.fromCheckout) {
             BtnContinuar.show();
             BtnContinuar.enable();
@@ -52,7 +52,7 @@ module.exports.callback = ($) => {
     $('.step-container').on('step:change:plano', function () {
         var location = window.location;
         BtnContinuar.disable();
-        $(".plano-box input[type='radio']").on('change', function () {
+        $('.plano-box input[type="radio"]').on('change', function () {
             if ($(this).is(':checked')) {
                 BtnContinuar.enable();
             }
@@ -70,7 +70,7 @@ module.exports.callback = ($) => {
         }
     });
 
-    $('.step-container').on('step:pre-exit:plano step:change:checkout', function (e) {
+    $('.step-container').on('step:pre-exit:plano step:change:checkout', function () {
         let plano = 'planos' + $('#idPlano').val();
         let planoSelecionado = $('#' + plano);
 
@@ -105,9 +105,9 @@ module.exports.callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
-        var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
-        var ctx = $('.step-0, .step-1, .step-plano');
-        DataLayerGTMPopulate(ctx, 'checkout_step_7');
+        var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
+        var ctx2 = $('.step-0, .step-1, .step-plano');
+        DataLayerGTMPopulate(ctx2, 'checkout_step_7');
         // Se for grátis
         if (idPlano === 1) {
             // Salvar todo o formulario anterior as fotos aqui

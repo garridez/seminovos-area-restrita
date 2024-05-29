@@ -4,7 +4,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.callback = ($) => {
     $('.step-container').on('steps-loaded', init);
 
-    var DataLayerGTMPopulate = require('helpers/DataLayerGTMPopulate');
+    var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
 
     $('.step-container').on('step:pre-exit:fotos', function () {
         if ($('#dados-basicos #flagCriando').val() == 1) {
@@ -26,7 +26,7 @@ function init() {
                 countSpan.html(
                     '<span style="color:red;font-size:13px;">Contém ' +
                         $(this).val().length +
-                        ` caracteres - As observações não podem ultrapassar 650 caracteres</span>`,
+                        ' caracteres - As observações não podem ultrapassar 650 caracteres</span>',
                 );
             } else {
                 BtnContinuar.enable();

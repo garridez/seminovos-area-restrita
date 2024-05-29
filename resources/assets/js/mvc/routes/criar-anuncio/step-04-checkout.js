@@ -2,10 +2,10 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.prepend = true;
 
 module.exports.callback = ($) => {
-    var advancedAlerts = require('components/AdvancedAlerts');
-    var Confirms = require('components/Confirms');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var Confirms = require('../../../components/Confirms');
     var stepContainer = $('.step-container');
-    var stopEvent = require('helpers/StopEvent');
+    var stopEvent = require('../../../helpers/StopEvent');
     var idPlano = $('#idPlano').val();
 
     stepContainer
@@ -65,7 +65,7 @@ module.exports.callback = ($) => {
                     .find('.btn-voltar')
                     .on('click', function (e) {
                         location.href = '/meus-veiculos';
-                $(this).addClass('disabled').attr('disabled','disabled');
+                        $(this).addClass('disabled').attr('disabled', 'disabled');
                         stopEvent(e);
                     });
             }
@@ -76,19 +76,21 @@ module.exports.callback = ($) => {
             if (planoAtual === '1') {
                 stepContainer.stepPlugin('goTo', '.step-plano');
                 $('#form_Plano input[name="idPlano"][value="1"]')
-                .prop('checked', false)
-                .change(function (e) {
-                    Confirms.info({
-                        title: 'Quer realmente permanecer no plano grátis?',
-                        text: 'O anúncio grátis não tem tanta visibilidade e não possui tantas fotos.',
-                        confirmCallback: () => {
-                            e.preventDefault();
-                            $(this).prop('checked', false);
-                            return false;
-                        },
+                    .prop('checked', false)
+                    .change(function (e) {
+                        Confirms.info({
+                            title: 'Quer realmente permanecer no plano grátis?',
+                            text: 'O anúncio grátis não tem tanta visibilidade e não possui tantas fotos.',
+                            confirmCallback: () => {
+                                e.preventDefault();
+                                $(this).prop('checked', false);
+                                return false;
+                            },
+                        });
                     });
-                });
-            advancedAlerts.info({text:'Você está no plano <b>SIMPLES</b>.<br>'
+                advancedAlerts.info({
+                    text:
+                        'Você está no plano <b>SIMPLES</b>.<br>' +
                         'Escolha um dos planos de acordo com a <b>prioridade</b> que deseja vender seu veículo<br>' +
                         'Lembrando que quanto mais <b>alto o plano</b>, mais seu veículo é <b>visto</b> ;)',
                     title: 'Escolha um plano',
@@ -104,7 +106,7 @@ module.exports.callback = ($) => {
                 $(ctx + '.servico-adicional-certificado').hide();
             }
         })
-        .on('step:exit:checkout', function (e) {
+        .on('step:exit:checkout', function () {
             window.location = '#';
         });
 };

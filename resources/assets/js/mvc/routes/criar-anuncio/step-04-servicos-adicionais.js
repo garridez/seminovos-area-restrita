@@ -8,7 +8,7 @@ module.exports.callback = ($) => {
 function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
-    var stopEvent = require('helpers/StopEvent');
+    var stopEvent = require('../../../helpers/StopEvent');
     var stepsContainer = $('.step-container.step-servicos-adicionais');
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
@@ -23,7 +23,7 @@ function init() {
             $('#dados-basicos .placaVeiculo').val() == '' &&
             $('#dados-basicos #flagCriando').val() == 1
         ) {
-            $('.btn-continuar').click();
+            $('.btn-continuar').trigger('click');
             $('.step-container').stepPlugin('goTo', '.step-checkout');
             $('.step-container .step-servicos-adicionais').remove();
             return stopEvent(e);
@@ -42,18 +42,18 @@ function init() {
         if ($this.is(':checked')) {
             adicionar.hide();
             adicionado.show();
-            $('.btn-continuar').click();
+            $('.btn-continuar').trigger('click');
         } else {
             adicionado.hide();
             adicionar.show();
-            $('.btn-continuar').click();
+            $('.btn-continuar').trigger('click');
         }
 
         $('[data-adicionar-action]').prop('checked', $this.is(':checked'));
         $('#dados-basicos .certificado').val($this.is(':checked') ? 1 : '');
     });
 
-    $('.step-container').on('step:change:servicos-adicionais', function (e) {
+    $('.step-container').on('step:change:servicos-adicionais', function () {
         if (
             location.hash &&
             location.hash.indexOf('addCertificado') !== -1 &&

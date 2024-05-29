@@ -9,14 +9,14 @@ function stopEvent(e) {
     return false;
 }
 module.exports.callback = ($) => {
-    require('components/StepPlugin');
-    var loading = require('components/Loading');
-    var HandleApiError = require('components/HandleApiError');
-    var marcaModelo = require('components/MarcaModelo');
+    require('../../../components/StepPlugin');
+    var loading = require('../../../components/Loading');
+    var HandleApiError = require('../../../components/HandleApiError');
+    var marcaModelo = require('../../../components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
     var GetUrl = require('./helpers/GetUrl');
 
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts');
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;

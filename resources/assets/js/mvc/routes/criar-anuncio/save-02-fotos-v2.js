@@ -44,8 +44,8 @@ module.exports = async function () {
 };
 
 async function init() {
-    const HandleApiError = require('components/HandleApiError');
-    var loading = require('components/Loading');
+    const HandleApiError = require('../../../components/HandleApiError');
+    var loading = require('../../../components/Loading');
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $fotosContainer = $('.fotos-container');
 
@@ -66,7 +66,7 @@ async function init() {
         );
     });
 
-    $('.step-container').on('step:pre-exit:fotos', function (e) {
+    $('.step-container').on('step:pre-exit:fotos', function () {
         BtnContinuar.disable();
 
         var $displayImgs = $fotosContainer.find('.display-img');
