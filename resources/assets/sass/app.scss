@@ -40,7 +40,46 @@ $use-pulse: true;
     outline: red solid 1px;
 }
 
-@import "~snbh-site/resources/assets/sass/components/all";
+@import "~snbh-site/resources/assets/sass/components/accordion";
+@import "~snbh-site/resources/assets/sass/components/alert";
+@import "~snbh-site/resources/assets/sass/components/alerts";
+@import "~snbh-site/resources/assets/sass/components/autocomplete";
+@import "~snbh-site/resources/assets/sass/components/blocks";
+@import "~snbh-site/resources/assets/sass/components/bootstrap-slider";
+@import "~snbh-site/resources/assets/sass/components/breadcrumb";
+@import "~snbh-site/resources/assets/sass/components/buttons";
+@import "~snbh-site/resources/assets/sass/components/calculator";
+@import "~snbh-site/resources/assets/sass/components/card";
+@import "~snbh-site/resources/assets/sass/components/carousel";
+@import "~snbh-site/resources/assets/sass/components/confirms";
+@import "~snbh-site/resources/assets/sass/components/effects";
+@import "~snbh-site/resources/assets/sass/components/filters";
+@import "~snbh-site/resources/assets/sass/components/focus";
+@import "~snbh-site/resources/assets/sass/components/forms";
+@import "~snbh-site/resources/assets/sass/components/gallery";
+@import "~snbh-site/resources/assets/sass/components/icon-font-sizes";
+@import "~snbh-site/resources/assets/sass/components/icon-planos";
+@import "~snbh-site/resources/assets/sass/components/icons-svg";
+@import "~snbh-site/resources/assets/sass/components/lists";
+@import "~snbh-site/resources/assets/sass/components/loader";
+@import "~snbh-site/resources/assets/sass/components/modal";
+@import "~snbh-site/resources/assets/sass/components/navbar";
+@import "~snbh-site/resources/assets/sass/components/new-card";
+@import "~snbh-site/resources/assets/sass/components/pagination";
+@import "~snbh-site/resources/assets/sass/components/payment";
+@import "~snbh-site/resources/assets/sass/components/pesquisa";
+@import "~snbh-site/resources/assets/sass/components/push";
+@import "~snbh-site/resources/assets/sass/components/search";
+@import "~snbh-site/resources/assets/sass/components/social";
+@import "~snbh-site/resources/assets/sass/components/sprites_brands";
+@import "~snbh-site/resources/assets/sass/components/sprites_categories";
+@import "~snbh-site/resources/assets/sass/components/thumbnail";
+@import "~snbh-site/resources/assets/sass/components/toolbar";
+@import "~snbh-site/resources/assets/sass/components/type";
+@import "~snbh-site/resources/assets/sass/components/utilities";
+@import "~snbh-site/resources/assets/sass/components/value-planos";
+@import "~snbh-site/resources/assets/sass/components/webfont";
+
 @import "~snbh-site/resources/assets/sass/components/webfont";
 @import "~sortable-tablesort/sortable.min.css";
 
