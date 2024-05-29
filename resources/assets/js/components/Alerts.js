@@ -1,9 +1,9 @@
-require('components/JsBsModal');
+import $ from 'jquery';
+import './JsBsModal';
 
-var $ = require('jquery');
 var alerts;
 
-module.exports = alerts = {
+export default alerts = {
     options: {
         time: 5000,
     },

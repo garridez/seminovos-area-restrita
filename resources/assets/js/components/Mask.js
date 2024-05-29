@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 function parseValueOfObject(maskOptions) {
     if (typeof maskOptions !== 'object') {
         return maskOptions;
@@ -44,8 +46,8 @@ function setMask($) {
             .trigger('keyup');
     });
 }
-module.exports = function () {
-    var $ = require('jquery');
+
+export default function () {
     $.jMaskGlobals = $.jMaskGlobals || {};
     $.jMaskGlobals.dataMask = false;
 

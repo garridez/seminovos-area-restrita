@@ -1,7 +1,7 @@
-require('components/JsBsModal');
-var advancedAlerts = require('components/AdvancedAlerts');
+import $ from 'jquery';
+import './JsBsModal';
+import advancedAlerts from './AdvancedAlerts';
 
-var $ = require('jquery');
 var confirms;
 
 module.exports = confirms = {

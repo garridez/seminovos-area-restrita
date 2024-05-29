@@ -1,7 +1,8 @@
 /**
  * @todo Fazer uma pequena documentação de como se usa esse plugin
  */
-var $ = require('jquery');
+import $ from 'jquery';
+
 module.exports = Plugin;
 
 var pluginName = 'stepPlugin';

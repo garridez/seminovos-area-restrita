@@ -11,7 +11,6 @@ module.exports = function ($) {
 
         $(this.options.notes).on('click', '.list > ul > li', function (e) {
             var note = $(this).find('.note-preview');
-            var note = $(this).find('.note-preview');
             $(_this.options.noteEditor).html(note.html());
             $(_this.options.notes).toggleClass('push');
         });

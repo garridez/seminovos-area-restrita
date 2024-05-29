@@ -5,9 +5,8 @@
  *
  */
 
-require('bootstrap/js/dist/modal.js');
-
-import jQuery from 'jquery';
+import 'bootstrap/js/dist/modal.js';
+import $ from 'jquery';
 
 (function ($) {
     'use strict';
@@ -118,4 +117,4 @@ import jQuery from 'jquery';
         return jsBsModalInit(options);
     };
     $[pluginName].htmls = htmls;
-})(jQuery);
+})($);

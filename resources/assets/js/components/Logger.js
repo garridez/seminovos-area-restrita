@@ -8,7 +8,7 @@
  *  looger(variavelQualquer); //  "opa"
  *  looger(variavelQualquer, 'Label'); // Label: "opa"
  */
-var $ = require('jquery');
+import $ from 'jquery';
 var div;
 $(function () {
     div = $('<div>').addClass('debug-js').css({

@@ -1,8 +1,7 @@
-require('components/JsBsModal');
+import $ from 'jquery';
+import './JsBsModal';
 
-var $ = require('jquery');
-
-module.exports = {
+export default {
     _instance: null,
     _showing: false,
     _persistent: false,

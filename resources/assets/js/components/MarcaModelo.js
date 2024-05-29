@@ -1,7 +1,7 @@
 var $form;
 var dataFilters;
 
-metodos = {
+const metodos = {
     /**
      * Callbacks para tratar os valores
      */

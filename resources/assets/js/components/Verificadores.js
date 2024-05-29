@@ -1,5 +1,5 @@
-var advancedAlerts = require('components/AdvancedAlerts');
-var HandleApiError = require('components/HandleApiError');
+import advancedAlerts from './AdvancedAlerts';
+import HandleApiError from './HandleApiError';
 
 function verficaCpfAction(cpf) {
     return $.ajax({
@@ -24,7 +24,11 @@ function verficaCpfAction(cpf) {
                 advancedAlerts
                     .error({
                         title: 'CPF já cadastrado',
-                        text: `O CPF informado já está cadastrado com o email: ${emailMasked} <div class='esqueci-minha-senha'><a class='' href=''>Esqueci a senha</a></div>`,
+                        text: `O CPF informado já está cadastrado com o email:
+                        ${emailMasked}
+                        <div class='esqueci-minha-senha'>
+                            <a class='' href=''>Esqueci a senha</a>
+                        </div>`,
                         time: 10000,
                     })
                     .on('click', '.esqueci-minha-senha a', function (e) {
@@ -36,7 +40,9 @@ function verficaCpfAction(cpf) {
                 return;
             }
         },
-        error: function (e) {},
+        error: function (e) {
+            console.log(e);
+        },
     });
 }
 function verficaEmailAction(email) {
@@ -49,7 +55,9 @@ function verficaEmailAction(email) {
                 advancedAlerts
                     .error({
                         title: 'E-mail já cadastrado',
-                        text: "E-mail já cadastrado no sistema, confira o e-mail.<div class='esqueci-minha-senha'><a class='' href=''>Esqueci a senha</a></div>",
+                        text:
+                            'E-mail já cadastrado no sistema, confira o e-mail.' +
+                            '<div class="esqueci-minha-senha"><a class="" href="">Esqueci a senha</a></div>',
                         time: 10000,
                     })
                     .on('click', '.esqueci-minha-senha a', function (e) {
@@ -61,13 +69,19 @@ function verficaEmailAction(email) {
                 return;
             }
         },
-        error: function (e) {},
+        error: function (e) {
+            console.log(e);
+        },
     });
 }
 function esqueciMinhaSenhaAction(email, emailMasked = '') {
     var fakeForm =
         $(`<form method="POST" name="formLembrarSenha" id="formLembrarSenha" action="remember-pass">
-    <input type="email" value="${email}" id="emailLembrarSenha" name="emailLembrarSenha" class="form-control" id="inlineFormInputGroup" placeholder="Email">
+            <input
+                type="email"
+                value="${email}"
+                id="emailLembrarSenha"
+                name="emailLembrarSenha" class="form-control" id="inlineFormInputGroup" placeholder="Email">
   </form>`);
 
     $.ajax({

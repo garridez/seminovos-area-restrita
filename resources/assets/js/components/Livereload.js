@@ -1,6 +1,6 @@
 module.exports = function () {
     return;
-    var { isDev } = require('components/Env');
+    var { isDev } = require('./Env');
 
     if (!isDev) {
         return;

@@ -1,5 +1,5 @@
+import Alert from './Alerts';
 function showError(body, title, time) {
-    var Alert = require('components/Alerts');
     Alert.error(body, title, time);
 }
 /**
@@ -10,7 +10,7 @@ function showError(body, title, time) {
  * @param int time Tempo de exibição do alert em milissegundos
  * @returns {Boolean}
  */
-module.exports = function (apiResponse, time) {
+export default function (apiResponse, time) {
     time = time || 15000;
     if (typeof apiResponse === 'object' && apiResponse.status >= 200 && apiResponse.status <= 299) {
         return true;

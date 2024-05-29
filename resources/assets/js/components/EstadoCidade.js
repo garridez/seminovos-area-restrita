@@ -1,6 +1,6 @@
-module.exports = function () {
-    var $ = require('jquery');
+import $ from 'jquery';
 
+module.exports = function () {
     $('body').on('change', '[name="idEstado"]', function () {
         var $this = $(this);
         var idEstado = $this.val();
@@ -34,5 +34,5 @@ module.exports = function () {
         });
     });
 
-    $("[name='idEstado']").change();
+    $('[name="idEstado"]').trigger('change');
 };

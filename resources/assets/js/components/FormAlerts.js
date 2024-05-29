@@ -1,6 +1,6 @@
-require('components/JsBsModal');
+import $ from 'jquery';
+import './JsBsModal';
 
-var $ = require('jquery');
 var formAlerts;
 
 module.exports = formAlerts = {

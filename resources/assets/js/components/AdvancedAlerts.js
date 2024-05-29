@@ -1,9 +1,9 @@
-require('components/JsBsModal');
+import './JsBsModal';
+import $ from 'jquery';
 
-var $ = require('jquery');
 var advancedAlerts;
 
-module.exports = advancedAlerts = {
+export default advancedAlerts = {
     optionsDefault: {
         text: '',
         title: '',

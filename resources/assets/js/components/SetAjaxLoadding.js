@@ -1,9 +1,11 @@
-module.exports = function () {
+import $ from 'jquery';
+import loading from './Loading';
+
+export default function () {
     if (window.setAjaxLoadding === false) {
         return;
     }
-    var $ = require('jquery');
-    var loading = require('components/Loading');
+
     $(document)
         .ajaxStart(function () {
             if (window.setAjaxLoadding === false) {
