@@ -55,17 +55,23 @@ class Module
             return;
         }
 
-        if (session_status() !== PHP_SESSION_ACTIVE){
-            session_start();
+        /** @var SessionManager $sessionManager */
+        $sessionManager = $sm->get(SessionManager::class);
+
+        try {
+            $sessionManager->start();
+        } catch (\Exception $e) {
+            session_destroy();
+            $sessionManager->forgetMe();
+            $sessionManager->start();
         }
 
-        /** @var AuthService $sessionManager */
+        /** @var AuthService $authService */
         $authService = $sm->get(AuthService::class);
 
         /** @var ApiClient $apiClient */
         $apiClient = $sm->get(ApiClient::class);
-        /** @var SessionManager $sessionManager */
-        $sessionManager = $sm->get(SessionManager::class);
+
 
         if (!isset($_COOKIE['TUID'])) {
             $identity = $authService->getIdentity();
