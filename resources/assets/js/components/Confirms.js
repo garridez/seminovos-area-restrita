@@ -4,7 +4,7 @@ import advancedAlerts from './AdvancedAlerts';
 
 var confirms;
 
-module.exports = confirms = {
+export default confirms = {
     optionsDefault: {
         text: '',
         title: '',

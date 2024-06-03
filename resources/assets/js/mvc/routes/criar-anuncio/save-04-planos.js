@@ -4,7 +4,7 @@ module.exports.callback = ($) => {
     var stopEvent = require('../../../helpers/StopEvent');
     var advancedAlerts = require('../../../components/AdvancedAlerts');
     var BtnContinuar = require('./helpers/BtnContinuar');
-    var HandleApiError = require('../../../components/HandleApiError');
+    var HandleApiError = require('../../../components/HandleApiError').default;
 
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({

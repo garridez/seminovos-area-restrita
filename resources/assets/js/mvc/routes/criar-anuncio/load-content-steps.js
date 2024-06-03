@@ -1,5 +1,5 @@
 module.exports = function () {
-    var loading = require('../../../components/Loading');
+    var loading = require('../../../components/Loading').default;
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
     if ($('#idVeiculo').val() !== '') {

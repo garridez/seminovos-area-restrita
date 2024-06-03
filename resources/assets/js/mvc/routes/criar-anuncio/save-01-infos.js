@@ -1,17 +1,19 @@
 /**
  * Este script junta os dados do form, 'dados', 'preco' e 'mais-informacoes'
  */
-module.exports.seletor = '.c-criar-anuncio.a-index';
+
 function stopEvent(e) {
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
     return false;
 }
-module.exports.callback = ($) => {
+import loading from '../../../components/Loading';
+
+export const seletor = '.c-criar-anuncio.a-index';
+export const callback = ($) => {
     require('../../../components/StepPlugin');
-    var loading = require('../../../components/Loading');
-    var HandleApiError = require('../../../components/HandleApiError');
+    var HandleApiError = require('../../../components/HandleApiError').default;
     var marcaModelo = require('../../../components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
     var GetUrl = require('./helpers/GetUrl');

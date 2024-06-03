@@ -44,8 +44,8 @@ module.exports = async function () {
 };
 
 async function init() {
-    const HandleApiError = require('../../../components/HandleApiError');
-    var loading = require('../../../components/Loading');
+    const HandleApiError = require('../../../components/HandleApiError').default;
+    var loading = require('../../../components/Loading').default;
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $fotosContainer = $('.fotos-container');
 

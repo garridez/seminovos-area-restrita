@@ -34,7 +34,7 @@ function init() {
     ) {
         handle = '.btn-move';
     }
-    new sortablejs.Sortable($('.fotos-container > div')[0], {
+    new sortablejs($('.fotos-container > div')[0], {
         animation: 150,
         swap: true,
         handle: handle,

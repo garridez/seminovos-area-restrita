@@ -3,7 +3,7 @@ import './JsBsModal';
 
 var formAlerts;
 
-module.exports = formAlerts = {
+export default formAlerts = {
     optionsDefault: {
         form: '',
         title: '',

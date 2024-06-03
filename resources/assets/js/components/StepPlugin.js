@@ -3,8 +3,6 @@
  */
 import $ from 'jquery';
 
-module.exports = Plugin;
-
 var pluginName = 'stepPlugin';
 var defaults = {
     root: '.step-container',
@@ -16,7 +14,7 @@ var defaults = {
     debug: false,
 };
 
-function Plugin(element, options) {
+export default function Plugin(element, options) {
     this.$ctx = $(element);
     this.element = element;
     this.opts = $.extend({}, defaults, options);

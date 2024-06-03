@@ -1,7 +1,7 @@
 module.exports.seletor = '.c-cadastrar.a-cadastro-simples';
 
 module.exports.callback = ($) => {
-    var Loading = require('../../../components/Loading');
+    var Loading = require('../../../components/Loading').default;
     var Alert = require('../../../components/Alerts');
 
     var Verificadores = require('../../../components/Verificadores');

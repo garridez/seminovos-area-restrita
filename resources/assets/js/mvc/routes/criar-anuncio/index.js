@@ -100,7 +100,7 @@ module.exports.callback = ($) => {
         }
 
         if (inLastStep) {
-            var Loading = require('../../../components/Loading');
+            var Loading = require('../../../components/Loading').default;
             var redirect = function () {
                 Loading.open();
                 window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();

@@ -12,7 +12,7 @@ module.exports.callback = ($) => {
     require('../../../components/EstadoCidade')();
 
     var Verificadores = require('../../../components/Verificadores');
-    var HandleApiError = require('../../../components/HandleApiError');
+    var HandleApiError = require('../../../components/HandleApiError').default;
     var Alert = require('../../../components/Alerts');
     require('../../../components/AdvancedAlerts');
 

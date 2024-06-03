@@ -17,7 +17,7 @@ export const callback = ($) => {
         requestAlerts.erro('Existe uma transação em andamento! Aguarde');
     };
 
-    var HandleApiError = require('../../../components/HandleApiError');
+    var HandleApiError = require('../../../components/HandleApiError').default;
 
     var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     var formCC = $('.pagamento-cc-form');
@@ -42,7 +42,7 @@ export const callback = ($) => {
                 value: tempo_contrato,
             });
 
-            var Loading = require('../../../components/Loading');
+            var Loading = require('../../../components/Loading').default;
             Loading.addFeedbackTexts('Validando informações...', 'Realizando pagamento ...', false);
 
             Loading.open();
