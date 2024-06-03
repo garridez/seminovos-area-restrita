@@ -1,5 +1,5 @@
 module.exports.seletor = '.c-pagamento.a-aprovado';
-module.exports.callback = async ($) => {
+module.exports.callback = async () => {
     if (!window.confetti) {
         return;
     }
@@ -27,7 +27,7 @@ module.exports.callback = async ($) => {
         const particleCount = 50 * (timeLeft / duration);
 
         // since particles fall down, start a bit higher than random
-        confetti(
+        window.confetti(
             Object.assign({}, defaults, {
                 particleCount,
                 origin: {
@@ -36,7 +36,7 @@ module.exports.callback = async ($) => {
                 },
             }),
         );
-        confetti(
+        window.confetti(
             Object.assign({}, defaults, {
                 particleCount,
                 origin: {
