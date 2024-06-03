@@ -2,11 +2,11 @@ module.exports.seletor = '.c-auth.a-login';
 
 module.exports.callback = ($) => {
     require('bootstrap/js/dist/modal');
-    var HandleApiError = require('components/HandleApiError');
-    var Alert = require('components/Alerts');
-    var advancedAlerts = require('components/AdvancedAlerts');
+    var HandleApiError = require('../../../components/HandleApiError').default;
+    var Alert = require('../../../components/Alerts').default;
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
-    var ShowPassword = require('components/ShowPassword');
+    var ShowPassword = require('../../../components/ShowPassword');
     ShowPassword($("input[type='password']"));
 
     $('body').on('click', 'input.radioTipoCadastro[data-cookie]', function (e) {
@@ -110,7 +110,7 @@ module.exports.callback = ($) => {
 
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');
-    var AdvancedAlerts = require('components/AdvancedAlerts');
+    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     $('form[name="formContatosCpfCpnj"]').submit(function (e) {
         e.preventDefault();
