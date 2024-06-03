@@ -61,8 +61,11 @@ class Module
         try {
             $sessionManager->start();
         } catch (\Exception $e) {
-            session_destroy();
-            $sessionManager->forgetMe();
+            /** @var SessionManager $sessionManager */
+            $sessionManager = $sm->build(SessionManager::class);
+            $sessionManager->destroy([
+                'clear_storage' => true,
+            ]);
             $sessionManager->start();
         }
 
