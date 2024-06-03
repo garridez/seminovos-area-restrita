@@ -110,4 +110,4 @@ function esqueciMinhaSenhaAction(email, emailMasked = '') {
         },
     });
 }
-module.exports = { verficaCpfAction, verficaEmailAction };
+export default { verficaCpfAction, verficaEmailAction };

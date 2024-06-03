@@ -1,6 +1,10 @@
-module.exports.seletor = '.c-cadastrar.a-index';
+import Verificadores from '../../../components/Verificadores';
+import HandleApiError from '../../../components/HandleApiError';
+import Alert from '../../../components/Alerts';
+import estadoCidade from '../../../components/EstadoCidade';
 
-module.exports.callback = ($) => {
+export const seletor = '.c-cadastrar.a-index';
+export const callback = ($) => {
     setTimeout(() => {
         //$('[name="responsavelNome"]').val('Felipe');
         //$('[name="email"]').val('felipe@seminovos.com.br');
@@ -9,12 +13,7 @@ module.exports.callback = ($) => {
         //$('[name="idCidade"]').val('2922');
     }, 1000);
 
-    require('../../../components/EstadoCidade')();
-
-    var Verificadores = require('../../../components/Verificadores');
-    var HandleApiError = require('../../../components/HandleApiError').default;
-    var Alert = require('../../../components/Alerts');
-    require('../../../components/AdvancedAlerts').default;
+    estadoCidade();
 
     var ctx = $('form[name="form_particularSite"]');
 

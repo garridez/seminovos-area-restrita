@@ -1,11 +1,9 @@
-module.exports.seletor = '.c-cadastrar.a-cadastro-simples';
+import Verificadores from '../../../components/Verificadores';
+import Loading from '../../../components/Loading';
+import Alert from '../../../components/Alerts';
 
-module.exports.callback = ($) => {
-    var Loading = require('../../../components/Loading').default;
-    var Alert = require('../../../components/Alerts');
-
-    var Verificadores = require('../../../components/Verificadores');
-
+export const seletor = '.c-cadastrar.a-cadastro-simples';
+export const callback = ($) => {
     var ctx = $('form[name="form_cadastroSimples"]');
 
     function validationControl(input, validated) {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-module.exports = function () {
+export default function () {
     $('body').on('change', '[name="idEstado"]', function () {
         var $this = $(this);
         var idEstado = $this.val();

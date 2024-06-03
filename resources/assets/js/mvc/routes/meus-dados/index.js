@@ -157,7 +157,7 @@ module.exports.callback = ($) => {
         });
     });
 
-    require('../../../components/EstadoCidade')();
+    require('../../../components/EstadoCidade').default();
 
     var resquestResponse = $('span[data-request-response]').data('request-response') || false;
     if (!resquestResponse) {
