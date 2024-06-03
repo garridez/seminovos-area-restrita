@@ -3,7 +3,7 @@ module.exports.prepend = true;
 
 module.exports.callback = ($) => {
     var advancedAlerts = require('../../../components/AdvancedAlerts').default;
-    var Confirms = require('../../../components/Confirms');
+    var Confirms = require('../../../components/Confirms').default;
     var stepContainer = $('.step-container');
     var stopEvent = require('../../../helpers/StopEvent');
     var idPlano = $('#idPlano').val();
