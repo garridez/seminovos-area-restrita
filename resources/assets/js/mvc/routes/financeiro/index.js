@@ -23,7 +23,7 @@ export const callback = ($) => {
     var formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
 
-    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     formCC.find('[name="validade_cartao"]').mask('00/00');
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);

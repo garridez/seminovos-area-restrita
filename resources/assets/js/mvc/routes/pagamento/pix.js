@@ -1,6 +1,6 @@
 module.exports.seletor = '.c-pagamento.a-pagamento-pix';
 module.exports.callback = async ($) => {
-    var AdvancedAlerts = require('../../../components/AdvancedAlerts');
+    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     // Get url params
     const urlParams = new URLSearchParams(window.location.search);

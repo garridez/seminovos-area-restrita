@@ -18,7 +18,7 @@ export const callback = ($) => {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var GetUrl = require('./helpers/GetUrl');
 
-    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;

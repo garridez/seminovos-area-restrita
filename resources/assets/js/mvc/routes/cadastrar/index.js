@@ -14,7 +14,7 @@ module.exports.callback = ($) => {
     var Verificadores = require('../../../components/Verificadores');
     var HandleApiError = require('../../../components/HandleApiError').default;
     var Alert = require('../../../components/Alerts');
-    require('../../../components/AdvancedAlerts');
+    require('../../../components/AdvancedAlerts').default;
 
     var ctx = $('form[name="form_particularSite"]');
 

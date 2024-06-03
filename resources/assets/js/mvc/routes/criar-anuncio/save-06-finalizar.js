@@ -2,7 +2,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('../../../components/HandleApiError').default;
-    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     $('.anuncio-steps').on('click', '.step-finalizar .btn-finalizar', function (e) {
         e.preventDefault();

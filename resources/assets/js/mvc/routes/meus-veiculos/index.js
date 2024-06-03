@@ -2,7 +2,7 @@ module.exports.seletor = '.c-meus-veiculos.a-index';
 
 module.exports.callback = ($) => {
     require('../../../components/JsBsModal');
-    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
     var Confirms = require('../../../components/Confirms');
     var FormAlerts = require('../../../components/FormAlerts');
     const jsCookie = require('js-cookie');

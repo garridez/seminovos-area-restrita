@@ -7,7 +7,7 @@ module.exports.callback = ($) => {
     let atualSenha = $('input[name="senhaAtual"]');
     let novaSenha = $('input[name="senha"]');
     let confNovaSenha = $('input[name="confirmacaoSenha"]');
-    var AdvancedAlerts = require('../../../components/AdvancedAlerts');
+    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
     if ($(atualSenha).hasClass('is-valid')) {
         AdvancedAlerts.info({
             title: 'Sucesso',

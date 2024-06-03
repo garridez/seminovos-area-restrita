@@ -2,7 +2,7 @@ module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.prepend = true;
 
 module.exports.callback = ($) => {
-    var advancedAlerts = require('../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
     var Confirms = require('../../../components/Confirms');
     var stepContainer = $('.step-container');
     var stopEvent = require('../../../helpers/StopEvent');

@@ -9,7 +9,7 @@ module.exports = function (formData, ajaxParams) {
     var pagamentoEmAndamento = require('./pagamento-em-andamento');
     requestAlerts.processando();
 
-    var advancedAlerts = require('../../../../components/AdvancedAlerts');
+    var advancedAlerts = require('../../../../components/AdvancedAlerts').default;
 
     var DataLayerGTMPopulate = require('../../../../helpers/DataLayerGTMPopulate');
 
