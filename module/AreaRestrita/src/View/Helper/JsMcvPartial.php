@@ -17,6 +17,9 @@ class JsMcvPartial extends AbstractHelper
 
     public function __toString(): string
     {
+        if (!$this->data) {
+            return '';
+        }
         $mixManifest = json_decode(file_get_contents('public/mix-manifest.json'), true);
         $seletor = '.' . $this->data['controller'] . '.' . $this->data['action'];
         $filesKeys = array_filter(array_keys($mixManifest), fn ($key) => str_contains($key, $seletor));
