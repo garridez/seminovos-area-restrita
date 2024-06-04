@@ -9,7 +9,12 @@ use Laminas\Validator\ValidatorChain;
 
 class ParticularForm extends Form
 {
-    public function __construct($name = 'form_particularSite', $options = [])
+    /**
+     * @param string $name
+     * @param array $options
+     * @param bool $cadastroSimples
+     */
+    public function __construct($name = 'form_particularSite', $options = [], protected $cadastroSimples = false)
     {
         parent::__construct($name, $options);
 
@@ -26,20 +31,21 @@ class ParticularForm extends Form
                 'placeholder' => 'Nome Sobrenome',
             ],
         ]);
-
-        $this->add([
-            'type' => Element\Date::class,
-            'name' => 'dataNascimento',
-            'options' => [
-                'label' => 'Data de Nascimento',
-            ],
-            'attributes' => [
-                'class' => 'form-control',
-                'required' => true,
-                'min' => date('Y-m-d', strtotime('-100 year')),
-                'max' => date('Y-m-d'),
-            ],
-        ]);
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Date::class,
+                'name' => 'dataNascimento',
+                'options' => [
+                    'label' => 'Data de Nascimento',
+                ],
+                'attributes' => [
+                    'class' => 'form-control',
+                    'required' => true,
+                    'min' => date('Y-m-d', strtotime('-100 year')),
+                    'max' => date('Y-m-d'),
+                ],
+            ]);
+        }
 
         $this->add([
             'type' => Element\Email::class,
@@ -53,32 +59,35 @@ class ParticularForm extends Form
                 'placeholder' => 'seuemail@example.com.br',
             ],
         ]);
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'rg',
-            'options' => [
-                'label' => 'Rg',
-            ],
-            'attributes' => [
-                'required' => true,
-                'class' => 'form-control',
-                'placeholder' => 'AA-00.000.000',
-            ],
-        ]);
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'cpfResponsavel',
-            'options' => [
-                'label' => 'CPF',
-            ],
-            'attributes' => [
-                'required' => true,
-                'readonly' => true,
-                'class' => 'form-control',
-                'placeholder' => '000.000.000-00',
-                'data-mask' => '000.000.000-00',
-            ],
-        ]);
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Text::class,
+                'name' => 'rg',
+                'options' => [
+                    'label' => 'Rg',
+                ],
+                'attributes' => [
+                    'required' => true,
+                    'class' => 'form-control',
+                    'placeholder' => 'AA-00.000.000',
+                ],
+            ]);
+
+            $this->add([
+                'type' => Element\Text::class,
+                'name' => 'cpfResponsavel',
+                'options' => [
+                    'label' => 'CPF',
+                ],
+                'attributes' => [
+                    'required' => true,
+                    'readonly' => true,
+                    'class' => 'form-control',
+                    'placeholder' => '000.000.000-00',
+                    'data-mask' => '000.000.000-00',
+                ],
+            ]);
+        }
         $this->add([
             'type' => Element\Select::class,
             'name' => 'idEstado',
@@ -139,19 +148,20 @@ class ParticularForm extends Form
                 'class' => 'form-control',
             ],
         ]);
-
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'telefone_1',
-            'options' => [
-                'label' => 'Telefone Residencial',
-            ],
-            'attributes' => [
-                'class' => 'form-control',
-                'data-mask' => '(00) 0000-0000',
-                'placeholder' => '(__) ____-____',
-            ],
-        ]);
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Text::class,
+                'name' => 'telefone_1',
+                'options' => [
+                    'label' => 'Telefone Residencial',
+                ],
+                'attributes' => [
+                    'class' => 'form-control',
+                    'data-mask' => '(00) 0000-0000',
+                    'placeholder' => '(__) ____-____',
+                ],
+            ]);
+        }
         $this->add([
             'type' => Element\Text::class,
             'name' => 'telefone_2',
@@ -179,65 +189,70 @@ class ParticularForm extends Form
                 'value' => 1,
             ],
         ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'operadora_2',
-            'options' => [
-                'label' => 'Operadora',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => 'OI',
-                    '2' => 'TIM',
-                    '3' => 'CLARO',
-                    '4' => 'VIVO',
-                    '5' => 'NEXTEL',
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Select::class,
+                'name' => 'operadora_2',
+                'options' => [
+                    'label' => 'Operadora',
+                    'value_options' => [
+                        '' => 'Selecione',
+                        '1' => 'OI',
+                        '2' => 'TIM',
+                        '3' => 'CLARO',
+                        '4' => 'VIVO',
+                        '5' => 'NEXTEL',
+                    ],
                 ],
-            ],
-            'attributes' => [
-                'required' => true,
-                'class' => 'form-control',
-            ],
-        ]);
+                'attributes' => [
+                    'required' => true,
+                    'class' => 'form-control',
+                ],
+            ]);
+        }
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Text::class,
+                'name' => 'telefone_3',
+                'options' => [
+                    'label' => 'Celular',
+                ],
+                'attributes' => [
+                    'class' => 'form-control',
+                    'data-mask' => '(00) 90000-0000',
+                    'placeholder' => '(__) _____-____',
+                ],
+            ]);
+            $this->add([
+                'type' => Element\Select::class,
+                'name' => 'operadora_3',
+                'options' => [
+                    'label' => 'Operadora',
+                    'value_options' => [
+                        '' => 'Selecione',
+                        '1' => 'OI',
+                        '2' => 'TIM',
+                        '3' => 'CLARO',
+                        '4' => 'VIVO',
+                        '5' => 'NEXTEL',
+                    ],
+                ],
+                'attributes' => [
+                    'class' => 'form-control',
+                ],
+            ]);
 
-        $this->add([
-            'type' => Element\Text::class,
-            'name' => 'telefone_3',
-            'options' => [
-                'label' => 'Celular',
-            ],
-            'attributes' => [
-                'class' => 'form-control',
-                'data-mask' => '(00) 90000-0000',
-                'placeholder' => '(__) _____-____',
-            ],
-        ]);
-        $this->add([
-            'type' => Element\Select::class,
-            'name' => 'operadora_3',
-            'options' => [
-                'label' => 'Operadora',
-                'value_options' => [
-                    '' => 'Selecione',
-                    '1' => 'OI',
-                    '2' => 'TIM',
-                    '3' => 'CLARO',
-                    '4' => 'VIVO',
-                    '5' => 'NEXTEL',
+            $this->add([
+                'type' => Element\Checkbox::class,
+                'name' => 'telefone_3_is_wpp',
+                'options' => [
+                    'label' => 'Whatsapp 3',
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
-            ],
-            'attributes' => [
-                'class' => 'form-control',
-            ],
-        ]);
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'telefone_3_is_wpp',
-            'options' => [
-                'label' => 'Whatsapp',
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-            ],
-        ]);
+            ]);
+        }
+
         $this->add([
             'type' => Element\Password::class,
             'name' => 'senha',
@@ -249,17 +264,19 @@ class ParticularForm extends Form
                 'class' => 'form-control',
             ],
         ]);
-        $this->add([
-            'type' => Element\Password::class,
-            'name' => 'confirmacaoSenha',
-            'options' => [
-                'label' => 'Confirmar Senha',
-            ],
-            'attributes' => [
-                'required' => true,
-                'class' => 'form-control',
-            ],
-        ]);
+        if (!$this->cadastroSimples) {
+            $this->add([
+                'type' => Element\Password::class,
+                'name' => 'confirmacaoSenha',
+                'options' => [
+                    'label' => 'Confirmar Senha',
+                ],
+                'attributes' => [
+                    'required' => true,
+                    'class' => 'form-control',
+                ],
+            ]);
+        }
 
         $this->add([
             'type' => Element\Submit::class,
@@ -273,18 +290,20 @@ class ParticularForm extends Form
         $this->configureInputFilter();
     }
 
-    protected function configureInputFilter()
+    protected function configureInputFilter(): void
     {
         $inputFilter = $this->getInputFilter();
         $inputFilter->add([
             'name' => 'responsavelNome',
             'required' => true,
         ]);
-        // campo não obrigatório, porém sem o required igual a false não funciona
-        $inputFilter->add([
-            'name' => 'dataNascimento',
-            'required' => false,
-        ]);
+        if (!$this->cadastroSimples) {
+            // campo não obrigatório, porém sem o required igual a false não funciona
+            $inputFilter->add([
+                'name' => 'dataNascimento',
+                'required' => false,
+            ]);
+        }
         $inputFilter->add([
             'name' => 'email',
             'required' => true,
@@ -302,56 +321,54 @@ class ParticularForm extends Form
                 ],
             ],
         ]);
-        $inputFilter->add([
-            'name' => 'rg',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StringToUpper'],
-            ],
-//            'validators' => [
-//                [
-//                    'name' => \Laminas\Validator\Regex::class,
-//                    'options' => [
-//                        'pattern' => '/^[A-Z]{2}\s[0-9]{2,3}\.[0-9]{3}\.[0-9]{3}$|^[A-Z][0-9]{6}-[0-9]$/'
-//                    ]
-//                ],
-//            ],
-        ]);
-        $inputFilter->add([
-            'name' => 'cpfResponsavel',
-            'required' => true,
-        ]);
+        if (!$this->cadastroSimples) {
+            $inputFilter->add([
+                'name' => 'rg',
+                'required' => true,
+                'filters' => [
+                    ['name' => 'StringTrim'],
+                    ['name' => 'StringToUpper'],
+                ],
+            ]);
+
+            $inputFilter->add([
+                'name' => 'cpfResponsavel',
+                'required' => true,
+            ]);
+
+            $inputFilter->add([
+                'name' => 'confirmacaoSenha',
+                'required' => true,
+            ]);
+        }
         $inputFilter->add([
             'name' => 'idEstado',
             'required' => true,
         ]);
-    // Reseta o validador de idCidade
+        // Reseta o validador de idCidade
         $inputFilter->get('idCidade')->setValidatorChain(new ValidatorChain());
         $inputFilter->add([
             'name' => 'idCidade',
             'required' => true,
         ]);
-    // campo não obrigatório, porém sem o required igual a false não funciona
-        $inputFilter->add([
-            'name' => 'operadora_2',
-            'required' => false,
-        ]);
-        $inputFilter->add([
-            'name' => 'operadora_1',
-            'required' => false,
-        ]);
-    // campo não obrigatório, porém sem o required igual a false não funciona
-        $inputFilter->add([
-            'name' => 'operadora_3',
-            'required' => false,
-        ]);
+        if (!$this->cadastroSimples) {
+            // campo não obrigatório, porém sem o required igual a false não funciona
+            $inputFilter->add([
+                'name' => 'operadora_2',
+                'required' => false,
+            ]);
+            $inputFilter->add([
+                'name' => 'operadora_1',
+                'required' => false,
+            ]);
+            // campo não obrigatório, porém sem o required igual a false não funciona
+            $inputFilter->add([
+                'name' => 'operadora_3',
+                'required' => false,
+            ]);
+        }
         $inputFilter->add([
             'name' => 'senha',
-            'required' => true,
-        ]);
-        $inputFilter->add([
-            'name' => 'confirmacaoSenha',
             'required' => true,
         ]);
     }

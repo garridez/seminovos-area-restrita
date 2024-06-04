@@ -23,13 +23,13 @@ class CadastrarController extends AbstractActionController
 {
     public function indexAction()
     {
-//        $dadosForm = new Cadastro\CadastroParticularForm();
-        $dadosForm = new ParticularForm();
+        $dadosForm = new ParticularForm('form_particularSite', [], true);
 
         $request = $this->getRequest();
+        $post = $request->getPost();
 
-        if ($request->isPost()) {
-            $post = $request->getPost();
+
+        if ($request->isPost() && !isset($post['oauth_cadastro'])) {
             $dadosForm->setData($post);
 
             if ($dadosForm->isValid()) {
@@ -37,11 +37,13 @@ class CadastrarController extends AbstractActionController
                 $cadastrosModel = $this->getContainer()->get(Cadastros::class);
 
                 $data = $dadosForm->getData();
-                if ($data['dataNascimento']) {
+                if (isset($data['dataNascimento']) && $data['dataNascimento']) {
                     $data['dataNascimento'] = date('d/m/Y', strtotime(str_replace('/', '-', (string) $data['dataNascimento'])));
                 }
 
                 $data['tipoCadastro'] = 2;
+                $data['cadastroSimplificado'] = 1;
+
                 $resPost = $cadastrosModel->post($data);
                 echo json_encode($resPost->json());
                 die;
@@ -53,20 +55,31 @@ class CadastrarController extends AbstractActionController
                 ]);
                 die;
             }
-        } else {
-            $email = $this->params('email');
-            $dadosForm->get('email')->setValue($email);
-
-            $view = new ViewModel([
-                'formCadastro' => $dadosForm,
-            ]);
-
-            $this->layout('layout/blank.phtml');
-
-            return $view;
         }
+
+
+        $nome = $this->request->getPost('nome', '');
+        $email = $this->request->getPost('email', $this->params('email'));
+
+        $dadosForm->populateValues([
+            'responsavelNome' => $nome,
+            'email' => $email,
+        ]);
+
+        $view = new ViewModel([
+            'dadosForm' => $dadosForm,
+        ]);
+
+        $this->layout('layout/blank.phtml');
+
+        return $view;
     }
 
+    /**
+     * @param string $cpfOuCpnj
+     * @param boolean $mask
+     * @return array
+     */
     private function getContatosFromCpfCnpj($cpfOuCpnj, $mask = true)
     {
         $campoCpfOuCnpj = preg_match('/^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})/', (string) $cpfOuCpnj) ? 'cpfResponsavel' : 'cnpj';
@@ -119,11 +132,21 @@ class CadastrarController extends AbstractActionController
             $dadosCadastroRetorno = $dadosCadastro;
         }
 
-        return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastroRetorno];
+        return [
+            'status' => 200,
+            'cpfCadastro' => true,
+            'email' => $email,
+            'telefone' => $telefone,
+            'tipoCadastro' => $tipoCadastro,
+            'dadosCadastro' => $dadosCadastroRetorno,
+        ];
     }
 
     /**
      * Get contact from email
+     * @param string $email
+     * @param bool $mask
+     * @return array
      */
     private function getContatosFromEmail($email, $mask = true)
     {
@@ -162,11 +185,21 @@ class CadastrarController extends AbstractActionController
             $telefone = preg_replace('/\(?(\d{2})\)?\s?(\d{1})\s?(\d{1})(\d{3})\-?(\d{4})/', '($1) $2 $3***-$5', (string) $telefone);
         }
 
-        return ['status' => 200, 'cpfCadastro' => true, 'email' => $email, 'telefone' => $telefone, 'tipoCadastro' => $tipoCadastro, 'dadosCadastro' => $dadosCadastro];
+        return [
+            'status' => 200,
+            'cpfCadastro' => true,
+            'email' => $email,
+            'telefone' => $telefone,
+            'tipoCadastro' => $tipoCadastro,
+            'dadosCadastro' => $dadosCadastro,
+        ];
     }
 
     /**
      * Verifica se o capcha para resetar senha é válido
+     *
+     * @param string $token
+     * @return bool
      */
     public function resetPasswordCheckRecaptcha($token)
     {
@@ -194,6 +227,10 @@ class CadastrarController extends AbstractActionController
         return true;
     }
 
+    /**
+     *
+     * @return JsonModel|array|string
+     */
     public function getEmailTelefoneFromCpfOuCnpjAction()
     {
         $request = $this->getRequest();
@@ -236,6 +273,11 @@ class CadastrarController extends AbstractActionController
         return new JsonModel($retorno);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return JsonModel|array
+     */
     public function rememberPassAction()
     {
         $request = $this->getRequest();
@@ -281,7 +323,14 @@ class CadastrarController extends AbstractActionController
 
         if ($retorno->status == 200) {
             // Envia email pela nova api
-            $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> ' . $dadosCadastro['responsavelNome'] . ', conforme solicitado, segue sua nova senha de acesso para o site <a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br /><strong>Foi gerada uma nova senha: </strong>' . $senha . '<br /><strong>Login: </strong>: ' . $dadosCadastro['email'] . '<br /><strong>Nome do usuário: </strong>: ' . $dadosCadastro['responsavelNome'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+            $mensagem = '<br /><br /><strong>Assunto: </strong> Nova senha de acesso<br /><br /> '
+                . $dadosCadastro['responsavelNome']
+                . ', conforme solicitado, segue sua nova senha de acesso para o site '
+                . '<a href="http://seminovos.com.br"><font color="orange">seminovos.com.br</font></a><br /><br />'
+                . '<strong>Foi gerada uma nova senha: </strong>' . $senha . '<br />'
+                . '<strong>Login: </strong>: ' . $dadosCadastro['email'] . '<br />'
+                . '<strong>Nome do usuário: </strong>: ' . $dadosCadastro['responsavelNome'] . '<br /><br />'
+                . 'Atenciosamente.<br />Equipe Seminovos.';
 
             $dadosEmail = [
                 'mensagem' => $mensagem,
@@ -350,6 +399,7 @@ class CadastrarController extends AbstractActionController
 
     /**
      * Valida o Token Sms para restaurar senha
+     * @return JsonModel
      */
     public function validateTokenAction()
     {
@@ -365,6 +415,7 @@ class CadastrarController extends AbstractActionController
 
     /**
      * Salva nova senha do usuário
+     * @return JsonModel
      */
     public function rememberPassSaveAction()
     {
@@ -383,6 +434,7 @@ class CadastrarController extends AbstractActionController
      * Verifica se a email está disponível para cadastro
      * Retorna TRUE se a email estiver disponível
      * Retorna FALSE se a email estiver indisponível
+     * @return JsonModel
      */
     public function emailDisponivelAction()
     {
@@ -474,7 +526,7 @@ class CadastrarController extends AbstractActionController
                 $data['cadastroSimplificado'] = 1;
 
                 if (!$data['cpfResponsavel']) {
-                     unset($data['cpfResponsavel']);
+                    unset($data['cpfResponsavel']);
                 }
 
                 $resPost = $cadastrosModel->post($data);
@@ -530,7 +582,7 @@ class CadastrarController extends AbstractActionController
             if ($dadosForm->isValid()) {
                 $data = $dadosForm->getData();
 
-                 $mensagem = '<br /><br /><strong>Parceria seminovos.com.br</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
+                $mensagem = '<br /><br /><strong>Parceria seminovos.com.br</strong><br /><br /> <strong>Nome: </strong>' . $data['responsavelNome'] . '<br /><strong>telefone: </strong>: ' . $data['telefone_2'] . '<br /><strong>Nome do usuário: </strong>: ' . $data['email'] . '<br /><br />Atenciosamente.<br />Equipe SeminovosBH.';
 
                 $dadosEmail = [
                     'mensagem' => $mensagem,

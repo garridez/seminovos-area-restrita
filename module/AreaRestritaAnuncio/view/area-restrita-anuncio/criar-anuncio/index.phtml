@@ -3,7 +3,7 @@
 use SnBH\ApiModel\Model\VeiculosStatus;
 use SnBH\ApiModel\Model\VeiculoTipo;
 
-/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
 
 $veiculo = $this->veiculo ?: false;
 
@@ -34,7 +34,7 @@ $rotasAnuncio = [
     'plano' => $this->url('criar-anuncio/anuncio/planos', $routeParams),
     //'servicos-adicionais' => $this->url('criar-anuncio/anuncio/servicos-adicionais', $routeParams),
     'checkout' => $this->url('criar-anuncio/anuncio/pagamento', $routeParams),
-];  
+];
 }*/
 
 if ($this->userInfo('tipoCadastro') == 1) {
@@ -84,7 +84,7 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
             );
             unset($rotasAnuncio['plano']);
             break;
-        
+
         default:
             unset(
                 $rotasAnuncio['servicos-adicionais'],

@@ -1,5 +1,5 @@
 <?php
-/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
 
 $isRevenda = $this->userInfo('tipoCadastro') == 1;
 $isParticular = !$isRevenda;
@@ -133,7 +133,7 @@ if ($isRevenda) {
                                         </li>
                                         <br/>
                                         <li class="text-danger">
-                                            * Caso o anunciante coloque como vendido ou remova o anúncio, o mesmo perderá o direito de renovação sem ônus.  
+                                            * Caso o anunciante coloque como vendido ou remova o anúncio, o mesmo perderá o direito de renovação sem ônus.
                                         </li>
                                     </ul>
                                 </div>
