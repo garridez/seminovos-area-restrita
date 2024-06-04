@@ -1,8 +1,9 @@
 <?php
+
+/** @var AreaRestrita\View\Helper\AutocompleteClass $this */
+
 $currentUrl = $this->serverUrl(true);
 $isRedirect = preg_match('/redirect=/', (string) $currentUrl);
-
-/* @var $this \AreaRestrita\View\Helper\AutocompleteClass */
 
 $assetSufix = APPLICATION_ENV === 'development' ? random_int(0, 64_456_645) . '-development' : APPLICATION_VERSION;
 
@@ -10,26 +11,26 @@ $assetSufix = APPLICATION_ENV === 'development' ? random_int(0, 64_456_645) . '-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta charset="utf-8" />
-  <title>Meus Anúncios - Seminovos.com.br</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link class="main-stylesheet" href="/css/app.css?<?= $assetSufix ?>" rel="stylesheet" type="text/css" />
-  <?php if (IS_PROD): ?>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Meus Anúncios - Seminovos.com.br</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link class="main-stylesheet" href="/css/app.css?<?= $assetSufix ?>" rel="stylesheet" type="text/css" />
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-" async="async"></script>
+    <?php if (IS_PROD) : ?>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WMZDL2D');</script>
-  <?php endif;?>
+    <?php endif; ?>
 </head>
 
 <?php
-/* @var $this Laminas\View\Renderer\PhpRenderer */
 global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
 ?>
@@ -42,8 +43,8 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
             <div class="snbh-logo-container">
                 <a href="<?= $url ?>" title="Voltar para o site seminovos.com.br">
                     <svg viewBox="0 0 180 66" width="180" height="66" class="snbh-logo">
-                    <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
-                    <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
+                        <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                        <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
                     </svg>
                 </a>
             </div>

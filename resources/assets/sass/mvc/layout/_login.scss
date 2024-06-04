@@ -15,7 +15,7 @@ $namespace:_login-;
             animation: #{$namespace}snbh-logo-layer-car 1s ease-in-out;
         }
         .layer-letters {
-            animation: #{$namespace}snbh-logo-layer-letters 2s ease-in-out;
+            animation: #{$namespace}snbh-logo-layer-letters 3s ease-in-out;
         }
     }
 }
@@ -35,10 +35,9 @@ $namespace:_login-;
     font-family: 'Roboto' !important;
 }
 .topo{
-    background-color: white;
     height: 10vh;
     .snbh-logo-container svg{
-        height: 45px;
+        height: 65px;
         width: auto;
     }
 }

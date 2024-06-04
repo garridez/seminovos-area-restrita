@@ -10,7 +10,9 @@ use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Session\SessionManager;
+use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 
 class AuthController extends AbstractActionController
@@ -25,11 +27,15 @@ class AuthController extends AbstractActionController
 
         /** @var AuthenticationService $authService */
         $authService = $container->get(AuthenticationService::class);
+        if ($authService->hasIdentity()) {
+            return $this->redirect()->toRoute('restrito');
+        }
         $authService->clearIdentity();
 
         $redirect = $this->getRequest()->getQuery('redirect', false);
         /** @var SessionManager $sessionManager */
         $sessionManager = $container->get(SessionManager::class);
+        /** @var SessionArrayStorage */
         $sessionStorage = $sessionManager->getStorage();
         if ($redirect) {
             $redirect = base64_decode((string) $redirect);
@@ -64,7 +70,7 @@ class AuthController extends AbstractActionController
         if (!$request->isPost()) {
             return $viewModel;
         }
-        $post = $request->getPost();
+        $post = (array) $request->getPost();
 
         if (!isset($post['token']) || !$post['token']) {
             $viewModel->setVariable('loginError', true);
@@ -145,6 +151,32 @@ class AuthController extends AbstractActionController
         $viewModel->setVariable('loginError', true);
 
         return $viewModel;
+    }
+
+    public function loginOauthAction(): JsonModel
+    {
+        /** @var AuthManager $authManager  */
+        $authManager = $this->getContainer()->get(AuthManager::class);
+        $idToken = $this->params()->fromPost('idToken');
+        $result = $authManager->loginOauth($idToken);
+
+        if ($result->getCode() === $result::SUCCESS) {
+            return new JsonModel([
+                'status' => 200
+            ]);
+        }
+
+        if ($result->getCode() === $result::FAILURE_IDENTITY_NOT_FOUND) {
+
+            return new JsonModel([
+                'status' => 404,
+                'data' => $result->getIdentity(),
+            ]);
+        }
+
+        return new JsonModel([
+            'status' => 500
+        ]);
     }
 
     /**

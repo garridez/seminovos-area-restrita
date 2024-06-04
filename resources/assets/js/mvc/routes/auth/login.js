@@ -1,13 +1,74 @@
-module.exports.seletor = '.c-auth.a-login';
+import HandleApiError from '../../../components/HandleApiError';
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import showPassword from '../../../components/showPassword';
+import 'bootstrap/js/dist/modal';
 
-module.exports.callback = ($) => {
-    require('bootstrap/js/dist/modal');
-    var HandleApiError = require('../../../components/HandleApiError').default;
-    var Alert = require('../../../components/Alerts').default;
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
+export const seletor = '.c-auth.a-login';
+/**
+ * @param {JQueryStatic} $
+ */
+export const callback = ($) => {
+    window.gsi_login_callback = function (response) {
+        console.log({
+            response,
+        });
 
-    var ShowPassword = require('../../../components/ShowPassword');
-    ShowPassword($("input[type='password']"));
+        $.post('/entrar/oauth', {
+            tipoCadastro: 2,
+            acao: 'login_oauth',
+            idToken: response.credential,
+        })
+            .done(function (response) {
+                console.log({ data: response });
+                if (response.status === 200) {
+                    window.location.href = '/';
+                    return;
+                }
+                if (response.status === 404) {
+                    $('<form/>')
+                        .attr({
+                            action: '/me-cadastrar',
+                            method: 'POST',
+                        })
+                        .append([
+                            $('<input/>').attr({
+                                type: 'hidden',
+                                name: 'oauth_cadastro',
+                                value: 1,
+                            }),
+                            $('<input/>').attr({
+                                type: 'hidden',
+                                name: 'email',
+                                value: response.data.email,
+                            }),
+                            $('<input/>').attr({
+                                type: 'hidden',
+                                name: 'nome',
+                                value: response.data.nome,
+                            }),
+                        ])
+                        .appendTo('body')
+                        .trigger('submit');
+                    return;
+                }
+                $('.debug-html').html(response).css({
+                    position: 'absolute',
+                    left: 0,
+                });
+            })
+            .catch(function (e) {
+                var html = e.responseText;
+                try {
+                    html = JSON.parse(html);
+                    html = '<pre>' + JSON.stringify(html, null, 4) + '</pre>';
+                } catch (e) {}
+                $('.debug-html').html(html).css({
+                    position: 'absolute',
+                    left: 0,
+                });
+            });
+    };
+    showPassword($('input[type="password"]'));
 
     $('body').on('click', 'input.radioTipoCadastro[data-cookie]', function (e) {
         let $this = $(this);
@@ -51,7 +112,9 @@ module.exports.callback = ($) => {
         if (msg !== '1') {
             try {
                 var listErros = JSON.parse(msg);
-            } catch (e) {}
+            } catch (e) {
+                console.log(e);
+            }
             var listErrosMsg = [];
             if (listErros) {
                 for (var i of listErros) {
@@ -76,12 +139,13 @@ module.exports.callback = ($) => {
             $('#modalCuidado').modal('hide');
         }, 8000);
     }
-    $('form', '.container-form-particular, .container-form-revenda').submit(function (e) {
+    $('form', '.container-form-particular, .container-form-revenda').submit(function () {
         $('.container-form-particular, .container-form-revenda').slideUp();
         $('.loading-container').slideDown();
     });
 
     var grecaptchaIntervalID = setInterval(function () {
+        var grecaptcha = window.grecaptcha;
         if (grecaptcha === undefined || grecaptcha.ready === undefined) {
             return;
         }
@@ -122,8 +186,6 @@ module.exports.callback = ($) => {
         var tipoCad = $(this).find('input[name="tipoCadastro"]').val();
 
         $formDadosBasicos.find('input[name="tipoCadastro"]').val(tipoCad);
-        var text = null;
-        var title = null;
 
         $.ajax({
             type: 'POST',
@@ -334,7 +396,7 @@ module.exports.callback = ($) => {
 
         setTimeout(() => {
             console.log('timeout');
-            grecaptcha
+            window.grecaptcha
                 .execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
                     action: 'submit',
                 })
@@ -361,6 +423,8 @@ module.exports.callback = ($) => {
      * @param {*} data
      */
     function resetPasswordHandleError(tipoCadastro) {
+        var title;
+        var text;
         switch (tipoCadastro) {
             case 2:
                 title = 'CPF não encontrado';
@@ -388,7 +452,7 @@ module.exports.callback = ($) => {
                 break;
             case 5:
                 title = 'Atenção';
-                text = `Desafio do capcha inválido!`;
+                text = 'Desafio do capcha inválido!';
                 break;
 
             default:

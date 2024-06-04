@@ -1,5 +1,7 @@
 <?php
-/* @var $this Laminas\View\Renderer\PhpRenderer */
+
+/** @var AreaRestrita\View\Helper\AutocompleteClass $this */
+
 global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
 
@@ -10,38 +12,40 @@ if ($this->captchaError) {
     echo '<input type="hidden" name="captcha-error" value="' . $this->escapeHtmlAttr($this->captchaError) . '" />';
 }
 
-$this->particularForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
-$this->revendaForm->get('entrar')->setAttribute('class', 'btn-warning btn-block btn-lg');
+$this->particularForm->get('entrar')->setAttribute('class', 'btn btn-warning btn-block btn-lg');
+$this->revendaForm->get('entrar')->setAttribute('class',    'btn btn-warning btn-block btn-lg');
 
 $this->particularForm->get('usuarioEmail')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'username');
+    ->setAttribute('class', 'form-control')
+    ->setAttribute('autocomplete', 'username');
 $this->particularForm->get('usuarioSenha')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'username');
+    ->setAttribute('class', 'form-control')
+    ->setAttribute('autocomplete', 'username');
 
 $this->revendaForm->get('usuarioEmail')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'current-password');
+    ->setAttribute('class', 'form-control')
+    ->setAttribute('autocomplete', 'current-password');
 $this->revendaForm->get('usuarioSenha')
-        ->setAttribute('class', 'form-control')
-        ->setAttribute('autocomplete', 'current-password');
-$this->headScript()->appendFile('https://www.google.com/recaptcha/api.js?render=6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-');
+    ->setAttribute('class', 'form-control')
+    ->setAttribute('autocomplete', 'current-password');
+
+$this->headScript()
+    ->appendFile('https://accounts.google.com/gsi/client', 'text/javascript', ['async' => true]);
 ?>
 
 <?php $urlCadastrar = ($this->cadastroSimples ?? false) ? '/cadastro-simples' : '/me-cadastrar' ?>
 <div class="login-area">
     <div class="titulo text-center py-4">
-        Entre com suas informações para ver e gerenciar sua conta.
+        Acessar minha conta
     </div>
 
     <div class="switch-container">
         <div class="switch-field">
-            <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked/>
+            <input type="radio" id="radioTipoCadastroParticular" class="radioTipoCadastro" name="tipoCadastro" data-cookie="particular" value="container-form-particular" checked />
             <label class="m-0" for="radioTipoCadastroParticular" title="Entrar como particular">Particular</label>
-            
+
             <input type="radio" id="radioTipoCadastroRevenda" class="radioTipoCadastro" name="tipoCadastro" data-cookie="revenda" value="container-form-revenda" />
-            <label class="m-0" for="radioTipoCadastroRevenda"  title="Entrar como revenda">Revenda</label>
+            <label class="m-0" for="radioTipoCadastroRevenda" title="Entrar como revenda">Revenda</label>
         </div>
     </div>
     <div class="conteudo">
@@ -57,11 +61,31 @@ $this->headScript()->appendFile('https://www.google.com/recaptcha/api.js?render=
                 ])
                 ?>
                 <div class="separador">
-                <span></span>ou<span></span>
+                    <span></span>ou<span></span>
+                </div>
+                <div class="text-center mt-2">
+                    <script>
+                        <?php $this->headScript()->captureStart(); ?>
+                        function gsi_login_callback_proxy(response) {
+                            if (window.gsi_login_callback) {
+                                window.gsi_login_callback(response);
+                                return;
+                            }
+                            setTimeout(() => {
+                                gsi_login_callback_proxy(response);
+                            }, 100);
+                        }
+                        <?php $this->headScript()->captureEnd(); ?>
+                    </script>
+                    <div id="g_id_onload" data-client_id="279894523758-baa3rqafd4ipk2pge2tnnebkish04mj0.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="gsi_login_callback_proxy" data-nonce="" data-close_on_tap_outside="false" data-auto_select="true" data-itp_support="true">
+                    </div>
+
+                    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
+                    </div>
                 </div>
                 <div class="cadastrar mt-3">
-                    <a href="<?= $urlCadastrar ?>" title="Criar uma conta" class="btn btn-laranja btn-cadastrar text-center">
-                        Não tem uma conta? Criar conta
+                    <a href="<?= $urlCadastrar ?>" title="Criar uma conta" class="btn btn-laranja btn-block btn-cadastrar text-center">
+                        Criar conta
                     </a>
                 </div>
             </div>
@@ -72,39 +96,29 @@ $this->headScript()->appendFile('https://www.google.com/recaptcha/api.js?render=
                 ])
                 ?>
                 <div class="separador">
-                <span></span>ou<span></span>
+                    <span></span>ou<span></span>
                 </div>
                 <div class="cadastrar mt-3">
-                    <a href="https://seminovos.com.br/cadastrar-revenda" title="Criar uma conta" class="btn btn-laranja btn-cadastrar text-center">
+                    <a href="https://seminovos.com.br/cadastrar-revenda" title="Criar uma conta" class="btn btn-laranja btn-block btn-cadastrar text-center">
                         Não tem uma conta? Criar conta
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="aviso mt-3">
-        <div class="esquerda">
-            <div class="text-center">
-                <img src="/img/icons/warning.png" alt="" srcset="">
-            </div>
+    <div class="aviso mt-3 text-center">
+        <div class="mt-2">
             <div class="text-center mt-2">
-                <span>Atenção!</span>
+                <div class="h4">Atenção!</div>
             </div>
-        </div>
-        <div class="direita">
-            
-            <span class="mt-2">
-                A Seminovos, <b>NÃO</b> faz contato por <b>telefone</b> ou
-                <b>whatsapp</b> solicitando código de verificação de
-                anúncio ou similar.
-            </span>
-
-            <div>
-                <span class="mt-2"><b>Cuidado para não cair em golpes!</b></span>
-            </div>
-
-            <span class="mt-3">Estamos à disposição para esclarecer dúvidas.</span>
+            A Seminovos, <b>NÃO</b> faz contato por <b>telefone</b> ou
+            <b>whatsapp</b> solicitando código de verificação de anúncio ou similar.
         </div>
 
+        <div>
+            <span class="mt-2"><b>Cuidado para não cair em golpes!</b></span>
+        </div>
+
+        <div class="mt-3">Estamos à disposição para esclarecer dúvidas.</div>
     </div>
 </div>

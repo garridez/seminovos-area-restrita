@@ -1,6 +1,4 @@
-module.exports = ShowPassword;
-
-function ShowPassword(input) {
+export default function showPassword(input) {
     let button = $(input).parent().find('.input-group-text');
     $(button).on('click', function () {
         $(this).parent().find('.fa').toggleClass('fa-eye fa-eye-slash');

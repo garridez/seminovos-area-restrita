@@ -70,7 +70,21 @@ class AuthManager
         return $result;
     }
 
-    public function logout()
+    public function loginOauth(string $idToken): Result
+    {
+        $authService = $this->authService;
+
+        /** @var AuthAdapter $authAdapter */
+        $authAdapter = $authService->getAdapter();
+        $authAdapter->setData([
+            'tipoCadastro' => 2,
+            'acao' => 'login_oauth',
+            'idToken' => $idToken,
+        ]);
+        return $result = $authService->authenticate();
+    }
+
+    public function logout(): void
     {
         $this->authService->clearIdentity();
     }

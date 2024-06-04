@@ -58,6 +58,16 @@ return [
                             ],
                         ],
                     ],
+                    'oauth' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/oauth',
+                            'defaults' => [
+                                'controller' => Controller\AuthController::class,
+                                'action' => 'loginoauth',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'logout' => [

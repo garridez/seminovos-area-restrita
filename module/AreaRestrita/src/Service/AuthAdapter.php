@@ -19,6 +19,9 @@ class AuthAdapter implements AdapterInterface
     public function authenticate(): AuthResult
     {
         $data = $this->data;
+        if (isset($data['acao']) && $data['acao'] === 'login_oauth') {
+            return $this->authenticateOauth();
+        }
         if ($data['loginWithoutPassword']) {
             return $this->authenticateNoPassword();
         }
@@ -48,6 +51,24 @@ class AuthAdapter implements AdapterInterface
         $code = $res->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;
 
         return new AuthResult($code, (int) $this->data['idCadastro']);
+    }
+
+    public function authenticateOauth(): AuthResult
+    {
+        /** @var Response */
+        $res = $this->apiClient->loginPost($this->data);
+        if ($res->status === 404) {
+            $data = $res->getData();
+            return new AuthResult(AuthResult::FAILURE_IDENTITY_NOT_FOUND, $data);
+        }
+
+        if ($res->status !== 200) {
+            return new AuthResult(AuthResult::FAILURE, 0);
+        }
+
+        $data = $res->getData()[0];
+
+        return new AuthResult(AuthResult::SUCCESS, (int) $data['idCadastro']);
     }
 
     /**
