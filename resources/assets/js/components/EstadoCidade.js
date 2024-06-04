@@ -35,4 +35,4 @@ export default function () {
     });
 
     $('[name="idEstado"]').trigger('change');
-};
+}

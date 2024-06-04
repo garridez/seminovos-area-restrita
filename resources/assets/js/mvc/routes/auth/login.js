@@ -174,7 +174,6 @@ export const callback = ($) => {
 
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');
-    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     $('form[name="formContatosCpfCpnj"]').submit(function (e) {
         e.preventDefault();
@@ -274,7 +273,7 @@ export const callback = ($) => {
                 if (!HandleApiError(data)) {
                     return;
                 }
-                AdvancedAlerts.success({
+                advancedAlerts.success({
                     title: 'Senha Enviada',
                     text: 'Nova senha enviada para o email:</br>' + data.email,
                 });
@@ -308,7 +307,7 @@ export const callback = ($) => {
                 }
                 var token = $this.find('input[name="token"]').val();
                 if (data.data.token != token) {
-                    AdvancedAlerts.error({
+                    advancedAlerts.error({
                         title: 'Erro',
                         text: 'Token Inválido',
                     });
@@ -338,7 +337,7 @@ export const callback = ($) => {
         var idCadastro = $formDadosBasicos.find('input[name="idCadastro"]').val();
 
         if (senha != senhaConf) {
-            AdvancedAlerts.error({
+            advancedAlerts.error({
                 title: 'Erro',
                 text: 'As senhas não conferem',
             });
@@ -358,12 +357,14 @@ export const callback = ($) => {
                     return;
                 }
                 $('#modalNovaSenha').modal('hide');
-                AdvancedAlerts.success({
-                    title: 'Nova senha cadastrada',
-                    text: 'Utilize a nova senha para entrar',
-                }).on('hidden.bs.modal', function () {
-                    window.location.href = '/';
-                });
+                advancedAlerts
+                    .success({
+                        title: 'Nova senha cadastrada',
+                        text: 'Utilize a nova senha para entrar',
+                    })
+                    .on('hidden.bs.modal', function () {
+                        window.location.href = '/';
+                    });
                 $formDadosBasicos.find('input').val('');
             },
             error: function (e) {
@@ -501,7 +502,7 @@ export const callback = ($) => {
         $('#modalRecuperarSenha').modal('show');
     }
 
-    /*AdvancedAlerts.info({
+    /*advancedAlerts.info({
       title: 'Sucesso',
       text: 'Sua senha foi atualizada com sucesso',
       closeCallback: function(){

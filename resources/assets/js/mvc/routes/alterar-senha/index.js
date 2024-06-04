@@ -1,13 +1,14 @@
-module.exports.seletor = '.c-meus-dados.a-alterar-senha';
+import showPassword from '../../../components/showPassword';
+import AdvancedAlerts from '../../../components/AdvancedAlerts';
 
-module.exports.callback = ($) => {
-    var ShowPassword = require('../../../components/showPassword').default;
-    ShowPassword($('input[type="password"]'));
+export const seletor = '.c-meus-dados.a-alterar-senha';
+export const callback = ($) => {
+    showPassword($('input[type="password"]'));
 
     let atualSenha = $('input[name="senhaAtual"]');
     let novaSenha = $('input[name="senha"]');
     let confNovaSenha = $('input[name="confirmacaoSenha"]');
-    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
+
     if ($(atualSenha).hasClass('is-valid')) {
         AdvancedAlerts.info({
             title: 'Sucesso',

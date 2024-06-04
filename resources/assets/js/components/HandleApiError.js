@@ -43,4 +43,4 @@ export default function (apiResponse, time) {
     }
     showError(body, title, time);
     return false;
-};
+}

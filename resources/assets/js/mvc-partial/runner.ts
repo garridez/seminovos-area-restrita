@@ -1,8 +1,8 @@
 if (typeof window !== 'undefined' && require) {
     for (const key in require.cache) {
-        const module: any = require.cache[key];
+        const module = require.cache[key];
 
-        if (module.exports && module.exports.seletor) {
+        if (module && module.exports && module.exports.seletor) {
             if (typeof module.exports === 'function') {
                 module.exports();
             } else if (typeof module.exports.default === 'function') {

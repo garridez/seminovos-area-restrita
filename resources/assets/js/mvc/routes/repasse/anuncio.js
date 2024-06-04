@@ -1,3 +1,4 @@
+/* eslint no-undef:1 */
 module.exports.seletor = '.c-repasse.a-anuncio';
 module.exports.callback = async ($) => {
     $("input[name='license-plate']").keyup(function () {
