@@ -51,14 +51,18 @@ class BodyClassFactory implements FactoryInterface
 
     protected function getClassByTipoCadastro(ContainerInterface $container): array
     {
-        if (!$container->get(AuthService::class)->hasIdentity()) {
+        try {
+            if (!$container->get(AuthService::class)->hasIdentity()) {
+                return [];
+            }
+
+            $isRevenda = $container->get(Cadastros::class)->isRevenda();
+
+            return [
+                't-' . ($isRevenda ? 'revenda' : 'particular'),
+            ];
+        } catch (\Exception $e) {
             return [];
         }
-
-        $isRevenda = $container->get(Cadastros::class)->isRevenda();
-
-        return [
-            't-' . ($isRevenda ? 'revenda' : 'particular'),
-        ];
     }
 }
