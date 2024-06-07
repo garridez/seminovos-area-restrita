@@ -72,22 +72,22 @@ class ParticularForm extends Form
                     'placeholder' => 'AA-00.000.000',
                 ],
             ]);
-
-            $this->add([
-                'type' => Element\Text::class,
-                'name' => 'cpfResponsavel',
-                'options' => [
-                    'label' => 'CPF',
-                ],
-                'attributes' => [
-                    'required' => true,
-                    'readonly' => true,
-                    'class' => 'form-control',
-                    'placeholder' => '000.000.000-00',
-                    'data-mask' => '000.000.000-00',
-                ],
-            ]);
         }
+        $this->add([
+            'type' => Element\Text::class,
+            'name' => 'cpfResponsavel',
+            'options' => [
+                'label' => 'CPF',
+            ],
+            'attributes' => [
+                'required' => true,
+                'readonly' => true,
+                'class' => 'form-control',
+                'placeholder' => '000.000.000-00',
+                'data-mask' => '000.000.000-00',
+            ],
+        ]);
+
         $this->add([
             'type' => Element\Select::class,
             'name' => 'idEstado',
