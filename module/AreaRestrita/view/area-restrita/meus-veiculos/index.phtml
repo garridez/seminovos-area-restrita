@@ -296,6 +296,13 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         </button>
                                     </a>
                                 <?php } ?>
+                                <?php if ($veiculo["botoes"]["compartilhar"]) { ?>
+                                    <a href="" class="item-compartilhar" data-modelo="<?= $veiculo['modelo'] ?>" data-id-veiculo="<?= $veiculo['idVeiculo'] ?>" data-marca="<?= $veiculo['marca']?>" rel="nofollow">
+                                        <button class="btn btn-success icon-2">
+                                            <i class=" fa fa-share-alt"></i><span>Compartilhar</span>
+                                        </button>
+                                    </a>
+                                <?php } ?>
                                 </li>
                             </div>
                         </div>
