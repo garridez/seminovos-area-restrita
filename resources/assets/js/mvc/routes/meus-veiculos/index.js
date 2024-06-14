@@ -54,12 +54,15 @@ module.exports.callback = ($) => {
                     window.location = link;
                 });
         })
-        .on('click', '.item-compartilhar a', function () {
+        .on('click', '.item-compartilhar', function () {;
+            const marca = $(this).data('marca');
+            const modelo = $(this).data('modelo');
+            const idVeiculo = $(this).data('id-veiculo')
             if (navigator && navigator.share) {
                 navigator
                     .share({
-                        title: 'Olha esse veículo que encontrei: ' + document.title,
-                        url: window.location.href,
+                        title: 'Veja este ' + marca + ' ' + modelo + ' que encontrei: ',
+                        url: 'https://seminovos.com.br/' + idVeiculo,
                     })
                     .then(() => {
                         console.log('Thanks for sharing!');
@@ -88,17 +91,6 @@ module.exports.callback = ($) => {
             $('body').off('click.closeToolTipCompartilhar');
             $ctx.removeClass('show');
         });
-
-    $('body').on('click', '.lista-compartilhar .share-link a', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        $(this).closest('.item-compartilhar').removeClass('show');
-        var msgToCopy =
-            'Encontrei esse veículo ' + $(this).data('title') + '\n ' + $(this).data('url');
-        console.log(msgToCopy);
-        //copyToClipboard(msgToCopy);
-    });
 
     if (location.hash !== '' && window.URLSearchParams) {
         (function () {

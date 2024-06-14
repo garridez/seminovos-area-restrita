@@ -176,6 +176,7 @@ class MeusVeiculosController extends AbstractActionController
                 "renovar_plano" => false,
                 "inativar" => false,
                 "certificado" => false,
+                "compartilhar" => false,
             ];
 
             switch ($veiculo['idStatus']) {
@@ -189,6 +190,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["excluir"] = true;
                     $temp_acoes["inativar"] = true;
                     $temp_acoes["trocar_plano"] = true;
+                    $temp_acoes["compartilhar"] = true;
                     break;
                 case "3":
                     $frase = "";
@@ -298,6 +300,7 @@ class MeusVeiculosController extends AbstractActionController
                 "renovar_plano" => false,
                 "alerta" => false,
                 "certificado" => false,
+                "compartilhar" => false,
             ];
 
             switch ($veiculo['idStatus']) {
@@ -318,6 +321,7 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_dados"] = true;
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
+                    $temp_acoes["compartilhar"] = true;
                     if ($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])) {
                         $temp_acoes["certificado"] = true;
                     }
