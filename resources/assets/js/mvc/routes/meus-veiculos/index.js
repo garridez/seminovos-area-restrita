@@ -62,7 +62,7 @@ module.exports.callback = ($) => {
                 navigator
                     .share({
                         title: 'Veja este ' + marca + ' ' + modelo + ' que encontrei: ',
-                        url: 'https://www.seminovos.com.br/' + idVeiculo,
+                        url: 'https://seminovos.com.br/' + idVeiculo,
                     })
                     .then(() => {
                         console.log('Thanks for sharing!');
