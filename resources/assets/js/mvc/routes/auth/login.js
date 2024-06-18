@@ -9,9 +9,8 @@ export const seletor = '.c-auth.a-login';
  */
 export const callback = ($) => {
     window.gsi_login_callback = function (response) {
-        console.log({
-            response,
-        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectBase64 = urlParams.get('redirect');
 
         $.post('/entrar/oauth', {
             tipoCadastro: 2,
@@ -19,9 +18,12 @@ export const callback = ($) => {
             idToken: response.credential,
         })
             .done(function (response) {
-                console.log({ data: response });
                 if (response.status === 200) {
-                    window.location.href = '/';
+                    let href = '/';
+                    if (redirectBase64) {
+                        href = atob(redirectBase64);
+                    }
+                    window.location.href = href;
                     return;
                 }
                 if (response.status === 404) {
@@ -51,10 +53,6 @@ export const callback = ($) => {
                         .trigger('submit');
                     return;
                 }
-                $('.debug-html').html(response).css({
-                    position: 'absolute',
-                    left: 0,
-                });
             })
             .catch(function (e) {
                 var html = e.responseText;
