@@ -31,7 +31,7 @@ export const callback = ($) => {
 
         if (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1) {
             var $inpuDataNasc = $('input[name="dataNascimento"]');
-            var date = $inpuDataNasc.val().split('/');
+            var date = ($inpuDataNasc.val() || '').split('/');
             $inpuDataNasc.unmask();
             $inpuDataNasc.val(date[2] + '-' + date[1] + '-' + date[0]);
         }
