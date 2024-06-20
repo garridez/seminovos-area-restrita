@@ -120,6 +120,9 @@ function init() {
         }
 
         var itens = $(this).find('option:selected').data('itens');
+        if (!itens) {
+            return;
+        }
 
         $('[name="codFipe"]').val(itens['codFipe']);
 
