@@ -27,7 +27,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
             <li class="menu-chat">
                 <a href="<?= $this->url('restrito/chat') ?>" title="Chat">
                     <span class="icon-thumbnail"><i class="fa fa-comments" aria-hidden="true"></i></span>
-                    <span class="title">Chat</span>
+                    <span class="title">Chat <sup class="count"></sup></span>
                 </a>
             </li>
         <?php endif; ?>
