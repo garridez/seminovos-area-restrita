@@ -1,14 +1,23 @@
+const { default: Alerts } = require('../../../components/Alerts');
+
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
     var HandleApiError = require('../../../components/HandleApiError').default;
     var stopEvent = require('../../../helpers/StopEvent');
     var stepsContainer = $('.step-container');
-    var urlSaved = '';
+    var urlSaved = 'none';
     $('.anuncio-steps').on('steps-loaded', function () {
         $('form[name="form_videoVeiculo"]')
             .find('input[name="video"]')
             .keyup(function () {
+                
+                if($(this).val() == "") {
+                    $("#remove-link-youtube").hide();
+                } else {
+                    $("#remove-link-youtube").show();
+                }
+
                 let result = parseVideo($(this).val());
                 if (result.type == 'youtube') {
                     $('.preview-video').removeClass('d-flex');
@@ -24,15 +33,22 @@ module.exports.callback = ($) => {
         var stepVideo = $('.step-video');
         var video = stepVideo.find('form [name="video"]');
         var url = video.val().trim();
-        if (url === '' || url === urlSaved) {
+
+
+        if (url === urlSaved) {
             return true;
         }
 
-        var videoParsed = parseVideo(url);
-        if (videoParsed.type === undefined) {
-            console.log('Link inválido');
-            return stopEvent(e);
+
+        if(url != '') {
+            var videoParsed = parseVideo(url);
+            if (videoParsed.type === undefined) {
+                console.log('Link inválido');
+                return stopEvent(e);
+            }
         }
+        
+
         var data = $('form', '#dados-basicos,.step-video').serialize();
 
         $.ajax({

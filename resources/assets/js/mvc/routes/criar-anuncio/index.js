@@ -68,6 +68,19 @@ module.exports.callback = ($) => {
         return modal;
     }
 
+    $('body').on('click', '#remove-link-youtube', function(){
+        // Remover a classe d-none e adicionar a classe d-flex ao div
+        $('.preview-video').removeClass('d-none').addClass('d-flex');
+        
+        // Adicionar a classe d-none e remover o src do iframe
+        var iframe = $('#videoWindow');
+        iframe.addClass('d-none');
+        iframe.attr('src', '');
+        
+        // Limpar o valor do input
+        $('input[name="video"]').val('');
+    });
+
     $('.btn-continuar').on('click', function () {
         // BtnContinuar.disable();
         // Valida no 1º passo se o modelo foi selecionado
@@ -220,6 +233,7 @@ function setStepIconActive() {
         }
     });
 }
+
 
 function setHashState(e, params) {
     return;
