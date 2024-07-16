@@ -42,6 +42,23 @@ export const callback = ($) => {
             data: $this.serialize(),
             dataType: 'json',
             success: function (data) {
+
+                //custom message for e-mail already exists
+                if(data.detail) {
+                    const contemEmail = data.detail.includes("E-mail");
+                    const contemCadastrado = data.detail.includes("já cadastrado em nosso sistema");
+
+                    if (contemEmail && contemCadastrado) {
+                        Alert.info(
+                            '<p>'+data.detail+'</p>',
+                            '<span style="color:red">Atenção!<span>',
+                            15_000,
+                        );
+    
+                        return;
+                    }
+                }
+
                 if (!HandleApiError(data)) {
                     return;
                 }
