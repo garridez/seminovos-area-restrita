@@ -12,6 +12,7 @@ module.exports.callback = ($) => {
 
     $(emailInput).keypress(function () {
         var email = emailInput.val() || '';
+
         if (originalEmail == email) return;
 
         $btnSubmit.addClass('to-validade');
@@ -25,7 +26,7 @@ module.exports.callback = ($) => {
         }
     });
 
-    var validarEmail = function (emailInput) {
+    var validarEmail = function (emailInput, originalEmail) {
         var email = emailInput.val();
 
         if (email == '') return;
@@ -51,7 +52,7 @@ module.exports.callback = ($) => {
 
                     $('.loading-container').addClass('hide');
 
-                    emailInput.val('');
+                    emailInput.val(originalEmail);
 
                     return;
                 }
@@ -69,7 +70,11 @@ module.exports.callback = ($) => {
         e.preventDefault();
         e.stopPropagation();
 
-        validarEmail(emailInput);
+        var email = $(this).val() || '';
+
+        if (originalEmail == email) return;
+
+        validarEmail(emailInput, originalEmail);
     });
 
     emailSecundarioInput.on('blur', function (e) {
