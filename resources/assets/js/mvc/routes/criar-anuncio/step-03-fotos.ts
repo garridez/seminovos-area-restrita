@@ -46,6 +46,13 @@ function init() {
     const inputFoto = ctx.find<HTMLInputElement>('[name="foto"]');
     const inputFotosMulti = ctx.find<HTMLInputElement>('[name="fotos"]');
 
+    ctx.find('.btn-excluir-todas-fotos').on('click', function () {
+        if (!confirm('Deseja realmente excluir todas fotos?')) {
+            return;
+        }
+        ctx.find('.btn-remove-img').click();
+    });
+
     ctx.find('.fotos-container').on('click', '.display-img', function (e) {
         e.preventDefault();
 

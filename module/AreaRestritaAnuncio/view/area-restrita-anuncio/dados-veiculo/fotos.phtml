@@ -40,16 +40,23 @@ unset($foto, $fotosNewKeys);
                         </label>
                     </div>
                     <div class="h1 text-center">ou</div> -->
-                    <div class="mult-imagens w-100 <?= $existeVeiculo ? 'd-none' : 'd-flex'?> justify-content-end">
-                        <label class="d-flex m-0" for="fotos" title="Enviar multiplas fotos">
-                            <div class="icones">
-                                <i class="fa fa-picture" aria-hidden="true"></i>
-                                <i class="fa fa-picture" aria-hidden="true"></i>
-                            </div>
-                            Multiplas imagens
-                            <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
-                        </label>
+                <div class="container mb-4">
+                    <div class="row">
+                        <div class="col-6 mult-imagens d-flex justify--content-end">
+                            <label class="d-flex m-0" for="fotos" title="Enviar multiplas fotos">
+                                <div class="icones">
+                                    <i class="fa fa-picture" aria-hidden="true"></i>
+                                    <i class="fa fa-picture" aria-hidden="true"></i>
+                                </div>
+                                Multiplas imagens
+                                <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
+                            </label>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end">
+                            <button type="button" class="btn btn-sm btn-light btn-excluir-todas-fotos">Excluir todas fotos</button>
+                        </div>
                     </div>
+                </div>
                 <input type="file" name="foto" accept="image/*" class="hidden" />
                 <div class=" container">
                     <div class="fotos-container">
