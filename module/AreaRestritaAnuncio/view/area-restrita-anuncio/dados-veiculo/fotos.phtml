@@ -34,19 +34,13 @@ unset($foto, $fotosNewKeys);
             </div> */?>
 
             <form>
-                <?php
-                /**
-                 * @todo Futuramente essa funcionalidade vai ser liberada
-                 */
-                    if (!$existeVeiculo):
-                ?>
                     <!-- <div class="form-group-lg form-group form-group-default form-text-center">
                         <label class="form-control-lg" for="fotos">
                             Clique em um dos espaços abaixo para selecionar <b>uma foto</b>
                         </label>
                     </div>
                     <div class="h1 text-center">ou</div> -->
-                    <div class="mult-imagens w-100 d-flex justify-content-end">
+                    <div class="mult-imagens w-100 <?= $existeVeiculo ? 'd-none' : 'd-flex'?> justify-content-end">
                         <label class="d-flex m-0" for="fotos" title="Enviar multiplas fotos">
                             <div class="icones">
                                 <i class="fa fa-picture" aria-hidden="true"></i>
@@ -56,7 +50,6 @@ unset($foto, $fotosNewKeys);
                             <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="hidden" />
                         </label>
                     </div>
-                <?php endif; ?>
                 <input type="file" name="foto" accept="image/*" class="hidden" />
                 <div class=" container">
                     <div class="fotos-container">

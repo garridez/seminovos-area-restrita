@@ -1955,6 +1955,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/compress.js@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@types/compress.js@npm:1.1.3"
+  checksum: 10/2fc6b1f638759ec71a247dba32c8258992a78b9a7c8e88b263d8c287d32fe9b55e6f740cd342303dfa4c721efc794eae06746602f0f445e13e928db1a992b984
+  languageName: node
+  linkType: hard
+
 "@types/connect-history-api-fallback@npm:^1.3.5":
   version: 1.5.4
   resolution: "@types/connect-history-api-fallback@npm:1.5.4"
@@ -2285,6 +2292,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10/b4b5381122465d80ea8b158537c00bc82317222d3fb31fd7229ff25b31fa89134abfbab969118da55622236bf3d8fee75759f3959908b5688991f492008f29bc
+  languageName: node
+  linkType: hard
+
+"@types/sortablejs@npm:^1.15.8":
+  version: 1.15.8
+  resolution: "@types/sortablejs@npm:1.15.8"
+  checksum: 10/aea58b08cf45f5e9633707a8df0df1212595c731bbdfd29805487138fdd0d8c51fa5c741999738a645c1e801d43a92ba0d3fb5b45625b52e247c56588aef6c55
   languageName: node
   linkType: hard
 
@@ -2837,11 +2851,13 @@ __metadata:
   dependencies:
     "@babel/plugin-syntax-jsx": "npm:^7.24.6"
     "@fortawesome/fontawesome-free": "npm:^6.5.2"
+    "@types/compress.js": "npm:^1.1.3"
     "@types/eslint": "npm:^8.56.10"
     "@types/jquery": "npm:^3.5.30"
     "@types/lodash.merge": "npm:^4.6.9"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
+    "@types/sortablejs": "npm:^1.15.8"
     "@types/webpack-bundle-analyzer": "npm:^4.7.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.12.0"
     "@typescript-eslint/parser": "npm:^7.12.0"
@@ -2855,6 +2871,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:^3.2.0"
     glob: "npm:^10.4.1"
     globals: "npm:^15.3.0"
+    heic2any: "npm:^0.0.4"
     highcharts: "npm:^11.4.3"
     highcharts-react-official: "npm:^3.2.1"
     jquery: "npm:^3.7.1"
@@ -5306,6 +5323,13 @@ __metadata:
   bin:
     he: bin/he
   checksum: 10/d09b2243da4e23f53336e8de3093e5c43d2c39f8d0d18817abfa32ce3e9355391b2edb4bb5edc376aea5d4b0b59d6a0482aab4c52bc02ef95751e4b818e847f1
+  languageName: node
+  linkType: hard
+
+"heic2any@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "heic2any@npm:0.0.4"
+  checksum: 10/71188058d5851dcd66685c89d1084458f633e87dcd2f31a0ed5cdadf32329421310ba86cdd2a6d4aba9e46856957e05fc7fc9112b52bfc44984e438f2372701f
   languageName: node
   linkType: hard
 
