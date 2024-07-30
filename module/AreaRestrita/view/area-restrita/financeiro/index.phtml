@@ -1,8 +1,10 @@
 <?php
-/* @var $this AreaRestrita\View\Helper\AutocompleteClass */
-$this->headTitle('Financeiro');
-$dadosFinanceiro = $this->financeiro;
+    /* @var $this AreaRestrita\View\Helper\AutocompleteClass */
+    $this->headTitle('Financeiro');
+    $dadosFinanceiro = $this->financeiro;
+    $plano = current($this->plano);
 ?>
+
 <div class=" container-fluid   container-fixed-lg">
     <div class="row">
         <div class="col-lg-12 text-left">
@@ -34,7 +36,17 @@ $dadosFinanceiro = $this->financeiro;
             <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
                 <div class="row">
                     <div class="col-md-5 col-12 b-r b-dashed b-grey sm-b-b">
-                        <div class="sm-m-t-15 m-t-50">
+                        <div class="">
+                            <h4 class="text-center font-weight-bolder">
+                                Pacote contratado
+                            </h4>   
+                        </div>
+                        <div class="m-t-30">
+                            <h4 class="text-center font-weight-normal">
+                                <?php echo $plano['nitro'] + $plano['turbo'] + $plano['simples']; ?> Espaços
+                            </h4>   
+                        </div>
+                        <div class="sm-m-t-5 m-t-30">
                             <i class="fa fa-shopping-cart fa-2x hint-text"></i>
                             <h5>Valor mensal do plano atual: R$ <?= $dadosFinanceiro['valor'] ?></h5>
                             <p class="small hint-text">Escolha o tempo que deseja pagar.</p>

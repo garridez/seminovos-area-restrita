@@ -138,6 +138,7 @@ class FinanceiroController extends AbstractActionController
 
         return new ViewModel([
             'financeiro' => $dadosFinanceiro,
-        ]);
+            'plano' => $dadosPlano,
+        ]); 
     }
 }
