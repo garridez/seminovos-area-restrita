@@ -67,7 +67,7 @@ btn.addEventListener('click', function(e) {
   try{
     document.execCommand('copy');
   }catch(err){
-    
+
     newrelic && newrelic.noticeError(err);
   }
   selectText();
@@ -116,3 +116,5 @@ function alerta (type, text, title, time) {
         return modal;
     }
 </script>
+
+<script> gtag('event', 'conversion', { 'send_to': 'AW-1006006929/il4KCIzQxrUBEJHl2d8D', 'value': 1.0, 'currency': 'BRL' }); </script>
