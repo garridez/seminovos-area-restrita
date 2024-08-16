@@ -18,6 +18,11 @@ module.exports.callback = ($) => {
     }
     $('.toggle-sidebar').click((e) => {
         if ($('body').hasClass('sidebar-open')) {
+
+            if($('body').hasClass('mobile')) {
+                jsCookie.remove('sidebar-collapsed');
+            }
+
             $('body').removeClass('sidebar-open');
             $('.page-sidebar').removeClass('visible');
         } else {
@@ -29,14 +34,24 @@ module.exports.callback = ($) => {
     let menu = $('.menu-items');
     menu.find();
     $('.sidebar-menu .btn-sidebar-collapse').click(function () {
-        $('body').toggleClass('sidebar-collapsed');
 
-        if ($('body').hasClass('sidebar-collapsed')) {
-            jsCookie.set('sidebar-collapsed', '1', {
-                expires: 365,
-            });
-        } else {
+        if($('body').hasClass('mobile')) {
             jsCookie.remove('sidebar-collapsed');
+
+            if ($('body').hasClass('sidebar-open')) {
+                $('body').removeClass('sidebar-open');
+                $('.page-sidebar').removeClass('visible');
+            }
+        } else {
+            $('body').toggleClass('sidebar-collapsed');
+
+            if ($('body').hasClass('sidebar-collapsed')) {
+                jsCookie.set('sidebar-collapsed', '1', {
+                    expires: 365,
+                });
+            } else {
+                jsCookie.remove('sidebar-collapsed');
+            }
         }
     });
 
