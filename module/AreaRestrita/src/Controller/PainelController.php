@@ -51,25 +51,38 @@ class PainelController extends AbstractActionController
         /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
+        $dateStart = $this->request->getQuery('date-start', 0);
+        $dateEnd = $this->request->getQuery('date-end', 0);
+
+        $filtradoPorData = $dateStart || $dateEnd;
+
         /** @var array $metricas */
         $metricas = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'veiculo',
             'incluirHistorico' => true,
+            'dates' => [
+                'start' => $dateStart,
+                'end' => $dateEnd,
+            ],
             'dias' => 30,
-        ], null, 60 * 60 * 24)->getData() ?? [];
+        ], null, 60 * 60)->getData() ?? [];
 
         $metricasPorData = $apiClient->veiculosMetricasGet([
             'idCadastro' => $idCadastro,
             'agruparPor' => 'data',
             'incluirHistorico' => true,
+            'dates' => [
+                'start' => $dateStart,
+                'end' => $dateEnd,
+            ],
             'dias' => 30,
-        ], null, 60 * 60 * 24)->getData() ?? [];
+        ], null, 60 * 60)->getData() ?? [];
 
         /** @var array $maisAcessados */
         $maisAcessados = $apiClient->maisAcessadosGet([
             'qtd' => 30,
-        ], null, 60 * 60 * 24)->getData() ?? [];
+        ], null, 60 * 60)->getData() ?? [];
 
         $apiClient->setStatusRangeCacheable(200, 404);
         foreach ($veiculos['data'] as $veiculo) {
@@ -100,6 +113,8 @@ class PainelController extends AbstractActionController
                 foreach ($metricas[$idVeiculo] as $metricaName => $metricasRow) {
                     $veiculos['data'][$k]['metricas'][$metricaName] = $metricasRow;
                 }
+            } else if ($filtradoPorData) {
+                unset($veiculos['data'][$k]);
             }
         }
 
@@ -159,9 +174,17 @@ class PainelController extends AbstractActionController
 
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
+        $dateStart = $this->request->getQuery('date-start', $veiculo['dataCadastro']);
+        $dateEnd = $this->request->getQuery('date-end', 0);
+
         $metricas = $apiClient->veiculosMetricasGet([
             'idVeiculo' => $idVeiculo,
-        ], null, 60 * 60 * 24)->getData()[$idVeiculo] ?? [
+            'dates' => [
+                'start' => $dateStart,
+                'end' => $dateEnd,
+            ],
+            'dias' => 60,
+        ], null, 60 * 60)->getData()[$idVeiculo] ?? [
             'acesso' => [
                 'total' => 0,
                 'data' => [],

@@ -1,2 +1,6 @@
 @import "index";
 @import "detalhe-anuncio";
+
+input::-webkit-calendar-picker-indicator {
+    display: initial;
+}

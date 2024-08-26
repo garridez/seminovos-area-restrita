@@ -1,4 +1,4 @@
-import highcharts, { SeriesOptionsType, Options } from 'highcharts';
+import highcharts, { SeriesOptionsType, Options } from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import exporting from 'highcharts/modules/exporting';
 import exportingData from 'highcharts/modules/export-data';
@@ -7,6 +7,7 @@ import highChartsLangPTBR from '../../../components/highChartsLangPTBR';
 
 import { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
+import $ from 'jquery';
 
 import { chartDefaultHighStock } from './helpers/chartDefaults';
 import * as chartOptionsMetricasTotais from './helpers/chartOptionsMetricasTotais';
@@ -27,6 +28,7 @@ declare global {
 
 export const seletor = '.c-painel.a-index';
 export default () => {
+    dateRange();
     $('body').on('click', '.nav-tabs .nav-link', function (e) {
         e.preventDefault();
         const $this = $(this);
@@ -53,7 +55,7 @@ export default () => {
         if (!metrica) {
             continue;
         }
-        const show = i === 1;
+        const show = false;
         navLis.push(
             <li key={id}>
                 <a
@@ -66,7 +68,6 @@ export default () => {
             </li>,
         );
         const chartOptions = chartOptionsMetricasTotais[label] || {};
-        console.log(chartOptions);
         const metricaMerged = merge({}, metrica, {
             dataLabels: {
                 enabled: true,
@@ -106,4 +107,21 @@ function getChart(chartOptions: Options, serie: SeriesOptionsType) {
     return (
         <HighchartsReact highcharts={highcharts} constructorType={'stockChart'} options={options} />
     );
+}
+
+function dateRange() {
+    const $ctx = $('form.filtro-date');
+    const $dateStart = $ctx.find('[name="date-start"]');
+    const $dateEnd = $ctx.find('[name="date-end"]');
+
+    $dateStart.on('change', function () {
+        const val = $(this).val();
+        console.log({ val });
+        $dateEnd.attr('min', String(val));
+    });
+    $dateEnd.on('change', function () {
+        const val = $(this).val();
+        console.log({ val });
+        $dateStart.attr('max', String(val));
+    });
 }

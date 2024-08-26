@@ -236,6 +236,28 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
             </div>
             <a href="#" class="btn btn-laranja">ok</a> -->
         </div>
+        <div class="col-12 mb-4">
+            <form method="get" class="form-inline filtro-date">
+                <span class="px-2">Filtra dados por data: </span>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">De:</span>
+                    </div>
+                    <label>
+                        <input type="date" name="date-start" class="form-control" value="<?= $_GET['date-start'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
+                    </label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Até:</span>
+                    </div>
+                    <label>
+                        <input type="date" name="date-end"   class="form-control" value="<?= $_GET['date-end'] ?? '' ?>" max="<?= date('Y-m-d') ?>" value="<?= date('Y-m-d') ?>" />
+                    </label>
+                </div>
+                <label>
+                    <button type="submit" class="btn btn-laranja">Filtrar</button>
+                </label>
+            </form>
+        </div>
         <div class="col-6 col-md-4 card">
             <div class="card-header text-center">Impressão no resultado de busca resultados de busca</div>
             <div class="card-body"><?= StringFuncs::nF($this->metricas['impressao']['total']) ?></div>

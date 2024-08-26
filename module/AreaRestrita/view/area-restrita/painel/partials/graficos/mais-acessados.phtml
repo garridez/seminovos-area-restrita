@@ -27,14 +27,22 @@ $renderChart = function (
             ];
         }
     }
+    foreach ($series as $kSerie => $serie){
+        usort($serie['data'], function($a, $b) {
+            return $a['x'] <=> $b['x'];
+        });
+        $series[$kSerie]['data'] = $serie['data'];
+    }
 ?>
     <div id="metricas-por-data-<?= $key ?>" class="collapse w-100" data-parent="#metricas-por-data-container">
         <div class="container-chart"></div>
     </div>
     <script>
         (function() {
+
             var series = <?= json_encode(array_values($series)); ?>;
-            Highcharts.chart(document.querySelector('#metricas-por-data-<?= $key ?> .container-chart'), {
+            var selector = '#metricas-por-data-<?= $key ?> .container-chart';
+            Highcharts.chart(document.querySelector(selector), {
                 chart: {
                     type: 'line'
                 },
