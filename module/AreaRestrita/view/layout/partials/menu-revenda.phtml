@@ -63,6 +63,12 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
             </a>
         </li>
         <li>
+            <a href="<?= $this->url('restrito/painel') ?>" title="Estatísticas">
+                <span class="icon-thumbnail"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="title">Estatísticas</span>
+            </a>
+        </li>
+        <li>
             <a href="<?= $this->url('restrito/repasse') ?>">
                 <span class="icon-thumbnail"><i class="fa fa-arrow-right-arrow-left" aria-hidden="true"></i></span>
                 <span class="title bg-laranja" style="display: inline-flex;padding: 0 5px;">Repasse Seminovos</span>
