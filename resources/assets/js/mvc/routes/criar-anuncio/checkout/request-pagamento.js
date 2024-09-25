@@ -18,6 +18,26 @@ module.exports = function (formData, ajaxParams) {
     if (formData && Array.isArray(formData)) {
         data = data.concat(formData);
     }
+
+    //FIELDS DATA ONLY
+    colorDepth   = screen.colorDepth;
+    type         = getDeviceType();
+    javaEnabled  = navigator.javaEnabled();
+    language     = navigator.language;
+    screenHeight = screen.height;
+    screenWidth  = screen.width;
+    timezoneOffset = getTimeZoneOffset();
+    userAgent    = navigator.userAgent;
+
+    data.push({name: 'colorDepth', value: colorDepth});
+    data.push({name: 'type', value: type});
+    data.push({name: 'javaEnabled', value: javaEnabled});
+    data.push({name: 'language', value: language});
+    data.push({name: 'screenHeight', value: screenHeight});
+    data.push({name: 'screenWidth', value: screenWidth});
+    data.push({name: 'timezoneOffset', value: timezoneOffset});
+    data.push({name: 'userAgent', value: userAgent});
+
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
     var dataRedirectPagamento = {
         urlAguardando: `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
@@ -113,5 +133,34 @@ module.exports = function (formData, ajaxParams) {
             })
             .find('.modal-footer')
             .html(downloadBtn);
+    }
+
+    /**
+     * USED FOR DATA ONLY FIELD
+     * 
+     * @returns {String} Retorna o tipo de dispositivo
+     */
+    function getDeviceType() {
+        const userAgent = navigator.userAgent;
+    
+        if (/Mobi|Android|iPhone/i.test(userAgent)) {
+            return 'Mobile';
+        } else if (/iPad|Tablet/i.test(userAgent)) {
+            return 'Tablet';
+        } else {
+            return 'Desktop';
+        }
+    }
+
+    /**
+     * USED FOR DATA ONLY FIELD
+     * 
+     * @returns {String} Retorna o offset do fuso horário
+     */
+    function getTimeZoneOffset() {
+        const offset = new Date().getTimezoneOffset();
+        const offsetHours = Math.abs(offset / 60);
+        const sign = offset < 0 ? '+' : '-';
+        return `UTC${sign}${offsetHours}`;
     }
 };

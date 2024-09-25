@@ -124,7 +124,7 @@ class PagamentoController extends AbstractActionController
     }
 
     public function processarAction()
-    {
+    {   
         $dadosPagamento = [];
         $comprovanteAnexo = [];
         $dados = $this->params()->fromPost();
@@ -152,6 +152,11 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['flagCertificado'] = isset($dados['certificado']) && !empty($dados['certificado']) ? (int) $dados['certificado'] : null;
         $dadosPagamento['parcelas'] = 1;
 
+        if($cadastro['tipoCadastro'] == 1){
+            $dadosPagamento['cep'] = str_replace(["-", "."], "", $cadastro['cep'])  ?? null;
+        } else {
+            $dadosPagamento['cep'] = str_replace(["-", "."], "", $dados['cep'])  ?? null;
+        }
 
         // dados para pagamento Cielo/cartão
         if ($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') {
@@ -165,7 +170,19 @@ class PagamentoController extends AbstractActionController
                 $dadosPagamento['parcelas'] = 8;
             }
             $dadosPagamento['tipo_pagamento'] = empty($dados['tipo_pagamento']) ? 'credito' : $dados['tipo_pagamento'];
+            
+            //FIELDS DATA ONLY
+            $dadosPagamento['color_depth'] = $dados['colorDepth'] ?? null;
+            $dadosPagamento['type'] = $dados['type'] ?? null;
+            $dadosPagamento['java_enabled'] = $dados['javaEnabled'] ?? null;
+            $dadosPagamento['language'] = $dados['language'] ?? null;
+            $dadosPagamento['screen_height'] = $dados['screenHeight'] ?? null;
+            $dadosPagamento['screen_width'] = $dados['screenWidth'] ?? null;
+            $dadosPagamento['time_zone_off_set'] = $dados['timezoneOffset'] ?? null;
+            $dadosPagamento['user_agent'] = $dados['userAgent'] ?? null;
+            $dadosPagamento['ip'] = $cadastro['ip'] ?? null;
         }
+
         $controle = false;
         $files = null;
         $apiClient = $this->getApiClient();
@@ -214,7 +231,6 @@ class PagamentoController extends AbstractActionController
 
         /*echo $this->getApiClient()
         ->pagamentosPost($dadosPagamento, null, false)->getBody(); exit;*/
-
         $response = $this->getApiClient()
         ->pagamentosPost($dadosPagamento, null, false)
         ->json();
@@ -291,5 +307,5 @@ HTML;
     {
         var_dump(__METHOD__ . ':' . __LINE__);
         die;
-    }
+    } 
 }

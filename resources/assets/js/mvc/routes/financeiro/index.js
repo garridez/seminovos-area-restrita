@@ -42,6 +42,25 @@ export const callback = ($) => {
                 value: tempo_contrato,
             });
 
+            //FIELDS DATA ONLY
+            var colorDepth   = screen.colorDepth;
+            var type         = getDeviceType();
+            var javaEnabled  = navigator.javaEnabled();
+            var language     = navigator.language;
+            var screenHeight = screen.height;
+            var screenWidth  = screen.width;
+            var timezoneOffset = getTimeZoneOffset();
+            var userAgent = navigator.userAgent;
+
+            data.push({name: 'colorDepth', value: colorDepth});
+            data.push({name: 'type', value: type});
+            data.push({name: 'javaEnabled', value: javaEnabled});
+            data.push({name: 'language', value: language});
+            data.push({name: 'screenHeight', value: screenHeight});
+            data.push({name: 'screenWidth', value: screenWidth});
+            data.push({name: 'timezoneOffset', value: timezoneOffset});
+            data.push({name: 'userAgent', value: userAgent});
+
             var Loading = require('../../../components/Loading').default;
             Loading.addFeedbackTexts('Validando informações...', 'Realizando pagamento ...', false);
 
@@ -131,6 +150,35 @@ export const callback = ($) => {
         },
     );
 
+    /**
+     * USED FOR DATA ONLY FIELD
+     * 
+     * @returns {String} Retorna o tipo de dispositivo
+     */
+    function getDeviceType() {
+        const userAgent = navigator.userAgent;
+    
+        if (/Mobi|Android|iPhone/i.test(userAgent)) {
+            return 'Mobile';
+        } else if (/iPad|Tablet/i.test(userAgent)) {
+            return 'Tablet';
+        } else {
+            return 'Desktop';
+        }
+    }
+
+    /**
+     * USED FOR DATA ONLY FIELD
+     * 
+     * @returns {String} Retorna o offset do fuso horário
+     */
+    function getTimeZoneOffset() {
+        const offset = new Date().getTimezoneOffset();
+        const offsetHours = Math.abs(offset / 60);
+        const sign = offset < 0 ? '+' : '-';
+        return `UTC${sign}${offsetHours}`;
+    }
+    
     function modalPagamentoBoleto(data) {
         var text = `
         <div class="w-100 text-center flex-wrap">
