@@ -1,16 +1,23 @@
 <form class="pagamento-boleto-form">
     <?php
     // @todo verificar se as revendas precisam de aceitar os termos
-    /* <div class="form-group form-group-default" title="Termos de adesão">
+    /* <div class="form-group" title="Termos de adesão">
       <label>
       <input type="checkbox" name="termos" required>
       Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
       </label>
       </div> */
-
     ?>
+
     <div class="form-group">
         <input type="hidden" name="metodo" value="boleto" required aria-required="true">
-        <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">GERAR BOLETO</button>
+        <button type="submit" class="btn btn-success w-100 btn-submit-pagt">GERAR BOLETO</button>
+
+        <div class="d-flex align-items-center mt-3 text-warning" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <div class="text-danger">
+              <strong> &nbsp;Ativação em até 3 dias úteis.</strong>
+          </div>
+        </div>
     </div>
 </form>
