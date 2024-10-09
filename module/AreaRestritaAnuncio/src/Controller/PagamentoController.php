@@ -180,7 +180,17 @@ class PagamentoController extends AbstractActionController
             $dadosPagamento['screen_width'] = $dados['screenWidth'] ?? null;
             $dadosPagamento['time_zone_off_set'] = $dados['timezoneOffset'] ?? null;
             $dadosPagamento['user_agent'] = $dados['userAgent'] ?? null;
-            $dadosPagamento['ip'] = $cadastro['ip'] ?? null;
+            
+            $ip = $cadastro['ip'] ?? null;
+
+            // Verifica se o IP é nulo ou se é um IPv6
+            if (is_null($ip) || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                // Atribui o IP fictício 10.0.0.1
+                $dadosPagamento['ip'] = '10.0.0.1';
+            } else {
+                // Mantém o IP original
+                $dadosPagamento['ip'] = $ip;
+            }
         }
 
         $controle = false;
