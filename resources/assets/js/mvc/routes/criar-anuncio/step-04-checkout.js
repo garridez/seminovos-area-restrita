@@ -107,6 +107,6 @@ module.exports.callback = ($) => {
             }
         })
         .on('step:exit:checkout', function () {
-            window.location = '#';
+            //window.location = '#';
         });
 };

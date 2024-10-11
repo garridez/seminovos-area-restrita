@@ -38,12 +38,14 @@ class PlanoController extends AbstractActionController
         ];
 
         $dadosVeiculo = $this->getVeiculo(5);
+        $data['dadosVeiculo'] = $dadosVeiculo;
 
         if ($dadosVeiculo) {
             $data['prioridadePlano'] = (int) $dadosVeiculo['prioridadePlano'];
             $data['idPlanoAtual'] = (int) ($dadosVeiculo['idStatus'] == 1 || $dadosVeiculo['idStatus'] == 3 ? 0 : $dadosVeiculo['idPlano']);
             $data['idStatusAnuncio'] = (int) $dadosVeiculo['idStatus'];
             $data['zeroKm'] = (int) $dadosVeiculo['veiculo_zero_km'];
+
         }
 
         $viewModel = new ViewModel($data);

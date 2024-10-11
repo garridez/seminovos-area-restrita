@@ -23,6 +23,9 @@ module.exports.callback = ($) => {
     stepsContainer.on('step:change', checkLastStep);
     stepsContainer.on('step:change', setHashState);
     anuncioSteps.on('steps-loaded', setStepIconActive);
+    anuncioSteps.on('steps-loaded', function () {
+        $('.step-controls').removeClass('d-none');
+    });
 
     stepsContainer.stepPlugin().on('submit', 'form', function (e) {
         $(this).closest('.step-container').stepPlugin('next');
@@ -71,12 +74,12 @@ module.exports.callback = ($) => {
     $('body').on('click', '#remove-link-youtube', function(){
         // Remover a classe d-none e adicionar a classe d-flex ao div
         $('.preview-video').removeClass('d-none').addClass('d-flex');
-        
+
         // Adicionar a classe d-none e remover o src do iframe
         var iframe = $('#videoWindow');
         iframe.addClass('d-none');
         iframe.attr('src', '');
-        
+
         // Limpar o valor do input
         $('input[name="video"]').val('');
     });

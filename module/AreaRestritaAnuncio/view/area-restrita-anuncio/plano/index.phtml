@@ -48,15 +48,15 @@ if ($isRevenda) {
         PLANOS DE ANÚNCIOS
     </h4>
     <div class="text-center my-3">
-        <small class="align-center">
-            Escolha o plano que atende às suas necessidades e pode dar o destaque que você quer ao seu veículo.
-            <br />Analise os Planos de Anúncios abaixo e conheça as vantagens de cada plano:
-        </small>
+        <span class="align-center">
+        Encontre o plano ideal para destacar seu veículo e alcançar os compradores certos.<br>
+        Explore as opções abaixo e descubra as vantagens exclusivas de cada plano para maximizar sua visibilidade e oportunidades de venda.
+        </span>
     </div>
 
     <div class="row-full">
         <div class="container">
-            <form id="form_Plano" name="form_Plano">
+            <form id="form_Plano" name="form_Plano" data-zerokm="<?= $zeroKm?>">
                 <div class="row grupo-planos">
                     <?php
                     $planoJaEscolhido = false;
@@ -115,9 +115,9 @@ if ($isRevenda) {
                     <?php endif; ?>
 
                     <?php if($isParticular):?>
-                    <div class="alert-primary row-full">
+                    <div class="row-full">
                         <div class="container">
-                            <div class=" row  justify-content-center text-justify p-4">
+                            <div class="row justify-content-center text-justify pt-4">
                                 <div class="fa-5x d-none d-md-block col-md-1 align-self-center">
                                     <i class="icon icon-danger"></i>
                                 </div>
@@ -133,7 +133,7 @@ if ($isRevenda) {
                                         </li>
                                         <br/>
                                         <li class="text-danger">
-                                            * Caso o anunciante coloque como vendido ou remova o anúncio, o mesmo perderá o direito de renovação sem ônus.
+                                            *Caso o anunciante coloque como vendido ou remova o anúncio, o mesmo perderá o direito de renovação sem ônus.
                                         </li>
                                     </ul>
                                 </div>
