@@ -183,14 +183,22 @@ class PagamentoController extends AbstractActionController
             
             $ip = $cadastro['ip'] ?? null;
 
+
             // Verifica se o IP é nulo ou se é um IPv6
             if (is_null($ip) || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                 // Atribui o IP fictício 10.0.0.1
                 $dadosPagamento['ip'] = '10.0.0.1';
             } else {
-                // Mantém o IP original
-                $dadosPagamento['ip'] = $ip;
+                // Verifica se é um IPv4 válido
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                    // Mantém o IP original
+                    $dadosPagamento['ip'] = $ip;
+                } else {
+                    // Atribui o IP fictício 10.0.0.1
+                    $dadosPagamento['ip'] = '10.0.0.1';
+                }
             }
+
         }
 
         $controle = false;
