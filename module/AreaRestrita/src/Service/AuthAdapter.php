@@ -80,7 +80,12 @@ class AuthAdapter implements AdapterInterface
      */
     public function setData(array $data)
     {
-        $data['ip'] = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+        $ip = trim($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
+        if (str_contains($ip, ',')) {
+            $ip = trim(explode(',', $ip)[0]);
+
+        }
+        $data['ip'] = $ip;
         $this->data = $data;
     }
 }
