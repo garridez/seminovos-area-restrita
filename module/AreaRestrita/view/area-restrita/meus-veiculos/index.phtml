@@ -326,7 +326,18 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 $editarPlanosUrl .= '#plano'; ?>
                                                 <a href="<?= $editarPlanosUrl ?>"
                                                     class="btn btn-sm btn-info text-white d-flex align-items-center w-100 justify-content-center btn-acao-trocar-plano">
-                                                    <?= $veiculo['idStatus'] == 3 ? 'Escolha um plano' : 'Trocar Plano' ?>
+                                                    <?php
+
+                                                        if($veiculo['idStatus'] == 3) {
+                                                            echo 'Escolha um plano';
+                                                        } else {
+                                                            if ($veiculo['veiculo_zero_km'] == 1) {
+                                                                echo 'Renovar';
+                                                            } else {
+                                                                echo 'Trocar Plano';
+                                                            }
+                                                        }
+                                                        ?>
                                                 </a>
                                             <?php } ?>
                                             <?php if ($veiculo["botoes"]["upgrade_plano"]) { ?>

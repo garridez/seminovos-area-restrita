@@ -129,8 +129,18 @@ $.extend(Plugin.prototype, {
     },
     _log: function () {
         if (this.opts.debug) {
-            arguments.unshift && arguments.unshift(pluginName + ' Debug:');
-            console.log.apply(this, arguments);
+            const args = [...arguments];
+            const root =
+                '.' +
+                this.$ctx
+                    .attr('class')
+                    .split(/\s+/)
+                    .filter((e) => e.includes('step-') && e !== 'step-0')
+                    .join('.');
+            args.unshift(root);
+            args.unshift(pluginName + ' Debug:');
+
+            console.log.apply(this, args);
         }
     },
     _triggerEvent: function (event, index, nextIndex) {

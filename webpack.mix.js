@@ -89,4 +89,4 @@ mix.copy('resources/assets/img', 'public/img');
 mix.copy('resources/assets/fonts', 'public/fonts');
 mix.copy('node_modules/snbh-site/resources/assets/img/svg', 'public/img/svg');
 mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
-mix.sourceMaps(!mix.inProduction(), 'source-map');
+mix.sourceMaps(!mix.inProduction());

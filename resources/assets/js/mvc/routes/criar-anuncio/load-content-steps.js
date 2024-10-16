@@ -10,6 +10,7 @@ module.exports = function () {
         ]);
     }
     loading.open(true);
+
     stepsUrl.each(function () {
         var ctx = $(this);
         $.get(ctx.data('url'), function (data) {

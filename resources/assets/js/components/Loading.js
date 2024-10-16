@@ -28,7 +28,7 @@ export default {
             },
         });
 
-        instance.attr('title', 'Carregando...');
+        instance.attr('title', 'Carregando...').addClass('ignore-help');
         instance.find('.modal-content').addClass('loading-container');
         this._configureDisplayText(instance);
         instance.modal({

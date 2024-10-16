@@ -164,7 +164,7 @@ body.sidebar-collapsed {
 }
 
 
-[title]:not([title=""]):not(.btn) {
+[title]:not([title=""]):not(.btn):not(.ignore-help) {
     text-decoration: underline dotted;
     &:not(a) {
         cursor: help;

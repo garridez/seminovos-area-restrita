@@ -1,12 +1,18 @@
+&{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .step-list-container{
     @include media-breakpoint-down(sm) {
         line-height: 0px;
     }
 }
 .page-container{
-    min-height: 100%;
-    margin-bottom: -50px;
-    padding-bottom: 50px !important;
+    //min-height: 100%;
+    //margin-bottom: -50px;
+    //padding-bottom: 50px !important;
+    min-height: auto;
     .content {
         padding-top: 0px;
     }
@@ -77,13 +83,13 @@ ul.steps-list{
 
 $namespace:_criar-anuncio-;
 
-.snbh-logo {
+/*.snbh-logo {
     .layer-car {
         animation: #{$namespace}snbh-logo-layer-car 1s ease-in-out;
     }
     .layer-letters {
         animation: #{$namespace}snbh-logo-layer-letters 2s ease-in-out;
     }
-}
+}*/
 
 @import "imports/login_animations";
