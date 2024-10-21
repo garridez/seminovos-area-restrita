@@ -11,16 +11,29 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class TokenMiddleware implements MiddlewareInterface
 {
-    public function __construct(protected $tokens)
-    {
-    }
+    public function __construct(protected $tokens) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $phpsessid = $request->getHeaderLine('X-SnBH-PHPSESSID');
+        $idCadastro = (int) $request->getHeaderLine('X-SnBH-IdCadastro');
+
+        if ($phpsessid) {
+            session_id($phpsessid);
+            session_start();
+            if (
+                $_SESSION
+                && isset($_SESSION['app_login'])
+                && isset($_SESSION['idCadastro'])
+                && $_SESSION['idCadastro'] == $idCadastro
+            ) {
+                return $handler->handle($request);
+            }
+        }
+
         /** @var ServerRequest $request */
 
         $token = $request->getHeaderLine('X-SnBH-Token');
-        $idCadastro = (int) $request->getHeaderLine('X-SnBH-IdCadastro');
 
         $acessoToken = false;
         if ($request->getHeaderLine('X-SnBH-Cadastro')) {
@@ -39,7 +52,7 @@ class TokenMiddleware implements MiddlewareInterface
             return $this->naoAutorizadoResponse();
         }
 
-    // O idCadastro passado deve ser igual ao idCadastro que está no banco
+        // O idCadastro passado deve ser igual ao idCadastro que está no banco
         if ($tokenData['idCadastro'] !== $idCadastro && !$acessoToken) {
             return $this->naoAutorizadoResponse();
         }
@@ -50,7 +63,7 @@ class TokenMiddleware implements MiddlewareInterface
             }
         }
 
-    // Tudo ok! Continua com a requisição
+        // Tudo ok! Continua com a requisição
         return $handler->handle($request);
     }
 
