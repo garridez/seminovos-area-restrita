@@ -54,7 +54,7 @@ export const callback = ($) => {
                             '<span style="color:red">Atenção!<span>',
                             15_000,
                         );
-    
+
                         return;
                     }
                 }
@@ -63,7 +63,8 @@ export const callback = ($) => {
                     return;
                 }
                 var modal = Alert.info(
-                    '<h4>Sua conta foi criada!<br>Você recebera um e-mail para liberação do seu cadastro</h4>',
+                    // eslint-disable-next-line max-len
+                    '<h4><strong>Verifique sua caixa de e-mail e siga as instruções para ativar seu cadastro</strong></h4>',
                     'Falta pouco',
                     20_000,
                 );
@@ -77,7 +78,7 @@ export const callback = ($) => {
                     .addClass('btn-success')
                     .click(redirectEntrar)
                     .find('.text-close')
-                    .html('Acessar Meus Anúncios');
+                    .html('Ok');
             },
             error: function (e) {
                 if (e.responseJSON) {
