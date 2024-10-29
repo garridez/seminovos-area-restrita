@@ -211,6 +211,9 @@ export const callback = ($) => {
     }
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function () {
+        if ($('#pix_tab').hasClass('active')) {
+            $('#pix-form').submit();
+        }
         var target = $(this).data('target').replace('#tab-', '');
         var state = {
             planos: {

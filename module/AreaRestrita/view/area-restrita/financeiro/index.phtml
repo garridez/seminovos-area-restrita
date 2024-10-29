@@ -191,6 +191,12 @@
                         <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
                             data-init-reponsive-tabs="dropdownfx">
                             <li class="nav-item">
+                                <a class="active" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
+                                    <i class="fa fa-credit-card tab-icon"></i>
+                                    <span>PIX</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
                                     <i class="fa fa-shopping-cart tab-icon"></i>
                                     <span>Cartão de Crédito</span>
@@ -202,14 +208,13 @@
                                     <span>Boleto Bancário</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
-                                    <i class="fa fa-credit-card tab-icon"></i>
-                                    <span>PIX</span>
-                                </a>
-                            </li>
                         </ul>
                         <div class="tab-content p-0">
+                            <div class="tab-pane padding-20 sm-no-padding slide-left active" id="pix_tab">
+                                <div class="row row-same-height">
+                                    <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
+                                </div>
+                            </div>
                             <div class="tab-pane padding-20 sm-no-padding slide-left" id="cartao_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-cartao-credito.phtml') ?>
@@ -218,11 +223,6 @@
                             <div class="tab-pane padding-20 sm-no-padding slide-left" id="boleto_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-boleto.phtml') ?>
-                                </div>
-                            </div>
-                            <div class="tab-pane padding-20 sm-no-padding slide-left" id="pix_tab">
-                                <div class="row row-same-height">
-                                    <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
                                 </div>
                             </div>
                         </div>
