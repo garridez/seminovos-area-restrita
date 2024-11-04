@@ -124,7 +124,7 @@ class PagamentoController extends AbstractActionController
     }
 
     public function processarAction()
-    {   
+    {
         $dadosPagamento = [];
         $comprovanteAnexo = [];
         $dados = $this->params()->fromPost();
@@ -153,9 +153,9 @@ class PagamentoController extends AbstractActionController
         $dadosPagamento['parcelas'] = 1;
 
         if($cadastro['tipoCadastro'] == 1){
-            $dadosPagamento['cep'] = str_replace(["-", "."], "", $cadastro['cep'])  ?? null;
+            $dadosPagamento['cep'] = str_replace(["-", "."], "", $cadastro['cep'] ?? '') ?: null;
         } else {
-            $dadosPagamento['cep'] = str_replace(["-", "."], "", $dados['cep'])  ?? null;
+            $dadosPagamento['cep'] = str_replace(["-", "."], "", $dados['cep'] ?? '') ?: null;
         }
 
         // dados para pagamento Cielo/cartão
@@ -170,7 +170,7 @@ class PagamentoController extends AbstractActionController
                 $dadosPagamento['parcelas'] = 8;
             }
             $dadosPagamento['tipo_pagamento'] = empty($dados['tipo_pagamento']) ? 'credito' : $dados['tipo_pagamento'];
-            
+
             //FIELDS DATA ONLY
             $dadosPagamento['color_depth'] = $dados['colorDepth'] ?? null;
             $dadosPagamento['type'] = $dados['type'] ?? null;
@@ -180,7 +180,7 @@ class PagamentoController extends AbstractActionController
             $dadosPagamento['screen_width'] = $dados['screenWidth'] ?? null;
             $dadosPagamento['time_zone_off_set'] = $dados['timezoneOffset'] ?? null;
             $dadosPagamento['user_agent'] = $dados['userAgent'] ?? null;
-            
+
             $ip = $cadastro['ip'] ?? null;
 
 
@@ -325,5 +325,5 @@ HTML;
     {
         var_dump(__METHOD__ . ':' . __LINE__);
         die;
-    } 
+    }
 }

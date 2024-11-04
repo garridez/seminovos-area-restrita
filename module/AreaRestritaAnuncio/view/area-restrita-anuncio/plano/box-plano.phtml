@@ -63,8 +63,16 @@ $nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
 $nomePlano = mb_strtoupper((string) $nomePlano);
 ?>
 <div class="col-12 col-sm col-md col-lg mb-4">
-    <div class="plano-box plano-box-<?= $boxes[$plano['prioridade']] ?> <?= $idPlanoAtual == $plano['idPlano'] ? 'plano-atual' : '' ?>
-                                <?= $desabilitarPlano ? 'plano-desabilitado' : '' ?>" <?= $desabilitarPlano ? 'title="Não é possível diminuir o plano"' : '' ?>>
+    <div
+        title="<?= $desabilitarPlano ? 'Não é possível diminuir o plano' : '' ?>"
+        class="plano-box <?php
+        echo ' plano-box-' . $boxes[$plano['prioridade']];
+        echo $idPlanoAtual == $plano['idPlano'] ? ' plano-atual' : '';
+        echo $desabilitarPlano ? ' plano-desabilitado' : '';
+        echo $diminuirPlano ? ' ' : ' plano-desabilitado';
+        ?>"
+
+    >
         <div class="linha-plano size-2x plano-<?= $boxes[$plano['prioridade']] ?>">
             <div class="plano-number"><?= $k + 1 . 'º' ?></div>
             <div class="icon-plano">
@@ -130,6 +138,27 @@ $nomePlano = mb_strtoupper((string) $nomePlano);
             <?php endif; ?>
         </ul>
         <?php if (!$isRevenda) : ?>
+            <?php if ($diminuirPlano && $planoAtualDados && $planoAtualDados['valorPlano'] != $plano['valorPlano']): ?>
+            <div>
+                <div class="valor-label <?= $class[$plano['prioridade']] ?>">
+                <?php
+
+                    $valorPlanoAtual = abs((float) $planoAtualDados['valorPlano'] - (float) $plano['valorPlano']);
+                    $valorPlano = explode(',', number_format($valorPlanoAtual, 2, ',', '.'));
+
+                    echo '<span>R$ </span>';
+                    echo "<span style='font-size: 40px;'>{$valorPlano[0]}</span>";
+                    echo "<span style=''>,{$valorPlano[1]}</span>";
+
+                ?>
+                </div>
+                <small>
+                    <div>Pague apenas a diferença</div>
+                    Valor original: <span class="text-decoration-line-through">R$ <?= number_format((float) $plano['valorPlano'], 2, ',', '.')?></span>
+                </small>
+            </div>
+            <?php else: ?>
+
             <div class="valor-label <?= $class[$plano['prioridade']] ?>">
                 <?php
                     $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '.'));
@@ -144,6 +173,7 @@ $nomePlano = mb_strtoupper((string) $nomePlano);
 
                 ?>
             </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php if ($isRevenda) : ?>
@@ -170,7 +200,7 @@ $nomePlano = mb_strtoupper((string) $nomePlano);
             <?= $diminuirPlano ? '' : 'data-plano-desativado' ?>
             <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
             <?= $planoAtual ? 'data-plano-atual' : '' ?>>
-            <?= $planoAtual ? 'PLANO ATUAL' : 'Escolher ' . $nomePlano ?>
+            <?= $planoAtual ? 'SEU PLANO ATUAL' : 'Escolher ' . $nomePlano ?>
         </label>
     </div>
 </div>

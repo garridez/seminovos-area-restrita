@@ -35,6 +35,7 @@ class PlanoController extends AbstractActionController
 
         $data = [
             'planos' => $dadosPlanos,
+            'planoAtualDados' => [],
         ];
 
         $dadosVeiculo = $this->getVeiculo(5);
@@ -45,7 +46,13 @@ class PlanoController extends AbstractActionController
             $data['idPlanoAtual'] = (int) ($dadosVeiculo['idStatus'] == 1 || $dadosVeiculo['idStatus'] == 3 ? 0 : $dadosVeiculo['idPlano']);
             $data['idStatusAnuncio'] = (int) $dadosVeiculo['idStatus'];
             $data['zeroKm'] = (int) $dadosVeiculo['veiculo_zero_km'];
+            foreach($dadosPlanos as $plano) {
+                if ($plano['idPlano'] == $data['idPlanoAtual']) {
+                    $data['planoAtualDados'] = $plano;
+                    break;
+                }
 
+            }
         }
 
         $viewModel = new ViewModel($data);

@@ -11,7 +11,7 @@ module.exports.callback = ($) => {
             });
         })
         .on('step:pre-change:plano', function () {
-            location.hash = 'plano';
+            //location.hash = 'plano';
             $('.step-controls').hide();
 
             if (!modalZeroKmExibido && $('#form_Plano').data('zerokm') == '1') {

@@ -41,7 +41,8 @@
                 }
             }
         }
-        &.plano-desabilitado{
+        &.plano-desabilitado {
+            opacity: .5;
             .icon-plano{
                 span[class^="bar-"]{
                     background-color:#adadad !important;

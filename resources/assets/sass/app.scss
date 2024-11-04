@@ -178,3 +178,7 @@ body.sidebar-collapsed {
 .sortable thead th:not(.no-sort)::after {
     color: inherit;
 }
+
+.text-decoration-line-through {
+    text-decoration: line-through !important;
+}
