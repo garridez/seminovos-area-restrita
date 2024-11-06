@@ -70,7 +70,7 @@ module.exports.callback = ($) => {
         }
     });
 
-    $('.step-container').on('step:pre-exit:plano step:change:checkout', function () {
+    $('.step-container').on('step:pre-exit:plano step:change:checkout', function (ev) {
         let plano = 'planos' + $('#idPlano').val();
         let planoSelecionado = $('#' + plano);
 
@@ -96,6 +96,11 @@ module.exports.callback = ($) => {
         $('.valor-total')
             .find('[data-valor-total]')
             .html(valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
+
+        if (valorTotal === 0 && ev.type == 'step:change:checkout') {
+            location.hash = 'plano&trocarPlano';
+            location.reload();
+        }
     });
 
     $('.step-container').on('step:pre-exit:plano', function (e) {
