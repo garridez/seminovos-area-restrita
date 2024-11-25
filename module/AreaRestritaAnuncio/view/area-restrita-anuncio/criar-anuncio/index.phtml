@@ -44,7 +44,7 @@ if ($this->userInfo('tipoCadastro') == 1) {
 }
 
 
-if($this->tipoVeiculo == VeiculoTipo::TIPO_CAMINHAO){
+if ($this->tipoVeiculo == VeiculoTipo::TIPO_CAMINHAO) {
     unset($rotasAnuncio['veiculo']['opcionais']);
 }
 
@@ -94,17 +94,17 @@ if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_ATIVO || $veicul
             break;
     }
 }
-    if($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_PENDENTE)){
-            echo 'Não tão rápido! Essa ação não é valida, estamos de olho.';
-            unset(
-                $rotasAnuncio['veiculo']['dados'],
-                $rotasAnuncio['veiculo']['preco'],
-                $rotasAnuncio['veiculo']['mais-informacoes'],
-                $rotasAnuncio['veiculo']['fotos'],
-                $rotasAnuncio['veiculo']['video']
-            );
-            die;
-    }
+if ($veiculo && ($veiculo['idStatus'] == VeiculosStatus::STATUS_PENDENTE)) {
+    echo 'Não tão rápido! Essa ação não é valida, estamos de olho.';
+    unset(
+        $rotasAnuncio['veiculo']['dados'],
+        $rotasAnuncio['veiculo']['preco'],
+        $rotasAnuncio['veiculo']['mais-informacoes'],
+        $rotasAnuncio['veiculo']['fotos'],
+        $rotasAnuncio['veiculo']['video']
+    );
+    die;
+}
 
 foreach ($rotasAnuncio['veiculo'] as &$rota) {
     $rota = $this->url('criar-anuncio/anuncio/dados/pages', ['action' => $rota] + $routeParams);
@@ -117,10 +117,10 @@ if ($this->idVeiculo) {
 }
 
 $status = '';
-if(isset($this->idStatus)){
+if (isset($this->idStatus)) {
     $status = $this->idStatus;
-}else{
-    $status = $this->userInfo('tipoCadastro') == 2 ? 3 : 5 ;
+} else {
+    $status = $this->userInfo('tipoCadastro') == 2 ? 3 : 5;
 }
 ?>
 <div id="dados-basicos" class="hide">
@@ -132,6 +132,7 @@ if(isset($this->idStatus)){
         <input type="hidden" id="idVeiculo" name="idVeiculo" value="<?= $this->idVeiculo ?>" class="idVeiculo">
         <input type="hidden" id="idAnuncioVeiculo" name="idAnuncioVeiculo" value="<?= $this->idAnuncioVeiculo ?>" class="idAnuncioVeiculo">
         <input type="hidden" id="idPlano" name="idPlano" value="<?= $this->idPlano ?>" class="idPlano">
+        <input type="hidden" id="idPlanoAtual" name="idPlanoAtual" value="<?= $this->idPlano ?>" class="idPlanoAtual">
         <input type="hidden" id="total" name="total" value="<?= $this->total ?>" class="total">
         <input type="hidden" id="acao" name="acao" value="" class="acao">
         <input type="hidden" id="codFipe" name="codFipe" value="<?= $this->codFipe ?>" class="codFipe">
@@ -164,8 +165,8 @@ if(isset($this->idStatus)){
 
         foreach ($rotasAnuncio as $name => $rota) {
             echo '<div class="' . ('step-' . $count++) . ' step-' . $name . '" '
-            . 'data-step-label="' . $name . '" '
-            . 'data-url="' . $rota . '"></div>';
+                . 'data-step-label="' . $name . '" '
+                . 'data-url="' . $rota . '"></div>';
         }
 
         ?>

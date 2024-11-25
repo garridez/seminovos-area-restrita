@@ -97,7 +97,12 @@ module.exports.callback = ($) => {
             .find('[data-valor-total]')
             .html(valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
 
-        if (valorTotal === 0 && ev.type == 'step:change:checkout') {
+        if (
+            ev.type == 'step:change:checkout' &&
+            valorTotal === 0 &&
+            $('#idPlanoAtual').val() == $('#idPlano').val()
+
+        ) {
             location.hash = 'plano&trocarPlano';
             location.reload();
         }
@@ -114,7 +119,7 @@ module.exports.callback = ($) => {
         var ctx2 = $('.step-0, .step-1, .step-plano');
         DataLayerGTMPopulate(ctx2, 'checkout_step_7');
         // Se for grátis
-        if (idPlano === 1) {
+        if (idPlano === 1 || idPlano === 5) {
             // Salvar todo o formulario anterior as fotos aqui
             var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
             var dataSerialized = form.serialize();

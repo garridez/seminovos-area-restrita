@@ -62,7 +62,8 @@ if ($isRevenda) {
                     $prioridadePlano ??= 5;
                     $planoGratis = false;
                     foreach ($planos as $k => $plano) :
-                        if ($plano['valorPlano'] == '0.0') {
+                        //if ($plano['valorPlano'] == '0.0') {
+                        if ($plano['idPlano'] == 1) {
                             $planoGratis = $plano;
                             continue;
                         }

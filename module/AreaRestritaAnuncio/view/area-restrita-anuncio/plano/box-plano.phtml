@@ -138,7 +138,7 @@ $nomePlano = mb_strtoupper((string) $nomePlano);
             <?php endif; ?>
         </ul>
         <?php if (!$isRevenda) : ?>
-            <?php if ($diminuirPlano && $planoAtualDados && $planoAtualDados['valorPlano'] != $plano['valorPlano']): ?>
+            <?php if ($diminuirPlano && isset($planoAtualDados) && $planoAtualDados && $planoAtualDados['valorPlano'] != $plano['valorPlano']): ?>
             <div>
                 <div class="valor-label <?= $class[$plano['prioridade']] ?>">
                 <?php
