@@ -119,7 +119,7 @@ module.exports.callback = ($) => {
         var ctx2 = $('.step-0, .step-1, .step-plano');
         DataLayerGTMPopulate(ctx2, 'checkout_step_7');
         // Se for grátis
-        if (idPlano === 1 || idPlano === 5) {
+        if (idPlano === 1 || (idPlano === 5 && !$('body').is('.t-revenda'))) {
             // Salvar todo o formulario anterior as fotos aqui
             var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
             var dataSerialized = form.serialize();
