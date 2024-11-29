@@ -541,7 +541,7 @@ class DadosVeiculoController extends AbstractActionController
                 $data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];
                 $data['idStatus'] = 6;
-                if ($post['idPlano'] == 5) {
+                if (!$this->isRevenda() && $post['idPlano'] == 5) {
                     $data['idStatus'] = 2;
                 }
                 $data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
