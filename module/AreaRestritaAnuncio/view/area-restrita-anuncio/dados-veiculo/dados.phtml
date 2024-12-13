@@ -176,13 +176,16 @@ if ($this->checkedLeilao === '1') {
                     <div class="opcionais">
                         <?php
                             $destaques = [];
-                                
+
+                            /*
+                            REMOVE O CHECKBOX PARA IPVA
+
                             if ($exibeIPVA) {
                                 $destaques = [
                                     $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.'quitado?'))
                                 ];
-                            }
-                            
+                            } */
+
                             if(isset($fields['adaptado'])) {
                                 $destaques[] = $this->formCheckbox($fields['adaptado']);
                             }

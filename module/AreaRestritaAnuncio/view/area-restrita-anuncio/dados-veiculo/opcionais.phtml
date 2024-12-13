@@ -72,20 +72,23 @@ if($tipoVeiculo === 1){
 
             <div class="border-top my-2 border-3x"></div>
 
-            <?php 
-            
-            $mesIPVA =  date('m');                                
+            <?php
+
+            $mesIPVA =  date('m');
             $meses = [1, 2, 3, 4, 5,12];
             $exibeIPVA = in_array($mesIPVA, $meses);
             $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
 
-                if($tipoVeiculo != 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))): 
+                if($tipoVeiculo != 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))):
             ?>
                 <div class="destaques pt-1 pb-3">
                     <div class="text-center"><b>Algum item que você quer destacar?</b></div>
 
                     <div class="opcionais">
                         <?php
+                        /*
+                        REMOVE O CHECKBOX IPVA
+
                         if ($exibeIPVA) {
                             $destaques = [
                                 $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.' quitado?'))
@@ -105,8 +108,8 @@ if($tipoVeiculo === 1){
                                 </div>
                         <?php
                             }
-                        }
-                            
+                        } */
+
                         if(isset($fields['adaptado'])) {
                             $adaptadoHTML = $this->formCheckbox($fields['adaptado']);
                             $adaptadoHTML = str_replace('class="checkbox"', 'class="checkbox-custom"', (string) $adaptadoHTML);
