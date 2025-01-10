@@ -21,13 +21,17 @@ class VeiculosFotos extends ApiModelVeiculosFotos
 
     /**
      * @param int $idVeiculo
-     * @return array
+     * @return array|false
      */
     public function get($idVeiculo)
     {
-        return parent::get([
+        $res = parent::get([
             'idVeiculo' => $idVeiculo,
-        ])->getData();
+        ]);
+        if ($res->status === 404){
+            return false;
+        }
+        return $res->getData();
     }
 
     /**
