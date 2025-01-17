@@ -54,6 +54,31 @@ class PrecoForm extends Form
                 'placeholder' => 'Ex: 48.000,00',
             ],
         ]);
+
+        $anoIpva = date('m') == 12 ? date('Y') + 1 : date('Y');
+
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flagIpva',
+            'options' => [
+                'label' => "IPVA $anoIpva quitado?",
+                'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+            ],
+        ]);
+
+        $this->add([
+            'type' => Element\Checkbox::class,
+            'name' => 'flagLeilao',
+            'options' => [
+                'label' => 'Carro proveniente de leilão?',
+                'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+            ],
+        ]);
+
         $this->add([
             'type' => Element\Checkbox::class,
             'name' => 'combinarValor',
@@ -132,7 +157,7 @@ class PrecoForm extends Form
     public function setIsEdition()
     {
         // $this->get('flagLeilao')
-    //     ->setAttribute('readonly', true)
-    //     ->setAttribute('disabled', true);
+        //     ->setAttribute('readonly', true)
+        //     ->setAttribute('disabled', true);
     }
 }

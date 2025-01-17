@@ -25,7 +25,7 @@ if ($this->checkedLeilao === '1') {
     <h4 class="text-center">
         Vamos aos dados do seu anúncio?
     </h4>
-    
+
     <div class="conteudo">
         <form method="POST" name="form_dadosVeiculo" class="needs-validation forms" role="form" id="form_dadosVeiculo">
             <?= $this->formElement($fields['tipoVeiculo']) ?>
@@ -97,7 +97,7 @@ if ($this->checkedLeilao === '1') {
 
             <?php if(isset($fields['motor']) && isset($fields['idValvula'])): ?>
                 <div class="d-flex justify-content-between conjunto-motor">
-                    
+
                     <div class="form-group form-group-default required">
                         <?= $this->formLabel($fields['motor']) ?>
                         <div><?= $this->formSelect($fields['motor']) ?></div>
@@ -152,39 +152,14 @@ if ($this->checkedLeilao === '1') {
                 <div><?= $this->formSelect($fields['combustivel']) ?></div>
             </div>
 
-            <div class="d-flex justify-content-between w-100 conjunto-leilao">
-                <b class="mr-3">
-                    Este veículo é proveniente de leilão?
-                </b>
-                <label class="switch">
-                    <?= $this->formElement($fields['flagLeilao']->setLabel('')) ?>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-
-            <?php 
-                  $mesIPVA =  date('m');                                
-                  $meses = [1, 2, 3, 4, 5,12];
-                  $exibeIPVA = in_array($mesIPVA, $meses);
-                  $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
-
-
-                if($tipoVeiculo == 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))): ?>
+            <?php
+                if($tipoVeiculo == 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva'])))): ?>
                 <div class="destaques pt-1 pb-3">
                     <div class="text-center"><b>Algum item que você quer destacar?</b></div>
 
                     <div class="opcionais">
                         <?php
                             $destaques = [];
-
-                            /*
-                            REMOVE O CHECKBOX PARA IPVA
-
-                            if ($exibeIPVA) {
-                                $destaques = [
-                                    $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.'quitado?'))
-                                ];
-                            } */
 
                             if(isset($fields['adaptado'])) {
                                 $destaques[] = $this->formCheckbox($fields['adaptado']);

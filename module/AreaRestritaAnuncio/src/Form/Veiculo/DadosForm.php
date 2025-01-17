@@ -63,17 +63,6 @@ class DadosForm extends Form
             ],
         ]);
 
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'flagLeilao',
-            'options' => [
-                'label' => 'Carro proveniente de leilão?',
-                'use_hidden_element' => true,
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-            ],
-        ]);
-
         global $container;
         /**
          * @todo mover isso pra uma factory
@@ -183,17 +172,6 @@ class DadosForm extends Form
             'name' => 'combustivel',
             'attributes' => [
                 'required' => true,
-            ],
-        ]);
-
-        $this->add([
-            'type' => Element\Checkbox::class,
-            'name' => 'flagIpva',
-            'options' => [
-                'label' => 'IPVA 2021 quitado?',
-                'use_hidden_element' => true,
-                'checked_value' => '1',
-                'unchecked_value' => '0',
             ],
         ]);
 

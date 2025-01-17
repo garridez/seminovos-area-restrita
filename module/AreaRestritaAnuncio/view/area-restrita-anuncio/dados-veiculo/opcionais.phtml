@@ -52,14 +52,14 @@ if($tipoVeiculo === 1){
                 </div>
             <?php endif; ?>
             <div class="opcionais pb-2">
-                <?php if ($tipoVeiculo == 1) : ?>           
+                <?php if ($tipoVeiculo == 1) : ?>
                     <div class="airbags">
                         <select name="checkboxacessorios[]" class="<?= $temAirBag != -1 ? 'selected' : '' ?>">
                             <option value>Air Bags</option>
                             <?php foreach ($airBagsValue as $key => $value) : ?>
                                 <option value="<?= $key ?>"  <?= $temAirBag == $key ? 'selected' : '' ?> > <?= $value ?> </option>
                             <?php endforeach ?>
-                        </select>                        
+                        </select>
                     </div>
                 <?php endif; ?>
                 <?php
@@ -73,42 +73,13 @@ if($tipoVeiculo === 1){
             <div class="border-top my-2 border-3x"></div>
 
             <?php
-
-            $mesIPVA =  date('m');
-            $meses = [1, 2, 3, 4, 5,12];
-            $exibeIPVA = in_array($mesIPVA, $meses);
-            $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
-
-                if($tipoVeiculo != 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva']) && $exibeIPVA))):
+                if($tipoVeiculo != 2 && (isset($fields['adaptado']) || (isset($fields['flagIpva'])))):
             ?>
                 <div class="destaques pt-1 pb-3">
                     <div class="text-center"><b>Algum item que você quer destacar?</b></div>
 
                     <div class="opcionais">
                         <?php
-                        /*
-                        REMOVE O CHECKBOX IPVA
-
-                        if ($exibeIPVA) {
-                            $destaques = [
-                                $this->formCheckbox($fields['flagIpva']->setLabel('IPVA '.$anoIpva.' quitado?'))
-                            ];
-                            foreach ($destaques as $key => $value) {
-                                $value = str_replace('class="checkbox"', 'class="checkbox-custom"', (string) $value);
-
-                                $value = str_replace('</label>', '<i class="fa fa-check" aria-hidden="true"></i></label>', $value);
-
-                                $value = explode('<div', $value);
-                                if (trim($value[0]) == '') {
-                                    unset($value[0]);
-                                } ?>
-
-                                <div class="checkbox-custom">
-                                    <?= $value[0] ?>
-                                </div>
-                        <?php
-                            }
-                        } */
 
                         if(isset($fields['adaptado'])) {
                             $adaptadoHTML = $this->formCheckbox($fields['adaptado']);

@@ -18,7 +18,7 @@
         case 3:
             $veiculo = 'a sua moto';
             break;
-        
+
         default:
             $veiculo = 'o seu carro';
             break;
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group form-group-default mb-2">
                 <b>Certo, agora fale sobre os diferenciais do seu carro, ou as observações que desejar. Não é obrigatório, ok?</b>
                 <p class="text-danger" id="blockWords"></p>
@@ -72,18 +72,18 @@
             </div>
 
 
-            <div class="d-flex justify-content-between">
+            <div>
                 <div class="conjunto-preco form-group form-group-default">
                     <div class="mb-1"><b>Por quanto deseja vender <?= $veiculo ?>?</b></div>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center justify-content-between">
                         <div class="form-group required mb-0 d-flex align-items-center">
                             <div class="mt-1 d-flex align-items-center">
                                 <b class="mr-2 text-verde">R$</b>
                                 <?= $this->formText($fields['valor']) ?>
                             </div>
                         </div>
-                        
-                        <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-preco">
+
+                        <div class="form-group d-flex align-items-center mb-0 justify-content-center justify-content-md-end flex-wrap exibir-preco pr-2 mr-1">
                             <b class="mr-1 mr-md-2">Exibir <span class="text-verde">preço</span>?</b>
                             <label class="switch mb-0">
                                 <?= $this->formElement($fields['combinarValor']->setLabel('')) ?>
@@ -93,7 +93,33 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="d-flex justify-content-between w-100 conjunto-leilao">
+                <div><b>Este veículo é proveniente de leilão?</b></div>
+                <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
+                    <label class="switch">
+                        <?= $this->formElement($fields['flagLeilao']->setLabel('')) ?>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <?php
+            $mesIPVA =  date('m');
+            $meses = [1, 2, 3, 4, 5,12];
+            $exibeIPVA = in_array($mesIPVA, $meses);
+            $anoIpva = $mesIPVA == 12 ? date('Y')+1 : date('Y');
+
+            if ($exibeIPVA):
+            ?>
+            <div class="form-group d-flex justify-content-between w-100 align-items-center">
+                <div><b><?= $fields['flagIpva']->getLabel() ?></b></div>
+                <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
+                    <label class="switch mb-0">
+                        <?= $this->formElement($fields['flagIpva']->setLabel('')) ?>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <?php endif; ?>
             <div class="form-group d-flex justify-content-between w-100 align-items-center">
                 <div><b>Este veículo está financiado?</b></div>
                 <div class="pr-1 pr-md-2 mr-0 mr-md-1 w-auto">
