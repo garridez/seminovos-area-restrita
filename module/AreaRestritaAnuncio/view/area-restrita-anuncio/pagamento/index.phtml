@@ -108,24 +108,6 @@
             <div class="col-md-4 checkout-metodos-container pt-3 pl-2 pt-md-0 pl-md-0">
                 <div class="text-left mb-3"><strong>FORMA DE PAGAMENTO</strong></div>
                 <div class="accordion" id="accordion-payment">
-                    <div class="card"><!--pix -->
-                        <div class="card-header" id="pix-label">
-
-                            <button class="h-25 btn btn-link text-left" type="button" data-toggle="collapse"
-                                    data-target=".pix">
-                                <strong>PIX</strong><br>
-                                <small class="text-capitalize">Ativação imediata</small>
-                            </button>
-
-
-                        </div>
-                        <div class="pix collapse show" aria-labelledby="pix-label"
-                             data-parent="#accordion-payment">
-                            <div class="card-body">
-                                <?= $this->partial('partials/pix.phtml') ?>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card"><!--cartão de crédito -->
                         <div class="card-header" id="cartao-de-credito-label">
 
@@ -137,7 +119,7 @@
 
 
                         </div>
-                        <div class="cartao-de-credito collapse" aria-labelledby="cartao-de-credito-label"
+                        <div class="cartao-de-credito collapse show" aria-labelledby="cartao-de-credito-label"
                             data-parent="#accordion-payment">
                             <div class="card-body">
                                 <div><small>Não guardamos nenhuma informação do seu cartão de crédito!</small></div><br>
@@ -183,6 +165,25 @@
                         <div id="boleto" class="collapse" aria-labelledby="boleto-label" data-parent="#accordion-payment">
                             <div class="card-body">
                                 <?= $this->partial('partials/boleto.phtml') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card"><!--pix -->
+                        <div class="card-header" id="pix-label">
+
+                            <button class="h-25 btn btn-link text-left" type="button" data-toggle="collapse"
+                                    data-target=".pix---">
+                                <strong>PIX</strong><br>
+                                <!--<small class="text-capitalize">Ativação imediata</small>-->
+                                <small class="text-capitalize">Indisponível - Em manutenção</small>
+                            </button>
+
+
+                        </div>
+                        <div class="pix collapse sh-ow" aria-labelledby="pix-label"
+                             data-parent="#accordion-payment">
+                            <div class="card-body">
+                                <?= $this->partial('partials/pix.phtml') ?>
                             </div>
                         </div>
                     </div>

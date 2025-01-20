@@ -31,6 +31,12 @@ export const callback = ($) => {
 
     $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(
         function (e) {
+            if ($(this).is('form.pagamento-pix-form')) {
+                //alert('Pix ');
+                return;
+
+            }
+
             e.preventDefault();
             var data = $(this).serializeArray();
             var tempo_contrato = $('.tab-content')
@@ -152,12 +158,12 @@ export const callback = ($) => {
 
     /**
      * USED FOR DATA ONLY FIELD
-     * 
+     *
      * @returns {String} Retorna o tipo de dispositivo
      */
     function getDeviceType() {
         const userAgent = navigator.userAgent;
-    
+
         if (/Mobi|Android|iPhone/i.test(userAgent)) {
             return 'Mobile';
         } else if (/iPad|Tablet/i.test(userAgent)) {
@@ -169,7 +175,7 @@ export const callback = ($) => {
 
     /**
      * USED FOR DATA ONLY FIELD
-     * 
+     *
      * @returns {String} Retorna o offset do fuso horário
      */
     function getTimeZoneOffset() {
@@ -178,7 +184,7 @@ export const callback = ($) => {
         const sign = offset < 0 ? '+' : '-';
         return `UTC${sign}${offsetHours}`;
     }
-    
+
     function modalPagamentoBoleto(data) {
         var text = `
         <div class="w-100 text-center flex-wrap">
