@@ -39,12 +39,12 @@
                         <div class="">
                             <h4 class="text-center font-weight-bolder">
                                 Pacote contratado
-                            </h4>
+                            </h4>   
                         </div>
                         <div class="m-t-30">
                             <h4 class="text-center font-weight-normal">
                                 <?php echo $plano['nitro'] + $plano['turbo'] + $plano['simples']; ?> Espaços
-                            </h4>
+                            </h4>   
                         </div>
                         <div class="sm-m-t-5 m-t-30">
                             <i class="fa fa-shopping-cart fa-2x hint-text"></i>
@@ -191,13 +191,13 @@
                         <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
                             data-init-reponsive-tabs="dropdownfx">
                             <li class="nav-item">
-                                <a class="a-ctive" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
+                                <a class="active" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
                                     <i class="fa fa-credit-card tab-icon"></i>
                                     <span>PIX</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
+                                <a class="" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
                                     <i class="fa fa-shopping-cart tab-icon"></i>
                                     <span>Cartão de Crédito</span>
                                 </a>
@@ -210,12 +210,12 @@
                             </li>
                         </ul>
                         <div class="tab-content p-0">
-                            <div class="tab-pane padding-20 sm-no-padding slide-left a-ctive" id="pix_tab">
+                            <div class="tab-pane padding-20 sm-no-padding slide-left active" id="pix_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
                                 </div>
                             </div>
-                            <div class="tab-pane padding-20 sm-no-padding slide-left active" id="cartao_tab">
+                            <div class="tab-pane padding-20 sm-no-padding slide-left" id="cartao_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-cartao-credito.phtml') ?>
                                 </div>
