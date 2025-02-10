@@ -1,6 +1,14 @@
-/* eslint no-undef:1 */
 module.exports.seletor = '.c-repasse.a-anuncio';
 module.exports.callback = async ($) => {
+    var email;
+    var marca;
+    var modelo;
+    var anoModelo;
+    var anoFabrica;
+    var valorFipe;
+    var numero;
+    var numeroFipe;
+    var licensePlate;
     $("input[name='license-plate']").keyup(function () {
         licensePlate = $("input[name='license-plate']").val();
         if (licensePlate.length == 7) {
@@ -12,6 +20,15 @@ module.exports.callback = async ($) => {
 
             $.ajax(settings).done(function (response) {
                 if (response.status == 200) {
+                    response.data = response.data || [{}];
+                    if(response.data.length == 0 ){
+                        return;
+                    }
+                    response.data[0] = response.data[0] || {};
+                    response.data[0].historicoCarro = response.data[0].historicoCarro || {};
+                    response.data[0].historicoCarro.dados_veiculo = response.data[0].historicoCarro.dados_veiculo || {};
+                    response.data[0].historicoCarro.fipe = response.data[0].historicoCarro.fipe || {};
+
                     $('.table-license-plate-api-brand').text(
                         response.data[0].historicoCarro.dados_veiculo.marca,
                     );
