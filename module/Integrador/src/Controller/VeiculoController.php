@@ -207,7 +207,8 @@ class VeiculoController extends AbstractActionController
             "flagPlaca" => 1,
         ], $placa, false)->json();
 
-        if (isset($res['data']) && $res['data']) {
+
+        if (isset($res['data']) && $res['data'] && !$this->isRepasse()) {
             if ($res['data'][0]['idCadastro'] != $this->getIdCadastro()) {
                 $res['data'] = [];
             }

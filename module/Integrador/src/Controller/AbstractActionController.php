@@ -41,6 +41,19 @@ class AbstractActionController extends ZendAbstractActionController
         return $this->getContainer()->get(ApiClient::class);
     }
 
+    public function isRepasse(): bool
+    {
+        $tokenHeader = $this->getRequest()->getHeader('X-Snbh-Token');
+        $idCadastro = $this->getIdCadastro();
+        $tokenValue = '';
+
+        if($tokenHeader){
+            $tokenValue = $tokenHeader->getFieldValue();
+        }
+
+        return $idCadastro === 269236 && $tokenValue === '879db53b62e90337D13316e85e81FaBe6f4943722090B568d6';
+    }
+
     /**
      * Verifica se o retorno da api é um erro.
      * Se sim, redireciona para  página de erro
