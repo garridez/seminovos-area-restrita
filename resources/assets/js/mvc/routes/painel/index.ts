@@ -4,6 +4,18 @@ module.exports.callback = ($: JQueryStatic) => {
 
     require('../../../components/MarcaModelo')($('.form-tabela-fipe'));
 
+    $('body').on('click', '[data-table2excel]',  function () {
+        const date = new Date();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const table2excel = new Table2Excel({
+            defaultFileName:
+                'estatisticas-seminovos-' + date.toLocaleDateString().replaceAll('/', '-'),
+        });
+        const seletor = $(this).data('table2excel');
+        table2excel.export($(seletor).get(0));
+    });
+
     $('#filtar-meus-veiculos').on('keyup', function () {
         const values = ($(this).val() + '')
             .toLowerCase()

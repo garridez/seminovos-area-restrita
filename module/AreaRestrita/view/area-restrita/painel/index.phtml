@@ -40,7 +40,7 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
 <script>
     <?= file_get_contents(__DIR__ . '/highcharts-lang.js') ?>
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js"></script>
 <div class="container-fluid painel-revenda">
     <div class="row step step-geral justify-content-between">
         <div class="col-12">
@@ -150,6 +150,9 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
                 </label>
 
             </form>
+            <div class="m-2">
+                <button type="button" class="btn btn-sm btn-outline-info" data-table2excel="#table-meus-veiculos">Exportar como planilha</button>
+            </div>
 
             <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
                 <thead class="thead-dark">
@@ -315,3 +318,4 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
         </div>
     </div>
 </div>
+
