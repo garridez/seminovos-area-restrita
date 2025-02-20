@@ -1,73 +1,77 @@
 <div class="p-5">
-  <h1>Tivemos um erro ao processar sua solicitação</h1>
-  <h2><?= $this->message ?></h2>
+    <h1>Tivemos um erro ao processar sua solicitação</h1>
+    <h2><?= $this->message ?></h2>
 </div>
+<?php
 
-<?php if (!empty($this->display_exceptions) || (isset($_GET['debug']) && $_GET['debug'] = 1)) : ?>
+if (isset($this->exception) && function_exists('newrelic_notice_error')) {
+    newrelic_notice_error($this->exception);
+}
+
+if (!empty($this->display_exceptions) || (isset($_GET['debug']) && $_GET['debug'] = 1)) : ?>
     <?php if (isset($this->exception) && ($this->exception instanceof \Exception || $this->exception instanceof \Error)) :
-
-        ?>
-        <hr/>
+    ?>
+        <hr />
 
         <h2>Additional information:</h2>
         <h3><?= $this->exception::class ?></h3>
         <dl>
-          <dt>File:</dt>
-          <dd>
-            <pre><?= $this->exception->getFile() ?>:<?= $this->exception->getLine() ?></pre>
-          </dd>
-          <dt>Message:</dt>
-          <dd>
-            <pre><?= $this->escapeHtml($this->exception->getMessage()) ?></pre>
-          </dd>
-          <dt>Stack trace:</dt>
-          <dd>
-            <pre><?= $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
-          </dd>
+            <dt>File:</dt>
+            <dd>
+                <pre><?= $this->exception->getFile() ?>:<?= $this->exception->getLine() ?></pre>
+            </dd>
+            <dt>Message:</dt>
+            <dd>
+                <pre><?= $this->escapeHtml($this->exception->getMessage()) ?></pre>
+            </dd>
+            <dt>Stack trace:</dt>
+            <dd>
+                <pre><?= $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
+            </dd>
         </dl>
 
         <?php if ($ex = $this->exception->getPrevious()) : ?>
-            <hr/>
+            <hr />
 
             <h2>Previous exceptions:</h2>
             <ul class="list-unstyled">
-              <?php $icount = 0 ?>
-              <?php while ($ex) : ?>
-                  <li>
-                    <h3><?= $ex::class ?></h3>
-                    <dl>
-                      <dt>File:</dt>
-                      <dd>
-                        <pre><?= $ex->getFile() ?>:<?= $ex->getLine() ?></pre>
-                      </dd>
-                      <dt>Message:</dt>
-                      <dd>
-                        <pre><?= $this->escapeHtml($ex->getMessage()) ?></pre>
-                      </dd>
-                      <dt>Stack trace:</dt>
-                      <dd>
-                        <pre><?= $this->escapeHtml($ex->getTraceAsString()) ?></pre>
-                      </dd>
-                    </dl>
-                  </li>
-                  <?php
-                  $ex = $ex->getPrevious();
-                  if (++$icount >= 50) {
-                      echo '<li>There may be more exceptions, but we do not have enough memory to process it.</li>';
-                      break;
-                  }
+                <?php $icount = 0 ?>
+                <?php while ($ex) : ?>
+                    <li>
+                        <h3><?= $ex::class ?></h3>
+                        <dl>
+                            <dt>File:</dt>
+                            <dd>
+                                <pre><?= $ex->getFile() ?>:<?= $ex->getLine() ?></pre>
+                            </dd>
+                            <dt>Message:</dt>
+                            <dd>
+                                <pre><?= $this->escapeHtml($ex->getMessage()) ?></pre>
+                            </dd>
+                            <dt>Stack trace:</dt>
+                            <dd>
+                                <pre><?= $this->escapeHtml($ex->getTraceAsString()) ?></pre>
+                            </dd>
+                        </dl>
+                    </li>
+                    <?php
+                    $ex = $ex->getPrevious();
+                    if (++$icount >= 50) {
+                        echo '<li>There may be more exceptions, but we do not have enough memory to process it.</li>';
+                        break;
+                    }
 
-                  ?>
-              <?php endwhile ?>
+                    ?>
+                <?php endwhile ?>
             </ul>
         <?php endif ?>
     <?php else : ?>
         <h3>No Exception available</h3>
     <?php endif ?>
-    <?php
+<?php
 
 
 
 
 
- endif ?>
+endif ?>
