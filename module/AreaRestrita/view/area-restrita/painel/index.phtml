@@ -176,7 +176,7 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
                     <?php foreach ($veiculos as $key => $veiculo) : ?>
                         <?php
                         $isVeiculoAtivo = $veiculo['idStatus'] == 2;
-                        $tempoCadastro = $formatDate->dias($veiculo['dataCadastro']);
+                        $tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
 
                         $acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
                         $impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
