@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+
 import SnBH from './SnBH';
 window.$ = $;
 //require('./ads.js');

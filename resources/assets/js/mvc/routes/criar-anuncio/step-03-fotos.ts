@@ -1,5 +1,5 @@
-import sortablejs from 'sortablejs';
 import Compress from 'compress.js';
+import sortablejs from 'sortablejs';
 
 export const seletor = '.c-criar-anuncio.a-index';
 
@@ -242,7 +242,7 @@ function init() {
                 // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
                 try {
                     if (imageFile.name.match(/.heic$/) !== null) {
-                        // eslint-disable-next-line @typescript-eslint/no-var-requires
+                         
                         const heic2any = require('heic2any');
                         //const heic2any = require('../../../components/heic2any');
                         const resultBlob = await heic2any({

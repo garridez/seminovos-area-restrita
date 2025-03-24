@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 module.exports = function () {
     return;
     var { isDev } = require('./Env');

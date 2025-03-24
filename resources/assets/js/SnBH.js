@@ -18,7 +18,9 @@ export default {
                     this.registered[seletor].push(callback);
                 }
                 if (this.isFinished) {
-                    $('body').is(seletor) && callback();
+                    if ($('body').is(seletor)) {
+                        callback();
+                    }
                 }
             }
         },

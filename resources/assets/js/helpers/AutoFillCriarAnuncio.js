@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-function autoFill(options) {
+function autoFill(_options) {
     var timeout = 3000;
 
     window.setTimeout(() => {

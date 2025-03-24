@@ -1,3 +1,4 @@
+import $ from 'jquery';
 /**
  *
  * Função comum para popular o DataLayer Enhanced Ecommerce

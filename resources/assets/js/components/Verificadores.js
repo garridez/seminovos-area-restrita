@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 import advancedAlerts from './AdvancedAlerts';
 import HandleApiError from './HandleApiError';
 

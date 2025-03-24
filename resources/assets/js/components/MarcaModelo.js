@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 var $form;
 var dataFilters;
 
@@ -116,7 +118,7 @@ const metodos = {
         var optionsString = '';
         var destaques = false;
 
-        $.each(options, function (i, v) {
+        $.each(options, function (_i, v) {
             var disabled = '';
             //Teste para ver se a string do campo é inváilda tipo "-" ou "   "
             if (!/\w/.test(v[keyHtml])) {
@@ -139,7 +141,7 @@ const metodos = {
         });
         if (destaques !== false) {
             var destaquesHtml = '';
-            $.each(destaques, function (i, html) {
+            $.each(destaques, function (_i, html) {
                 destaquesHtml += html;
             });
             optionsString = destaquesHtml + optionsString;

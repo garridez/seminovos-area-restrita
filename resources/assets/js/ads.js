@@ -210,8 +210,8 @@ module.exports = (function (window, document) {
      * O boostrap usa o "innerWidth" para os breaking points, já o mapping do ADS usa o clientWidth
      * Então ative o debug para ver qual é a correspondência de cada um
      */
-    // enableDebugWidth();
-    function enableDebugWidth() {
+    // _enableDebugWidth();
+    function _enableDebugWidth() {
         addEvent('DOMContentLoaded', function () {
             var div = document.createElement('div');
             var style = div.style;

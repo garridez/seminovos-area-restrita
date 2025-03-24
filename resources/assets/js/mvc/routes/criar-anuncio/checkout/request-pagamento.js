@@ -22,23 +22,23 @@ module.exports = function (formData, ajaxParams) {
     }
 
     //FIELDS DATA ONLY
-    colorDepth   = screen.colorDepth;
-    type         = getDeviceType();
-    javaEnabled  = navigator.javaEnabled();
-    language     = navigator.language;
-    screenHeight = screen.height;
-    screenWidth  = screen.width;
-    timezoneOffset = getTimeZoneOffset();
-    userAgent    = navigator.userAgent;
+    const colorDepth = screen.colorDepth;
+    const type = getDeviceType();
+    const javaEnabled = navigator.javaEnabled();
+    const language = navigator.language;
+    const screenHeight = screen.height;
+    const screenWidth = screen.width;
+    const timezoneOffset = getTimeZoneOffset();
+    const userAgent = navigator.userAgent;
 
-    data.push({name: 'colorDepth', value: colorDepth});
-    data.push({name: 'type', value: type});
-    data.push({name: 'javaEnabled', value: javaEnabled});
-    data.push({name: 'language', value: language});
-    data.push({name: 'screenHeight', value: screenHeight});
-    data.push({name: 'screenWidth', value: screenWidth});
-    data.push({name: 'timezoneOffset', value: timezoneOffset});
-    data.push({name: 'userAgent', value: userAgent});
+    data.push({ name: 'colorDepth', value: colorDepth });
+    data.push({ name: 'type', value: type });
+    data.push({ name: 'javaEnabled', value: javaEnabled });
+    data.push({ name: 'language', value: language });
+    data.push({ name: 'screenHeight', value: screenHeight });
+    data.push({ name: 'screenWidth', value: screenWidth });
+    data.push({ name: 'timezoneOffset', value: timezoneOffset });
+    data.push({ name: 'userAgent', value: userAgent });
 
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
     var dataRedirectPagamento = {
@@ -58,7 +58,7 @@ module.exports = function (formData, ajaxParams) {
                 pagamentoEmAndamento();
                 return;
             }
-            if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
+            if (!('status' in httpResponse) || httpResponse.status != 200) {
                 requestAlerts.erro(httpResponse);
                 return;
             }
@@ -70,7 +70,7 @@ module.exports = function (formData, ajaxParams) {
              * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
              * @return void
              */
-            if (httpResponse.data.hasOwnProperty('redirect') && httpResponse.data.redirect) {
+            if ('redirect' in httpResponse.data && httpResponse.data.redirect) {
                 var ctx = $('#dados-basicos form, .step-0, .step-1, .step-plano');
                 DataLayerGTMPopulate(ctx, 'purchase', data);
 
@@ -90,7 +90,7 @@ module.exports = function (formData, ajaxParams) {
             console.log(e);
         },
     };
-    var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
+    var ajaxParamsMerged = $.extend(ajaxDefaultParams, ajaxParams || {});
 
     var text = `A Seminovos <b class='text-primary'>NÃO </b>faz contato por
         <b class='text-primary'>telefone </b> ou <b class='text-primary'>whatsapp </b>
@@ -106,7 +106,7 @@ module.exports = function (formData, ajaxParams) {
             closeText: 'ESTOU CIENTE',
         })
         .on('hide.bs.modal', function () {
-            $.ajax(ajaxParams);
+            $.ajax(ajaxParamsMerged);
         });
 
     function modalPagamentoBoleto(data) {
@@ -120,7 +120,7 @@ module.exports = function (formData, ajaxParams) {
         var downloadBtn = $(
             `<a href="${data.url}" target="_BLANK" download="boleto_pagamento.pdf" class="btn btn-primary">` +
                 `<i class="fa fa-download mr-3" aria-hidden="true"></i>Baixar Boleto</a>`,
-        ).on('click', function (e) {
+        ).on('click', function () {
             setTimeout(function () {
                 window.location = data.urlAguardando;
             }, 1000);

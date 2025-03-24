@@ -3,7 +3,6 @@
  */
 
 module.exports = function (uri) {
-    var $ = require('jquery');
     if (!uri) {
         uri = '';
     }

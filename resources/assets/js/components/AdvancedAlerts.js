@@ -1,4 +1,5 @@
 import './JsBsModal';
+
 import $ from 'jquery';
 
 var advancedAlerts;

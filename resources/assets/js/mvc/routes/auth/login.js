@@ -1,7 +1,8 @@
-import HandleApiError from '../../../components/HandleApiError';
-import advancedAlerts from '../../../components/AdvancedAlerts';
-import showPassword from '../../../components/showPassword';
 import 'bootstrap/js/dist/modal';
+
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import HandleApiError from '../../../components/HandleApiError';
+import showPassword from '../../../components/showPassword';
 
 export const seletor = '.c-auth.a-login';
 /**
@@ -59,7 +60,9 @@ export const callback = ($) => {
                 try {
                     html = JSON.parse(html);
                     html = '<pre>' + JSON.stringify(html, null, 4) + '</pre>';
-                } catch (e) {}
+                } catch (e) {
+                    console.log(e);
+                }
                 $('.debug-html').html(html).css({
                     position: 'absolute',
                     left: 0,
@@ -68,7 +71,7 @@ export const callback = ($) => {
     };
     showPassword($('input[type="password"]'));
 
-    $('body').on('click', 'input.radioTipoCadastro[data-cookie]', function (e) {
+    $('body').on('click', 'input.radioTipoCadastro[data-cookie]', function () {
         let $this = $(this);
         let cookieDate = new Date();
         cookieDate.setFullYear(cookieDate.getFullYear() + 1);

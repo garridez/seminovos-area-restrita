@@ -9,7 +9,7 @@ module.exports = function ($) {
         this.bezierEasing = [0.05, 0.74, 0.27, 0.99];
         var _this = this;
 
-        $(this.options.notes).on('click', '.list > ul > li', function (e) {
+        $(this.options.notes).on('click', '.list > ul > li', function (_e) {
             var note = $(this).find('.note-preview');
             $(_this.options.noteEditor).html(note.html());
             $(_this.options.notes).toggleClass('push');
@@ -17,7 +17,7 @@ module.exports = function ($) {
         $(this.options.notes).on('click', '.list > ul > li .checkbox', function (e) {
             e.stopPropagation();
         });
-        $(this.options.notes).on('click', _this.options.backButton, function (e) {
+        $(this.options.notes).on('click', _this.options.backButton, function (_e) {
             $(_this.options.notes).find('.toolbar > li > a').removeClass('active');
             $(_this.options.notes).toggleClass('push');
         });
@@ -38,7 +38,7 @@ module.exports = function ($) {
                 $(this).parents('li').remove();
             });
         });
-        $(this.options.notes).on('click', '.toolbar > li > a', function (e) {
+        $(this.options.notes).on('click', '.toolbar > li > a', function (_e) {
             //e.preventDefault();
             var command = $(this).attr('data-action');
             document.execCommand(command, false, null);

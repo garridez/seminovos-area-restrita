@@ -11,9 +11,9 @@ function init() {
     var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
     var stopEvent = require('../../../helpers/StopEvent');
-    var stepsContainer = $('.step-container.step-servicos-adicionais');
+    //var stepsContainer = $('.step-container.step-servicos-adicionais');
 
-    $('.step-container').on('step:pre-change:servicos-adicionais', function (e) {
+    $('.step-container').on('step:pre-change:servicos-adicionais', function () {
         if (window.fromCheckout) {
             BtnContinuar.get().removeClass('hide d-none');
             BtnContinuar.enable();

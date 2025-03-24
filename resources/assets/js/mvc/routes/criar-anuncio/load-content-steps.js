@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 module.exports = function () {
     var loading = require('../../../components/Loading').default;
     var stepsUrl = $('div.anuncio-steps [data-url]');

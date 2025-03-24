@@ -1,5 +1,5 @@
-import showPassword from '../../../components/showPassword';
 import AdvancedAlerts from '../../../components/AdvancedAlerts';
+import showPassword from '../../../components/showPassword';
 
 export const seletor = '.c-meus-dados.a-alterar-senha';
 export const callback = ($) => {

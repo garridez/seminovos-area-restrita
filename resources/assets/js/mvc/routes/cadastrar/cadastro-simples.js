@@ -1,6 +1,6 @@
-import Verificadores from '../../../components/Verificadores';
-import Loading from '../../../components/Loading';
 import Alert from '../../../components/Alerts';
+import Loading from '../../../components/Loading';
+import Verificadores from '../../../components/Verificadores';
 
 export const seletor = '.c-cadastrar.a-cadastro-simples';
 export const callback = ($) => {

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 var methods = {
     get: function () {
         return $('.step-controls .btn-continuar');

@@ -21,7 +21,7 @@ export default function () {
             success: function (data) {
                 cidadesSelect.html('');
                 addOption('', 'Selecione');
-                $.each(data, function (i, e) {
+                $.each(data, function (_i, e) {
                     addOption(e.idCidade, e.cidade);
                 });
 

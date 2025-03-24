@@ -1,5 +1,3 @@
-const { default: Alerts } = require('../../../components/Alerts');
-
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {
@@ -11,7 +9,7 @@ module.exports.callback = ($) => {
         $('form[name="form_videoVeiculo"]')
             .find('input[name="video"]')
             .keyup(function () {
-                
+
                 if($(this).val() == "") {
                     $("#remove-link-youtube").hide();
                 } else {
@@ -47,7 +45,7 @@ module.exports.callback = ($) => {
                 return stopEvent(e);
             }
         }
-        
+
 
         var data = $('form', '#dados-basicos,.step-video').serialize();
 

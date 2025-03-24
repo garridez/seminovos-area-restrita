@@ -1,5 +1,7 @@
-import $ from 'jquery';
 import './JsBsModal';
+
+import $ from 'jquery';
+
 import advancedAlerts from './AdvancedAlerts';
 
 var confirms;
@@ -38,7 +40,7 @@ export default confirms = {
                 } else if (typeof options.confirmCallback === 'string') {
                     $('.modal').modal('hide');
                     $.getJSON(options.confirmCallback)
-                        .done(function (data, jqXHR, type) {
+                        .done(function (data, _jqXHR, _type) {
                             if (data.status !== 200) {
                                 advancedAlerts.error({
                                     text: data.detail,

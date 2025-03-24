@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 module.exports = function () {
     var requestPagamento = require('./request-pagamento');
     $('.pagamento-transferencia-form').submit(function (e) {
@@ -12,7 +14,7 @@ module.exports = function () {
                 data.append(this.name, this.value);
             });
 
-        $.each($(this).find('#comprovanteAnexo')[0].files, function (key, value) {
+        $.each($(this).find('#comprovanteAnexo')[0].files, function (_key, value) {
             data.append('comprovanteAnexo', value);
         });
 

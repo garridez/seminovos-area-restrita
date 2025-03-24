@@ -74,7 +74,7 @@ module.exports.callback = ($) => {
         let plano = 'planos' + $('#idPlano').val();
         let planoSelecionado = $('#' + plano);
 
-        $('[id^="planos"]').each((i, obj) => {
+        $('[id^="planos"]').each((_i, obj) => {
             $(obj).hide();
             $(obj).removeClass('plano-selecionado');
         });

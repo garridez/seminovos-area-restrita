@@ -43,7 +43,7 @@ module.exports.callback = async ($) => {
             data: formDataEdit,
         };
 
-        $.ajax(settingsEdit).done(function (response) {
+        $.ajax(settingsEdit).done(function (_response) {
             window.location.href = '/repasse/meus-anuncios';
         });
     });
@@ -75,7 +75,7 @@ module.exports.callback = async ($) => {
             timeout: 0,
         };
 
-        $.ajax(settingsDelete).done(function (response) {
+        $.ajax(settingsDelete).done(function (_response) {
             window.location.href = '/repasse/meus-anuncios';
         });
     });

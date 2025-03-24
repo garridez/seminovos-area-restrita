@@ -20,7 +20,7 @@ module.exports.callback = ($) => {
 
     var cpfInput = $ctxForm.find('input[name="cpfResponsavel"]');
     var cpfOriginal = cpfInput.val() || '';
-    $ctxForm.find('input[name="cpfResponsavel"]').on('change', function (e) {
+    $ctxForm.find('input[name="cpfResponsavel"]').on('change', function () {
         if (cpfInput.val() != cpfOriginal) {
             $btnSubmit.addClass('to-validade-cpf');
         }

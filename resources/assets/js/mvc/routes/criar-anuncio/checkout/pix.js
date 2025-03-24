@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 module.exports = function () {
     var requestPagamento = require('./request-pagamento');
     $('form.pagamento-pix-form').submit(function (e) {

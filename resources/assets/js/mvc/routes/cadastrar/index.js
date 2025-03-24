@@ -1,7 +1,7 @@
-import Verificadores from '../../../components/Verificadores';
-import HandleApiError from '../../../components/HandleApiError';
 import Alert from '../../../components/Alerts';
 import estadoCidade from '../../../components/EstadoCidade';
+import HandleApiError from '../../../components/HandleApiError';
+import Verificadores from '../../../components/Verificadores';
 
 export const seletor = '.c-cadastrar.a-index';
 export const callback = ($) => {
@@ -63,7 +63,7 @@ export const callback = ($) => {
                     return;
                 }
                 var modal = Alert.info(
-                    // eslint-disable-next-line max-len
+                     
                     '<h4><strong>Verifique sua caixa de e-mail e siga as instruções para ativar seu cadastro</strong></h4>',
                     'Falta pouco',
                     20_000,

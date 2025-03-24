@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 /**
  * Este script faz a configuração inicial da página de anuncie
  */
@@ -42,7 +44,7 @@ module.exports.callback = ($) => {
         checkLastStep();
     });
 
-    function alerta(type, text, title) {
+    function _alerta(type, text, title) {
         if (title === null || title === undefined) {
             title = '';
         }
@@ -127,7 +129,7 @@ module.exports.callback = ($) => {
                 return;
             }
             // Espera todos os ajax terminarem com sucesso para então redirecionar
-            $(document).ajaxComplete(function (ev, jqXHR) {
+            $(document).ajaxComplete(function (_ev, jqXHR) {
                 if ($.active - 1 !== 0) {
                     return;
                 }
@@ -238,8 +240,9 @@ function setStepIconActive() {
 }
 
 
-function setHashState(e, params) {
+function setHashState(_e, params) {
     return;
+    // eslint-disable-next-line no-unreachable
     var $element = params.stepElementDeep || params.stepElementTarget || $(this);
     var label = $element.data('step-label');
 

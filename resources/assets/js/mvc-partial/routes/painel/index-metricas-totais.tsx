@@ -1,18 +1,16 @@
-import highcharts, { SeriesOptionsType, Options } from 'highcharts/highstock';
+import highcharts, { Options,SeriesOptionsType } from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
-import exporting from 'highcharts/modules/exporting';
 import exportingData from 'highcharts/modules/export-data';
+import exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
-import highChartsLangPTBR from '../../../components/highChartsLangPTBR';
-
+import $ from 'jquery';
+import merge from 'lodash/merge';
 import { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
-import $ from 'jquery';
 
+import highChartsLangPTBR from '../../../components/highChartsLangPTBR';
 import { chartDefaultHighStock } from './helpers/chartDefaults';
 import * as chartOptionsMetricasTotais from './helpers/chartOptionsMetricasTotais';
-
-import merge from 'lodash/merge';
 
 type MetricasSerie = {
     acesso?: SeriesOptionsType;
@@ -42,14 +40,12 @@ export default () => {
     exportingData(highcharts);
 
     const metricasSerie = window.metricasSerie;
-    let i = 0;
 
     const navLis: JSX.Element[] = [];
     const charts: JSX.Element[] = [];
 
     let label: keyof MetricasSerie;
     for (label in metricasSerie) {
-        i++;
         const id = 'metrica-' + label + '-' + Math.trunc(Math.random() * 10000);
         const metrica = metricasSerie[label];
         if (!metrica) {

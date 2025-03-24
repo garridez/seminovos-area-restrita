@@ -140,7 +140,7 @@ async function init() {
             if (idVeiculo) {
                 $.get('/clear-cache/' + idVeiculo);
             }
-        } catch (e) {
+        } catch (_e) {
             console.log('Erro no clear cache');
         }
         $.active = 1;
@@ -254,7 +254,7 @@ async function init() {
                     console.log('upload com erro');
                 },
             });
-        } catch (e) {
+        } catch (_e) {
             console.log('Deu erro');
         }
         removeLoading();

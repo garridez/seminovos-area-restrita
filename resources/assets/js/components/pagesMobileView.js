@@ -26,7 +26,7 @@ module.exports = function ($) {
 
     $.fn.pgMobileViews.defaults = {
         //Returns Target View & Animation Type
-        onNavigate: function (view, animation) {},
+        onNavigate: function (_view, _animation) {},
     };
     // MOBILE VIEW DATA API
     //===================

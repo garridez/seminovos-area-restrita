@@ -26,11 +26,12 @@ module.exports.callback = async ($) => {
                 pagDataCadastro.setMinutes(pagDataCadastro.getMinutes() + 5);
                 console.log(pagDataCadastro);
                 break;
-            case '2':
+            case '2': {
                 console.log('Pagamento confirmado');
                 const tipo = window.location.pathname.split('/').filter(Boolean)[0];
                 window.location.href = `/${tipo}/${idVeiculo}/checkout/aprovado`;
                 break;
+            }
             case '3':
                 AdvancedAlerts.warning({
                     title: 'Pagamento cancelado',

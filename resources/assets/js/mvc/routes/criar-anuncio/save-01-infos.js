@@ -16,7 +16,7 @@ export const callback = ($) => {
     var HandleApiError = require('../../../components/HandleApiError').default;
     var marcaModelo = require('../../../components/MarcaModelo');
     var BtnContinuar = require('./helpers/BtnContinuar');
-    var GetUrl = require('./helpers/GetUrl');
+    //var GetUrl = require('./helpers/GetUrl');
 
     var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
@@ -140,7 +140,7 @@ export const callback = ($) => {
                                     .slice(0, -1);
                                 $('select[name="cor"] option:selected').prop('selected', false);
                                 let options = $('select[name="cor"] option');
-                                options.each(function (k, v) {
+                                options.each(function (_k, v) {
                                     let option = $(v);
                                     let cor = option.val().toLowerCase().slice(0, -1);
                                     if (corSelecionada == cor) {
@@ -156,7 +156,7 @@ export const callback = ($) => {
                                 );
                                 let combustivelSelecionado = historico.dados_veiculo.combustivel;
                                 options = $('select[name="combustivel"] option');
-                                options.each(function (k, v) {
+                                options.each(function (_k, v) {
                                     let option = $(v);
                                     let combustivel = option.html().trim();
                                     if (combustivel == combustivelSelecionado) {
@@ -185,7 +185,7 @@ export const callback = ($) => {
                                 if (marcaSelecionada) {
                                     marcaSelecionada = marcaSelecionada.toLowerCase();
                                 }
-                                options.each(function (k, v) {
+                                options.each(function (_k, v) {
                                     let option = $(v);
                                     let marca = option.html().trim().toLowerCase();
                                     if (marca == marcaSelecionada) {
@@ -246,7 +246,7 @@ export const callback = ($) => {
         });
 
     var ajaxProcessing = false;
-    stepsContainer.on('step:pre-change:mais-informacoes', function (e) {
+    stepsContainer.on('step:pre-change:mais-informacoes', function (_e) {
         var form = $('form', '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes');
         var dataSerialized = form.serialize();
         if (formWithError === true && dataSerialized === dataWithError) {
@@ -344,9 +344,9 @@ export const callback = ($) => {
                 stepsContainer.stepPlugin('goTo', '.step-dados');
                 if (e.responseJSON) {
                     HandleApiError(e.responseJSON);
-                    e.responseJSON.detail
-                        ? $('#blockWords').html(e.responseJSON.detail.split('<br/>').at(-1))
-                        : '';
+                    if (e.responseJSON.detail) {
+                        $('#blockWords').html(e.responseJSON.detail.split('<br/>').at(-1));
+                    }
                 } else {
                     HandleApiError(false);
                 }

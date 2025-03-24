@@ -16,7 +16,7 @@ module.exports.callback = ($) => {
         $('body').addClass('desktop');
         $('body').removeClass('mobile');
     }
-    $('.toggle-sidebar').click((e) => {
+    $('.toggle-sidebar').click(() => {
         if ($('body').hasClass('sidebar-open')) {
 
             if($('body').hasClass('mobile')) {

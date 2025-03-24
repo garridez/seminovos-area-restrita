@@ -1,4 +1,5 @@
 import $ from 'jquery';
+
 import Loading from './Loading';
 
 export default function () {

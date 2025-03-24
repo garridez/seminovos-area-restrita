@@ -9,7 +9,7 @@ module.exports.callback = ($) => {
     var idPlano = $('#idPlano').val();
 
     stepContainer
-        .on('step:change:checkout', function (e) {
+        .on('step:change:checkout', function (_e) {
             // handler certificado no checkout
             window.fromCheckout = true;
 

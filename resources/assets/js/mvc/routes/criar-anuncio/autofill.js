@@ -126,7 +126,7 @@ module.exports = {
                 return;
             }
             var stopContinuar = false;
-            $('.step-container').on('step:exit', function (e) {
+            $('.step-container').on('step:exit', function () {
                 if (stopContinuar) {
                     return;
                 }

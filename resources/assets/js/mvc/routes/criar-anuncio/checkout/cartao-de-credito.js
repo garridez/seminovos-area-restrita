@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 module.exports = function () {
     require('jquery-mask-plugin');
     require('jquery-validation');

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 /**
  * Esse modulo é para gerenciar o estado dos alertas vindos do resultado do pagamento.
  * Normal: Remove todos os alertas

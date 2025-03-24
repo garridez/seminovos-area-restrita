@@ -111,7 +111,7 @@ module.exports.callback = async ($) => {
             data: formData,
         };
 
-        $.ajax(settingsPost).done(function (response) {
+        $.ajax(settingsPost).done(function (_response) {
             window.location.href = '/repasse';
         });
     });

@@ -7,10 +7,10 @@ module.exports.callback = ($) => {
     $('.anuncio-steps').on('click', '.step-finalizar .btn-finalizar', function (e) {
         e.preventDefault();
         var idStatus = parseInt($(this).data('status'), 10);
-        var dadosBasicos = $('#dados-basicos');
+        //var dadosBasicos = $('#dados-basicos');
         var form = $('form', '#dados-basicos, .step-plano');
         var acao = idStatus === 2 || idStatus === 5 ? 'publicar' : '';
-        var idVeiculo = dadosBasicos.find('#idVeiculo').val();
+        //var idVeiculo = dadosBasicos.find('#idVeiculo').val();
         var dataSerialized = form.serializeArray();
         dataSerialized.push(
             {
