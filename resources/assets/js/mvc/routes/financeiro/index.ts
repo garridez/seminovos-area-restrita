@@ -12,18 +12,18 @@ export const callback = ($) => {
     require('jquery-validation/dist/additional-methods');
     require('jquery-validation/dist/localization/messages_pt_BR');
 
-    var pagamentoEmAndamento = function () {
-        var requestAlerts = require('./../criar-anuncio/checkout/request-alerts');
+    const pagamentoEmAndamento = function () {
+        const requestAlerts = require('./../criar-anuncio/checkout/request-alerts');
         requestAlerts.erro('Existe uma transação em andamento! Aguarde');
     };
 
-    var HandleApiError = require('../../../components/HandleApiError').default;
+    const HandleApiError = require('../../../components/HandleApiError').default;
 
-    var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
-    var formCC = $('.pagamento-cc-form');
+    const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
+    const formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
 
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
+    const advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     formCC.find('[name="validade_cartao"]').mask('00/00');
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
@@ -32,8 +32,8 @@ export const callback = ($) => {
     $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(
         function (e) {
             e.preventDefault();
-            var data = $(this).serializeArray();
-            var tempo_contrato = $('.tab-content')
+            const data = $(this).serializeArray();
+            const tempo_contrato = $('.tab-content')
                 .find('input[name="tempo_contrato"]:checked')
                 .data('tempo_contrato');
 
@@ -43,14 +43,14 @@ export const callback = ($) => {
             });
 
             //FIELDS DATA ONLY
-            var colorDepth = screen.colorDepth;
-            var type = getDeviceType();
-            var javaEnabled = navigator.javaEnabled();
-            var language = navigator.language;
-            var screenHeight = screen.height;
-            var screenWidth = screen.width;
-            var timezoneOffset = getTimeZoneOffset();
-            var userAgent = navigator.userAgent;
+            const colorDepth = screen.colorDepth;
+            const type = getDeviceType();
+            const javaEnabled = navigator.javaEnabled();
+            const language = navigator.language;
+            const screenHeight = screen.height;
+            const screenWidth = screen.width;
+            const timezoneOffset = getTimeZoneOffset();
+            const userAgent = navigator.userAgent;
 
             data.push({ name: 'colorDepth', value: colorDepth });
             data.push({ name: 'type', value: type });
@@ -61,15 +61,15 @@ export const callback = ($) => {
             data.push({ name: 'timezoneOffset', value: timezoneOffset });
             data.push({ name: 'userAgent', value: userAgent });
 
-            var Loading = require('../../../components/Loading').default;
+            const Loading = require('../../../components/Loading').default;
             Loading.addFeedbackTexts('Validando informações...', 'Realizando pagamento ...', false);
 
             Loading.open();
-            var $btnSubmit = $(this).find('button[type="submit"]');
-            var dataRedirectPagamento = {};
+            const $btnSubmit = $(this).find('button[type="submit"]');
+            const dataRedirectPagamento = {};
             dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
 
-            var ajaxDefaultParams = {
+            const ajaxDefaultParams = {
                 url: '/carro/checkout/processar',
                 cache: false,
                 data: data,
@@ -121,14 +121,14 @@ export const callback = ($) => {
                         dataRedirectPagamento.url = httpResponse.data.url || '';
                         modalPagamentoBoleto(dataRedirectPagamento);
                     } else {
-                        var title = 'Pagamento aprovado!';
-                        var text = $(`  <div>
+                        const title = 'Pagamento aprovado!';
+                        const text = $(`  <div>
                                         <div>É nescessário aguardar a atualização do site,
                                         <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
                                     </div>
                                 `);
-                        var closeText = 'Li e concordo';
-                        var time = 0;
+                        const closeText = 'Li e concordo';
+                        const time = 0;
                         advancedAlerts.success({
                             title,
                             text,
@@ -181,14 +181,14 @@ export const callback = ($) => {
     }
 
     function modalPagamentoBoleto(data) {
-        var text = `
+        const text = `
         <div class="w-100 text-center flex-wrap">
             <div>
                 <h5>Caso o Boleto não tenha sido baixado automaticamente clique no botão abaixo</h5>
             </div>
             <div><small>O Boleto também será encaminhado para o seu email. 😃</small></div>
         </div>`;
-        var downloadBtn = $(
+        const downloadBtn = $(
             `<a href="${data.url}" target="_BLANK" ` +
                 'download="boleto_pagamento.pdf" class="btn btn-primary">' +
                 '<i class="fa fa-download mr-3" aria-hidden="true"></i>' +
@@ -215,8 +215,8 @@ export const callback = ($) => {
         if ($('#pix_tab').hasClass('active')) {
             $('#pix-form').submit();
         }
-        var target = $(this).data('target').replace('#tab-', '');
-        var state = {
+        const target = $(this).data('target').replace('#tab-', '');
+        const state = {
             planos: {
                 prev: false,
                 next: true,
@@ -240,17 +240,19 @@ export const callback = ($) => {
     });
 
     $('.table-condensed').on('change', function () {
-        var clickado = $('.tab-content').find('input[name="tempo_contrato"]:checked').closest('tr');
-        var resultado = $('#resultado');
-        var pagamento = $('#tab-pagamento');
+        const clickado = $('.tab-content')
+            .find('input[name="tempo_contrato"]:checked')
+            .closest('tr');
+        const resultado = $('#resultado');
+        const pagamento = $('#tab-pagamento');
 
-        var plano = $(clickado).find('#plano').html();
-        var desconto = $(clickado).find('#desconto').html();
-        var economia = $(clickado).find('#economia').html();
-        var valor = parseFloat(
+        const plano = $(clickado).find('#plano').html();
+        const desconto = $(clickado).find('#desconto').html();
+        const economia = $(clickado).find('#economia').html();
+        const valor = parseFloat(
             $(clickado).find('#valor').html().replace('.', '').replace(',', '.').replace(' ', ''),
         );
-        var valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        const valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
         resultado.find('#desconto').html(desconto);
         resultado.find('#economia').html(economia);
@@ -262,7 +264,7 @@ export const callback = ($) => {
         pagamento.find('#valor').html(valorFormatado);
         optionsParcelas(valor, plano);
     });
-    var tabsCallback = {
+    const tabsCallback = {
         planos: function () {
             if (!$('form.form-planos')[0].checkValidity()) {
                 Alerts.warning('Escolha a periodicidade do seu plano');
@@ -279,13 +281,13 @@ export const callback = ($) => {
     };
 
     $('#rootwizard').on('click', 'a', function (e) {
-        var $this = $(this);
-        var direction = $this.data('nav-dir');
+        const $this = $(this);
+        const direction = $this.data('nav-dir');
         if (direction === 'finish') {
             return true;
         }
 
-        var idTab = $('.tab-content-main > .tab-pane.active').attr('id');
+        let idTab = $('.tab-content-main > .tab-pane.active').attr('id');
         if (idTab) {
             idTab = idTab.replace('tab-', '');
         }
@@ -305,12 +307,12 @@ export const callback = ($) => {
 };
 
 var optionsParcelas = (valor, plano) => {
-    var generateOption = function (i) {
+    const generateOption = function (i) {
         return $('<option>')
             .attr('value', i + 1)
             .text(i + 1 + 'x de R$ ' + (valor / (i + 1)).toFixed(2));
     };
-    var parcelas = $('#parcelas');
+    const parcelas = $('#parcelas');
     parcelas.html('');
     switch (plano) {
         case 'Plano Mensal':
