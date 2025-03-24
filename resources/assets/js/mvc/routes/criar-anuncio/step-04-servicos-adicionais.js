@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 module.exports.seletor = '.c-criar-anuncio.a-index';
 module.exports.prepend = true;
 

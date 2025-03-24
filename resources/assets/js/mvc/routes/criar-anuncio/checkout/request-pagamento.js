@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 /**
  *
  * @param array formData Dados adicionais na requisição
@@ -137,12 +139,12 @@ module.exports = function (formData, ajaxParams) {
 
     /**
      * USED FOR DATA ONLY FIELD
-     * 
+     *
      * @returns {String} Retorna o tipo de dispositivo
      */
     function getDeviceType() {
         const userAgent = navigator.userAgent;
-    
+
         if (/Mobi|Android|iPhone/i.test(userAgent)) {
             return 'Mobile';
         } else if (/iPad|Tablet/i.test(userAgent)) {
@@ -154,7 +156,7 @@ module.exports = function (formData, ajaxParams) {
 
     /**
      * USED FOR DATA ONLY FIELD
-     * 
+     *
      * @returns {String} Retorna o offset do fuso horário
      */
     function getTimeZoneOffset() {

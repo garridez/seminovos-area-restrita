@@ -8,7 +8,7 @@ function stopEvent(e) {
     e.stopImmediatePropagation();
     return false;
 }
-import loading from '../../../components/Loading';
+import Loading from '../../../components/Loading';
 
 export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
@@ -301,7 +301,7 @@ export const callback = ($) => {
             ajaxProcessing = false;
             return;
         }
-        loading.addFeedbackTexts([
+        Loading.addFeedbackTexts([
             'Salvando dados do veículo...',
             'Salvando os acessórios...',
             'Salvando...',

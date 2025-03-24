@@ -2,13 +2,14 @@ import './JsBsModal';
 
 import $ from 'jquery';
 
-export default {
-    _instance: null,
-    _showing: false,
-    _persistent: false,
-    _feedbackTexts: false,
-    _feedbackTextsCycle: false,
-    _getModal: function () {
+//const Loading: LoadingType = {
+class Loading {
+    _instance: JQuery<HTMLElement> | null = null;
+    _showing: boolean = false;
+    _persistent: boolean = false;
+    _feedbackTexts: string | string[] | false = false;
+    _feedbackTextsCycle: boolean = false;
+    _getModal() {
         if (this._instance) {
             return this._instance;
         }
@@ -37,8 +38,8 @@ export default {
             keyboard: false,
         });
         return (this._instance = instance);
-    },
-    open: function (persistent) {
+    }
+    open(persistent?: boolean) {
         if (persistent !== undefined) {
             this._persistent = persistent;
         }
@@ -50,8 +51,8 @@ export default {
         const instance = this._getModal();
         instance.modal('show');
         return instance;
-    },
-    close: function (forceClose) {
+    }
+    close(forceClose: boolean = false) {
         if (forceClose) {
             this._persistent = false;
         }
@@ -66,7 +67,7 @@ export default {
         const modal = this._getModal().modal('hide');
         const self = this;
         // Para garantir que o modal vai desparecer caso o close seja chamado muito rapido
-        var intervalID = setInterval(function () {
+        const intervalID = setInterval(function () {
             if (modal) {
                 modal.modal('hide');
             } else {
@@ -79,20 +80,20 @@ export default {
             clearInterval(intervalID);
         });
         return this._getModal();
-    },
+    }
     /**
      *
      * @param string|array texts Texto ou um array texto
      * @returns {undefined}
      */
-    addFeedbackTexts: function (texts, cycle) {
+    addFeedbackTexts(texts: string | string[], cycle: boolean = false) {
         this._feedbackTextsCycle = cycle;
         if (!Array.isArray(texts)) {
             texts = [texts];
         }
         this._feedbackTexts = texts;
-    },
-    _configureDisplayText: function (instance) {
+    }
+    _configureDisplayText(instance: JQuery<HTMLElement>) {
         const self = this;
         const feedbackElement = instance.find('.feedback-text');
         const displayFeedbackText = function () {
@@ -122,5 +123,7 @@ export default {
         instance.on('hide.bs.modal', function () {
             clearInterval(interval);
         });
-    },
-};
+    }
+}
+
+export default new Loading();

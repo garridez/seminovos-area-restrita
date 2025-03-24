@@ -1,4 +1,5 @@
 const BtnContinuar = require('./helpers/BtnContinuar');
+import $ from 'jquery';
 module.exports.seletor = '.c-criar-anuncio.a-index';
 
 module.exports.callback = ($) => {

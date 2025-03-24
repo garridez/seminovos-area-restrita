@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import loading from './Loading';
+import Loading from './Loading';
 
 export default function () {
     if (window.setAjaxLoadding === false) {
@@ -11,12 +11,12 @@ export default function () {
             if (window.setAjaxLoadding === false) {
                 return;
             }
-            loading.open();
+            Loading.open();
         })
         .ajaxComplete(function () {
             if (window.setAjaxLoadding === false) {
                 return;
             }
-            loading.close();
+            Loading.close();
         });
 }

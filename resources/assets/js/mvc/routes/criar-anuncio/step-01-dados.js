@@ -8,6 +8,8 @@ function stopEvent(e) {
 var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
 window.AutoFillCriarAnuncio = require('../../../helpers/AutoFillCriarAnuncio');
 var Alert = require('../../../components/Alerts').default;
+import $ from 'jquery';
+
 import HandleApiError from '../../../components/HandleApiError';
 
 export const seletor = '.c-criar-anuncio.a-index';

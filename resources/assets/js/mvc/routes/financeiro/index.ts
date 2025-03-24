@@ -1,29 +1,28 @@
+import 'bootstrap/js/dist/util.js';
+import 'bootstrap/js/dist/index.js';
+import 'bootstrap/js/dist/tab';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/dropdown';
+import 'jquery-mask-plugin';
+import 'jquery-validation';
+import 'jquery-validation/dist/additional-methods';
+import 'jquery-validation/dist/localization/messages_pt_BR';
+
+import advancedAlerts from '../../../components/AdvancedAlerts';
 import Alerts from '../../../components/Alerts';
+import HandleApiError from '../../../components/HandleApiError';
+import Loading from '../../../components/Loading';
+import requestAlerts from './../criar-anuncio/checkout/request-alerts';
+
 export const seletor = '.c-financeiro.a-index';
-export const callback = ($) => {
-    require('bootstrap/js/dist/util.js');
-    require('bootstrap/js/dist/index.js');
-    require('bootstrap/js/dist/tab');
-    require('bootstrap/js/dist/collapse');
-    require('bootstrap/js/dist/dropdown');
-
-    require('jquery-mask-plugin');
-    require('jquery-validation');
-    require('jquery-validation/dist/additional-methods');
-    require('jquery-validation/dist/localization/messages_pt_BR');
-
+export const callback = ($: JQueryStatic) => {
     const pagamentoEmAndamento = function () {
-        const requestAlerts = require('./../criar-anuncio/checkout/request-alerts');
         requestAlerts.erro('Existe uma transação em andamento! Aguarde');
     };
-
-    const HandleApiError = require('../../../components/HandleApiError').default;
 
     const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     const formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
-
-    const advancedAlerts = require('../../../components/AdvancedAlerts').default;
 
     formCC.find('[name="validade_cartao"]').mask('00/00');
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
@@ -52,42 +51,52 @@ export const callback = ($) => {
             const timezoneOffset = getTimeZoneOffset();
             const userAgent = navigator.userAgent;
 
-            data.push({ name: 'colorDepth', value: colorDepth });
+            data.push({ name: 'colorDepth', value: String(colorDepth) });
             data.push({ name: 'type', value: type });
-            data.push({ name: 'javaEnabled', value: javaEnabled });
+            data.push({ name: 'javaEnabled', value: String(javaEnabled) });
             data.push({ name: 'language', value: language });
-            data.push({ name: 'screenHeight', value: screenHeight });
-            data.push({ name: 'screenWidth', value: screenWidth });
+            data.push({ name: 'screenHeight', value: String(screenHeight) });
+            data.push({ name: 'screenWidth', value: String(screenWidth) });
             data.push({ name: 'timezoneOffset', value: timezoneOffset });
             data.push({ name: 'userAgent', value: userAgent });
 
-            const Loading = require('../../../components/Loading').default;
-            Loading.addFeedbackTexts('Validando informações...', 'Realizando pagamento ...', false);
+            Loading.addFeedbackTexts(['Validando informações...', 'Realizando pagamento ...']);
 
             Loading.open();
             const $btnSubmit = $(this).find('button[type="submit"]');
-            const dataRedirectPagamento = {};
-            dataRedirectPagamento.urlAguardando = '/historico-pagamentos';
+            const dataRedirectPagamento: ModalPagamentoBoletoParam = {
+                url: '',
+                urlAguardando: '/historico-pagamentos',
+            };
 
-            const ajaxDefaultParams = {
+            type ProcessarResponseType = {
+                html?: string;
+                type?: number;
+                status: number;
+                data?: {
+                    qr_code?: string;
+                    img_qr_code?: string;
+                    redirect?: string;
+                    url: string;
+                };
+            };
+
+            const ajaxDefaultParams: JQuery.AjaxSettings = {
                 url: '/carro/checkout/processar',
                 cache: false,
                 data: data,
                 type: 'POST',
                 dataType: 'json',
-                success: function (httpResponse) {
+                success: function (httpResponse: ProcessarResponseType) {
                     Loading.close();
                     if (httpResponse.html) {
                         $('.retorno-boleto').html(httpResponse.html);
                         return;
                     }
-                    if (
-                        httpResponse.data &&
-                        httpResponse.data.hasOwnProperty('qr_code') &&
-                        httpResponse.data.qr_code
-                    ) {
-                        $('.qrcode-img').attr('src', httpResponse.data.img_qr_code);
-                        $('.text-pix').html(httpResponse.data.qr_code);
+                    const dataRes = httpResponse.data;
+                    if (dataRes?.qr_code) {
+                        $('.qrcode-img').attr('src', dataRes.img_qr_code || '');
+                        $('.text-pix').html(dataRes.qr_code);
                         $('.form-pix').hide();
                         $('.retorno-pix').show();
                         Loading.close();
@@ -99,7 +108,8 @@ export const callback = ($) => {
                          */
                         pagamentoEmAndamento();
                     }
-                    if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
+                    //if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
+                    if (!('status' in httpResponse) || httpResponse.status != 200) {
                         HandleApiError(httpResponse);
                         return;
                     }
@@ -113,7 +123,7 @@ export const callback = ($) => {
                      */
                     if (httpResponse.data && httpResponse.data.redirect) {
                         if (httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1) {
-                            window.location = httpResponse.data.url;
+                            window.location.href = httpResponse.data.url;
                             return;
                         }
 
@@ -142,12 +152,11 @@ export const callback = ($) => {
                     Loading.close();
                 },
                 error: function (e) {
-                    HandleApiError(e.responseText);
+                    HandleApiError(e.responseJSON);
                     Loading.close();
                 },
             };
-            var ajaxParams = $.extend(ajaxDefaultParams, ajaxParams || {});
-            $.ajax(ajaxParams);
+            $.ajax($.extend(ajaxDefaultParams, {}));
         },
     );
 
@@ -179,8 +188,12 @@ export const callback = ($) => {
         const sign = offset < 0 ? '+' : '-';
         return `UTC${sign}${offsetHours}`;
     }
+    type ModalPagamentoBoletoParam = {
+        url: string;
+        urlAguardando: string;
+    };
 
-    function modalPagamentoBoleto(data) {
+    function modalPagamentoBoleto(data: ModalPagamentoBoletoParam) {
         const text = `
         <div class="w-100 text-center flex-wrap">
             <div>
@@ -196,7 +209,7 @@ export const callback = ($) => {
                 '</a>',
         ).on('click', function () {
             setTimeout(function () {
-                window.location = data.urlAguardando;
+                window.location.href = data.urlAguardando;
             }, 1000);
         });
 
@@ -210,13 +223,21 @@ export const callback = ($) => {
             .find('.modal-footer')
             .html(downloadBtn);
     }
+    type TabsNames = 'planos' | 'pagamento' | 'finalizar';
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function () {
         if ($('#pix_tab').hasClass('active')) {
             $('#pix-form').submit();
         }
-        const target = $(this).data('target').replace('#tab-', '');
-        const state = {
+        const target = $(this).data('target').replace('#tab-', '') as TabsNames;
+        type StateType = {
+            prev: boolean;
+            next: boolean;
+            finish: boolean;
+        };
+        const states: {
+            [key in TabsNames]: StateType;
+        } = {
             planos: {
                 prev: false,
                 next: true,
@@ -232,7 +253,8 @@ export const callback = ($) => {
                 next: false,
                 finish: true,
             },
-        }[target];
+        };
+        const state: StateType = states[target];
 
         $('.pager .next')[!state.next ? 'addClass' : 'removeClass']('hide');
         $('.pager .previous')[!state.prev ? 'addClass' : 'removeClass']('hide');
@@ -266,7 +288,7 @@ export const callback = ($) => {
     });
     const tabsCallback = {
         planos: function () {
-            if (!$('form.form-planos')[0].checkValidity()) {
+            if (!$<HTMLFormElement>('form.form-planos')[0].checkValidity()) {
                 Alerts.warning('Escolha a periodicidade do seu plano');
                 return false;
             }
@@ -282,14 +304,14 @@ export const callback = ($) => {
 
     $('#rootwizard').on('click', 'a', function (e) {
         const $this = $(this);
-        const direction = $this.data('nav-dir');
+        const direction: 'next' | 'prev' | 'finish' = $this.data('nav-dir');
         if (direction === 'finish') {
             return true;
         }
 
-        let idTab = $('.tab-content-main > .tab-pane.active').attr('id');
+        let idTab = $('.tab-content-main > .tab-pane.active').attr('id') as TabsNames;
         if (idTab) {
-            idTab = idTab.replace('tab-', '');
+            idTab = idTab.replace('tab-', '') as TabsNames;
         }
         e.preventDefault();
         if (!tabsCallback[idTab] || !direction) {
@@ -306,8 +328,8 @@ export const callback = ($) => {
     });
 };
 
-var optionsParcelas = (valor, plano) => {
-    const generateOption = function (i) {
+const optionsParcelas = (valor: number, plano: string) => {
+    const generateOption = function (i: number) {
         return $('<option>')
             .attr('value', i + 1)
             .text(i + 1 + 'x de R$ ' + (valor / (i + 1)).toFixed(2));

@@ -6,12 +6,52 @@
  */
 
 import 'bootstrap/js/dist/modal.js';
-import $ from 'jquery';
 
-(function ($) {
+import $ from 'jquery';
+declare global {
+    interface JQueryStatic {
+        jsBsModal(options: Partial<OptionsType>): $HTMLElement;
+    }
+}
+type $HTMLElement = JQuery<HTMLElement>;
+type HTMLSKeysType =
+    | 'modal'
+    | 'modal-dialog'
+    | 'modal-content'
+    | 'modal-header'
+    | 'close'
+    | 'modal-title'
+    | 'modal-body'
+    | 'modal-footer';
+
+type StructureHTMLType = {
+    name: HTMLSKeysType;
+    childs?: StructureHTMLType | StructureHTMLType[];
+};
+
+type OptionsType = {
+    autoShow: boolean;
+    structureHTML: StructureHTMLType;
+    contents: {
+        [key in HTMLSKeysType]?: JQuery.htmlString | JQuery.Node | false;
+        //modal: JQuery.htmlString | JQuery.Node;
+
+        //'modal-dialog': JQuery.htmlString | JQuery.Node;
+        //'modal-content': JQuery.htmlString | JQuery.Node;
+        //'modal-header': JQuery.htmlString | JQuery.Node;
+        //close: JQuery.htmlString | JQuery.Node;
+        //'modal-title': JQuery.htmlString | JQuery.Node | false;
+        //'modal-body': JQuery.htmlString | JQuery.Node | false;
+        //'modal-footer': JQuery.htmlString | JQuery.Node | false;
+    };
+};
+
+(function ($: JQueryStatic): void {
     'use strict';
-    var pluginName = 'jsBsModal';
-    var htmls = {
+    const pluginName = 'jsBsModal';
+    const htmls: {
+        [key in HTMLSKeysType]: string;
+    } = {
         modal: '<div class="modal fade" tabindex="-1" role="dialog">',
         'modal-dialog': '<div class="modal-dialog" role="document">',
         'modal-content': '<div class="modal-content">',
@@ -29,7 +69,8 @@ import $ from 'jquery';
         'modal-body': '<div class="modal-body">',
         'modal-footer': '<div class="modal-footer">',
     };
-    var structureHTML = {
+
+    const structureHTML: StructureHTMLType = {
         name: 'modal',
         childs: {
             name: 'modal-dialog',
@@ -46,7 +87,7 @@ import $ from 'jquery';
             },
         },
     };
-    var optionsDefault = {
+    const optionsDefault: OptionsType = {
         autoShow: true,
         structureHTML: structureHTML,
         contents: {
@@ -61,11 +102,21 @@ import $ from 'jquery';
         },
     };
 
-    function makeHtml(structureHTML, options) {
+    function makeHtml(structureHTML: StructureHTMLType[], options: OptionsType): $HTMLElement[];
+    function makeHtml(structureHTML: StructureHTMLType, options: OptionsType): $HTMLElement | false;
+    function makeHtml(
+        structureHTML: StructureHTMLType | StructureHTMLType[],
+        options: OptionsType,
+    ): $HTMLElement | $HTMLElement[] | false {
+        console.log(structureHTML);
         if (Array.isArray(structureHTML)) {
-            var elements = [];
-            $.each(structureHTML, function (i, v) {
-                elements.push(makeHtml(v, options));
+            console.log(structureHTML);
+            const elements: $HTMLElement[] = [];
+            $.each<StructureHTMLType>(structureHTML, function (_i, v) {
+                const html = makeHtml(v, options);
+                if (html) {
+                    elements.push(html);
+                }
             });
             return elements;
         }
@@ -76,20 +127,20 @@ import $ from 'jquery';
             );
         }
 
-        var content = options.contents[structureHTML.name];
+        const content = options.contents[structureHTML.name];
 
         if (content === false || content === undefined) {
-            return;
+            return false;
         }
 
-        var html = $(htmls[structureHTML.name]);
+        const html = $(htmls[structureHTML.name]);
 
         if (content !== '') {
             html.append(content);
         }
-
-        if (structureHTML.childs) {
-            $.each(makeHtml(structureHTML.childs, options), function (i, el) {
+        const childs = structureHTML.childs;
+        if (childs) {
+            $.each(makeHtml(Array.isArray(childs) ? childs : [childs], options), function (_i, el) {
                 html.append(el);
             });
         }
@@ -97,12 +148,14 @@ import $ from 'jquery';
         return html;
     }
 
-    function jsBsModalInit(options) {
-        var modal = makeHtml(options.structureHTML, options);
+    function jsBsModalInit(options: OptionsType) {
+        const modal = makeHtml(options.structureHTML, options);
 
-        $('body').append(modal);
+        if (modal) {
+            $('body').append(modal);
+        }
 
-        if (options.autoShow) {
+        if (options.autoShow && modal) {
             modal.modal('show');
         }
 
@@ -114,7 +167,7 @@ import $ from 'jquery';
 
         options.contents = $.extend({}, optionsDefault.contents, options.contents);
 
-        return jsBsModalInit(options);
+        return jsBsModalInit(options as OptionsType) || $();
     };
-    $[pluginName].htmls = htmls;
+    //$[pluginName].htmls = htmls;
 })($);
