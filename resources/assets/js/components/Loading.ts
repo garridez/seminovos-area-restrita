@@ -1,5 +1,6 @@
-import $ from 'jquery';
 import './JsBsModal';
+
+import $ from 'jquery';
 
 export default {
     _instance: null,
