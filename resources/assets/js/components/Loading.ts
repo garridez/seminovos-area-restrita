@@ -12,7 +12,7 @@ export default {
         if (this._instance) {
             return this._instance;
         }
-        var modalContent =
+        const modalContent =
             '<div class="text-center">' +
             ' <div class="spinner-border text-laranja" style="width: 3rem; height: 3rem;" role="status">' +
             '  <span class="sr-only">Loading...</span>' +
@@ -20,7 +20,7 @@ export default {
             ' <div class="feedback-text text-white animated pulse infinite">Carregando...</div>' +
             '</div>';
 
-        var instance = $.jsBsModal({
+        const instance = $.jsBsModal({
             autoShow: false,
             contents: {
                 'modal-content': modalContent,
@@ -47,7 +47,7 @@ export default {
         }
 
         this._showing = true;
-        var instance = this._getModal();
+        const instance = this._getModal();
         instance.modal('show');
         return instance;
     },
@@ -63,8 +63,8 @@ export default {
             return;
         }
         this._feedbackTexts = false;
-        var modal = this._getModal().modal('hide');
-        var self = this;
+        const modal = this._getModal().modal('hide');
+        const self = this;
         // Para garantir que o modal vai desparecer caso o close seja chamado muito rapido
         var intervalID = setInterval(function () {
             if (modal) {
@@ -93,14 +93,14 @@ export default {
         this._feedbackTexts = texts;
     },
     _configureDisplayText: function (instance) {
-        var self = this;
-        var feedbackElement = instance.find('.feedback-text');
-        var displayFeedbackText = function () {
-            var texts = self._feedbackTexts;
+        const self = this;
+        const feedbackElement = instance.find('.feedback-text');
+        const displayFeedbackText = function () {
+            const texts = self._feedbackTexts;
             if (!Array.isArray(texts) || !texts.length) {
                 return false;
             }
-            var indexFeedback = feedbackElement.data('indexFeedback');
+            let indexFeedback = feedbackElement.data('indexFeedback');
             if (indexFeedback === undefined) {
                 indexFeedback = -1;
             }
@@ -118,7 +118,7 @@ export default {
             return true;
         };
         displayFeedbackText();
-        var interval = setInterval(displayFeedbackText, 4000);
+        const interval = setInterval(displayFeedbackText, 4000);
         instance.on('hide.bs.modal', function () {
             clearInterval(interval);
         });
