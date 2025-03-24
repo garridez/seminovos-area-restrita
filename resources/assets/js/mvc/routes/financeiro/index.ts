@@ -12,7 +12,7 @@ import advancedAlerts from '../../../components/AdvancedAlerts';
 import Alerts from '../../../components/Alerts';
 import HandleApiError from '../../../components/HandleApiError';
 import Loading from '../../../components/Loading';
-import requestAlerts from './../criar-anuncio/checkout/request-alerts';
+import requestAlerts from '../criar-anuncio/checkout/request-alerts';
 
 export const seletor = '.c-financeiro.a-index';
 export const callback = ($: JQueryStatic) => {

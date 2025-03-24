@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-module.exports = function () {
+export default function () {
     var requestPagamento = require('./request-pagamento');
     $('.pagamento-transferencia-form').submit(function (e) {
         e.preventDefault();

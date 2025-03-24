@@ -108,9 +108,7 @@ type OptionsType = {
         structureHTML: StructureHTMLType | StructureHTMLType[],
         options: OptionsType,
     ): $HTMLElement | $HTMLElement[] | false {
-        console.log(structureHTML);
         if (Array.isArray(structureHTML)) {
-            console.log(structureHTML);
             const elements: $HTMLElement[] = [];
             $.each<StructureHTMLType>(structureHTML, function (_i, v) {
                 const html = makeHtml(v, options);

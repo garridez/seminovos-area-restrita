@@ -6,7 +6,7 @@ import $ from 'jquery';
  * @param object ajaxParams Parametros para a função "ajax" do jQuery
  * @returns {undefined}
  */
-module.exports = function (formData, ajaxParams) {
+export default function (formData, ajaxParams) {
     var requestAlerts = require('./request-alerts');
     var pagamentoEmAndamento = require('./pagamento-em-andamento');
     requestAlerts.processando();

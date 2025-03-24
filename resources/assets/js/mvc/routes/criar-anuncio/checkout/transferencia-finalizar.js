@@ -4,7 +4,7 @@ import $ from 'jquery';
  *
  * Finaliza o pagamento para o cliente enviar o comprovante depois
  */
-module.exports = function () {
+export default function () {
     var ctx = '.pagamento-transferencia-form';
     $(ctx + ' button.pagamento-finalizar-deposito').click(function () {
         $(ctx + ' .form-control-file').prop('required', false);

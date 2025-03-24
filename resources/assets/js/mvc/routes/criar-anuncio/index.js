@@ -3,15 +3,15 @@ import $ from 'jquery';
 /**
  * Este script faz a configuração inicial da página de anuncie
  */
-module.exports.seletor = '.c-criar-anuncio.a-index';
-module.exports.prepend = true; // Esse script precisa rodar primeiro
+export const seletor = '.c-criar-anuncio.a-index';
+export const prepend = true; // Esse script precisa rodar primeiro
 function stopEvent(e) {
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
     return false;
 }
-module.exports.callback = ($) => {
+export const callback = ($) => {
     require('../../../components/StepPlugin');
     require('./load-content-steps')();
 
@@ -182,7 +182,7 @@ module.exports.callback = ($) => {
      *
      * Descomentar o autofill apenas em dev!
      */
-    //require('./autofill').init();
+    //require('./helpers/autofill').init();
 };
 function allStepsInlast() {
     var inLastStep = true;

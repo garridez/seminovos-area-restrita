@@ -48,6 +48,12 @@ export default {
                         return false;
                     }
                     uniquePaths.push(fileNormalized);
+                    if (
+                        fileNormalized.includes('criar-anuncio/checkout') ||
+                        fileNormalized.includes('criar-anuncio/helpers')
+                    ) {
+                        return false;
+                    }
                     return true;
                 })
                 .forEach((file) => {

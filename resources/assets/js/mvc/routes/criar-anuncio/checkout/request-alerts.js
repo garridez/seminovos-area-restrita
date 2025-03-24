@@ -6,7 +6,7 @@ import $ from 'jquery';
  * Processando: Mostra msg para aguardar a resposta do pagamento
  * Erro: Mostra o motivo do erro e um botão para tentar novamente
  */
-module.exports = {
+export default {
     init: function () {
         var self = this;
         this.ctx = $('.checkout-metodos-container');

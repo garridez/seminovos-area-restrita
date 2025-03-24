@@ -1,7 +1,7 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
-module.exports.prepend = true;
+export const seletor = '.c-criar-anuncio.a-index';
+export const prepend = true;
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     var advancedAlerts = require('../../../components/AdvancedAlerts').default;
     var Confirms = require('../../../components/Confirms').default;
     var stepContainer = $('.step-container');

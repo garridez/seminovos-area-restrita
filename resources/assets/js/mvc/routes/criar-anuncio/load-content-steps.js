@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-module.exports = function () {
+export default function () {
     var loading = require('../../../components/Loading').default;
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;

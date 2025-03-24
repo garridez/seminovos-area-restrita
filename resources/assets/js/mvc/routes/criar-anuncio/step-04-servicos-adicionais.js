@@ -1,9 +1,9 @@
 import $ from 'jquery';
 
-module.exports.seletor = '.c-criar-anuncio.a-index';
-module.exports.prepend = true;
+export const seletor = '.c-criar-anuncio.a-index';
+export const prepend = true;
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     $('.step-container').on('steps-loaded', init);
 };
 

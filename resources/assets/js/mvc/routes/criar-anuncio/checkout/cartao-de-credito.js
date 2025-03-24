@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-module.exports = function () {
+export default function () {
     require('jquery-mask-plugin');
     require('jquery-validation');
     require('jquery-validation/dist/additional-methods');

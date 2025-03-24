@@ -1,6 +1,6 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
+export const seletor = '.c-criar-anuncio.a-index';
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     var HandleApiError = require('../../../components/HandleApiError').default;
     var advancedAlerts = require('../../../components/AdvancedAlerts').default;
 

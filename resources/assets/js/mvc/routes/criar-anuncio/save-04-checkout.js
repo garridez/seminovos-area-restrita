@@ -1,6 +1,6 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
+export const seletor = '.c-criar-anuncio.a-index';
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     require('bootstrap/js/dist/util.js');
     require('bootstrap/js/dist/collapse.js');
 

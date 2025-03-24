@@ -1,6 +1,6 @@
-module.exports.seletor = '.c-criar-anuncio.a-index';
+export const seletor = '.c-criar-anuncio.a-index';
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     var stopEvent = require('../../../helpers/StopEvent');
     var advancedAlerts = require('../../../components/AdvancedAlerts').default;
     var BtnContinuar = require('./helpers/BtnContinuar');

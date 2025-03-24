@@ -1,7 +1,7 @@
 import $ from 'jquery';
-module.exports.seletor = '.c-criar-anuncio.a-index';
+export const seletor = '.c-criar-anuncio.a-index';
 
-module.exports.callback = ($) => {
+export const callback = ($) => {
     $('.step-container').on('steps-loaded', init);
 
     var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');

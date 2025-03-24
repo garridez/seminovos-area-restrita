@@ -41,7 +41,7 @@ function filterImgToReorder($img) {
 
 var ajaxAsyncCount = 0;
 
-module.exports = async function () {
+export default async function () {
     $('.step-container').on('steps-loaded', init);
 };
 
