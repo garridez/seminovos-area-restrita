@@ -5,7 +5,6 @@
  */
 
 use Laminas\Cache\Storage\Adapter\Filesystem;
-use Laminas\Cache\Storage\Adapter\Redis;
 
 /**
  * List of enabled modules for this application.
@@ -24,7 +23,6 @@ return [
     'Laminas\Log',
     'Laminas\Form',
     'Laminas\Cache',
-    Redis::class,
     Filesystem::class,
     'Laminas\Validator',
 
