@@ -65,6 +65,7 @@ class Loading {
         }
         this._feedbackTexts = false;
         const modal = this._getModal().modal('hide');
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         // Para garantir que o modal vai desparecer caso o close seja chamado muito rapido
         const intervalID = setInterval(function () {
@@ -94,10 +95,9 @@ class Loading {
         this._feedbackTexts = texts;
     }
     _configureDisplayText(instance: JQuery<HTMLElement>) {
-        const self = this;
         const feedbackElement = instance.find('.feedback-text');
-        const displayFeedbackText = function () {
-            const texts = self._feedbackTexts;
+        const displayFeedbackText = () => {
+            const texts = this._feedbackTexts;
             if (!Array.isArray(texts) || !texts.length) {
                 return false;
             }
@@ -108,7 +108,7 @@ class Loading {
             indexFeedback++;
             if (indexFeedback >= texts.length) {
                 indexFeedback = 0;
-                if (!self._feedbackTextsCycle) {
+                if (!this._feedbackTextsCycle) {
                     return false;
                 }
             }

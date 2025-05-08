@@ -33,7 +33,7 @@ function init() {
         }
     });
 
-    $('input#servico-adicional-certificado').change(function () {
+    $('input#servico-adicional-certificado').on('change', function () {
         var $this = $(this);
 
         var adicionar = $ctx.find('.btn-control-certificado .text-adicionar');

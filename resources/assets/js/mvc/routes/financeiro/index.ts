@@ -28,7 +28,8 @@ export const callback = ($: JQueryStatic) => {
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
     formCC.find('[name="numero_cartao"]').mask('9999 9999 9999 9??? ????', optional);
 
-    $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').submit(
+    $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').on(
+        'submit',
         function (e) {
             e.preventDefault();
             const data = $(this).serializeArray();
@@ -44,7 +45,7 @@ export const callback = ($: JQueryStatic) => {
             //FIELDS DATA ONLY
             const colorDepth = screen.colorDepth;
             const type = getDeviceType();
-            const javaEnabled = navigator.javaEnabled();
+            const javaEnabled = false;
             const language = navigator.language;
             const screenHeight = screen.height;
             const screenWidth = screen.width;
@@ -227,7 +228,7 @@ export const callback = ($: JQueryStatic) => {
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function () {
         if ($('#pix_tab').hasClass('active')) {
-            $('#pix-form').submit();
+            $('#pix-form').trigger('submit');
         }
         const target = $(this).data('target').replace('#tab-', '') as TabsNames;
         type StateType = {

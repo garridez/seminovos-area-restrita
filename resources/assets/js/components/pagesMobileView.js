@@ -1,5 +1,6 @@
 export default function ($) {
     var MobileView = function (element, options) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         var self = this;
         self.options = $.extend(true, {}, $.fn.pgMobileViews.defaults, options);
         self.element = $(element);

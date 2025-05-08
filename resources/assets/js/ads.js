@@ -118,7 +118,7 @@ export default (function (window, document) {
         slots[adPath] = slots[adPath] || {};
         slots[adPath][e.id] = {
             slot: slot,
-            element: e instanceof Element || e instanceof HTMLDocument ? e : null,
+            element: e instanceof Element || e instanceof Document ? e : null,
         };
         return e;
     }

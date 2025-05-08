@@ -67,7 +67,7 @@ function pickRandomOption(field) {
     var randomOption = Math.floor(Math.random() * options.length);
 
     var ret = options.eq(randomOption).prop('selected', true);
-    $(field).change();
+    $(field).trigger('change');
     return ret;
 }
 
@@ -86,7 +86,7 @@ function makeRandomPlaca(field, model = 'AAA0000') {
         }
     }
 
-    return $(field).val(placa).blur();
+    return $(field).val(placa).trigger('blur');
 }
 
 export default autoFill;

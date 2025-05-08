@@ -188,7 +188,7 @@ function init() {
         }
     });
 
-    anoModelo.change(function (event, limparCampos = true, caracteristica = '') {
+    anoModelo.on('change', function (event, limparCampos = true, caracteristica = '') {
         $('#divOutraVersao').addClass('hide');
 
         if (!getValInt(this)) {
@@ -244,7 +244,7 @@ function init() {
                 }
 
                 if (dados.length == 0) {
-                    $('[name="versao"]').val('-1').change();
+                    $('[name="versao"]').val('-1').trigger('change');
                 }
             },
             error: function (e) {

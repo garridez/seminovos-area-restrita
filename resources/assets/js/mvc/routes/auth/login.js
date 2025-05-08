@@ -81,7 +81,7 @@ export const callback = ($) => {
     var $ctx = $('.login-area');
     var $formDivs = $('.container-form-particular, .container-form-revenda');
     $formDivs.filter('.hide').hide().removeClass('hide');
-    $ctx.find('.switch-field input').change(function () {
+    $ctx.find('.switch-field input').on('change', function () {
         let seletectedForm = '.' + $(this).val();
         $formDivs.slideUp().filter(seletectedForm).slideDown();
     });
@@ -140,7 +140,7 @@ export const callback = ($) => {
             $('#modalCuidado').modal('hide');
         }, 8000);
     }
-    $('form', '.container-form-particular, .container-form-revenda').submit(function () {
+    $('form', '.container-form-particular, .container-form-revenda').on('submit', function () {
         $('.container-form-particular, .container-form-revenda').slideUp();
         $('.loading-container').slideDown();
     });
@@ -176,7 +176,7 @@ export const callback = ($) => {
     /**------------------------------------------------ */
     var $formDadosBasicos = $('form#formdadosBasicos');
 
-    $('form[name="formContatosCpfCpnj"]').submit(function (e) {
+    $('form[name="formContatosCpfCpnj"]').on('submit', function (e) {
         e.preventDefault();
         $('#modalLembrarSenha').modal('hide');
         $('#modalLembrarSenhaRevenda').modal('hide');
@@ -294,7 +294,7 @@ export const callback = ($) => {
         });
     });
 
-    $('#modalValidaToken form#formValidaToken').submit(function (e) {
+    $('#modalValidaToken form#formValidaToken').on('submit', function (e) {
         e.preventDefault();
         var $this = $(this);
         $.ajax({
@@ -329,7 +329,7 @@ export const callback = ($) => {
         });
     });
 
-    $('#modalNovaSenha form#formNovaSenha').submit(function (e) {
+    $('#modalNovaSenha form#formNovaSenha').on('submit', function (e) {
         e.preventDefault();
 
         var $this = $(this);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 export default function ($) {
     'use strict';
     // QUICKVIEW CLASS DEFINITION
@@ -41,6 +42,7 @@ export default function ($) {
         $(this.options.notes).on('click', '.toolbar > li > a', function (_e) {
             //e.preventDefault();
             var command = $(this).attr('data-action');
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             document.execCommand(command, false, null);
             $(this).toggleClass('active');
         });

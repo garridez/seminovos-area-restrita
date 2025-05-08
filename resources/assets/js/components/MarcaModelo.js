@@ -71,15 +71,14 @@ export default function (form, filterData) {
             marca: function () {
                 var marcas = metodos.getMarcas();
                 var marcaInput = metodos.getInputVal('idMarca');
-                var self = this;
 
                 metodos
                     .makeOptions(marcaInput.input, marcas, 'nome', 'id')
                     .prepend('<option selected value="">Selecione a marca</option>')
                     .val(marcaInput.value)
                     .unbind('change')
-                    .change(function () {
-                        self.modelos();
+                    .change(() => {
+                        this.modelos();
                     })
                     .change();
             },
@@ -105,9 +104,8 @@ export default function (form, filterData) {
             },
         },
         autocomplete: function (params) {
-            var self = this;
-            $.each(params, function (i, v) {
-                var inputVal = self.getInputVal(i);
+            $.each(params, (i, v) => {
+                var inputVal = this.getInputVal(i);
                 if (!inputVal) {
                     return;
                 }

@@ -20,7 +20,7 @@ function init() {
     var observacoesTextarea = ctx.find('textarea[name="observacoes"]');
     var countSpan = ctx.find('.wordcount span.count');
     observacoesTextarea
-        .keyup(function () {
+        .on('keyup', function () {
             countSpan.html($(this).val().length);
             if ($(this).val().length > 650) {
                 countSpan.html(
@@ -32,5 +32,5 @@ function init() {
                 BtnContinuar.enable();
             }
         })
-        .keyup();
+        .trigger('keyup');
 }

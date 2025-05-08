@@ -8,11 +8,10 @@ import $ from 'jquery';
  */
 export default {
     init: function () {
-        var self = this;
         this.ctx = $('.checkout-metodos-container');
         this.ctxBaseClass = this.ctx.attr('class');
-        this.ctx.on('click', '.tentar-novamente', function () {
-            self.normal();
+        this.ctx.on('click', '.tentar-novamente', () => {
+            this.normal();
         });
 
         // Reseta essa função para não ser executada novamente

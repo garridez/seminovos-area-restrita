@@ -19,7 +19,7 @@ export default advancedAlerts = {
         options = $.extend({}, this.optionsDefault, options);
         var close = $('<button class="btn btn-primary" data-dismiss="modal">')
             .html(`<span class="text-close">${options.closeText} </span>`)
-            .click(function () {});
+            .on('click', function () {});
 
         if (typeof options.img === 'string' && options.img !== '') {
             options.img = $(`<img src="${options.img}" class="modal-img">`);

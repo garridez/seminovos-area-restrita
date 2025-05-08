@@ -63,7 +63,7 @@ const autofill = {
 
         function continuar() {
             setTimeout(function () {
-                $('.btn-continuar').click();
+                $('.btn-continuar').trigger('click');
             }, 10);
         }
         $('.anuncio-steps').on('steps-loaded', function () {
@@ -77,15 +77,15 @@ const autofill = {
             var form = $('#form_dadosVeiculo');
 
             form.find('[name="placa"]').val(options.placa);
-            form.find('[name="idMarca"]').val('18').change();
+            form.find('[name="idMarca"]').val('18').trigger('change');
             console.log('vai');
             await sleep(1000);
             console.log('vai');
-            form.find('[name="modeloCarro"]').val('1964').change();
+            form.find('[name="modeloCarro"]').val('1964').trigger('change');
             await sleep(1000);
 
             form.find('[name="anoFabricacao"]').val('2015');
-            form.find('[name="anoModelo"]').val('2015').change();
+            form.find('[name="anoModelo"]').val('2015').trigger('change');
             await sleep(1000);
             form.find('[name="motor"]').val('3');
 
@@ -106,10 +106,10 @@ const autofill = {
 
             $('[name="valor"]').val('15000');
             $('[name="observacoes"]').val('Observação de teste');
-            $('#form_maisInformacoesVeiculo [type="checkbox"][name="termo"]').click();
+            $('#form_maisInformacoesVeiculo [type="checkbox"][name="termo"]').trigger('click');
 
             $('[name="idTroca"]').filter('[value="1"]').prop('checked', true);
-            $('#radio-idPlano-2').click();
+            $('#radio-idPlano-2').trigger('click');
 
             setTimeout(function () {
                 var ctx = $('.pagamento-cc-form');
@@ -117,8 +117,8 @@ const autofill = {
                 ctx.find('[name="nome_cartao"]').val('Felipe Rodrigues Amaral');
                 ctx.find('[name="validade_cartao"]').val(options.cartao.validade_cartao);
                 ctx.find('[name="cvc_cartao"]').val('654');
-                $('#accordion-payment [name="termos"]').click();
-                //ctx.find('.btn-submit-pagt').click();
+                $('#accordion-payment [name="termos"]').trigger('click');
+                //ctx.find('.btn-submit-pagt').trigger('click');
             }, 500); // Pagamentos
         }
 

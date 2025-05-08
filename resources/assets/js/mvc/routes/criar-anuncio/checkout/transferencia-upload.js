@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 import requestPagamento from './request-pagamento';
 export default function () {
-    $('.pagamento-transferencia-form').submit(function (e) {
+    $('.pagamento-transferencia-form').on('submit', function (e) {
         e.preventDefault();
         if (!$(this).valid()) {
             return;

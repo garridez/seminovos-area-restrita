@@ -52,7 +52,7 @@ function init() {
         if (!confirm('Deseja realmente excluir todas fotos?')) {
             return;
         }
-        ctx.find('.btn-remove-img').click();
+        ctx.find('.btn-remove-img').trigger('click');
     });
 
     ctx.find('.fotos-container').on('click', '.display-img', function (e) {
@@ -99,7 +99,7 @@ function init() {
     ctx.on('click', '.btn-upload-img', function (e) {
         e.preventDefault();
         // Trigga a imagem para abrir o upload
-        $(this).closest('.foto').find('.display-img').click();
+        $(this).closest('.foto').find('.display-img').trigger('click');
     });
     ctx.on('click', '.btn-remove-img', function (e) {
         e.preventDefault();
@@ -312,10 +312,10 @@ function testImgUpload() {
                 const url = `/sequenciais/${i}.jpg`;
                 await loadURLToInputFiled(inputFoto[0], url);
                 inputFoto.data('img-element', $('.display-img')[key]);
-                $('[type="file"][name="foto"]').change();
+                $('[type="file"][name="foto"]').trigger('change');
             }
             setTimeout(function () {
-                $('.btn-continuar').click();
+                $('.btn-continuar').trigger('click');
             }, 100);
 
             return;

@@ -22,7 +22,7 @@ export default function (formData, ajaxParams) {
     //FIELDS DATA ONLY
     const colorDepth = screen.colorDepth;
     const type = getDeviceType();
-    const javaEnabled = navigator.javaEnabled();
+    const javaEnabled = false;
     const language = navigator.language;
     const screenHeight = screen.height;
     const screenWidth = screen.width;

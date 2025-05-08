@@ -33,7 +33,7 @@ export default confirms = {
 
         var btnConfirm = $('<button type="button" class="btn btn-primary">')
             .html(`<span>${options.confirmText}</span>`)
-            .click(function () {
+            .on('click', function () {
                 $(this).attr('disabled', true);
                 if (typeof options.confirmCallback === 'function') {
                     options.confirmCallback();
@@ -71,7 +71,7 @@ export default confirms = {
 
         var btnNegate = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">')
             .html(`<span>${options.negateText}</span>`)
-            .click(function () {
+            .on('click', function () {
                 options.negateCallback();
             });
 
