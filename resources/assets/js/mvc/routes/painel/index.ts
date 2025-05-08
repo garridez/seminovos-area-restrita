@@ -1,10 +1,12 @@
-module.exports.seletor = '.c-painel.a-index';
-module.exports.callback = ($: JQueryStatic) => {
-    require('sortable-tablesort');
+import 'sortable-tablesort';
 
-    require('../../../components/MarcaModelo')($('.form-tabela-fipe'));
+import MarcaModelo from '../../../components/MarcaModelo';
 
-    $('body').on('click', '[data-table2excel]',  function () {
+export const seletor = '.c-painel.a-index';
+export const callback = ($: JQueryStatic) => {
+    MarcaModelo($('.form-tabela-fipe'));
+
+    $('body').on('click', '[data-table2excel]', function () {
         const date = new Date();
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

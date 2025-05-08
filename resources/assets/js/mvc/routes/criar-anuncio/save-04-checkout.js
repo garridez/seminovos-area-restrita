@@ -1,15 +1,20 @@
+import 'bootstrap/js/dist/util.js';
+import 'bootstrap/js/dist/collapse.js';
+
+import cc from './checkout/cartao-de-credito';
+import pagseguro from './checkout/pagseguro';
+import pix from './checkout/pix';
+import transferenciaFinalizar from './checkout/transferencia-finalizar';
+import transferenciaUpload from './checkout/transferencia-upload';
+
 export const seletor = '.c-criar-anuncio.a-index';
-
 export const callback = ($) => {
-    require('bootstrap/js/dist/util.js');
-    require('bootstrap/js/dist/collapse.js');
-
     var handlers = {
-        cc: require('./checkout/cartao-de-credito'),
-        pagseguro: require('./checkout/pagseguro'),
-        pix: require('./checkout/pix'),
-        transferenciaFinalizar: require('./checkout/transferencia-finalizar'),
-        transferenciaUpload: require('./checkout/transferencia-upload'),
+        cc,
+        pagseguro,
+        pix,
+        transferenciaFinalizar,
+        transferenciaUpload,
     };
 
     var initialized = false;

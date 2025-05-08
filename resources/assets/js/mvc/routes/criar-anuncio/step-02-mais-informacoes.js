@@ -1,10 +1,11 @@
 import $ from 'jquery';
-export const seletor = '.c-criar-anuncio.a-index';
 
+import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
+import BtnContinuar from './helpers/BtnContinuar';
+
+export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
     $('.step-container').on('steps-loaded', init);
-
-    var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
 
     $('.step-container').on('step:pre-exit:fotos', function () {
         if ($('#dados-basicos #flagCriando').val() == 1) {
@@ -18,7 +19,6 @@ function init() {
     var ctx = $('.step-preco');
     var observacoesTextarea = ctx.find('textarea[name="observacoes"]');
     var countSpan = ctx.find('.wordcount span.count');
-    var BtnContinuar = require('./helpers/BtnContinuar');
     observacoesTextarea
         .keyup(function () {
             countSpan.html($(this).val().length);

@@ -3,7 +3,7 @@
  *  Adiciona uma div acima de tudo e mostra o conteúdo das variáveis
  *
  * Modo de usar:
- *  var looger = require('components/Logger');
+ *  import looger from 'components/Logger';
  *  var variavelQualquer = 'opa'
  *  looger(variavelQualquer); //  "opa"
  *  looger(variavelQualquer, 'Label'); // Label: "opa"
@@ -26,7 +26,7 @@ $(function () {
     });
     $('body').append(div);
 });
-module.exports = function (variable, label) {
+export default function (variable, label) {
     label = label || '';
     var b = JSON.stringify(variable, null, '\t');
     if (b && b.replace) {

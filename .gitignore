@@ -31,4 +31,5 @@ version
 !.yarn/versions
 public/psalm-report.html
 public/webpack-report.html
+resources/.dist
 

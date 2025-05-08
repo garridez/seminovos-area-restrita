@@ -1,4 +1,4 @@
-module.exports = function ($) {
+export default function ($) {
     'use strict';
     //To Open Chat When Clicked
     $('[data-chat-input]').on('keypress', function (e) {

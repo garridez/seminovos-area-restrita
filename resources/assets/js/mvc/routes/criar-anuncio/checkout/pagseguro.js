@@ -1,7 +1,9 @@
+
 import $ from 'jquery';
 
+import requestPagamento from './request-pagamento';
+
 export default function () {
-    var requestPagamento = require('./request-pagamento');
     $('form.pagamento-boleto-form').submit(function (e) {
         e.preventDefault();
         if (!$(this).valid()) {
@@ -14,4 +16,4 @@ export default function () {
             },
         ]);
     });
-};
+}

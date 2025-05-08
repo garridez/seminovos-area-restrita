@@ -1,4 +1,4 @@
-module.exports = function ($) {
+export default function ($) {
     var MobileView = function (element, options) {
         var self = this;
         self.options = $.extend(true, {}, $.fn.pgMobileViews.defaults, options);

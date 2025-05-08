@@ -1,4 +1,6 @@
 import $ from 'jquery';
+
+import { isDev } from '../components/Env';
 /**
  *
  * Função comum para popular o DataLayer Enhanced Ecommerce
@@ -6,7 +8,6 @@ import $ from 'jquery';
  */
 
 export default function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
-    var { isDev } = require('../components/Env');
     if (isDev) {
         return;
     }
@@ -101,4 +102,4 @@ export default function (ctx, stepWhoCall = 'checkout_step_1', requestData = {})
             products: [currentVal],
         },
     });
-};
+}

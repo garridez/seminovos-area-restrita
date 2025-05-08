@@ -1,12 +1,14 @@
 import Compress from 'compress.js';
+import heic2any from 'heic2any';
 import sortablejs from 'sortablejs';
+
+import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
 
 export const seletor = '.c-criar-anuncio.a-index';
 
 export const callback = ($: JQueryStatic) => {
     $('.step-container').on('steps-loaded', init);
 
-    const DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
     $('.step-container').on('step:pre-exit:video', function () {
         if ($('#dados-basicos #flagCriando').val() == 1) {
             const ctx = $('.step-0, .step-1');
@@ -242,9 +244,6 @@ function init() {
                 // Se o compress falhar, não tem problema. A imagem original já está settada para enviar
                 try {
                     if (imageFile.name.match(/.heic$/) !== null) {
-                         
-                        const heic2any = require('heic2any');
-                        //const heic2any = require('../../../components/heic2any');
                         const resultBlob = await heic2any({
                             blob: imageFile,
                             toType: 'image/jpg',

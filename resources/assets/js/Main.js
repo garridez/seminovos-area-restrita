@@ -1,8 +1,7 @@
 import * as $ from 'jquery';
 
 import SnBH from './SnBH';
-window.$ = $;
-//require('./ads.js');
+window.jQuery = window.$ = $;
 
 $(function () {
     // Inicia a aplicação

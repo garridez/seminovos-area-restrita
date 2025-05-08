@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 function randStr(length, type) {
     var result = '';
 
@@ -15,7 +17,7 @@ function sleep(ms = 1000) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-module.exports = {
+const autofill = {
     init: function () {
         this._core({
             autofill: true,
@@ -41,7 +43,6 @@ module.exports = {
         });
     },
     _core: function (options) {
-        var $ = require('jquery');
         if ($('#idVeiculo').val() !== '') {
             return;
         }
@@ -150,3 +151,5 @@ module.exports = {
         }
     },
 };
+
+export default autofill;

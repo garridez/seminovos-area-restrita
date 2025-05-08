@@ -5,12 +5,15 @@ function stopEvent(e) {
     return false;
 }
 
-var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
-window.AutoFillCriarAnuncio = require('../../../helpers/AutoFillCriarAnuncio');
-var Alert = require('../../../components/Alerts').default;
 import $ from 'jquery';
 
+import Alert from '../../../components/Alerts';
+import Confirms from '../../../components/Confirms';
 import HandleApiError from '../../../components/HandleApiError';
+import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
+
+//import AutoFillCriarAnuncio from '../../../helpers/AutoFillCriarAnuncio';
+//window.AutoFillCriarAnuncio = AutoFillCriarAnuncio;
 
 export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
@@ -43,7 +46,6 @@ export const callback = ($) => {
 };
 
 function init() {
-    var Confirms = require('../../../components/Confirms');
     var ctx = $('.step-dados');
     var veiculoZeroKm = ctx.find('[name="veiculo_zero_km"]');
     var motoTrilha = ctx.find('[name="motoTrilha"]');

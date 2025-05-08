@@ -1,4 +1,10 @@
+import '../../../components/StepPlugin';
+
 import $ from 'jquery';
+
+import Loading from '../../../components/Loading';
+import BtnContinuar from './helpers/BtnContinuar';
+import loadContentSteps from './load-content-steps';
 
 /**
  * Este script faz a configuração inicial da página de anuncie
@@ -12,12 +18,10 @@ function stopEvent(e) {
     return false;
 }
 export const callback = ($) => {
-    require('../../../components/StepPlugin');
-    require('./load-content-steps')();
+    loadContentSteps();
 
     var stepsContainer = $('.step-container');
     var anuncioSteps = $('.anuncio-steps'); // Conjuto de steps principal
-    var BtnContinuar = require('./helpers/BtnContinuar');
 
     // Troca o ícone ativo de acordo com o step ativo
     stepsContainer.on('step:change', setStepIconActive);
@@ -73,7 +77,7 @@ export const callback = ($) => {
         return modal;
     }
 
-    $('body').on('click', '#remove-link-youtube', function(){
+    $('body').on('click', '#remove-link-youtube', function () {
         // Remover a classe d-none e adicionar a classe d-flex ao div
         $('.preview-video').removeClass('d-none').addClass('d-flex');
 
@@ -118,7 +122,6 @@ export const callback = ($) => {
         }
 
         if (inLastStep) {
-            var Loading = require('../../../components/Loading').default;
             var redirect = function () {
                 Loading.open();
                 window.location.href = '/meus-veiculos/' + $('#idVeiculo').val();
@@ -182,7 +185,7 @@ export const callback = ($) => {
      *
      * Descomentar o autofill apenas em dev!
      */
-    //require('./helpers/autofill').init();
+    //(await import('./helpers/autofill')).default.init();
 };
 function allStepsInlast() {
     var inLastStep = true;
@@ -238,7 +241,6 @@ function setStepIconActive() {
         }
     });
 }
-
 
 function setHashState(_e, params) {
     return;

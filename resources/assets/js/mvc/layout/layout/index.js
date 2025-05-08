@@ -1,13 +1,18 @@
-module.exports.seletor = '.l-layout';
+import 'bootstrap/js/dist/util.js';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/dropdown';
 
-module.exports.callback = ($) => {
-    require('bootstrap/js/dist/util.js');
-    require('bootstrap/js/dist/collapse');
-    require('bootstrap/js/dist/dropdown');
-    require('../../../components/pagesQuickView')($);
-    require('../../../components/pagesMobileView')($);
-    require('../../../components/pagesChat')($);
-    const jsCookie = require('js-cookie');
+import jsCookie from 'js-cookie';
+
+import pagesChat from '../../../components/pagesChat';
+import pagesMobileView from '../../../components/pagesMobileView';
+import pagesQuickView from '../../../components/pagesQuickView';
+
+export const seletor = '.l-layout';
+export const callback = ($) => {
+    pagesQuickView($);
+    pagesMobileView($);
+    pagesChat($);
 
     if ($(window).width() < 992) {
         $('body').removeClass('desktop');
@@ -18,8 +23,7 @@ module.exports.callback = ($) => {
     }
     $('.toggle-sidebar').click(() => {
         if ($('body').hasClass('sidebar-open')) {
-
-            if($('body').hasClass('mobile')) {
+            if ($('body').hasClass('mobile')) {
                 jsCookie.remove('sidebar-collapsed');
             }
 
@@ -34,8 +38,7 @@ module.exports.callback = ($) => {
     let menu = $('.menu-items');
     menu.find();
     $('.sidebar-menu .btn-sidebar-collapse').click(function () {
-
-        if($('body').hasClass('mobile')) {
+        if ($('body').hasClass('mobile')) {
             jsCookie.remove('sidebar-collapsed');
 
             if ($('body').hasClass('sidebar-open')) {

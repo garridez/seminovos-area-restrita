@@ -1,3 +1,5 @@
+import 'jquery-mask-plugin';
+
 import $ from 'jquery';
 
 function parseValueOfObject(maskOptions) {
@@ -50,8 +52,6 @@ function setMask($) {
 export default function () {
     $.jMaskGlobals = $.jMaskGlobals || {};
     $.jMaskGlobals.dataMask = false;
-
-    require('jquery-mask-plugin');
 
     setMask($);
     $(document).ajaxComplete(function () {

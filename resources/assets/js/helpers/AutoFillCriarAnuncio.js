@@ -1,4 +1,4 @@
-var $ = require('jquery');
+import $ from 'jquery';
 
 function autoFill(_options) {
     var timeout = 3000;
@@ -89,4 +89,4 @@ function makeRandomPlaca(field, model = 'AAA0000') {
     return $(field).val(placa).blur();
 }
 
-module.exports = autoFill;
+export default autoFill;

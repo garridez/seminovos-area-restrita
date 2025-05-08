@@ -1,4 +1,4 @@
-module.exports = (function (window, document) {
+export default (function (window, document) {
     var googletag = window.googletag || {};
     googletag.cmd = googletag.cmd || [];
 

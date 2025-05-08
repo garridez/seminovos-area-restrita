@@ -1,9 +1,8 @@
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import HandleApiError from '../../../components/HandleApiError';
+
 export const seletor = '.c-criar-anuncio.a-index';
-
 export const callback = ($) => {
-    var HandleApiError = require('../../../components/HandleApiError').default;
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
-
     $('.anuncio-steps').on('click', '.step-finalizar .btn-finalizar', function (e) {
         e.preventDefault();
         var idStatus = parseInt($(this).data('status'), 10);

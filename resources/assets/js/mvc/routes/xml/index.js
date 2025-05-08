@@ -1,7 +1,7 @@
-module.exports.seletor = '.c-xml.a-dadosVeiculos';
+import loading from '../../../components/Loading';
 
-module.exports.callback = ($) => {
-    var loading = require('../../../components/Loading').default;
+export const seletor = '.c-xml.a-dadosVeiculos';
+export const callback = ($) => {
     var totalVeiculo = $('.data-total-veiculos').val();
     var totalFotos = $('.data-total-fotos').val();
     // tempo download de fotos + tempo upload fotos + tempo importação veículos

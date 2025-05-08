@@ -1,7 +1,7 @@
-module.exports.seletor = '.c-pagamento.a-pagamento-pix';
-module.exports.callback = async ($) => {
-    var AdvancedAlerts = require('../../../components/AdvancedAlerts').default;
+import AdvancedAlerts from '../../../components/AdvancedAlerts';
 
+export const seletor = '.c-pagamento.a-pagamento-pix';
+export const callback = async ($) => {
     // Get url params
     const urlParams = new URLSearchParams(window.location.search);
     const idVeiculo = urlParams.get('idVeiculo');

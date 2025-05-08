@@ -1,9 +1,9 @@
 /* eslint-disable no-unreachable */
-module.exports = function () {
-    return;
-    var { isDev } = require('./Env');
+import env from './Env';
 
-    if (!isDev) {
+export default function () {
+    return;
+    if (!env.isDev) {
         return;
     }
     var script = document.createElement('script');

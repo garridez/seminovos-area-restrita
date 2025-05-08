@@ -1,8 +1,9 @@
-export const seletor = '.c-criar-anuncio.a-index';
+import 'bootstrap/js/dist/collapse.js';
 
+import advancedAlerts from '../../../components/AdvancedAlerts';
+
+export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
-    require('bootstrap/js/dist/collapse.js');
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
     let modalZeroKmExibido = false;
     $('.step-container')
         .on('steps-loaded', function () {

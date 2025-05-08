@@ -1,11 +1,11 @@
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import HandleApiError from '../../../components/HandleApiError';
+import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
+import stopEvent from '../../../helpers/StopEvent';
+import BtnContinuar from './helpers/BtnContinuar';
+
 export const seletor = '.c-criar-anuncio.a-index';
-
 export const callback = ($) => {
-    var stopEvent = require('../../../helpers/StopEvent');
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
-    var BtnContinuar = require('./helpers/BtnContinuar');
-    var HandleApiError = require('../../../components/HandleApiError').default;
-
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({
             text: 'Não é possível diminuir o plano',
@@ -115,7 +115,6 @@ export const callback = ($) => {
         $('#dados-basicos .idPlano').val(idPlano);
         $('#dados-basicos .total').val(plano.data('valor-plano'));
 
-        var DataLayerGTMPopulate = require('../../../helpers/DataLayerGTMPopulate');
         var ctx2 = $('.step-0, .step-1, .step-plano');
         DataLayerGTMPopulate(ctx2, 'checkout_step_7');
         // Se for grátis

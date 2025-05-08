@@ -1,12 +1,12 @@
-module.exports.seletor = '.c-meus-veiculos.a-index';
+import '../../../components/JsBsModal';
 
-module.exports.callback = ($) => {
-    require('../../../components/JsBsModal');
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
-    var Confirms = require('../../../components/Confirms').default;
-    var FormAlerts = require('../../../components/FormAlerts').default;
-    const jsCookie = require('js-cookie');
+import jsCookie from 'js-cookie';
 
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import Confirms from '../../../components/Confirms';
+import FormAlerts from '../../../components/FormAlerts';
+export const seletor = '.c-meus-veiculos.a-index';
+export const callback = ($) => {
     modalRepasse();
 
     if ($('div[data-veiculo-finalizar]').length) {
@@ -54,10 +54,10 @@ module.exports.callback = ($) => {
                     window.location = link;
                 });
         })
-        .on('click', '.item-compartilhar', function () {;
+        .on('click', '.item-compartilhar', function () {
             const marca = $(this).data('marca');
             const modelo = $(this).data('modelo');
-            const idVeiculo = $(this).data('id-veiculo')
+            const idVeiculo = $(this).data('id-veiculo');
             if (navigator && navigator.share) {
                 navigator
                     .share({

@@ -1,7 +1,7 @@
-module.exports.seletor = '.c-fatura.a-particular';
-module.exports.callback = ($) => {
+import 'printthis';
 
-    require('printthis');
+export const seletor = '.c-fatura.a-particular';
+export const callback = ($) => {
     $(document).bind('keydown', function (e) {
         if (e.ctrlKey && e.keyCode == 80) {
             $('.card-body').printThis({

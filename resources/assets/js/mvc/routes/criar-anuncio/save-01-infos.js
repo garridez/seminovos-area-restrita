@@ -8,18 +8,16 @@ function stopEvent(e) {
     e.stopImmediatePropagation();
     return false;
 }
+import '../../../components/StepPlugin';
+
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import HandleApiError from '../../../components/HandleApiError';
 import Loading from '../../../components/Loading';
+import marcaModelo from '../../../components/MarcaModelo';
+import BtnContinuar from './helpers/BtnContinuar';
 
 export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
-    require('../../../components/StepPlugin');
-    var HandleApiError = require('../../../components/HandleApiError').default;
-    var marcaModelo = require('../../../components/MarcaModelo');
-    var BtnContinuar = require('./helpers/BtnContinuar');
-    //var GetUrl = require('./helpers/GetUrl');
-
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
-
     var stepsContainer = $('.step-container.step-veiculo');
     var lastSavedData;
     var dataWithError;

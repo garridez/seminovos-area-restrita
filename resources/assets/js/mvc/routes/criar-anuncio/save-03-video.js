@@ -1,19 +1,18 @@
-export const seletor = '.c-criar-anuncio.a-index';
+import HandleApiError from '../../../components/HandleApiError';
+import stopEvent from '../../../helpers/StopEvent';
 
+export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
-    var HandleApiError = require('../../../components/HandleApiError').default;
-    var stopEvent = require('../../../helpers/StopEvent');
     var stepsContainer = $('.step-container');
     var urlSaved = 'none';
     $('.anuncio-steps').on('steps-loaded', function () {
         $('form[name="form_videoVeiculo"]')
             .find('input[name="video"]')
             .keyup(function () {
-
-                if($(this).val() == "") {
-                    $("#remove-link-youtube").hide();
+                if ($(this).val() == '') {
+                    $('#remove-link-youtube').hide();
                 } else {
-                    $("#remove-link-youtube").show();
+                    $('#remove-link-youtube').show();
                 }
 
                 let result = parseVideo($(this).val());
@@ -32,20 +31,17 @@ export const callback = ($) => {
         var video = stepVideo.find('form [name="video"]');
         var url = video.val().trim();
 
-
         if (url === urlSaved) {
             return true;
         }
 
-
-        if(url != '') {
+        if (url != '') {
             var videoParsed = parseVideo(url);
             if (videoParsed.type === undefined) {
                 console.log('Link inválido');
                 return stopEvent(e);
             }
         }
-
 
         var data = $('form', '#dados-basicos,.step-video').serialize();
 

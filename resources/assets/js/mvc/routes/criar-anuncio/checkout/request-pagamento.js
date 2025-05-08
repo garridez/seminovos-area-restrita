@@ -1,5 +1,9 @@
 import $ from 'jquery';
 
+import advancedAlerts from '../../../../components/AdvancedAlerts';
+import DataLayerGTMPopulate from '../../../../helpers/DataLayerGTMPopulate';
+import pagamentoEmAndamento from './pagamento-em-andamento';
+import requestAlerts from './request-alerts';
 /**
  *
  * @param array formData Dados adicionais na requisição
@@ -7,13 +11,7 @@ import $ from 'jquery';
  * @returns {undefined}
  */
 export default function (formData, ajaxParams) {
-    var requestAlerts = require('./request-alerts');
-    var pagamentoEmAndamento = require('./pagamento-em-andamento');
     requestAlerts.processando();
-
-    var advancedAlerts = require('../../../../components/AdvancedAlerts').default;
-
-    var DataLayerGTMPopulate = require('../../../../helpers/DataLayerGTMPopulate');
 
     var data = $('#dados-basicos form').serializeArray();
 
@@ -165,4 +163,4 @@ export default function (formData, ajaxParams) {
         const sign = offset < 0 ? '+' : '-';
         return `UTC${sign}${offsetHours}`;
     }
-};
+}

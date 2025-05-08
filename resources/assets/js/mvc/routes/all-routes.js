@@ -8,7 +8,4 @@ export const callback = () => {
     Mask();
     SetAjaxLoadding();
     Livereload();
-    //require('components/Mask')();
-    //require('components/SetAjaxLoadding')();
-    //require('components/Livereload')();
 };

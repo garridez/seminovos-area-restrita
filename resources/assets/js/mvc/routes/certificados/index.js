@@ -1,6 +1,7 @@
-module.exports.seletor = '.c-certificados.a-index';
-module.exports.callback = ($) => {
-    require('printthis');
+import 'printthis';
+export const seletor = '.c-certificados.a-index';
+export const callback = ($) => {
+
     $(document).bind('keydown', function (e) {
         if (e.ctrlKey && e.keyCode == 80) {
             $('.to-print').printThis({

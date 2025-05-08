@@ -1,7 +1,7 @@
-module.exports.seletor = '.c-meus-dados.a-index';
-
-module.exports.callback = ($) => {
-    var advancedAlerts = require('../../../components/AdvancedAlerts').default;
+import advancedAlerts from '../../../components/AdvancedAlerts';
+import EstadoCidade from '../../../components/EstadoCidade';
+export const seletor = '.c-meus-dados.a-index';
+export const callback = ($) => {
     var $ctxForm = $('form[name="form_particularSite"]');
 
     var emailInput = $ctxForm.find('input[name="email"]');
@@ -162,7 +162,7 @@ module.exports.callback = ($) => {
         });
     });
 
-    require('../../../components/EstadoCidade').default();
+    EstadoCidade();
 
     var resquestResponse = $('span[data-request-response]').data('request-response') || false;
     if (!resquestResponse) {

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
+import requestPagamento from './request-pagamento';
 export default function () {
-    var requestPagamento = require('./request-pagamento');
     $('.pagamento-transferencia-form').submit(function (e) {
         e.preventDefault();
         if (!$(this).valid()) {
@@ -29,4 +29,4 @@ export default function () {
             contentType: false,
         });
     });
-};
+}

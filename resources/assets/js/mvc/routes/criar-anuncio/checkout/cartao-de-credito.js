@@ -1,12 +1,13 @@
+import 'jquery-mask-plugin';
+import 'jquery-validation';
+import 'jquery-validation/dist/additional-methods';
+import 'jquery-validation/dist/localization/messages_pt_BR';
+
 import $ from 'jquery';
 
-export default function () {
-    require('jquery-mask-plugin');
-    require('jquery-validation');
-    require('jquery-validation/dist/additional-methods');
-    require('jquery-validation/dist/localization/messages_pt_BR');
+import requestPagamento from './request-pagamento';
 
-    var requestPagamento = require('./request-pagamento');
+export default function () {
     var optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     var formCC = $('.pagamento-cc-form');
 
@@ -33,4 +34,4 @@ export default function () {
             return false;
         },
     });
-};
+}

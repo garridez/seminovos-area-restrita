@@ -1,7 +1,8 @@
 import $ from 'jquery';
 
+import loading from '../../../components/Loading';
+
 export default function () {
-    var loading = require('../../../components/Loading').default;
     var stepsUrl = $('div.anuncio-steps [data-url]');
     var totalSteps = stepsUrl.length;
     if ($('#idVeiculo').val() !== '') {
@@ -26,4 +27,4 @@ export default function () {
             }
         });
     });
-};
+}

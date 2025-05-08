@@ -2,6 +2,10 @@
 
 import $ from 'jquery';
 
+import HandleApiError from '../../../components/HandleApiError';
+import loading from '../../../components/Loading';
+import BtnContinuar from './helpers/BtnContinuar';
+
 function filterImgToUpload($img) {
     return (
         $img
@@ -43,12 +47,9 @@ var ajaxAsyncCount = 0;
 
 export default async function () {
     $('.step-container').on('steps-loaded', init);
-};
+}
 
 async function init() {
-    const HandleApiError = require('../../../components/HandleApiError').default;
-    var loading = require('../../../components/Loading').default;
-    var BtnContinuar = require('./helpers/BtnContinuar');
     var $fotosContainer = $('.fotos-container');
 
     var countDelay = 0;

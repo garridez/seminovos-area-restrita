@@ -1,5 +1,5 @@
-module.exports.seletor = '.c-pagamento.a-aprovado';
-module.exports.callback = async () => {
+export const seletor = '.c-pagamento.a-aprovado';
+export const callback = async () => {
     if (!window.confetti) {
         return;
     }

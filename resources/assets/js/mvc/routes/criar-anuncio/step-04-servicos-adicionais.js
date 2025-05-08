@@ -1,5 +1,7 @@
 import $ from 'jquery';
 
+import stopEvent from '../../../helpers/StopEvent';
+import BtnContinuar from './helpers/BtnContinuar';
 export const seletor = '.c-criar-anuncio.a-index';
 export const prepend = true;
 
@@ -8,9 +10,8 @@ export const callback = ($) => {
 };
 
 function init() {
-    var BtnContinuar = require('./helpers/BtnContinuar');
     var $ctx = $('#form_servicos-adicionais');
-    var stopEvent = require('../../../helpers/StopEvent');
+
     //var stepsContainer = $('.step-container.step-servicos-adicionais');
 
     $('.step-container').on('step:pre-change:servicos-adicionais', function () {
