@@ -18,7 +18,11 @@ register_shutdown_function(function () {
 chdir(dirname(__DIR__));
 
 // Composer autoloading
-require 'vendor/autoload.php';
+if (file_exists('../vendor/autoload.php')){
+    require '../vendor/autoload.php';
+} else {
+    require 'vendor/autoload.php';
+}
 
 $appConfig = require 'config/application.config.php';
 
