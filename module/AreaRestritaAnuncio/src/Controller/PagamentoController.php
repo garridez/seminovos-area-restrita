@@ -268,7 +268,7 @@ class PagamentoController extends AbstractActionController
             }
             if ($dados['metodo'] == 'pix' && !isset($_FILES['comprovanteAnexo']) && $cadastro['tipoCadastro'] != 1) {
                 $routeParams['action'] = 'pagamento-pix';
-                $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo . '&code=' . $response['data']['qr_code'] . '&idPagamento=' . md5($response['data']['idPagamento']);
+                $response['data']['url'] = $urlHelper->fromRoute('criar-anuncio/anuncio/pagamento/metodos', $routeParams) . '?idVeiculo=' . $idVeiculo . '&code=' . urlencode($response['data']['qr_code']) . '&idPagamento=' . md5($response['data']['idPagamento']);
             }
             if (!isset($response['data']['url']) && $cadastro['tipoCadastro'] != 1) {
                 $response['data']['url'] = $getUrlRedirect('plano-renovado');
