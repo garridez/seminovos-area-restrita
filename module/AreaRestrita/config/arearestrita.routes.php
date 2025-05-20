@@ -53,6 +53,15 @@ return [
                     ],
                 ],
             ],
+            'detalhes' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/detalhes/:idRepasse',
+                    'defaults' => [
+                        'action' => 'detalhes',
+                    ],
+                ],
+            ],
             'license-plate' => [
                 'type' => Http\Literal::class,
                 'options' => [

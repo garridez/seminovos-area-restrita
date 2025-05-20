@@ -51,4 +51,12 @@ class StringFuncs
             $thousands_separator
         );
     }
+
+    public static function telefoneFormat(string| int $telefone): string
+    {
+        $telefone = preg_replace('/[^0-9]/', '',  (string) $telefone);
+        $telefone = preg_replace('/^(.+)([0-9]{5})([0-9]{4})$/', ' ($1) $2-$3', $telefone);
+
+        return $telefone;
+    }
 }

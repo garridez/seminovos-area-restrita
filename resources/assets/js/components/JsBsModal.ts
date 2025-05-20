@@ -28,21 +28,17 @@ type StructureHTMLType = {
     name: HTMLSKeysType;
     childs?: StructureHTMLType | StructureHTMLType[];
 };
-
+type ContentTypes =
+    | JQuery.htmlString
+    | JQuery.Node
+    | HTMLElement
+    | JQuery<HTMLElement | JQuery.Node>
+    | false;
 type OptionsType = {
     autoShow: boolean;
     structureHTML: StructureHTMLType;
     contents: {
-        [key in HTMLSKeysType]?: JQuery.htmlString | JQuery.Node | false;
-        //modal: JQuery.htmlString | JQuery.Node;
-
-        //'modal-dialog': JQuery.htmlString | JQuery.Node;
-        //'modal-content': JQuery.htmlString | JQuery.Node;
-        //'modal-header': JQuery.htmlString | JQuery.Node;
-        //close: JQuery.htmlString | JQuery.Node;
-        //'modal-title': JQuery.htmlString | JQuery.Node | false;
-        //'modal-body': JQuery.htmlString | JQuery.Node | false;
-        //'modal-footer': JQuery.htmlString | JQuery.Node | false;
+        [key in HTMLSKeysType]?: ContentTypes | ContentTypes[];
     };
 };
 
@@ -134,7 +130,12 @@ type OptionsType = {
         const html = $(htmls[structureHTML.name]);
 
         if (content !== '') {
-            html.append(content);
+            if (Array.isArray(content)) {
+                const content2 = content.filter((e) => e !== false);
+                html.append(...content2);
+            } else {
+                html.append(content);
+            }
         }
         const childs = structureHTML.childs;
         if (childs) {

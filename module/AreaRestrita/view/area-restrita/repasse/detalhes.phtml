@@ -1,0 +1,151 @@
+<?php
+
+/** @var \Laminas\View\Renderer\PhpRenderer $this */
+
+use SnBH\Common\Helper\StringFuncs;
+
+$this->headTitle('Detalhes veículo');
+
+if (!$detalhes) {
+    echo '<h1 class="text-center">Veículo não encontrado</h1>';
+    return;
+}
+
+
+$marcaModelo = $detalhes['marca'] . ' ' . $detalhes['modelo'];
+
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <?php foreach ($detalhes['fotos'] as $foto): ?>
+                <!--<img src="<?= $foto['url'] ?>">-->
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="part-galeria gallery-main">
+                <div class="gallery-thumbs" style="max-width: 90px;">
+                    <div class="thumb-scroll">
+                        <ul class="list-unstyled">
+                            <?php foreach ($detalhes['fotos'] as $k =>  $foto): ?>
+                                <li class="<?= $k === 0 ? 'active' : '' ?>">
+                                    <picture>
+                                        <source
+                                            media="(max-width: 360px)"
+                                            srcset="<?= $foto['url'] ?>">
+                                        <img
+                                            width="70"
+                                            data-id="<?= $k ?>"
+                                            src="<?= $foto['url'] ?>"
+                                            data-src="<?= $foto['url'] ?>"
+                                            class="available <?= $k === 0 ? 'active' : '' ?> ignore-help"
+                                            fetchpriority="<?= $k === 0 ? 'high' : 'low' ?>"
+                                            alt="<?= $marcaModelo ?>"
+                                            title="Ampliar <?= $marcaModelo . " #$k" ?> "
+                                            <?= $k > 0 ? 'loading="lazy"' : '' ?>
+                                            itemprop="image">
+                                    </picture>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+                <figure id="fotoVeiculo">
+                    <div class="esq">
+                        <div class="bg">
+                            <i class="icon-arrow-back"></i>
+                        </div>
+                    </div>
+                    <div class="dir">
+                        <div class="bg">
+                            <i class="icon-arrow-next"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-container"></div>
+                    <div class="controles helper d-print-none"></div>
+                    <div class="justify-content-center text-center" style="z-index: 2;">
+                        <picture>
+
+                            <img
+                                data-id="0"
+                                width="750"
+                                height="564"
+                                fetchpriority="high"
+                                src="<?= $detalhes['fotos'][0]['url'] ?>"
+                                itemprop="image"
+                                style="max-height: 500px;"
+                                alt="<?= $marcaModelo ?>"
+                                title="<?= $marcaModelo ?>"
+                                onerror="this.onerror=null;this.src='/img/svg/icons/veiculo-preparando.svg';this.className+=' icon-sem-foto '"
+                                class="img-fluid main-image">
+                        </picture>
+                    </div>
+                </figure>
+                <input type="hidden" name="countFotos" id="countFotos" value="<?= count($detalhes['fotos']) ?>">
+            </div>
+        </div>
+        <div class="col-12">
+            <h1>
+                <?= $marcaModelo ?>
+            </h1>
+        </div>
+        <div class="col-2">
+            Ano:
+            <div>
+                <b><?= $detalhes['ano_fabricacao'] ?>/<?= $detalhes['ano_modelo'] ?></b>
+            </div>
+        </div>
+        <div class="col-2">
+            Valor:
+            <div>
+                <b>R$ <?= number_format((float)$detalhes['valor'], 2, ',', '.') ?></b>
+            </div>
+        </div>
+
+        <div class="col-2">
+            Combustível:
+            <div>
+                <b><?= $detalhes['combustivel'] ?></b>
+            </div>
+        </div>
+        <div class="col-2">
+            Cor:
+            <div>
+                <b><?= $detalhes['cor'] ?></b>
+            </div>
+        </div>
+        <div class="col-2">
+            Data Cadastro:
+            <div>
+                <b><?= (new DateTime($detalhes['data_cadastro']))->format('d/m/Y') ?></b>
+            </div>
+        </div>
+        <div class="col-2">
+            Contato:
+            <div>
+
+                <a href="tel://<?= $detalhes['telefone_1'] ?>" target="_blank">
+                    <?= StringFuncs::telefoneFormat($detalhes['telefone_1']) ?>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row ">
+        <div class="col-12">
+            Descrição:
+            <div>
+                <?= htmlentities($detalhes['descricao']) ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php //var_dump($detalhes);
+?>

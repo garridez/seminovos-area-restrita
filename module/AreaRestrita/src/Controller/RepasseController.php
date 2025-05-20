@@ -196,4 +196,17 @@ class RepasseController extends AbstractActionController
         echo json_encode($res->json());
         die;
     }
+    public function detalhesAction()
+    {
+        $idVeiculoRepasse = $this->params('idRepasse');
+
+        $res = $this->getApiClient()->repasseGet(null, $idVeiculoRepasse);
+
+        $viewModel = new ViewModel([
+            'detalhes' => $res->status === 200 ? $res->getData() : false
+        ]);
+        $viewModel->setTerminal($this->request->isXmlHttpRequest());
+
+        return $viewModel;
+    }
 }

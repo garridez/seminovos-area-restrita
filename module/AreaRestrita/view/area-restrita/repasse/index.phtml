@@ -97,29 +97,27 @@ $veiculos = $this->veiculos;
                                 </h4>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
+                                <li class="list-group-item py-0">
                                     Ano:
                                     <span class="text-uppercase"><?= $veiculo['ano_fabricacao'] . '/' . $veiculo['ano_modelo'] ?></span>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item py-0">
                                     Placa:
                                     <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item py-0">
                                     Data do Cadastro:
                                     <span class="text-uppercase"><?= (new DateTime($veiculo['data_cadastro']))->format('d/m/Y') ?> </span>
                                 </li>
                             </ul>
                             <div class="btn-group d-flex justify-content-around">
-                                <a href="#modalFotos" class="btn btn-laranja text-white mx-1 p-1 w-100"
-                                    title="Fotos" data-toggle="modal" data-id-veiculo="<?= $veiculo['idRepasse'] ?>">
-                                    <i class=" fa fa-camera"></i>
-                                    <span>Fotos</span>
-                                </a>
-                                <a href="#modalContato" class="btn btn-laranja text-white p-1 w-100"
-                                    title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['idRepasse'] ?>">
-                                    <i class=" fa fa-user"></i>
-                                    <span>Contato</span>
+                                <a
+                                    href="/repasse/detalhes/<?= $veiculo['idRepasse'] ?>"
+                                    class="btn btn-laranja text-white mx-1 p-1 w--100 btn-sm veiculo-detalhes"
+                                    data-toggle="modal"
+                                    data-id-veiculo="<?= $veiculo['idRepasse'] ?>">
+                                    <i class=" fa fa-circle-info"></i>
+                                    <span>Detalhes</span>
                                 </a>
                             </div>
                         </div>

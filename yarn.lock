@@ -3090,7 +3090,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     sass: "npm:^1.89.0"
     sass-loader: "npm:^16.0.5"
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a"
     sortable-tablesort: "npm:^3.2.3"
     sortablejs: "npm:^1.15.6"
     ts-loader: "npm:^9.5.2"
@@ -8590,10 +8590,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharer.js@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "sharer.js@npm:0.5.2"
-  checksum: 10/b5e64166c4de2bd43ae1ca3d08eed9620a43f7a144e0f139c293811790a564bcf0a56725074736dd1333729ec03de790474ffe1e04334dff9ba1b612e9d6e8be
+"sharer.js@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "sharer.js@npm:0.5.3"
+  checksum: 10/252b142a6d8d786ee5d424843e481b3fa2fa336b83e8be49a1d2d9012502cb09681c07b2f73097675cae1ba938a5433eb28daa9e3317ec01a54fc63b3a9df425
   languageName: node
   linkType: hard
 
@@ -8678,9 +8678,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a":
   version: 1.0.0
-  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=d8d95c88f30c3f269751df6da0da83edc994f15e"
+  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a"
   dependencies:
     bootstrap: "npm:^4.6.2"
     bootstrap-slider: "npm:^11.0.2"
@@ -8692,8 +8692,8 @@ __metadata:
     js-base64: "npm:^3.7.7"
     js-cookie: "npm:^3.0.5"
     md5: "npm:^2.3.0"
-    sharer.js: "npm:^0.5.2"
-  checksum: 10/3d9799718ae6153556b69bf818552b14d2f4fffff0e466d66410988ca112f368e509d64a29fa719b1bef64c9904cf2c470f4414b1390c5966a2c3fe270e7f48e
+    sharer.js: "npm:^0.5.3"
+  checksum: 10/5a69d9474ed81c9009a858f9416969847123510ebfd9097a2696906246bfc4b33b514cebfaf3634de53d535ce26a958a4ae42ee382d28baef6822a9629161e2f
   languageName: node
   linkType: hard
 
