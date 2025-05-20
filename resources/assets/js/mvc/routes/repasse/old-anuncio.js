@@ -1,4 +1,4 @@
-module.exports.seletor = '.c-repasse.a-anuncio';
+module.exports.seletor = 'old.c-repasse.a-anuncio';
 module.exports.callback = async ($) => {
     var email;
     var marca;
@@ -68,7 +68,7 @@ module.exports.callback = async ($) => {
                     if (response.data[0].historicoCarro.fipe.valor_fipe == 0) {
                         numeroFipe = 0;
                     } else {
-                        valorFipe = response.data[0].historicoCarro.fipe.valor_fipe;
+                        valorFipe = response.data[0].historicoCarro.fipe.valor_fipe || '';
                         numero = valorFipe.replace('R$ ', '').replace('.', '').replace(',', '.');
                         numeroFipe = parseFloat(numero);
                     }

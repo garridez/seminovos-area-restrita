@@ -1,4 +1,4 @@
-module.exports.seletor = '.c-repasse.a-editar';
+module.exports.seletor = 'old.c-repasse.a-editar';
 module.exports.callback = async ($) => {
     $('body').on('submit', '#edit', function (e) {
         var email = $("input[name='email']").val();

@@ -1,4 +1,4 @@
-module.exports.seletor = '.c-repasse.a-index';
+module.exports.seletor = 'old.c-repasse.a-index';
 
 module.exports.callback = async ($) => {
     $('#modalFotos').on('show.bs.modal', function (event) {

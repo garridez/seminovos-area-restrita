@@ -44,6 +44,15 @@ return [
                     ],
                 ],
             ],
+            'deletar' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/deletar/:idRepasse',
+                    'defaults' => [
+                        'action' => 'deletar',
+                    ],
+                ],
+            ],
             'license-plate' => [
                 'type' => Http\Literal::class,
                 'options' => [

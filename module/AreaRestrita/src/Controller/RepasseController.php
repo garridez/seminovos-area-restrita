@@ -7,6 +7,7 @@ use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
 
 use \Laminas\Http\PhpEnvironment\Request;
+use SnBH\Common\Helper\MoveUpload;
 
 class RepasseController extends AbstractActionController
 {
@@ -20,7 +21,7 @@ class RepasseController extends AbstractActionController
         $this->container = $container;
 
         /**
-         * Apenas para mostrar na view a rota 
+         * Apenas para mostrar na view a rota
          */
         /* @var $routeMatch \Laminas\Router\Http\RouteMatch */
         $routeMatch = $container
@@ -50,81 +51,68 @@ class RepasseController extends AbstractActionController
 
         $filtroMarca = $request->getQuery('search');
 
-        $queryParams = [
-            'page' => $page,
-            'per_page' => 9,
-            'city'=> $cidade,
-            'search' => $filtroMarca,
-            'price_min' => $precoDe,
-            'price_max' => $precoAte,
-            'year_to' => $anoDe,
-            'year_from' => $anoAte,
-            'status' => 1,
-        ];
+        $res = $this->getApiClient()->repasseGet([
+            'page' => $page
+        ]);
 
-        
-        $queryString = http_build_query($queryParams);
-        
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles?' . $queryString,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $arr = json_decode($response, true);
-
-        $veiculos = $arr['data'];
-        $meta = $arr['meta'];
-
-        /* @var $request \Laminas\Http\PhpEnvironment\Request */
-
-        $routeName = str_replace("/repasse", "", (string) $request->getRequestUri());
-
-        $routeParams = "/repasse";
-
-        $paginationData = [
-            'pages' => $meta['last_page'],
-            'total' => $meta['total'],
-            'current' => $page ?? 1,
-            'routeName' => $routeName,
-            'routeParams' => $routeParams,
-            'pagination' => true,
-            'paginationResultado' => true
-        ];
-        
         return new ViewModel([
             'parametro' => $this->params('parametro'),
-            'veiculos' => $veiculos, 
-            'paginationData' => $paginationData,
+            'veiculos' => $res->json(),
         ]);
     }
-    public function anuncioAction(){
+    public function anuncioAction()
+    {
+        $salvo = -1;
+        if ($this->request->isPost()) {
+            $tempDir = implode(DIRECTORY_SEPARATOR, [
+                $this->getContainer()->get('config')['dir']['upload'],
+                'repasse',
+                uniqid(),
+            ]);
+            if (!file_exists($tempDir)) {
+                mkdir($tempDir, 0777, true);
+            }
+            $moveUpload = new MoveUpload([
+                'target' => $tempDir,
+                'overwrite' => true,
+                'randomize' => true,
+                'use_upload_name' => true,
+                'use_upload_extension' => true,
+            ]);
+            $files = $moveUpload->move($this->request->getFiles()->fotos, true);
+            $apiClient = $this->getApiClient();
+            $post = $this->request->getPost();
+            $dataPost = [
+                ...$post,
+                'idModelo' => $post['modeloCarro'],
+                'idCadastro' => $this->getCadastro('idCadastro'),
+                $apiClient::KEY_FILES => [
+                    'fotos' => $files
+                ]
+            ];
+            /** @var \SnBH\ApiClient\Response */
+            $res = $apiClient->repassePost($dataPost);
+            $salvo = $res->status === 200 ? 1 : 0;
+        }
 
         return new ViewModel([
             'routeParams' => $this->routeParams,
+            'salvo' => $salvo
         ]);
     }
 
-    public function licensePlateAction(){
+    public function licensePlateAction()
+    {
 
         $request = $this->request;
 
         $licensePlate = $request->getQuery('license-plate');
 
-        if($licensePlate){
+        if ($licensePlate) {
             $curl = curl_init();
-            
+
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://meus-anuncios.seminovos.com.br/integrador/veiculo?&placa='.$licensePlate,
+                CURLOPT_URL => 'https://meus-anuncios.seminovos.com.br/integrador/veiculo?&placa=' . $licensePlate,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -132,80 +120,44 @@ class RepasseController extends AbstractActionController
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_CUSTOMREQUEST => 'GET', 
+                CURLOPT_CUSTOMREQUEST => 'GET',
                 CURLOPT_HTTPHEADER => array(
                     'X-SnBH-Token: 879db53b62e90337D13316e85e81FaBe6f4943722090B568d6',
                     'X-SnBH-IdCadastro: 269236'
                 ),
             ));
-    
+
             $response = curl_exec($curl);
-           $data = json_decode($response, true);
-           return new JsonModel($data);
+            $data = json_decode($response, true);
+            return new JsonModel($data);
         }
     }
-    public function meusAnunciosAction(){
-        $curl = curl_init();
-
-        $email = $this -> getCadastro('email');
-        
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles?page=1&per_page=9&email=' . $email,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $arr = json_decode($response, true);
-
-        $veiculos = $arr['data'];
-        $meta = $arr['meta'];
-
-        $request = $this->request;
-
-        $routeName = str_replace("/repasse/meus-anuncios", "", (string) $request->getRequestUri());
-
-        $routeParams = "/repasse/meus-anuncios";
-
-        $paginationData = [
-            'pages' => $meta['last_page'],
-            'total' => $meta['total'],
-            'current' => $page ?? 1,
-            'routeName' => $routeName,
-            'routeParams' => $routeParams,
-            'pagination' => true,
-            'paginationResultado' => true
-        ];
+    public function meusAnunciosAction()
+    {
+        $res = $this->getApiClient()->repasseGet([
+            'idCadastro' => $this->getCadastro('idCadastro'),
+        ]);
 
         return new ViewModel([
             'routeParams' => $this->routeParams,
-            'meta' => $meta,
-            'veiculos' => $veiculos,
-            'paginationData'=> $paginationData,
+            'veiculos' => $res->json(),
         ]);
     }
-    public function editarAction(){
+    public function editarAction()
+    {
         $idVeiculo = $this->params('idRepasse');
 
         $curl = curl_init();
-        
+
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles/' . $idVeiculo,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_URL => 'https://autoconecta.com.br/api/vehicles/' . $idVeiculo,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
         ));
 
         $response = curl_exec($curl);
@@ -218,5 +170,30 @@ class RepasseController extends AbstractActionController
             'routeParams' => $this->routeParams,
             'veiculo' => $arr,
         ]);
+    }
+    public function deletarAction()
+    {
+        $apiClient = $this->getApiClient();
+
+        $repasseVeiculo = $apiClient->repasseGet(null, $this->params('idRepasse'));
+        if ($repasseVeiculo->status !== 200) {
+            echo json_encode([
+                'status' => 404,
+                'title' => 'Veículo não encontrado'
+            ]);
+            die;
+        }
+        $data = $repasseVeiculo->getData();
+        if ($data['idCadastro'] !== $this->getCadastro('idCadastro')) {
+            echo json_encode([
+                'status' => 403,
+                'title' => 'Não permitido'
+            ]);
+            die;
+        }
+
+        $res = $apiClient->repasseDelete(null,  $this->params('idRepasse'));
+        echo json_encode($res->json());
+        die;
     }
 }

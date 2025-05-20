@@ -1,4 +1,4 @@
-module.exports.seletor = '.c-repasse.a-meus-anuncios';
+module.exports.seletor = 'old.c-repasse.a-meus-anuncios';
 
 module.exports.callback = async ($) => {
     $('#excluirModal').on('show.bs.modal', function (event) {

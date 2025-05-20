@@ -1,28 +1,9 @@
 <?php
 /* @var $this \Laminas\View\Renderer\PhpRenderer */
-$this->headTitle('Meus Anúncios');
+$this->headTitle('Meus Repasses');
 
-$veiculos = $this->veiculos;
-$meta = $this -> meta;
-$email = $this->userInfo('email');
 
 ?>
-
-<div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="ExcluirModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Excluir Anúncio</h5>
-      </div>
-      <div class="modal-body" id="textoModal">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-laranja text-white" data-dismiss="modal">Cancelar</button>
-        <button type="button" id="delete" class="btn btn-danger text-white">Excluir</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="container-fluid">
     <div class="row justify-content-center px-2 px-md-0">
@@ -36,79 +17,77 @@ $email = $this->userInfo('email');
             <a href="/repasse/anuncio" class="col-sm-12 btn btn-info">Novo Anúncio</a>
         </div>
     </div>
-    <?php if($meta['total'] == 0):  ?>
-    <div class="row d-flex justify-content-center">
-        <h4>Sem anúncios disponíveis</h4>
-    </div>
+    <?php if ($veiculos['total'] == 0):  ?>
+        <div class="row d-flex justify-content-center">
+            <h4>Sem anúncios disponíveis</h4>
+        </div>
     <?php else: ?>
         <div class="row">
-        <div class="card-deck col-12 mt-2 row-cols-md-4 row-cols-1">
-            <?php
-            foreach ($veiculos as $key => $veiculo): 
-            ?>
-            <div class="col mb-1">
-                <div class="card h-100 d-flex">
-                    <div class="card-img-container">
-                        <?php if (!$veiculo['pictures']): ?>
-                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
-                        <?php else: ?>
-                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
-                        <?php endif; ?>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
-                        <div class="card-text">
-                            <h4 class="d-flex flex-wrap">
-                                <span class="mr-3 mr-md-0"> R$
-                                <?= number_format($veiculo['courier_value_sale'], 2, ',', '.') ?>
-                                </span>
-                            </h4>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                Ano:
-                                <span class="text-uppercase"><?= $veiculo['creation_year'] ?></span> 
-                            </li>
-                            <li class="list-group-item">
-                                Placa:
-                                <span class="text-uppercase"><?= $veiculo['license_plate']?></span>
-                            </li>
-                            <li class="list-group-item">
-                                Data do Cadastro:
-                                <span class="text-uppercase"><?= $veiculo['created_at'] ?> </span>
-                            </li>
-                        </ul>
-                        <div class="btn-group d-flex justify-content-arround">
-                            <a href="/repasse/<?= $veiculo['id'] ?>/editar" class="btn text-white btn-laranja w-100 mx-1 p-1"
-                            title="Editar">
-                            <i class=" fa fa-edit"></i><span> Editar</span>
-                            </a>
-                            <a href="#excluirModal" class="btn text-white btn-danger w-100 mx-1 p-1"
-                            title="Excluir" data-toggle="modal"
-                            data-id-veiculo="<?= $veiculo['id']?>"
-                            data-marca-veiculo="<?= $veiculo['courier_brand']?>"
-                            data-modelo-veiculo="<?= $veiculo['courier_model']?>"
-                            data-email="<?= $email?>"
-                            > 
-                            <i class="fa fa-trash"></i><span> Excluir</span>
-                            </a>
-
-                            <?php if ($veiculo['status'] == 2): ?>
-                            <span class="badge badge-success mx-2">Vendido</span>
-                            <?php endif; ?>    
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <?php endif ?>
-    </div>
-    <div class="col-md-12">
+            <div class="card-deck col-12 mt-2 row-cols-md-6 row-cols-1">
                 <?php
-                if ($veiculos) {
-                    echo $this->partial('partials/pagination.phtml', $this->paginationData);
-                }
+                foreach ($veiculos['data'] as $key => $veiculo):
+                    //var_dump($veiculo);
+                    //die;
                 ?>
-    </div>
+                    <div class="col mb-1 repasse-row">
+                        <div class="card h-100 d-flex">
+                            <div class="card-img-container">
+                                <img
+                                    src="<?= $veiculo['url'] ?>"
+                                    alt="<?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>"
+                                    class="card-img-top img-thumbnail img-fluid"
+                                    width="100">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?></h5>
+                                <div class="card-text">
+                                    <h4 class="d-flex flex-wrap">
+                                        <span class="mr-3 mr-md-0"> R$
+                                            <?= number_format((float)$veiculo['valor'], 2, ',', '.') ?>
+                                        </span>
+                                    </h4>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item p-0">
+                                        Ano:
+                                        <span class="text-uppercase"><?= $veiculo['ano_fabricacao'] . '/' . $veiculo['ano_modelo'] ?></span>
+                                    </li>
+                                    <li class="list-group-item p-0">
+                                        Placa:
+                                        <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
+                                    </li>
+                                    <li class="list-group-item p-0">
+                                        Data do Cadastro:
+                                        <span class="text-uppercase"><?= (new DateTime($veiculo['data_cadastro']))->format('d/m/Y') ?> </span>
+                                    </li>
+                                </ul>
+                                <div class="btn-group-sm d-flex justify-content-arround">
+                                    <a href="/repasse/<?= $veiculo['idRepasse'] ?>/editar" class="btn text-white btn-sm btn-laranja mx-1"
+                                        title="Editar">
+                                        <i class=" fa fa-edit"></i><span> Editar</span>
+                                    </a>
+                                    <a href="#" class="deletar-repasse btn text-white btn-sm btn-danger mx-1"
+                                        title="Excluir"
+                                        data-idrepasse="<?= $veiculo['idRepasse'] ?>">
+                                        <i class="fa fa-trash"></i><span> Excluir</span>
+                                    </a>
+
+                                    <?php if (false && $veiculo['status'] == 2): ?>
+                                        <span class="badge badge-success mx-2">Vendido</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif ?>
+        </div>
+        <div class="col-md-12">
+            <?php
+            if ($veiculos) {
+                //echo $this->partial('partials/pagination.phtml', $this->paginationData);
+            }
+            ?>
+        </div>
 </div>

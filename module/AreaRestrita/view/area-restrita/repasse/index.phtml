@@ -1,48 +1,15 @@
 <?php
+
 /** @var \Laminas\View\Renderer\PhpRenderer $this */
 $this->headTitle('Repasse Seminovos');
 
 
 $veiculos = $this->veiculos;
-$meta = $this -> meta;
+
+
 
 ?>
 
-<div class="modal fade" tabindex="-1" role="document" aria-labelledby="modalFotos" id="modalFotos" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-fotos modal-dialog-scrollable">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title text-uppercase h4 text-cinza-escuro marca-modelo">Fotos</h4>
-        </div>
-        <div class="modal-body">
-                <div class="card-deck" id="deck-fotos">
-                </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="Contato" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="TituloModalCentralizado">Contato</h5>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group list-group-flush">
-          <li id="nome" class="list-group-item">Nome: </li>
-          <li id="empresa" class="list-group-item">Empresa: </li>
-          <li id="cidade" class="list-group-item">Cidade/Estado: </li>
-          <li id="telefone" class="list-group-item">Telefone: </li>
-          <li id="detalhes" class="list-group-item">Detalhes do Veículo: </li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn bg-cinza text-white" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="container-fluid container-anuncios">
     <div class="row justify-content-center px-2 px-md-0">
@@ -111,64 +78,62 @@ $meta = $this -> meta;
     <div class="row">
         <div class="card-deck col-12 mt-2 row-cols-md-4 row-cols-1 d-flex flex-wrap">
             <?php
-            foreach ($veiculos as $key => $veiculo):
+            foreach ($veiculos['data'] as $key => $veiculo):
             ?>
-            <div class="col mb-1">
-                <div class="card h-100 d-flex">
-                    <div class="card-img-container">
-                        <?php if (!$veiculo['pictures']): ?>
-                            <img src="https://placehold.co/600x400?text=Sem+Fotos" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
-                        <?php else: ?>
-                            <img src="<?= $veiculo['pictures'][0]['full_path']?>" alt="<?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?>" class="card-img-top img-thumbnail img-fluid">
-                        <?php endif; ?>
-                    </div>
-                    <div class="card-body d-flex flex-column justify-content-end">
-                        <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['courier_brand'] .' ' . $veiculo['courier_model'] ?></h5>
-                        <div class="card-text">
-                            <h4 class="d-flex flex-wrap">
-                                <span class="mr-3 mr-md-0"> R$
-                                <?= number_format($veiculo['courier_value_sale'], 2, ',', '.') ?>
-                                </span>
-                            </h4>
+                <div class="col mb-1">
+                    <div class="card h-100 d-flex">
+                        <div class="card-img-container">
+
+                            <img src="<?= $veiculo['url'] ?>" alt="<?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>" class="card-img-top img-thumbnail img-fluid">
+
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                Ano:
-                                <span class="text-uppercase"><?= $veiculo['creation_year'] ?></span>
-                            </li>
-                            <li class="list-group-item">
-                                Placa:
-                                <span class="text-uppercase"><?= $veiculo['license_plate']?></span>
-                            </li>
-                            <li class="list-group-item">
-                                Data do Cadastro:
-                                <span class="text-uppercase"><?= $veiculo['created_at'] ?> </span>
-                            </li>
-                        </ul>
-                        <div class="btn-group d-flex justify-content-around">
-                            <a href="#modalFotos" class="btn btn-laranja text-white mx-1 p-1 w-100"
-                                title="Fotos" data-toggle="modal" data-id-veiculo = "<?= $veiculo['id']?>">
-                                <i class=" fa fa-camera"></i>
-                                <span>Fotos</span>
-                            </a>
-                            <a href="#modalContato" class="btn btn-laranja text-white p-1 w-100"
-                                title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['id']?>">
-                                <i class=" fa fa-user"></i>
-                                <span>Contato</span>
-                            </a>
+                        <div class="card-body d-flex flex-column justify-content-end">
+                            <h5 class="card-title text-uppercase h4 text-cinza-escuro marca-modelo"><?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?></h5>
+                            <div class="card-text">
+                                <h4 class="d-flex flex-wrap">
+                                    <span class="mr-3 mr-md-0"> R$
+                                        <?= number_format($veiculo['valor'], 2, ',', '.') ?>
+                                    </span>
+                                </h4>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ano:
+                                    <span class="text-uppercase"><?= $veiculo['ano_fabricacao'] . '/' . $veiculo['ano_modelo'] ?></span>
+                                </li>
+                                <li class="list-group-item">
+                                    Placa:
+                                    <span class="text-uppercase"><?= $veiculo['placa'] ?></span>
+                                </li>
+                                <li class="list-group-item">
+                                    Data do Cadastro:
+                                    <span class="text-uppercase"><?= (new DateTime($veiculo['data_cadastro']))->format('d/m/Y') ?> </span>
+                                </li>
+                            </ul>
+                            <div class="btn-group d-flex justify-content-around">
+                                <a href="#modalFotos" class="btn btn-laranja text-white mx-1 p-1 w-100"
+                                    title="Fotos" data-toggle="modal" data-id-veiculo="<?= $veiculo['idRepasse'] ?>">
+                                    <i class=" fa fa-camera"></i>
+                                    <span>Fotos</span>
+                                </a>
+                                <a href="#modalContato" class="btn btn-laranja text-white p-1 w-100"
+                                    title="Contato" data-toggle="modal" data-id-veiculo="<?= $veiculo['idRepasse'] ?>">
+                                    <i class=" fa fa-user"></i>
+                                    <span>Contato</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <?php endforeach; ?>
         </div>
 
     </div>
     <div class="col-md-12">
-                <?php
-                if ($veiculos) {
-                    echo $this->partial('partials/pagination.phtml', $this->paginationData);
-                }
-                ?>
+        <?php
+        if ($veiculos) {
+            //echo $this->partial('partials/pagination.phtml', $this->paginationData);
+        }
+        ?>
     </div>
 </div>

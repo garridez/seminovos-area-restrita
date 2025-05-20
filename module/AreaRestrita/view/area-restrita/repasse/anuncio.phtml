@@ -1,74 +1,184 @@
 <?php
-/* @var $this \Laminas\View\Renderer\PhpRenderer */
-$this->headTitle('Criar Novo Anúncio');
-$email  = $this->userInfo('email');
-?>
 
+/** @var \Laminas\View\Renderer\PhpRenderer $this */
+
+use SnBH\Common\Form\Element\SelectCombustivel;
+use SnBH\Common\Form\Element\SelectCor;
+
+$this->headTitle('Criar Novo Anúncio');
+?>
+<?php if ($salvo !== -1): ?>
+    <div class="container-fluid">
+        <div class="row">
+            <?php if ($salvo === 1): ?>
+                <div class="alert alert-success col" role="alert">
+                    Veículo Cadastrado
+                </div>
+            <?php else: ?>
+                <div class="alert alert-danger col" role="alert">
+                    Erro ao salvar veículo
+                </div>
+            <?php endif ?>
+        </div>
+    </div>
+<?php endif ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 d-flex">
             <h3>Novo Anúncio</h3>
         </div>
     </div>
-    <input type="hidden" name="email" id="email" value="<?= $email?>">
-    <form action="" method="POST" id="save">
-
-            <div class="row d-flex justify-content-center mt-2">
-                <div class="form-group">
-                    <label for="license-plate">Placa:</label>
-                    <input class="form-control" type="text" name="license-plate" placeholder="Digite a placa do veículo">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table no-border teste table-license-plate-api" style="display: none;">
-                    <thead>
-                        <tr class="header-table">
-                        <th>Marca</th>
-                        <th class="text-center">Modelo</th>
-                        <th class="text-center">Cor</th>
-                        <th class="text-center">Combustível</th>
-                        <th class="text-center">Cidade</th>
-                        <th class="text-center">Estado</th>
-                        <th class="text-center">Valor Fipe</th>
-                        </tr>
-                    </thead>
-                    <tbody class="no-border-x no-border-y">
-                        <tr>
-                        <td class="table-license-plate-api-brand"></td>
-                        <td class="text-center table-license-plate-api-model"></td>
-                        <td class="text-center table-license-plate-api-color"></td>
-                        <td class="text-center table-license-plate-api-fuel"></td>
-                        <td class="text-center table-license-plate-api-city"></td>
-                        <td class="text-center table-license-plate-api-state"></td>
-                        <td class="text-center table-license-plate-api-fipe-price"></td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center mt-2">
-                <div class="form-group">
-                    <label for="price">Preço: </label>
-                    <input type="text" class="form-control" name="valor" id="valor">
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center mt-2">
-                <div class="form-group">
-                    <label for="description">Descrição do Anúncio:</label>
-                    <textarea class="form-control" required="required" name="description" cols="50" rows="10" placeholder="Informe aqui os detalhes do veículo"></textarea>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center mt-2 mb-5 form-group col-md-12">
-                <label for="enviar-fotos">Enviar Fotos do Veículo:</label>
-                <input type="file" class="form-control form-control-lg form-control-file justify-content-center" name="enviar-fotos[]" multiple>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-block btn-trans btn-info btn-rad"><i class="fa fa-save"></i> SALVAR</button>
+    <form method="POST" class="form-novo" enctype="multipart/form-data">
+        <div class="row step-1 step-tipo-veiculo">
+            <div class="col-12">
+                <div class="h4 text-center">Selecione o tipo de veículo</div>
+                <div class="radio-group-type veiculo-tipo justify-content-center ">
+                    <div class="radio-group-item col-2">
+                        <input class="form-radio" type="radio" name="tipoVeiculo" value="1" id="tipoCarro">
+                        <label for="tipoCarro">
+                            <i class="icon icon-type-car-2"></i><br>
+                        </label>
+                    </div>
+                    <div class="radio-group-item col-2">
+                        <input class="form-radio" type="radio" name="tipoVeiculo" value="3" id="tipoMoto">
+                        <label for="tipoMoto">
+                            <i class="icon icon-type-moto-2"></i>
+                        </label>
+                    </div>
+                    <div class="radio-group-item col-2">
+                        <input class="form-radio" type="radio" name="tipoVeiculo" value="2" id="tipoCaminhao">
+                        <label for="tipoCaminhao">
+                            <i class="icon icon-type-truck-2"></i>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="row step-2 step-placa d-none">
+            <div class="form-group">
+                <label>Placa:
+                    <input class="form-control" type="text" name="placa" required placeholder="Digite a placa do veículo">
+                </label>
+            </div>
+        </div>
+        <div class="row step-3 step-detalhes d-none">
+            <div class="col-12">
+                <div class="form-group form-group-default required">
+                    <label for="idMarca">Marca</label>
+                    <div>
+                        <select name="idMarca" required="" class="form-control">
+                            <option selected="" value="">Selecione a marca</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-group-default required">
+                    <label for="modeloCarro">Modelo</label>
+                    <div>
+                        <select name="modeloCarro" required="" class="form-control">
+                            <option>Selecione o modelo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group form-group-default required">
+                    <label for="ano_fabricacao">Ano Fabricacao</label>
+                    <div>
+                        <input type="number" name="ano_fabricacao" required="" class="form-control" placeholder="Ex.: 2020">
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group form-group-default required">
+                    <label for="ano_modelo">Ano Modelo</label>
+                    <div>
+                        <input type="number" name="ano_modelo" required="" class="form-control" placeholder="Ex.: 2021">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-group-default required">
+                    <label for="cor">Cor</label>
+                    <div>
+                        <?php
+                        $selectCor = new SelectCor('cor');
+                        $selectCor->setAttributes([
+                            'class' => 'form-control',
+                            'required' => 'true'
+
+                        ]);
+
+                        echo $this->formSelect($selectCor);
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group form-group-default required">
+                    <label for="combustivel">Combustível</label>
+                    <div>
+                        <?php
+                        $selectCor = new SelectCombustivel('idCombustivel');
+                        $selectCor->setCombustivelFromVeiculo(1);
+                        $selectCor->setAttributes([
+                            'class' => 'form-control',
+                            'required' => 'true'
+
+                        ]);
+
+                        echo $this->formSelect($selectCor);
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group form-group-default required">
+                    <label for="valor">Valor</label>
+                    <div>
+                        <div class="form-group required mb-0 d-flex align-items-center">
+                            <div class="mt-1 d-flex align-items-center">
+                                <b class="mr-2 text-verde">R$</b>
+                                <input
+                                    type="text"
+                                    name="valor"
+                                    required=""
+                                    class="form-control"
+                                    id="valor"
+                                    data-mask="000.000.000.000.000,00"
+                                    data-mask-options="{&quot;reverse&quot;:true}"
+                                    placeholder="Ex: 48.000,00"
+                                    value=""
+                                    autocomplete="off"
+                                    maxlength="22">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group-default required">
+                    <label for="descricao">Descrição</label>
+                    <div>
+                        <textarea
+                            class="form-control"
+                            name="descricao"
+                            id="descricao"
+                            rows="10"
+                            style="height:100px;" placeholder="Informações importantes sobre o veículo"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group form-group-default required">
+                    <label for="descricao">Foto</label>
+                    <div>
+                        <input type="file" name="fotos[]" accept="image/*" multiple required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <button
+                    type="submit"
+                    class="btn-continuar btn btn-lg btn-laranja btn-block text-white">Salvar</button>
+            </div>
+        </div>
     </form>
+</div>
