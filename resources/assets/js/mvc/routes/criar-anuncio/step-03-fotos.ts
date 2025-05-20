@@ -248,10 +248,14 @@ function init() {
                             blob: imageFile,
                             toType: 'image/jpg',
                         });
-                        imageFile = new File([resultBlob], 'heic' + '.jpg', {
-                            type: 'image/jpeg',
-                            lastModified: new Date().getTime(),
-                        });
+                        imageFile = new File(
+                            Array.isArray(resultBlob) ? resultBlob : [resultBlob],
+                            'heic' + '.jpg',
+                            {
+                                type: 'image/jpeg',
+                                lastModified: new Date().getTime(),
+                            },
+                        );
                     }
                     const compress = new Compress();
 
