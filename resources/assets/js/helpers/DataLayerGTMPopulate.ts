@@ -1,35 +1,71 @@
 import $ from 'jquery';
 
-import { isDev } from '../components/Env';
+import isDev from '../components/Env';
 /**
  *
  * Função comum para popular o DataLayer Enhanced Ecommerce
  *
  */
-
-export default function (ctx, stepWhoCall = 'checkout_step_1', requestData = {}) {
+type DataLayerProduct = {
+    name: string;
+    id: string;
+    price: number;
+    brand: string;
+    category: string;
+    variant: string;
+    quantity: number;
+};
+type DataLayerTransactionData = {
+    payment_method: string | null;
+    id: string;
+    affiliation: string;
+    revenue: number;
+    tax: number;
+    shipping: number;
+    coupon: string;
+};
+type DataLayerEvent = {
+    event: string;
+    push_type: string;
+    eec_data: {
+        transaction_data?: DataLayerTransactionData;
+        products: DataLayerProduct[];
+    };
+};
+declare global {
+    interface Window {
+        dataLayer: DataLayerEvent[];
+    }
+}
+type RequestDataType = { name: string; value: string | number };
+export default function (
+    ctx: HTMLElement | JQuery<HTMLElement>,
+    stepWhoCall = 'checkout_step_1',
+    requestData: RequestDataType[] = [],
+) {
     if (isDev) {
         return;
     }
     window.dataLayer = window.dataLayer || [];
-    var $ctx = $(ctx);
-    var defaultVal = {
+    const $ctx = $(ctx);
+    const defaultVal: DataLayerProduct = {
         name: '',
         id: '',
-        price: '',
+        price: 0,
         brand: '',
         category: '',
         variant: '',
         quantity: 1,
     };
-    var currentVal = $.extend({}, defaultVal);
+    const currentVal = $.extend({}, defaultVal);
 
     currentVal.brand = $ctx.find('select[name="idMarca"] :selected').html();
     currentVal.variant = $ctx.find('select[name="modeloCarro"] :selected').html();
 
-    var tipoVei = parseInt($ctx.find('[name="tipoVeiculo"]').val());
+    let tipoVei = 'carro';
+    const tipoVeiSrc = parseInt($ctx.find<HTMLInputElement>('[name="tipoVeiculo"]').val() || '0');
 
-    switch (tipoVei) {
+    switch (tipoVeiSrc) {
         case 1:
             tipoVei = 'carro';
             break;
@@ -52,12 +88,12 @@ export default function (ctx, stepWhoCall = 'checkout_step_1', requestData = {})
             .closest('.plano-box')
             .find('h3')
             .html();
-        currentVal.id = $ctx.find('[name="idPlano"]:checked').val();
+        currentVal.id = String($ctx.find('[name="idPlano"]:checked').val() || '');
         currentVal.price = parseFloat($ctx.find('[name="idPlano"]:checked').data('valor-plano'));
     }
 
     if (stepWhoCall == 'purchase') {
-        var transaction_data = {
+        const transaction_data: DataLayerTransactionData = {
             payment_method: 'pagamento',
             id: '000000',
             affiliation: '',
@@ -68,11 +104,11 @@ export default function (ctx, stepWhoCall = 'checkout_step_1', requestData = {})
         };
 
         if (requestData || false) {
-            var pagamento = requestData.filter(function (val) {
+            const pagamento = requestData.filter(function (val) {
                 return val.name === 'metodo';
             })[0];
 
-            transaction_data.payment_method = pagamento ? pagamento.value : null;
+            transaction_data.payment_method = pagamento ? String(pagamento.value) : null;
         }
 
         transaction_data.revenue = $ctx.find('[name="idPlano"]:checked').data('valor-plano');
