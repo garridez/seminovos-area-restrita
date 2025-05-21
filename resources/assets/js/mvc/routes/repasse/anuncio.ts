@@ -134,11 +134,14 @@ export const callback = async ($: JQueryStatic) => {
             },
         });
     });
+
+    /* dev * /
     console.log('ookoko4');
     await sleep(100);
     $('#tipoCarro').prop('checked', true).trigger('change');
     await sleep();
     $('[name="placa"]').val('RNM6A16').trigger('change');
+    /**/
 };
 
 function sleep(time: number = 500) {
