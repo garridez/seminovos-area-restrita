@@ -4,7 +4,6 @@ import Gallery from 'snbh-site/resources/dist/js/components/Gallery';
 
 export const seletor = '.c-repasse.a-index';
 export const callback = async ($: JQueryStatic) => {
-    //
     $<HTMLAnchorElement>('.veiculo-detalhes')
         .on('click', async function (e) {
             e.preventDefault();
@@ -28,7 +27,5 @@ export const callback = async ($: JQueryStatic) => {
             modal.on('hidden.bs.modal', function () {
                 this.remove();
             });
-        })
-        .eq(4)
-        .trigger('click');
+        });
 };
