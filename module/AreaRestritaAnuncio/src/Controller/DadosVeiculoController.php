@@ -57,7 +57,7 @@ class DadosVeiculoController extends AbstractActionController
             $cambio = (int) $veiculoDados['idAcessorio'];
         }
 
-    //libera edição para revendas
+        //libera edição para revendas
         if (isset($veiculoDados['cadastro']['tipoCadastro']) && $veiculoDados['cadastro']['tipoCadastro'] === '1') {
             $dadosForm->setIsEdition(false);
         }
@@ -399,7 +399,7 @@ class DadosVeiculoController extends AbstractActionController
 
         $request = $this->getRequest();
 
-    //        var_dump($request);exit;
+        //        var_dump($request);exit;
 
         if ($request->isPost()) {
             $post = $request->getPost();
@@ -460,7 +460,7 @@ class DadosVeiculoController extends AbstractActionController
     public function placaDisponivelAction()
     {
         $statusPermitidos = [
-                        /*1, // aguardando pagamento
+            /*1, // aguardando pagamento
                         3, // cadastrando */
             7, // removido
             8, // vendido
@@ -471,6 +471,7 @@ class DadosVeiculoController extends AbstractActionController
         }
         /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
+
 
         $veiculo = $apiClient->veiculosGet([
             "ignorarCondicoesBasicas" => 1,

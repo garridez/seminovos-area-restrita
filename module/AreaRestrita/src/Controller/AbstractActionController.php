@@ -13,6 +13,7 @@ use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response;
 
 /**
+ * @property PhpEnvironmentResponse $response
  * @property Request $request
  * @method Request getRequest()
  * @method PhpEnvironmentResponse getResponse()

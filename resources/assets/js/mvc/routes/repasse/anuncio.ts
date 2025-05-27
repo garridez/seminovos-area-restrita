@@ -1,10 +1,8 @@
 import MarcaModelo from '../../../components/MarcaModelo';
 type PlacaDisponivelResponseType = {
-    [key: string]: any;
     status: number;
     placaDisponivel: boolean;
     historicoCarro?: {
-        [key: string]: any;
         dados_veiculo?: {
             ano_fabricacao?: string;
             ano_modelo?: string;
@@ -143,11 +141,3 @@ export const callback = async ($: JQueryStatic) => {
     $('[name="placa"]').val('RNM6A16').trigger('change');
     /**/
 };
-
-function sleep(time: number = 500) {
-    return new Promise(function (resolve) {
-        setTimeout(() => {
-            resolve(true);
-        }, time);
-    });
-}

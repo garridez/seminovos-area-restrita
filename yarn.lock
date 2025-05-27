@@ -2289,13 +2289,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.3.21":
-  version: 18.3.21
-  resolution: "@types/react@npm:18.3.21"
+"@types/react@npm:^18.3.23":
+  version: 18.3.23
+  resolution: "@types/react@npm:18.3.23"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/89adc2fe391fd63b620db0aaa10b2be89fad338039415fd748e60c962e47bf2b0f1897cb5226f181eda963f37a1c8ac1bf0b3b29a0e35313bacd0355e5d6c736
+  checksum: 10/4b965dffe34a1f8aac8e2d7e976f113373f38134f9e37239f7e75d7ac6b3c2e1333a8df21febf1fe7749640f8de5708f7668cdfc70bffebda1cc4d3346724fd5
   languageName: node
   linkType: hard
 
@@ -3057,7 +3057,7 @@ __metadata:
     "@types/jquery": "npm:^3.5.32"
     "@types/jquery-mask-plugin": "npm:^1.14.6"
     "@types/lodash.merge": "npm:^4.6.9"
-    "@types/react": "npm:^18.3.21"
+    "@types/react": "npm:^18.3.23"
     "@types/react-dom": "npm:^18.3.7"
     "@types/sortablejs": "npm:^1.15.8"
     "@types/webpack-bundle-analyzer": "npm:^4.7.0"
@@ -3072,7 +3072,7 @@ __metadata:
     eslint-plugin-tsdoc: "npm:^0.4.0"
     eslint-plugin-unused-imports: "npm:^4.1.4"
     glob: "npm:^11.0.2"
-    globals: "npm:^16.1.0"
+    globals: "npm:^16.2.0"
     heic2any: "npm:^0.0.4"
     highcharts: "npm:^11.4.8"
     highcharts-react-official: "npm:^3.2.2"
@@ -3090,7 +3090,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     sass: "npm:^1.89.0"
     sass-loader: "npm:^16.0.5"
-    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a"
+    snbh-site: "git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=382a9863b6328f7bc0248767ddfc650549531387"
     sortable-tablesort: "npm:^3.2.3"
     sortablejs: "npm:^1.15.6"
     ts-loader: "npm:^9.5.2"
@@ -5375,10 +5375,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^16.1.0":
-  version: 16.1.0
-  resolution: "globals@npm:16.1.0"
-  checksum: 10/b24fa86c9d9e7f452572977105cefa66529ac166faf1d81abe6618e0ccce98cdd32f8cbc25d37ed6c2dbe7936b00d442696fd0c96da4c90567490488ecefb8fa
+"globals@npm:^16.2.0":
+  version: 16.2.0
+  resolution: "globals@npm:16.2.0"
+  checksum: 10/37fc33502973ebbee5a44b58939aa8574abc00ca1fc4c1d4ec0571a2c6620843ae647eff8bd082adf6bb5975ad221a887522b9a7961125764f0cb6dfab0b7483
   languageName: node
   linkType: hard
 
@@ -8678,9 +8678,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a":
+"snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=382a9863b6328f7bc0248767ddfc650549531387":
   version: 1.0.0
-  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=4ac56d7495ea3c2205983e4f03cb42dc251bf34a"
+  resolution: "snbh-site@git+ssh://git@bitbucket.org/seminovosbh/site_novo.git#commit=382a9863b6328f7bc0248767ddfc650549531387"
   dependencies:
     bootstrap: "npm:^4.6.2"
     bootstrap-slider: "npm:^11.0.2"
@@ -8693,7 +8693,7 @@ __metadata:
     js-cookie: "npm:^3.0.5"
     md5: "npm:^2.3.0"
     sharer.js: "npm:^0.5.3"
-  checksum: 10/5a69d9474ed81c9009a858f9416969847123510ebfd9097a2696906246bfc4b33b514cebfaf3634de53d535ce26a958a4ae42ee382d28baef6822a9629161e2f
+  checksum: 10/5ae6f92557445ac481b1336af35795c6d61e2c172f1cb5c1a96aaaa33aa3142bd798035cc48c4c75f4784f7f6767ae037bc1757b5a1f8e1ea8d842fb6d00e36f
   languageName: node
   linkType: hard
 

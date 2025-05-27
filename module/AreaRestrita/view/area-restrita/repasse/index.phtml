@@ -6,6 +6,16 @@ $this->headTitle('Repasse Seminovos');
 
 $veiculos = $this->veiculos;
 
+$precoOptionsHtml = implode('', array_map(fn($valor) => '<option value="' . $valor . '">' . number_format($valor, 0, ',', '.') . '</option>', [
+    ...range(2_000, 30_000, 2_000),
+    ...range(35_000, 50_000, 5_000),
+    ...range(60_000, 90_000, 10_000),
+    ...range(100_000, 450_000, 50_000),
+    ...range(500_000, 1_000_000, 100_000),
+    2_000_000,
+    5_000_000,
+    10_000_000
+]));
 
 
 ?>
@@ -20,9 +30,24 @@ $veiculos = $this->veiculos;
             <a href="/repasse/meus-anuncios" class="col-12 btn btn-info">Meus Repasses</a>
         </div>
         <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
-            <a href="/repasse/anuncio" class="col-12 btn btn-info">Novo Anúncio</a>
+            <a href="/repasse/anuncio" class="col-12 btn btn-laranja">Novo Anúncio</a>
         </div>
     </div>
+
+    <form class="repasse-filtro">
+        <div class="col">
+            <div class="form-group">
+                <select name="precoDe" class="form-control">
+                    <option value="">Min.</option>
+                    <?= $precoOptionsHtml ?>
+                </select>
+                <select name="precoAte" class="form-control">
+                    <option value="">Máx.</option>
+                    <?= $precoOptionsHtml ?>
+                </select>
+            </div>
+        </div>
+    </form>
 
     <form>
         <div class="form-row">

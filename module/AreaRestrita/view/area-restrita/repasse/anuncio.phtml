@@ -22,7 +22,18 @@ $this->headTitle('Criar Novo Anúncio');
         </div>
     </div>
 <?php endif ?>
-<div class="container-fluid">
+<div class="container-fluid mb-5">
+    <div class="row justify-content-center px-2 px-md-0">
+        <div class="col-sm-12 col-md-6 my-2 d-flex">
+            <h3>Repasse Seminovos</h3>
+        </div>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="/repasse/meus-anuncios" class="col-12 btn btn-info">Meus Repasses</a>
+        </div>
+        <div class="col-12 col-md-3 my-2 d-flex align-items-center justify-content-end">
+            <a href="/repasse/anuncio" class="col-12 btn btn-laranja">Novo Anúncio</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12 d-flex">
             <h3>Novo Anúncio</h3>
@@ -31,7 +42,7 @@ $this->headTitle('Criar Novo Anúncio');
     <form method="POST" class="form-novo" enctype="multipart/form-data">
         <div class="row step-1 step-tipo-veiculo">
             <div class="col-12">
-                <div class="h4 text-center">Selecione o tipo de veículo</div>
+                <div class="h4 text-center mb-4">Selecione o tipo de veículo</div>
                 <div class="radio-group-type veiculo-tipo justify-content-center ">
                     <div class="radio-group-item col-2">
                         <input class="form-radio" type="radio" name="tipoVeiculo" value="1" id="tipoCarro">
