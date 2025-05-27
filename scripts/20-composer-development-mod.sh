@@ -3,7 +3,8 @@
 
 if [ "$APPLICATION_ENV" = 'development' ]; then
     composer dev-enable
-    mkdir -p ../data/cache
+    mkdir -p  ../data/cache
+    chmod 777 ../data/cache
     # Pequeno hack para melhorar a performance no volume do Docker no Windows
     (
         composer config vendor-dir ../vendor;

@@ -1,3 +1,4 @@
+name: seminovos-area-restrita
 services:
     snbh-area-restrita:
         build: 
@@ -20,9 +21,16 @@ services:
             - SESSION_SAVE_PATH=tcp://snbh-area-restrita-redis:6379?weight=1&timeout=1
         volumes:
             - .:/home/www-data
+        networks:
+            - snbh-network
     snbh-area-restrita-redis:
         image: redis:7-alpine
         container_name: snbh-area-restrita-redis
         ports:
-        - "6378:6379"
-
+            - "6378:6379"
+        networks:
+            - snbh-network
+networks: 
+    snbh-network:
+        name: snbh-network
+        driver: bridge
