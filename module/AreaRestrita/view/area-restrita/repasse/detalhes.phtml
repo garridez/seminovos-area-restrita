@@ -26,9 +26,9 @@ $marcaModelo = $detalhes['marca'] . ' ' . $detalhes['modelo'];
         </div>
     </div>
     <div class="row text-center">
-        <div class="col-12">
+        <div class="col-12 col-md-8">
             <div class="part-galeria gallery-main">
-                <div class="gallery-thumbs" style="max-width: 90px;">
+                <div class="gallery-thumbs mr-1" style="max-width: 90px;">
                     <div class="thumb-scroll">
                         <ul class="list-unstyled">
                             <?php foreach ($detalhes['fotos'] as $k =>  $foto): ?>
@@ -89,10 +89,34 @@ $marcaModelo = $detalhes['marca'] . ' ' . $detalhes['modelo'];
                 <input type="hidden" name="countFotos" id="countFotos" value="<?= count($detalhes['fotos']) ?>">
             </div>
         </div>
-        <div class="col-6 col-md-2 mb-2">
+        <div class="col-12 col-md-4">
             <h1>
                 <?= $marcaModelo ?>
             </h1>
+			<div class="mt-2 mb-3 d-flex flex-wrap border p-3 rounded shadow-sm">
+
+				<!-- Valor -->
+				<h2 class="w-100 mb-3">
+				  <div class="fw-bold fs-2 text-primary">
+					R$ <?= number_format((float)$detalhes['valor'], 2, ',', '.') ?>
+				  </div>
+				</h2>
+
+				<!-- Nome da loja -->
+				<div class="w-100 mb-2">
+				  <div class="fw-semibold fs-5 text-dark">
+					<?= @$detalhes['razaoSocial'] ?>
+				  </div>
+				</div>
+
+				<!-- Telefone com ícone -->
+				<div class="w-100">
+				  <a href="https://wa.me/<?= $detalhes['telefone_1'] ?>" target="_blank" class="fs-6 text-success text-decoration-none" style="font-size: 1rem">
+					<i class="fab fa-whatsapp fa-lg me-2"></i> <?= StringFuncs::telefoneFormat($detalhes['telefone_1']) ?>
+				  </a>
+				</div>
+
+			</div>
         </div>
         <div class="col-6 col-md-2 mb-2">
             Ano:
@@ -100,13 +124,6 @@ $marcaModelo = $detalhes['marca'] . ' ' . $detalhes['modelo'];
                 <b><?= $detalhes['ano_fabricacao'] ?>/<?= $detalhes['ano_modelo'] ?></b>
             </div>
         </div>
-        <div class="col-6 col-md-2 mb-2">
-            Valor:
-            <div>
-                <b>R$ <?= number_format((float)$detalhes['valor'], 2, ',', '.') ?></b>
-            </div>
-        </div>
-
         <div class="col-6 col-md-2 mb-2">
             Combustível:
             <div>
