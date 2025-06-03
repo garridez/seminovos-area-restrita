@@ -89,43 +89,43 @@ $marcaModelo = $detalhes['marca'] . ' ' . $detalhes['modelo'];
                 <input type="hidden" name="countFotos" id="countFotos" value="<?= count($detalhes['fotos']) ?>">
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-6 col-md-2 mb-2">
             <h1>
                 <?= $marcaModelo ?>
             </h1>
         </div>
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Ano:
             <div>
                 <b><?= $detalhes['ano_fabricacao'] ?>/<?= $detalhes['ano_modelo'] ?></b>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Valor:
             <div>
                 <b>R$ <?= number_format((float)$detalhes['valor'], 2, ',', '.') ?></b>
             </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Combustível:
             <div>
                 <b><?= $detalhes['combustivel'] ?></b>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Cor:
             <div>
                 <b><?= $detalhes['cor'] ?></b>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Data Cadastro:
             <div>
                 <b><?= (new DateTime($detalhes['data_cadastro']))->format('d/m/Y') ?></b>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-6 col-md-2 mb-2">
             Contato:
             <div>
 
