@@ -54,9 +54,19 @@ class StringFuncs
 
     public static function telefoneFormat(string| int $telefone): string
     {
-        $telefone = preg_replace('/[^0-9]/', '',  (string) $telefone);
-        $telefone = preg_replace('/^(.+)([0-9]{5})([0-9]{4})$/', ' ($1) $2-$3', $telefone);
+		// Remove tudo que não for número
+		$telefone = preg_replace('/[^0-9]/', '', (string) $telefone);
 
-        return $telefone;
+		// Verifica se é celular (11 dígitos) ou fixo (10 dígitos)
+		if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $telefone, $m)) {
+			// Celular: (31) 91234-5678
+			return "($m[1]) $m[2]-$m[3]";
+		} elseif (preg_match('/^(\d{2})(\d{4})(\d{4})$/', $telefone, $m)) {
+			// Fixo: (31) 3234-5678
+			return "($m[1]) $m[2]-$m[3]";
+		}
+
+		// Retorna original se não bater com nenhum dos dois formatos
+		return $telefone;
     }
 }
