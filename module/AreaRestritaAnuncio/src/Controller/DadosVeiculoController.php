@@ -198,7 +198,7 @@ class DadosVeiculoController extends AbstractActionController
         $dadosForm->setCombustivel($tipoVeiculo);
 
         $cambio = null;
-        $veiculoDados = $this->getVeiculo(5);
+        $veiculoDados = $this->getVeiculo(false);
         if ($veiculoDados) {
             $dadosForm->populateValues($veiculoDados);
             $dadosForm->setIsEdition(true);
@@ -229,7 +229,7 @@ class DadosVeiculoController extends AbstractActionController
         }
 
         $precoForm = new Veiculo\PrecoForm();
-        $data = $this->getVeiculo(5);
+        $data = $this->getVeiculo(false);
         $precoForm->populateValues($data);
 
         $this->layout()->setTemplate('none');
@@ -255,7 +255,7 @@ class DadosVeiculoController extends AbstractActionController
     public function maisInformacoesAction()
     {
         $maisInformacoesForm = new Veiculo\MaisInformacoesForm();
-        $data = $this->getVeiculo(5);
+        $data = $this->getVeiculo(false);
         $maisInformacoesForm->populateValues($data);
 
         $checkedTermo = !empty($data);
