@@ -63,10 +63,10 @@ class MaisInformacoesForm extends Form
             'name' => 'aceitaChat',
             'options' => [
                 'label' => 'Aceitar contato por chat.',
-            ],
-            'attributes' => [
-                'value' => 'yes',
-            ],
+                'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0',				
+            ]
         ]);
 
         $this->add([
@@ -77,7 +77,7 @@ class MaisInformacoesForm extends Form
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
-            ],
+            ]
         ]);
 
         $this->add([
