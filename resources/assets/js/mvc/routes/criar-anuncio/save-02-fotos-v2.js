@@ -114,6 +114,7 @@ async function init() {
     function awaitAjaxAsyncCount() {
         return new Promise(function (resolve) {
             var interval = setInterval(function () {
+				console.log('Async Count: ' + ajaxAsyncCount);
                 if (ajaxAsyncCount === 0) {
                     clearInterval(interval);
                     resolve();
