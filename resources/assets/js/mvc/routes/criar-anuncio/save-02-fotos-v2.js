@@ -118,11 +118,12 @@ async function init() {
                     clearInterval(interval);
                     resolve();
 					
-					$('.btn-continuar').prop('disabled', false);
-					if(loading._showing) loading.close(true);
+					$('.btn-continuar').prop('disabled', false).html('Continuar');
+					loading.close(true);
                 } else {
-					$('.btn-continuar').prop('disabled', true);
-					if(!loading._showing) loading.open(true);					
+					$('.btn-continuar').prop('disabled', true).html('Aguarde');
+					loading.addFeedbackTexts(['Aguarde o upload...']);
+					loading.open(true);					
 				}
             }, 100);
         });
