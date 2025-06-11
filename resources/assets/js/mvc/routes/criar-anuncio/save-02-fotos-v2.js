@@ -163,6 +163,16 @@ async function init() {
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
 
+		var watch = setInterval(function(){
+			if(countDelay <= 0){
+				console.log('Count delay: ' + countDelay);
+				countDelay = 0;
+				$('.btn-continuar').prop('disabled', false).html('Continue') ;
+				loading.open(true);	
+				clearInterval(watch);
+			}
+		}, 200);
+
         var ajaxLoaddingBackup = window.setAjaxLoadding;
 
         window.setAjaxLoadding = showLoading;
@@ -175,13 +185,6 @@ async function init() {
             $containerFoto.removeClass('uploading');
             window.setAjaxLoadding = ajaxLoaddingBackup;
             ajaxAsyncCount--;
-			
-			console.log('Async Count:' + ajaxAsyncCount);
-			
-			if(ajaxAsyncCount == 0){
-				$('.btn-continuar').prop('disabled', false).html('Continuar');
-				loading.close(true);
-			}
         }
         if ($img.data('force-process') === true) {
             $img.data('uploaded', false);
