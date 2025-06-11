@@ -176,6 +176,8 @@ async function init() {
             window.setAjaxLoadding = ajaxLoaddingBackup;
             ajaxAsyncCount--;
 			
+			console.log('Async Count:' + ajaxAsyncCount);
+			
 			if(ajaxAsyncCount == 0){
 				$('.btn-continuar').prop('disabled', false).html('Continuar');
 				loading.close(true);
