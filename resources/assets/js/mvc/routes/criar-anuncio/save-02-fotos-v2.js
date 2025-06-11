@@ -163,15 +163,21 @@ async function init() {
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
 
-		var watch = setInterval(function(){
+		var timeout = null;
+		var watch = setInterval(function(){			
+			clearTimeout(timeout);
+		
 			if(countDelay <= 0){
 				console.log('Count delay: ' + countDelay);
 				countDelay = 0;
-				$('.btn-continuar').prop('disabled', false).html('Continue') ;
-				loading.open(true);	
-				clearInterval(watch);
+				
+				timeout = setTimeout(function(){
+					$('.btn-continuar').prop('disabled', false).html('Continue') ;
+					loading.open(true);	
+					clearInterval(watch);
+				}, 1000);
 			}
-		}, 1000);
+		}, 200);
 
         var ajaxLoaddingBackup = window.setAjaxLoadding;
 
