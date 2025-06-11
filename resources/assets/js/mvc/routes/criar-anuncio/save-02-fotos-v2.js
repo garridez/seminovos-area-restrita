@@ -171,6 +171,7 @@ async function init() {
 
 		let timeout = null;
 		let watch = setInterval(function () {
+			console.log('Count:', currentUploads);
 			if (currentUploads <= 0) {
 				if (!timeout) {
 					timeout = setTimeout(function () {
@@ -190,6 +191,9 @@ async function init() {
 				// Se algum upload começar, cancela a espera
 				clearTimeout(timeout);
 				timeout = null;
+				
+				$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
+				loading.open(true);				
 			}
 		}, 200);
 
