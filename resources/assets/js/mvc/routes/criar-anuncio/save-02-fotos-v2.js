@@ -165,6 +165,9 @@ async function init() {
 		
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
+		
+        var ajaxLoaddingBackup = window.setAjaxLoadding;
+        window.setAjaxLoadding = showLoading;		
 
 		let timeout = null;
 		let watch = setInterval(function () {
@@ -189,10 +192,6 @@ async function init() {
 				timeout = null;
 			}
 		}, 200);
-
-        var ajaxLoaddingBackup = window.setAjaxLoadding;
-
-        window.setAjaxLoadding = showLoading;
 
         var $img = $(img);
         var $containerFoto = $img.closest('.foto');
