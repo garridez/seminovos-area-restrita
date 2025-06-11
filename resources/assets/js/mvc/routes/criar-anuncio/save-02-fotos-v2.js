@@ -65,7 +65,7 @@ async function init() {
             function () {
                 uploadImage(this, false, false);
             }.bind(this),
-            countDelay * 1000,
+            countDelay * 500,
         );
     });
 
@@ -171,7 +171,7 @@ async function init() {
 				loading.open(true);	
 				clearInterval(watch);
 			}
-		}, 200);
+		}, 1000);
 
         var ajaxLoaddingBackup = window.setAjaxLoadding;
 
