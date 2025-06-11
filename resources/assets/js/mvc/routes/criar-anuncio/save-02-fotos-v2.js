@@ -59,14 +59,14 @@ async function init() {
         if (countDelay === 0) {
             countDelay++;
 			currentUploads++;
-            uploadImage(this, false, false);
+            uploadImage(this, false, true);
             return;
         }
         countDelay++;
         currentUploads++;
         setTimeout(
             function () {
-                uploadImage(this, false, false);
+                uploadImage(this, false, true);
             }.bind(this),
             countDelay * 500,
         );
