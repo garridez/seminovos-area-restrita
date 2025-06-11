@@ -150,7 +150,7 @@ async function init() {
         $.active = 1;
         $(document).triggerHandler('ajaxComplete', [{ status: 200 }]);
 
-        loading.close(true);
+        //loading.close(true);
 
         console.log('subiu tudo!');
 
@@ -174,7 +174,7 @@ async function init() {
 						if (currentUploads <= 0) {
 							console.log('Uploads finalizados. Count:', currentUploads);
 							$('.btn-continuar').prop('disabled', false).html('Continue');
-							loading.open(true);
+							loading.close(true);
 							clearInterval(watch);
 						} else {
 							// Reinicia o timeout se algo novo começou a enviar
