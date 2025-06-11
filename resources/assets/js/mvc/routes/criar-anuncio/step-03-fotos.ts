@@ -1,6 +1,7 @@
 import Compress from 'compress.js';
 import heic2any from 'heic2any';
 import sortablejs from 'sortablejs';
+import loading from '../../../components/Loading';
 
 import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
 
@@ -27,6 +28,10 @@ function init() {
     if (!ctx.length) {
         return;
     }
+	
+	loading.addFeedbackTexts([
+		'Aguarde',
+	]);	
 
     const rotate = ['rotate(0deg)', 'rotate(90deg)', 'rotate(180deg)', 'rotate(270deg)'];
 
@@ -89,10 +94,22 @@ function init() {
         const files = this.files;
         if (files) {
             const arr = Array.from(files);
-            arr.forEach(function (file, i) {
-                showPhoto(imgs.eq(i), file);
-                //compressPhoto(imgs.eq(i), file);
-            });
+			
+			
+			
+			// ⚠️ DESABILITA O BOTÃO
+			loading.open(true);
+			$('.btn-continuar').prop('disabled', true);
+
+			for (let i = 0; i < arr.length; i++) {
+				const file = arr[i];
+				const img = imgs.eq(i);
+				await showPhoto(img, file);
+			}
+
+			// ✅ REABILITA O BOTÃO
+			$('.btn-continuar').prop('disabled', false);
+			loading.close(true);
         }
     });
 
