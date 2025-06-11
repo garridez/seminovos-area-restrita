@@ -53,6 +53,8 @@ async function init() {
     var $fotosContainer = $('.fotos-container');
 
     var countDelay = 0;
+	
+	var currentUploads = 0;
 
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
         if (countDelay === 0) {
@@ -67,6 +69,8 @@ async function init() {
             }.bind(this),
             countDelay * 1000,
         );
+		
+		currentUploads++;
     });
 
     $('.step-container').on('step:pre-exit:fotos', function () {
@@ -155,6 +159,10 @@ async function init() {
 
         $('.fotos-container').closest('.step-container').stepPlugin('next');
     }
+	
+	function updateBtnContinuar() {
+		$('.btn-continuar').prop('disabled', currentUploads > 0);
+	}	
 
     async function uploadImage(img, reordenar = false, showLoading = true) {
         setImagesOrder();
@@ -230,6 +238,9 @@ async function init() {
                 dataType: 'json',
                 context: document,
                 success: function (data) {
+					currentUploads--;
+					updateBtnContinuar();
+					
                     if (!HandleApiError(data)) {
                         return;
                     }
@@ -247,6 +258,9 @@ async function init() {
                     }
                 },
                 error: function (e) {
+					currentUploads--;
+					updateBtnContinuar();					
+					
                     if (e.responseJSON) {
                         HandleApiError(e.responseJSON);
                     } else {
