@@ -114,18 +114,10 @@ async function init() {
     function awaitAjaxAsyncCount() {
         return new Promise(function (resolve) {
             var interval = setInterval(function () {
-				console.log('Async Count: ' + ajaxAsyncCount);
                 if (ajaxAsyncCount === 0) {
                     clearInterval(interval);
                     resolve();
-					
-					$('.btn-continuar').prop('disabled', false).html('Continuar');
-					loading.close(true);
-                } else {
-					$('.btn-continuar').prop('disabled', true).html('Aguarde');
-					loading.addFeedbackTexts(['Aguarde o upload...']);
-					loading.open(true);					
-				}
+                }
             }, 100);
         });
     }
@@ -167,6 +159,9 @@ async function init() {
     async function uploadImage(img, reordenar = false, showLoading = true) {
         setImagesOrder();
         ajaxAsyncCount++;
+		
+		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
+		loading.open(true);
 
         var ajaxLoaddingBackup = window.setAjaxLoadding;
 
@@ -180,6 +175,11 @@ async function init() {
             $containerFoto.removeClass('uploading');
             window.setAjaxLoadding = ajaxLoaddingBackup;
             ajaxAsyncCount--;
+			
+			if(ajaxAsyncCount == 0){
+				$('.btn-continuar').prop('disabled', false).html('Continuar');
+				loading.close(true);
+			}
         }
         if ($img.data('force-process') === true) {
             $img.data('uploaded', false);
