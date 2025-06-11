@@ -53,14 +53,11 @@ async function init() {
     var $fotosContainer = $('.fotos-container');
 
     var countDelay = 0;
-	
-	var currentUploads = 0;
 
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
         if (countDelay === 0) {
             countDelay++;
             uploadImage(this, false, false);
-			currentUploads++;
             return;
         }
         countDelay++;
@@ -70,10 +67,6 @@ async function init() {
             }.bind(this),
             countDelay * 1000,
         );
-		
-		currentUploads++;
-		updateBtnContinuar();
-		console.log('SnBH-Upload');
     });
 
     $('.step-container').on('step:pre-exit:fotos', function () {
@@ -124,7 +117,13 @@ async function init() {
                 if (ajaxAsyncCount === 0) {
                     clearInterval(interval);
                     resolve();
-                }
+					
+					$('.btn-continuar').prop('disabled', false);
+					if(loading._showing) loading.close(true);
+                } else {
+					$('.btn-continuar').prop('disabled', true);
+					if(!loading._showing) loading.open(true);					
+				}
             }, 100);
         });
     }
@@ -162,16 +161,6 @@ async function init() {
 
         $('.fotos-container').closest('.step-container').stepPlugin('next');
     }
-	
-	function updateBtnContinuar() {
-		$('.btn-continuar').prop('disabled', currentUploads > 0);
-		
-		if(currentUploads > 0){
-			loading.open(true);
-		} else {
-			loading.close(true);
-		}
-	}	
 
     async function uploadImage(img, reordenar = false, showLoading = true) {
         setImagesOrder();
@@ -247,9 +236,6 @@ async function init() {
                 dataType: 'json',
                 context: document,
                 success: function (data) {
-					currentUploads--;
-					updateBtnContinuar();
-					
                     if (!HandleApiError(data)) {
                         return;
                     }
@@ -267,9 +253,6 @@ async function init() {
                     }
                 },
                 error: function (e) {
-					currentUploads--;
-					updateBtnContinuar();					
-					
                     if (e.responseJSON) {
                         HandleApiError(e.responseJSON);
                     } else {
