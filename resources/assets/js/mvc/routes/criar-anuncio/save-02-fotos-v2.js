@@ -60,6 +60,7 @@ async function init() {
         if (countDelay === 0) {
             countDelay++;
             uploadImage(this, false, false);
+			currentUploads++;
             return;
         }
         countDelay++;
@@ -164,6 +165,12 @@ async function init() {
 	
 	function updateBtnContinuar() {
 		$('.btn-continuar').prop('disabled', currentUploads > 0);
+		
+		if(currentUploads > 0){
+			loading.open(true);
+		} else {
+			loading.close(true);
+		}
 	}	
 
     async function uploadImage(img, reordenar = false, showLoading = true) {
