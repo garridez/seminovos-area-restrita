@@ -106,7 +106,7 @@ function init() {
 			for (let i = 0; i < arr.length; i++) {
 				const file = arr[i];
 				const img = imgs.eq(i);
-				await showPhoto(img, file);
+				showPhoto(img, file);
 				uploadCount++;
 			}
 			
