@@ -166,15 +166,27 @@ async function init() {
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
 
-		var watch = setInterval(function(){
-			console.log('Count Uploads: ' + currentUploads);
-		
-			if(currentUploads <= 0){
-				currentUploads = 0;				
-
-				$('.btn-continuar').prop('disabled', false).html('Continue') ;
-				loading.open(true);
-				clearInterval(watch);
+		let timeout = null;
+		let watch = setInterval(function () {
+			if (currentUploads <= 0) {
+				if (!timeout) {
+					timeout = setTimeout(function () {
+						if (currentUploads <= 0) {
+							console.log('Uploads finalizados. Count:', currentUploads);
+							$('.btn-continuar').prop('disabled', false).html('Continue');
+							loading.open(true);
+							clearInterval(watch);
+						} else {
+							// Reinicia o timeout se algo novo começou a enviar
+							clearTimeout(timeout);
+							timeout = null;
+						}
+					}, 1000); // espera 1 segundo estável
+				}
+			} else {
+				// Se algum upload começar, cancela a espera
+				clearTimeout(timeout);
+				timeout = null;
 			}
 		}, 200);
 
@@ -254,7 +266,7 @@ async function init() {
                         return;
                     }
                     console.log(data);
-                    console.log('upload ok');
+                    console.log('upload ok ' + currentUploads);
                     // Marca as imagens como "já carregadas"
                     $img.data('uploaded', true);
                     $imgToDelete.data('deleted', true);
