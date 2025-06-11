@@ -71,6 +71,8 @@ async function init() {
         );
 		
 		currentUploads++;
+		updateBtnContinuar();
+		console.log('SnBH-Upload');
     });
 
     $('.step-container').on('step:pre-exit:fotos', function () {
