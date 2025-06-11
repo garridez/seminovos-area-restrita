@@ -59,14 +59,14 @@ async function init() {
         if (countDelay === 0) {
             countDelay++;
 			currentUploads++;
-            uploadImage(this, false, true);
+            uploadImage(this, false, false);
             return;
         }
         countDelay++;
         currentUploads++;
         setTimeout(
             function () {
-                uploadImage(this, false, true);
+                uploadImage(this, false, false);
             }.bind(this),
             countDelay * 500,
         );
@@ -136,7 +136,7 @@ async function init() {
         var $displayImgs = $fotosContainer.find('.display-img');
 
         for (var img of $displayImgs) {
-            await uploadImage(img, reordenar);
+            await uploadImage(img, reordenar, false);
         }
 
         try {
@@ -180,13 +180,10 @@ async function init() {
 							$('.btn-continuar').prop('disabled', false).html('Continue');
 							loading.close(true);
 							clearInterval(watch);
-							window.setAjaxLoadding = false;
 						} else {
 							// Reinicia o timeout se algo novo começou a enviar
 							clearTimeout(timeout);
 							timeout = null;
-							window.setAjaxLoadding = true;
-
 						}
 					}, 1000); // espera 1 segundo estável
 				}
@@ -197,8 +194,6 @@ async function init() {
 				
 				$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 				loading.open(true);	
-
-				window.setAjaxLoadding = true;
 			}
 		}, 200);
 
