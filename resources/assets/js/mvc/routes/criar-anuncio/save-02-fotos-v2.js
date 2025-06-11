@@ -53,14 +53,17 @@ async function init() {
     var $fotosContainer = $('.fotos-container');
 
     var countDelay = 0;
+	var currentUploads = 0;
 
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
         if (countDelay === 0) {
             countDelay++;
+			currentUploads++;
             uploadImage(this, false, false);
             return;
         }
         countDelay++;
+        currentUploads++;
         setTimeout(
             function () {
                 uploadImage(this, false, false);
@@ -167,9 +170,9 @@ async function init() {
 		var watch = setInterval(function(){			
 			clearTimeout(timeout);
 		
-			if(countDelay <= 0){
-				console.log('Count delay: ' + countDelay);
-				countDelay = 0;
+			if(currentUploads <= 0){
+				console.log('Count Uploads: ' + currentUploads);
+				currentUploads = 0;
 				
 				timeout = setTimeout(function(){
 					$('.btn-continuar').prop('disabled', false).html('Continue') ;
@@ -249,6 +252,8 @@ async function init() {
                 dataType: 'json',
                 context: document,
                 success: function (data) {
+					currentUploads--;
+					
                     if (!HandleApiError(data)) {
                         return;
                     }
@@ -266,6 +271,8 @@ async function init() {
                     }
                 },
                 error: function (e) {
+					currentUploads--;
+					
                     if (e.responseJSON) {
                         HandleApiError(e.responseJSON);
                     } else {
@@ -275,6 +282,7 @@ async function init() {
                 },
             });
         } catch (_e) {
+			currentUploads--;
             console.log('Deu erro');
         }
         removeLoading();
