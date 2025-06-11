@@ -136,7 +136,7 @@ async function init() {
         var $displayImgs = $fotosContainer.find('.display-img');
 
         for (var img of $displayImgs) {
-            await uploadImage(img, reordenar, false);
+            await uploadImage(img, reordenar, true);
         }
 
         try {
@@ -150,7 +150,7 @@ async function init() {
         $.active = 1;
         $(document).triggerHandler('ajaxComplete', [{ status: 200 }]);
 
-        //loading.close(true);
+        loading.close(true);
 
         console.log('subiu tudo!');
 
@@ -163,7 +163,7 @@ async function init() {
         setImagesOrder();
         ajaxAsyncCount++;
 		
-		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
+		$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;
 		loading.open(true);
 		
         var ajaxLoaddingBackup = window.setAjaxLoadding;
@@ -178,7 +178,6 @@ async function init() {
 						if (currentUploads <= 0) {
 							console.log('Uploads finalizados. Count:', currentUploads);
 							$('.btn-continuar').prop('disabled', false).html('Continue');
-							loading.close(true);
 							clearInterval(watch);
 						} else {
 							// Reinicia o timeout se algo novo começou a enviar
@@ -192,8 +191,7 @@ async function init() {
 				clearTimeout(timeout);
 				timeout = null;
 				
-				$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
-				loading.open(true);	
+				$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;	
 			}
 		}, 200);
 
