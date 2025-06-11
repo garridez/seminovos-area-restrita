@@ -166,10 +166,10 @@ async function init() {
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
 
-		var watch = setInterval(function(){			
+		var watch = setInterval(function(){
+			console.log('Count Uploads: ' + currentUploads);
 		
 			if(currentUploads <= 0){
-				console.log('Count Uploads: ' + currentUploads);
 				currentUploads = 0;				
 
 				$('.btn-continuar').prop('disabled', false).html('Continue') ;
