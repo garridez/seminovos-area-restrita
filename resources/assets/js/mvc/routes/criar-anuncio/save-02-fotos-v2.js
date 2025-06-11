@@ -166,19 +166,15 @@ async function init() {
 		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		loading.open(true);
 
-		var timeout = null;
 		var watch = setInterval(function(){			
-			clearTimeout(timeout);
 		
 			if(currentUploads <= 0){
 				console.log('Count Uploads: ' + currentUploads);
-				currentUploads = 0;
-				
-				timeout = setTimeout(function(){
-					$('.btn-continuar').prop('disabled', false).html('Continue') ;
-					loading.open(true);	
-					clearInterval(watch);
-				}, 1000);
+				currentUploads = 0;				
+
+				$('.btn-continuar').prop('disabled', false).html('Continue') ;
+				loading.open(true);
+				clearInterval(watch);
 			}
 		}, 200);
 
