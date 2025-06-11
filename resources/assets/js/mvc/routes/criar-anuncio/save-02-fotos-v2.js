@@ -180,10 +180,13 @@ async function init() {
 							$('.btn-continuar').prop('disabled', false).html('Continue');
 							loading.close(true);
 							clearInterval(watch);
+							window.setAjaxLoadding = false;
 						} else {
 							// Reinicia o timeout se algo novo começou a enviar
 							clearTimeout(timeout);
 							timeout = null;
+							window.setAjaxLoadding = true;
+
 						}
 					}, 1000); // espera 1 segundo estável
 				}
@@ -193,7 +196,9 @@ async function init() {
 				timeout = null;
 				
 				$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
-				loading.open(true);				
+				loading.open(true);	
+
+				window.setAjaxLoadding = true;
 			}
 		}, 200);
 
