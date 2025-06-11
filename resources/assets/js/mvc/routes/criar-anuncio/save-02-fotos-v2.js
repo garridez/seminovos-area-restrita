@@ -4,6 +4,7 @@ import $ from 'jquery';
 
 import HandleApiError from '../../../components/HandleApiError';
 import loading from '../../../components/Loading';
+import locker from '../../../components/Locker';
 import BtnContinuar from './helpers/BtnContinuar';
 
 function filterImgToUpload($img) {
@@ -164,7 +165,7 @@ async function init() {
         ajaxAsyncCount++;
 		
 		$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;
-		loading.open(true);
+		locker.open(true);
 		
         var ajaxLoaddingBackup = window.setAjaxLoadding;
         window.setAjaxLoadding = showLoading;		
@@ -179,6 +180,7 @@ async function init() {
 							console.log('Uploads finalizados. Count:', currentUploads);
 							$('.btn-continuar').prop('disabled', false).html('Continue');
 							clearInterval(watch);
+							locker.close(true);
 						} else {
 							// Reinicia o timeout se algo novo começou a enviar
 							clearTimeout(timeout);
