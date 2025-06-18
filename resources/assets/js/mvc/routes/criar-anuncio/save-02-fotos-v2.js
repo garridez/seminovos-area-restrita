@@ -281,6 +281,7 @@ async function init() {
 						console.log(data);
 						console.log(data.resUpload.data.fotosInseridas[0].idFoto);
 						console.log('id ^');
+						$img.attr('data-idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
                         $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
                         $img.data('idfoto', data.resUpload.data.fotosInseridas[0].ordem);
 						console.log($img);
