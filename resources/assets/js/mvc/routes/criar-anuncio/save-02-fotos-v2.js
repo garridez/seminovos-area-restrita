@@ -164,7 +164,7 @@ async function init() {
         setImagesOrder();
         ajaxAsyncCount++;
 		
-		$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;
+		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
 		locker.open(true);
 		
         var ajaxLoaddingBackup = window.setAjaxLoadding;
@@ -278,7 +278,13 @@ async function init() {
                         data.resUpload.data &&
                         data.resUpload.data.fotosInseridas
                     ) {
+						console.log(data);
+						console.log(data.resUpload.data.fotosInseridas[0].idFoto);
+						console.log('id ^');
                         $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
+                        $img.data('idfoto', data.resUpload.data.fotosInseridas[0].ordem);
+						console.log($img);
+						console.log($img.data('idfoto'));
                     }
                 },
                 error: function (e) {
