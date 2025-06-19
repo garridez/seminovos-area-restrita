@@ -278,15 +278,10 @@ async function init() {
                         data.resUpload.data &&
                         data.resUpload.data.fotosInseridas
                     ) {
-						console.log(data);
-						console.log(data.resUpload.data.fotosInseridas[0].idFoto);
-						console.log('id ^');
-                        $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
-                        $img.data('idfoto', data.resUpload.data.fotosInseridas[0].ordem);
-						$img.attr('data-idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
-						$img.attr('data-ordem', data.resUpload.data.fotosInseridas[0].ordem);
-						console.log($img);
-						console.log($img.data('idfoto') + "-");
+                        $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);						
+                        $img.data('ordem', data.resUpload.data.fotosInseridas[0].ordem);
+						console.log('ID FOTO: ' + $img.data('idfoto'));
+						console.log('ORDEM: ' + $img.data('ordem'));
                     }
                 },
                 error: function (e) {
