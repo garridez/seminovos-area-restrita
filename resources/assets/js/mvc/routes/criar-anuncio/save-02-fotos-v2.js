@@ -296,6 +296,7 @@ async function init() {
                     ) {
                         $img.data('idfoto', data.resUpload.data.fotosInseridas[0].idFoto);						
                         $img.data('ordem', data.resUpload.data.fotosInseridas[0].ordem);
+						$img.data('file-data', true);
 						console.log('ID FOTO: ' + $img.data('idfoto'));
 						console.log('ORDEM: ' + $img.data('ordem'));
                     }
