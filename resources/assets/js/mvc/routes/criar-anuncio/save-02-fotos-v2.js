@@ -286,7 +286,7 @@ async function init() {
 						$img.attr('data-idfoto', data.resUpload.data.fotosInseridas[0].idFoto);
 						$img.attr('data-ordem', data.resUpload.data.fotosInseridas[0].ordem);
 						console.log($img);
-						console.log($img.data('idfoto'));
+						console.log($img.data('idfoto') + "-");
                     }
                 },
                 error: function (e) {
