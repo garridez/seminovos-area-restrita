@@ -135,8 +135,11 @@ async function init() {
         var $fotosContainer = $('.fotos-container');
         var reordenar = $fotosContainer.data('reordanado') || false;
         var $displayImgs = $fotosContainer.find('.display-img');
-
+		
         for (var img of $displayImgs) {
+			console.log('UPLOADING...');
+			console.log(img);
+			console.log(reordenar);
             await uploadImage(img, reordenar, true);
         }
 
@@ -196,6 +199,8 @@ async function init() {
 				$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;	
 			}
 		}, 200);
+		
+		console.log('TRACK 1');
 
         var $img = $(img);
         var $containerFoto = $img.closest('.foto');
@@ -213,19 +218,28 @@ async function init() {
                 $img.data('delete', true);
             }
         }
+		
+		console.log('TRACK 2');
 
         var $imgToUpload = filterImgToUpload($img);
         var $imgToDelete = filterImgToDelete($img);
         var $imgToReorder = filterImgToReorder($img);
 
+		console.log('TRACK 3');
+
         if (!$imgToUpload.length && !$imgToDelete.length && !reordenar) {
             removeLoading();
             return;
         }
+		
+		console.log('TRACK 4');
+		
         if (reordenar && !$imgToReorder.length && !$imgToUpload.length) {
             removeLoading();
             return;
         }
+		
+		console.log('TRACK 5');
 
         var formData = new FormData();
         $('#dados-basicos form')
@@ -233,6 +247,8 @@ async function init() {
             .forEach(function (e) {
                 formData.append(e.name, e.value);
             });
+			
+		console.log('TRACK 6');			
 
         $imgToUpload.each(function () {
             formData.append('ordem[]', $(this).data('ordem')); // Ordem para o upload
