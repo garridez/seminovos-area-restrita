@@ -164,13 +164,13 @@ async function init() {
         setImagesOrder();
         ajaxAsyncCount++;
 		
-		$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
-		locker.open(true);
-		
         var ajaxLoaddingBackup = window.setAjaxLoadding;
         window.setAjaxLoadding = showLoading;		
 
 		if(currentUploads > 0){
+			$('.btn-continuar').prop('disabled', true).html('Aguarde...') ;
+			locker.open(true);			
+			
 			let timeout = null;
 			let watch = setInterval(function () {
 				console.log('Count:', currentUploads);
