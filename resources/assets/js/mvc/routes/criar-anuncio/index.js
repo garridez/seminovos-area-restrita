@@ -165,6 +165,9 @@ export const callback = ($) => {
         if (!hash || hash === '#') {
             return;
         }
+		
+		$('.modal, .modal-backdrop').hide();
+		
         var hashArr = hash.replace('#', '').split('&');
         hash = '.step-' + hashArr[0];
 
