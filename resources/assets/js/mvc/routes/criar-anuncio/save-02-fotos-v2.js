@@ -170,32 +170,35 @@ async function init() {
         var ajaxLoaddingBackup = window.setAjaxLoadding;
         window.setAjaxLoadding = showLoading;		
 
-		let timeout = null;
-		let watch = setInterval(function () {
-			console.log('Count:', currentUploads);
-			if (currentUploads <= 0) {
-				if (!timeout) {
-					timeout = setTimeout(function () {
-						if (currentUploads <= 0) {
-							console.log('Uploads finalizados. Count:', currentUploads);
-							$('.btn-continuar').prop('disabled', false).html('Continue');
-							clearInterval(watch);
-							locker.close(true);
-						} else {
-							// Reinicia o timeout se algo novo começou a enviar
-							clearTimeout(timeout);
-							timeout = null;
-						}
-					}, 1000); // espera 1 segundo estável
+		if(currentUploads > 0){
+			let timeout = null;
+			let watch = setInterval(function () {
+				console.log('Count:', currentUploads);
+				if (currentUploads <= 0) {
+					if (!timeout) {
+						timeout = setTimeout(function () {
+							if (currentUploads <= 0) {
+								console.log('Uploads finalizados. Count:', currentUploads);
+								$('.btn-continuar').prop('disabled', false).html('Continue');
+								clearInterval(watch);
+								locker.close(true);
+								$('.modal, .modal-backdrop').hide();
+							} else {
+								// Reinicia o timeout se algo novo começou a enviar
+								clearTimeout(timeout);
+								timeout = null;
+							}
+						}, 1000); // espera 1 segundo estável
+					}
+				} else {
+					// Se algum upload começar, cancela a espera
+					clearTimeout(timeout);
+					timeout = null;
+					
+					$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;	
 				}
-			} else {
-				// Se algum upload começar, cancela a espera
-				clearTimeout(timeout);
-				timeout = null;
-				
-				$('.btn-continuar').prop('disabled', true).html('Enviando, aguarde...') ;	
-			}
-		}, 200);
+			}, 200);
+		}
 		
 		console.log('TRACK 1');
 
