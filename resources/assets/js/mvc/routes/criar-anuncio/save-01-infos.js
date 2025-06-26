@@ -329,9 +329,9 @@ export const callback = ($) => {
                     $('#dados-basicos .placaVeiculo').val(placa);
 					
 					$('#form_dadosVeiculo')
-						.find('input:not([type="submit"]), select')
-						.attr('disabled', 'disabled')
-						.attr('readonly', '');
+						.find('input:not([type="submit"]):not([type="button"]), select')
+						.prop('disabled', true)
+						.prop('readonly', true);
 
                     var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
                     window.history.pushState(null, null, path);
