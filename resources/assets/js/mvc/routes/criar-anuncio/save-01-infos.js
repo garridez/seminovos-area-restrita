@@ -34,7 +34,10 @@ export const callback = ($) => {
                     $("input[name='veiculo_zero_km']").is(':checked')
                 ) {
                     $("input[name='placa']").removeAttr('required');
-                }
+                } else {
+					$("input[name='placa']").prop('required', 'true');
+				}
+				
                 if (idStatus == 3 || idStatus == 6 || idStatus == 10) {
                     $("input[name='placa']").prop('readonly', false).prop('disabled', false);
                 }
