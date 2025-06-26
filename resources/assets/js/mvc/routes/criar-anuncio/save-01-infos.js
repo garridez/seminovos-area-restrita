@@ -325,7 +325,13 @@ export const callback = ($) => {
 
                     $('#dados-basicos .idVeiculo').val(idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
+                    $('#dados-basicos .idPlano').val(5); // Plano inativo. TODO: Dinamizar.
                     $('#dados-basicos .placaVeiculo').val(placa);
+					
+					$('#form_dadosVeiculo')
+						.find('input:not([type="submit"]), select')
+						.attr('disabled', 'disabled')
+						.attr('readonly', '');
 
                     var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
                     window.history.pushState(null, null, path);
