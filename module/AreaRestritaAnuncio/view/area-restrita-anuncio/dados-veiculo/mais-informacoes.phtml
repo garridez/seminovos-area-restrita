@@ -14,11 +14,11 @@ if ($this->checkedProposta != 0) {
     $fields['aceitaProposta']->setChecked(true);
 }
 
-if ($this->checkedChat != 0) {
+if ($this->checkedChat != 0 || empty($this->checkedChat)) {
     $fields['aceitaChat']->setChecked(true);
 }
 
-if ($this->checkedLigacao != 0) {
+if ($this->checkedLigacao != 0 || empty($this->checkedLigacao)) {
     $fields['aceitaLigacao']->setChecked(true);
 }
 
