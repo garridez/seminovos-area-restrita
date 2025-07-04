@@ -524,6 +524,7 @@ class DadosVeiculoController extends AbstractActionController
 
             $post = $request->getPost();
 
+            $idVeiculo = $post['idVeiculo'];
             $placa = $post['placa'];
 
 			$result = $apiClient->veiculosGet([
