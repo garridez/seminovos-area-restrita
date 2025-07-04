@@ -528,7 +528,7 @@ class DadosVeiculoController extends AbstractActionController
 
             $result = $apiClient->veiculosGet([
                 'ignorarCondicoesBasicas' => true,
-            ], (int) $placa, 5);
+            ], (int) $placa, false);
 
             $veiculo = $result->getData();
 
