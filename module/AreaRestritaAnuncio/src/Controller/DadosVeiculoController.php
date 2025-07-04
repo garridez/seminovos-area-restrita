@@ -484,6 +484,7 @@ class DadosVeiculoController extends AbstractActionController
 			$status = 10;
         } elseif (!isset($veiculo['data'][0]['idVeiculo'])) {
             $placaDisponivel = true;
+			$status = 3;
         } else {
             $placaDisponivel = in_array($veiculo['data'][0]['idStatus'], $statusPermitidos);
         }
@@ -492,7 +493,7 @@ class DadosVeiculoController extends AbstractActionController
         return new JsonModel([
             'status' => 200,
             'placaDisponivel' => $placaDisponivel,
-			'status' => 
+			'status' => $status,
             'historicoCarro' => $veiculo['data'][0]['historicoCarro'],
         ]);
     }
