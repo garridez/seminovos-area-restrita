@@ -481,6 +481,7 @@ class DadosVeiculoController extends AbstractActionController
         $placaDisponivel = false;
         if (isset($veiculo) && $veiculo['status'] != 200) {
             $placaDisponivel = true;
+			$status = 10;
         } elseif (!isset($veiculo['data'][0]['idVeiculo'])) {
             $placaDisponivel = true;
         } else {
@@ -491,6 +492,7 @@ class DadosVeiculoController extends AbstractActionController
         return new JsonModel([
             'status' => 200,
             'placaDisponivel' => $placaDisponivel,
+			'status' => 
             'historicoCarro' => $veiculo['data'][0]['historicoCarro'],
         ]);
     }
@@ -524,11 +526,11 @@ class DadosVeiculoController extends AbstractActionController
 
             $post = $request->getPost();
 
-            $idVeiculo = $post['idVeiculo'];
+            $placa = $post['placa'];
 
             $result = $apiClient->veiculosGet([
                 'ignorarCondicoesBasicas' => true,
-            ], (int) $idVeiculo, 5);
+            ], $placa, false);
 
             $veiculo = $result->getData();
 
