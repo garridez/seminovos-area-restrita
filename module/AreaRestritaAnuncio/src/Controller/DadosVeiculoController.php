@@ -524,11 +524,11 @@ class DadosVeiculoController extends AbstractActionController
 
             $post = $request->getPost();
 
-            $idVeiculo = $post['idVeiculo'];
+            $placa = $post['placa'];
 
             $result = $apiClient->veiculosGet([
                 'ignorarCondicoesBasicas' => true,
-            ], (int) $idVeiculo, 5);
+            ], (int) $placa, 5);
 
             $veiculo = $result->getData();
 
@@ -537,9 +537,10 @@ class DadosVeiculoController extends AbstractActionController
             if ($veiculo[0]['idPlano'] == 1 && $post['idPlano'] == 1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
                 return new JsonModel(['status' => 405, 'detail' => 'Não é possível utilizar o plano grátis mais de uma vez', 'title' => 'Selecione outro Plano']);
             }
+			
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
-                //$data['tipoCadastro'] = $post['tipoCadastro'];
+                $data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];
                 $data['idStatus'] = 6;
                 //$data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
