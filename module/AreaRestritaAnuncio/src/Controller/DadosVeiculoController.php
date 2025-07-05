@@ -541,7 +541,7 @@ class DadosVeiculoController extends AbstractActionController
 			
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
-                $data['tipoCadastro'] = $post['tipoCadastro'];
+                //$data['tipoCadastro'] = $post['tipoCadastro'];
                 $data['idPlano'] = $post['idPlano'];
                 $data['idStatus'] = 6;
                 //$data['idAnuncioVeiculo'] = $post['idAnuncioVeiculo'];
