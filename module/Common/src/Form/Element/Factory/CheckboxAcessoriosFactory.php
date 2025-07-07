@@ -32,7 +32,7 @@ class CheckboxAcessoriosFactory extends AbstractElementFactory
             $idCaminhao => [],
         ];
 
-        $cambios = [11, 60, 78];
+        $cambios = [11, 60, 78, 86];
 
         foreach (VeiculoTipo::$idTipos as $idTipo => $tipoNome) {
             // Caminhão não tem acessórios

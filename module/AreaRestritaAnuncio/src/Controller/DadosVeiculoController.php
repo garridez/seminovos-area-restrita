@@ -451,6 +451,13 @@ class DadosVeiculoController extends AbstractActionController
             ]);
         }
     }
+	
+	/**
+	 * Get Descricao Deep Seek
+	*/
+	public function smartDescricaoAction(){
+		echo 'test';
+	}
 
     /**
      * Verifica se a placa está disponível para cadastro
