@@ -528,6 +528,7 @@ class DadosVeiculoController extends AbstractActionController
         if ($request->isPost()) {
             /** @var ApiClient $apiClient */
             $apiClient = $this->getContainer()->get(ApiClient::class);
+			$idCadastro = $this->getCadastro('idCadastro');
 
             $post = $request->getPost();
 
@@ -535,7 +536,8 @@ class DadosVeiculoController extends AbstractActionController
             $placa = $post['placaVeiculo'];
 
 			$result = $apiClient->veiculosGet([
-				"ignorarCondicoesBasicas" => 1
+				'ignorarCondicoesBasicas' => 1,
+				'idCadastro' => $idCadastro
 			], $placa, 5);
 
             $veiculo = $result->getData();
