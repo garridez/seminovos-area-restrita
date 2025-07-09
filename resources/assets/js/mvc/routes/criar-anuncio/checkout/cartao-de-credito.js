@@ -14,7 +14,7 @@ export default function () {
     formCC.find('[name="validade_cartao"]').mask('00/00');
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
     formCC.find('[name="numero_cartao"]').mask('9999 9999 9999 9??? ????', optional);
-    formCC.find('[name="cep"]').mask('9999999999?', optional);
+    formCC.find('[name="cep"]').mask('99999-999', optional);
     formCC.validate({
         rules: {
             numero_cartao: {
