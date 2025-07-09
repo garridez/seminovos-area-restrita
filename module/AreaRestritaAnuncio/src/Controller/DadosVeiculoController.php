@@ -545,7 +545,7 @@ class DadosVeiculoController extends AbstractActionController
             $arrayStatusAltera = ['1', '3', '10'];
 
             if ($veiculo[0]['idPlano'] == 1 && $post['idPlano'] == 1 && !in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
-                return new JsonModel(['status' => 405, 'detail' => 'Não é possível utilizar o plano grátis mais de uma vez', 'title' => 'Selecione outro Plano']);
+                return new JsonModel(['status' => 405, 'detail' => 'Não é possível utilizar o plano grátis mais de uma vez. ['.$idCadastro.']', 'title' => 'Selecione outro Plano']);
             }
 
             if (in_array($veiculo[0]['idStatus'], $arrayStatusAltera)) {
