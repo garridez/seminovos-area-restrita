@@ -51,7 +51,7 @@ class Module
         $request = $sm->get('Request');
         $path = $request->getUri()->getPath();
 
-        if (preg_match('/^\/(integrador|zoop)/', $path)) {
+        if (preg_match('/^\/(integrador|zoop|payments)/', $path)) {
             return;
         }
 
