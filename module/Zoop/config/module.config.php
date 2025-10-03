@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- */
-
 namespace SnBH\Zoop;
 
 use Laminas\Router\Http\Literal;
@@ -16,6 +12,16 @@ return [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/zoop',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
+            'payments' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/payments',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'index',
