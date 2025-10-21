@@ -1,4 +1,5 @@
 <?php
+echo 'start';
 $ch = curl_init('http://ip-10-0-1-196.us-west-2.compute.internal/v1/veiculos/123');
 curl_setopt_array($ch, [
   CURLOPT_CUSTOMREQUEST => 'PUT',
