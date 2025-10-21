@@ -9,4 +9,4 @@ $out = curl_exec($ch);
 var_dump(curl_error($ch));
 echo $out;
 
-echo 'v2';
+echo 'v3';
