@@ -10,3 +10,4 @@ var_dump(curl_error($ch));
 echo $out;
 
 echo 'v3';
+echo 'v3';
