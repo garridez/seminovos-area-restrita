@@ -3,107 +3,120 @@ import stopEvent from '../../../helpers/StopEvent';
 
 export const seletor = '.c-criar-anuncio.a-index';
 export const callback = ($) => {
-    var stepsContainer = $('.step-container');
-    var urlSaved = 'none';
-    $('.anuncio-steps').on('steps-loaded', function () {
-        $('form[name="form_videoVeiculo"]')
-            .find('input[name="video"]')
-            .keyup(function () {
-                if ($(this).val() == '') {
-                    $('#remove-link-youtube').hide();
-                } else {
-                    $('#remove-link-youtube').show();
-                }
+  const stepsContainer = $('.step-container');
+  let urlSaved = 'none';
 
-                let result = parseVideo($(this).val());
-                if (result.type == 'youtube') {
-                    $('.preview-video').removeClass('d-flex');
-                    $('.preview-video').addClass('d-none');
-                    $('#videoWindow').removeClass('d-none');
-                    $('#videoWindow').attr('src', 'https://www.youtube.com/embed/' + result.id);
-                }
-            })
-            .trigger('keyup');
+  // Flags para direção do passo
+  let goingNext = false;
+  let goingPrev = false;
+
+  // Detecta cliques explícitos nos botões do seu stepper
+  // ajuste os seletores conforme seu HTML
+  $(document)
+    .on('click', '[data-step-action="next"], .btn-next', () => { goingNext = true; goingPrev = false; })
+    .on('click', '[data-step-action="prev"], .btn-prev', () => { goingPrev = true; goingNext = false; });
+
+  $('.anuncio-steps').on('steps-loaded', function () {
+    const $input = $('form[name="form_videoVeiculo"]').find('input[name="video"]');
+
+    const updatePreview = () => {
+      const v = $input.val().trim();
+      if (v === '') {
+        $('#remove-link-youtube').hide();
+        $('.preview-video').addClass('d-flex').removeClass('d-none');
+        $('#videoWindow').addClass('d-none').attr('src', '');
+        return;
+      }
+      $('#remove-link-youtube').show();
+
+      const result = parseVideo(v);
+      if (result.type === 'youtube') {
+        $('.preview-video').removeClass('d-flex').addClass('d-none');
+        $('#videoWindow').removeClass('d-none').attr('src', 'https://www.youtube.com/embed/' + result.id);
+      } else {
+        // URL não suportada → esconde player
+        $('#videoWindow').addClass('d-none').attr('src', '');
+        $('.preview-video').addClass('d-flex').removeClass('d-none');
+      }
+    };
+
+    // Debounce leve evita repinturas excessivas
+    let t;
+    $input.on('keyup', function () {
+      clearTimeout(t);
+      t = setTimeout(updatePreview, 120);
+    }).trigger('keyup');
+  });
+
+  stepsContainer.on('step:pre-exit:video', function (e) {
+    // Se for voltar, nunca bloqueie
+    if (goingPrev) {
+      goingPrev = false;
+      goingNext = false;
+      return true;
+    }
+
+    const stepVideo = $('.step-video');
+    const $videoField = stepVideo.find('form [name="video"]');
+    const url = ($videoField.val() || '').trim();
+
+    // Nada mudou ou vazio → deixa avançar sem AJAX
+    if (url === urlSaved || url === '') {
+      goingNext = false;
+      return true;
+    }
+
+    // Validar URL antes de salvar
+    const parsed = parseVideo(url);
+    if (!parsed.type) {
+      console.log('Link inválido');
+      goingNext = false;
+      return stopEvent(e);
+    }
+
+    // Só aqui bloqueia a saída, salva e navega manualmente
+    const $ctx = $('#dados-basicos, .step-video');
+    const data = $ctx.find('form').serialize();
+
+    $.ajax({
+      url: '/carro/video',
+      data,
+      type: 'POST',
+      dataType: 'json',
+      success: function (resp) {
+        if (!HandleApiError(resp)) return;
+        urlSaved = url;
+        // Avança explicitamente após salvar
+        stepVideo.closest('.step-container').stepPlugin('next');
+      },
+      error: function (err) {
+        if (err.responseJSON) HandleApiError(err.responseJSON);
+        else HandleApiError(false);
+      },
+      complete: function () {
+        goingNext = false;
+      },
     });
 
-    stepsContainer.on('step:pre-exit:video', function (e) {
-        var stepVideo = $('.step-video');
-        var video = stepVideo.find('form [name="video"]');
-        var url = video.val().trim();
-
-        if (url === urlSaved) {
-            return true;
-        }
-
-        if (url != '') {
-            var videoParsed = parseVideo(url);
-            if (videoParsed.type === undefined) {
-                console.log('Link inválido');
-                return stopEvent(e);
-            }
-        }
-
-        var data = $('form', '#dados-basicos,.step-video').serialize();
-
-        $.ajax({
-            url: '/carro/video',
-            data: data,
-            type: 'POST',
-            dataType: 'json',
-            success: function (data) {
-                if (!HandleApiError(data)) {
-                    return;
-                }
-                urlSaved = url;
-                stepVideo.closest('.step-container').stepPlugin('next');
-            },
-            error: function (e) {
-                if (e.responseJSON) {
-                    HandleApiError(e.responseJSON);
-                } else {
-                    HandleApiError(false);
-                }
-            },
-        });
-        // O evento não espera o ajax terminar, pois não é um dado crítico
-        // E melhora a fluidez da criação do anúncio
-        return stopEvent(e);
-    });
+    // Bloqueia apenas este caso de avançar com salvamento
+    return stopEvent(e);
+  });
 };
 
 /**
- * @see https://gist.github.com/yangshun/9892961
+ * Parser seguro de YouTube/Vimeo.
  * @param {string} url
- * @returns object
+ * @returns {{type?: 'youtube'|'vimeo', id?: string}}
  */
 function parseVideo(url) {
-    // - Supported YouTube URL formats:
-    //   - http://www.youtube.com/watch?v=My2FRPA3Gf8
-    //   - http://youtu.be/My2FRPA3Gf8
-    //   - https://youtube.googleapis.com/v/My2FRPA3Gf8
-    // - Supported Vimeo URL formats:
-    //   - http://vimeo.com/25451551
-    //   - http://player.vimeo.com/video/25451551
-    // - Also supports relative URLs:
-    //   - //player.vimeo.com/video/25451551
+  const re = /(http:|https:|)\/\/(player\.|www\.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/|shorts\/)?([A-Za-z0-9._%-]+)(\&\S+)?/;
+  const m = url.match(re);
+  if (!m) return {};
 
-    url.match(
-        /* eslint max-len: 0 */
-        /* eslint no-useless-escape: 0 */
-        /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/|shorts\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
-    );
-    var type;
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    if (RegExp.$3.indexOf('youtu') > -1) {
-        type = 'youtube';
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    } else if (RegExp.$3.indexOf('vimeo') > -1) {
-        type = 'vimeo';
-    }
+  const host = m[3] || '';
+  const id = m[6] || '';
 
-    return {
-        type: type,
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        id: RegExp.$6,
-    };
+  if (host.includes('youtu')) return { type: 'youtube', id };
+  if (host.includes('vimeo')) return { type: 'vimeo', id };
+  return {};
 }
