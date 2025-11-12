@@ -17,16 +17,19 @@ class PainelController extends AbstractActionController
 	// TTLs
 	protected int $cacheTtlVeiculosInfo = 86400; // 24h
 	protected int $cacheTtlMetricas = 3600; // 1h
+	protected int $gcThreshold = 420 * 1024 * 1024;
 
 	public function indexAction(): ViewModel
 	{
+		$container = $this->getServiceContainer();
+
 		/** @var Cadastros $cadastrosModel */
-		$cadastrosModel = $this->getContainer()->get(Cadastros::class);
+		$cadastrosModel = $container->get(Cadastros::class);
 		$cadastro = $cadastrosModel->getCurrent();
 		$idCadastro = $cadastro['idCadastro'] ?? 0;
 
 		/** @var Planos $planosModel */
-		$planosModel = $this->getContainer()->get(Planos::class);
+		$planosModel = $container->get(Planos::class);
 		/** @var array $dadosPlanos */
 		$dadosPlanos = $planosModel->get('revenda') ?? [];
 
@@ -34,7 +37,7 @@ class PainelController extends AbstractActionController
 		$valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
 		/** @var Veiculos $veiculosModel */
-		$veiculosModel = $this->getContainer()->get(Veiculos::class);
+		$veiculosModel = $container->get(Veiculos::class);
 		$veiculos = $veiculosModel->getAll([
 			'idCadastro' => $idCadastro,
 		], 60 * 10);
@@ -52,7 +55,7 @@ class PainelController extends AbstractActionController
 		}
 
 		/** @var ApiClient $apiClient */
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$apiClient = $container->get(ApiClient::class);
 
 		$dateStart = $this->request->getQuery('date-start', 0);
 		$dateEnd = $this->request->getQuery('date-end', 0);
@@ -108,10 +111,10 @@ class PainelController extends AbstractActionController
 		$apiClient->setStatusRangeCacheable(200, 404);
 
 		/** @var VeiculosInfo $veiculosInfoModel */
-		$veiculosInfoModel = $this->getContainer()->get(VeiculosInfo::class);
+		$veiculosInfoModel = $container->get(VeiculosInfo::class);
 
 		// robust cache resolver com fallback embutido
-		$localCache = $this->resolveLocalCache();
+		$localCache = $this->resolveLocalCache($container);
 
 		// 1) Agrupar por modelo+anoFabricacao+anoModelo para evitar chamadas N por veiculo
 		$groups = [];
@@ -203,7 +206,8 @@ class PainelController extends AbstractActionController
 
 	public function contadorPorMarcaAction(): JsonModel
 	{
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$container = $this->getServiceContainer();
+		$apiClient = $container->get(ApiClient::class);
 
 		$contador = $apiClient->contadorGet(['marca' => true])->getData();
 
@@ -215,7 +219,8 @@ class PainelController extends AbstractActionController
 
 	public function contadorPorModeloAction(): JsonModel
 	{
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$container = $this->getServiceContainer();
+		$apiClient = $container->get(ApiClient::class);
 
 		$contador = $apiClient->contadorGet(['modelo' => true])->getData();
 
@@ -227,7 +232,8 @@ class PainelController extends AbstractActionController
 
 	public function contadorPorCategoriaAction(): JsonModel
 	{
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$container = $this->getServiceContainer();
+		$apiClient = $container->get(ApiClient::class);
 
 		$contador = $apiClient->contadorGet(['categoria' => true])->getData();
 
@@ -239,13 +245,14 @@ class PainelController extends AbstractActionController
 
 	public function detalheAnuncioAction(): ViewModel
 	{
+		$container = $this->getServiceContainer();
 		$idVeiculo = (int) $this->params('idVeiculo');
 		/** @var Veiculos $veiculoModel */
-		$veiculoModel = $this->getContainer()->get(Veiculos::class);
+		$veiculoModel = $container->get(Veiculos::class);
 
 		$veiculo = $veiculoModel->get($idVeiculo);
 
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$apiClient = $container->get(ApiClient::class);
 
 		$dateStart = $this->request->getQuery('date-start', $veiculo['dataCadastro'] ?? 0);
 		$dateEnd = $this->request->getQuery('date-end', 0);
@@ -363,9 +370,10 @@ class PainelController extends AbstractActionController
 
 	public function tabelaFipeAction(): JsonModel
 	{
+		$container = $this->getServiceContainer();
 		$params = $this->params()->fromPost();
 
-		$apiClient = $this->getContainer()->get(ApiClient::class);
+		$apiClient = $container->get(ApiClient::class);
 		$data = $apiClient->versaoGet([
 			'idModelo' => $params['modeloCarro'],
 			'ano' => $params['ano'],
@@ -379,13 +387,34 @@ class PainelController extends AbstractActionController
 	}
 
 	/**
+	 * Resolve o ServiceManager a partir do evento MVC.
+	 */
+	protected function getServiceContainer()
+	{
+		// prefer event -> application -> service manager
+		if (method_exists($this, 'getEvent') && $this->getEvent()) {
+			$app = $this->getEvent()->getApplication();
+			if ($app && method_exists($app, 'getServiceManager')) {
+				return $app->getServiceManager();
+			}
+		}
+
+		// fallback para compatibilidade com versões antigas
+		if (method_exists($this, 'getServiceLocator')) {
+			return $this->getServiceLocator();
+		}
+
+		throw new \RuntimeException('ServiceManager not available in controller context');
+	}
+
+	/**
 	 * Resolve um cache local de forma robusta ou retorna um cache em memória fallback.
 	 *
+	 * @param object $container
 	 * @return mixed objeto com hasItem/getItem/setItem
 	 */
-	protected function resolveLocalCache()
+	protected function resolveLocalCache($container)
 	{
-		$container = $this->getContainer();
 		$candidates = [
 			'Cache',
 			'cache',
@@ -437,7 +466,6 @@ class PainelController extends AbstractActionController
 		try {
 			if (method_exists($cache, 'setItem')) {
 				$cache->setItem($key, $value);
-				// se o storage suportar TTL e método específico, poderia setar aqui
 			}
 		} catch (\Throwable $e) {
 			// ignore
