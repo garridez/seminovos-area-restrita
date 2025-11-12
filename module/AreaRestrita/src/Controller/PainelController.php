@@ -10,6 +10,7 @@ use Laminas\View\Model\ViewModel;
 use SnBH\ApiClient\Client as ApiClient;
 use SnBH\ApiClient\Response as ApiResponse;
 use SnBH\ApiModel\Model\VeiculosInfo;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class PainelController extends AbstractActionController
 {
@@ -22,14 +23,14 @@ class PainelController extends AbstractActionController
 		/** @var Cadastros $cadastrosModel */
 		$cadastrosModel = $this->getContainer()->get(Cadastros::class);
 		$cadastro = $cadastrosModel->getCurrent();
-		$idCadastro = $cadastro['idCadastro'];
+		$idCadastro = $cadastro['idCadastro'] ?? 0;
 
 		/** @var Planos $planosModel */
 		$planosModel = $this->getContainer()->get(Planos::class);
 		/** @var array $dadosPlanos */
-		$dadosPlanos = $planosModel->get('revenda');
+		$dadosPlanos = $planosModel->get('revenda') ?? [];
 
-		$key = array_search($cadastro['idPlano'], array_column($dadosPlanos, 'idPlanoRevenda'));
+		$key = array_search($cadastro['idPlano'] ?? null, array_column($dadosPlanos ?: [], 'idPlanoRevenda'));
 		$valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
 		/** @var Veiculos $veiculosModel */
@@ -38,15 +39,16 @@ class PainelController extends AbstractActionController
 			'idCadastro' => $idCadastro,
 		], 60 * 10);
 
-		$totalVeiculos = $veiculos['total'] ?? 0;
+		$veiculos['data'] = $veiculos['data'] ?? [];
+		$totalVeiculos = $veiculos['total'] ?? count($veiculos['data']);
 		$idsVeiculos = [];
 		$totalVeiculosAtivos = 0;
 
 		foreach ($veiculos['data'] as $veiculo) {
-			if (in_array($veiculo['idStatus'], [2, 8, 9])) {
+			if (in_array($veiculo['idStatus'] ?? null, [2, 8, 9], true)) {
 				$totalVeiculosAtivos++;
 			}
-			$idsVeiculos[] = $veiculo['idVeiculo'];
+			$idsVeiculos[] = $veiculo['idVeiculo'] ?? 0;
 		}
 
 		/** @var ApiClient $apiClient */
@@ -57,41 +59,59 @@ class PainelController extends AbstractActionController
 		$filtradoPorData = (bool) ($dateStart || $dateEnd);
 
 		// metricas por veiculo (agrupado por veiculo)
-		$metricas = $apiClient->veiculosMetricasGet([
-			'idCadastro' => $idCadastro,
-			'agruparPor' => 'veiculo',
-			'incluirHistorico' => true,
-			'dates' => [
-				'start' => $dateStart,
-				'end' => $dateEnd,
-			],
-			'dias' => 30,
-		], null, $this->cacheTtlMetricas)->getData() ?? [];
+		$metricas = [];
+		try {
+			$metricas = $apiClient->veiculosMetricasGet([
+				'idCadastro' => $idCadastro,
+				'agruparPor' => 'veiculo',
+				'incluirHistorico' => true,
+				'dates' => [
+					'start' => $dateStart,
+					'end' => $dateEnd,
+				],
+				'dias' => 30,
+			], null, $this->cacheTtlMetricas)->getData() ?? [];
+		} catch (\Throwable $e) {
+			error_log('veiculosMetricasGet error: ' . $e->getMessage());
+			$metricas = [];
+		}
 
 		// metricas por data para gráficos
-		$metricasPorData = $apiClient->veiculosMetricasGet([
-			'idCadastro' => $idCadastro,
-			'agruparPor' => 'data',
-			'incluirHistorico' => true,
-			'dates' => [
-				'start' => $dateStart,
-				'end' => $dateEnd,
-			],
-			'dias' => 30,
-		], null, $this->cacheTtlMetricas)->getData() ?? [];
+		$metricasPorData = [];
+		try {
+			$metricasPorData = $apiClient->veiculosMetricasGet([
+				'idCadastro' => $idCadastro,
+				'agruparPor' => 'data',
+				'incluirHistorico' => true,
+				'dates' => [
+					'start' => $dateStart,
+					'end' => $dateEnd,
+				],
+				'dias' => 30,
+			], null, $this->cacheTtlMetricas)->getData() ?? [];
+		} catch (\Throwable $e) {
+			error_log('veiculosMetricasGet(data) error: ' . $e->getMessage());
+			$metricasPorData = [];
+		}
 
 		/** @var array $maisAcessados */
-		$maisAcessados = $apiClient->maisAcessadosGet([
-			'qtd' => 30,
-		], null, 60 * 60)->getData() ?? [];
+		$maisAcessados = [];
+		try {
+			$maisAcessados = $apiClient->maisAcessadosGet([
+				'qtd' => 30,
+			], null, 60 * 60)->getData() ?? [];
+		} catch (\Throwable $e) {
+			error_log('maisAcessadosGet error: ' . $e->getMessage());
+			$maisAcessados = [];
+		}
 
 		$apiClient->setStatusRangeCacheable(200, 404);
 
 		/** @var VeiculosInfo $veiculosInfoModel */
 		$veiculosInfoModel = $this->getContainer()->get(VeiculosInfo::class);
 
-		/** @var \Laminas\Cache\Storage\StorageInterface $localCache */
-		$localCache = $this->getContainer()->get('Cache');
+		// robust cache resolver com fallback embutido
+		$localCache = $this->resolveLocalCache();
 
 		// 1) Agrupar por modelo+anoFabricacao+anoModelo para evitar chamadas N por veiculo
 		$groups = [];
@@ -113,15 +133,20 @@ class PainelController extends AbstractActionController
 		// 2) Resolver precoInfo por grupo (cache local)
 		foreach ($groups as $groupKey => $meta) {
 			$cacheKey = "veiculos-preco-{$groupKey}";
-			$precoInfo = $localCache->hasItem($cacheKey) ? $localCache->getItem($cacheKey) : null;
+			$precoInfo = $this->cacheGet($localCache, $cacheKey);
 
 			if ($precoInfo === null) {
 				// tenta via model local primeiro
-				$precoInfo = $veiculosInfoModel->get(
-					$meta['modelo'],
-					$meta['anoFabricacao'],
-					$meta['anoModelo']
-				) ?? [];
+				try {
+					$precoInfo = $veiculosInfoModel->get(
+						$meta['modelo'],
+						$meta['anoFabricacao'],
+						$meta['anoModelo']
+					) ?? [];
+				} catch (\Throwable $e) {
+					error_log('veiculosInfoModel->get error: ' . $e->getMessage());
+					$precoInfo = [];
+				}
 
 				// se estiver vazio, usa um idVeiculo representativo para buscar FIPE via API
 				$repId = (int) $meta['repId'];
@@ -131,13 +156,14 @@ class PainelController extends AbstractActionController
 						$fipeData = $apiClient->veiculosInfoGet([], $repId, 60 * 60 * 24);
 						$precoInfo['fipe'] = ($fipeData && $fipeData->status === 200) ? $fipeData->getData() : [];
 					} catch (\Throwable $e) {
+						error_log('veiculosInfoGet API error: ' . $e->getMessage());
 						$precoInfo['fipe'] = [];
 					}
 				} else {
 					$precoInfo['fipe'] = [];
 				}
 
-				$localCache->setItem($cacheKey, $precoInfo);
+				$this->cacheSet($localCache, $cacheKey, $precoInfo, $this->cacheTtlVeiculosInfo);
 			}
 
 			// aplica precoInfo para todos os indices do grupo
@@ -148,7 +174,7 @@ class PainelController extends AbstractActionController
 
 		// 3) Anexa métricas e aplica filtro por data (mantendo comportamento anterior)
 		foreach ($veiculos['data'] as $k => $veiculo) {
-			$idVeiculo = $veiculo['idVeiculo'];
+			$idVeiculo = $veiculo['idVeiculo'] ?? 0;
 
 			if ($filtradoPorData && empty($metricas[$idVeiculo])) {
 				unset($veiculos['data'][$k]);
@@ -161,7 +187,6 @@ class PainelController extends AbstractActionController
 					$veiculos['data'][$k]['metricas'][$metricaName] = $metricasRow;
 				}
 			} else {
-				// garante chave metricas existindo mesmo vazia (compatibilidade)
 				$veiculos['data'][$k]['metricas'] = $veiculos['data'][$k]['metricas'] ?? [];
 			}
 		}
@@ -222,26 +247,35 @@ class PainelController extends AbstractActionController
 
 		$apiClient = $this->getContainer()->get(ApiClient::class);
 
-		$dateStart = $this->request->getQuery('date-start', $veiculo['dataCadastro']);
+		$dateStart = $this->request->getQuery('date-start', $veiculo['dataCadastro'] ?? 0);
 		$dateEnd = $this->request->getQuery('date-end', 0);
 
-		$metricas = $apiClient->veiculosMetricasGet([
-			'idVeiculo' => $idVeiculo,
-			'dates' => [
-				'start' => $dateStart,
-				'end' => $dateEnd,
-			],
-			'dias' => 60,
-		], null, 60 * 60)->getData()[$idVeiculo] ?? [
-			'acesso' => [
-				'total' => 0,
-				'data' => [],
-			],
-			'impressao' => [
-				'total' => 0,
-				'data' => [],
-			],
-		];
+		$metricas = [];
+		try {
+			$metricas = $apiClient->veiculosMetricasGet([
+				'idVeiculo' => $idVeiculo,
+				'dates' => [
+					'start' => $dateStart,
+					'end' => $dateEnd,
+				],
+				'dias' => 60,
+			], null, 60 * 60)->getData()[$idVeiculo] ?? [
+				'acesso' => [
+					'total' => 0,
+					'data' => [],
+				],
+				'impressao' => [
+					'total' => 0,
+					'data' => [],
+				],
+			];
+		} catch (\Throwable $e) {
+			error_log('veiculosMetricasGet detalhe error: ' . $e->getMessage());
+			$metricas = [
+				'acesso' => ['total' => 0, 'data' => []],
+				'impressao' => ['total' => 0, 'data' => []],
+			];
+		}
 
 		$cliques = $metricas['acesso']['total'] ?? 0;
 		$impressoes = $metricas['impressao']['total'] ?? 0;
@@ -264,7 +298,7 @@ class PainelController extends AbstractActionController
 			"inativar" => false,
 		];
 
-		switch ($veiculo['idStatus']) {
+		switch ($veiculo['idStatus'] ?? '') {
 			case "1":
 				$frase = "";
 				break;
@@ -284,7 +318,7 @@ class PainelController extends AbstractActionController
 				$frase = "";
 				$temp_acoes["excluir"] = true;
 				$temp_acoes["inativar"] = true;
-				if ($veiculo['idPlano'] == 1) {
+				if (($veiculo['idPlano'] ?? 0) == 1) {
 					$temp_acoes["trocar_plano"] = true;
 				}
 				break;
@@ -296,14 +330,8 @@ class PainelController extends AbstractActionController
 				$temp_acoes["excluir"] = true;
 				break;
 			case "6":
-				$frase = "";
-				break;
 			case "7":
-				$frase = "";
-				break;
 			case "8":
-				$frase = "";
-				break;
 			case "9":
 				$frase = "";
 				break;
@@ -348,5 +376,71 @@ class PainelController extends AbstractActionController
 			'success' => '200',
 			'data' => $data,
 		]);
+	}
+
+	/**
+	 * Resolve um cache local de forma robusta ou retorna um cache em memória fallback.
+	 *
+	 * @return mixed objeto com hasItem/getItem/setItem
+	 */
+	protected function resolveLocalCache()
+	{
+		$container = $this->getContainer();
+		$candidates = [
+			'Cache',
+			'cache',
+			'laminas.cache',
+			\Laminas\Cache\Storage\StorageInterface::class,
+			'FilesystemCache',
+			'RedisCache',
+		];
+
+		foreach ($candidates as $name) {
+			try {
+				if ($container->has($name)) {
+					return $container->get($name);
+				}
+			} catch (\Throwable $e) {
+				// ignora e tenta o próximo
+			}
+		}
+
+		// fallback: cache simples em memória
+		return new class {
+			private array $store = [];
+			public function hasItem(string $k): bool { return array_key_exists($k, $this->store); }
+			public function getItem(string $k, $default = null) { return $this->store[$k] ?? $default; }
+			public function setItem(string $k, $v): void { $this->store[$k] = $v; }
+		};
+	}
+
+	/**
+	 * Abstração para leitura do cache (compatível com fallback)
+	 */
+	protected function cacheGet($cache, string $key)
+	{
+		try {
+			if (method_exists($cache, 'hasItem') && $cache->hasItem($key)) {
+				return $cache->getItem($key);
+			}
+		} catch (\Throwable $e) {
+			// ignore
+		}
+		return null;
+	}
+
+	/**
+	 * Abstração para escrita no cache (compatível com fallback)
+	 */
+	protected function cacheSet($cache, string $key, $value, int $ttl = null): void
+	{
+		try {
+			if (method_exists($cache, 'setItem')) {
+				$cache->setItem($key, $value);
+				// se o storage suportar TTL e método específico, poderia setar aqui
+			}
+		} catch (\Throwable $e) {
+			// ignore
+		}
 	}
 }
