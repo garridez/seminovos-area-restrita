@@ -75,18 +75,14 @@ export default function (formData, ajaxParams) {
         data: data,
         type: 'POST',
         dataType: 'json',
-        success: function (httpResponse) {
-			console.log(httpResponse);
-			console.log(httpResponse.data);
-			
-			
+        success: function (httpResponse) {			
 			if (metodo === 'pix') {
 				if (
-					httpResponse.data.status === "ok" &&
-					httpResponse.data.pix &&
-					httpResponse.data.pix.qrCode
+					httpResponse.status === "ok" &&
+					httpResponse.pix &&
+					httpResponse.pix.qrCode
 				) {
-					window.location = `/${tipo}/${httpResponse.data.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.data.idVeiculo}&code=${url_encode(httpResponse.data.pix.qrCode)}&idPagamento=${httpResponse.data.idPagamento}`;
+					window.location = `/${tipo}/${httpResponse.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.idVeiculo}&code=${url_encode(httpResponse.pix.qrCode)}&idPagamento=${httpResponse.idPagamento}`;
 				} else {
 					requestAlerts.erro('Instabilidade ao gerar QRCode Pix. Por favor, tente novamente.');
 				}
