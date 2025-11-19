@@ -22,17 +22,19 @@ export const callback = async ($) => {
 
         switch (status.ultimoPagamento.status) {
             case '1':
+            case 1:
                 pagDataCadastro = new Date(status.ultimoPagamento.data_cadastro);
                 pagDataCadastro.setMinutes(pagDataCadastro.getMinutes() + 5);
                 console.log(pagDataCadastro);
                 break;
-            case '2': {
+            case '2':
+            case 2:
                 console.log('Pagamento confirmado');
                 const tipo = window.location.pathname.split('/').filter(Boolean)[0];
                 window.location.href = `/${tipo}/${idVeiculo}/checkout/aprovado`;
-                break;
-            }
+                return;				
             case '3':
+            case 3:
                 AdvancedAlerts.warning({
                     title: 'Pagamento cancelado',
                     text: 'O pagamento para esse veículo foi cancelado.<br>\
