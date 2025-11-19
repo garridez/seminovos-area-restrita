@@ -89,6 +89,16 @@ export default function (formData, ajaxParams) {
 				return;
 			}
 			
+			if(metodo === 'card') {
+				if(httpResponse.status == "captured"){
+					const tipo = window.location.pathname.split('/').filter(Boolean)[0];
+					window.location.href = `/${tipo}/${httpResponse.idVeiculo}/checkout/aprovado`;
+				} else {
+					pagamentoEmAndamento();
+				}
+                return;					
+			}
+			
 			return;
 			
             if (httpResponse.type === 15002) {
@@ -99,7 +109,7 @@ export default function (formData, ajaxParams) {
                 return;
             }
             if (!('status' in httpResponse) || httpResponse.status != 200) {
-                requestAlerts.erro(httpResponse);
+                requestAlerts.erro('Falha ao processar pagamento. Fale com nosso suporte.');
                 return;
             }
 
