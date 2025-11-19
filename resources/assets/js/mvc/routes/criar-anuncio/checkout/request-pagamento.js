@@ -55,6 +55,7 @@ export default function (formData, ajaxParams) {
 			var checkout_endpoint = '/carro/checkout/processar';
 	}
 	
+	console.log(data);
 	
     var ajaxDefaultParams = {
         url: checkout_endpoint,
