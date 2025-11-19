@@ -44,7 +44,7 @@ export default function (formData, ajaxParams) {
     };
 	
 	
-	switch(formData.metodo){
+	switch(formData[0].metodo){
 		case 'pix':
 			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
 			break;
