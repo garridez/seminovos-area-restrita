@@ -82,7 +82,7 @@ export default function (formData, ajaxParams) {
 					httpResponse.pix &&
 					httpResponse.pix.qrCode
 				) {
-					window.location = `/${tipo}/${httpResponse.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.idVeiculo}&code=${url_encode(httpResponse.pix.qrCode)}&idPagamento=${httpResponse.idPagamento}`;
+					window.location = `/${tipo}/${httpResponse.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.idVeiculo}&code=${encodeURIComponent(httpResponse.pix.qrCode)}&idPagamento=${httpResponse.idPagamento}`;
 				} else {
 					requestAlerts.erro('Instabilidade ao gerar QRCode Pix. Por favor, tente novamente.');
 				}
