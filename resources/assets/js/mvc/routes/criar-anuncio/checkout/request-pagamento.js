@@ -44,7 +44,7 @@ export default function (formData, ajaxParams) {
     };
 	
 	
-	switch(data.metodo){
+	switch(formData.metodo){
 		case 'pix':
 			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
 			break;
@@ -55,7 +55,7 @@ export default function (formData, ajaxParams) {
 			var checkout_endpoint = '/carro/checkout/processar';
 	}
 	
-	console.log(data);
+	console.log(formData);
 	
     var ajaxDefaultParams = {
         url: checkout_endpoint,
