@@ -42,13 +42,31 @@ export default function (formData, ajaxParams) {
     var dataRedirectPagamento = {
         urlAguardando: `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
     };
+	
+	
+	switch(data.metodo){
+		case 'pix':
+			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+			break;
+		case 'card':
+			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+			break;
+		default:
+			var checkout_endpoint = '/carro/checkout/processar';
+	}
+	
+	
     var ajaxDefaultParams = {
-        url: '/carro/checkout/processar',
+        url: checkout_endpoint,
         cache: false,
         data: data,
         type: 'POST',
         dataType: 'json',
         success: function (httpResponse) {
+			console.log(httpResponse);
+			console.log(httpResponse.data);
+			return;
+			
             if (httpResponse.type === 15002) {
                 /**
                  * @todo implementar essa função
