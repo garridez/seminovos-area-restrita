@@ -44,13 +44,17 @@ export default function (formData, ajaxParams) {
     };
 	
 	var checkout_endpoint = '/carro/checkout/processar';
+	var metodo = null;
+	
 	if(formData[0].name == 'metodo'){
 		switch(formData[0].value){
 			case 'pix':
 				checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+				metodo = 'pix';
 				break;
 			case 'card':
 				checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+				metodo = 'card';
 				break;
 			default:
 				checkout_endpoint = '/carro/checkout/processar';
@@ -58,6 +62,12 @@ export default function (formData, ajaxParams) {
 	}
 	
 	console.log(formData);
+	
+	var tipo = 'carro';
+	if(window.location.href.indexOf('caminhao') > -1)
+		tipo = 'caminhao';
+	else if(window.location.href.indexOf('moto') > -1)
+		tipo = 'moto';
 	
     var ajaxDefaultParams = {
         url: checkout_endpoint,
@@ -68,6 +78,21 @@ export default function (formData, ajaxParams) {
         success: function (httpResponse) {
 			console.log(httpResponse);
 			console.log(httpResponse.data);
+			
+			
+			if (metodo === 'pix') {
+				if (
+					httpResponse.data.status === "ok" &&
+					httpResponse.data.pix &&
+					httpResponse.data.pix.qrCode
+				) {
+					window.location = `/${tipo}/${httpResponse.data.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.data.idVeiculo}&code=${url_encode(httpResponse.data.pix.qrCode)}&idPagamento=${httpResponse.data.idPagamento}`;
+				} else {
+					requestAlerts.erro('Instabilidade ao gerar QRCode Pix. Por favor, tente novamente.');
+				}
+				return;
+			}
+			
 			return;
 			
             if (httpResponse.type === 15002) {
