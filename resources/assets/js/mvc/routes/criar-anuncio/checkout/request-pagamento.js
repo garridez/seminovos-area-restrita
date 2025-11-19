@@ -46,18 +46,24 @@ export default function (formData, ajaxParams) {
 	var checkout_endpoint = '/carro/checkout/processar';
 	var metodo = null;
 	
-	if(formData[0].name == 'metodo'){
-		switch(formData[0].value){
-			case 'pix':
-				checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
-				metodo = 'pix';
-				break;
-			case 'card':
-				checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
-				metodo = 'card';
-				break;
-			default:
-				checkout_endpoint = '/carro/checkout/processar';
+	outer:
+	for (var i = 0; i < formData.length; i++) {
+		if (formData[i].name == 'metodo') {
+			switch (formData[i].value) {
+				case 'pix':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+					metodo = 'pix';
+					break outer;
+
+				case 'card':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+					metodo = 'card';
+					break outer;
+
+				default:
+					checkout_endpoint = '/carro/checkout/processar';
+					break outer;
+			}
 		}
 	}
 	
