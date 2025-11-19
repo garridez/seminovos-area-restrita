@@ -43,16 +43,18 @@ export default function (formData, ajaxParams) {
         urlAguardando: `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
     };
 	
-	
-	switch(formData[0].metodo){
-		case 'pix':
-			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
-			break;
-		case 'card':
-			var checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
-			break;
-		default:
-			var checkout_endpoint = '/carro/checkout/processar';
+	var checkout_endpoint = '/carro/checkout/processar';
+	if(formData[0].name == 'metodo'){
+		switch(formData[0].value){
+			case 'pix':
+				checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+				break;
+			case 'card':
+				checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+				break;
+			default:
+				checkout_endpoint = '/carro/checkout/processar';
+		}
 	}
 	
 	console.log(formData);
