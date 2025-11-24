@@ -46,6 +46,8 @@ export default function (formData, ajaxParams) {
 	var checkout_endpoint = '/carro/checkout/processar';
 	var metodo = null;
 	
+	console.log(formData);
+	
 	outer:
 	for (var i = 0; i < formData.length; i++) {
 		if (formData[i].name == 'metodo') {
