@@ -112,8 +112,8 @@ export default function (formData, ajaxParams) {
 			
 			if(metodo === 'boleto'){
 				if(httpResponse.status == "ok"){
-					data.url = httpResponse.pdf;
-					modalPagamentoBoleto(data.url);
+					dataRedirectPagamento.url = httpResponse.pdf;
+					modalPagamentoBoleto(dataRedirectPagamento);
 				} else {
 					requestAlerts.erro('Instabilidade ao gerar Boleto. Por favor, tente novamente.');
 				}
