@@ -59,6 +59,11 @@ export default function (formData, ajaxParams) {
 					checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
 					metodo = 'card';
 					break outer;
+					
+				case 'boleto':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/boleto/charge';
+					metodo = 'boleto';
+					break outer;					
 
 				default:
 					checkout_endpoint = '/carro/checkout/processar';
@@ -103,6 +108,17 @@ export default function (formData, ajaxParams) {
 					pagamentoEmAndamento();
 				}
                 return;					
+			}
+			
+			if(metodo === 'boleto'){
+				if(httpResponse.status == "ok"){
+					data.url = httpResponse.pdf;
+					modalPagamentoBoleto(data.url);
+				} else {
+					requestAlerts.erro('Instabilidade ao gerar Boleto. Por favor, tente novamente.');
+				}
+				
+				return;
 			}
 			
 			return;
