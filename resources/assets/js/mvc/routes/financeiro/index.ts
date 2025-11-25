@@ -81,76 +81,82 @@ export const callback = ($: JQueryStatic) => {
                     url: string;
                 };
             };
+			
+			switch (data.metodo) {
+				case 'pix':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+					break outer;
+
+				case 'card':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+					break outer;
+					
+				case 'boleto':
+					checkout_endpoint = 'https://pagamentos.seminovos.com.br/boleto/charge';
+					break outer;					
+
+				default:
+					checkout_endpoint = '/carro/checkout/processar';
+					break outer;
+					
+			}
 
             const ajaxDefaultParams: JQuery.AjaxSettings = {
-                url: '/carro/checkout/processar',
+                url: checkout_endpoint,
                 cache: false,
                 data: data,
                 type: 'POST',
                 dataType: 'json',
                 success: function (httpResponse: ProcessarResponseType) {
-                    Loading.close();
-                    if (httpResponse.html) {
-                        $('.retorno-boleto').html(httpResponse.html);
+                    Loading.close();                    
+					if(data.metodo == 'pix'){
+						if(httpResponse.status == "ok"){
+							$('.qrcode-img').attr('src', httpResponse.pix.image || '');
+							$('.text-pix').html(httpResponse.pix.qrCode);
+							$('.form-pix').hide();
+							$('.retorno-pix').show();
+							Loading.close();
+						} else {
+							HandleApiError(httpResponse);
+							return;							
+						}
                         return;
-                    }
-                    const dataRes = httpResponse.data;
-                    if (dataRes?.qr_code) {
-                        $('.qrcode-img').attr('src', dataRes.img_qr_code || '');
-                        $('.text-pix').html(dataRes.qr_code);
-                        $('.form-pix').hide();
-                        $('.retorno-pix').show();
-                        Loading.close();
+					}
+					
+					if(data.metodo == 'boleto'){
+						if(httpResponse.status == "ok"){
+							dataRedirectPagamento.url = httpResponse.boleto.pdf;
+							modalPagamentoBoleto(dataRedirectPagamento);						
+						} else {
+							HandleApiError(httpResponse);
+							return;							
+						}
                         return;
-                    }
-                    if (httpResponse.type === 15002) {
-                        /**
-                         * @todo implementar essa função
-                         */
-                        pagamentoEmAndamento();
-                    }
-                    //if (!httpResponse.hasOwnProperty('status') || httpResponse.status != 200) {
-                    if (!('status' in httpResponse) || httpResponse.status != 200) {
-                        HandleApiError(httpResponse);
-                        return;
-                    }
+					}
+					
+					if(metodo === 'card') {
+						if(httpResponse.status == "captured"){
+							const title = 'Pagamento aprovado!';
+							const text = $(`  <div>
+											<div>É nescessário aguardar a atualização do site,
+											<h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
+										</div>
+									`);
+							const closeText = 'Li e concordo';
+							const time = 0;
+							advancedAlerts.success({
+								title,
+								text,
+								closeText,
+								time,
+							});
 
-                    /**
-                     * Caso seja necessário redirecionar o cliente para alguma tela de pagamento
-                     * como PagSeguro ou se escolhido a opção 'débito' da Cielo
-                     *
-                     * @param  boolean httpResponse.data.redirect Flag que indica se é ou não para redirecionar
-                     * @return void
-                     */
-                    if (httpResponse.data && httpResponse.data.redirect) {
-                        if (httpResponse.data.url.indexOf('data.galaxpay.com.br') === -1) {
-                            window.location.href = httpResponse.data.url;
-                            return;
-                        }
-
-                        window.open(httpResponse.data.url, '_blank');
-                        dataRedirectPagamento.url = httpResponse.data.url || '';
-                        modalPagamentoBoleto(dataRedirectPagamento);
-                    } else {
-                        const title = 'Pagamento aprovado!';
-                        const text = $(`  <div>
-                                        <div>É nescessário aguardar a atualização do site,
-                                        <h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
-                                    </div>
-                                `);
-                        const closeText = 'Li e concordo';
-                        const time = 0;
-                        advancedAlerts.success({
-                            title,
-                            text,
-                            closeText,
-                            time,
-                        });
-
-                        $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
-                    }
-                    $btnSubmit.prop('disabled', true);
-                    Loading.close();
+							$('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
+						} else {
+							pagamentoEmAndamento();
+						}
+						return;					
+					}
                 },
                 error: function (e) {
                     HandleApiError(e.responseJSON);
