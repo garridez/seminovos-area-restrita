@@ -111,7 +111,7 @@ export const callback = ($: JQueryStatic) => {
                 dataType: 'json',
                 success: function (httpResponse: ProcessarResponseType) {
                     Loading.close();                    
-					if(data.metodo == 'pix'){
+					if(metodo == 'pix'){
 						if(httpResponse.status == "ok"){
 							$('.qrcode-img').attr('src', httpResponse.pix.image || '');
 							$('.text-pix').html(httpResponse.pix.qrCode);
@@ -125,7 +125,7 @@ export const callback = ($: JQueryStatic) => {
                         return;
 					}
 					
-					if(data.metodo == 'boleto'){
+					if(metodo == 'boleto'){
 						if(httpResponse.status == "ok"){
 							dataRedirectPagamento.url = httpResponse.boleto.pdf;
 							modalPagamentoBoleto(dataRedirectPagamento);						
