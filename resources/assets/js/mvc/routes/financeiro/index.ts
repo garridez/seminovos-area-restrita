@@ -82,23 +82,26 @@ export const callback = ($: JQueryStatic) => {
                 };
             };
 			
-			switch (data.metodo) {
+			let checkout_endpoint = '';
+
+			const metodo = data.find(x => x.name === 'metodo')?.value;
+
+			switch (metodo) {
 				case 'pix':
 					checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
-					break outer;
+					break;
 
 				case 'card':
 					checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
-					break outer;
+					break;
 					
 				case 'boleto':
 					checkout_endpoint = 'https://pagamentos.seminovos.com.br/boleto/charge';
-					break outer;					
+					break;
 
 				default:
 					checkout_endpoint = '/carro/checkout/processar';
-					break outer;
-					
+					break;
 			}
 
             const ajaxDefaultParams: JQuery.AjaxSettings = {
