@@ -109,7 +109,7 @@ export const callback = ($: JQueryStatic) => {
                 data: data,
                 type: 'POST',
                 dataType: 'json',
-                success: function (httpResponse: ProcessarResponseType) {
+                success: function (httpResponse: any) {
                     Loading.close();                    
 					if(metodo == 'pix'){
 						if(httpResponse.status == "ok"){
