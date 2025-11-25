@@ -83,7 +83,6 @@ export const callback = ($: JQueryStatic) => {
             };
 			
 			let checkout_endpoint = '';
-
 			const metodo = data.find(x => x.name === 'metodo')?.value;
 
 			switch (metodo) {
