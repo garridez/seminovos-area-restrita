@@ -75,50 +75,64 @@
     }
 }
 
+/* CONTAINER DOS CARDS */
 .planos-cards-container{
 	display:flex;
-	gap:20px;
 	flex-wrap:wrap;
 	justify-content:center;
+	gap:20px;
+	margin:0 auto;
+	max-width:1400px;
 }
 
+/* ====== DESKTOP (4 CARDS) ====== */
 .plano-card{
 	position: relative;
-	width:270px;
+	flex:1 1 calc(25% - 20px);
+	max-width: calc(25% - 20px);
+	min-width:260px;
 	border-radius:18px;
 	padding: 10px;
 	color:#fff;
-	background: #2b2b2b url('#{$assets-url}/img/maps/sn-bg-card.jpg') center/cover no-repeat;
+	background:#2b2b2b url('#{$assets-url}/img/sn-bg-card.jpg') center/cover no-repeat;
 	box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 	display:flex;
 	flex-direction:column;
-	justify-content:space-between;
-	text-align: center;
+	height:100%;
+	text-align:center;
 }
 
+/* MESMA ALTURA */
 .plano-inner-card{
 	border: 1px solid #f4d100;
 	border-radius:18px;
 	padding: 12px;
+
+	flex:1; /* ocupa toda área do card */
+	display:flex;
+	flex-direction:column;
+	justify-content:flex-start;
 }
 
+/* TÍTULO */
 .plano-card h3{
 	font-size:32px;
 	font-weight:800;
 	color:#f4d100;
 	margin-bottom:8px;
-	margin-top: 15px;
+	margin-top:15px;
 }
 
 .plano-card h3 span{
-	color: #ffffff;
+	color:#ffffff;
 	font-size:22px;
 	font-weight:600;
 }
 
+/* PREÇO */
 .preco{
 	display:flex;
-	align-items:flex-start; /* importante para alinhar o ,90 no topo */
+	align-items:flex-start;
 	justify-content:center;
 	gap:3px;
 	margin-bottom:20px;
@@ -128,13 +142,13 @@
 	font-size:20px;
 	color:#f4d100;
 	font-weight:700;
-	margin-top:10px; /* desce a moeda para alinhar visualmente */
+	margin-top:10px;
 }
 
 .preco .valor{
-	font-size:48px; /* maior que o seu atual */
+	font-size:48px;
 	font-weight:900;
-	line-height:0.9; 
+	line-height:0.9;
 	color:#ffffff;
 }
 
@@ -142,25 +156,26 @@
 	font-size:20px;
 	font-weight:700;
 	line-height:1.2;
-	margin-top:6px; /* sobe um pouco para encaixar igual à imagem */
+	margin-top:6px;
 	color:#ffffff;
 }
 
+/* LISTA */
 .plano-card ul{
 	list-style:none;
 	padding:0;
-	margin: 15px 15px 45px 15px;
-	font-size:11px;
-	line-height: 1.4;
+	margin:15px 15px 45px 15px;
+	font-size:12px;
+	line-height:1.4;
 }
 
 .plano-card ul li{
 	margin-bottom:15px;
 	display:flex;
 	align-items:flex-start;
-	text-align: left;
+	text-align:left;
 	gap:6px;
-	text-transform: uppercase;
+	text-transform:uppercase;
 }
 
 .plano-card ul li i{
@@ -169,12 +184,19 @@
 	margin-top:1px;
 }
 
+/* TEXTO CENTRALIZADO NOS ITENS */
+.plano-card ul li .item-texto{
+	text-align:center;
+	flex:1;
+}
+
+/* BOTÃO */
 .btn-escolher{
-	position: absolute;
-	bottom: -0px;
-	left: 50%;
-	transform: translate(-50%, 40%);
-	width: 70%;
+	position:absolute;
+	bottom:0;
+	left:50%;
+	transform:translate(-50%, 40%);
+	width:70%;
 	padding:10px 0;
 	text-align:center;
 	background:#f4d100;
@@ -184,16 +206,16 @@
 	text-transform:uppercase;
 	text-decoration:none;
 	font-size:14px;
-	border: 1px solid #ffffff;
-	box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-	overflow: hidden; /* necessário para o efeito */
+	border:1px solid #ffffff;
+	box-shadow:0 4px 10px rgba(0,0,0,0.25);
+	overflow:hidden;
 }
 
 .btn-escolher span{
 	font-weight:500;
 }
 
-/* pseudo-elemento que será o "ripple" */
+/* RIPPLE */
 .btn-escolher::after{
 	content:"";
 	position:absolute;
@@ -204,18 +226,34 @@
 	transform:translate(-50%, -50%) scale(0);
 	background:rgba(255,255,255,0.35);
 	border-radius:50%;
-	transition: transform 0.5s ease, opacity 0.5s ease;
+	transition:transform 0.5s ease, opacity 0.5s ease;
 	pointer-events:none;
 	opacity:0;
 }
 
-/* Clique / active → simula o ripple */
 .btn-escolher:active::after{
 	transform:translate(-50%, -50%) scale(1);
 	opacity:1;
 }
 
-/* Hover escurecido */
 .btn-escolher:hover{
 	background:#e5c200;
+}
+
+/* ====== TABLET (2 CARDS) ====== */
+@media (max-width: 992px){
+	.plano-card{
+		flex:1 1 calc(50% - 20px);
+		max-width:calc(50% - 20px);
+	}
+}
+
+/* ====== MOBILE (1 CARD com MARGENS) ====== */
+@media (max-width: 576px){
+	.plano-card{
+		flex:1 1 90%;
+		max-width:90%;
+		margin-left:auto;
+		margin-right:auto;
+	}
 }
