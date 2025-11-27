@@ -28,7 +28,7 @@
                                     <?php $valorPagar = $plano['valorPlano'] - $this->valorPlanoAtual ?>
                                     <strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
                                 <?php else: ?>
-                                    <?php $valorPagar = $plano['valorPlano'] ?>
+                                    <?php $valorPagar = $plano['valorPlano'] - $plano['valorDescontoMonetario'] ?>
                                     <strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
                                 <?php endif; ?>
                                 <input type="hidden" name="valor-plano" class="d-none hide" data-valor-plano="<?= $valorPagar ?>" value="<?= $valorPagar ?>">
