@@ -92,13 +92,12 @@
 	max-width:calc(25% - 25px);
 	min-width:280px;
 
-	background:#2b2b2b url("#{$assets-url}/img/sn-bg-card.jpg") center/cover no-repeat;
+	background:#2b2b2b url("#{$assets-img-url}/sn-bg-card.jpg") center/cover no-repeat;
 	border-radius:22px;
 	padding:12px;
 
 	display:flex;
 	flex-direction:column;
-	height:100%;
 
 	box-shadow:0 8px 25px rgba(0,0,0,0.40);
 }
