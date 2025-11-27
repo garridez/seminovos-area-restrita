@@ -47,8 +47,16 @@ if ($isRevenda) {
 $nomePlano = $plano['nomePlano'] == "Grátis" ? "Grátis" : $plano['nomePlano'];
 $nomePlano = mb_strtoupper($nomePlano);
 
-$valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '.'));
+$valorExibido = (float)$plano['valorPlano'];
 
+if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda) {
+    // Se for outro plano, calcula a diferença
+    if ($planoAtualDados['idPlano'] != $plano['idPlano']) {
+        $valorExibido = abs((float)$planoAtualDados['valorPlano'] - (float)$plano['valorPlano']);
+    }
+}
+
+$valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 ?>
 
 	<div class="plano-card plano-box">
@@ -59,13 +67,22 @@ $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '
 				<span>Plano</span>
 				<?= $nomePlano ?>
 			</h3>
+			
+			<?php
+				if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda && $planoAtualDados['idPlano'] != $plano['idPlano']):
+			?>
+				<div class="py-2 mb-2 badge bg-success text-center text-white"><i class="fa fa-check-circle" aria-hidden="true"></i>
+				Pague apenas a diferença.</div>
+			<?php
+				endif;
+			?>			
 
 			<!-- PREÇO -->
 			<div class="preco">
 				<span class="moeda">R$</span>
 				<span class="valor"><?= $valorPlano[0] ?></span>
 				<span class="centavos">,<?= $valorPlano[1] ?></span>
-			</div>
+			</div>				
 
 			<!-- LISTA -->
 			<ul>
@@ -134,7 +151,7 @@ $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '
 			value="<?= $plano['idPlano'] ?>"
 			class="input-radio-plano"
 			<?= ($desabilitarPlano || $desabilitarPlanoRenda || !$diminuirPlano) ? 'disabled' : '' ?>
-			data-valor-plano="<?= $plano['valorPlano'] ?>"
+			data-valor-plano="<?= $valorExibido ?>"
 			style="height:0!important"
 		>
 
