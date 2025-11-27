@@ -64,7 +64,7 @@ if ($isRevenda) {
                     foreach ($planos as $k => $plano) :
                         //if ($plano['valorPlano'] == '0.0') {
                         if ($plano['idPlano'] == 1) {
-                            //$planoGratis = $plano;
+                            $planoGratis = $plano;
                             //continue;
                         }
                         echo $this->partial('./box-plano.phtml', [
@@ -80,6 +80,19 @@ if ($isRevenda) {
                             'planoAtualDados' => $planoAtualDados,
                         ]);
                     endforeach;
+					
+                        echo $this->partial('./box-plano.phtml', [
+                            'k' => $k,
+                            'planoJaEscolhido' => $planoJaEscolhido,
+                            'plano' => $planoGratis,
+                            'prioridadePlano' => $prioridadePlano,
+                            'isRevenda' => $isRevenda,
+                            'isParticular' => $isParticular,
+                            'idPlanoAtual' => $idPlanoAtual,
+                            'idStatusAnuncio' => $idStatusAnuncio,
+                            'zeroKm' => $zeroKm,
+                            'planoAtualDados' => $planoAtualDados,
+                        ]);					
                     ?>
                 </div>
                 <div>
