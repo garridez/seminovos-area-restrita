@@ -48,6 +48,7 @@ $nomePlano = $plano['nomePlano'] == "Grátis" ? "Grátis" : $plano['nomePlano'];
 $nomePlano = mb_strtoupper($nomePlano);
 
 $valorExibido = (float)$plano['valorPlano'];
+$valorReal = explode(',', number_format($valorExibido, 2, ',', '.'));
 
 $isDiscounted = false;
 if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda) {
@@ -86,11 +87,27 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 			?>			
 
 			<!-- PREÇO -->
+			<?php
+				if(!$isDiscounted):
+			?>
 			<div class="preco">
 				<span class="moeda">R$</span>
 				<span class="valor"><?= $valorPlano[0] ?></span>
 				<span class="centavos">,<?= $valorPlano[1] ?></span>
-			</div>				
+			</div>
+			<?php else: ?>
+			<div class="preco" style="margin-bottom: 0">
+				<span class="moeda">R$</span>
+				<span class="valor"><?= $valorPlano[0] ?></span>
+				<span class="centavos">,<?= $valorPlano[1] ?></span>
+			</div>
+			<div class="preco" style="transform: scale(0.7); opacity: 0.5;">
+				<div style="position: absolute; top: 50%; left: 0; height: 2px; width: 100%; background-color: #ffffff;"></div>
+				<span class="moeda">R$</span>
+				<span class="valor"><?= $valorReal[0] ?></span>
+				<span class="centavos">,<?= $valorReal[1] ?></span>
+			</div>			
+			<?php endif; ?>
 
 			<!-- LISTA -->
 			<ul>
