@@ -75,44 +75,39 @@
     }
 }
 
-/* CONTAINER DOS CARDS */
-/* CONTAINER */
+/* CONTAINER 4 → 2 → 1 */
 .planos-cards-container{
 	display:flex;
 	flex-wrap:wrap;
 	justify-content:center;
-	gap:20px;
+	gap:25px;
 	margin:0 auto;
-	max-width:1400px;
+	max-width:1420px;
 }
 
-/* DESKTOP — 4 CARDS */
+/* CARD */
 .plano-card{
-	position: relative;
+	position:relative;
+	flex:1 1 calc(25% - 25px);
+	max-width:calc(25% - 25px);
+	min-width:280px;
 
-	flex:1 1 calc(#{25%} - 20px);
-	max-width: calc(#{25%} - 20px);
-	min-width:260px;
-
-	border-radius:18px;
-	padding:10px;
-	color:#fff;
-
-	background:#2b2b2b url("#{$assets-url}/img/maps/sn-bg-card.jpg") center/cover no-repeat;
-
-	box-shadow:0 4px 10px rgba(0,0,0,0.25);
+	background:#0f0f0f url("#{$assets-url}/img/maps/sn-bg-card.jpg") center/cover no-repeat;
+	border-radius:22px;
+	padding:12px;
 
 	display:flex;
 	flex-direction:column;
 	height:100%;
-	text-align:center;
+
+	box-shadow:0 8px 25px rgba(0,0,0,0.40);
 }
 
-/* IGUAL ALTURA */
+/* BORDA DUPLA */
 .plano-inner-card{
-	border:1px solid #f4d100;
+	border:2px solid #f4d100;
 	border-radius:18px;
-	padding:12px;
+	padding:22px 20px;
 
 	flex:1;
 	display:flex;
@@ -122,16 +117,16 @@
 
 /* TÍTULO */
 .plano-card h3{
-	font-size:32px;
+	font-size:28px;
 	font-weight:800;
 	color:#f4d100;
-	margin-bottom:8px;
-	margin-top:15px;
+	margin-bottom:20px;
+	text-align:left;
 }
 
 .plano-card h3 span{
+	font-size:20px;
 	color:#fff;
-	font-size:22px;
 	font-weight:600;
 }
 
@@ -139,30 +134,29 @@
 .preco{
 	display:flex;
 	align-items:flex-start;
-	justify-content:center;
-	gap:3px;
-	margin-bottom:20px;
+	justify-content:flex-start;
+	gap:4px;
+	margin-bottom:25px;
 }
 
 .preco .moeda{
-	font-size:20px;
+	font-size:22px;
 	color:#f4d100;
 	font-weight:700;
-	margin-top:10px;
+	margin-top:12px;
 }
 
 .preco .valor{
-	font-size:48px;
+	font-size:58px;
 	font-weight:900;
-	line-height:.9;
+	line-height:0.9;
 	color:#fff;
 }
 
 .preco .centavos{
-	font-size:20px;
+	font-size:24px;
 	font-weight:700;
-	line-height:1.2;
-	margin-top:6px;
+	margin-top:10px;
 	color:#fff;
 }
 
@@ -170,29 +164,27 @@
 .plano-card ul{
 	list-style:none;
 	padding:0;
-	margin:15px 15px 45px 15px;
-	font-size:11px;
-	line-height:1.4;
+	margin:0;
+	font-size:13px;
+	line-height:1.35;
+	color:#fff;
 }
 
 .plano-card ul li{
 	margin-bottom:15px;
+
 	display:flex;
 	align-items:flex-start;
+	gap:10px;
+
 	text-align:left;
-	gap:6px;
 	text-transform:uppercase;
 }
 
 .plano-card ul li i{
 	color:#f4d100;
 	font-size:1rem;
-	margin-top:1px;
-}
-
-.plano-card ul li .item-texto{
-	text-align:center;
-	flex:1;
+	margin-top:2px;
 }
 
 /* BOTÃO */
@@ -200,62 +192,38 @@
 	position:absolute;
 	bottom:0;
 	left:50%;
-	transform:translate(-50%, 40%);
-	width:70%;
-	padding:10px 0;
-	text-align:center;
+	transform:translate(-50%, 45%);
 
+	width:78%;
 	background:#f4d100;
-	border-radius:8px;
 	color:#000;
+
+	font-weight:700;
 	text-transform:uppercase;
-	font-weight:800;
-	text-decoration:none;
-	font-size:14px;
-
+	padding:12px 0;
+	border-radius:8px;
 	border:1px solid #fff;
-	box-shadow:0 4px 10px rgba(0,0,0,0.25);
-	overflow:hidden;
-}
 
-.btn-escolher span{
-	font-weight:500;
-}
+	text-align:center;
+	font-size:15px;
+	box-shadow:0 8px 18px rgba(0,0,0,0.30);
 
-/* RIPPLE */
-.btn-escolher::after{
-	content:"";
-	position:absolute;
-	width:180%;
-	height:180%;
-	top:50%;
-	left:50%;
-	transform:translate(-50%, -50%) scale(0);
-	background:rgba(255,255,255,0.35);
-	border-radius:50%;
-	transition:transform .5s ease, opacity .5s ease;
-	pointer-events:none;
-	opacity:0;
-}
-
-.btn-escolher:active::after{
-	transform:translate(-50%, -50%) scale(1);
-	opacity:1;
+	transition:background .2s;
 }
 
 .btn-escolher:hover{
-	background:#e5c200;
+	background:#eac400;
 }
 
-/* TABLET — 2 CARDS */
+/* RESPONSIVO — 2 CARDS */
 @media (max-width: 992px){
 	.plano-card{
-		flex:1 1 calc(#{50%} - 20px);
-		max-width:calc(#{50%} - 20px);
+		flex:1 1 calc(50% - 25px);
+		max-width:calc(50% - 25px);
 	}
 }
 
-/* MOBILE — 1 CARD COM MARGENS */
+/* RESPONSIVO — 1 CARD COM MARGEM */
 @media (max-width: 576px){
 	.plano-card{
 		flex:1 1 90%;

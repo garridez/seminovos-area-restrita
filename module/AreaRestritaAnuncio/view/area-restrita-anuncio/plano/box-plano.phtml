@@ -44,7 +44,7 @@ if ($isRevenda) {
     $diminuirPlano = true;
 }
 
-$nomePlano = $plano['nomePlano'] == "Grátis" ? "Simples" : $plano['nomePlano'];
+$nomePlano = $plano['nomePlano'] == "Grátis" ? "Grátis" : $plano['nomePlano'];
 $nomePlano = mb_strtoupper($nomePlano);
 
 $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '.'));
