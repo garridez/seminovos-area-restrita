@@ -80,7 +80,7 @@ if ($isRevenda) {
                             'planoAtualDados' => $planoAtualDados,
                         ]);
                     endforeach;
-					
+					if ($isParticular && $prioridadePlano >= $planoGratis['prioridade'] && in_array($idStatusAnuncio, [3, 10, false])) : 
                         echo $this->partial('./box-plano.phtml', [
                             'k' => $k,
                             'planoJaEscolhido' => $planoJaEscolhido,
@@ -92,7 +92,8 @@ if ($isRevenda) {
                             'idStatusAnuncio' => $idStatusAnuncio,
                             'zeroKm' => $zeroKm,
                             'planoAtualDados' => $planoAtualDados,
-                        ]);					
+                        ]);	
+					endif;
                     ?>
                 </div>
                 <div>
