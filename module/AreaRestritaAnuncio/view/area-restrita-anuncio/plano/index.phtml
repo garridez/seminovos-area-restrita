@@ -65,7 +65,7 @@ if ($isRevenda) {
                         //if ($plano['valorPlano'] == '0.0') {
                         if ($plano['idPlano'] == 1) {
                             $planoGratis = $plano;
-                            //continue;
+                            continue;
                         }
                         echo $this->partial('./box-plano.phtml', [
                             'k' => $k,
