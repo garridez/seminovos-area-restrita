@@ -24,13 +24,27 @@
                                 <div class="ate-venda"><small>Até a venda. Necessário renovar gratuitamente a cada 30 dias.</small></div>
                             </div>
                             <div class="valor-plano">
-                                <?php if (($this->idStatus == 2 || $this->idStatus == 9)/* && $this->idPlano != 4*/) : ?>
-                                    <?php $valorPagar = $plano['valorPlano'] - $this->valorPlanoAtual ?>
-                                    <strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
-                                <?php else: ?>
-                                    <?php $valorPagar = $plano['valorPlano'] - $plano['valorDescontoMonetario'] ?>
-                                    <strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
-                                <?php endif; ?>
+								<?php
+								function toFloat($v) {
+									return floatval(str_replace(',', '.', $v));
+								}
+
+								$valorPlano = toFloat($plano['valorPlano']);
+								$valorDesconto = toFloat($plano['valorDescontoMonetario']);
+								$valorAtual = toFloat($this->valorPlanoAtual);
+								?>
+
+								<?php if ($this->idStatus == 2 || $this->idStatus == 9): ?>
+
+									<?php $valorPagar = $valorPlano - $valorAtual; ?>
+									<strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
+
+								<?php else: ?>
+
+									<?php $valorPagar = $valorPlano - $valorDesconto; ?>
+									<strong class="text-success">R$ <?= number_format($valorPagar, 2, ',', '.') ?></strong>
+
+								<?php endif; ?>
                                 <input type="hidden" name="valor-plano" class="d-none hide" data-valor-plano="<?= $valorPagar ?>" value="<?= $valorPagar ?>">
                             </div>
                         </div>
