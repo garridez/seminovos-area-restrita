@@ -69,7 +69,11 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 ?>
 
 	<div class="plano-card plano-box">
-
+		<?php if($isDiscounted): ?>
+			<div style="position: absolute; top: -40px; left: 5%">
+				<img src="https://meus-anuncios.seminovos.com.br/img/black-friday.png" style="height: 100px;">
+			</div>		
+		<?php endif; ?>
 		<div class="plano-inner-card">
 
 			<h3>
