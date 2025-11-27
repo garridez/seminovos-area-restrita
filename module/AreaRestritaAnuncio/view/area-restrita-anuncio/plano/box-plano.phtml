@@ -59,7 +59,6 @@ if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda) {
 } else {
 	$discount = (float)$plano['valorDescontoMonetario'];
 	if($discount > 0){
-		$valorReal = $valorExibido;
 		$valorExibido = $valorExibido - $discount;
 		$isDiscounted = true;
 	}
