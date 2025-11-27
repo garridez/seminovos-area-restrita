@@ -49,11 +49,19 @@ $nomePlano = mb_strtoupper($nomePlano);
 
 $valorExibido = (float)$plano['valorPlano'];
 
+$isDiscounted = false;
 if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda) {
     // Se for outro plano, calcula a diferença
     if ($planoAtualDados['idPlano'] != $plano['idPlano']) {
         $valorExibido = abs((float)$planoAtualDados['valorPlano'] - (float)$plano['valorPlano']);
     }
+} else {
+	$discount = (float)$plano['valorDescontoMonetario'];
+	if($discount > 0){
+		$valorReal = $valorExibido;
+		$valorExibido = $valorExibido - $discount;
+		$isDiscounted = true;
+	}
 }
 
 $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
