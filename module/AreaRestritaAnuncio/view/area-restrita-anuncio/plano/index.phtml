@@ -96,38 +96,6 @@ if ($isRevenda) {
                     ?>
                 </div>
                 <div>
-                    <?php if ($isParticular && $prioridadePlano >= $planoGratis['prioridade'] && in_array($idStatusAnuncio, [3, 10, false])) : ?>
-                        <div class="row mt-1 mb-4">
-                            <div class="col col-md-4 offset-md-4 text-center">
-                                <div>
-                                    <a
-                                        data-toggle="collapse"
-                                        href="#planoSimplesCollapse"
-                                        role="button"
-                                        aria-expanded="false"
-                                        aria-controls="planoSimples"
-                                        class="btn btn-block btn-sm bg-light text-dark text-bold"
-                                    >Escolher Plano Grátis</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="planoSimplesCollapse" class="row mt-2 collapse">
-                            <div class="col-md-4 offset-md-4 text--center">
-                                <?= $this->partial('./box-plano.phtml', [
-                                    'k' => $k,
-                                    'planoJaEscolhido' => $planoJaEscolhido,
-                                    'plano' => $planoGratis,
-                                    'prioridadePlano' => $prioridadePlano,
-                                    'isRevenda' => $isRevenda,
-                                    'isParticular' => $isParticular,
-                                    'idPlanoAtual' => $idPlanoAtual,
-                                    'idStatusAnuncio' => $idStatusAnuncio,
-                                    'zeroKm' => $zeroKm,
-                                ]) ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
                     <?php if($isParticular):?>
                     <div class="row-full">
                         <div class="container">
