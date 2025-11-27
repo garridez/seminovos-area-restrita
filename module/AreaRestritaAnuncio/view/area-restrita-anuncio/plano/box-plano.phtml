@@ -135,14 +135,17 @@ $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '
 			class="input-radio-plano"
 			<?= ($desabilitarPlano || $desabilitarPlanoRenda || !$diminuirPlano) ? 'disabled' : '' ?>
 			data-valor-plano="<?= $plano['valorPlano'] ?>"
+			style="height:0!important"
 		>
 
 		<!-- BOTÃO -->
-		<label
-			class="btn-escolher"
-			for="radio-idPlano-<?= $plano['idPlano'] ?>"
-		>
-			<span>Escolher</span> <?= $nomePlano ?>
-		</label>
+        <label
+            class="btn btn-escolher"
+            for="radio-idPlano-<?= $plano['idPlano'] ?>"
+            <?= $diminuirPlano ? '' : 'data-plano-desativado' ?>
+            <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
+            <?= $planoAtual ? 'data-plano-atual' : '' ?>>
+            <?= $planoAtual ? 'SEU PLANO ATUAL' : 'Escolher ' . $nomePlano ?>
+        </label>
 
 	</div>
