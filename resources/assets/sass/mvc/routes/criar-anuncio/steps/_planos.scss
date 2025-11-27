@@ -190,30 +190,55 @@
 
 /* BOTÃO */
 .btn-escolher{
-	position:absolute;
-	bottom:0;
-	left:50%;
-	transform:translate(-50%, 45%);
-
-	width:78%;
-	background:#f4d100;
-	color:#000;
-
-	font-weight:700;
-	text-transform:uppercase;
-	padding:12px 0;
-	border-radius:8px;
-	border:1px solid #fff;
-
+	position: absolute;
+	bottom: -0px;
+	left: 50%;
+	transform: translate(-50%, 40%);
+	width: 70%;
+	padding:10px 0;
 	text-align:center;
-	font-size:15px;
-	box-shadow:0 8px 18px rgba(0,0,0,0.30);
-
-	transition:background .2s;
+	background:#f4d100;
+	border-radius:8px;
+	color:#000;
+	font-weight:800;
+	text-transform:uppercase;
+	text-decoration:none;
+	font-size:14px;
+	border: 1px solid #ffffff;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+	overflow: hidden; /* necessário para o efeito */
+	height: auto !important;
 }
 
+.btn-escolher span{
+	font-weight:500;
+}
+
+/* pseudo-elemento que será o "ripple" */
+.btn-escolher::after{
+	content:"";
+	position:absolute;
+	width:180%;
+	height:180%;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%) scale(0);
+	background:rgba(255,255,255,0.35);
+	border-radius:50%;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+	pointer-events:none;
+	opacity:0;
+}
+
+/* Clique / active → simula o ripple */
+.btn-escolher:active::after{
+	transform:translate(-50%, -50%) scale(1);
+	opacity:1;
+}
+
+/* Hover escurecido */
 .btn-escolher:hover{
-	background:#eac400;
+	background:#e5c200;
 }
 
 /* RESPONSIVO — 2 CARDS */

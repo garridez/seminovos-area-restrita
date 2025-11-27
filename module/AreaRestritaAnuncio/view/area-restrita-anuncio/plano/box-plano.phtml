@@ -140,12 +140,12 @@ $valorPlano = explode(',', number_format((float) $plano['valorPlano'], 2, ',', '
 
 		<!-- BOTÃO -->
         <label
-            class="btn btn-escolher"
+            class="btn-escolher"
             for="radio-idPlano-<?= $plano['idPlano'] ?>"
             <?= $diminuirPlano ? '' : 'data-plano-desativado' ?>
             <?= $desabilitarPlanoRenda ? 'data-plano-revenda-desativado' : '' ?>
             <?= $planoAtual ? 'data-plano-atual' : '' ?>>
-            <?= $planoAtual ? 'SEU PLANO ATUAL' : 'Escolher ' . $nomePlano ?>
+            <?= $planoAtual ? 'SEU PLANO ATUAL' : 'Escolher <strong>' . $nomePlano . '</strong>' ?>
         </label>
 
 	</div>
