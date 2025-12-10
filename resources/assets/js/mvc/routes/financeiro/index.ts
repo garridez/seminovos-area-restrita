@@ -20,21 +20,30 @@ export const callback = ($: JQueryStatic) => {
         requestAlerts.erro('Existe uma transação em andamento! Aguarde');
     };
 	
-	var buildErrorHtmlFromResponse = function (responseJSON) {
-		const error = responseJSON?.error || {};
-		const details = error.details || {};
+	type ErrorDetails = Record<string, string[]>;
+
+	type ErrorResponse = {
+		error?: {
+			message?: string;
+			details?: ErrorDetails;
+		};
+	};
+
+	var buildErrorHtmlFromResponse = function (responseJSON: ErrorResponse): string {
+		const error = responseJSON?.error;
+		const details: ErrorDetails = error?.details || {};
 		let html = '<ul class="error-list">';
 
 		Object.entries(details).forEach(([fieldName, messages]) => {
-			messages.forEach((message) => {
+			messages.forEach((message: string) => {
 				html += `<li><strong>${fieldName}:</strong> ${message}</li>`;
 			});
 		});
 
 		html += '</ul>';
 		return html;
-	}
-
+	};
+	
     const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     const formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
