@@ -26,7 +26,7 @@ export default function (formData, ajaxParams) {
 
 		Object.entries(details).forEach(([fieldName, messages]) => {
 			messages.forEach((message) => {
-				html += `<li><strong>${fieldName}:</strong> ${message}</li>`;
+				html += `<li><strong>${message}</li>`;
 			});
 		});
 

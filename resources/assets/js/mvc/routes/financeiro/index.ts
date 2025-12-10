@@ -36,7 +36,7 @@ export const callback = ($: JQueryStatic) => {
 
 		Object.entries(details).forEach(([fieldName, messages]) => {
 			messages.forEach((message: string) => {
-				html += `<li><strong>${fieldName}:</strong> ${message}</li>`;
+				html += `<li><strong>${message}</li>`;
 			});
 		});
 
