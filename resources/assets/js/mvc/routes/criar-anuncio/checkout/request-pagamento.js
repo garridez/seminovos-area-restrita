@@ -22,17 +22,35 @@ export default function (formData, ajaxParams) {
 	var buildErrorHtmlFromResponse = function (responseJSON) {
 		const error = responseJSON?.error || {};
 		const details = error.details || {};
-		let html = '<ul class="error-list">';
+
+		let html = `
+			<div class="alert alert-danger d-flex align-items-start" role="alert">
+				<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+				<div>
+					<p class="mb-1 fw-bold">Ocorreram erros de validação:</p>
+					<ul class="error-list list-unstyled mb-0">
+		`;
 
 		Object.entries(details).forEach(([fieldName, messages]) => {
 			messages.forEach((message) => {
-				html += `<li><strong>${message}</li>`;
+				html += `
+					<li class="d-flex align-items-start mb-1">
+						<i class="bi bi-x-circle-fill me-2 mt-1"></i>
+						<span>${message}</span>
+					</li>
+				`;
 			});
 		});
 
-		html += '</ul>';
+		html += `
+					</ul>
+				</div>
+			</div>
+		`;
+
 		return html;
-	}	
+	};
+		
 
     //FIELDS DATA ONLY
     const colorDepth = screen.colorDepth;

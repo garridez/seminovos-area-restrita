@@ -29,20 +29,40 @@ export const callback = ($: JQueryStatic) => {
 		};
 	};
 
-	var buildErrorHtmlFromResponse = function (responseJSON: ErrorResponse): string {
+	const buildErrorHtmlFromResponse = (responseJSON: ErrorResponse): string => {
 		const error = responseJSON?.error;
 		const details: ErrorDetails = error?.details || {};
-		let html = '<ul class="error-list">';
+
+		let html = `
+		<div class="alert alert-danger d-flex align-items-start" role="alert">
+			<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+			<div>
+				<p class="mb-1 fw-bold">
+					${error?.message || 'Ocorreram erros de validação:'}
+				</p>
+				<ul class="error-list list-unstyled mb-0">
+		`;
 
 		Object.entries(details).forEach(([fieldName, messages]) => {
 			messages.forEach((message: string) => {
-				html += `<li><strong>${message}</li>`;
+				html += `
+					<li class="d-flex align-items-start mb-1">
+						<i class="bi bi-x-circle-fill me-2 mt-1"></i>
+						<span>${message}</span>
+					</li>
+				`;
 			});
 		});
 
-		html += '</ul>';
+		html += `
+				</ul>
+			</div>
+		</div>
+		`;
+
 		return html;
 	};
+
 	
     const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     const formCC = $('.pagamento-cc-form');
