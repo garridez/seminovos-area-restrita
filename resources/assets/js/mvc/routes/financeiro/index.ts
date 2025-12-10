@@ -19,6 +19,21 @@ export const callback = ($: JQueryStatic) => {
     const pagamentoEmAndamento = function () {
         requestAlerts.erro('Existe uma transação em andamento! Aguarde');
     };
+	
+	var buildErrorHtmlFromResponse = function (responseJSON) {
+		const error = responseJSON?.error || {};
+		const details = error.details || {};
+		let html = '<ul class="error-list">';
+
+		Object.entries(details).forEach(([fieldName, messages]) => {
+			messages.forEach((message) => {
+				html += `<li><strong>${fieldName}:</strong> ${message}</li>`;
+			});
+		});
+
+		html += '</ul>';
+		return html;
+	}
 
     const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     const formCC = $('.pagamento-cc-form');
@@ -119,6 +134,11 @@ export const callback = ($: JQueryStatic) => {
 							$('.retorno-pix').show();
 							Loading.close();
 						} else {
+							if (httpResponse?.error) {
+								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
+								return;
+							}
+							
 							HandleApiError(httpResponse);
 							return;							
 						}
@@ -130,6 +150,11 @@ export const callback = ($: JQueryStatic) => {
 							dataRedirectPagamento.url = httpResponse.boleto.pdf;
 							modalPagamentoBoleto(dataRedirectPagamento);						
 						} else {
+							if (httpResponse?.error) {
+								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
+								return;
+							}							
+							
 							HandleApiError(httpResponse);
 							return;							
 						}
@@ -161,6 +186,12 @@ export const callback = ($: JQueryStatic) => {
 					}
                 },
                 error: function (e) {
+					if (e.responseJSON?.error) {
+						requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
+						Loading.close();
+						return;
+					}					
+					
                     HandleApiError(e.responseJSON);
                     Loading.close();
                 },

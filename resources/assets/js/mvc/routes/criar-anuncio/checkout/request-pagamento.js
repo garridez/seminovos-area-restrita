@@ -18,6 +18,21 @@ export default function (formData, ajaxParams) {
     if (formData && Array.isArray(formData)) {
         data = data.concat(formData);
     }
+	
+	var buildErrorHtmlFromResponse = function (responseJSON) {
+		const error = responseJSON?.error || {};
+		const details = error.details || {};
+		let html = '<ul class="error-list">';
+
+		Object.entries(details).forEach(([fieldName, messages]) => {
+			messages.forEach((message) => {
+				html += `<li><strong>${fieldName}:</strong> ${message}</li>`;
+			});
+		});
+
+		html += '</ul>';
+		return html;
+	}	
 
     //FIELDS DATA ONLY
     const colorDepth = screen.colorDepth;
@@ -95,6 +110,11 @@ export default function (formData, ajaxParams) {
 				) {
 					window.location = `/${tipo}/${httpResponse.idVeiculo}/checkout/pagamento-pix?idVeiculo=${httpResponse.idVeiculo}&code=${encodeURIComponent(httpResponse.pix.qrCode)}&idPagamento=${httpResponse.idPagamento}`;
 				} else {
+					if (httpResponse?.error) {
+						requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
+						return;
+					}					
+					
 					requestAlerts.erro('Instabilidade ao gerar QRCode Pix. Por favor, tente novamente.');
 				}
 				return;
@@ -115,6 +135,11 @@ export default function (formData, ajaxParams) {
 					dataRedirectPagamento.url = httpResponse.boleto.pdf;
 					modalPagamentoBoleto(dataRedirectPagamento);
 				} else {
+					if (httpResponse?.error) {
+						requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
+						return;
+					}					
+					
 					requestAlerts.erro('Instabilidade ao gerar Boleto. Por favor, tente novamente.');
 				}
 				
@@ -158,6 +183,12 @@ export default function (formData, ajaxParams) {
             }
         },
         error: function (e) {
+			if (e.responseJSON?.error) {
+				requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
+				Loading.close();
+				return;
+			}			
+			
             requestAlerts.erro(e);
             console.log(e);
         },
