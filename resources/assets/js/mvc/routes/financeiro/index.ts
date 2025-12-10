@@ -195,6 +195,8 @@ export const callback = ($: JQueryStatic) => {
 					}
                 },
                 error: function (e) {
+					console.log('erro');
+					console.log(e);
 					if (e.responseJSON?.error) {
 						requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
 						Loading.close();
