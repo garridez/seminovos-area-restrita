@@ -185,7 +185,7 @@ export default function (formData, ajaxParams) {
         error: function (e) {
 			if (e.responseJSON?.error) {
 				requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
-				Loading.close();
+				//Loading.close();
 				return;
 			}			
 			
