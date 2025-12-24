@@ -193,9 +193,9 @@ export const callback = ($: JQueryStatic) => {
 					if(metodo === 'card') {
 						if(httpResponse.status == "captured"){
 							const title = 'Pagamento aprovado!';
-							const text = $(`  <div>
-											<div>É nescessário aguardar a atualização do site,
-											<h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5></div>
+							const text = $(`<div>
+											<h4 class="text-primary font-weight-bold">Meio de pagamento cadastrado com sucesso!</h4>
+											<h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5>
 										</div>
 									`);
 							const closeText = 'Li e concordo';
@@ -220,7 +220,11 @@ export const callback = ($: JQueryStatic) => {
 					if (e.responseJSON?.error) {
 						console.log(e.responseJSON?.error);
 						console.log(buildErrorHtmlFromResponse(e.responseJSON));
-						Alerts.error(buildErrorHtmlFromResponse(e.responseJSON));
+						if(e.responseJSON?.error){
+							Alerts.error(e.responseJSON?.error);
+						} else {
+							Alerts.error(buildErrorHtmlFromResponse(e.responseJSON));
+						}
 						Loading.close();
 						return;
 					}					
