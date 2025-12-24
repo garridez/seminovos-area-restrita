@@ -108,6 +108,7 @@
                                         </div>
                                     </td>
                                     <td class="">
+										<?php if($plano['desconto'] > 0){ ?>
                                         <span>Desconto de
                                             <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
                                             </span>
@@ -115,6 +116,7 @@
                                                 (R$ <?= $plano['economia'] ?>)
                                             </small>
                                         </span>
+										<?php } ?>
                                     </td>
                                     <td class="">
                                         <h4 class="text-orange font-montserrat">R$
