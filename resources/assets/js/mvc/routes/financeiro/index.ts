@@ -196,8 +196,7 @@ export const callback = ($: JQueryStatic) => {
 							const text = $(`<div>
 											<h4 class="text-primary font-weight-bold">Meio de pagamento cadastrado com sucesso!</h4>
 											<h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5>
-										</div>
-									`);
+										</div>`);
 							const closeText = 'Li e concordo';
 							const time = 0;
 							advancedAlerts.success({
@@ -208,6 +207,12 @@ export const callback = ($: JQueryStatic) => {
 							});
 
 							$('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
+						} else if{
+							if(e.responseJSON?.error){
+								Alerts.error(e.responseJSON?.error);
+							} else {
+								Alerts.error(buildErrorHtmlFromResponse(e.responseJSON));
+							}							
 						} else {
 							pagamentoEmAndamento();
 						}
