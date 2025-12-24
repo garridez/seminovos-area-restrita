@@ -408,6 +408,7 @@ const optionsParcelas = (valor: number, plano: string) => {
             .text(i + 1 + 'x de R$ ' + (valor / (i + 1)).toFixed(2));
     };
     const parcelas = $('#parcelas');
+    const row_parcelas = $('#row_parcelas');
     parcelas.html('');
 	const btn = $('#add_payment_form');
 	btn.html('EFETUAR PAGAMENTO');
@@ -415,21 +416,25 @@ const optionsParcelas = (valor: number, plano: string) => {
         case 'Plano Mensal':
             parcelas.append(generateOption(0));
 			btn.html('ADICIONAR FORMA DE PAGAMENTO');
+			row_parcelas.hide();
             break;
         case 'Plano Trimestral':
             for (let i = 0; i < 3; i++) {
                 parcelas.append(generateOption(i));
             }
+			row_parcelas.show();
             break;
         case 'Plano Semestral':
             for (let i = 0; i < 6; i++) {
                 parcelas.append(generateOption(i));
             }
+			row_parcelas.show();
             break;
         case 'Plano Anual':
             for (let i = 0; i < 12; i++) {
                 parcelas.append(generateOption(i));
             }
+			row_parcelas.show();
             break;
         default:
             break;
