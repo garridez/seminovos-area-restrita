@@ -65,6 +65,7 @@
                                     'value_checkbox' => $dadosFinanceiro['value_checkbox_mensal'],
                                     'parcelas' => '1'
                                 ],
+								/*
                                 [
                                     'nome' => 'Plano Trimestral',
                                     'desconto' => $dadosFinanceiro['desconto_trimestral'],
@@ -81,6 +82,7 @@
                                     'value_checkbox' => $dadosFinanceiro['value_checkbox_semestral'],
                                     'parcelas' => '6'
                                 ],
+								*/
                                 [
                                     'nome' => 'Plano Anual',
                                     'desconto' => $dadosFinanceiro['desconto_anual'],
@@ -110,7 +112,7 @@
                                             <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
                                             </span>
                                             <small id="economia">
-                                                (<?= $plano['economia'] ?>)
+                                                (R$ <?= $plano['economia'] ?>)
                                             </small>
                                         </span>
                                     </td>
@@ -152,14 +154,14 @@
                     <div class="col-md-6 col-12 b-r b-dashed b-grey ">
                         <div class="">
                             <h2>Forma de pagamento</h2>
-                            <p>Escolha ao lado a forma de pagamento desejda para finalizar a compra.</p>
+                            <p>Escolha uma forma de pagamento para manter o seu plano.</p>
                             <p class="small hint-text">Dados do plano contratado</p>
                             <table class="table-condensed" width="100%">
                                 <tr>
                                     <td class="">
                                         <div class="align-items-center d-flex">
                                             <span class="m-l-10 font-montserrat fs-11 all-caps" id="plano">
-                                                Selecione Um Plano
+                                                Selecione um plano
                                             </span>
                                         </div>
                                     </td>
@@ -183,23 +185,22 @@
                                     </td>
                                 </tr>
                             </table>
-                            <p>A fatura estará disponível no seu histórico de pagamentos após a confirmação de
-                                pagamento. <br>Condições de pagamento: Cartão de Crédito ou Boleto Bancário </p>
+                            <p>A fatura estará disponível no seu histórico de pagamentos após a confirmação de pagamento.<br>Condições de pagamento: Pix, Cartão de Crédito ou Boleto Bancário</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
                             data-init-reponsive-tabs="dropdownfx">
                             <li class="nav-item">
-                                <a class="active" data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
-                                    <i class="fa fa-credit-card tab-icon"></i>
-                                    <span>PIX</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
+                                <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
                                     <i class="fa fa-shopping-cart tab-icon"></i>
                                     <span>Cartão de Crédito</span>
+                                </a>
+                            </li>							
+                            <li class="nav-item">
+                                <a data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
+                                    <i class="fa fa-credit-card tab-icon"></i>
+                                    <span>PIX</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -210,14 +211,14 @@
                             </li>
                         </ul>
                         <div class="tab-content p-0">
-                            <div class="tab-pane padding-20 sm-no-padding slide-left active" id="pix_tab">
-                                <div class="row row-same-height">
-                                    <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
-                                </div>
-                            </div>
-                            <div class="tab-pane padding-20 sm-no-padding slide-left" id="cartao_tab">
+                            <div class="tab-pane padding-20 sm-no-padding slide-left active" id="cartao_tab">
                                 <div class="row row-same-height">
                                     <?= $this->partial('area-restrita/financeiro/form-cartao-credito.phtml') ?>
+                                </div>
+                            </div>						
+                            <div class="tab-pane padding-20 sm-no-padding slide-left" id="pix_tab">
+                                <div class="row row-same-height">
+                                    <?= $this->partial('area-restrita/financeiro/form-pix.phtml') ?>
                                 </div>
                             </div>
                             <div class="tab-pane padding-20 sm-no-padding slide-left" id="boleto_tab">

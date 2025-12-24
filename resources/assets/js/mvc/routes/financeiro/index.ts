@@ -300,7 +300,7 @@ export const callback = ($: JQueryStatic) => {
 
     $('.nav-main-financeiro li a').on('shown.bs.tab', function () {
         if ($('#pix_tab').hasClass('active')) {
-            $('#pix-form').trigger('submit');
+            //$('#pix-form').trigger('submit');
         }
         const target = $(this).data('target').replace('#tab-', '') as TabsNames;
         type StateType = {
@@ -409,9 +409,12 @@ const optionsParcelas = (valor: number, plano: string) => {
     };
     const parcelas = $('#parcelas');
     parcelas.html('');
+	const btn = $('#add_payment_form');
+	btn.html('EFETUAR PAGAMENTO');
     switch (plano) {
         case 'Plano Mensal':
             parcelas.append(generateOption(0));
+			btn.html('ADICIONAR FORMA DE PAGAMENTO');
             break;
         case 'Plano Trimestral':
             for (let i = 0; i < 3; i++) {
@@ -424,7 +427,7 @@ const optionsParcelas = (valor: number, plano: string) => {
             }
             break;
         case 'Plano Anual':
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 12; i++) {
                 parcelas.append(generateOption(i));
             }
             break;

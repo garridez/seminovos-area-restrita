@@ -87,9 +87,9 @@ class FinanceiroController extends AbstractActionController
         $valorPlanoAtual = (float) ($valorPlano + $valorAdicional);
 
         // Percentuais de descontos
-        $descTrime = 5.0;
-        $descSemes = 10.0;
-        $descAnual = 15.0;
+        $descTrime = 0;
+        $descSemes = 2.5;
+        $descAnual = 5;
         /** ! Removido desconto COVID
         $idCadastrosComDescondoCOVID = [
             207703, // Golaço Automóveis
