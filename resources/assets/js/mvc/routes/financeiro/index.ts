@@ -164,7 +164,7 @@ export const callback = ($: JQueryStatic) => {
 							Loading.close();
 						} else {
 							if (httpResponse?.error) {
-								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
+								requestAlerts.erro(httpResponse?.error);
 								return;
 							}
 							
@@ -208,10 +208,10 @@ export const callback = ($: JQueryStatic) => {
 
 							$('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
 						} else if{
-							if(e.responseJSON?.error){
-								Alerts.error(e.responseJSON?.error);
+							if(httpResponse?.error){
+								requestAlerts.erro(httpResponse?.error);
 							} else {
-								Alerts.error(buildErrorHtmlFromResponse(e.responseJSON));
+								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
 							}							
 						} else {
 							pagamentoEmAndamento();
@@ -223,12 +223,10 @@ export const callback = ($: JQueryStatic) => {
 					console.log('erro');
 					console.log(e);
 					if (e.responseJSON?.error) {
-						console.log(e.responseJSON?.error);
-						console.log(buildErrorHtmlFromResponse(e.responseJSON));
 						if(e.responseJSON?.error){
-							Alerts.error(e.responseJSON?.error);
+							requestAlerts.erro(e.responseJSON?.error);
 						} else {
-							Alerts.error(buildErrorHtmlFromResponse(e.responseJSON));
+							requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
 						}
 						Loading.close();
 						return;
