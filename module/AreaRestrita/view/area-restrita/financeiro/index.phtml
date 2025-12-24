@@ -74,6 +74,7 @@
                                     'value_checkbox' => $dadosFinanceiro['value_checbkox_trimestral'] ?? null,
                                     'parcelas' => '3'
                                 ],
+								*/
                                 [
                                     'nome' => 'Plano Semestral',
                                     'desconto' => $dadosFinanceiro['desconto_semestral'],
@@ -82,7 +83,6 @@
                                     'value_checkbox' => $dadosFinanceiro['value_checkbox_semestral'],
                                     'parcelas' => '6'
                                 ],
-								*/
                                 [
                                     'nome' => 'Plano Anual',
                                     'desconto' => $dadosFinanceiro['desconto_anual'],
@@ -136,11 +136,13 @@
                                 </div>
                             </div>
                             <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
-                                <div>
+                                <?php if($plano['desconto'] > 0){ ?>
+								<div>
                                     <h5 class="font-montserrat all-caps small no-margin hint-text bold">
                                         Economia</h5>
                                     <p class="no-margin">R$ <span id="economia">-</span></p>
                                 </div>
+								<?php } ?>
                             </div>
                             <div class="col-md-6 text-right bg-dark padding-10">
                                 <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
