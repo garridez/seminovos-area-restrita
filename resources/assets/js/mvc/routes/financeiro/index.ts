@@ -207,7 +207,7 @@ export const callback = ($: JQueryStatic) => {
 							});
 
 							$('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
-						} else if{
+						} else if(httpResponse.status == "denied"){
 							if(httpResponse?.error){
 								requestAlerts.erro(httpResponse?.error);
 							} else {
