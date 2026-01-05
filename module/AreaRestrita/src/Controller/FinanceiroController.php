@@ -88,8 +88,8 @@ class FinanceiroController extends AbstractActionController
 
         // Percentuais de descontos
         $descTrime = 0;
-        $descSemes = 2.5;
-        $descAnual = 5;
+        $descSemes = 5;
+        $descAnual = 10;
         /** ! Removido desconto COVID
         $idCadastrosComDescondoCOVID = [
             207703, // Golaço Automóveis
