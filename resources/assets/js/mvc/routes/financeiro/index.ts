@@ -222,8 +222,9 @@ export const callback = ($: JQueryStatic) => {
                 error: function (e) {
 					console.log('erro');
 					console.log(e);
-					console.log(e.responseJSON?.error);
+					
 					if (e.responseJSON?.error) {
+						console.log(e.responseJSON?.error);
 						if(e.responseJSON?.error){
 							requestAlerts.erro(e.responseJSON?.error);
 						} else {
