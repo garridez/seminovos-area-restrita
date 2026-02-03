@@ -68,7 +68,7 @@ class VeiculoFotosController extends AbstractActionController
 				if (!in_array($foto['type'], $allowedTypes)) {
 					return new JsonModel([
 						'status' => 400,
-						'detail' => 'Formato inválido: '.$foto['name'],
+						'detail' => 'Formato inválido: '.$foto['name'].', Fornecido: '.$foto['type'],
 					]);
 				}
 			}
@@ -122,9 +122,11 @@ class VeiculoFotosController extends AbstractActionController
 
                 $resUpload = $this->getApiClient()->veiculosFotosPost($data)->json();
 
-                foreach ($files as $file) {
-                    unlink($file);
-                }
+				foreach ($files as $file) {
+					if (file_exists($file)) {
+						unlink($file);
+					}
+				}
 
 				if (
 					!isset($resUpload['status']) ||
