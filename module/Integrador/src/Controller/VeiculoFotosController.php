@@ -19,9 +19,9 @@ class VeiculoFotosController extends AbstractActionController
             $apiClient = $this->getApiClient();
             $tempDir = $this->getContainer()->get('config')['dir']['upload'];
             $tempDir .= DIRECTORY_SEPARATOR . $dataPost->idVeiculo;
-            if (!file_exists($tempDir)) {
-                mkdir($tempDir);
-            }
+			if (!file_exists($tempDir)) {
+				mkdir($tempDir, 0775, true);
+			}
             $moveUpload = new MoveUpload([
                 'target' => $tempDir,
                 'overwrite' => true,
@@ -31,14 +31,47 @@ class VeiculoFotosController extends AbstractActionController
             ]);
 
             $fotos = $request->getFiles()->fotos;
+			
+			if (empty($fotos)) {
+				return new JsonModel([
+					'status' => 400,
+					'detail' => 'Nenhuma foto enviada',
+				]);
+			}			
+			
+			// primeiro isso
+			if (isset($fotos['tmp_name'])) {
+				return new JsonModel([
+					'status' => 405,
+					'detail' => 'O campo fotos deve ser um array.',
+				]);
+			}			
+			
+			$maxSize = 5 * 1024 * 1024; // 5 MB
+			$allowedTypes = ['image/jpeg', 'image/png'];
 
-            // Se existe $fotos['tmp_name'] quer dizer que não é um array de fotos
-            if (isset($fotos['tmp_name'])) {
-                return new JsonModel([
-                    'status' => 405,
-                    'detail' => 'O campo fotos deve ser um array.',
-                ]);
-            }
+			foreach ($fotos as $foto) {
+				if ($foto['error'] !== UPLOAD_ERR_OK) {
+					return new JsonModel([
+						'status' => 400,
+						'detail' => 'Erro no upload da foto: '.$foto['name'],
+					]);
+				}
+
+				if ($foto['size'] > $maxSize) {
+					return new JsonModel([
+						'status' => 400,
+						'detail' => 'Foto muito grande (máx 5MB): '.$foto['name'],
+					]);
+				}
+
+				if (!in_array($foto['type'], $allowedTypes)) {
+					return new JsonModel([
+						'status' => 400,
+						'detail' => 'Formato inválido: '.$foto['name'],
+					]);
+				}
+			}
 
             // Upload
             if ($fotos) {
@@ -47,12 +80,14 @@ class VeiculoFotosController extends AbstractActionController
                         ->json();
                 $ultimoOrdem = is_countable($fotosVeiculo['data']) ? count($fotosVeiculo['data']) : 0;
 
-                if ($ultimoOrdem == 15) {
-                    return new JsonModel([
-                        'status' => 405,
-                        'detail' => 'Limite de fotos alcançado',
-                    ]);
-                }
+				$totalFotos = count($fotosVeiculo['data']) + count($fotos);
+
+				if ($totalFotos > 15) {
+					return new JsonModel([
+						'status' => 400,
+						'detail' => 'Limite máximo de 15 fotos por veículo',
+					]);
+				}
 
                 foreach ($fotos as $foto) {
                     $ordem[] = $ultimoOrdem + 1;
@@ -65,7 +100,22 @@ class VeiculoFotosController extends AbstractActionController
                     'ordem' => $ordem,
                 ];
 
-                $files = $moveUpload->move($fotos, true);
+                $files = $moveUpload->move($fotos, true);				
+				
+				if (!is_array($files) || count($files) === 0) {
+					return new JsonModel([
+						'status' => 500,
+						'detail' => 'Falha ao mover os arquivos',
+					]);
+				}
+
+				if (count($files) !== count($fotos)) {
+					return new JsonModel([
+						'status' => 500,
+						'detail' => 'Nem todas as fotos foram processadas',
+					]);
+				}				
+				
                 $data[$apiClient::KEY_FILES] = [
                     'fotos' => $files,
                 ];
@@ -76,9 +126,16 @@ class VeiculoFotosController extends AbstractActionController
                     unlink($file);
                 }
 
-                if ($resUpload['status'] !== 200) {
-                    return new JsonModel($resUpload);
-                }
+				if (
+					!isset($resUpload['status']) ||
+					$resUpload['status'] !== 200 ||
+					empty($resUpload['data'])
+				) {
+					return new JsonModel([
+						'status' => 502,
+						'detail' => 'API não confirmou salvamento das fotos',
+					]);
+				}
             } else {
                 return new JsonModel([
                     'status' => 405,
