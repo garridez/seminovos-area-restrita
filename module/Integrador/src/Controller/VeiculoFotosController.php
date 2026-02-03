@@ -48,7 +48,9 @@ class VeiculoFotosController extends AbstractActionController
 			}			
 			
 			$maxSize = 5 * 1024 * 1024; // 5 MB
-			$allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'jpg', 'png'];
+
+			$finfo = new \finfo(FILEINFO_MIME_TYPE);
+			$allowedMime = ['image/jpeg', 'image/png', 'image/jpg'];
 
 			foreach ($fotos as $foto) {
 				if ($foto['error'] !== UPLOAD_ERR_OK) {
@@ -65,10 +67,20 @@ class VeiculoFotosController extends AbstractActionController
 					]);
 				}
 
-				if (!in_array($foto['type'], $allowedTypes)) {
+				// MIME real (conteúdo)
+				$mimeReal = $finfo->file($foto['tmp_name']);
+				if (!in_array($mimeReal, $allowedMime)) {
 					return new JsonModel([
 						'status' => 400,
-						'detail' => 'Formato inválido: '.$foto['name'].', Fornecido: '.$foto['type'],
+						'detail' => 'Formato inválido: '.$foto['name'].', Detectado: '.$mimeReal,
+					]);
+				}
+
+				// Validação estrutural da imagem
+				if (@getimagesize($foto['tmp_name']) === false) {
+					return new JsonModel([
+						'status' => 400,
+						'detail' => 'Imagem corrompida ou inválida: '.$foto['name'],
 					]);
 				}
 			}
