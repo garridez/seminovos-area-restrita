@@ -48,7 +48,7 @@ class VeiculoFotosController extends AbstractActionController
 			}			
 			
 			$maxSize = 5 * 1024 * 1024; // 5 MB
-			$allowedTypes = ['image/jpeg', 'image/png'];
+			$allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'jpg', 'png'];
 
 			foreach ($fotos as $foto) {
 				if ($foto['error'] !== UPLOAD_ERR_OK) {
