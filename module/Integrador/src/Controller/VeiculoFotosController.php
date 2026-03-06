@@ -147,7 +147,7 @@ class VeiculoFotosController extends AbstractActionController
 				) {
 					return new JsonModel([
 						'status' => 502,
-						'detail' => 'API não confirmou salvamento das fotos',
+						'detail' => 'Erro: '.json_encode($resUpload),
 					]);
 				}
             } else {
