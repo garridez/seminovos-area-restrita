@@ -88,6 +88,14 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
                 </a>
             </li>
         <?php endif; ?>
+		<?php if ($this->userInfo('idCadastro') == 56216) : ?>
+            <li>
+                <a href="https://builder.seminovos.com.br/" title="Site Builder" target="_blank">
+                    <span class="icon-thumbnail"><i class="fa fa-house" aria-hidden="true"></i></span>
+                    <span class="title">Administrar Site</span>
+                </a>
+            </li>		
+		<?php endif; ?>
         <li>
             <a href="<?= $this->url('restrito/contrato-revenda') ?>" title="Contrato">
                 <span class="icon-thumbnail"><i class="fa fa-address-book" aria-hidden="true"></i></span>
