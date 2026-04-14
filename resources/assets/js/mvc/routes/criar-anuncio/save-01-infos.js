@@ -569,21 +569,27 @@ export const callback = ($) => {
                                     // Versão — name="versao", carrega via AJAX após anoModelo
                                     if (parsed.versao) {
                                         setTimeout(function () {
-                                            var versaoSetada = setSelectByMatch(
-                                                $,
-                                                'versao',
-                                                parsed.versao,
-                                            );
+                                            var versaoSelect = $('select[name="versao"]');
+                                            // Checa se tem options reais (excluindo placeholder e "Outra versão")
+                                            var temOpcoesReais = versaoSelect.find('option').filter(function () {
+                                                var val = $(this).val();
+                                                return val && val !== '' && val !== '-1';
+                                            }).length > 0;
+
+                                            var versaoSetada = false;
+                                            if (temOpcoesReais) {
+                                                versaoSetada = setSelectByMatch($, 'versao', parsed.versao);
+                                            }
+
                                             if (!versaoSetada) {
                                                 // Seleciona "Outra versão" (value="-1")
-                                                $('select[name="versao"]').val('-1').trigger('change');
+                                                versaoSelect.val('-1').trigger('change');
                                                 // Preenche o input de texto
+                                                var textoVersao = parsed.versao +
+                                                    (parsed.turbo ? ' Turbo Intercooler' : '');
                                                 var inputOutraVersao = $('input[name="outraVersao"]');
                                                 if (inputOutraVersao.length) {
-                                                    inputOutraVersao.val(
-                                                        parsed.versao +
-                                                            (parsed.turbo ? ' Turbo Intercooler' : ''),
-                                                    );
+                                                    inputOutraVersao.val(textoVersao);
                                                 }
                                             }
                                         }, 1500);
