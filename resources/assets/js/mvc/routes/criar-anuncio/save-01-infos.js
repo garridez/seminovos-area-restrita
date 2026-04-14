@@ -483,96 +483,112 @@ export const callback = ($) => {
                                 }
 
                                 // ========================================
-                                // MODELO — prioriza parsed FIPE modeloNome, fallback dados_veiculo
+                                // MODELO + CAMPOS EXTRAS
+                                // Espera o select de modelos ser populado
+                                // (carrega via AJAX após o trigger de marca)
                                 // ========================================
                                 var modeloAlvo = parsed.modeloNome || dadosVeiculo.modelo;
-                                $('select[name="modeloCarro"] option:selected').prop(
-                                    'selected',
-                                    false,
-                                );
-                                options = $('select[name="modeloCarro"] option');
-                                var matchRegex = -1;
-                                options.each(function (k, v) {
-                                    var option = $(v);
-                                    var modelo = option.html().trim();
-                                    if (!modelo) return;
-                                    var regex = RegExp(modelo, 'i');
-                                    if (regex.test(modeloAlvo)) {
-                                        if (matchRegex > -1) {
-                                            var previosOption = $(options[matchRegex])
-                                                .html()
-                                                .trim();
-                                            matchRegex =
-                                                previosOption.length > modelo.length
-                                                    ? matchRegex
-                                                    : k;
-                                        } else {
-                                            matchRegex = k;
-                                        }
+
+                                // Polling: espera as options do modelo carregarem (max 5s)
+                                var _modeloPollCount = 0;
+                                var _modeloPoll = setInterval(function () {
+                                    _modeloPollCount++;
+                                    var modeloOptions = $('select[name="modeloCarro"] option');
+
+                                    // Ainda só tem "Selecione o modelo"? Espera mais
+                                    if (modeloOptions.length <= 1 && _modeloPollCount < 50) {
+                                        return; // tenta de novo em 100ms
                                     }
-                                });
-                                if (matchRegex > -1) {
-                                    $(options[matchRegex]).prop('selected', true);
-                                }
+                                    clearInterval(_modeloPoll);
 
-                                // ========================================
-                                // CAMPOS EXTRAS via parser FIPE
-                                // ========================================
-
-                                // Motor (ex: "3.2", "1.0", "2.0")
-                                // @TODO: confirmar name do select de Motor
-                                if (parsed.motor) {
-                                    setSelectByMatch($, 'motor', parsed.motor);
-                                }
-
-                                // Válvulas (ex: 8, 16, 24)
-                                // @TODO: confirmar name do select de Válvula
-                                if (parsed.valvulas) {
-                                    setSelectByMatch($, 'valvula', String(parsed.valvulas));
-                                }
-
-                                // Câmbio (ex: "Automático", "Manual", "CVT")
-                                // @TODO: confirmar name do select de Câmbio
-                                if (parsed.cambio) {
-                                    setSelectByMatch($, 'cambio', parsed.cambio);
-                                }
-
-                                // Portas (ex: 2, 3, 4, 5)
-                                // @TODO: confirmar name do select de Portas
-                                if (parsed.portas) {
-                                    setSelectByMatch($, 'portas', String(parsed.portas));
-                                }
-
-                                // Versão — se o parser encontrou, tenta setar
-                                // O select de versão depende do trigger de anoModelo
-                                // então setamos após um delay para dar tempo de carregar
-                                if (parsed.versao) {
-                                    setTimeout(function () {
-                                        var versaoSetada = setSelectByMatch(
-                                            $,
-                                            'caracteristicaVeiculo',
-                                            parsed.versao,
-                                        );
-                                        // Se não achou no select, preenche "Outra versão"
-                                        if (!versaoSetada) {
-                                            setSelectByMatch(
-                                                $,
-                                                'caracteristicaVeiculo',
-                                                'outra',
-                                            );
-                                            // Preenche o input de texto com a versão completa
-                                            var inputOutraVersao = $(
-                                                'input[name="outraVersao"], input[name="versaoOutra"], input[name="outra_versao"]',
-                                            );
-                                            if (inputOutraVersao.length) {
-                                                inputOutraVersao.val(
-                                                    parsed.versao +
-                                                        (parsed.turbo ? ' Turbo Intercooler' : ''),
-                                                );
+                                    // --- Setar modelo ---
+                                    $('select[name="modeloCarro"] option:selected').prop(
+                                        'selected',
+                                        false,
+                                    );
+                                    var matchRegex = -1;
+                                    modeloOptions.each(function (k, v) {
+                                        var option = $(v);
+                                        var modelo = option.html().trim();
+                                        if (!modelo) return;
+                                        var regex = RegExp(modelo, 'i');
+                                        if (regex.test(modeloAlvo)) {
+                                            if (matchRegex > -1) {
+                                                var previosOption = $(modeloOptions[matchRegex])
+                                                    .html()
+                                                    .trim();
+                                                matchRegex =
+                                                    previosOption.length > modelo.length
+                                                        ? matchRegex
+                                                        : k;
+                                            } else {
+                                                matchRegex = k;
                                             }
                                         }
-                                    }, 1500);
-                                }
+                                    });
+                                    if (matchRegex > -1) {
+                                        $(modeloOptions[matchRegex]).prop('selected', true);
+                                    }
+
+                                    // --- Campos extras via parser FIPE ---
+
+                                    // Motor — name="motor", options text: "3.2", "1.0", etc.
+                                    if (parsed.motor) {
+                                        setSelectByMatch($, 'motor', parsed.motor);
+                                    }
+
+                                    // Válvulas — name="idValvula", options text: "8", "16", etc.
+                                    if (parsed.valvulas) {
+                                        setSelectByMatch($, 'idValvula', String(parsed.valvulas));
+                                    }
+
+                                    // Câmbio — name="checkboxacessorios[]" (compartilhado!)
+                                    // Localiza pelo label[for="cambio"] para pegar o select correto
+                                    if (parsed.cambio) {
+                                        var cambioSelect = $('label[for="cambio"]')
+                                            .closest('.form-group')
+                                            .find('select');
+                                        if (cambioSelect.length) {
+                                            var cambioAlvo = parsed.cambio.toLowerCase();
+                                            cambioSelect.find('option').each(function () {
+                                                var opt = $(this);
+                                                var optText = opt.text().trim().toLowerCase();
+                                                if (optText === cambioAlvo || optText.indexOf(cambioAlvo) > -1 || cambioAlvo.indexOf(optText) > -1) {
+                                                    opt.prop('selected', true);
+                                                    return false;
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    // Portas — name="portas", options text: "5 Portas", etc.
+                                    if (parsed.portas) {
+                                        setSelectByMatch($, 'portas', String(parsed.portas));
+                                    }
+
+                                    // Versão — name="versao", carrega via AJAX após anoModelo
+                                    if (parsed.versao) {
+                                        setTimeout(function () {
+                                            var versaoSetada = setSelectByMatch(
+                                                $,
+                                                'versao',
+                                                parsed.versao,
+                                            );
+                                            if (!versaoSetada) {
+                                                // Seleciona "Outra versão" (value="-1")
+                                                $('select[name="versao"]').val('-1').trigger('change');
+                                                // Preenche o input de texto
+                                                var inputOutraVersao = $('input[name="outraVersao"]');
+                                                if (inputOutraVersao.length) {
+                                                    inputOutraVersao.val(
+                                                        parsed.versao +
+                                                            (parsed.turbo ? ' Turbo Intercooler' : ''),
+                                                    );
+                                                }
+                                            }
+                                        }, 1500);
+                                    }
+                                }, 100); // poll a cada 100ms
                             }
 
                             BtnContinuar.enable();
