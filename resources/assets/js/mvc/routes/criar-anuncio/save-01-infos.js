@@ -22,36 +22,36 @@ import BtnContinuar from './helpers/BtnContinuar';
 //   → { modeloNome: "Pajero", motor: "3.2", tracao: "4X4",
 //        turbo: true, combustivel: "Diesel", portas: 5, cambio: "Automático" }
 // ============================================================
-function parseFipeModelo(fipeStr: string) {
-    let remaining = fipeStr.trim();
-    const result: Record<string, any> = {};
+function parseFipeModelo(fipeStr) {
+    var remaining = fipeStr.trim();
+    var result = {};
 
     // Carroceria (CD = Cabine Dupla, CS = Cabine Simples, CE = Cabine Estendida)
-    remaining = remaining.replace(/\b(CD|CS|CE)\b/g, (m) => {
+    remaining = remaining.replace(/\b(CD|CS|CE)\b/g, function (m) {
         result.carroceria = m.toUpperCase();
         return '';
     });
 
     // Câmbio
-    const cambioMap: Record<string, string> = {
+    var cambioMap = {
         'aut': 'Automático',
         'man': 'Manual',
         'cvt': 'CVT',
     };
-    remaining = remaining.replace(/\b(Aut|Man|CVT)\b\.?/i, (m) => {
-        const key = m.replace('.', '').toLowerCase();
+    remaining = remaining.replace(/\b(Aut|Man|CVT)\b\.?/i, function (m) {
+        var key = m.replace('.', '').toLowerCase();
         result.cambio = cambioMap[key] || m;
         return '';
     });
 
     // Portas (ex: "5p", "4p", "3p", "2p")
-    remaining = remaining.replace(/\b(\d)p\b/i, (_m, n) => {
+    remaining = remaining.replace(/\b(\d)p\b/i, function (_m, n) {
         result.portas = parseInt(n, 10);
         return '';
     });
 
     // Combustível
-    const combMap: Record<string, string> = {
+    var combMap = {
         'dies': 'Diesel',
         'diesel': 'Diesel',
         'flex': 'Flex',
@@ -66,37 +66,37 @@ function parseFipeModelo(fipeStr: string) {
     };
     remaining = remaining.replace(
         /\b(Dies|Diesel|Flex|Gas|Gasolina|Elet|Elétrico|Híb|Híbrido|GNV|Alc|Álcool)\b\.?/i,
-        (m) => {
-            const key = m.replace('.', '').toLowerCase();
+        function (m) {
+            var key = m.replace('.', '').toLowerCase();
             result.combustivel = combMap[key] || m;
             return '';
         },
     );
 
     // Turbo / Aspiração (T.I. = Turbo Intercooler)
-    remaining = remaining.replace(/\bT\.?\s?I\.?\b/gi, () => {
+    remaining = remaining.replace(/\bT\.?\s?I\.?\b/gi, function () {
         result.turbo = true;
         return '';
     });
-    remaining = remaining.replace(/\bTurbo\b/gi, () => {
+    remaining = remaining.replace(/\bTurbo\b/gi, function () {
         result.turbo = true;
         return '';
     });
 
     // Tração
-    remaining = remaining.replace(/\b(4x[24]|AWD|FWD|RWD|2WD)\b/i, (m) => {
+    remaining = remaining.replace(/\b(4x[24]|AWD|FWD|RWD|2WD)\b/i, function (m) {
         result.tracao = m.toUpperCase();
         return '';
     });
 
     // Motor / Cilindrada (ex: "3.2", "1.0", "2.0")
-    remaining = remaining.replace(/\b(\d\.\d)\b/, (m) => {
+    remaining = remaining.replace(/\b(\d\.\d)\b/, function (m) {
         result.motor = m;
         return '';
     });
 
     // Válvulas (ex: "8V", "16V", "24V")
-    remaining = remaining.replace(/\b(\d{1,2})[Vv]\b/, (_m, n) => {
+    remaining = remaining.replace(/\b(\d{1,2})[Vv]\b/, function (_m, n) {
         result.valvulas = parseInt(n, 10);
         return '';
     });
@@ -104,7 +104,7 @@ function parseFipeModelo(fipeStr: string) {
     // Tokens técnicos conhecidos (limpar)
     remaining = remaining.replace(
         /\b(MPI|MPFI|DOHC|SOHC|VVT|VVTi|VTEC|TSI|TDI|HDI|CDI|CGI|GDI|EcoBoost|BlueHDi|JTD)\b/gi,
-        (m) => {
+        function (m) {
             result.tecnologia = result.tecnologia || [];
             result.tecnologia.push(m.toUpperCase());
             return '';
@@ -115,27 +115,27 @@ function parseFipeModelo(fipeStr: string) {
     remaining = remaining.replace(/\s{2,}/g, ' ').replace(/^\s+|\s+$/g, '');
 
     // Separar modelo de versão/trim
-    // Versões geralmente são siglas maiúsculas de 2-5 chars (LTZ, XRE, EXL, Comfort, Plus...)
-    const words = remaining.split(' ');
-    const versionPattern = /^[A-Z][A-Za-z]{1,10}$/; // Siglas ou nomes de versão
-    const knownVersions = [
+    var words = remaining.split(' ');
+    var knownVersions = [
         'LT', 'LTZ', 'LTZ2', 'LS', 'LX', 'EX', 'EXL', 'DX', 'GL', 'GLS', 'GLX',
         'SE', 'SEL', 'SR', 'SV', 'SL', 'XE', 'XRE', 'XRV', 'XRS', 'XEI', 'XLS', 'XLT',
         'Comfort', 'Plus', 'Sense', 'Life', 'Active', 'Style', 'Evolution', 'Limited',
         'Premium', 'Titanium', 'Ghia', 'HPE', 'HPE-S', 'Highline', 'Comfortline', 'Trendline',
-        'Adventure', 'Endurance', 'Volcano', 'Freedom', 'Longitude', 'Limited', 'Overland',
+        'Adventure', 'Endurance', 'Volcano', 'Freedom', 'Longitude', 'Overland',
         'Outdoor', 'Urban', 'Intense', 'Iconic', 'Launch', 'Edition',
     ];
-    const knownVersionsLower = knownVersions.map((v) => v.toLowerCase());
+    var knownVersionsLower = knownVersions.map(function (v) { return v.toLowerCase(); });
+    var versionPattern = /^[A-Z]{2,5}$/;
 
-    const modelWords: string[] = [];
-    const versionWords: string[] = [];
-    let foundVersion = false;
+    var modelWords = [];
+    var versionWords = [];
+    var foundVersion = false;
 
-    for (const word of words) {
+    for (var i = 0; i < words.length; i++) {
+        var word = words[i];
         if (!word) continue;
-        const isKnownVersion = knownVersionsLower.includes(word.toLowerCase());
-        const looksLikeVersion = !foundVersion && versionPattern.test(word) && word.length <= 5;
+        var isKnownVersion = knownVersionsLower.indexOf(word.toLowerCase()) > -1;
+        var looksLikeVersion = !foundVersion && versionPattern.test(word) && word.length <= 5;
 
         if (!foundVersion && !isKnownVersion && !looksLikeVersion) {
             modelWords.push(word);
@@ -156,14 +156,13 @@ function parseFipeModelo(fipeStr: string) {
 // ============================================================
 // Mapeamento de siglas Denatran/RENAVAM → nome comercial
 // ============================================================
-const marcaAliases: Record<string, string> = {
+var marcaAliases = {
     'mmc': 'mitsubishi',
     'gm': 'chevrolet',
     'gm - chevrolet': 'chevrolet',
     'chevrolet - gm': 'chevrolet',
     'vw': 'volkswagen',
     'vw - volkswagen': 'volkswagen',
-    'i/': 'fiat', // importados Fiat
     'fiat': 'fiat',
     'ford': 'ford',
     'toyota': 'toyota',
@@ -213,23 +212,18 @@ const marcaAliases: Record<string, string> = {
 // Helper: tenta setar o valor de um <select> por match parcial
 // Retorna true se encontrou
 // ============================================================
-function setSelectByMatch(
-    $: JQueryStatic,
-    selectName: string,
-    targetValue: string,
-    form?: JQuery,
-): boolean {
-    const container = form || $(document);
-    const select = container.find(`select[name="${selectName}"]`);
+function setSelectByMatch($, selectName, targetValue, form) {
+    var container = form || $(document);
+    var select = container.find('select[name="' + selectName + '"]');
     if (!select.length || !targetValue) return false;
 
-    const target = targetValue.toLowerCase().trim();
-    let found = false;
+    var target = targetValue.toLowerCase().trim();
+    var found = false;
 
     // Primeira tentativa: match exato
     select.find('option').each(function () {
-        const option = $(this);
-        const optVal = option.text().trim().toLowerCase();
+        var option = $(this);
+        var optVal = option.text().trim().toLowerCase();
         if (optVal === target) {
             option.prop('selected', true);
             found = true;
@@ -241,9 +235,9 @@ function setSelectByMatch(
 
     // Segunda tentativa: match parcial (contém)
     select.find('option').each(function () {
-        const option = $(this);
-        const optVal = option.text().trim().toLowerCase();
-        if (optVal.includes(target) || target.includes(optVal)) {
+        var option = $(this);
+        var optVal = option.text().trim().toLowerCase();
+        if (optVal.indexOf(target) > -1 || target.indexOf(optVal) > -1) {
             option.prop('selected', true);
             found = true;
             return false;
@@ -340,14 +334,14 @@ export const callback = ($) => {
                             }
 
                             if (response.historicoCarro && response.historicoCarro.dados_veiculo) {
-                                let historico = response.historicoCarro;
-                                let dadosVeiculo = historico.dados_veiculo;
-                                let fipe = historico.fipe || null;
+                                var historico = response.historicoCarro;
+                                var dadosVeiculo = historico.dados_veiculo;
+                                var fipe = historico.fipe || null;
 
                                 // ========================================
                                 // Parser FIPE: extrair dados estruturados
                                 // ========================================
-                                let parsed: Record<string, any> = {};
+                                var parsed = {};
                                 if (fipe && fipe.modelo) {
                                     parsed = parseFipeModelo(fipe.modelo);
                                 }
@@ -355,7 +349,7 @@ export const callback = ($) => {
                                 // ========================================
                                 // Ano Fabricação / Ano Modelo
                                 // ========================================
-                                let anoModelo = dadosVeiculo.ano_modelo;
+                                var anoModelo = dadosVeiculo.ano_modelo;
 
                                 if (
                                     dadosVeiculo.ano_fabricacao &&
@@ -377,7 +371,7 @@ export const callback = ($) => {
                                 }
 
                                 // Trigger para buscar versão
-                                setTimeout(() => {
+                                setTimeout(function () {
                                     $('select[name="anoModelo"]').trigger('change', [
                                         false,
                                         $('[name="caracteristicaVeiculo"]').val(),
@@ -387,14 +381,14 @@ export const callback = ($) => {
                                 // ========================================
                                 // Cor — prioriza dados_veiculo (já vem limpo)
                                 // ========================================
-                                let corSelecionada = dadosVeiculo.cor
+                                var corSelecionada = dadosVeiculo.cor
                                     .toLowerCase()
                                     .slice(0, -1);
                                 $('select[name="cor"] option:selected').prop('selected', false);
-                                let options = $('select[name="cor"] option');
+                                var options = $('select[name="cor"] option');
                                 options.each(function (_k, v) {
-                                    let option = $(v);
-                                    let cor = option.val().toLowerCase().slice(0, -1);
+                                    var option = $(v);
+                                    var cor = option.val().toLowerCase().slice(0, -1);
                                     if (corSelecionada == cor) {
                                         option.prop('selected', true);
                                         return false;
@@ -408,7 +402,7 @@ export const callback = ($) => {
                                     'selected',
                                     false,
                                 );
-                                let combustivelAlvo = parsed.combustivel || dadosVeiculo.combustivel;
+                                var combustivelAlvo = parsed.combustivel || dadosVeiculo.combustivel;
                                 if (combustivelAlvo) {
                                     setSelectByMatch($, 'combustivel', combustivelAlvo);
                                 }
@@ -429,7 +423,7 @@ export const callback = ($) => {
                                 // ========================================
                                 // MARCA — prioriza FIPE, fallback dados_veiculo + aliases
                                 // ========================================
-                                let marcaFonte = (fipe && fipe.marca)
+                                var marcaFonte = (fipe && fipe.marca)
                                     ? fipe.marca
                                     : dadosVeiculo.marca;
 
@@ -440,14 +434,14 @@ export const callback = ($) => {
                                 options = $('select[name="idMarca"] option');
 
                                 if (marcaFonte) {
-                                    let marcaLower = marcaFonte.toLowerCase().trim();
+                                    var marcaLower = marcaFonte.toLowerCase().trim();
                                     // Resolver alias (MMC → mitsubishi, GM → chevrolet, etc.)
-                                    let marcaNormalizada = marcaAliases[marcaLower] || marcaLower;
+                                    var marcaNormalizada = marcaAliases[marcaLower] || marcaLower;
 
-                                    let marcaEncontrada = false;
+                                    var marcaEncontrada = false;
                                     options.each(function (_k, v) {
-                                        let option = $(v);
-                                        let marca = option.html().trim().toLowerCase();
+                                        var option = $(v);
+                                        var marca = option.html().trim().toLowerCase();
                                         if (
                                             marca === marcaNormalizada ||
                                             marca === marcaLower
@@ -468,11 +462,11 @@ export const callback = ($) => {
                                     // Se não encontrou nem por alias, tenta match parcial
                                     if (!marcaEncontrada) {
                                         options.each(function (_k, v) {
-                                            let option = $(v);
-                                            let marca = option.html().trim().toLowerCase();
+                                            var option = $(v);
+                                            var marca = option.html().trim().toLowerCase();
                                             if (
-                                                marca.includes(marcaNormalizada) ||
-                                                marcaNormalizada.includes(marca)
+                                                marca.indexOf(marcaNormalizada) > -1 ||
+                                                marcaNormalizada.indexOf(marca) > -1
                                             ) {
                                                 option.prop('selected', true);
                                                 $('select[name="idMarca"]').trigger('change');
@@ -491,7 +485,7 @@ export const callback = ($) => {
                                 // ========================================
                                 // MODELO — prioriza parsed FIPE modeloNome, fallback dados_veiculo
                                 // ========================================
-                                let modeloAlvo = parsed.modeloNome || dadosVeiculo.modelo;
+                                var modeloAlvo = parsed.modeloNome || dadosVeiculo.modelo;
                                 $('select[name="modeloCarro"] option:selected').prop(
                                     'selected',
                                     false,
@@ -499,10 +493,10 @@ export const callback = ($) => {
                                 options = $('select[name="modeloCarro"] option');
                                 var matchRegex = -1;
                                 options.each(function (k, v) {
-                                    let option = $(v);
-                                    let modelo = option.html().trim();
+                                    var option = $(v);
+                                    var modelo = option.html().trim();
                                     if (!modelo) return;
-                                    let regex = RegExp(modelo, 'i');
+                                    var regex = RegExp(modelo, 'i');
                                     if (regex.test(modeloAlvo)) {
                                         if (matchRegex > -1) {
                                             var previosOption = $(options[matchRegex])
@@ -553,22 +547,21 @@ export const callback = ($) => {
                                 // O select de versão depende do trigger de anoModelo
                                 // então setamos após um delay para dar tempo de carregar
                                 if (parsed.versao) {
-                                    setTimeout(() => {
-                                        let versaoSetada = setSelectByMatch(
+                                    setTimeout(function () {
+                                        var versaoSetada = setSelectByMatch(
                                             $,
                                             'caracteristicaVeiculo',
                                             parsed.versao,
                                         );
                                         // Se não achou no select, preenche "Outra versão"
                                         if (!versaoSetada) {
-                                            // Seleciona "Outra versão" no select se existir
                                             setSelectByMatch(
                                                 $,
                                                 'caracteristicaVeiculo',
                                                 'outra',
                                             );
                                             // Preenche o input de texto com a versão completa
-                                            let inputOutraVersao = $(
+                                            var inputOutraVersao = $(
                                                 'input[name="outraVersao"], input[name="versaoOutra"], input[name="outra_versao"]',
                                             );
                                             if (inputOutraVersao.length) {
@@ -578,7 +571,7 @@ export const callback = ($) => {
                                                 );
                                             }
                                         }
-                                    }, 1500); // Delay para o select de versão carregar via AJAX
+                                    }, 1500);
                                 }
                             }
 
