@@ -26,11 +26,9 @@ function parseFipeModelo(fipeStr) {
     var remaining = fipeStr.trim();
     var result = {};
 
-    // Carroceria (CD = Cabine Dupla, CS = Cabine Simples, CE = Cabine Estendida)
-    remaining = remaining.replace(/\b(CD|CS|CE)\b/g, function (m) {
-        result.carroceria = m.toUpperCase();
-        return '';
-    });
+    // Nota: CD (Cabine Dupla), CS (Cabine Simples), CE (Cabine Estendida)
+    // NÃO são removidos pois fazem parte do nome do modelo nos selects
+    // Ex: "Hilux CD", "Hilux CS", "S10 CD"
 
     // Câmbio
     var cambioMap = {
@@ -114,41 +112,10 @@ function parseFipeModelo(fipeStr) {
     // O que sobrou = modelo + versão (limpar espaços)
     remaining = remaining.replace(/\s{2,}/g, ' ').replace(/^\s+|\s+$/g, '');
 
-    // Separar modelo de versão/trim
-    var words = remaining.split(' ');
-    var knownVersions = [
-        'LT', 'LTZ', 'LTZ2', 'LS', 'LX', 'EX', 'EXL', 'DX', 'GL', 'GLS', 'GLX',
-        'SE', 'SEL', 'SR', 'SV', 'SL', 'XE', 'XRE', 'XRV', 'XRS', 'XEI', 'XLS', 'XLT',
-        'Comfort', 'Plus', 'Sense', 'Life', 'Active', 'Style', 'Evolution', 'Limited',
-        'Premium', 'Titanium', 'Ghia', 'HPE', 'HPE-S', 'Highline', 'Comfortline', 'Trendline',
-        'Adventure', 'Endurance', 'Volcano', 'Freedom', 'Longitude', 'Overland',
-        'Outdoor', 'Urban', 'Intense', 'Iconic', 'Launch', 'Edition',
-    ];
-    var knownVersionsLower = knownVersions.map(function (v) { return v.toLowerCase(); });
-    var versionPattern = /^[A-Z]{2,5}$/;
-
-    var modelWords = [];
-    var versionWords = [];
-    var foundVersion = false;
-
-    for (var i = 0; i < words.length; i++) {
-        var word = words[i];
-        if (!word) continue;
-        var isKnownVersion = knownVersionsLower.indexOf(word.toLowerCase()) > -1;
-        var looksLikeVersion = !foundVersion && versionPattern.test(word) && word.length <= 5;
-
-        if (!foundVersion && !isKnownVersion && !looksLikeVersion) {
-            modelWords.push(word);
-        } else {
-            foundVersion = true;
-            versionWords.push(word);
-        }
-    }
-
-    result.modeloNome = modelWords.join(' ');
-    if (versionWords.length) {
-        result.versao = versionWords.join(' ');
-    }
+    // Retorna o texto limpo inteiro — a separação modelo/versão
+    // será feita comparando com as options do select de modelos,
+    // que é muito mais confiável que tentar adivinhar aqui
+    result.remaining = remaining;
 
     return result;
 }
@@ -487,7 +454,7 @@ export const callback = ($) => {
                                 // Espera o select de modelos ser populado
                                 // (carrega via AJAX após o trigger de marca)
                                 // ========================================
-                                var modeloAlvo = parsed.modeloNome || dadosVeiculo.modelo;
+                                var modeloAlvo = parsed.remaining || dadosVeiculo.modelo;
 
                                 // Polling: espera as options do modelo carregarem (max 5s)
                                 var _modeloPollCount = 0;
@@ -501,33 +468,96 @@ export const callback = ($) => {
                                     }
                                     clearInterval(_modeloPoll);
 
-                                    // --- Setar modelo ---
+                                    // --- Setar modelo usando o select como referência ---
+                                    // Compara cada option contra o texto FIPE limpo
+                                    // O option mais longo que casar = modelo correto
+                                    // O que sobra do texto = versão
                                     $('select[name="modeloCarro"] option:selected').prop(
                                         'selected',
                                         false,
                                     );
-                                    var matchRegex = -1;
+
+                                    var bestMatchIndex = -1;
+                                    var bestMatchLength = 0;
+                                    var bestMatchName = '';
+                                    var alvoLower = modeloAlvo.toLowerCase();
+
+                                    // Passo 1: match por prefixo (mais confiável)
+                                    // Ex: "Hilux CD SR" começa com "Hilux CD"
                                     modeloOptions.each(function (k, v) {
                                         var option = $(v);
-                                        var modelo = option.html().trim();
-                                        if (!modelo) return;
-                                        var regex = RegExp(modelo, 'i');
-                                        if (regex.test(modeloAlvo)) {
-                                            if (matchRegex > -1) {
-                                                var previosOption = $(modeloOptions[matchRegex])
-                                                    .html()
-                                                    .trim();
-                                                matchRegex =
-                                                    previosOption.length > modelo.length
-                                                        ? matchRegex
-                                                        : k;
-                                            } else {
-                                                matchRegex = k;
+                                        var optName = option.html().trim();
+                                        if (!optName || !option.val()) return;
+                                        var optLower = optName.toLowerCase();
+
+                                        if (alvoLower.indexOf(optLower) === 0 &&
+                                            optLower.length > bestMatchLength) {
+                                            var nextChar = alvoLower.charAt(optLower.length);
+                                            if (nextChar === '' || nextChar === ' ') {
+                                                bestMatchIndex = k;
+                                                bestMatchLength = optLower.length;
+                                                bestMatchName = optName;
                                             }
                                         }
                                     });
-                                    if (matchRegex > -1) {
-                                        $(modeloOptions[matchRegex]).prop('selected', true);
+
+                                    // Passo 2 (fallback): option contida no alvo como substring
+                                    if (bestMatchIndex === -1) {
+                                        modeloOptions.each(function (k, v) {
+                                            var option = $(v);
+                                            var optName = option.html().trim();
+                                            if (!optName || !option.val()) return;
+
+                                            var escaped = optName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                                            var regex = RegExp(escaped, 'i');
+                                            if (regex.test(modeloAlvo) && optName.length > bestMatchLength) {
+                                                bestMatchIndex = k;
+                                                bestMatchLength = optName.length;
+                                                bestMatchName = optName;
+                                            }
+                                        });
+                                    }
+
+                                    // Passo 3 (fallback): todas as palavras da option existem no alvo
+                                    // Pega "Strada CS" quando alvo é "Strada Firefly CS"
+                                    if (bestMatchIndex === -1) {
+                                        var alvoWords = alvoLower.split(/\s+/);
+                                        modeloOptions.each(function (k, v) {
+                                            var option = $(v);
+                                            var optName = option.html().trim();
+                                            if (!optName || !option.val()) return;
+                                            var optWords = optName.toLowerCase().split(/\s+/);
+
+                                            var allFound = optWords.every(function (w) {
+                                                return alvoWords.indexOf(w) > -1;
+                                            });
+                                            if (allFound && optWords.length > bestMatchLength) {
+                                                bestMatchIndex = k;
+                                                bestMatchLength = optWords.length; // conta por palavras
+                                                bestMatchName = optName;
+                                            }
+                                        });
+                                    }
+
+                                    if (bestMatchIndex > -1) {
+                                        $(modeloOptions[bestMatchIndex]).prop('selected', true);
+                                    }
+
+                                    // Derivar a versão: tudo que sobrou após remover o nome do modelo
+                                    var versaoDerivada = '';
+                                    if (bestMatchName) {
+                                        // Remove cada palavra do modelo do texto FIPE
+                                        var optWords = bestMatchName.toLowerCase().split(/\s+/);
+                                        var remainingWords = modeloAlvo.split(/\s+/).filter(function (w) {
+                                            var wLower = w.toLowerCase();
+                                            var idx = optWords.indexOf(wLower);
+                                            if (idx > -1) {
+                                                optWords.splice(idx, 1); // remove só a primeira ocorrência
+                                                return false;
+                                            }
+                                            return true;
+                                        });
+                                        versaoDerivada = remainingWords.join(' ');
                                     }
 
                                     // --- Campos extras via parser FIPE ---
@@ -566,11 +596,10 @@ export const callback = ($) => {
                                         setSelectByMatch($, 'portas', String(parsed.portas));
                                     }
 
-                                    // Versão — name="versao", carrega via AJAX após anoModelo
-                                    if (parsed.versao) {
+                                    // Versão — derivada do que sobrou após o match do modelo
+                                    if (versaoDerivada) {
                                         setTimeout(function () {
                                             var versaoSelect = $('select[name="versao"]');
-                                            // Checa se tem options reais (excluindo placeholder e "Outra versão")
                                             var temOpcoesReais = versaoSelect.find('option').filter(function () {
                                                 var val = $(this).val();
                                                 return val && val !== '' && val !== '-1';
@@ -578,14 +607,13 @@ export const callback = ($) => {
 
                                             var versaoSetada = false;
                                             if (temOpcoesReais) {
-                                                versaoSetada = setSelectByMatch($, 'versao', parsed.versao);
+                                                versaoSetada = setSelectByMatch($, 'versao', versaoDerivada);
                                             }
 
                                             if (!versaoSetada) {
-                                                // Seleciona "Outra versão" (value="-1")
                                                 versaoSelect.val('-1').trigger('change');
-                                                // Preenche o input de texto
-                                                var textoVersao = parsed.versao +
+                                                var textoVersao = versaoDerivada +
+                                                    (parsed.tracao ? ' ' + parsed.tracao : '') +
                                                     (parsed.turbo ? ' Turbo Intercooler' : '');
                                                 var inputOutraVersao = $('input[name="outraVersao"]');
                                                 if (inputOutraVersao.length) {
