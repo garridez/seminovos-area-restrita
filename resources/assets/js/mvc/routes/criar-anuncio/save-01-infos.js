@@ -120,7 +120,6 @@ function parseFipeModelo(fipeStr) {
     return result;
 }
 
-
 // ============================================================
 // Mapeamento de siglas Denatran/RENAVAM → nome comercial
 // ============================================================
@@ -177,23 +176,7 @@ var marcaAliases = {
 };
 
 // ============================================================
-// Helper: remove acentos e normaliza texto para comparação
-// "Elétrico" → "eletrico", "Álcool" → "alcool"
-// ============================================================
-function normalizeStr(str) {
-    return str
-        .toLowerCase()
-        .trim()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')  // remove diacríticos
-        .replace(/[\/\-]/g, ' ')           // "/" e "-" viram espaço
-        .replace(/\s{2,}/g, ' ')
-        .trim();
-}
-
-// ============================================================
-// Helper: tenta setar o valor de um <select> por match
-// Usa normalização para ignorar acentos
+// Helper: tenta setar o valor de um <select> por match parcial
 // Retorna true se encontrou
 // ============================================================
 function setSelectByMatch($, selectName, targetValue, form) {
@@ -201,13 +184,13 @@ function setSelectByMatch($, selectName, targetValue, form) {
     var select = container.find('select[name="' + selectName + '"]');
     if (!select.length || !targetValue) return false;
 
-    var target = normalizeStr(targetValue);
+    var target = targetValue.toLowerCase().trim();
     var found = false;
 
-    // Primeira tentativa: match exato (normalizado)
+    // Primeira tentativa: match exato
     select.find('option').each(function () {
         var option = $(this);
-        var optVal = normalizeStr(option.text());
+        var optVal = option.text().trim().toLowerCase();
         if (optVal === target) {
             option.prop('selected', true);
             found = true;
@@ -217,10 +200,10 @@ function setSelectByMatch($, selectName, targetValue, form) {
 
     if (found) return true;
 
-    // Segunda tentativa: match parcial (contém, normalizado)
+    // Segunda tentativa: match parcial (contém)
     select.find('option').each(function () {
         var option = $(this);
-        var optVal = normalizeStr(option.text());
+        var optVal = option.text().trim().toLowerCase();
         if (optVal.indexOf(target) > -1 || target.indexOf(optVal) > -1) {
             option.prop('selected', true);
             found = true;
@@ -317,58 +300,10 @@ export const callback = ($) => {
                                 response.historicoCarro.dados_veiculo = false;
                             }
 
-                            // ========================================
-                            // RESET: limpar dados da placa anterior
-                            // ========================================
-                            $('select[name="idMarca"]').val('').prop('disabled', false);
-                            $('select[name="idMarca"] option')
-                                .prop('disabled', false)
-                                .removeClass('hide');
-                            $('select[name="modeloCarro"]').val('');
-                            $('select[name="anoFabricacao"]').val('');
-                            $('select[name="anoModelo"]').val('');
-                            $('select[name="versao"]').val('');
-                            $('select[name="motor"]').val('');
-                            $('select[name="idValvula"]').val('');
-                            $('select[name="cor"]').val('');
-                            $('select[name="portas"]').val('');
-                            $('select[name="combustivel"]').val('');
-                            $('input[name="outraVersao"]').val('');
-                            $('input[name="motoCilindradas"]').val('');
-                            // Câmbio (select pelo container)
-                            $('label[for="cambio"]')
-                                .closest('.form-group')
-                                .find('select').val('');
-
                             if (response.historicoCarro && response.historicoCarro.dados_veiculo) {
                                 var historico = response.historicoCarro;
                                 var dadosVeiculo = historico.dados_veiculo;
                                 var fipe = historico.fipe || null;
-
-                                // ========================================
-                                // LIMPAR campos preenchidos por placa anterior
-                                // ========================================
-                                $('select[name="idMarca"] option:not(:selected)')
-                                    .prop('disabled', false).removeClass('hide');
-                                $('select[name="idMarca"]').val('');
-                                $('select[name="modeloCarro"]').html(
-                                    '<option value="">Selecione o modelo</option>'
-                                );
-                                $('select[name="anoFabricacao"]').val('');
-                                $('select[name="anoModelo"]').val('');
-                                $('select[name="versao"]').val('');
-                                $('input[name="outraVersao"]').val('');
-                                $('select[name="motor"]').val('');
-                                $('select[name="idValvula"]').val('');
-                                $('select[name="cor"]').val('');
-                                $('select[name="portas"]').val('');
-                                $('select[name="combustivel"]').val('');
-                                // Câmbio (select com name compartilhado)
-                                var cambioSelectReset = $('label[for="cambio"]')
-                                    .closest('.form-group').find('select');
-                                if (cambioSelectReset.length) {
-                                    cambioSelectReset.val('');
-                                }
 
                                 // ========================================
                                 // Parser FIPE: extrair dados estruturados
@@ -411,28 +346,24 @@ export const callback = ($) => {
                                 }, 0);
 
                                 // ========================================
-                                // Cor — usa normalização para gênero
-                                // "Vermelha"→"vermelh", "Vermelho"→"vermelh"
-                                // "Preta"→"pret", "Preto"→"pret"
+                                // Cor — prioriza dados_veiculo (já vem limpo)
                                 // ========================================
-                                if (dadosVeiculo.cor) {
-                                    var corAlvo = normalizeStr(dadosVeiculo.cor);
-                                    // Remove sufixo de gênero (a/o/e) pra match flexível
-                                    var corBase = corAlvo.replace(/[aoe]$/, '');
-                                    $('select[name="cor"] option:selected').prop('selected', false);
-                                    $('select[name="cor"] option').each(function () {
-                                        var option = $(this);
-                                        var optCor = normalizeStr(option.val() || option.text());
-                                        var optBase = optCor.replace(/[aoe]$/, '');
-                                        if (optBase && corBase && optBase === corBase) {
-                                            option.prop('selected', true);
-                                            return false;
-                                        }
-                                    });
-                                }
+                                var corSelecionada = dadosVeiculo.cor
+                                    .toLowerCase()
+                                    .slice(0, -1);
+                                $('select[name="cor"] option:selected').prop('selected', false);
+                                var options = $('select[name="cor"] option');
+                                options.each(function (_k, v) {
+                                    var option = $(v);
+                                    var cor = option.val().toLowerCase().slice(0, -1);
+                                    if (corSelecionada == cor) {
+                                        option.prop('selected', true);
+                                        return false;
+                                    }
+                                });
 
                                 // ========================================
-                                // Combustível — mapeia nomes Denatran para o select
+                                // Combustível — prioriza parsed FIPE, fallback dados_veiculo
                                 // ========================================
                                 $('select[name="combustivel"] option:selected').prop(
                                     'selected',
@@ -440,24 +371,7 @@ export const callback = ($) => {
                                 );
                                 var combustivelAlvo = parsed.combustivel || dadosVeiculo.combustivel;
                                 if (combustivelAlvo) {
-                                    // Mapeamento Denatran → nome no select
-                                    var combNorm = normalizeStr(combustivelAlvo);
-                                    var denatranCombMap = {
-                                        'eletrico fonte externa': 'Elétrico',
-                                        'eletrico': 'Elétrico',
-                                        'elet fonte ext': 'Elétrico',
-                                        'gasolina alcool': 'Bi-Combustível',
-                                        'alcool gasolina': 'Bi-Combustível',
-                                        'gasolina etanol': 'Bi-Combustível',
-                                        'gas metano': 'Kit Gás',
-                                        'gas natural veicular': 'Kit Gás',
-                                        'gnv': 'Kit Gás',
-                                        'gasolina eletrico': 'Híbrido',
-                                        'eletrico gasolina': 'Híbrido',
-                                        'hibrido': 'Híbrido',
-                                    };
-                                    var combMapeado = denatranCombMap[combNorm];
-                                    setSelectByMatch($, 'combustivel', combMapeado || combustivelAlvo);
+                                    setSelectByMatch($, 'combustivel', combustivelAlvo);
                                 }
 
                                 // ========================================
@@ -625,25 +539,6 @@ export const callback = ($) => {
                                         });
                                     }
 
-                                    // Passo 4 (normalizado): strip hífens, acentos, espaços
-                                    // "IPACE E400 SE" ↔ "I-Pace", "TCROSS" ↔ "T-Cross"
-                                    if (bestMatchIndex === -1) {
-                                        var alvoNorm = normalizeStr(modeloAlvo).replace(/\s+/g, '');
-                                        modeloOptions.each(function (k, v) {
-                                            var option = $(v);
-                                            var optName = option.html().trim();
-                                            if (!optName || !option.val()) return;
-                                            var optNorm = normalizeStr(optName).replace(/\s+/g, '');
-
-                                            if (alvoNorm.indexOf(optNorm) === 0 &&
-                                                optNorm.length > bestMatchLength) {
-                                                bestMatchIndex = k;
-                                                bestMatchLength = optNorm.length;
-                                                bestMatchName = optName;
-                                            }
-                                        });
-                                    }
-
                                     if (bestMatchIndex > -1) {
                                         $(modeloOptions[bestMatchIndex]).prop('selected', true);
                                     }
@@ -651,21 +546,13 @@ export const callback = ($) => {
                                     // Derivar a versão: tudo que sobrou após remover o nome do modelo
                                     var versaoDerivada = '';
                                     if (bestMatchName) {
-                                        // Normaliza as palavras do modelo para comparar
-                                        var optWordsNorm = normalizeStr(bestMatchName).split(/\s+/);
+                                        // Remove cada palavra do modelo do texto FIPE
+                                        var optWords = bestMatchName.toLowerCase().split(/\s+/);
                                         var remainingWords = modeloAlvo.split(/\s+/).filter(function (w) {
-                                            var wNorm = normalizeStr(w);
-                                            // Tenta match exato normalizado
-                                            var idx = optWordsNorm.indexOf(wNorm);
+                                            var wLower = w.toLowerCase();
+                                            var idx = optWords.indexOf(wLower);
                                             if (idx > -1) {
-                                                optWordsNorm.splice(idx, 1);
-                                                return false;
-                                            }
-                                            // Tenta match sem espaços/hífens
-                                            // "IPACE" → "ipace" vs ["i", "pace"] unido → "ipace"
-                                            var joined = optWordsNorm.join('');
-                                            if (joined && wNorm === joined) {
-                                                optWordsNorm = [];
+                                                optWords.splice(idx, 1); // remove só a primeira ocorrência
                                                 return false;
                                             }
                                             return true;
