@@ -17,32 +17,38 @@ import marcaModelo from '../../../components/MarcaModelo';
 import BtnContinuar from './helpers/BtnContinuar';
 
 // ============================================================
+// Normaliza texto: remove acentos, hífens, barras → minúsculo
+// "Elétrico" → "eletrico", "I-Pace" → "i pace"
+// "Eletrico / Fonte Externa" → "eletrico fonte externa"
+// ============================================================
+function normalizeStr(str) {
+    if (!str) return '';
+    return str
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[\/\-]/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+}
+
+// ============================================================
 // FIPE Parser — extrai dados estruturados da string de modelo FIPE
-// Ex: "Pajero 3.2 4x4 T.I. Dies. 5p Aut"
-//   → { modeloNome: "Pajero", motor: "3.2", tracao: "4X4",
-//        turbo: true, combustivel: "Diesel", portas: 5, cambio: "Automático" }
 // ============================================================
 function parseFipeModelo(fipeStr) {
     var remaining = fipeStr.trim();
     var result = {};
 
-    // Nota: CD (Cabine Dupla), CS (Cabine Simples), CE (Cabine Estendida)
-    // NÃO são removidos pois fazem parte do nome do modelo nos selects
-    // Ex: "Hilux CD", "Hilux CS", "S10 CD"
-
     // Câmbio
-    var cambioMap = {
-        'aut': 'Automático',
-        'man': 'Manual',
-        'cvt': 'CVT',
-    };
+    var cambioMap = { 'aut': 'Automático', 'man': 'Manual', 'cvt': 'CVT' };
     remaining = remaining.replace(/\b(Aut|Man|CVT)\b\.?/i, function (m) {
         var key = m.replace('.', '').toLowerCase();
         result.cambio = cambioMap[key] || m;
         return '';
     });
 
-    // Portas (ex: "5p", "4p", "3p", "2p")
+    // Portas
     remaining = remaining.replace(/\b(\d)p\b/i, function (_m, n) {
         result.portas = parseInt(n, 10);
         return '';
@@ -50,17 +56,10 @@ function parseFipeModelo(fipeStr) {
 
     // Combustível
     var combMap = {
-        'dies': 'Diesel',
-        'diesel': 'Diesel',
-        'flex': 'Flex',
-        'gas': 'Gasolina',
-        'gasolina': 'Gasolina',
-        'elet': 'Elétrico',
-        'elétrico': 'Elétrico',
-        'híb': 'Híbrido',
-        'gnv': 'GNV',
-        'alc': 'Álcool',
-        'álcool': 'Álcool',
+        'dies': 'Diesel', 'diesel': 'Diesel', 'flex': 'Flex',
+        'gas': 'Gasolina', 'gasolina': 'Gasolina',
+        'elet': 'Elétrico', 'elétrico': 'Elétrico',
+        'híb': 'Híbrido', 'gnv': 'GNV', 'alc': 'Álcool', 'álcool': 'Álcool',
     };
     remaining = remaining.replace(
         /\b(Dies|Diesel|Flex|Gas|Gasolina|Elet|Elétrico|Híb|Híbrido|GNV|Alc|Álcool)\b\.?/i,
@@ -71,15 +70,9 @@ function parseFipeModelo(fipeStr) {
         },
     );
 
-    // Turbo / Aspiração (T.I. = Turbo Intercooler)
-    remaining = remaining.replace(/\bT\.?\s?I\.?\b/gi, function () {
-        result.turbo = true;
-        return '';
-    });
-    remaining = remaining.replace(/\bTurbo\b/gi, function () {
-        result.turbo = true;
-        return '';
-    });
+    // Turbo
+    remaining = remaining.replace(/\bT\.?\s?I\.?\b/gi, function () { result.turbo = true; return ''; });
+    remaining = remaining.replace(/\bTurbo\b/gi, function () { result.turbo = true; return ''; });
 
     // Tração
     remaining = remaining.replace(/\b(4x[24]|AWD|FWD|RWD|2WD)\b/i, function (m) {
@@ -87,19 +80,16 @@ function parseFipeModelo(fipeStr) {
         return '';
     });
 
-    // Motor / Cilindrada (ex: "3.2", "1.0", "2.0")
-    remaining = remaining.replace(/\b(\d\.\d)\b/, function (m) {
-        result.motor = m;
-        return '';
-    });
+    // Motor
+    remaining = remaining.replace(/\b(\d\.\d)\b/, function (m) { result.motor = m; return ''; });
 
-    // Válvulas (ex: "8V", "16V", "24V")
+    // Válvulas
     remaining = remaining.replace(/\b(\d{1,2})[Vv]\b/, function (_m, n) {
         result.valvulas = parseInt(n, 10);
         return '';
     });
 
-    // Tokens técnicos conhecidos (limpar)
+    // Tokens técnicos
     remaining = remaining.replace(
         /\b(MPI|MPFI|DOHC|SOHC|VVT|VVTi|VTEC|TSI|TDI|HDI|CDI|CGI|GDI|EcoBoost|BlueHDi|JTD)\b/gi,
         function (m) {
@@ -109,14 +99,8 @@ function parseFipeModelo(fipeStr) {
         },
     );
 
-    // O que sobrou = modelo + versão (limpar espaços)
     remaining = remaining.replace(/\s{2,}/g, ' ').replace(/^\s+|\s+$/g, '');
-
-    // Retorna o texto limpo inteiro — a separação modelo/versão
-    // será feita comparando com as options do select de modelos,
-    // que é muito mais confiável que tentar adivinhar aqui
     result.remaining = remaining;
-
     return result;
 }
 
@@ -124,94 +108,96 @@ function parseFipeModelo(fipeStr) {
 // Mapeamento de siglas Denatran/RENAVAM → nome comercial
 // ============================================================
 var marcaAliases = {
-    'mmc': 'mitsubishi',
-    'gm': 'chevrolet',
-    'gm - chevrolet': 'chevrolet',
-    'chevrolet - gm': 'chevrolet',
-    'vw': 'volkswagen',
-    'vw - volkswagen': 'volkswagen',
-    'fiat': 'fiat',
-    'ford': 'ford',
-    'toyota': 'toyota',
-    'hob': 'honda',
-    'honda': 'honda',
-    'mbenz': 'mercedes-benz',
-    'mercedes-benz': 'mercedes-benz',
-    'm.benz': 'mercedes-benz',
-    'bmw': 'bmw',
-    'nissan': 'nissan',
-    'jac': 'jac',
-    'jac motors': 'jac',
-    'lr': 'land rover',
-    'land rover': 'land rover',
-    'hyundai': 'hyundai',
-    'kia': 'kia',
-    'kia motors': 'kia',
-    'peug': 'peugeot',
-    'peugeot': 'peugeot',
-    'ren': 'renault',
-    'renault': 'renault',
-    'citr': 'citroën',
-    'citroën': 'citroën',
-    'citroen': 'citroën',
-    'jeep': 'jeep',
-    'sub': 'subaru',
-    'subaru': 'subaru',
-    'volvo': 'volvo',
-    'suzuki': 'suzuki',
-    'chery': 'chery',
-    'jag': 'jaguar',
-    'jaguar': 'jaguar',
-    'porsche': 'porsche',
-    'audi': 'audi',
-    'ram': 'ram',
-    'dodge': 'dodge',
-    'chrysler': 'chrysler',
-    'chev': 'chevrolet',
-    'cad': 'cadillac',
-    'byd': 'byd',
-    'gwm': 'gwm',
-    'caoa chery': 'caoa chery',
-    'troller': 'troller',
+    'mmc': 'mitsubishi', 'gm': 'chevrolet', 'gm - chevrolet': 'chevrolet',
+    'chevrolet - gm': 'chevrolet', 'vw': 'volkswagen', 'vw - volkswagen': 'volkswagen',
+    'fiat': 'fiat', 'ford': 'ford', 'toyota': 'toyota',
+    'hob': 'honda', 'honda': 'honda',
+    'mbenz': 'mercedes-benz', 'mercedes-benz': 'mercedes-benz', 'm.benz': 'mercedes-benz',
+    'bmw': 'bmw', 'nissan': 'nissan', 'jac': 'jac', 'jac motors': 'jac',
+    'lr': 'land rover', 'land rover': 'land rover',
+    'hyundai': 'hyundai', 'kia': 'kia', 'kia motors': 'kia',
+    'peug': 'peugeot', 'peugeot': 'peugeot', 'ren': 'renault', 'renault': 'renault',
+    'citr': 'citroën', 'citroën': 'citroën', 'citroen': 'citroën',
+    'jeep': 'jeep', 'sub': 'subaru', 'subaru': 'subaru',
+    'volvo': 'volvo', 'suzuki': 'suzuki', 'chery': 'chery',
+    'jag': 'jaguar', 'jaguar': 'jaguar', 'porsche': 'porsche', 'audi': 'audi',
+    'ram': 'ram', 'dodge': 'dodge', 'chrysler': 'chrysler', 'chev': 'chevrolet',
+    'cad': 'cadillac', 'byd': 'byd', 'gwm': 'gwm',
+    'caoa chery': 'caoa chery', 'troller': 'troller',
 };
 
 // ============================================================
-// Helper: tenta setar o valor de um <select> por match parcial
-// Retorna true se encontrou
+// Mapeamento combustível Denatran → nome no select
+// ============================================================
+var denatranCombMap = {
+    'eletrico fonte externa': 'Elétrico',
+    'eletrico': 'Elétrico',
+    'elet fonte ext': 'Elétrico',
+    'gasolina alcool': 'Bi-Combustível',
+    'alcool gasolina': 'Bi-Combustível',
+    'gasolina etanol': 'Bi-Combustível',
+    'gas metano': 'Kit Gás',
+    'gas natural veicular': 'Kit Gás',
+    'gnv': 'Kit Gás',
+    'gasolina eletrico': 'Híbrido',
+    'eletrico gasolina': 'Híbrido',
+    'hibrido': 'Híbrido',
+};
+
+// ============================================================
+// Helper: tenta setar um <select> por match normalizado
 // ============================================================
 function setSelectByMatch($, selectName, targetValue, form) {
     var container = form || $(document);
     var select = container.find('select[name="' + selectName + '"]');
     if (!select.length || !targetValue) return false;
 
-    var target = targetValue.toLowerCase().trim();
+    var target = normalizeStr(targetValue);
     var found = false;
 
-    // Primeira tentativa: match exato
+    // Match exato normalizado
     select.find('option').each(function () {
         var option = $(this);
-        var optVal = option.text().trim().toLowerCase();
+        var optVal = normalizeStr(option.text());
         if (optVal === target) {
             option.prop('selected', true);
             found = true;
             return false;
         }
     });
-
     if (found) return true;
 
-    // Segunda tentativa: match parcial (contém)
+    // Match parcial normalizado
     select.find('option').each(function () {
         var option = $(this);
-        var optVal = option.text().trim().toLowerCase();
-        if (optVal.indexOf(target) > -1 || target.indexOf(optVal) > -1) {
+        var optVal = normalizeStr(option.text());
+        if (optVal && target && (optVal.indexOf(target) > -1 || target.indexOf(optVal) > -1)) {
             option.prop('selected', true);
             found = true;
             return false;
         }
     });
-
     return found;
+}
+
+// ============================================================
+// Limpar campos preenchidos por placa anterior
+// ============================================================
+function resetFormFields($) {
+    $('select[name="idMarca"] option').prop('disabled', false).removeClass('hide');
+    $('select[name="idMarca"]').val('');
+    $('select[name="modeloCarro"]').html('<option value="">Selecione o modelo</option>');
+    $('select[name="anoFabricacao"]').val('');
+    $('select[name="anoModelo"]').val('');
+    $('select[name="versao"]').val('');
+    $('input[name="outraVersao"]').val('');
+    $('select[name="motor"]').val('');
+    $('select[name="idValvula"]').val('');
+    $('select[name="cor"]').val('');
+    $('select[name="portas"]').val('');
+    $('select[name="combustivel"]').val('');
+    var cambioSel = $('label[for="cambio"]').closest('.form-group').find('select');
+    if (cambioSel.length) cambioSel.val('');
 }
 
 export const seletor = '.c-criar-anuncio.a-index';
@@ -221,10 +207,8 @@ export const callback = ($) => {
     var dataWithError;
     var formWithError;
 
-    //($('#form_dadosVeiculo'))
     $('.anuncio-steps')
         .on('steps-loaded', function () {
-            // Para esperar as máscaras serem aplicadas
             setTimeout(function () {
                 let idStatus = $('input.idStatus').val();
                 if (
@@ -235,7 +219,6 @@ export const callback = ($) => {
                 } else {
                     $("input[name='placa']").prop('required', 'true');
                 }
-
                 if (idStatus == 3 || idStatus == 6 || idStatus == 10) {
                     $("input[name='placa']").prop('readonly', false).prop('disabled', false);
                 }
@@ -248,7 +231,6 @@ export const callback = ($) => {
         .on('steps-loaded', function () {
             marcaModelo($('#form_dadosVeiculo'));
             var placaAtual = $('#placaVeiculo').val();
-            /* @todo COLOCAR A FUNÇÃO DE VALIDAR PLACA DURANTE O TAB */
             $('form[name="form_dadosVeiculo"]')
                 .find('input[name="placa"]')
                 .blur(function () {
@@ -305,39 +287,26 @@ export const callback = ($) => {
                                 var dadosVeiculo = historico.dados_veiculo;
                                 var fipe = historico.fipe || null;
 
-                                // ========================================
-                                // Parser FIPE: extrair dados estruturados
-                                // ========================================
+                                // LIMPAR campos da placa anterior
+                                resetFormFields($);
+
+                                // Parser FIPE
                                 var parsed = {};
                                 if (fipe && fipe.modelo) {
                                     parsed = parseFipeModelo(fipe.modelo);
                                 }
 
-                                // ========================================
                                 // Ano Fabricação / Ano Modelo
-                                // ========================================
                                 var anoModelo = dadosVeiculo.ano_modelo;
-
-                                if (
-                                    dadosVeiculo.ano_fabricacao &&
-                                    (parseInt(dadosVeiculo.ano_fabricacao) || false)
-                                ) {
-                                    $('select[name="anoFabricacao"]').val(
-                                        dadosVeiculo.ano_fabricacao,
-                                    );
+                                if (dadosVeiculo.ano_fabricacao && (parseInt(dadosVeiculo.ano_fabricacao) || false)) {
+                                    $('select[name="anoFabricacao"]').val(dadosVeiculo.ano_fabricacao);
                                 }
-
-                                if (
-                                    dadosVeiculo.ano_modelo &&
-                                    (parseInt(dadosVeiculo.ano_modelo) || false)
-                                ) {
+                                if (dadosVeiculo.ano_modelo && (parseInt(dadosVeiculo.ano_modelo) || false)) {
                                     if (anoModelo === '0' || anoModelo === null) {
                                         anoModelo = dadosVeiculo.ano_fabricacao;
                                     }
                                     $('select[name="anoModelo"]').val(anoModelo);
                                 }
-
-                                // Trigger para buscar versão
                                 setTimeout(function () {
                                     $('select[name="anoModelo"]').trigger('change', [
                                         false,
@@ -345,153 +314,94 @@ export const callback = ($) => {
                                     ]);
                                 }, 0);
 
-                                // ========================================
-                                // Cor — prioriza dados_veiculo (já vem limpo)
-                                // ========================================
-                                var corSelecionada = dadosVeiculo.cor
-                                    .toLowerCase()
-                                    .slice(0, -1);
-                                $('select[name="cor"] option:selected').prop('selected', false);
-                                var options = $('select[name="cor"] option');
-                                options.each(function (_k, v) {
-                                    var option = $(v);
-                                    var cor = option.val().toLowerCase().slice(0, -1);
-                                    if (corSelecionada == cor) {
-                                        option.prop('selected', true);
-                                        return false;
-                                    }
-                                });
+                                // Cor — normalizada, gênero flexível
+                                if (dadosVeiculo.cor) {
+                                    var corBase = normalizeStr(dadosVeiculo.cor).replace(/[aoe]$/, '');
+                                    $('select[name="cor"] option').each(function () {
+                                        var option = $(this);
+                                        var optBase = normalizeStr(option.val() || option.text()).replace(/[aoe]$/, '');
+                                        if (optBase && corBase && optBase === corBase) {
+                                            option.prop('selected', true);
+                                            return false;
+                                        }
+                                    });
+                                }
 
-                                // ========================================
-                                // Combustível — prioriza parsed FIPE, fallback dados_veiculo
-                                // ========================================
-                                $('select[name="combustivel"] option:selected').prop(
-                                    'selected',
-                                    false,
-                                );
+                                // Combustível — mapa Denatran + normalizado
                                 var combustivelAlvo = parsed.combustivel || dadosVeiculo.combustivel;
                                 if (combustivelAlvo) {
-                                    setSelectByMatch($, 'combustivel', combustivelAlvo);
+                                    var combNorm = normalizeStr(combustivelAlvo);
+                                    var combMapeado = denatranCombMap[combNorm];
+                                    setSelectByMatch($, 'combustivel', combMapeado || combustivelAlvo);
                                 }
 
-                                // ========================================
                                 // Cilindradas (motos)
-                                // ========================================
                                 var motoCilindradas = $('input[name="motoCilindradas"');
-                                if (
-                                    motoCilindradas.length &&
-                                    dadosVeiculo.cilindradas
-                                ) {
-                                    motoCilindradas
-                                        .val(dadosVeiculo.cilindradas)
-                                        .trigger('input');
+                                if (motoCilindradas.length && dadosVeiculo.cilindradas) {
+                                    motoCilindradas.val(dadosVeiculo.cilindradas).trigger('input');
                                 }
 
-                                // ========================================
-                                // MARCA — prioriza FIPE, fallback dados_veiculo + aliases
-                                // ========================================
-                                var marcaFonte = (fipe && fipe.marca)
-                                    ? fipe.marca
-                                    : dadosVeiculo.marca;
-
-                                $('select[name="idMarca"] option:not(:selected)')
-                                    .prop('disabled', false)
-                                    .removeClass('hide');
+                                // MARCA
+                                var marcaFonte = (fipe && fipe.marca) ? fipe.marca : dadosVeiculo.marca;
+                                $('select[name="idMarca"] option:not(:selected)').prop('disabled', false).removeClass('hide');
                                 $('select[name="idMarca"] option:selected').prop('selected', false);
-                                options = $('select[name="idMarca"] option');
+                                var options = $('select[name="idMarca"] option');
 
                                 if (marcaFonte) {
                                     var marcaLower = marcaFonte.toLowerCase().trim();
-                                    // Resolver alias (MMC → mitsubishi, GM → chevrolet, etc.)
                                     var marcaNormalizada = marcaAliases[marcaLower] || marcaLower;
-
                                     var marcaEncontrada = false;
+
                                     options.each(function (_k, v) {
                                         var option = $(v);
                                         var marca = option.html().trim().toLowerCase();
-                                        if (
-                                            marca === marcaNormalizada ||
-                                            marca === marcaLower
-                                        ) {
+                                        if (marca === marcaNormalizada || marca === marcaLower) {
                                             option.prop('selected', true);
                                             $('select[name="idMarca"]').trigger('change');
-                                            $('select[name="idMarca"] option:selected')
-                                                .prop('disabled', false)
-                                                .removeClass('hide');
-                                            $('select[name="idMarca"] option:not(:selected)')
-                                                .prop('disabled', true)
-                                                .addClass('hide');
+                                            $('select[name="idMarca"] option:selected').prop('disabled', false).removeClass('hide');
+                                            $('select[name="idMarca"] option:not(:selected)').prop('disabled', true).addClass('hide');
                                             marcaEncontrada = true;
                                             return false;
                                         }
                                     });
 
-                                    // Se não encontrou nem por alias, tenta match parcial
                                     if (!marcaEncontrada) {
                                         options.each(function (_k, v) {
                                             var option = $(v);
                                             var marca = option.html().trim().toLowerCase();
-                                            if (
-                                                marca.indexOf(marcaNormalizada) > -1 ||
-                                                marcaNormalizada.indexOf(marca) > -1
-                                            ) {
+                                            if (marca.indexOf(marcaNormalizada) > -1 || marcaNormalizada.indexOf(marca) > -1) {
                                                 option.prop('selected', true);
                                                 $('select[name="idMarca"]').trigger('change');
-                                                $('select[name="idMarca"] option:selected')
-                                                    .prop('disabled', false)
-                                                    .removeClass('hide');
-                                                $('select[name="idMarca"] option:not(:selected)')
-                                                    .prop('disabled', true)
-                                                    .addClass('hide');
+                                                $('select[name="idMarca"] option:selected').prop('disabled', false).removeClass('hide');
+                                                $('select[name="idMarca"] option:not(:selected)').prop('disabled', true).addClass('hide');
                                                 return false;
                                             }
                                         });
                                     }
                                 }
 
-                                // ========================================
-                                // MODELO + CAMPOS EXTRAS
-                                // Espera o select de modelos ser populado
-                                // (carrega via AJAX após o trigger de marca)
-                                // ========================================
+                                // MODELO + CAMPOS EXTRAS (polling espera AJAX)
                                 var modeloAlvo = parsed.remaining || dadosVeiculo.modelo;
-
-                                // Polling: espera as options do modelo carregarem (max 5s)
                                 var _modeloPollCount = 0;
                                 var _modeloPoll = setInterval(function () {
                                     _modeloPollCount++;
                                     var modeloOptions = $('select[name="modeloCarro"] option');
-
-                                    // Ainda só tem "Selecione o modelo"? Espera mais
-                                    if (modeloOptions.length <= 1 && _modeloPollCount < 50) {
-                                        return; // tenta de novo em 100ms
-                                    }
+                                    if (modeloOptions.length <= 1 && _modeloPollCount < 50) return;
                                     clearInterval(_modeloPoll);
 
-                                    // --- Setar modelo usando o select como referência ---
-                                    // Compara cada option contra o texto FIPE limpo
-                                    // O option mais longo que casar = modelo correto
-                                    // O que sobra do texto = versão
-                                    $('select[name="modeloCarro"] option:selected').prop(
-                                        'selected',
-                                        false,
-                                    );
-
+                                    $('select[name="modeloCarro"] option:selected').prop('selected', false);
                                     var bestMatchIndex = -1;
                                     var bestMatchLength = 0;
                                     var bestMatchName = '';
                                     var alvoLower = modeloAlvo.toLowerCase();
 
-                                    // Passo 1: match por prefixo (mais confiável)
-                                    // Ex: "Hilux CD SR" começa com "Hilux CD"
+                                    // Passo 1: prefixo exato
                                     modeloOptions.each(function (k, v) {
                                         var option = $(v);
                                         var optName = option.html().trim();
                                         if (!optName || !option.val()) return;
                                         var optLower = optName.toLowerCase();
-
-                                        if (alvoLower.indexOf(optLower) === 0 &&
-                                            optLower.length > bestMatchLength) {
+                                        if (alvoLower.indexOf(optLower) === 0 && optLower.length > bestMatchLength) {
                                             var nextChar = alvoLower.charAt(optLower.length);
                                             if (nextChar === '' || nextChar === ' ') {
                                                 bestMatchIndex = k;
@@ -501,16 +411,14 @@ export const callback = ($) => {
                                         }
                                     });
 
-                                    // Passo 2 (fallback): option contida no alvo como substring
+                                    // Passo 2: substring contida
                                     if (bestMatchIndex === -1) {
                                         modeloOptions.each(function (k, v) {
                                             var option = $(v);
                                             var optName = option.html().trim();
                                             if (!optName || !option.val()) return;
-
                                             var escaped = optName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                                            var regex = RegExp(escaped, 'i');
-                                            if (regex.test(modeloAlvo) && optName.length > bestMatchLength) {
+                                            if (RegExp(escaped, 'i').test(modeloAlvo) && optName.length > bestMatchLength) {
                                                 bestMatchIndex = k;
                                                 bestMatchLength = optName.length;
                                                 bestMatchName = optName;
@@ -518,8 +426,7 @@ export const callback = ($) => {
                                         });
                                     }
 
-                                    // Passo 3 (fallback): todas as palavras da option existem no alvo
-                                    // Pega "Strada CS" quando alvo é "Strada Firefly CS"
+                                    // Passo 3: todas palavras da option existem no alvo
                                     if (bestMatchIndex === -1) {
                                         var alvoWords = alvoLower.split(/\s+/);
                                         modeloOptions.each(function (k, v) {
@@ -527,13 +434,29 @@ export const callback = ($) => {
                                             var optName = option.html().trim();
                                             if (!optName || !option.val()) return;
                                             var optWords = optName.toLowerCase().split(/\s+/);
-
                                             var allFound = optWords.every(function (w) {
                                                 return alvoWords.indexOf(w) > -1;
                                             });
                                             if (allFound && optWords.length > bestMatchLength) {
                                                 bestMatchIndex = k;
-                                                bestMatchLength = optWords.length; // conta por palavras
+                                                bestMatchLength = optWords.length;
+                                                bestMatchName = optName;
+                                            }
+                                        });
+                                    }
+
+                                    // Passo 4: normalizado sem hífens
+                                    // "IPACE" ↔ "I-Pace", "TCROSS" ↔ "T-Cross", "HRV" ↔ "HR-V"
+                                    if (bestMatchIndex === -1) {
+                                        var alvoNorm = normalizeStr(modeloAlvo).replace(/\s+/g, '');
+                                        modeloOptions.each(function (k, v) {
+                                            var option = $(v);
+                                            var optName = option.html().trim();
+                                            if (!optName || !option.val()) return;
+                                            var optNorm = normalizeStr(optName).replace(/\s+/g, '');
+                                            if (alvoNorm.indexOf(optNorm) === 0 && optNorm.length > bestMatchLength) {
+                                                bestMatchIndex = k;
+                                                bestMatchLength = optNorm.length;
                                                 bestMatchName = optName;
                                             }
                                         });
@@ -543,16 +466,21 @@ export const callback = ($) => {
                                         $(modeloOptions[bestMatchIndex]).prop('selected', true);
                                     }
 
-                                    // Derivar a versão: tudo que sobrou após remover o nome do modelo
+                                    // Derivar versão removendo palavras do modelo
                                     var versaoDerivada = '';
                                     if (bestMatchName) {
-                                        // Remove cada palavra do modelo do texto FIPE
-                                        var optWords = bestMatchName.toLowerCase().split(/\s+/);
+                                        var optWordsNorm = normalizeStr(bestMatchName).split(/\s+/);
                                         var remainingWords = modeloAlvo.split(/\s+/).filter(function (w) {
-                                            var wLower = w.toLowerCase();
-                                            var idx = optWords.indexOf(wLower);
+                                            var wNorm = normalizeStr(w);
+                                            var idx = optWordsNorm.indexOf(wNorm);
                                             if (idx > -1) {
-                                                optWords.splice(idx, 1); // remove só a primeira ocorrência
+                                                optWordsNorm.splice(idx, 1);
+                                                return false;
+                                            }
+                                            // "IPACE" = "i"+"pace" joined
+                                            var joined = optWordsNorm.join('');
+                                            if (joined && wNorm === joined) {
+                                                optWordsNorm = [];
                                                 return false;
                                             }
                                             return true;
@@ -560,24 +488,12 @@ export const callback = ($) => {
                                         versaoDerivada = remainingWords.join(' ');
                                     }
 
-                                    // --- Campos extras via parser FIPE ---
+                                    // Campos extras via parser FIPE
+                                    if (parsed.motor) setSelectByMatch($, 'motor', parsed.motor);
+                                    if (parsed.valvulas) setSelectByMatch($, 'idValvula', String(parsed.valvulas));
 
-                                    // Motor — name="motor", options text: "3.2", "1.0", etc.
-                                    if (parsed.motor) {
-                                        setSelectByMatch($, 'motor', parsed.motor);
-                                    }
-
-                                    // Válvulas — name="idValvula", options text: "8", "16", etc.
-                                    if (parsed.valvulas) {
-                                        setSelectByMatch($, 'idValvula', String(parsed.valvulas));
-                                    }
-
-                                    // Câmbio — name="checkboxacessorios[]" (compartilhado!)
-                                    // Localiza pelo label[for="cambio"] para pegar o select correto
                                     if (parsed.cambio) {
-                                        var cambioSelect = $('label[for="cambio"]')
-                                            .closest('.form-group')
-                                            .find('select');
+                                        var cambioSelect = $('label[for="cambio"]').closest('.form-group').find('select');
                                         if (cambioSelect.length) {
                                             var cambioAlvo = parsed.cambio.toLowerCase();
                                             cambioSelect.find('option').each(function () {
@@ -591,12 +507,9 @@ export const callback = ($) => {
                                         }
                                     }
 
-                                    // Portas — name="portas", options text: "5 Portas", etc.
-                                    if (parsed.portas) {
-                                        setSelectByMatch($, 'portas', String(parsed.portas));
-                                    }
+                                    if (parsed.portas) setSelectByMatch($, 'portas', String(parsed.portas));
 
-                                    // Versão — derivada do que sobrou após o match do modelo
+                                    // Versão
                                     if (versaoDerivada) {
                                         setTimeout(function () {
                                             var versaoSelect = $('select[name="versao"]');
@@ -609,7 +522,6 @@ export const callback = ($) => {
                                             if (temOpcoesReais) {
                                                 versaoSetada = setSelectByMatch($, 'versao', versaoDerivada);
                                             }
-
                                             if (!versaoSetada) {
                                                 versaoSelect.val('-1').trigger('change');
                                                 var textoVersao = versaoDerivada +
@@ -622,7 +534,7 @@ export const callback = ($) => {
                                             }
                                         }, 1500);
                                     }
-                                }, 100); // poll a cada 100ms
+                                }, 100);
                             }
 
                             BtnContinuar.enable();
@@ -676,7 +588,6 @@ export const callback = ($) => {
             return stopEvent(e);
         }
 
-        // Salvar todo o formulario anterior as fotos aqui
         var form = $(
             'form',
             '#dados-basicos,.step-dados,.step-preco,.step-mais-informacoes,.step-opcionais',
@@ -701,26 +612,18 @@ export const callback = ($) => {
         ]);
         $.ajax({
             type: 'POST',
-
-            /**
-             * @TODO Corrigir o "/carro" para o valor correto
-             */
             url: '/carro/dados',
             data: dataSerialized,
             dataType: 'json',
             success: function (data) {
                 ajaxProcessing = false;
-                /**
-                 * Atribui o valor do veiculo no form, caso a pessoa volte e edite,
-                 *      na hora de salvar é enviado o id do veículo e assim é feita a edição
-                 */
                 data = data.data;
                 if (data) {
                     var idVeiculo = data[0].idVeiculo;
 
                     $('#dados-basicos .idVeiculo').val(idVeiculo);
                     $('#dados-basicos .idAnuncioVeiculo').val(data[0].idAnuncio);
-                    $('#dados-basicos .idPlano').val(5); // Plano inativo. TODO: Dinamizar.
+                    $('#dados-basicos .idPlano').val(5);
                     $('#dados-basicos .placaVeiculo').val(placa);
 
                     $('#form_dadosVeiculo')
@@ -731,7 +634,6 @@ export const callback = ($) => {
                     var path = window.location.pathname.match(/^\/[a-z]+/).input + '/' + idVeiculo;
                     window.history.pushState(null, null, path);
                 }
-                // Guarda o que foi serializado para garantir que não vai salvar dados que não foram alterados
                 lastSavedData = form.serialize();
                 stepsContainer.stepPlugin('next');
                 formWithError = false;
