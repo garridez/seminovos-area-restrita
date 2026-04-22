@@ -358,8 +358,6 @@ export const callback = ($) => {
                                         if (marca === marcaNormalizada || marca === marcaLower) {
                                             option.prop('selected', true);
                                             $('select[name="idMarca"]').trigger('change');
-                                            $('select[name="idMarca"] option:selected').prop('disabled', false).removeClass('hide');
-                                            $('select[name="idMarca"] option:not(:selected)').prop('disabled', true).addClass('hide');
                                             marcaEncontrada = true;
                                             return false;
                                         }
@@ -372,8 +370,6 @@ export const callback = ($) => {
                                             if (marca.indexOf(marcaNormalizada) > -1 || marcaNormalizada.indexOf(marca) > -1) {
                                                 option.prop('selected', true);
                                                 $('select[name="idMarca"]').trigger('change');
-                                                $('select[name="idMarca"] option:selected').prop('disabled', false).removeClass('hide');
-                                                $('select[name="idMarca"] option:not(:selected)').prop('disabled', true).addClass('hide');
                                                 return false;
                                             }
                                         });
