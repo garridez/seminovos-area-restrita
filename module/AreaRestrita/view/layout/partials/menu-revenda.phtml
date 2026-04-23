@@ -90,7 +90,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <?php endif; ?>
 		<?php 
 			$lojas = array(327270, 56216, 327270);
-			if (in_array($this->userInfo('idCadastro'), $lojas) : 
+			if (in_array($this->userInfo('idCadastro'), $lojas)) : 
 		?>
             <li>
                 <a href="https://builder.seminovos.com.br/" title="Site Builder" target="_blank">
