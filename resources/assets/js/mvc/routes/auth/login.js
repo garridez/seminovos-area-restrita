@@ -80,7 +80,15 @@ export const callback = ($) => {
 
     var $ctx = $('.login-area');
     var $formDivs = $('.container-form-particular, .container-form-revenda');
-    $formDivs.filter('.hide').hide().removeClass('hide');
+
+    // Mostra o formulário Particular imediatamente — sem esperar o
+    // reCAPTCHA e sem o spinner de carregamento travando a tela.
+    var captchaTokenPronto = false;
+    $formDivs.removeClass('hide');
+    $('.container-form-revenda').hide();
+    $('.container-form-particular').show();
+    $('.loading-container').hide();
+
     $ctx.find('.switch-field input').on('change', function () {
         let seletectedForm = '.' + $(this).val();
         $formDivs.slideUp().filter(seletectedForm).slideDown();
@@ -140,11 +148,48 @@ export const callback = ($) => {
             $('#modalCuidado').modal('hide');
         }, 8000);
     }
-    $('form', '.container-form-particular, .container-form-revenda').on('submit', function () {
+
+    // Envio do formulário. O token do reCAPTCHA é obrigatório: se
+    // ainda não chegou, seguramos o envio e disparamos assim que
+    // o token estiver disponível.
+    $('form', '.container-form-particular, .container-form-revenda').on('submit', function (e) {
+        var $form = $(this);
+
         $('.container-form-particular, .container-form-revenda').slideUp();
         $('.loading-container').slideDown();
+
+        if (!captchaTokenPronto) {
+            e.preventDefault();
+            $(document).one('captcha:pronto', function () {
+                $form.trigger('submit');
+            });
+        }
     });
 
+    /**
+     * Injeta o token do reCAPTCHA no(s) formulário(s) e avisa que
+     * o token está pronto.
+     *
+     * @param {string} token
+     */
+    function injetarTokenCaptcha(token) {
+        $('input[data-msg="Acabou a festa!"]').remove();
+        $('form', '.container-form-particular, .container-form-revenda')
+            .find('[type="submit"]')
+            .after(
+                $('<input/>')
+                    .attr('name', 'token')
+                    .attr('type', 'hidden')
+                    .attr('data-msg', 'Acabou a festa!')
+                    .val(token),
+            );
+        $('input[name="tokenResetarSenha"]').val(token);
+        captchaTokenPronto = true;
+        $(document).trigger('captcha:pronto');
+    }
+
+    // O reCAPTCHA roda em segundo plano: o formulário já está
+    // visível e preenchível enquanto o token é obtido.
     var grecaptchaIntervalID = setInterval(function () {
         var grecaptcha = window.grecaptcha;
         if (grecaptcha === undefined || grecaptcha.ready === undefined) {
@@ -156,20 +201,7 @@ export const callback = ($) => {
                 .execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
                     action: 'submit',
                 })
-                .then(function (token) {
-                    $('.container-form-particular').slideDown();
-                    $('.loading-container').slideUp();
-                    $('form', '.container-form-particular, .container-form-revenda')
-                        .find('[type="submit"]')
-                        .after(
-                            $('<input/>')
-                                .attr('name', 'token')
-                                .attr('type', 'hidden')
-                                .attr('data-msg', 'Acabou a festa!')
-                                .val(token),
-                        );
-                    $('input[name="tokenResetarSenha"]').val(token);
-                });
+                .then(injetarTokenCaptcha);
         });
     }, 50);
 
@@ -388,34 +420,17 @@ export const callback = ($) => {
     });
 
     /**
-     * Atualiza o token do reCaptcha, quando necessário
+     * Atualiza o token do reCaptcha, quando necessário.
      */
     function refreshReCaptcha() {
-        var elementosParaRemover = document.querySelectorAll('[data-msg="Acabou a festa!"]');
-        elementosParaRemover.forEach(function (elemento) {
-            elemento.parentNode.removeChild(elemento);
-        });
+        captchaTokenPronto = false;
 
-        setTimeout(() => {
-            console.log('timeout');
+        setTimeout(function () {
             window.grecaptcha
                 .execute('6Lcm0A8fAAAAAGeYyV-DsiGHCoCCNry6joY_Joc-', {
                     action: 'submit',
                 })
-                .then(function (token) {
-                    $('.container-form-particular').slideDown();
-                    $('.loading-container').slideUp();
-                    $('form', '.container-form-particular, .container-form-revenda')
-                        .find('[type="submit"]')
-                        .after(
-                            $('<input/>')
-                                .attr('name', 'token')
-                                .attr('type', 'hidden')
-                                .attr('data-msg', 'Acabou a festa!')
-                                .val(token),
-                        );
-                    $('input[name="tokenResetarSenha"]').val(token);
-                });
+                .then(injetarTokenCaptcha);
         }, 1000);
     }
 
@@ -502,31 +517,4 @@ export const callback = ($) => {
 
         $('#modalRecuperarSenha').modal('show');
     }
-
-    /*advancedAlerts.info({
-      title: 'Sucesso',
-      text: 'Sua senha foi atualizada com sucesso',
-      closeCallback: function(){
-          window.location.href = '/';
-      }
-    });
-    return;
-    fetch('/remember-pass-phone', {
-            method: 'POST',
-            body: formData
-        })
-        .then((response) => {
-            return response.json();
-        })
-        .then((response) => {
-            if (response.status == 201) {
-                mudarPasso('passo2');
-            } else {
-                document.getElementById('telefone_invalido').style.display = 'block';
-            }
-        })
-        .catch(function (error) {
-            console.log("Error: " + error);
-        });
-  }*/
 };

@@ -2,14 +2,11 @@
 //  DESIGN SYSTEM · ÍNDICE
 //  resources/assets/sass/mvc/design-system/_all.scss
 //
-//  Agora o design system também estiliza telas específicas
-//  (menu lateral e dashboard), então ele precisa ser a ÚLTIMA
-//  camada de CSS. No app.scss:
-//
+//  Importar por ÚLTIMO no app.scss:
 //      @import "components/all";
 //      @import "mvc/routes/all";
 //      @import "mvc/layout/all";
-//      @import "mvc/design-system/all";   <-- por último
+//      @import "mvc/design-system/all";   <-- aqui
 //
 //  tokens vem primeiro porque os demais usam as variáveis $ds-*.
 // =============================================================
@@ -21,3 +18,4 @@
 @import "cards";      // cards / painéis
 @import "sidebar";    // menu lateral + banner de expiração
 @import "dashboard";  // tela "Meus Veículos"
+@import "login";      // tela de login

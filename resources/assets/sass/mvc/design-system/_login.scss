@@ -1,0 +1,217 @@
+// =============================================================
+//  DESIGN SYSTEM · TELA DE LOGIN
+//  resources/assets/sass/mvc/design-system/_login.scss
+//
+//  Redesenha a tela de login. Carrega por último (via _all.scss),
+//  então vence o SCSS de rota e de layout antigos.
+//
+//  Resolve, sem editar arquivos antigos:
+//   - a fonte serifada (define $ds-font dentro de .login-area)
+//   - a animação de introdução de 3s (animation: none)
+//   - o visual datado (cartão, campos, alternador, aviso)
+// =============================================================
+
+body {
+
+  // ---- Desliga a animação de introdução -----------------------
+  // Era a animação de 3s que deixava o logo e o formulário
+  // aparecendo devagar (sensação de travamento).
+  .snbh-logo,
+  .snbh-logo .layer-car,
+  .snbh-logo .layer-letters,
+  .intro-2 {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  // ===========================================================
+  //  ÁREA DE LOGIN
+  // ===========================================================
+  .login-area {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+    font-family: $ds-font;   // corrige a fonte de toda a tela
+
+    // ---- Título ----------------------------------------------
+    .titulo {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: $ds-text;
+    }
+
+    // ---- Alternador Particular / Revenda ---------------------
+    .switch-container .switch-field {
+      background: $ds-muted;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius;
+      padding: 4px;
+      gap: 4px;
+
+      label {
+        width: 50%;
+        margin: 0;
+        padding: 9px 0;
+        border-radius: $ds-radius-sm;
+        background: transparent;
+        color: $ds-text-soft;
+        font-family: $ds-font;
+        font-weight: 600;
+        font-size: .9rem;
+        text-decoration: none;
+        transition: background-color $ds-transition, color $ds-transition;
+
+        &:hover { color: $ds-text; }
+      }
+      input:checked + label {
+        background: $ds-brand;
+        color: #fff;
+        box-shadow: $ds-shadow-sm;
+
+        &:hover { color: #fff; }
+      }
+    }
+
+    // ---- O cartão --------------------------------------------
+    .conteudo {
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
+      box-shadow: $ds-shadow;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    // ---- Formulários -----------------------------------------
+    .forms {
+      padding: $ds-space-4;
+
+      .form-group {
+        margin-bottom: $ds-space-3;
+
+        label {
+          font-family: $ds-font !important;   // vence o 'Roboto' da rota
+          font-size: .82rem;
+          font-weight: 600;
+          color: $ds-text;
+          margin-bottom: 6px;
+          text-transform: none;
+          letter-spacing: normal;
+        }
+
+        // o campo já é .form-control; aqui garantimos o estilo
+        .form-control {
+          height: 44px;
+          padding: 10px 14px;
+          border: 1px solid $ds-border;
+          border-radius: $ds-radius-sm;
+          font-family: $ds-font;
+          font-size: .9375rem;
+
+          &:focus {
+            border-color: $ds-brand;
+            box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+          }
+        }
+      }
+
+      // campo de senha com o ícone do olho
+      .group-senha {
+        flex-wrap: nowrap;
+
+        .form-control {
+          border-right: 0;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        .input-group-text {
+          height: 44px;
+          background: $ds-surface;
+          border: 1px solid $ds-border;
+          border-left: 0;
+          border-top-right-radius: $ds-radius-sm;
+          border-bottom-right-radius: $ds-radius-sm;
+          color: $ds-text-soft;
+          cursor: pointer;
+        }
+        &:focus-within {
+          .form-control,
+          .input-group-text { border-color: $ds-brand; }
+        }
+      }
+
+      .esqueci-senha {
+        margin: -2px 0 $ds-space-3;
+
+        a {
+          font-family: $ds-font;
+          font-size: .85rem;
+          font-weight: 600;
+          color: $ds-brand;
+          &:hover { color: $ds-brand-hover; }
+        }
+      }
+    }
+
+    // ---- Botão ENTRAR ----------------------------------------
+    // O PHP renderiza o ENTRAR como .btn-warning; aqui ele
+    // recebe o laranja da marca (ação principal).
+    .btn-warning {
+      background-color: $ds-brand;
+      border-color: $ds-brand;
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background-color: $ds-brand-hover;
+        border-color: $ds-brand-hover;
+        color: #fff;
+      }
+    }
+
+    // ---- Divisor "ou" ----------------------------------------
+    .separador {
+      margin: $ds-space-3 0;
+      color: $ds-text-soft;
+      font-size: .85rem;
+      gap: 12px;
+
+      span { border-top-color: $ds-border; }
+    }
+
+    // ---- Estado de carregamento ------------------------------
+    .loading-container {
+      padding: $ds-space-5 $ds-space-4;
+      text-align: center;
+
+      .spinner-border { color: $ds-brand; }
+      .feedback-text {
+        margin-top: 12px;
+        color: $ds-text-soft;
+        font-size: .9rem;
+      }
+    }
+  }
+
+  // ---- Aviso anti-fraude (fica fora de .login-area) ----------
+  .login-area + .aviso {
+    width: 400px;
+    max-width: 100%;
+    margin: $ds-space-4 auto 0 !important;
+    padding: $ds-space-3 $ds-space-4;
+    background: $ds-brand-soft;
+    border: 1px solid rgba($ds-brand, .25);
+    border-radius: $ds-radius;
+    color: $ds-text-soft;
+    font-family: $ds-font;
+    font-size: .85rem;
+    line-height: 1.55;
+
+    .h4 {
+      color: $ds-warning;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    b { color: $ds-text; }
+  }
+}
