@@ -1,0 +1,149 @@
+// =============================================================
+//  DESIGN SYSTEM · MENU LATERAL
+//  resources/assets/sass/mvc/design-system/_sidebar.scss
+//
+//  Cobre .page-sidebar: itens de menu, banner de expiração
+//  (com 3 estados de cor) e os contadores de plano.
+//  Aninhado em `body` para vencer o tema legado.
+// =============================================================
+
+// tons exclusivos do menu escuro
+$sb-bg:        #23272e;
+$sb-text:      #b9bec7;
+$sb-text-soft: #7f868f;
+
+body .page-sidebar {
+  background-color: $sb-bg;
+
+  a, button { color: $sb-text; }
+
+  .sidebar-menu .menu-items {
+    padding: 8px 10px;
+
+    // ---- Item de menu -----------------------------------------
+    > li > a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      margin-bottom: 2px;
+      border-radius: $ds-radius-sm;
+      font-family: $ds-font;
+      font-size: .9rem;
+      font-weight: 500;
+      color: $sb-text;
+      line-height: 1.25;
+      transition: background-color $ds-transition, color $ds-transition;
+
+      .icon-thumbnail {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        min-height: 0;
+        margin: 0;
+        font-size: 1rem;
+        color: $sb-text-soft;
+        background: transparent;
+        transition: color $ds-transition;
+
+        img { width: 16px; height: 16px; }
+      }
+      .title { flex: 1; }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, .06);
+        color: #fff;
+        .icon-thumbnail { color: $ds-brand; }
+      }
+    }
+
+    // ---- Item ativo -------------------------------------------
+    > li.active > a,
+    > li.open > a {
+      background-color: rgba($ds-brand, .16);
+      color: #fff;
+      box-shadow: inset 3px 0 0 $ds-brand;
+      .icon-thumbnail { color: $ds-brand; }
+    }
+
+    // contador de mensagens não lidas (Chat)
+    .menu-chat .count {
+      background: $ds-danger;
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: $ds-radius-pill;
+    }
+  }
+
+  // ---- Banner de expiração do plano ---------------------------
+  // As classes de estado já vêm do PHP (menu-revenda.phtml):
+  //   .plano-expira-mes    -> mais de 7 dias  (tranquilo / verde)
+  //   .plano-expira-semana -> 1 a 7 dias      (atenção  / amarelo)
+  //   .plano-expirou       -> expirado        (crítico  / vermelho)
+  .aviso-expiracao {
+    margin: 12px 10px 10px;
+    padding: 14px 12px !important;
+    border-radius: $ds-radius;
+    text-align: center;
+    color: #fff;
+
+    .icone {
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .22);
+      font-size: 1.05rem;
+    }
+    h5 {
+      margin: 0;
+      font-size: .9rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: inherit;
+
+      b { font-size: 1.05rem; font-weight: 700; }
+    }
+
+    &.plano-expira-mes {
+      background: linear-gradient(135deg, #25a85f, #1c8049);
+    }
+    &.plano-expira-semana {
+      background: linear-gradient(135deg, #f3c218, #e08a00);
+      color: #3d2c00;
+      .icone { background: rgba(0, 0, 0, .14); }
+    }
+    &.plano-expirou {
+      background: linear-gradient(135deg, #e0473e, #c23b32);
+    }
+  }
+
+  // ---- Contadores de plano (Nitro / Turbo / Flex) -------------
+  .qtd-anuncios-menu {
+    margin-top: 6px;
+
+    .bg-color-menu-dark {
+      background-color: rgba(255, 255, 255, .05) !important;
+      border-radius: $ds-radius-sm;
+      padding: 9px 10px !important;
+    }
+    .title {
+      font-size: .85rem;
+      color: $sb-text;
+      b { color: #fff; font-weight: 600; }
+    }
+  }
+
+  // ---- Botão recolher menu ------------------------------------
+  .btn-sidebar-collapse {
+    background-color: $ds-brand;
+    color: #fff;
+  }
+}

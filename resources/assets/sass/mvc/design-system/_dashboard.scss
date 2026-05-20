@@ -1,0 +1,114 @@
+// =============================================================
+//  DESIGN SYSTEM · DASHBOARD / MEUS VEÍCULOS
+//  resources/assets/sass/mvc/design-system/_dashboard.scss
+//
+//  Cobre a tela "Meus Veículos" (.container-anuncios):
+//  título, lista de detalhes, selo do plano, etiquetas e o
+//  espaçamento entre os botões de ação.
+//  Aninhado em `body` para vencer o SCSS de rota legado.
+// =============================================================
+
+body {
+
+  // ---- Botão "Trocar Plano" (usa a classe .btn-info) ----------
+  .btn-info {
+    background-color: #3a4150;
+    border-color: #3a4150;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      background-color: #2b303b;
+      border-color: #2b303b;
+      color: #fff;
+    }
+  }
+
+  .container-anuncios {
+
+    // ---- Título da página -------------------------------------
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $ds-text;
+      margin-bottom: $ds-space-3;
+    }
+
+    // ---- Lista de detalhes do veículo -------------------------
+    ul.h-auto {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding: 7px 0;
+        font-size: .875rem;
+        color: $ds-text-soft;
+        border-bottom: 1px solid $ds-border;
+
+        // valores destacados (quando vêm dentro de <span>)
+        span { color: $ds-text; font-weight: 600; }
+
+        &:last-child { border-bottom: 0; }
+      }
+    }
+
+    // ---- Selo do plano (Turbo / Nitro / Flex) -----------------
+    p[class*="titulo-plano-"] {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      margin-bottom: 0;
+      background: $ds-muted;
+      border-radius: $ds-radius-pill;
+      font-size: .78rem !important;
+      letter-spacing: .03em;
+
+      // a bolinha colorida (.text-p-N) mantém a cor do plano
+      .fa-circle { font-size: .6rem; }
+    }
+
+    // ---- Etiqueta "Ver" (propostas / e-mails) -----------------
+    .label {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: $ds-radius-pill;
+      font-size: .72rem !important;
+      font-weight: 600;
+      letter-spacing: .03em;
+      line-height: 1;
+    }
+
+    // ---- Grupo de ações: separar os botões --------------------
+    // O .btn-group do Bootstrap "cola" os botões; aqui voltamos
+    // a dar respiro entre eles.
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      > .btn {
+        flex: 1 1 auto;
+        margin: 0;
+        border-radius: $ds-radius-sm;
+      }
+    }
+
+    // ---- Paginação --------------------------------------------
+    .pagination {
+      gap: 6px;
+
+      .page-link {
+        border-radius: $ds-radius-sm;
+        border-color: $ds-border;
+        color: $ds-text;
+      }
+      .page-item.active .page-link {
+        background-color: $ds-brand;
+        border-color: $ds-brand;
+        color: #fff;
+      }
+    }
+  }
+}
