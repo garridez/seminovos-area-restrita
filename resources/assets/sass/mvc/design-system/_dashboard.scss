@@ -2,26 +2,28 @@
 //  DESIGN SYSTEM · DASHBOARD / MEUS VEÍCULOS
 //  resources/assets/sass/mvc/design-system/_dashboard.scss
 //
-//  Cobre a tela "Meus Veículos" (.container-anuncios):
-//  título, lista de detalhes, selo do plano, etiquetas e o
-//  espaçamento entre os botões de ação.
+//  Estiliza a tela "Meus Veículos" por completo: filtros,
+//  cartão do veículo, lista de detalhes com ícones, sub-painéis,
+//  selos, status, botões de ação e paginação.
 //  Aninhado em `body` para vencer o SCSS de rota legado.
 // =============================================================
 
 body {
 
-  // ---- Botão "Trocar Plano" (usa a classe .btn-info) ----------
+  // ---- Variantes de botão usadas nesta tela -------------------
   .btn-info {
     background-color: #3a4150;
     border-color: #3a4150;
     color: #fff;
-
     &:hover,
-    &:focus {
-      background-color: #2b303b;
-      border-color: #2b303b;
-      color: #fff;
-    }
+    &:focus { background-color: #2b303b; border-color: #2b303b; color: #fff; }
+  }
+  .btn-complete {
+    background-color: $ds-info;
+    border-color: $ds-info;
+    color: #fff;
+    &:hover,
+    &:focus { background-color: darken($ds-info, 8%); border-color: darken($ds-info, 8%); color: #fff; }
   }
 
   .container-anuncios {
@@ -34,70 +36,192 @@ body {
       margin-bottom: $ds-space-3;
     }
 
-    // ---- Lista de detalhes do veículo -------------------------
-    ul.h-auto {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    // ---- Estado vazio (sem anúncios) --------------------------
+    .sem-anuncios {
+      background: $ds-surface;
+      border: 1px dashed $ds-border;
+      border-radius: $ds-radius-lg;
+      padding: $ds-space-5 $ds-space-3;
 
-      li {
-        padding: 7px 0;
-        font-size: .875rem;
-        color: $ds-text-soft;
-        border-bottom: 1px solid $ds-border;
+      h2 { font-size: 1.25rem; color: $ds-text; width: 100%; justify-content: center; }
+      h3 { color: $ds-text-soft; font-size: 1rem; }
 
-        // valores destacados (quando vêm dentro de <span>)
-        span { color: $ds-text; font-weight: 600; }
-
-        &:last-child { border-bottom: 0; }
+      .link-black {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: $ds-radius;
+        color: #fff;
+        transition: transform $ds-transition;
+        &:hover { transform: translateY(-2px); }
       }
     }
 
-    // ---- Selo do plano (Turbo / Nitro / Flex) -----------------
-    p[class*="titulo-plano-"] {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 11px;
-      margin-bottom: 0;
-      background: $ds-muted;
-      border-radius: $ds-radius-pill;
-      font-size: .78rem !important;
-      letter-spacing: .03em;
+    // ===========================================================
+    //  CARTÃO DO VEÍCULO  (.veiculo)
+    // ===========================================================
+    .veiculo {
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
+      box-shadow: $ds-shadow-sm;
+      overflow: hidden;
+      margin-bottom: $ds-space-4 !important;
+      transition: box-shadow $ds-transition;
 
-      // a bolinha colorida (.text-p-N) mantém a cor do plano
-      .fa-circle { font-size: .6rem; }
-    }
+      &:hover { box-shadow: $ds-shadow; }
 
-    // ---- Etiqueta "Ver" (propostas / e-mails) -----------------
-    .label {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: $ds-radius-pill;
-      font-size: .72rem !important;
-      font-weight: 600;
-      letter-spacing: .03em;
-      line-height: 1;
-    }
+      // ---- Foto -----------------------------------------------
+      .img-fluid {
+        border-radius: $ds-radius;
+        max-height: 200px;
+        width: 100%;
+        object-fit: contain;
+      }
 
-    // ---- Grupo de ações: separar os botões --------------------
-    // O .btn-group do Bootstrap "cola" os botões; aqui voltamos
-    // a dar respiro entre eles.
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      // ---- Título e preço -------------------------------------
+      .veiculo-titulo {
+        align-items: baseline;
+        gap: 2px 16px;
 
-      > .btn {
-        flex: 1 1 auto;
+        .marca-modelo {
+          flex: 1 1 auto;
+          font-size: 1.15rem;
+          font-weight: 700;
+          color: $ds-text;
+          margin: 0;
+        }
+        .preco h4 {
+          margin: 0;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: $ds-text;
+        }
+        .valvula small {
+          color: $ds-text-soft;
+          font-size: .8rem;
+        }
+      }
+
+      // a divisória colorida sob o título (cor do plano) afina
+      .border-bottom-c {
+        padding-bottom: 6px;
+        margin-bottom: 4px;
+      }
+
+      // ---- Lista de detalhes (com ícones) ---------------------
+      ul.h-auto {
+        list-style: none;
         margin: 0;
+        padding: 0;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          padding: 7px 0;
+          font-size: .875rem;
+          color: $ds-text-soft;
+          border-bottom: 1px solid $ds-border;
+
+          .ds-li-ico {
+            width: 16px;
+            flex: none;
+            text-align: center;
+            color: $ds-brand;
+            font-size: .85rem;
+          }
+          // valores destacados (quando vêm dentro de <span>)
+          span { color: $ds-text; font-weight: 600; }
+
+          &:last-child { border-bottom: 0; }
+        }
+      }
+
+      // ---- Sub-painéis (e-mails, certificado, plano, status) --
+      .bg-master-lightest {
+        background-color: $ds-bg !important;
+        border: 1px solid $ds-border;
         border-radius: $ds-radius-sm;
+        padding: 12px 14px !important;
+      }
+
+      // ---- Selo do plano (Turbo / Nitro / Flex) ---------------
+      p[class*="titulo-plano-"] {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 11px;
+        margin: 0;
+        background: $ds-muted;
+        border-radius: $ds-radius-pill;
+        font-size: .78rem !important;
+        letter-spacing: .03em;
+
+        // a bolinha (.text-p-N) mantém a cor do plano
+        .fa-circle { font-size: .6rem; }
+      }
+
+      // ---- Bloco de status ------------------------------------
+      // o <p> do status: ícone colorido (.text-s-N) + título
+      .pb-2 p.bold {
+        margin-bottom: 4px;
+        font-size: .9rem;
+        color: $ds-text;
+      }
+      .hint-text {
+        color: $ds-text-soft;
+        font-size: .8rem;
+        line-height: 1.4;
+      }
+
+      // ---- Etiqueta "Ver" -------------------------------------
+      .label {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: $ds-radius-pill;
+        font-size: .72rem !important;
+        font-weight: 600;
+        letter-spacing: .03em;
+        line-height: 1;
+      }
+
+      // ---- Botões de ação (rodapé do cartão) ------------------
+      // O .btn-group do Bootstrap "cola" os botões; aqui voltamos
+      // a dar respiro entre eles.
+      .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 0 12px;
+
+        > a,
+        > .btn {
+          flex: 1 1 auto;
+          margin: 0 !important;
+        }
+        .btn {
+          width: 100%;
+          border-radius: $ds-radius-sm;
+        }
+      }
+
+      // botões empilhados da coluna direita (inativar, renovar...)
+      .justify-content-end.flex-wrap {
+        gap: 8px;
+
+        > .btn,
+        > a { margin: 0 !important; }
       }
     }
 
     // ---- Paginação --------------------------------------------
     .pagination {
+      justify-content: center;
       gap: 6px;
+      margin-top: $ds-space-3;
 
       .page-link {
         border-radius: $ds-radius-sm;
