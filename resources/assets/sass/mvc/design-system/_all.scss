@@ -1,0 +1,19 @@
+// =============================================================
+//  DESIGN SYSTEM · ÍNDICE
+//  resources/assets/sass/mvc/design-system/_all.scss
+//
+//  Importar em app.scss numa linha só, entre "components/all"
+//  e "mvc/routes/all":
+//      @import "components/all";
+//      @import "mvc/design-system/all";
+//      @import "mvc/routes/all";
+//
+//  A ordem abaixo importa: tokens precisa vir antes dos
+//  componentes, pois eles usam as variáveis $ds-*.
+// =============================================================
+
+@import "tokens";   // variáveis e custom properties (fundação)
+@import "base";     // fonte, fundo, tipografia, foco global
+@import "buttons";  // botões
+@import "forms";    // campos, rótulos, validação
+@import "cards";    // cards / painéis

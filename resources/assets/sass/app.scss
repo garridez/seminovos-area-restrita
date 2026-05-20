@@ -4,7 +4,7 @@
  * @todo Colocar as variáveis abaixo num arquivo separado
  * Essas variáveis são para a versão 4.3.1 do bootstrap
  */
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 $enable-pointer-cursor-for-buttons: true !default;
 $font-weight-bolder: bolder !default;
 /**
@@ -33,6 +33,7 @@ $use-pulse: true;
 
 @import "tools/mixins";
 @import "components/all";
+@import "mvc/design-system/all";
 @import "mvc/routes/all";
 @import "mvc/layout/all";
 

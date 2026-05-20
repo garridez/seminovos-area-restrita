@@ -1,0 +1,158 @@
+// =============================================================
+//  DESIGN SYSTEM · BOTÕES
+//  resources/assets/sass/mvc/design-system/_buttons.scss
+//
+//  Regra de cor:
+//   - laranja  = ação principal   (ENTRAR, CONTINUAR, SALVAR)
+//   - neutro   = ação secundária  (VOLTAR, CANCELAR)
+//   - verde    = ação positiva    (PAGAR, ATIVAR, COMPARTILHAR)
+//   - vermelho = ação destrutiva  (EXCLUIR, INATIVAR)
+//   - escuro   = ação alternativa (TROCAR PLANO)
+//
+//  As regras são aninhadas em `body` de propósito: dá a
+//  especificidade necessária para vencer o tema legado sem
+//  precisar de !important.
+// =============================================================
+
+// Mixin de variante: define cor de fundo, hover, active e texto.
+@mixin ds-btn-variant($bg, $bg-hover, $bg-active, $fg: #fff, $border: $bg) {
+  background-color: $bg;
+  border-color: $border;
+  color: $fg;
+
+  &:hover {
+    background-color: $bg-hover;
+    border-color: $bg-hover;
+    color: $fg;
+  }
+  &:focus,
+  &.focus {
+    background-color: $bg-hover;
+    border-color: $bg-hover;
+    color: $fg;
+    box-shadow: 0 0 0 3px rgba($bg, .35);
+  }
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    background-color: $bg-active;
+    border-color: $bg-active;
+    color: $fg;
+  }
+}
+
+body {
+
+  // ---- Base comum a todos os botões ----------------------------
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-family: $ds-font;
+    font-size: .9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: $ds-radius;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background-color $ds-transition,
+                border-color $ds-transition,
+                box-shadow $ds-transition,
+                transform $ds-transition;
+
+    &:hover  { transform: translateY(-1px); }
+    &:active { transform: translateY(0); }
+
+    &:disabled,
+    &.disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .fa, i { font-size: .95em; }
+  }
+
+  // ---- Tamanhos ------------------------------------------------
+  .btn-sm    { padding: 6px 14px;  font-size: .8125rem; border-radius: $ds-radius-sm; }
+  .btn-lg    { padding: 13px 28px; font-size: 1rem; }
+  .btn-block { display: flex; width: 100%; }
+
+  // ---- Ação principal — laranja da marca -----------------------
+  // "btn-primary" e "btn-laranja" são a MESMA ação principal;
+  // unificamos os dois no laranja para acabar com a divergência.
+  .btn-primary,
+  .btn-laranja {
+    @include ds-btn-variant($ds-brand, $ds-brand-hover, $ds-brand-active);
+  }
+
+  // ---- Ação secundária — neutra --------------------------------
+  // Na área restrita "btn-amarelo" é o botão VOLTAR. Por isso é
+  // redesenhado como botão neutro. Para um amarelo de DESTAQUE
+  // real, use a classe ".btn-acento".
+  .btn-secondary,
+  .btn-amarelo {
+    @include ds-btn-variant(
+      $ds-muted, darken($ds-muted, 5%), darken($ds-muted, 9%),
+      $ds-text, $ds-border
+    );
+  }
+
+  // ---- Positivo — pagar, ativar, compartilhar ------------------
+  .btn-success,
+  .btn-verde {
+    @include ds-btn-variant($ds-success, darken($ds-success, 6%), darken($ds-success, 11%));
+  }
+
+  // ---- Destrutivo — excluir, inativar --------------------------
+  .btn-danger,
+  .btn-vermelho {
+    @include ds-btn-variant($ds-danger, darken($ds-danger, 6%), darken($ds-danger, 11%));
+  }
+
+  // ---- Escuro — ex.: TROCAR PLANO ------------------------------
+  .btn-dark,
+  .btn-escuro {
+    @include ds-btn-variant(#2b303b, lighten(#2b303b, 9%), lighten(#2b303b, 4%));
+  }
+
+  // ---- Amarelo de destaque (uso pontual) -----------------------
+  .btn-acento {
+    @include ds-btn-variant(
+      $ds-accent, darken($ds-accent, 6%), darken($ds-accent, 11%), $ds-text
+    );
+  }
+
+  // ---- Botão de texto ------------------------------------------
+  .btn-link {
+    background: transparent;
+    border-color: transparent;
+    color: $ds-brand;
+    box-shadow: none;
+
+    &:hover {
+      color: $ds-brand-hover;
+      transform: none;
+      text-decoration: underline;
+    }
+  }
+
+  // ---- Botões com contorno -------------------------------------
+  .btn-outline-primary,
+  .btn-outline-laranja {
+    background: transparent;
+    border-color: $ds-brand;
+    color: $ds-brand;
+    &:hover { background: $ds-brand; border-color: $ds-brand; color: #fff; }
+  }
+  .btn-outline-secondary {
+    background: transparent;
+    border-color: $ds-border;
+    color: $ds-text;
+    &:hover { background: $ds-muted; color: $ds-text; }
+  }
+}

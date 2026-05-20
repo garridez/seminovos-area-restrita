@@ -1,0 +1,53 @@
+// =============================================================
+//  DESIGN SYSTEM · BASE
+//  resources/assets/sass/mvc/design-system/_base.scss
+//
+//  Aplica a fundação visual na área restrita. É este arquivo
+//  que faz a fonte Inter (importada no topo do app.scss)
+//  realmente entrar em vigor — sem ele, trocar o @import da
+//  fonte não muda nada.
+// =============================================================
+
+body {
+  font-family: $ds-font;
+  color: $ds-text;
+  background-color: $ds-bg;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// -------- Tipografia ------------------------------------------
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: $ds-text;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p { line-height: 1.6; }
+
+// -------- Links -----------------------------------------------
+a {
+  color: $ds-brand;
+  transition: color $ds-transition;
+
+  &:hover,
+  &:focus {
+    color: $ds-brand-hover;
+  }
+}
+
+// utilitário de cor já usado nos templates (ex.: text-laranja)
+.text-laranja { color: $ds-brand !important; }
+
+// -------- Divisórias ------------------------------------------
+hr {
+  border: 0;
+  border-top: 1px solid $ds-border;
+}
+
+// -------- Acessibilidade: anel de foco visível ----------------
+:focus-visible {
+  outline: 2px solid rgba($ds-brand, .55);
+  outline-offset: 2px;
+}

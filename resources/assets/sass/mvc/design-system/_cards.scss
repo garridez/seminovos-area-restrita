@@ -1,0 +1,61 @@
+// =============================================================
+//  DESIGN SYSTEM · CARDS
+//  resources/assets/sass/mvc/design-system/_cards.scss
+//
+//  Padroniza .card (Bootstrap 4) e o .card-deck usado na lista
+//  de veículos do Repasse. Troca a sombra dura "0 0 3px #ccc"
+//  do tema legado por uma elevação suave.
+//
+//  Aninhado em `body` para vencer o tema legado sem !important.
+// =============================================================
+
+body {
+
+  .card {
+    background-color: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    box-shadow: $ds-shadow-sm;
+    transition: box-shadow $ds-transition, transform $ds-transition;
+  }
+
+  // realce sutil ao passar o mouse em cards clicáveis
+  a > .card:hover,
+  .card.card-hover:hover {
+    box-shadow: $ds-shadow;
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid $ds-border;
+    padding: $ds-space-3 $ds-space-4;
+    font-weight: 600;
+    color: $ds-text;
+  }
+
+  .card-body {
+    padding: $ds-space-4;
+  }
+
+  .card-footer {
+    background-color: transparent;
+    border-top: 1px solid $ds-border;
+    padding: $ds-space-3 $ds-space-4;
+  }
+
+  .card-title {
+    font-weight: 600;
+    color: $ds-text;
+  }
+
+  .card-img-top {
+    border-top-left-radius: $ds-radius;
+    border-top-right-radius: $ds-radius;
+  }
+
+  // espaçamento entre cards num card-deck
+  .card-deck .card {
+    margin-bottom: $ds-space-3;
+  }
+}

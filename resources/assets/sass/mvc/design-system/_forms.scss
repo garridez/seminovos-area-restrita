@@ -1,0 +1,141 @@
+// =============================================================
+//  DESIGN SYSTEM · FORMULÁRIOS
+//  resources/assets/sass/mvc/design-system/_forms.scss
+//
+//  Cobre os dois padrões usados na área restrita:
+//   - .form-control "solto" (etapas de criar anúncio, filtros)
+//   - .form-group-default — a "caixa com rótulo dentro" do
+//     tema Pages (tela Meus Dados, pagamento, etc.)
+//
+//  Aninhado em `body` para vencer o tema legado sem !important.
+// =============================================================
+
+body {
+
+  // ---- Rótulos -------------------------------------------------
+  label {
+    font-weight: 600;
+    font-size: .875rem;
+    color: $ds-text;
+    margin-bottom: 6px;
+  }
+
+  // ---- Campo padrão -------------------------------------------
+  .form-control {
+    height: 44px;
+    padding: 10px 14px;
+    font-family: $ds-font;
+    font-size: .9375rem;
+    color: $ds-text;
+    background-color: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-sm;
+    box-shadow: none;
+    transition: border-color $ds-transition, box-shadow $ds-transition;
+
+    &::placeholder {
+      color: $ds-text-soft;
+      opacity: 1;
+    }
+
+    &:focus {
+      border-color: $ds-brand;
+      box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+      outline: none;
+    }
+
+    // Estado desabilitado: muted intencional, não "quebrado".
+    &:disabled,
+    &[readonly] {
+      background-color: $ds-muted;
+      color: $ds-text-soft;
+      border-color: $ds-border;
+      cursor: not-allowed;
+    }
+  }
+
+  textarea.form-control {
+    height: auto;
+    min-height: 110px;
+    padding: 12px 14px;
+    resize: vertical;
+  }
+
+  // ---- Select com seta personalizada --------------------------
+  select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+
+  // ---- Validação ----------------------------------------------
+  // O jquery-validation marca campos inválidos com .error e
+  // insere um <label class="error"> com a mensagem.
+  .form-control.is-invalid,
+  .form-control.error,
+  input.error,
+  select.error,
+  textarea.error {
+    border-color: $ds-danger;
+
+    &:focus { box-shadow: 0 0 0 3px rgba($ds-danger, .15); }
+  }
+  label.error,
+  .invalid-feedback {
+    display: block;
+    color: $ds-danger;
+    font-size: .8125rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .form-control.is-valid { border-color: $ds-success; }
+
+  // ---- Grupo legado "form-group-default" ----------------------
+  // O tema Pages usa essa classe como uma caixa que contém o
+  // rótulo + o campo (o campo, por dentro, fica sem borda).
+  // Modernizamos a caixa mantendo a estrutura intacta.
+  .form-group-default {
+    background-color: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-sm;
+    padding: 8px 14px;
+    transition: border-color $ds-transition, box-shadow $ds-transition;
+
+    &:focus-within {
+      border-color: $ds-brand;
+      box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+    }
+
+    label {
+      margin-bottom: 0;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: $ds-text-soft;
+    }
+
+    // dentro da caixa o campo não tem borda nem fundo próprios
+    .form-control {
+      height: auto;
+      padding: 2px 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none !important;
+
+      &:focus { box-shadow: none !important; }
+    }
+
+    &.has-error,
+    &.error {
+      border-color: $ds-danger;
+    }
+  }
+
+  // ---- Espaçamento entre grupos -------------------------------
+  .form-group { margin-bottom: $ds-space-3; }
+}
