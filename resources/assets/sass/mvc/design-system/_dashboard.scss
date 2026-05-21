@@ -283,6 +283,16 @@ body {
             background: linear-gradient(180deg, mix($ds-success, #fff, 9%),
                         mix($ds-success, #fff, 22%)) !important;
           }
+
+          // confirmação ao copiar o link — verde sólido por instantes
+          &.copiado {
+            background: linear-gradient(180deg, $ds-success,
+                        mix($ds-success, #000, 8%)) !important;
+            border-color: $ds-success !important;
+            &,
+            i,
+            span { color: #fff !important; }
+          }
         }
       }
 

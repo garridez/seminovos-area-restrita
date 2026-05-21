@@ -54,43 +54,80 @@ export const callback = ($) => {
                     window.location = link;
                 });
         })
-        .on('click', '.item-compartilhar', function () {
-            const marca = $(this).data('marca');
-            const modelo = $(this).data('modelo');
-            const idVeiculo = $(this).data('id-veiculo');
+        .on('click', '.item-compartilhar', function (e) {
+            e.preventDefault();
+ 
+            var marca = $(this).data('marca');
+            var modelo = $(this).data('modelo');
+            var idVeiculo = $(this).data('id-veiculo');
+            var link = 'https://seminovos.com.br/' + idVeiculo;
+ 
+            // ---- Mobile / navegadores com suporte: share nativo ----
             if (navigator && navigator.share) {
                 navigator
                     .share({
                         title: 'Veja este ' + marca + ' ' + modelo + ' que encontrei: ',
-                        url: 'https://seminovos.com.br/' + idVeiculo,
+                        url: link,
                     })
-                    .then(() => {
-                        console.log('Thanks for sharing!');
-                    })
-                    .catch(console.error);
+                    .catch(function () {
+                        // usuário cancelou o compartilhamento — ignora
+                    });
                 return;
             }
-            const $ctx = $(this).closest('.item-compartilhar');
-
-            if (!$ctx.hasClass('show')) {
-                $ctx.addClass('show');
-                $('body').on(
-                    'click.closeToolTipCompartilhar',
-                    ':not(.item-compartilhar)',
-                    function (e) {
-                        if ($ctx.find($(e.target)).length > 0) {
-                            return;
-                        }
-                        $ctx.removeClass('show');
-                        $('body').off('click.closeToolTipCompartilhar');
-                    },
-                );
+ 
+            // ---- Desktop: copia o link para a área de transferência ----
+            var $botao = $(this).find('button');
+            var $icon = $botao.find('i');
+            var $span = $botao.find('span');
+ 
+            // ignora cliques seguidos enquanto o feedback está na tela
+            if ($botao.hasClass('copiado')) {
                 return;
             }
-
-            $('body').off('click.closeToolTipCompartilhar');
-            $ctx.removeClass('show');
+ 
+            // troca ícone + texto por ~2s confirmando a cópia
+            function feedbackCopiado() {
+                var iconOriginal = $icon.attr('class');
+                var textoOriginal = $span.text();
+ 
+                $botao.addClass('copiado');
+                $icon.attr('class', 'fa fa-check');
+                $span.text('Link copiado!');
+ 
+                setTimeout(function () {
+                    $icon.attr('class', iconOriginal);
+                    $span.text(textoOriginal);
+                    $botao.removeClass('copiado');
+                }, 2000);
+            }
+ 
+            // alternativa para navegadores sem Clipboard API (ou HTTP)
+            function copiarFallback() {
+                var $tmp = $('<textarea>')
+                    .val(link)
+                    .css({ position: 'fixed', top: '-1000px', left: '0', opacity: 0 })
+                    .appendTo('body');
+ 
+                $tmp[0].focus();
+                $tmp[0].select();
+ 
+                try {
+                    document.execCommand('copy');
+                    feedbackCopiado();
+                } catch (err) {
+                    console.error('Não foi possível copiar o link:', err);
+                }
+ 
+                $tmp.remove();
+            }
+ 
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(link).then(feedbackCopiado, copiarFallback);
+            } else {
+                copiarFallback();
+            }
         });
+
 
     if (location.hash !== '' && window.URLSearchParams) {
         (function () {
