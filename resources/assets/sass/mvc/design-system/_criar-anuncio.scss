@@ -18,15 +18,16 @@ body.l-criar-anuncio {
     margin-bottom: $ds-space-5;
   }
 
-  // Stepper 100% CSS.
-  // Ancorado em .step-list-container para vencer o CSS original
-  // `ul.steps-list li` por especificidade.
+  // Stepper 100% CSS — indicador de PROGRESSO em pontos.
+  // Sem números: o JS remove ícones de etapas não-carregadas,
+  // então a contagem varia (6 vira 4) e número viraria mentira.
+  // Pontos mostram "feito / atual / a fazer" — não uma contagem.
+  // Ancorado em .step-list-container para vencer o CSS original.
   .step-list-container .steps-list {
-    counter-reset: passo;
     display: flex !important;
     align-items: center;
     width: 100%;
-    max-width: 480px;
+    max-width: 420px;
     margin: 0 auto;
     padding: 0;
     list-style: none;
@@ -41,59 +42,64 @@ body.l-criar-anuncio {
     }
 
     li {
-      counter-increment: passo;
       flex: 1 1 0 !important;
       min-width: 0;
       position: relative;
-      height: 46px;
+      height: 40px;
       border: 0 !important;
       display: block;
 
       svg { display: none !important; }   // SVG quebrado escondido
 
-      // linha de ligação
+      // linha de ligação — laranja = trecho já percorrido
       &::before {
-        content: "";
-        position: absolute;
-        top: 50%;
+        content: "" !important;
+        position: absolute !important;
+        top: 50% !important;
         left: 0;
         right: 0;
-        height: 2px;
-        background: $ds-border;
-        z-index: 0;
+        height: 3px !important;
+        background: $ds-brand !important;
+        z-index: 0 !important;
       }
       &:first-child::before { left: 50%; }
       &:last-child::before  { right: 50%; }
 
-      // disco numerado
+      // o ponto. !important em tudo: o CSS original tem
+      // `li:not(:last-child)::after { content:" " }` em alta
+      // especificidade — sem !important ele venceria.
       &::after {
-        content: counter(passo);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: $ds-surface;
-        border: 2px solid $ds-border;
-        color: $ds-text-soft;
-        font-family: $ds-font;
-        font-weight: 700;
-        font-size: .95rem;
-        transition: border-color $ds-transition, background-color $ds-transition,
-                    color $ds-transition, box-shadow $ds-transition;
+        content: "" !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 1 !important;
+        width: 16px !important;
+        height: 16px !important;
+        display: block !important;
+        border-radius: 50% !important;
+        background: $ds-brand !important;     // etapa concluída
+        border: 3px solid $ds-surface !important;
+        box-shadow: 0 0 0 1px $ds-brand !important;
+        transition: all $ds-transition;
       }
 
+      // etapa ATUAL — ponto maior com anel
       &.active::after {
-        border-color: $ds-brand;
-        background: $ds-brand;
-        color: #fff;
-        box-shadow: 0 0 0 4px rgba($ds-brand, .15);
+        width: 22px !important;
+        height: 22px !important;
+        background: $ds-brand !important;
+        box-shadow: 0 0 0 4px rgba($ds-brand, .22) !important;
+      }
+
+      // etapas SEGUINTES — ainda não percorridas
+      &.active ~ li::before {
+        background: $ds-border !important;
+      }
+      &.active ~ li::after {
+        background: $ds-surface !important;
+        box-shadow: 0 0 0 1px $ds-border !important;
       }
     }
   }
@@ -230,6 +236,15 @@ body.l-criar-anuncio {
     }
     // espaço para a seta do select não cobrir o texto
     select.form-control { padding-right: 38px !important; }
+
+    // textarea não pode herdar a altura fixa de 46px
+    textarea.form-control {
+      height: auto !important;
+      min-height: 160px !important;
+      padding: 12px 14px !important;
+      line-height: 1.5;
+      resize: vertical;
+    }
   }
 
   .form-group { margin-bottom: $ds-space-3; }
@@ -373,6 +388,72 @@ body.l-criar-anuncio {
     text-align: center;
     font-size: .85rem;
     color: $ds-text-soft;
+  }
+
+  // ===========================================================
+  //  PASSO DE PREÇO  (Sobre o seu carro)
+  //  Ancorado no #form_precoVeiculo (ID) para vencer o legado.
+  // ===========================================================
+  #form_precoVeiculo {
+
+    // os títulos em negrito dos blocos viram rótulos de campo
+    .conjunto-km > div:first-child b,
+    .conjunto-preco > div:first-child b,
+    .form-group-default > b:first-child {
+      display: block;
+      margin-bottom: 8px;
+      font-size: .92rem;
+      font-weight: 700;
+      color: $ds-text;
+    }
+
+    // KM e R$ — inputs limpos de borda única
+    input[type="text"] {
+      height: 46px;
+      padding: 10px 14px;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius;
+      background: $ds-surface;
+      font-size: .95rem;
+
+      &:focus {
+        border-color: $ds-brand;
+        box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+        outline: none;
+      }
+    }
+    .text-laranja, .text-verde { font-size: .95rem; }
+
+    // contador de caracteres da observação
+    .wordcount {
+      font-size: .78rem;
+      color: $ds-text-soft;
+    }
+
+    // ---- Perguntas de sim/não ---------------------------------
+    // viram uma lista limpa: rótulo à esquerda, interruptor à
+    // direita, divisória entre cada uma.
+    .conjunto-leilao,
+    .d-flex.justify-content-between.w-100 {
+      align-items: center !important;
+      margin: 0 !important;
+      padding: 14px 2px;
+      border-bottom: 1px solid $ds-border;
+
+      b {
+        font-weight: 600;
+        font-size: .92rem;
+        color: $ds-text;
+      }
+    }
+    // a primeira pergunta ganha uma linha em cima — fecha a lista
+    .conjunto-leilao { border-top: 1px solid $ds-border; }
+
+    // bloco de financiamento (revenda) acompanha o mesmo padrão
+    .group-financiamento {
+      padding: 14px 2px;
+      border-bottom: 1px solid $ds-border;
+    }
   }
 
   // ===========================================================
