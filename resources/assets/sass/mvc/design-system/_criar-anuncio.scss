@@ -18,28 +18,29 @@ body.l-criar-anuncio {
     margin-bottom: $ds-space-5;
   }
 
-  // Stepper feito 100% em CSS — sem depender dos SVGs (que não
-  // têm dimensão própria e renderizavam como óvalos vazios).
+  // Stepper 100% CSS. width:100% + flex forçado garante que as
+  // etapas se espalhem pela barra em vez de se amontoarem.
   .steps-list {
     counter-reset: passo;
-    display: flex;
+    display: flex !important;
     align-items: center;
-    list-style: none;
-    max-width: 440px;
+    width: 100%;
+    max-width: 480px;
     margin: 0 auto;
     padding: 0;
+    list-style: none;
 
     li {
       counter-increment: passo;
-      flex: 1;
+      flex: 1 1 0 !important;
+      min-width: 0;
       position: relative;
       height: 46px;
       border: 0 !important;
 
-      // o SVG quebrado é escondido
-      svg { display: none !important; }
+      svg { display: none !important; }   // SVG quebrado escondido
 
-      // linha de ligação entre as etapas
+      // linha de ligação
       &::before {
         content: "";
         position: absolute;
@@ -53,7 +54,7 @@ body.l-criar-anuncio {
       &:first-child::before { left: 50%; }
       &:last-child::before  { right: 50%; }
 
-      // o número da etapa, num disco
+      // disco numerado
       &::after {
         content: counter(passo);
         position: absolute;
@@ -77,7 +78,6 @@ body.l-criar-anuncio {
                     color $ds-transition, box-shadow $ds-transition;
       }
 
-      // etapa atual
       &.active::after {
         border-color: $ds-brand;
         background: $ds-brand;
@@ -88,10 +88,10 @@ body.l-criar-anuncio {
   }
 
   // ===========================================================
-  //  CARTÃO DO PASSO
+  //  O CARTÃO — a ÚNICA caixa da tela
   // ===========================================================
   .anuncio-steps {
-    max-width: 880px;
+    max-width: 820px;
     margin: 0 auto;
     background: $ds-surface;
     border: 1px solid $ds-border;
@@ -108,6 +108,23 @@ body.l-criar-anuncio {
   }
   h3, h4 { font-size: 1.4rem; margin-bottom: $ds-space-4; }
   h5     { font-size: 1.1rem; margin-bottom: $ds-space-3; }
+
+  // ---- Achata as caixas internas ----------------------------
+  // Eliminam o "form dentro do form" — só o cartão é caixa.
+  .container,
+  .conteudo,
+  form.forms,
+  form.needs-validation,
+  #form_dadosVeiculo,
+  #form_precoVeiculo {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
 
   // ===========================================================
   //  SELEÇÃO DE TIPO  (Carro / Moto / Caminhão)
@@ -145,8 +162,6 @@ body.l-criar-anuncio {
 
     i { color: $ds-text-soft; transition: color $ds-transition; }
 
-    // hover/seleção: fundo laranja COM ícone e texto brancos
-    // (antes o ícone sumia por ficar laranja sobre laranja)
     &:hover,
     &.selecionado,
     &.active {
@@ -162,44 +177,53 @@ body.l-criar-anuncio {
   }
 
   // ===========================================================
-  //  FORMULÁRIO GRANDE
-  //  O form ficava preso num .container estreito do Bootstrap.
-  //  Aqui ele passa a ocupar toda a largura do cartão.
+  //  CAMPOS — inputs limpos, de borda única (estilo busca)
+  //  Antes cada campo era uma "caixa". Aqui o grupo vira só um
+  //  invólucro e o input ganha sua própria borda arredondada.
   // ===========================================================
-  .container {
-    max-width: none !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .conteudo {
-    width: 100%;
-    padding: 0;
-  }
-  form.forms,
-  form.needs-validation {
-    width: 100%;
-  }
-
-  // cada campo ocupa a largura toda
   .form-group-default {
     width: 100%;
     margin-bottom: $ds-space-3;
-    padding: 11px 18px;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
 
     label {
-      font-size: .74rem;
+      display: block;
+      margin-bottom: 6px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: $ds-text;
+      text-transform: none;
+      letter-spacing: normal;
     }
-    // o campo dentro do grupo fica maior e mais confortável
+
     .form-control {
-      height: auto;
-      min-height: 30px;
-      padding: 3px 0;
-      font-size: 1rem;
+      height: 46px !important;
+      padding: 10px 14px !important;
+      border: 1px solid $ds-border !important;
+      border-radius: $ds-radius !important;
+      background: $ds-surface !important;
+      font-family: $ds-font !important;
+      font-size: .95rem !important;
+      box-shadow: none;
+      transition: border-color $ds-transition, box-shadow $ds-transition;
+
+      &:focus {
+        border-color: $ds-brand !important;
+        box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+        outline: none;
+      }
     }
+    // espaço para a seta do select não cobrir o texto
+    select.form-control { padding-right: 38px !important; }
   }
 
-  // pares de campos lado a lado (Ano Fab / Ano Modelo, etc.)
+  .form-group { margin-bottom: $ds-space-3; }
+
+  // pares de campos lado a lado
   .conteudo .d-flex.justify-content-between {
     gap: $ds-space-3;
     align-items: flex-start;
@@ -210,12 +234,7 @@ body.l-criar-anuncio {
       min-width: 0;
     }
   }
-
-  // a linha da placa + "0KM sem placa"
-  .placa-container {
-    display: flex;
-    align-items: center;
-  }
+  .placa-container { display: flex; align-items: center; }
 
   // ===========================================================
   //  OPCIONAIS
@@ -246,10 +265,8 @@ body.l-criar-anuncio {
     gap: 4px 14px;
     width: 100%;
 
-    > div {
-      display: flex;
-      align-items: center;
-    }
+    > div { display: flex; align-items: center; }
+
     label {
       display: flex;
       align-items: center;
@@ -282,10 +299,7 @@ body.l-criar-anuncio {
       font-size: .82rem;
       background: $ds-surface;
 
-      &.selected {
-        border-color: $ds-brand;
-        background: $ds-brand-soft;
-      }
+      &.selected { border-color: $ds-brand; background: $ds-brand-soft; }
     }
   }
 
@@ -335,13 +349,13 @@ body.l-criar-anuncio {
     display: flex;
     justify-content: center;
     gap: $ds-space-3;
-    max-width: 880px;
+    max-width: 820px;
     margin: $ds-space-4 auto $ds-space-5;
     padding: 0 $ds-space-3;
 
     > div {
       flex: 1;
-      max-width: 360px;
+      max-width: 340px;
       margin: 0 !important;
       padding: 0;
     }
@@ -364,9 +378,7 @@ body.l-criar-anuncio {
       border-radius: $ds-radius;
     }
     .opcionais { grid-template-columns: 1fr 1fr; }
-
     .conteudo .d-flex.justify-content-between { flex-wrap: wrap; }
-
     .step-controls {
       flex-direction: column-reverse;
       gap: $ds-space-2;
