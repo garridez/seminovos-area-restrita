@@ -18,9 +18,10 @@ body.l-criar-anuncio {
     margin-bottom: $ds-space-5;
   }
 
-  // Stepper 100% CSS. width:100% + flex forçado garante que as
-  // etapas se espalhem pela barra em vez de se amontoarem.
-  .steps-list {
+  // Stepper 100% CSS.
+  // Ancorado em .step-list-container para vencer o CSS original
+  // `ul.steps-list li` por especificidade.
+  .step-list-container .steps-list {
     counter-reset: passo;
     display: flex !important;
     align-items: center;
@@ -30,6 +31,15 @@ body.l-criar-anuncio {
     padding: 0;
     list-style: none;
 
+    // O CSS original tem `ul.steps-list::after { width:100% }`.
+    // Num container flex esse ::after vira um item que engole
+    // TODA a largura — sobra zero, e flex:1 não distribui zero,
+    // então as etapas colapsam e se amontoam. Aqui ele morre.
+    &::after {
+      content: none !important;
+      display: none !important;
+    }
+
     li {
       counter-increment: passo;
       flex: 1 1 0 !important;
@@ -37,6 +47,7 @@ body.l-criar-anuncio {
       position: relative;
       height: 46px;
       border: 0 !important;
+      display: block;
 
       svg { display: none !important; }   // SVG quebrado escondido
 
@@ -238,68 +249,90 @@ body.l-criar-anuncio {
 
   // ===========================================================
   //  OPCIONAIS
+  //  Ancorado no #dadosAcessorios (ID) — vence o `.opcionais`
+  //  legado (display:flex;justify-content:center) SEMPRE,
+  //  independente da ordem de import.
   // ===========================================================
-  #btnCompleto .checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    background: $ds-brand-soft;
-    border: 1px solid rgba($ds-brand, .3);
-    border-radius: $ds-radius-pill;
+  #dadosAcessorios {
 
-    label {
-      margin: 0;
-      font-weight: 700;
-      font-size: .85rem;
-      color: $ds-brand-active;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-      cursor: pointer;
-    }
-  }
-
-  .opcionais {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 4px 14px;
-    width: 100%;
-
-    > div { display: flex; align-items: center; }
-
-    label {
-      display: flex;
+    #btnCompleto .checkbox {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      width: 100%;
-      margin: 0;
-      padding: 7px 8px;
-      border-radius: $ds-radius-sm;
-      font-size: .82rem;
-      color: $ds-text;
-      cursor: pointer;
-      transition: background-color $ds-transition;
+      padding: 8px 14px;
+      background: $ds-brand-soft;
+      border: 1px solid rgba($ds-brand, .3);
+      border-radius: $ds-radius-pill;
 
-      &:hover { background: $ds-muted; }
-    }
-    input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      flex: none;
-      accent-color: $ds-brand;
-      cursor: pointer;
+      label {
+        margin: 0;
+        font-weight: 700;
+        font-size: .85rem;
+        color: $ds-brand-active;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        cursor: pointer;
+      }
     }
 
-    .airbags select {
+    // grade fixa de 3 colunas — colunas alinhadas de verdade
+    .opcionais {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px 16px;
       width: 100%;
-      height: 38px;
-      padding: 6px 10px;
-      border: 1px solid $ds-border;
-      border-radius: $ds-radius-sm;
-      font-size: .82rem;
-      background: $ds-surface;
+      margin-top: $ds-space-2;
+      justify-content: stretch;   // anula o justify-content:center legado
 
-      &.selected { border-color: $ds-brand; background: $ds-brand-soft; }
+      > div {
+        display: flex;
+        align-items: center;
+        margin: 0 !important;     // anula margens soltas do tema antigo
+      }
+
+      // cada opcional: linha limpa, alinhada à esquerda
+      label {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        width: 100%;
+        margin: 0;
+        padding: 8px 10px;
+        border-radius: $ds-radius-sm;
+        font-size: .82rem;
+        line-height: 1.25;
+        color: $ds-text;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color $ds-transition;
+
+        &:hover { background: $ds-muted; }
+      }
+      input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        accent-color: $ds-brand;
+        cursor: pointer;
+      }
+
+      // o seletor de Air Bags ocupa uma célula da grade
+      .airbags {
+        display: flex;
+        align-items: center;
+
+        select {
+          width: 100%;
+          height: 40px;
+          padding: 6px 10px;
+          border: 1px solid $ds-border;
+          border-radius: $ds-radius-sm;
+          font-size: .82rem;
+          background: $ds-surface;
+
+          &.selected { border-color: $ds-brand; background: $ds-brand-soft; }
+        }
+      }
     }
   }
 
@@ -368,7 +401,7 @@ body.l-criar-anuncio {
   @include media-breakpoint-down(sm) {
     .hea-der { margin-bottom: $ds-space-4; }
 
-    .steps-list li {
+    .step-list-container .steps-list li {
       height: 38px;
       &::after { width: 32px; height: 32px; font-size: .82rem; }
     }
@@ -377,7 +410,7 @@ body.l-criar-anuncio {
       padding: $ds-space-4 $ds-space-3;
       border-radius: $ds-radius;
     }
-    .opcionais { grid-template-columns: 1fr 1fr; }
+    #dadosAcessorios .opcionais { grid-template-columns: 1fr 1fr; }
     .conteudo .d-flex.justify-content-between { flex-wrap: wrap; }
     .step-controls {
       flex-direction: column-reverse;
