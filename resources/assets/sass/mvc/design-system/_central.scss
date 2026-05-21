@@ -1,0 +1,202 @@
+// =============================================================
+//  DESIGN SYSTEM · CENTRAL DE INFORMAÇÕES
+//  resources/assets/sass/mvc/design-system/_central.scss
+//
+//  Tela "Central de Informações" — cartões de atalho + a área
+//  de conteúdo que abre ao clicar. Modernização só por CSS.
+//
+//  Escopo: ancorado em `.opcoes:has(.opcao[data-target])`, um
+//  padrão exclusivo desta tela — `.conteudo` e `.texto`
+//  sozinhos são usados em outras telas (ex.: o wizard).
+// =============================================================
+
+body {
+
+  // ---- Cabeçalho ----------------------------------------------
+  .topo:has(+ .opcoes) {
+    padding: $ds-space-4 $ds-space-4 $ds-space-3 !important;
+    font-family: $ds-font;
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: none;
+      color: $ds-text;
+    }
+    span {
+      font-size: .95rem;
+      color: $ds-text-soft;
+    }
+  }
+
+  // ===========================================================
+  //  CARTÕES DE ATALHO
+  // ===========================================================
+  .opcoes:has(.opcao[data-target]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $ds-space-3;
+    padding: 0 $ds-space-4 !important;
+    font-family: $ds-font;
+
+    .opcao {
+      display: flex;
+      flex: 1 1 200px;
+      flex-direction: column;
+      align-items: center;
+      gap: $ds-space-3;
+      padding: $ds-space-4 $ds-space-3;
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
+      box-shadow: $ds-shadow-sm;
+      text-decoration: none;
+      transition: transform $ds-transition,
+                  box-shadow $ds-transition,
+                  border-color $ds-transition;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: $ds-shadow;
+        border-color: $ds-brand;
+        text-decoration: none;
+      }
+      // estado ativo (caso o JS marque a opção escolhida)
+      &.active,
+      &.selected,
+      &.show {
+        border-color: $ds-brand;
+        background: $ds-brand-soft;
+      }
+
+      // ícone num badge redondo (vem primeiro visualmente)
+      .icone {
+        order: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: $ds-brand-soft;
+
+        i,
+        .icon {
+          font-size: 1.8rem;
+          color: $ds-brand;
+        }
+      }
+
+      // rótulo
+      .texto {
+        order: 2;
+        font-size: .95rem;
+        font-weight: 600;
+        line-height: 1.4;
+        text-align: center;
+        color: $ds-text;
+      }
+    }
+
+    // a opção "Novo golpe" ganha tom de alerta
+    .opcao[data-target=".golpe"] {
+      .icone {
+        background: mix($ds-danger, #fff, 12%);
+
+        i,
+        .icon { color: $ds-danger; }
+      }
+      &:hover { border-color: $ds-danger; }
+    }
+  }
+
+  // ===========================================================
+  //  ÁREA DE CONTEÚDO
+  // ===========================================================
+  .opcoes:has(.opcao[data-target]) ~ .conteudo {
+    margin-top: $ds-space-4;
+    padding: $ds-space-4 !important;
+    font-family: $ds-font;
+
+    // cada bloco de conteúdo — um cartão (só um fica visível)
+    > div {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: $ds-space-5;
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
+      box-shadow: $ds-shadow-sm;
+    }
+
+    .titulo {
+      margin: 0 0 $ds-space-3;
+      padding-bottom: $ds-space-2;
+      border-bottom: 2px solid $ds-border;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $ds-text;
+    }
+
+    h3,
+    h4 {
+      margin: $ds-space-3 0 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: $ds-text;
+    }
+
+    .texto p,
+    p {
+      margin: 0 0 $ds-space-2;
+      font-size: .95rem;
+      line-height: 1.7;
+      color: $ds-text-soft;
+    }
+    strong { color: $ds-text; }
+
+    // vídeos do YouTube — responsivos
+    .container-video {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      margin: $ds-space-3 auto 0;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: $ds-radius;
+      background: #000;
+
+      iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    }
+
+    // imagens (prints) — responsivas
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: $ds-radius;
+    }
+  }
+
+  // ---- Responsivo ---------------------------------------------
+  @include media-breakpoint-down(sm) {
+    .topo:has(+ .opcoes) { padding: $ds-space-3 $ds-space-2 !important; }
+
+    .opcoes:has(.opcao[data-target]) {
+      padding: 0 $ds-space-2 !important;
+      .opcao { flex-basis: 140px; padding: $ds-space-3 $ds-space-2; }
+      .opcao .icone { width: 54px; height: 54px; }
+    }
+
+    .opcoes:has(.opcao[data-target]) ~ .conteudo {
+      padding: $ds-space-3 $ds-space-2 !important;
+      > div { padding: $ds-space-3; }
+    }
+  }
+}
