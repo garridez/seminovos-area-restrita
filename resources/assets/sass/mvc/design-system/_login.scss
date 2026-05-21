@@ -1,217 +1,382 @@
 // =============================================================
-//  DESIGN SYSTEM · TELA DE LOGIN
+//  DESIGN SYSTEM · TELA DE LOGIN  (split-screen)
 //  resources/assets/sass/mvc/design-system/_login.scss
 //
-//  Redesenha a tela de login. Carrega por último (via _all.scss),
-//  então vence o SCSS de rota e de layout antigos.
+//  Layout dividido: painel de marca (escuro/imersivo) à esquerda
+//  e o formulário à direita.
 //
-//  Resolve, sem editar arquivos antigos:
-//   - a fonte serifada (define $ds-font dentro de .login-area)
-//   - a animação de introdução de 3s (animation: none)
-//   - o visual datado (cartão, campos, alternador, aviso)
+//  Tudo escopado em `body.l-login`: eleva a especificidade acima
+//  do tema legado, do SCSS de rota e do pacote ~snbh-site — então
+//  a fonte e o visual não escapam mais.
 // =============================================================
 
-body {
+body.l-login {
+  min-height: 100vh;
+  margin: 0;
+  font-family: $ds-font !important;
+  color: $ds-text;
+  background: $ds-surface;
 
-  // ---- Desliga a animação de introdução -----------------------
-  // Era a animação de 3s que deixava o logo e o formulário
-  // aparecendo devagar (sensação de travamento).
+  // ---- Mata a animação de introdução de 3s -------------------
   .snbh-logo,
   .snbh-logo .layer-car,
   .snbh-logo .layer-letters,
-  .intro-2 {
+  .intro-1,
+  .intro-2,
+  .snbh-logo-container {
     animation: none !important;
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  // ---- Libera os contêineres do layout para o full-bleed -----
+  // (o logo agora vive dentro do hero; a barra antiga some)
+  .topo { display: none !important; }
+
+  .container {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .login-container {
+    height: auto !important;
+    width: 100%;
+    padding: 0;
   }
 
   // ===========================================================
-  //  ÁREA DE LOGIN
+  //  ESTRUTURA DIVIDIDA
   // ===========================================================
+  .login-split {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  // ---- Painel de marca (esquerda) ----------------------------
+  .login-split__hero {
+    flex: 0 0 46%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 56px 5.5%;
+    color: #fff;
+    background:
+      radial-gradient(ellipse 80% 60% at 24% 18%, rgba(219, 149, 36, .42), transparent 60%),
+      linear-gradient(155deg, #2b3038 0%, #1b1e24 56%, #15171c 100%);
+
+    // arcos decorativos — eco da silhueta do logo
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+    &::before {
+      width: 620px;
+      height: 620px;
+      right: -230px;
+      bottom: -250px;
+      border: 2px solid rgba(219, 149, 36, .22);
+    }
+    &::after {
+      width: 430px;
+      height: 430px;
+      right: -120px;
+      bottom: -150px;
+      border: 2px solid rgba(255, 255, 255, .06);
+    }
+  }
+
+  .login-hero {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+
+    &__logo svg {
+      height: 56px;
+      width: auto;
+    }
+    .layer-letters { fill: #fff; }
+
+    &__title {
+      margin: 34px 0 14px;
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+    }
+    &__subtitle {
+      margin: 0 0 30px;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, .72);
+    }
+    &__features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 9px 0;
+        font-size: .95rem;
+        color: rgba(255, 255, 255, .9);
+
+        i {
+          flex: none;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          background: rgba(219, 149, 36, .18);
+          color: $ds-brand;
+          font-size: .95rem;
+        }
+      }
+    }
+  }
+
+  // ---- Painel do formulário (direita) ------------------------
+  .login-split__panel {
+    flex: 1 1 auto;
+    display: flex;
+    overflow-y: auto;
+    padding: 48px 24px;
+    background-color: #f6f1ea;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 88% 10%, rgba(219, 149, 36, .12), transparent 65%);
+  }
+
+  // margin:auto centraliza quando cabe e permite rolar quando não cabe
   .login-area {
     width: 400px;
     max-width: 100%;
-    margin: 0 auto;
-    font-family: $ds-font;   // corrige a fonte de toda a tela
+    margin: auto;
+  }
 
-    // ---- Título ----------------------------------------------
-    .titulo {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: $ds-text;
-    }
+  // ---- Título ------------------------------------------------
+  .titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $ds-text;
+    letter-spacing: -.01em;
+    text-align: center;
+    padding: 0 0 18px;
+  }
 
-    // ---- Alternador Particular / Revenda ---------------------
-    .switch-container .switch-field {
-      background: $ds-muted;
-      border: 1px solid $ds-border;
-      border-radius: $ds-radius;
-      padding: 4px;
-      gap: 4px;
+  // ---- Alternador Particular / Revenda -----------------------
+  .switch-container .switch-field {
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    padding: 4px;
+    gap: 4px;
 
-      label {
-        width: 50%;
-        margin: 0;
-        padding: 9px 0;
-        border-radius: $ds-radius-sm;
-        background: transparent;
-        color: $ds-text-soft;
-        font-family: $ds-font;
-        font-weight: 600;
-        font-size: .9rem;
-        text-decoration: none;
-        transition: background-color $ds-transition, color $ds-transition;
-
-        &:hover { color: $ds-text; }
-      }
-      input:checked + label {
-        background: $ds-brand;
-        color: #fff;
-        box-shadow: $ds-shadow-sm;
-
-        &:hover { color: #fff; }
-      }
-    }
-
-    // ---- O cartão --------------------------------------------
-    .conteudo {
-      background: $ds-surface;
-      border: 1px solid $ds-border;
-      border-radius: $ds-radius-lg;
-      box-shadow: $ds-shadow;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-
-    // ---- Formulários -----------------------------------------
-    .forms {
-      padding: $ds-space-4;
-
-      .form-group {
-        margin-bottom: $ds-space-3;
-
-        label {
-          font-family: $ds-font !important;   // vence o 'Roboto' da rota
-          font-size: .82rem;
-          font-weight: 600;
-          color: $ds-text;
-          margin-bottom: 6px;
-          text-transform: none;
-          letter-spacing: normal;
-        }
-
-        // o campo já é .form-control; aqui garantimos o estilo
-        .form-control {
-          height: 44px;
-          padding: 10px 14px;
-          border: 1px solid $ds-border;
-          border-radius: $ds-radius-sm;
-          font-family: $ds-font;
-          font-size: .9375rem;
-
-          &:focus {
-            border-color: $ds-brand;
-            box-shadow: 0 0 0 3px rgba($ds-brand, .15);
-          }
-        }
-      }
-
-      // campo de senha com o ícone do olho
-      .group-senha {
-        flex-wrap: nowrap;
-
-        .form-control {
-          border-right: 0;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-        .input-group-text {
-          height: 44px;
-          background: $ds-surface;
-          border: 1px solid $ds-border;
-          border-left: 0;
-          border-top-right-radius: $ds-radius-sm;
-          border-bottom-right-radius: $ds-radius-sm;
-          color: $ds-text-soft;
-          cursor: pointer;
-        }
-        &:focus-within {
-          .form-control,
-          .input-group-text { border-color: $ds-brand; }
-        }
-      }
-
-      .esqueci-senha {
-        margin: -2px 0 $ds-space-3;
-
-        a {
-          font-family: $ds-font;
-          font-size: .85rem;
-          font-weight: 600;
-          color: $ds-brand;
-          &:hover { color: $ds-brand-hover; }
-        }
-      }
-    }
-
-    // ---- Botão ENTRAR ----------------------------------------
-    // O PHP renderiza o ENTRAR como .btn-warning; aqui ele
-    // recebe o laranja da marca (ação principal).
-    .btn-warning {
-      background-color: $ds-brand;
-      border-color: $ds-brand;
-      color: #fff;
-
-      &:hover,
-      &:focus {
-        background-color: $ds-brand-hover;
-        border-color: $ds-brand-hover;
-        color: #fff;
-      }
-    }
-
-    // ---- Divisor "ou" ----------------------------------------
-    .separador {
-      margin: $ds-space-3 0;
+    label {
+      width: 50%;
+      margin: 0;
+      padding: 10px 0;
+      border-radius: $ds-radius-sm;
+      background: transparent;
       color: $ds-text-soft;
-      font-size: .85rem;
-      gap: 12px;
+      font-family: $ds-font;
+      font-weight: 600;
+      font-size: .9rem;
+      text-decoration: none;
+      transition: background-color $ds-transition, color $ds-transition;
 
-      span { border-top-color: $ds-border; }
+      &:hover { color: $ds-text; }
+    }
+    input:checked + label {
+      background: $ds-brand;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(219, 149, 36, .4);
+
+      &:hover { color: #fff; }
+    }
+  }
+
+  // ---- O cartão ----------------------------------------------
+  .conteudo {
+    position: relative;
+    background: $ds-surface;
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: 18px;
+    box-shadow:
+      0 22px 46px -20px rgba(58, 40, 10, .28),
+      0 6px 16px -8px rgba(58, 40, 10, .14);
+    margin-top: 14px;
+    overflow: hidden;
+
+    // fio de marca no topo do cartão
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f1d116, $ds-brand);
+    }
+  }
+
+  // ---- Formulários -------------------------------------------
+  .forms {
+    padding: $ds-space-4;
+
+    .form-group {
+      margin-bottom: $ds-space-3;
+
+      // os labels CNPJ / Senha — agora com a fonte certa
+      label {
+        font-family: $ds-font !important;
+        font-size: .82rem;
+        font-weight: 600;
+        color: $ds-text;
+        margin-bottom: 6px;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+
+      .form-control {
+        height: 46px;
+        padding: 10px 14px;
+        border: 1px solid $ds-border;
+        border-radius: $ds-radius-sm;
+        font-family: $ds-font;
+        font-size: .9375rem;
+        background: $ds-surface;
+
+        &:focus {
+          border-color: $ds-brand;
+          box-shadow: 0 0 0 3px rgba($ds-brand, .15);
+        }
+      }
     }
 
-    // ---- Estado de carregamento ------------------------------
-    .loading-container {
-      padding: $ds-space-5 $ds-space-4;
-      text-align: center;
+    // campo de senha com o ícone do olho
+    .group-senha {
+      flex-wrap: nowrap;
 
-      .spinner-border { color: $ds-brand; }
-      .feedback-text {
-        margin-top: 12px;
+      .form-control {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .input-group-text {
+        height: 46px;
+        background: $ds-surface;
+        border: 1px solid $ds-border;
+        border-left: 0;
+        border-top-right-radius: $ds-radius-sm;
+        border-bottom-right-radius: $ds-radius-sm;
         color: $ds-text-soft;
-        font-size: .9rem;
+        cursor: pointer;
+      }
+      &:focus-within {
+        .form-control,
+        .input-group-text { border-color: $ds-brand; }
+      }
+    }
+
+    .esqueci-senha {
+      margin: -2px 0 $ds-space-3;
+
+      a {
+        font-family: $ds-font;
+        font-size: .85rem;
+        font-weight: 600;
+        color: $ds-brand;
+        &:hover { color: $ds-brand-hover; }
       }
     }
   }
 
-  // ---- Aviso anti-fraude (fica fora de .login-area) ----------
-  .login-area + .aviso {
-    width: 400px;
-    max-width: 100%;
-    margin: $ds-space-4 auto 0 !important;
-    padding: $ds-space-3 $ds-space-4;
-    background: $ds-brand-soft;
-    border: 1px solid rgba($ds-brand, .25);
-    border-radius: $ds-radius;
+  // ---- Botão ENTRAR (renderizado como .btn-warning) ----------
+  .btn-warning {
+    height: 50px;
+    background-color: $ds-brand;
+    border-color: $ds-brand;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: .04em;
+    box-shadow: 0 8px 20px -8px rgba(219, 149, 36, .7);
+
+    &:hover,
+    &:focus {
+      background-color: $ds-brand-hover;
+      border-color: $ds-brand-hover;
+      color: #fff;
+    }
+  }
+
+  // ---- Divisor "ou" ------------------------------------------
+  .separador {
+    margin: $ds-space-3 0;
     color: $ds-text-soft;
-    font-family: $ds-font;
     font-size: .85rem;
-    line-height: 1.55;
+    gap: 12px;
+
+    span { border-top-color: $ds-border; }
+  }
+
+  // ---- Estado de carregamento --------------------------------
+  .loading-container {
+    padding: $ds-space-5 $ds-space-4;
+    text-align: center;
+
+    .spinner-border { color: $ds-brand; }
+    .feedback-text {
+      margin-top: 12px;
+      color: $ds-text-soft;
+      font-size: .9rem;
+    }
+  }
+
+  // ---- Aviso anti-fraude -------------------------------------
+  .aviso {
+    margin-top: $ds-space-4;
+    padding: $ds-space-3 $ds-space-2 0;
+    font-family: $ds-font;
+    font-size: .82rem;
+    line-height: 1.6;
+    color: $ds-text-soft;
 
     .h4 {
       color: $ds-warning;
-      font-size: 1rem;
+      font-size: .95rem;
       font-weight: 700;
     }
     b { color: $ds-text; }
+  }
+
+  // ===========================================================
+  //  RESPONSIVO — empilha abaixo de 992px
+  // ===========================================================
+  @include media-breakpoint-down(md) {
+    .login-split { flex-direction: column; }
+
+    .login-split__hero {
+      flex: none;
+      padding: 38px 28px;
+
+      &::before,
+      &::after { display: none; }
+    }
+    .login-hero {
+      max-width: 100%;
+
+      &__title { font-size: 1.6rem; margin: 22px 0 10px; }
+      &__subtitle { margin-bottom: 0; }
+      &__features { display: none; }
+    }
+
+    .login-split__panel { padding: 32px 18px; }
   }
 }
