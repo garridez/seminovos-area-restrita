@@ -7,7 +7,7 @@ import Confirms from '../../../components/Confirms';
 import FormAlerts from '../../../components/FormAlerts';
 export const seletor = '.c-meus-veiculos.a-index';
 export const callback = ($) => {
-    modalRepasse();
+    //modalRepasse();
 
     if ($('div[data-veiculo-finalizar]').length) {
         advancedAlerts.warning({
