@@ -117,6 +117,23 @@ body.l-criar-anuncio {
     padding: $ds-space-5;
   }
 
+  // Planos e pagamento são telas largas (4 cards / 2 colunas).
+  // O cartão cresce só nesses passos — os passos de formulário
+  // continuam estreitos.
+  .anuncio-steps:has(.step-plano.active),
+  .anuncio-steps:has(.step-checkout.active) {
+    max-width: 1160px;
+  }
+
+  // O CSS legado usa `.row-full { width:99.5vw }` para ir
+  // full-bleed. Dentro do cartão isso estoura tudo e ainda
+  // cria barra de rolagem horizontal. Aqui ele só preenche.
+  .row-full {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
   // títulos de seção
   h3, h4, h5 {
     text-align: center;
@@ -129,11 +146,13 @@ body.l-criar-anuncio {
   // ---- Achata as caixas internas ----------------------------
   // Eliminam o "form dentro do form" — só o cartão é caixa.
   .container,
+  .container-fluid,
   .conteudo,
   form.forms,
   form.needs-validation,
   #form_dadosVeiculo,
-  #form_precoVeiculo {
+  #form_precoVeiculo,
+  #form_Plano {
     max-width: none !important;
     width: 100% !important;
     margin: 0 !important;
@@ -540,6 +559,145 @@ body.l-criar-anuncio {
       letter-spacing: .07em !important;
       z-index: 3 !important;
     }
+  }
+
+  // ===========================================================
+  //  PASSO DE PLANOS
+  // ===========================================================
+  .step-plano {
+
+    // a frase de apoio sob o título
+    > .container > .text-center span { color: $ds-text-soft; }
+
+    // ---- Os cards de plano ------------------------------------
+    // (o visual escuro dos cards é mantido — só o arranjo muda)
+    .planos-cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: $ds-space-3;
+      margin-top: $ds-space-2;
+
+      > * {
+        flex: 1 1 0;
+        min-width: 220px;
+        max-width: 280px;
+        margin: 0 !important;
+      }
+    }
+
+    // ---- Bloco "Reativação / Veículos 0km" --------------------
+    // Era texto justificado e desalinhado. Vira um painel claro,
+    // duas colunas legíveis, com divisória sutil.
+    .row.text-justify {
+      margin-top: $ds-space-4 !important;
+      padding: $ds-space-4;
+      background: $ds-muted;
+      border-radius: $ds-radius;
+      text-align: left !important;
+
+      h5 {
+        text-align: left !important;
+        font-size: .98rem;
+        margin-bottom: 10px;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        font-size: .86rem;
+        line-height: 1.6;
+        color: $ds-text-soft;
+      }
+      .icon-danger { color: $ds-warning; }
+
+      // a divisória entre as duas colunas
+      .border-left {
+        border-left: 1px solid $ds-border !important;
+      }
+      @include media-breakpoint-down(sm) {
+        .border-left { border-left: 0 !important; }
+      }
+    }
+  }
+
+  // ===========================================================
+  //  PASSO DE PAGAMENTO  (checkout)
+  // ===========================================================
+  .step-checkout {
+
+    .row { justify-content: center; }
+
+    // títulos das duas colunas
+    .resumo-compra .titulo,
+    .checkout-metodos-container > .text-left {
+      font-size: .95rem;
+      letter-spacing: .04em;
+      color: $ds-text-soft;
+      margin-bottom: $ds-space-3 !important;
+
+      strong { color: $ds-text; }
+    }
+
+    // ---- Resumo da compra -------------------------------------
+    .resumo-compra {
+      .plano.card-style {
+        display: flex;
+        align-items: center;
+        gap: $ds-space-2;
+        padding: $ds-space-3;
+        background: $ds-surface;
+        border: 1px solid $ds-border;
+        border-radius: $ds-radius;
+        margin-bottom: $ds-space-2;
+      }
+      .nome-plano strong { color: $ds-text; }
+      .ate-venda small { color: $ds-text-soft; }
+      .valor-plano {
+        margin-left: auto;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+    }
+
+    // ---- Formas de pagamento (acordeão) -----------------------
+    #accordion-payment {
+
+      .card {
+        border: 1px solid $ds-border;
+        border-radius: $ds-radius !important;
+        box-shadow: none;
+        margin-bottom: $ds-space-2;
+        overflow: hidden;
+      }
+      .card-header {
+        background: $ds-surface;
+        border: 0;
+        padding: 0;
+      }
+      .btn-link {
+        width: 100%;
+        padding: 14px 16px !important;
+        text-decoration: none !important;
+        white-space: normal;
+
+        strong { color: $ds-text; font-size: .95rem; }
+        small  { color: $ds-text-soft; }
+
+        &:hover { background: $ds-bg; }
+      }
+      // método selecionado/aberto
+      .collapse.show ~ .card-header,
+      .card:has(.collapse.show) .card-header { background: $ds-brand-soft; }
+
+      .card-body {
+        padding: $ds-space-3;
+        border-top: 1px solid $ds-border;
+      }
+    }
+
+    // o checkbox do termo de adesão e o botão de pagar
+    .btn-submit-pagt { margin-top: $ds-space-2; }
   }
 
   // ===========================================================
