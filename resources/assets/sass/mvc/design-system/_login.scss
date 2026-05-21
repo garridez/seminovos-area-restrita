@@ -2,14 +2,13 @@
 //  DESIGN SYSTEM · TELA DE LOGIN  (split-screen)
 //  resources/assets/sass/mvc/design-system/_login.scss
 //
-//  Layout dividido: painel de marca (escuro/imersivo) à esquerda
-//  e o formulário à direita.
-//
-//  Tudo escopado em `body.l-login`: eleva a especificidade acima
-//  do tema legado, do SCSS de rota e do pacote ~snbh-site — então
-//  a fonte e o visual não escapam mais.
+//  Tudo do formulário é ancorado em `.login-split` — o wrapper
+//  novo do HTML. Isso dá especificidade suficiente para vencer
+//  o SCSS de rota legado (body.c-auth ...) e o pacote ~snbh-site
+//  INDEPENDENTE da ordem de import no app.scss.
 // =============================================================
 
+// -------- Nível de página -----------------------------------
 body.l-login {
   min-height: 100vh;
   margin: 0;
@@ -17,7 +16,7 @@ body.l-login {
   color: $ds-text;
   background: $ds-surface;
 
-  // ---- Mata a animação de introdução de 3s -------------------
+  // mata a animação de introdução de 3s
   .snbh-logo,
   .snbh-logo .layer-car,
   .snbh-logo .layer-letters,
@@ -29,10 +28,10 @@ body.l-login {
     transform: none !important;
   }
 
-  // ---- Libera os contêineres do layout para o full-bleed -----
-  // (o logo agora vive dentro do hero; a barra antiga some)
+  // a barra de logo antiga some — o logo agora vive no hero
   .topo { display: none !important; }
 
+  // libera os contêineres do layout para o full-bleed
   .container {
     max-width: none !important;
     width: 100% !important;
@@ -44,14 +43,15 @@ body.l-login {
     width: 100%;
     padding: 0;
   }
+}
 
-  // ===========================================================
-  //  ESTRUTURA DIVIDIDA
-  // ===========================================================
-  .login-split {
-    display: flex;
-    min-height: 100vh;
-  }
+// =============================================================
+//  ESTRUTURA DIVIDIDA
+//  Ancorado em `.login-split` de propósito (ver topo do arquivo).
+// =============================================================
+body.l-login .login-split {
+  display: flex;
+  min-height: 100vh;
 
   // ---- Painel de marca (esquerda) ----------------------------
   .login-split__hero {
@@ -102,6 +102,7 @@ body.l-login {
 
     &__title {
       margin: 34px 0 14px;
+      color: #fff;                 // vence o h1 { color escuro } do _base
       font-size: 2.4rem;
       font-weight: 800;
       line-height: 1.12;
@@ -233,7 +234,9 @@ body.l-login {
     .form-group {
       margin-bottom: $ds-space-3;
 
-      // os labels CNPJ / Senha — agora com a fonte certa
+      // os labels CNPJ / E-mail / Senha — fonte do design system.
+      // Com `.login-split` na frente, a especificidade é (0,4,2),
+      // acima do `body.c-auth .forms .form-group label` (0,3,2).
       label {
         font-family: $ds-font !important;
         font-size: .82rem;
@@ -360,7 +363,7 @@ body.l-login {
   //  RESPONSIVO — empilha abaixo de 992px
   // ===========================================================
   @include media-breakpoint-down(md) {
-    .login-split { flex-direction: column; }
+    flex-direction: column;
 
     .login-split__hero {
       flex: none;
