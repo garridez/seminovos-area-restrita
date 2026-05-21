@@ -218,7 +218,9 @@ body {
           justify-content: center;
           gap: 8px;
           padding: 11px 16px;
-          border-radius: $ds-radius;
+          // !important para vencer as regras do .btn-group do
+          // Bootstrap, que zeram os cantos internos dos botões.
+          border-radius: $ds-radius !important;
           font-weight: 600;
           font-size: .82rem;
           letter-spacing: .02em;
