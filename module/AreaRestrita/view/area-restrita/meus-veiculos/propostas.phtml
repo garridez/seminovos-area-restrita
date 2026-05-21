@@ -6,89 +6,94 @@ $veiculo = $this->veiculo;
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
 
+$temPropostas = count($this->propostas) > 0;
 ?>
-<div class="container-fluid container-fixed-lg">
-    <div class="row">
-        <div class="col-lg-12 text-left m-b-10">
-            <h3 class="font-montserrat all-caps hint-text">Propostas recebidas por email</h3>
-            <span>Essas mensagem foram recebidas no seu e-mail, responda por lá!<br/></span>
-        </div>
-    </div>
-</div>
-<div class="container-fluid  container-fixed-lg bg-master-lighter">
-    <div class="timeline-container top-circle">
-        <section class="timeline">
-            <div class="timeline-block">
-                <div class="timeline-point success">
-                    <i class="fa fa-car"></i>
+<div class="ds-propostas">
+
+    <header class="ds-propostas__head">
+        <h3>Propostas recebidas por e-mail</h3>
+        <p>Essas mensagens foram recebidas no seu e-mail &mdash; responda por lá.</p>
+    </header>
+
+    <div class="ds-timeline">
+
+        <!-- Âncora: o veículo -->
+        <article class="ds-timeline__item ds-timeline__item--anchor">
+
+            <div class="ds-timeline__card ds-veiculo-card">
+                <div class="ds-veiculo-card__foto">
+                    <img src="<?= $veiculo['imagem'] ?>"
+                         alt="<?= $this->escapeHtmlAttr($veiculo['marca'] . ' ' . $veiculo['modelo']) ?>">
                 </div>
-                <div class="timeline-content">
-                    <div class="card social-card share full-width">
-                        <div class="circle" data-toggle="tooltip" title="Label" data-container="body">
-                        </div>
-                        <div class="card-header clearfix">
-                            <div class="user-pic">
-                                <img alt="" style="height: 90px; width: 90px;" src="<?= $veiculo['imagem'] ?>">
-                            </div>
-                            <p class="m-0 p-0 text-uppercase h4 text-cinza-escuro">
-                                <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
-                                <small class=" small">
-                                    <?= $veiculo['motor'] . ' ' . $veiculo['valvula'] . 'V' ?></small>
-                            </p>
-                            <h6 class="text-uppercase">Placa: <?= $veiculo['placa'] ?></h6>
-                            <h6 class="">R$: <?= $veiculo['valorFormatado'] ?></h6>
-                            <h6 class="">Kilometragem: <?= $veiculo['kilometragemFormatada'] ?></h6>
-                            <h6 class="">Código: <?= $veiculo['idVeiculo'] ?></h6>
-                        </div>
-                        <div class="event-date">
-                            <h6 class="font-montserrat all-caps hint-text m-t-0">Cadastrado em</h6>
-                            <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso($veiculo['dataCadastro'])?></small>
+                <div class="ds-veiculo-card__info">
+                    <h4>
+                        <?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>
+                        <small><?= $veiculo['motor'] . ' ' . $veiculo['valvula'] ?>V</small>
+                    </h4>
+                    <ul class="ds-data-list">
+                        <li><span>Placa</span><strong><?= strtoupper((string) $veiculo['placa']) ?></strong></li>
+                        <li><span>Valor</span><strong>R$ <?= $veiculo['valorFormatado'] ?></strong></li>
+                        <li><span>Quilometragem</span><strong><?= $veiculo['kilometragemFormatada'] ?> km</strong></li>
+                        <li><span>Código</span><strong><?= $veiculo['idVeiculo'] ?></strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ds-timeline__marker ds-timeline__marker--anchor">
+                <i class="fa fa-car"></i>
+            </div>
+
+            <div class="ds-timeline__date">
+                <span class="ds-timeline__date-label">Cadastrado em</span>
+                <span class="ds-timeline__date-value"><?= $formatDate->dataPorExtenso($veiculo['dataCadastro']) ?></span>
+            </div>
+        </article>
+
+        <?php if ($temPropostas) : ?>
+            <?php foreach ($this->propostas as $proposta) : ?>
+                <article class="ds-timeline__item">
+
+                    <div class="ds-timeline__card ds-proposta-card">
+                        <h5><?= $proposta['nome'] ?></h5>
+                        <ul class="ds-proposta-card__contato">
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                <a href="mailto:<?= $this->escapeHtmlAttr($proposta['email']) ?>"><?= strtolower((string) $proposta['email']) ?></a>
+                            </li>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                <a href="tel:<?= preg_replace('/\D/', '', (string) $proposta['telefone']) ?>"><?= $proposta['telefone'] ?></a>
+                            </li>
+                        </ul>
+                        <div class="ds-proposta-card__msg">
+                            <span class="ds-proposta-card__msg-label">Mensagem</span>
+                            <p><?= $proposta['texto'] ?></p>
                         </div>
                     </div>
+
+                    <div class="ds-timeline__marker"></div>
+
+                    <div class="ds-timeline__date">
+                        <span class="ds-timeline__date-value"><?= $formatDate->dataPorExtenso($proposta['data']) ?></span>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <article class="ds-timeline__item ds-timeline__item--empty">
+
+                <div class="ds-timeline__card ds-proposta-card ds-proposta-card--empty">
+                    <i class="fa fa-inbox"></i>
+                    <h5>Nenhuma proposta recebida</h5>
+                    <p>Este veículo ainda não recebeu propostas por e-mail.</p>
                 </div>
 
-                <?php if (count($this->propostas) > 0) :
-                    foreach ($this->propostas as $propostas):
-                ?>
-                    <div class="timeline-block">
-                        <div class="timeline-point small"></div>
-                        <div class="timeline-content">
-                            <div class="card  social-card share full-width">
-                                <div class="circle" data-toggle="tooltip" title="Label" data-container="body"></div>
-                                <div class="card-header clearfix">
-                                    <h5><?= $propostas['nome'] ?></h5>
-                                    <h6>E-mail: <span class="location semi-bold text-lowercase"><?= $propostas['email'] ?></span></h6>
-                                    <h6>Telefone: <span class="location semi-bold"><?= $propostas['telefone'] ?></span></h6>
+                <div class="ds-timeline__marker"></div>
 
-                                </div>
-                                <div class="card-description">
-                                    <p><strong>Mensagem: </strong><?= $propostas['texto'] ?></p>
-                                </div>
-                            </div>
-                            <div class="event-date">
-                                <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso($propostas['data']) ?></small>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach;?>
-                <?php else : ?>
-                <div class="timeline-block">
-                    <div class="timeline-point small">
-                    </div>
-                    <div class="timeline-content">
-                        <div class="card  social-card share full-width">
-                            <div class="circle" data-toggle="tooltip" title="Label" data-container="body">
-                            </div>
-                            <div class="card-header clearfix">
-                                <h5>Nenhuma proposta <span class="semi-bold">enviada para o veículo.</span> </h5>
-                            </div>
-                        </div>
-                        <div class="event-date">
-                            <small class="fs-12 hint-text"><?= $formatDate->dataPorExtenso(date('Y-m-d'))?></small>
-                        </div>
-                    </div>
+                <div class="ds-timeline__date">
+                    <span class="ds-timeline__date-value"><?= $formatDate->dataPorExtenso(date('Y-m-d')) ?></span>
                 </div>
-                <?php endif; ?>
-        </section>
+            </article>
+        <?php endif; ?>
+
     </div>
 </div>
