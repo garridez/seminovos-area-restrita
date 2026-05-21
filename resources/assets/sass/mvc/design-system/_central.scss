@@ -36,18 +36,21 @@ body {
   .opcoes:has(.opcao[data-target]) {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center !important;   // centraliza o grupo de cards
     gap: $ds-space-3;
     padding: 0 $ds-space-4 !important;
     font-family: $ds-font;
 
     .opcao {
       display: flex;
-      flex: 1 1 200px;
+      flex: 0 1 240px;
+      min-width: 160px;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;        // ícone sempre no topo, alinhado
       gap: $ds-space-3;
       padding: $ds-space-4 $ds-space-3;
-      background: $ds-surface;
+      background: $ds-surface !important;
       border: 1px solid $ds-border;
       border-radius: $ds-radius-lg;
       box-shadow: $ds-shadow-sm;
