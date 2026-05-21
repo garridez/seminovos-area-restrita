@@ -105,10 +105,26 @@ body.l-criar-anuncio {
   }
 
   // ===========================================================
-  //  O CARTÃO — a ÚNICA caixa da tela
+  //  ESTRUTURA DOS PASSOS
+  //  .anuncio-steps é só um envoltório largo. O "cartão" branco
+  //  vai em cada passo de conteúdo. Planos e pagamento NÃO têm
+  //  cartão — ficam fluidos, usando a largura toda.
+  //  Tudo escopado nas classes .step-* (que sempre existem),
+  //  sem depender de :has() nem de adivinhação.
   // ===========================================================
   .anuncio-steps {
-    max-width: 820px;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  // passos de FORMULÁRIO / conteúdo — cartão branco centralizado
+  .step-dados,
+  .step-preco,
+  .step-opcionais,
+  .step-mais-informacoes,
+  .step-fotos,
+  .step-video {
+    max-width: 860px;
     margin: 0 auto;
     background: $ds-surface;
     border: 1px solid $ds-border;
@@ -117,17 +133,20 @@ body.l-criar-anuncio {
     padding: $ds-space-5;
   }
 
-  // Planos e pagamento são telas largas (4 cards / 2 colunas).
-  // O cartão cresce só nesses passos — os passos de formulário
-  // continuam estreitos.
-  .anuncio-steps:has(.step-plano.active),
-  .anuncio-steps:has(.step-checkout.active) {
-    max-width: 1160px;
+  // passos LARGOS — planos e pagamento — sem cartão, fluidos
+  .step-plano,
+  .step-checkout {
+    max-width: none;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: $ds-space-3 0;
   }
 
   // O CSS legado usa `.row-full { width:99.5vw }` para ir
-  // full-bleed. Dentro do cartão isso estoura tudo e ainda
-  // cria barra de rolagem horizontal. Aqui ele só preenche.
+  // full-bleed — isso estoura tudo e cria barra de rolagem
+  // horizontal. Aqui ele só preenche o espaço disponível.
   .row-full {
     width: 100% !important;
     max-width: 100% !important;
@@ -144,7 +163,9 @@ body.l-criar-anuncio {
   h5     { font-size: 1.1rem; margin-bottom: $ds-space-3; }
 
   // ---- Achata as caixas internas ----------------------------
-  // Eliminam o "form dentro do form" — só o cartão é caixa.
+  // Eliminam o "form dentro do form" — só o cartão do passo
+  // é caixa. NÃO mexe em .planos-cards-container: o _planos.scss
+  // já tem o layout 4→2→1 dos cards e ele deve prevalecer.
   .container,
   .container-fluid,
   .conteudo,
@@ -563,58 +584,46 @@ body.l-criar-anuncio {
 
   // ===========================================================
   //  PASSO DE PLANOS
+  //  O _planos.scss já tem o layout 4→2→1 dos cards. Aqui NÃO
+  //  mexemos em .planos-cards-container nem em .plano-card —
+  //  só damos espaço e organizamos o texto de apoio.
   // ===========================================================
   .step-plano {
 
+    > .container { text-align: center; }
+
+    h4 { margin-bottom: $ds-space-2; }
+
     // a frase de apoio sob o título
-    > .container > .text-center span { color: $ds-text-soft; }
-
-    // ---- Os cards de plano ------------------------------------
-    // (o visual escuro dos cards é mantido — só o arranjo muda)
-    .planos-cards-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: stretch;
-      gap: $ds-space-3;
-      margin-top: $ds-space-2;
-
-      > * {
-        flex: 1 1 0;
-        min-width: 220px;
-        max-width: 280px;
-        margin: 0 !important;
-      }
-    }
+    .text-center span { color: $ds-text-soft; }
 
     // ---- Bloco "Reativação / Veículos 0km" --------------------
     // Era texto justificado e desalinhado. Vira um painel claro,
-    // duas colunas legíveis, com divisória sutil.
+    // centralizado, duas colunas legíveis com divisória sutil.
     .row.text-justify {
-      margin-top: $ds-space-4 !important;
-      padding: $ds-space-4;
-      background: $ds-muted;
-      border-radius: $ds-radius;
+      max-width: 1000px;
+      margin: $ds-space-5 auto 0 !important;
+      padding: $ds-space-4 $ds-space-5;
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
       text-align: left !important;
 
       h5 {
         text-align: left !important;
-        font-size: .98rem;
+        font-size: 1rem;
         margin-bottom: 10px;
       }
       ul {
         margin: 0;
         padding: 0;
-        font-size: .86rem;
-        line-height: 1.6;
+        font-size: .88rem;
+        line-height: 1.65;
         color: $ds-text-soft;
       }
       .icon-danger { color: $ds-warning; }
 
-      // a divisória entre as duas colunas
-      .border-left {
-        border-left: 1px solid $ds-border !important;
-      }
+      .border-left { border-left: 1px solid $ds-border !important; }
       @include media-breakpoint-down(sm) {
         .border-left { border-left: 0 !important; }
       }
@@ -623,18 +632,35 @@ body.l-criar-anuncio {
 
   // ===========================================================
   //  PASSO DE PAGAMENTO  (checkout)
+  //  Tela fluida, duas colunas largas — a coluna do cartão
+  //  deixa de ficar espremida.
   // ===========================================================
   .step-checkout {
 
-    .row { justify-content: center; }
+    .row {
+      justify-content: center;
+      gap: $ds-space-4;
+    }
 
-    // títulos das duas colunas
+    // duas colunas largas e equilibradas
+    .col-md-5,
+    .checkout-metodos-container {
+      flex: 1 1 0 !important;
+      max-width: 540px !important;
+      padding: 0 !important;
+    }
+
+    // ---- Títulos das colunas — modernizados -------------------
     .resumo-compra .titulo,
     .checkout-metodos-container > .text-left {
-      font-size: .95rem;
-      letter-spacing: .04em;
-      color: $ds-text-soft;
       margin-bottom: $ds-space-3 !important;
+      padding-bottom: 10px;
+      border-bottom: 2px solid $ds-brand;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: $ds-text-soft;
 
       strong { color: $ds-text; }
     }
@@ -643,20 +669,33 @@ body.l-criar-anuncio {
     .resumo-compra {
       .plano.card-style {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: $ds-space-2;
         padding: $ds-space-3;
         background: $ds-surface;
         border: 1px solid $ds-border;
         border-radius: $ds-radius;
-        margin-bottom: $ds-space-2;
+        margin-bottom: $ds-space-3;
       }
-      .nome-plano strong { color: $ds-text; }
+      .nome-plano strong { color: $ds-text; font-size: 1.05rem; }
       .ate-venda small { color: $ds-text-soft; }
       .valor-plano {
+        width: auto !important;
         margin-left: auto;
-        font-size: 1.1rem;
-        font-weight: 700;
+        font-size: 1.15rem;
+        font-weight: 800;
+      }
+
+      // bloco "Atenção"
+      .renovacao,
+      strong { color: $ds-text; }
+
+      // a linha do total
+      [data-valor-total],
+      .total {
+        font-weight: 800;
+        color: $ds-text;
       }
     }
 
@@ -669,35 +708,53 @@ body.l-criar-anuncio {
         box-shadow: none;
         margin-bottom: $ds-space-2;
         overflow: hidden;
+        transition: border-color $ds-transition;
       }
       .card-header {
         background: $ds-surface;
         border: 0;
         padding: 0;
+        min-height: 0;
       }
       .btn-link {
         width: 100%;
-        padding: 14px 16px !important;
+        padding: 15px 18px !important;
         text-decoration: none !important;
         white-space: normal;
 
-        strong { color: $ds-text; font-size: .95rem; }
-        small  { color: $ds-text-soft; }
+        strong {
+          color: $ds-text;
+          font-size: .98rem;
+          text-transform: uppercase;
+          letter-spacing: .02em;
+        }
+        small { color: $ds-text-soft; }
 
         &:hover { background: $ds-bg; }
       }
-      // método selecionado/aberto
-      .collapse.show ~ .card-header,
-      .card:has(.collapse.show) .card-header { background: $ds-brand-soft; }
+      // cartão com o método aberto — destaque de marca
+      .card:has(.collapse.show) {
+        border-color: $ds-brand;
+        .card-header { background: $ds-brand-soft; }
+      }
 
       .card-body {
-        padding: $ds-space-3;
+        padding: $ds-space-4;
         border-top: 1px solid $ds-border;
       }
     }
 
-    // o checkbox do termo de adesão e o botão de pagar
+    // botão de pagar
     .btn-submit-pagt { margin-top: $ds-space-2; }
+
+    // termo de adesão
+    .pagamento-pix-form .form-group-default,
+    .pagamento-cc-form .form-group-default { margin-bottom: $ds-space-3; }
+
+    @include media-breakpoint-down(sm) {
+      .col-md-5,
+      .checkout-metodos-container { max-width: 100% !important; }
+    }
   }
 
   // ===========================================================
