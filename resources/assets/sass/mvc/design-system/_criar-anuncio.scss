@@ -1,0 +1,330 @@
+// =============================================================
+//  DESIGN SYSTEM · CRIAR ANÚNCIO  (wizard)
+//  resources/assets/sass/mvc/design-system/_criar-anuncio.scss
+//
+//  Cobre o fluxo de criar anúncio: cabeçalho com indicador de
+//  etapas, cartão do passo, seleção de tipo, formulários, a
+//  grade de opcionais e os botões de controle.
+//
+//  Escopado em `body.l-criar-anuncio` (classe do layout do
+//  wizard) para vencer o SCSS de rota legado.
+// =============================================================
+
+body.l-criar-anuncio {
+  background: $ds-bg;
+
+  // ===========================================================
+  //  CABEÇALHO + INDICADOR DE ETAPAS
+  // ===========================================================
+  .hea-der {
+    background: $ds-surface;
+    border-bottom: 1px solid $ds-border;
+    box-shadow: $ds-shadow-sm;
+    margin-bottom: $ds-space-5;
+  }
+
+  .steps-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 0;
+
+    li {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      // linha de ligação entre as etapas
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: $ds-border;
+        z-index: 0;
+      }
+      &:first-child::before { left: 50%; }
+      &:last-child::before  { right: 50%; }
+
+      // o ícone vira um disco
+      svg {
+        position: relative;
+        z-index: 1;
+        width: 44px;
+        height: 44px;
+        padding: 11px;
+        border-radius: 50%;
+        background: $ds-surface;
+        border: 2px solid $ds-border;
+        box-sizing: border-box;
+        opacity: .55;
+        transition: border-color $ds-transition, opacity $ds-transition, box-shadow $ds-transition;
+      }
+
+      // etapa atual
+      &.active svg {
+        opacity: 1;
+        border-color: $ds-brand;
+        box-shadow: 0 0 0 4px rgba($ds-brand, .14);
+      }
+    }
+  }
+
+  // ===========================================================
+  //  COLUNA / CARTÃO DO PASSO
+  // ===========================================================
+  // o conjunto de steps do wizard vira um cartão centralizado
+  .anuncio-steps {
+    max-width: 680px;
+    margin: 0 auto;
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-lg;
+    box-shadow: $ds-shadow;
+    padding: $ds-space-5 $ds-space-4;
+  }
+
+  // títulos de seção dentro do wizard
+  h3, h4, h5 {
+    text-align: center;
+    font-weight: 700;
+    color: $ds-text;
+  }
+  h3, h4 { font-size: 1.3rem; margin-bottom: $ds-space-4; }
+  h5     { font-size: 1.05rem; margin-bottom: $ds-space-3; }
+
+  // ===========================================================
+  //  SELEÇÃO DE TIPO  (Carro / Moto / Caminhão)
+  // ===========================================================
+  .conteudo {
+    padding: 0 $ds-space-3;
+  }
+  .selecionar-tipo {
+    max-width: 560px;
+    margin: 0 auto;
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-lg;
+    box-shadow: $ds-shadow;
+    padding: $ds-space-5 $ds-space-4;
+
+    > .d-flex {
+      gap: $ds-space-3;
+      flex-wrap: wrap;
+    }
+  }
+
+  .link-tipo {
+    flex: 1 1 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $ds-space-4 $ds-space-2;
+    border: 1.5px solid $ds-border;
+    border-radius: $ds-radius;
+    background: $ds-surface;
+    color: $ds-text;
+    text-align: center;
+    font-weight: 600;
+    transition: border-color $ds-transition, box-shadow $ds-transition,
+                transform $ds-transition, color $ds-transition;
+
+    i { color: $ds-text-soft; transition: color $ds-transition; }
+
+    &:hover {
+      border-color: $ds-brand;
+      color: $ds-brand;
+      transform: translateY(-3px);
+      box-shadow: $ds-shadow;
+      text-decoration: none;
+
+      i { color: $ds-brand; }
+    }
+  }
+
+  // ===========================================================
+  //  FORMULÁRIOS DO WIZARD
+  // ===========================================================
+  // grupos lado a lado (motor / cor / portas, ano fab / ano modelo)
+  .conjunto-motor,
+  .d-flex.justify-content-between {
+    gap: $ds-space-3;
+  }
+  .form-group { margin-bottom: $ds-space-3; }
+
+  // ===========================================================
+  //  OPCIONAIS
+  // ===========================================================
+  // atalho "Completo"
+  #btnCompleto {
+    .checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: $ds-brand-soft;
+      border: 1px solid rgba($ds-brand, .3);
+      border-radius: $ds-radius-pill;
+
+      label {
+        margin: 0;
+        font-weight: 700;
+        font-size: .85rem;
+        color: $ds-brand-active;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // a grade de opcionais — colunas alinhadas em vez de lista solta
+  .opcionais {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 4px 14px;
+    width: 100%;
+
+    // cada item de checkbox
+    > div {
+      display: flex;
+      align-items: center;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin: 0;
+      padding: 7px 8px;
+      border-radius: $ds-radius-sm;
+      font-size: .82rem;
+      color: $ds-text;
+      cursor: pointer;
+      transition: background-color $ds-transition;
+
+      &:hover { background: $ds-muted; }
+    }
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      flex: none;
+      accent-color: $ds-brand;
+      cursor: pointer;
+    }
+
+    // o seletor de Air Bags ocupa uma célula da grade
+    .airbags select {
+      width: 100%;
+      height: 38px;
+      padding: 6px 10px;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-sm;
+      font-size: .82rem;
+      background: $ds-surface;
+
+      &.selected {
+        border-color: $ds-brand;
+        background: $ds-brand-soft;
+      }
+    }
+  }
+
+  // bloco de destaque (PCD / itens em destaque)
+  .destaques {
+    margin-top: $ds-space-3;
+    padding-top: $ds-space-3;
+    border-top: 1px solid $ds-border;
+  }
+  .checkbox-custom {
+    display: inline-flex;
+    align-items: center;
+
+    input { display: none; }
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      padding: 7px 16px;
+      border: 1.5px solid $ds-border;
+      border-radius: $ds-radius-pill;
+      font-size: .82rem;
+      font-weight: 600;
+      color: $ds-text;
+      cursor: pointer;
+      transition: all $ds-transition;
+    }
+    input:checked ~ label,
+    input:checked + label {
+      border-color: $ds-brand;
+      background: $ds-brand;
+      color: #fff;
+    }
+  }
+  .detalhes-pcd {
+    margin-top: 10px;
+    text-align: center;
+    font-size: .85rem;
+    color: $ds-text-soft;
+  }
+
+  // ===========================================================
+  //  CONTROLES  (VOLTAR / CONTINUAR)
+  // ===========================================================
+  // corrige o alinhamento — eram colunas com offsets tortos
+  .step-controls {
+    display: flex;
+    justify-content: center;
+    gap: $ds-space-3;
+    max-width: 680px;
+    margin: $ds-space-4 auto $ds-space-5;
+    padding: 0 $ds-space-3;
+
+    > div {
+      flex: 1;
+      max-width: 320px;
+      margin: 0 !important;
+      padding: 0;
+    }
+    .btn { width: 100%; }
+  }
+
+  // ===========================================================
+  //  RESPONSIVO
+  // ===========================================================
+  @include media-breakpoint-down(sm) {
+    .hea-der { margin-bottom: $ds-space-4; }
+
+    .steps-list li svg {
+      width: 36px;
+      height: 36px;
+      padding: 8px;
+    }
+    .anuncio-steps,
+    .selecionar-tipo {
+      padding: $ds-space-4 $ds-space-3;
+      border-radius: $ds-radius;
+    }
+    .opcionais {
+      grid-template-columns: 1fr 1fr;
+    }
+    .conjunto-motor,
+    .d-flex.justify-content-between {
+      flex-wrap: wrap;
+    }
+    .step-controls {
+      flex-direction: column-reverse;
+      gap: $ds-space-2;
+
+      > div { max-width: 100%; }
+    }
+  }
+}

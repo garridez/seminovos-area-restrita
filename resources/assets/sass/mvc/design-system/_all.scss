@@ -2,20 +2,18 @@
 //  DESIGN SYSTEM · ÍNDICE
 //  resources/assets/sass/mvc/design-system/_all.scss
 //
-//  Importar por ÚLTIMO no app.scss:
-//      @import "components/all";
-//      @import "mvc/routes/all";
-//      @import "mvc/layout/all";
-//      @import "mvc/design-system/all";   <-- aqui
+//  Importar por ÚLTIMO no app.scss, depois de todo o bloco
+//  de @import "~snbh-site/...".
 //
 //  tokens vem primeiro porque os demais usam as variáveis $ds-*.
 // =============================================================
 
-@import "tokens";     // variáveis e custom properties
-@import "base";       // fonte, fundo, tipografia, foco
-@import "buttons";    // botões
-@import "forms";      // campos, rótulos, validação
-@import "cards";      // cards / painéis
-@import "sidebar";    // menu lateral + banner de expiração
-@import "dashboard";  // tela "Meus Veículos"
-@import "login";      // tela de login
+@import "tokens";         // variáveis e custom properties
+@import "base";           // fonte, fundo, tipografia, foco
+@import "buttons";        // botões
+@import "forms";          // campos, rótulos, validação
+@import "cards";          // cards / painéis
+@import "sidebar";        // menu lateral + banner de expiração
+@import "dashboard";      // tela "Meus Veículos"
+@import "login";          // tela de login
+@import "criar-anuncio";  // wizard de criar anúncio
