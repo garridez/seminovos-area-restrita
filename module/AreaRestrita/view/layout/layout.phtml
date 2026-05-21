@@ -85,48 +85,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </a>
             </div>
             <div class="d-flex align-items-center ml-auto">
-                <div class="dropdown pull-right d-block">
-                    <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <div class="p-r-10 fs-14 font-heading hidden-md-down">
-                            <?php
-                            if ($this->userInfo('tipoCadastro') !== null) {
-                                if ($this->userInfo('tipoCadastro') == 1) {
-                                    $new_nome = $this->userInfo('nomeFantasia');
-                                } elseif ($this->userInfo('tipoCadastro') == 2) {
-                                    $new_nome = $this->userInfo('responsavelNome');
-                                }
-                                if (isset($new_nome) && $new_nome) {
-                                    $new_nome = explode(" ", (string) $new_nome);
-                                    $new_nome = $new_nome[0] . " " . ($new_nome[1] ?? '');
-                                } else {
-                                    $new_nome = "Não informado";
-                                }
-                            } else {
-                                $new_nome = "Não informado";
-                            }
-                            ?>
-                            <span class="semi-bold d-block">
-                                <?= $new_nome ?>
-                                <i class="fa fa-angle-down ml-1" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" x-placement="bottom-end"
-                        style="position: absolute; transform: translate3d(-94px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <a href="<?= $this->url('restrito/meus-dados') ?>" class="dropdown-item"
-                            title="Meus dados de cadastro">
-                            <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
-                        </a>
-                        <a href="<?= $this->url('restrito/alterar-senha') ?>" class="dropdown-item"
-                            title="Alterar minha senha">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
-                        </a>
-                        <a href="<?= $this->url('logout') ?>" class="clearfix bg-master-lighter dropdown-item">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
-                        </a>
-                    </div>
-                </div>
+				<?= $this->partial('partials/usermenu.phtml') ?>
             </div>
         </div>
         <div class="page-content-wrapper">
