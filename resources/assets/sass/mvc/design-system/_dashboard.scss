@@ -188,23 +188,99 @@ body {
         line-height: 1;
       }
 
-      // ---- Botões de ação (rodapé do cartão) ------------------
-      // O .btn-group do Bootstrap "cola" os botões; aqui voltamos
-      // a dar respiro entre eles.
+      // ---- Botões de ação do rodapé do cartão -----------------
+      // Botões CLAROS, em linha, arredondados, com leve degradê e
+      // borda na cor da ação. Ícone e texto acompanham a cor.
+      //   • Editar anúncio / fotos  -> laranja
+      //   • Excluir anúncio         -> vermelho
+      //   • Compartilhar            -> verde
       .btn-group {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         padding: 4px 0 12px;
 
-        > a,
-        > .btn {
+        // cada item da linha (o <a>) cresce, com largura mínima.
+        // O <a> ou É o botão (editar) ou ENVOLVE um <button>
+        // (excluir, compartilhar) — isto cobre os dois casos.
+        > a {
+          display: flex;
           flex: 1 1 auto;
+          min-width: 150px;
           margin: 0 !important;
         }
+        > a > .btn { width: 100%; }
+
+        // ---- aparência comum dos botões -----------------------
         .btn {
-          width: 100%;
-          border-radius: $ds-radius-sm;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 11px 16px;
+          border-radius: $ds-radius;
+          font-weight: 600;
+          font-size: .82rem;
+          letter-spacing: .02em;
+          background-clip: padding-box;
+          box-shadow: $ds-shadow-sm;
+          transition: transform $ds-transition,
+                      box-shadow $ds-transition,
+                      filter $ds-transition;
+
+          i    { font-size: .95rem; line-height: 1; }
+          span { line-height: 1; }
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: $ds-shadow;
+            filter: saturate(1.12);
+          }
+          &:active { transform: translateY(0); }
+        }
+
+        // ---- NORMAL — Editar anúncio / Editar fotos — LARANJA -
+        .bg-cinza {
+          background: linear-gradient(180deg, #fff, $ds-brand-soft) !important;
+          border: 1px solid rgba($ds-brand, .55) !important;
+          &,
+          i,
+          span { color: $ds-brand !important; }
+
+          &:hover {
+            background: linear-gradient(180deg, $ds-brand-soft,
+                        mix($ds-brand, #fff, 22%)) !important;
+          }
+        }
+
+        // ---- PERIGO — Excluir anúncio — VERMELHO --------------
+        .btn-danger {
+          background: linear-gradient(180deg, #fff,
+                      mix($ds-danger, #fff, 9%)) !important;
+          border: 1px solid rgba($ds-danger, .55) !important;
+          &,
+          i,
+          span { color: $ds-danger !important; }
+
+          &:hover {
+            background: linear-gradient(180deg, mix($ds-danger, #fff, 9%),
+                        mix($ds-danger, #fff, 22%)) !important;
+          }
+        }
+
+        // ---- POSITIVO — Compartilhar — VERDE ------------------
+        .btn-success {
+          background: linear-gradient(180deg, #fff,
+                      mix($ds-success, #fff, 9%)) !important;
+          border: 1px solid rgba($ds-success, .55) !important;
+          &,
+          i,
+          span { color: $ds-success !important; }
+
+          &:hover {
+            background: linear-gradient(180deg, mix($ds-success, #fff, 9%),
+                        mix($ds-success, #fff, 22%)) !important;
+          }
         }
       }
 
