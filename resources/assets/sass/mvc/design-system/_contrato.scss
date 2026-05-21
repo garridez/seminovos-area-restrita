@@ -1,0 +1,156 @@
+// =============================================================
+//  DESIGN SYSTEM · CONTRATO
+//  resources/assets/sass/mvc/design-system/_contrato.scss
+//
+//  Tela "Contrato de prestação de serviço". Modernização só
+//  por CSS — a marcação não é tocada.
+//
+//  Escopo: #card-advance (id único do documento do contrato).
+// =============================================================
+
+body {
+
+  // título da página — fica no .container-fixed-lg IRMÃO,
+  // imediatamente antes do documento
+  .container-fixed-lg:has(+ .container-fixed-lg #card-advance) h3 {
+    font-family: $ds-font;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    color: $ds-text;
+  }
+
+  // ===========================================================
+  //  O DOCUMENTO DO CONTRATO
+  // ===========================================================
+  #card-advance {
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: $ds-surface;
+    border: 1px solid $ds-border !important;
+    border-radius: $ds-radius-lg;
+    box-shadow: $ds-shadow-sm;
+    font-family: $ds-font;
+
+    // ---- Intro destacado --------------------------------------
+    .card-header {
+      padding: $ds-space-3 $ds-space-4 !important;
+      background: $ds-brand-soft !important;
+      border: 0 !important;
+      border-bottom: 1px solid $ds-border !important;
+
+      .card-title {
+        margin: 0;
+        font-size: .9rem;
+        font-weight: 700;
+        line-height: 1.5;
+        text-transform: none;
+        color: $ds-brand-active;
+      }
+    }
+
+    // ---- Corpo do documento -----------------------------------
+    > .card-body {
+      padding: $ds-space-5 !important;
+      color: $ds-text;
+    }
+
+    // remove os <br> soltos entre seções (as margens cuidam disso)
+    > .card-body > br { display: none; }
+
+    // ---- Títulos de seção  (1. Objeto, 2. Prazo…) -------------
+    h3 {
+      margin: $ds-space-4 0 $ds-space-2;
+      padding-bottom: 8px;
+      border-bottom: 2px solid $ds-border;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: $ds-text;
+
+      &:first-child { margin-top: 0; }
+
+      // o número "N."
+      .semi-bold {
+        margin-right: 4px;
+        color: $ds-brand;
+      }
+    }
+
+    // ---- Parágrafos -------------------------------------------
+    p {
+      margin: 0 0 $ds-space-2;
+      font-size: .92rem;
+      line-height: 1.7;
+      color: $ds-text-soft;
+    }
+    strong { color: $ds-text; }
+
+    // ---- Os 3 cards de planos (seção 3) -----------------------
+    .row {
+      margin-right: -8px;
+      margin-left: -8px;
+    }
+    .col-lg-4 { padding: 8px; }
+
+    .card.card-default {
+      height: 100%;
+      margin: 0 !important;
+      background: $ds-bg !important;
+      border: 1px solid $ds-border !important;
+      border-top: 3px solid $ds-brand !important;
+      border-radius: $ds-radius !important;
+      box-shadow: none !important;
+
+      .card-body { padding: $ds-space-3 !important; }
+
+      h4 {
+        margin: 0 0 6px;
+        font-size: .95rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $ds-text;
+
+        .semi-bold { color: $ds-text; }
+      }
+      p {
+        margin: 0;
+        font-size: .86rem;
+      }
+    }
+
+    // ---- Listas (seção Resumo) --------------------------------
+    ul {
+      margin: $ds-space-2 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        position: relative;
+        padding: 6px 0 6px 22px;
+        font-size: .92rem;
+        line-height: 1.6;
+        color: $ds-text-soft;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 2px;
+          top: 13px;
+          width: 7px;
+          height: 7px;
+          border-radius: 2px;
+          background: $ds-brand;
+        }
+      }
+    }
+  }
+
+  // ---- Responsivo ---------------------------------------------
+  @include media-breakpoint-down(sm) {
+    #card-advance > .card-body { padding: $ds-space-3 !important; }
+    #card-advance .card-header { padding: $ds-space-3 !important; }
+  }
+}

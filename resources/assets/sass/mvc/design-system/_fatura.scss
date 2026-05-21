@@ -1,0 +1,208 @@
+// =============================================================
+//  DESIGN SYSTEM · FATURA
+//  resources/assets/sass/mvc/design-system/_fatura.scss
+//
+//  Telas de fatura (revenda e particular). Modernização só por
+//  CSS — a marcação de impressão não é tocada.
+//
+//  Escopo:
+//    .to-print                   -> o documento da fatura
+//    .bg-light:has(.btn-print)   -> a barra Voltar / Imprimir
+// =============================================================
+
+body {
+
+  // ===========================================================
+  //  BARRA DE AÇÕES  (Voltar / Imprimir)
+  // ===========================================================
+  .bg-light:has(.btn-print) {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: $ds-space-3 !important;
+    background: $ds-bg !important;
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: $ds-radius;
+      font-family: $ds-font;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background $ds-transition, filter $ds-transition;
+
+      i { color: inherit !important; margin: 0 !important; }
+    }
+
+    // Voltar — neutro
+    .btn:not(.btn-print) {
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      color: $ds-text;
+
+      &:hover { background: $ds-muted; }
+    }
+
+    // Imprimir — marca
+    .btn-print {
+      background: linear-gradient(180deg, $ds-brand, $ds-brand-hover);
+      border: 1px solid $ds-brand;
+      color: #fff;
+
+      &:hover { filter: brightness(1.07); }
+    }
+  }
+
+  // ===========================================================
+  //  O DOCUMENTO
+  // ===========================================================
+  .to-print {
+    padding: $ds-space-4 $ds-space-3 $ds-space-6;
+    background: $ds-bg;
+
+    // moldura do documento — centrado, tipo folha
+    .card.card-default {
+      max-width: 920px;
+      margin: 0 auto;
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-lg;
+      box-shadow: $ds-shadow;
+    }
+    .card-body {
+      padding: $ds-space-4 !important;
+      font-family: $ds-font;
+      color: $ds-text;
+    }
+
+    // logo do topo
+    .invoice-logo {
+      width: 160px;
+      height: auto;
+    }
+
+    // títulos
+    h3 {
+      font-family: $ds-font;
+      font-weight: 700;
+      color: $ds-text;
+      letter-spacing: .01em;
+    }
+    h5 { color: $ds-text; }
+
+    // endereço da empresa (tira o itálico padrão de <address>)
+    address {
+      font-style: normal;
+      font-size: .85rem;
+      color: $ds-text-soft;
+    }
+
+    // rótulos de seção (Tomador dos Serviços, Informações…)
+    .border-bottom {
+      border-bottom: 2px solid $ds-border !important;
+
+      .hint-text {
+        font-weight: 700;
+        font-size: .78rem;
+        letter-spacing: .07em;
+        color: $ds-brand;
+      }
+    }
+
+    // micro-rótulos (CNPJ:, Inscrição Municipal:)
+    p.bold {
+      font-size: .72rem;
+      letter-spacing: .03em;
+      color: $ds-text-soft;
+    }
+
+    // ---- Tabela de serviços -----------------------------------
+    table {
+      width: 100%;
+      font-size: .88rem;
+
+      thead th,
+      thead td {
+        padding: 10px 12px;
+        border: 0;
+        border-bottom: 2px solid $ds-border;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        color: $ds-text-soft;
+      }
+      tbody td {
+        padding: 13px 12px;
+        border: 0;
+        border-bottom: 1px solid $ds-border;
+        color: $ds-text;
+        vertical-align: top;
+      }
+      tbody tr:last-child td { border-bottom: 0; }
+    }
+
+    // ---- Bloco "Data de Pagamento + Total" --------------------
+    .b-a.b-grey {
+      border: 1px solid $ds-border !important;
+      border-radius: $ds-radius;
+      overflow: hidden;
+    }
+    // a caixa escura do total
+    .bg-master-darker {
+      background: $ds-text !important;
+
+      h5 {
+        color: rgba(#fff, .72) !important;
+        letter-spacing: .08em;
+      }
+      h1 {
+        color: #fff !important;
+        font-weight: 800;
+      }
+    }
+
+    // ---- Informações legais -----------------------------------
+    small {
+      font-size: .76rem;
+      line-height: 1.55;
+      color: $ds-text-soft;
+    }
+
+    // ---- Rodapé do documento ----------------------------------
+    .text-black { color: $ds-text !important; }
+    a.text-black {
+      color: $ds-brand !important;
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  // ===========================================================
+  //  IMPRESSÃO — esconde a barra de ações e tira a moldura
+  // ===========================================================
+  @media print {
+    .bg-light:has(.btn-print) { display: none !important; }
+
+    .to-print {
+      padding: 0;
+      background: #fff;
+    }
+    .to-print .card.card-default {
+      max-width: none;
+      border: 0;
+      box-shadow: none;
+    }
+  }
+
+  // ---- Responsivo ---------------------------------------------
+  @include media-breakpoint-down(sm) {
+    .to-print { padding: $ds-space-3 $ds-space-2 $ds-space-5; }
+    .to-print .card-body { padding: $ds-space-3 !important; }
+    .to-print .invoice-logo { width: 130px; }
+  }
+}
