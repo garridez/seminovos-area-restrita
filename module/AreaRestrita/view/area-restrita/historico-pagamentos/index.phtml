@@ -1,110 +1,129 @@
 <?php
+
 /** @var \Laminas\View\Renderer\PhpRenderer $this */
 $this->headTitle('Histórico de Pagamentos');
-$pagamentos = $this->historicoPagamentos;
-$statusPagamento = $this->arrayStatus;
+
+$pagamentos       = $this->historicoPagamentos;
+$statusPagamento  = $this->arrayStatus;
 $arrFormaPagamento = $this->arrayFormaPagamento;
 
 /* @var $formatDate \AreaRestrita\View\Helper\Data */
 $formatDate = new \AreaRestrita\View\Helper\Data();
+
+// código de status -> classe de cor do badge
+$dsStatusClasse = [
+    1 => 'pendente',
+    2 => 'aprovado',
+    3 => 'cancelado',
+];
 ?>
-<div class="container-fluid">
-    <div class="d-flex pl-3">
-        <h3 class="font-montserrat all-caps hint-text">HISTÓRICO DE PAGAMENTOS</h3>
-    </div>
-</div>
-<div class="container-fluid bg-white pt-3">
-    <div class="row d-flex justify-content-end  pr-3">
-        <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-    </div>
-    <div class="w-100 table-responsive ">
-        <table class="table dataTable table-hover w-100" id="tableWithSearch">
-            <?php if ($this->tipoCadastro == 1) : ?>
-            <thead>
-                <tr role="row">
-                    <th class="text-left d-none d-md-table-cell">Tempo</th>
-                    <th class="text-center text-success d-table-cell no-wrap d-md-table-cell">Valor R$</th>
-                    <th class="text-center d-none d-md-table-cell">Desconto</th>
-                    <th class="text-center d-none d-md-table-cell">Total</th>
-                    <th class="text-center d-none d-md-table-cell">Pagamento</th>
-                    <th class="text-center d-none d-md-table-cell">Parcelas</th>
-                    <th class="text-center text-laranja d-table-cell status-cell d-md-table-cell">Status</th>
-                    <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
-                    <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($pagamentos as $pagamento) : ?>
-                <tr role="row">
-                    <td class="text-left d-none d-md-table-cell semi-bold"><?= $pagamento['tempoContrato'] ?> mês</td>
-                    <td class="text-center d-table-cell no-wrap d-md-table-cell"><?= $pagamento['valor'] ?></td>
-                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['desconto'] ?></td>
-                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
-                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
-                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['parcelas'] ?><small>x</small></td>
-                    <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
-                    </td>
-                    <td class="text-center d-table-cell d-md-table-cell">
-                        <?php if($pagamento['status'] != 3 ): ?>
-                        <a class="" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-                        <?php else: ?>
-                        -
-                        <?php endif;?>
-                    </td>
+<div class="ds-historico">
 
-                    <td class="text-right d-table-cell no-wrap d-md-table-cell">
-                        Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>
-                        Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?><br>
-                        Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?>
-                    </td>
-                </tr>
-                <?php endforeach;?>
-            </tbody>
-            <?php elseif ($this->tipoCadastro == 2) : ?>
-            <thead>
-                <tr role="row">
-                    <th class="text-center text-success d-table-cell no-wrap d-md-table-cell">Valor R$</th>
-                    <th class="text-center d-none d-md-table-cell">Total</th>
-                    <th class="text-center d-none d-md-table-cell">Pagamento</th>
-                    <th class="text-center text-laranja d-table-cell status-cell d-md-table-cell">Status</th>
-                    <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
-                    <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($pagamentos as $pagamento) : ?>
-                <tr role="row">
-                    <td class="text-center d-table-cell no-wrap d-md-table-cell"><?= $pagamento['valor'] ?></td>
-                    <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
-                    <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
-                    <td class="text-center d-table-cell  d-md-table-cell"><?= $statusPagamento[$pagamento['status']] ?>
-                    </td>
-                    <td class="text-center d-table-cell d-md-table-cell">
-                        <?php 
-                    /*
-                     * @todo melhorar a data tirando horas
-                     */
-                    ?>
-                        <?php if($pagamento['status'] == 2): ?>
-                        <a class="" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" title="Ver Fatura">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-                        <?php else: ?>
-                        -
-                        <?php endif;?>
-                    </td>
+    <header class="ds-historico__head">
+        <h3>Histórico de Pagamentos</h3>
+        <p>Acompanhe os pagamentos e renovações dos seus planos.</p>
+    </header>
 
-                    <td class="text-right d-table-cell no-wrap d-md-table-cell">
-                        Cad.: <?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?><br>
-                        Ren.: <?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?><br>
-                        Exp.: <?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?>
-                    </td>
-                </tr>
-                <?php endforeach;?>
-            </tbody>
-            <?php endif; ?>
-        </table>
+    <div class="ds-historico__panel">
+
+        <div class="ds-historico__search">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="text" id="search-table" class="form-control" placeholder="Buscar no histórico…">
+        </div>
+
+        <div class="ds-historico__table-wrap table-responsive">
+            <table class="table dataTable table-hover w-100 ds-table" id="tableWithSearch">
+
+                <?php if ($this->tipoCadastro == 1) : ?>
+                <thead>
+                    <tr role="row">
+                        <th class="text-left d-none d-md-table-cell">Tempo</th>
+                        <th class="text-center d-table-cell no-wrap d-md-table-cell">Valor R$</th>
+                        <th class="text-center d-none d-md-table-cell">Desconto</th>
+                        <th class="text-center d-none d-md-table-cell">Total</th>
+                        <th class="text-center d-none d-md-table-cell">Pagamento</th>
+                        <th class="text-center d-none d-md-table-cell">Parcelas</th>
+                        <th class="text-center d-table-cell status-cell d-md-table-cell">Status</th>
+                        <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
+                        <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($pagamentos as $pagamento) : ?>
+                        <?php $dsCls = $dsStatusClasse[$pagamento['status']] ?? 'neutro'; ?>
+                        <tr role="row">
+                            <td class="text-left d-none d-md-table-cell semi-bold"><?= $pagamento['tempoContrato'] ?> mês</td>
+                            <td class="text-center d-table-cell no-wrap d-md-table-cell ds-valor"><?= $pagamento['valor'] ?></td>
+                            <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['desconto'] ?></td>
+                            <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
+                            <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
+                            <td class="text-center d-none d-md-table-cell"><?= $pagamento['parcelas'] ?><small>x</small></td>
+                            <td class="text-center d-table-cell d-md-table-cell">
+                                <span class="ds-status ds-status--<?= $dsCls ?>"><?= $statusPagamento[$pagamento['status']] ?></span>
+                            </td>
+                            <td class="text-center d-table-cell d-md-table-cell">
+                                <?php if ($pagamento['status'] != 3) : ?>
+                                    <a class="ds-fatura-btn" href="/fatura/revenda/id/<?= $pagamento['idPagamento'] ?>" title="Ver fatura">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                <?php else : ?>
+                                    <span class="ds-vazio">&mdash;</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-right d-table-cell no-wrap d-md-table-cell">
+                                <div class="ds-datas">
+                                    <span><em>Cad.</em><?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?></span>
+                                    <span><em>Ren.</em><?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?></span>
+                                    <span><em>Exp.</em><?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?></span>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+                <?php elseif ($this->tipoCadastro == 2) : ?>
+                <thead>
+                    <tr role="row">
+                        <th class="text-center d-table-cell no-wrap d-md-table-cell">Valor R$</th>
+                        <th class="text-center d-none d-md-table-cell">Total</th>
+                        <th class="text-center d-none d-md-table-cell">Pagamento</th>
+                        <th class="text-center d-table-cell status-cell d-md-table-cell">Status</th>
+                        <th class="text-center d-table-cell fatura-cell d-md-table-cell">Faturas</th>
+                        <th class="text-right d-table-cell data-cell d-md-table-cell">Datas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($pagamentos as $pagamento) : ?>
+                        <?php $dsCls = $dsStatusClasse[$pagamento['status']] ?? 'neutro'; ?>
+                        <tr role="row">
+                            <td class="text-center d-table-cell no-wrap d-md-table-cell ds-valor"><?= $pagamento['valor'] ?></td>
+                            <td class="text-center d-none d-md-table-cell">R$ <?= $pagamento['total'] ?></td>
+                            <td class="text-center d-none d-md-table-cell"><?= $pagamento['formaPagamento'] ?></td>
+                            <td class="text-center d-table-cell d-md-table-cell">
+                                <span class="ds-status ds-status--<?= $dsCls ?>"><?= $statusPagamento[$pagamento['status']] ?></span>
+                            </td>
+                            <td class="text-center d-table-cell d-md-table-cell">
+                                <?php if ($pagamento['status'] == 2) : ?>
+                                    <a class="ds-fatura-btn" href="/fatura/particular/id/<?= $pagamento['idPagamento'] ?>" title="Ver fatura">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                <?php else : ?>
+                                    <span class="ds-vazio">&mdash;</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-right d-table-cell no-wrap d-md-table-cell">
+                                <div class="ds-datas">
+                                    <span><em>Cad.</em><?= $formatDate->converterDataHoraBR($pagamento['dataCadastro']) ?></span>
+                                    <span><em>Ren.</em><?= $formatDate->converterDataHoraBR($pagamento['dataRenovacao']) ?></span>
+                                    <span><em>Exp.</em><?= $formatDate->converterDataHoraBR($pagamento['dataExpiracao']) ?></span>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <?php endif; ?>
+
+            </table>
+        </div>
     </div>
 </div>
