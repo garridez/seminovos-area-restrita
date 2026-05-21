@@ -457,6 +457,92 @@ body.l-criar-anuncio {
   }
 
   // ===========================================================
+  //  PASSO DE FOTOS
+  // ===========================================================
+  .step-fotos {
+
+    // o <form> tinha fundo branco + sombra próprios — caixa
+    // dentro da caixa. Achata: só o cartão é caixa.
+    form {
+      background: transparent !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    // espaço entre a barra de ferramentas e a grade — o banner
+    // "Foto Principal" não colide mais com "Múltiplas imagens"
+    .fotos-container { margin-top: $ds-space-4; }
+
+    // ---- Barra de ferramentas ---------------------------------
+    .mult-imagens label {
+      background: $ds-surface !important;
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-sm;
+      box-shadow: none !important;
+      padding: 9px 14px !important;
+      font-size: .85rem;
+      font-weight: 600;
+      color: $ds-text;
+      transition: border-color $ds-transition, color $ds-transition;
+
+      &:hover { border-color: $ds-brand; color: $ds-brand; }
+      .icones i { color: $ds-brand; }
+    }
+
+    .btn-excluir-todas-fotos {
+      border: 1px solid $ds-border;
+      border-radius: $ds-radius-sm;
+      background: $ds-surface;
+      color: $ds-text-soft;
+      font-size: .8rem;
+      font-weight: 600;
+
+      &:hover {
+        border-color: $ds-danger;
+        color: $ds-danger;
+        background: $ds-surface;
+      }
+    }
+
+    // ---- Slots de foto ----------------------------------------
+    .foto-container {
+      border: 1px solid $ds-border !important;
+      border-radius: $ds-radius !important;
+      box-shadow: none !important;
+      background: $ds-muted;
+      transition: border-color $ds-transition;
+    }
+    .foto:hover .foto-container { border-color: $ds-brand; }
+
+    // o "+" do slot vazio
+    .btn-adicionar a,
+    .controls .btn-upload-img {
+      color: $ds-text-soft;
+      transition: color $ds-transition;
+    }
+    .foto:hover .btn-adicionar a { color: $ds-brand; }
+
+    // ---- Banner "Foto Principal" ------------------------------
+    // Era uma barra laranja chapada saindo do slot (top:-13px),
+    // o que colidia com a barra de cima. Vira um selo de canto.
+    .foto:first-of-type::before {
+      top: 8px !important;
+      left: 8px !important;
+      width: auto !important;
+      height: auto !important;
+      padding: 3px 11px !important;
+      border-radius: $ds-radius-pill !important;
+      background: $ds-brand !important;
+      opacity: 1 !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      letter-spacing: .07em !important;
+      z-index: 3 !important;
+    }
+  }
+
+  // ===========================================================
   //  CONTROLES  (VOLTAR / CONTINUAR)
   // ===========================================================
   .step-controls {
