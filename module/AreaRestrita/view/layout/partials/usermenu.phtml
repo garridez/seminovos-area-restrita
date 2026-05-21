@@ -1,0 +1,134 @@
+<?php
+
+/** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
+
+// --- Identidade do usuário ---------------------------------------
+$dsTipo = $this->userInfo('tipoCadastro');
+if ($dsTipo == 1) {
+    $dsNomeCompleto = (string) $this->userInfo('nomeFantasia');
+    $dsTipoLabel    = 'Revenda';
+} elseif ($dsTipo == 2) {
+    $dsNomeCompleto = (string) $this->userInfo('responsavelNome');
+    $dsTipoLabel    = 'Particular';
+} else {
+    $dsNomeCompleto = '';
+    $dsTipoLabel    = '';
+}
+
+$dsNomeCompleto = trim($dsNomeCompleto);
+if ($dsNomeCompleto === '') {
+    $dsNomeCompleto = 'Não informado';
+}
+
+// iniciais: primeira letra do primeiro e do último nome
+$dsPartes   = preg_split('/\s+/', $dsNomeCompleto);
+$dsIniciais = mb_strtoupper(mb_substr($dsPartes[0], 0, 1));
+if (count($dsPartes) > 1) {
+    $dsIniciais .= mb_strtoupper(mb_substr(end($dsPartes), 0, 1));
+}
+$dsNomeCurto = $dsPartes[0] . (isset($dsPartes[1]) ? ' ' . $dsPartes[1] : '');
+
+global $container;
+$dsUrlSite  = $container->get('Config')['SnBH']['urls']['site'] ?? '/';
+$dsWhatsapp = $dsTipo == 1 ? '5531995502814' : '5531996071787';
+?>
+<div class="ds-usermenu dropdown">
+
+    <button class="ds-usermenu__toggle" type="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        <span class="ds-usermenu__badge" aria-hidden="true"><?= $this->escapeHtml($dsIniciais) ?></span>
+        <span class="ds-usermenu__toggle-name d-none d-md-inline"><?= $this->escapeHtml($dsNomeCurto) ?></span>
+        <i class="fa fa-angle-down ds-usermenu__caret" aria-hidden="true"></i>
+    </button>
+
+    <div class="dropdown-menu dropdown-menu-right ds-usermenu__panel" role="menu">
+
+        <!-- Cabeçalho: identidade -->
+        <div class="ds-usermenu__head">
+            <span class="ds-usermenu__badge ds-usermenu__badge--lg" aria-hidden="true"><?= $this->escapeHtml($dsIniciais) ?></span>
+            <span class="ds-usermenu__identity">
+                <strong><?= $this->escapeHtml($dsNomeCompleto) ?></strong>
+                <?php if ($dsTipoLabel !== '') : ?>
+                    <small><?= $dsTipoLabel ?></small>
+                <?php endif; ?>
+            </span>
+        </div>
+
+        <!-- Ação principal -->
+        <a href="/criar-anuncio" class="ds-usermenu__cta">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Novo Anúncio
+        </a>
+
+        <!-- Navegação (itens do menu lateral) -->
+        <div class="ds-usermenu__section">
+            <span class="ds-usermenu__label">Navegação</span>
+
+            <?php if (defined('SHOW_CHAT') && SHOW_CHAT) : ?>
+                <a href="<?= $this->url('restrito/chat') ?>" class="ds-usermenu__item">
+                    <i class="fa fa-comments" aria-hidden="true"></i> Chat
+                </a>
+            <?php endif; ?>
+
+            <a href="<?= $this->url('restrito/meus-veiculos') ?>" class="ds-usermenu__item">
+                <i class="fa fa-car" aria-hidden="true"></i> Meus Veículos
+            </a>
+
+            <?php if ($dsTipo == 1) : ?>
+                <a href="<?= $this->url('restrito/painel') ?>" class="ds-usermenu__item">
+                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i> Estatísticas
+                </a>
+                <a href="<?= $this->url('restrito/repasse') ?>" class="ds-usermenu__item">
+                    <i class="fa fa-arrow-right-arrow-left" aria-hidden="true"></i> Repasse Seminovos
+                </a>
+            <?php endif; ?>
+
+            <a href="<?= $this->url('restrito/historico-pagamentos') ?>" class="ds-usermenu__item">
+                <i class="fa fa-history" aria-hidden="true"></i> Histórico Pagamentos
+            </a>
+
+            <?php if ($dsTipo == 1 && $this->userInfo('concessionaria') === 'N') : ?>
+                <a href="<?= $this->url('restrito/financeiro') ?>" class="ds-usermenu__item">
+                    <i class="fa fa-money-bill" aria-hidden="true"></i> Financeiro
+                </a>
+            <?php endif; ?>
+
+            <?php if ($dsTipo == 1) : ?>
+                <a href="<?= $this->url('restrito/contrato-revenda') ?>" class="ds-usermenu__item">
+                    <i class="fa fa-address-book" aria-hidden="true"></i> Contrato
+                </a>
+            <?php endif; ?>
+
+            <a href="<?= $this->url('restrito/central-informacoes') ?>" class="ds-usermenu__item">
+                <i class="fa fa-newspaper" aria-hidden="true"></i> Central de Informações
+            </a>
+        </div>
+
+        <!-- Conta -->
+        <div class="ds-usermenu__section">
+            <span class="ds-usermenu__label">Minha conta</span>
+            <a href="<?= $this->url('restrito/meus-dados') ?>" class="ds-usermenu__item">
+                <i class="fa fa-cogs" aria-hidden="true"></i> Meus Dados
+            </a>
+            <a href="<?= $this->url('restrito/alterar-senha') ?>" class="ds-usermenu__item">
+                <i class="fa fa-lock" aria-hidden="true"></i> Alterar Senha
+            </a>
+        </div>
+
+        <!-- Atalhos -->
+        <div class="ds-usermenu__section">
+            <span class="ds-usermenu__label">Atalhos</span>
+            <a href="<?= $dsUrlSite ?>" class="ds-usermenu__item" target="_blank" rel="noopener">
+                <i class="fa fa-globe" aria-hidden="true"></i> Ir para o site
+            </a>
+            <a href="https://wa.me/<?= $dsWhatsapp ?>" class="ds-usermenu__item" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Atendimento por WhatsApp
+            </a>
+        </div>
+
+        <!-- Sair -->
+        <a href="<?= $this->url('logout') ?>" class="ds-usermenu__logout">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
+        </a>
+    </div>
+</div>

@@ -1,0 +1,228 @@
+// =============================================================
+//  DESIGN SYSTEM · MENU DO USUÁRIO (HEADER)
+//  resources/assets/sass/mvc/design-system/_usermenu.scss
+//
+//  Botão do canto direito do header (badge com iniciais) + o
+//  painel suspenso com navegação completa, conta e sair.
+//
+//  Casa com a marcação de:
+//    module/AreaRestrita/view/layout/partials/usermenu.phtml
+//
+//  Reaproveita o mecanismo de dropdown do Bootstrap
+//  (data-toggle="dropdown" / .dropdown-menu) — sem JS novo.
+// =============================================================
+
+body {
+
+  .ds-usermenu {
+    position: relative;
+    font-family: $ds-font;
+  }
+
+  // ===========================================================
+  //  BOTÃO (no header)
+  // ===========================================================
+  .ds-usermenu__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 12px 5px 5px;
+    line-height: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: $ds-radius-pill;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background $ds-transition, border-color $ds-transition;
+
+    &:hover { background: $ds-muted; }
+    &:focus { outline: none; }
+    &[aria-expanded="true"] {
+      background: $ds-muted;
+      border-color: $ds-border;
+    }
+  }
+
+  .ds-usermenu__toggle-name {
+    font-size: .9rem;
+    font-weight: 600;
+    color: $ds-text;
+    white-space: nowrap;
+  }
+
+  .ds-usermenu__caret {
+    font-size: .78rem;
+    color: $ds-text-soft;
+    transition: transform $ds-transition;
+  }
+  .ds-usermenu__toggle[aria-expanded="true"] .ds-usermenu__caret {
+    transform: rotate(180deg);
+  }
+
+  // ===========================================================
+  //  BADGE COM AS INICIAIS
+  // ===========================================================
+  .ds-usermenu__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $ds-brand, $ds-brand-hover);
+    color: #fff;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .02em;
+
+    &--lg {
+      width: 46px;
+      height: 46px;
+      font-size: 1rem;
+      box-shadow: $ds-shadow-sm;
+    }
+  }
+
+  // ===========================================================
+  //  PAINEL SUSPENSO
+  // ===========================================================
+  .ds-usermenu__panel {
+    width: 304px;
+    max-width: calc(100vw - 24px);
+    max-height: calc(100vh - 90px);
+    padding: 0;
+    margin-top: 10px;
+    overflow: hidden auto;
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-lg;
+    box-shadow: $ds-shadow;
+    font-family: $ds-font;
+  }
+
+  // ---- Cabeçalho: identidade ----------------------------------
+  .ds-usermenu__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: $ds-space-3;
+    background: linear-gradient(135deg, $ds-brand-soft, $ds-surface);
+    border-bottom: 1px solid $ds-border;
+  }
+  .ds-usermenu__identity {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    strong {
+      font-size: .92rem;
+      font-weight: 700;
+      color: $ds-text;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    small {
+      margin-top: 2px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: $ds-brand;
+    }
+  }
+
+  // ---- Ação principal: Novo Anúncio ---------------------------
+  .ds-usermenu__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: $ds-space-3;
+    padding: 11px;
+    border-radius: $ds-radius;
+    background: linear-gradient(180deg, $ds-brand, $ds-brand-hover);
+    color: #fff !important;
+    font-size: .86rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter $ds-transition;
+
+    i { font-size: .98rem; }
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+      filter: brightness(1.07);
+    }
+  }
+
+  // ---- Seções -------------------------------------------------
+  .ds-usermenu__section {
+    padding: 7px 0;
+    border-top: 1px solid $ds-border;
+  }
+  .ds-usermenu__label {
+    display: block;
+    padding: 4px $ds-space-3 5px;
+    font-size: .67rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: $ds-text-soft;
+  }
+
+  // ---- Itens --------------------------------------------------
+  .ds-usermenu__item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px $ds-space-3;
+    color: $ds-text;
+    font-size: .88rem;
+    text-decoration: none;
+    transition: background $ds-transition, color $ds-transition;
+
+    i {
+      width: 18px;
+      flex: none;
+      text-align: center;
+      font-size: .9rem;
+      color: $ds-text-soft;
+      transition: color $ds-transition;
+    }
+
+    &:hover {
+      background: $ds-brand-soft;
+      color: $ds-brand;
+      text-decoration: none;
+
+      i { color: $ds-brand; }
+    }
+  }
+
+  // ---- Sair ---------------------------------------------------
+  .ds-usermenu__logout {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px $ds-space-3;
+    border-top: 1px solid $ds-border;
+    background: $ds-bg;
+    color: $ds-danger;
+    font-size: .88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background $ds-transition;
+
+    i { width: 18px; flex: none; text-align: center; }
+
+    &:hover {
+      color: $ds-danger;
+      text-decoration: none;
+      background: mix($ds-danger, #fff, 9%);
+    }
+  }
+}
