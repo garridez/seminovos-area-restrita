@@ -145,30 +145,23 @@ body.l-criar-anuncio {
     padding: $ds-space-5;
   }
 
-  // passos LARGOS — planos e pagamento — FULL-BLEED de verdade.
-  // width:100vw + margens negativas = ocupa a tela toda,
-  // independente de onde o pai esteja. Sem cartão.
+  // passos LARGOS — planos e pagamento — sem cartão, fluidos.
+  // O full-bleed quem faz é a `.row-full` (do CSS do tema, que
+  // já está correto). Aqui NÃO mexemos largura nem margens.
   .step-plano,
   .step-checkout {
-    box-sizing: border-box;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: calc(50% - 50vw) !important;
-    padding: $ds-space-4 clamp(16px, 4vw, 56px) !important;
+    max-width: none;
+    margin: 0;
+    padding: $ds-space-3 0;
     background: transparent;
     border: 0;
     box-shadow: none;
   }
 
-  // O CSS legado usa `.row-full { width:99.5vw }` para ir
-  // full-bleed — isso estoura tudo e cria barra de rolagem
-  // horizontal. Aqui ele só preenche o espaço disponível.
-  .row-full {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
+  // NÃO tocar em `.row-full`. No CSS atual ela já é um full-bleed
+  // correto (position:relative; left:50%; width:100vw;
+  // margin-left:-50vw). Sobrescrever margin/width quebrava a
+  // compensação e jogava tudo para a direita.
 
   // títulos de seção
   h3, h4, h5 {
@@ -668,8 +661,10 @@ body.l-criar-anuncio {
   // ===========================================================
   .step-checkout {
 
-    // a linha das duas colunas — forçada, centralizada, larga
-    .row {
+    // SOMENTE a linha principal (col resumo + col métodos).
+    // Tem a classe `justify-content-center` — os <div class="row">
+    // de dentro dos formulários NÃO têm, então não são afetados.
+    .row.justify-content-center {
       display: flex !important;
       flex-wrap: wrap !important;
       justify-content: center !important;
@@ -801,8 +796,33 @@ body.l-criar-anuncio {
       }
 
       .card-body {
-        padding: $ds-space-4;
+        padding: $ds-space-3;
         border-top: 1px solid $ds-border;
+
+        // ---- Formulário do cartão — compacto --------------------
+        // campos mais juntos
+        .form-group-default {
+          margin-bottom: 10px !important;
+        }
+        // os <div class="row"> internos (Validade / CVV):
+        // lado a lado, gap pequeno, sem margens negativas
+        .row {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 10px !important;
+          margin: 0 !important;
+
+          > [class*="col-"] {
+            flex: 1 1 0 !important;
+            max-width: none !important;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        }
+        // textos auxiliares mais discretos
+        > div > small,
+        br { line-height: 1.3; }
       }
     }
 
