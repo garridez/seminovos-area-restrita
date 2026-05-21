@@ -100,6 +100,15 @@ body {
       $ds-muted, darken($ds-muted, 5%), darken($ds-muted, 9%),
       $ds-text, $ds-border
     );
+
+    // Botão claro: o texto precisa ser escuro para ter contraste.
+    // Vários templates ainda colocam .text-white nele (sobra de
+    // quando era amarelo) — aqui forçamos o texto legível.
+    &,
+    & span,
+    & i {
+      color: $ds-text !important;
+    }
   }
 
   // ---- Positivo — pagar, ativar, compartilhar ------------------
