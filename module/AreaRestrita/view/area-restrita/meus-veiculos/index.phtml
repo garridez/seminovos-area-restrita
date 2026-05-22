@@ -12,7 +12,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
     <div class="row justify-content-center px-3 px-md-0">
         <?php if ($this->userInfo('tipoCadastro') == AreaRestrita\Model\Cadastros::TIPO_CADASTRO_REVENDA): ?>
             <div class="col-sm-12 col-md-6">
-                <h3>Meus Veículos</h3>
+                <h3 class="ds-page-title">Meus Veículos</h3>
             </div>
             <div class="col-6 col-md-3">
                 <div class="form-group">

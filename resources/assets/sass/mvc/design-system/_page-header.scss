@@ -2,14 +2,17 @@
 //  DESIGN SYSTEM · TÍTULO DE PÁGINA
 //  resources/assets/sass/mvc/design-system/_page-header.scss
 //
-//  Padrão ÚNICO de título para toda a área restrita. Unifica:
-//   • páginas legadas  -> <h1/h2/h3 class="... hint-text all-caps">
-//   • páginas novas    -> .ds-historico__head h3, .ds-propostas__head h3
-//   • Central de Info. -> .topo h1
+//  Padrão ÚNICO de título para toda a área restrita.
 //
-//  !important nas propriedades-chave para vencer o tema legado
-//  (cinza-claro do .hint-text, caixa-alta do .all-caps, fonte
-//  Montserrat) de forma garantida.
+//  COMO USAR nas telas:
+//    <h3 class="ds-page-title">Meus Veículos</h3>
+//    <p  class="ds-page-subtitle">Texto opcional de apoio.</p>
+//
+//  A marcação legada é inconsistente (umas telas usam
+//  `<h3 class="font-montserrat all-caps hint-text">`, outras só
+//  `<h3>` puro). Por isso a forma garantida é a classe
+//  `.ds-page-title`. As classes legadas continuam aqui como
+//  rede de segurança para telas ainda não ajustadas.
 //
 //  Importar por ÚLTIMO no _all.scss.
 // =============================================================
@@ -17,6 +20,7 @@
 body {
 
   // ---- O TÍTULO ------------------------------------------------
+  .ds-page-title,
   h1.hint-text, h2.hint-text, h3.hint-text,
   h1.all-caps,  h2.all-caps,  h3.all-caps,
   .ds-historico__head h3,
@@ -31,16 +35,20 @@ body {
     color: $ds-text !important;        // desfaz o cinza-claro do hint-text
   }
 
-  // espaçamento p/ títulos legados "soltos" (sem wrapper próprio)
+  // espaçamento p/ títulos "soltos" (sem header wrapper próprio)
+  .ds-page-title,
   h1.hint-text, h2.hint-text, h3.hint-text,
   h1.all-caps,  h2.all-caps,  h3.all-caps {
-    margin: 0 0 $ds-space-4;
+    margin: 0 0 $ds-space-4 !important;
   }
 
-  // ---- O SUBTÍTULO (quando existir) ----------------------------
+  // ---- O SUBTÍTULO --------------------------------------------
+  .ds-page-subtitle,
   .ds-historico__head p,
   .ds-propostas__head p,
   &.c-pages.a-central-informacoes .topo span {
+    display: block;
+    margin: -#{$ds-space-2} 0 0;       // encosta sob o título
     font-family: $ds-font;
     font-size: .95rem;
     line-height: 1.5;
