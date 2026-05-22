@@ -84,13 +84,29 @@ body {
 
     &:focus { box-shadow: 0 0 0 3px rgba($ds-danger, .15); }
   }
-  label.error,
-  .invalid-feedback {
+  // jquery-validation: insere <label class="error"> só quando há
+  // erro — pode forçar display:block sem problema.
+  label.error {
     display: block;
     color: $ds-danger;
     font-size: .8125rem;
     font-weight: 500;
     margin-top: 4px;
+  }
+  // Bootstrap: .invalid-feedback fica OCULTO por padrão e só deve
+  // aparecer quando o JS marca o campo/pai com .is-invalid.
+  // NÃO forçar display:block aqui — senão a mensagem (ex.: "placa
+  // já cadastrada") aparece antes mesmo da verificação via AJAX.
+  .invalid-feedback {
+    display: none;
+    color: $ds-danger;
+    font-size: .8125rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .is-invalid .invalid-feedback,
+  .is-invalid ~ .invalid-feedback {
+    display: block;
   }
   .form-control.is-valid { border-color: $ds-success; }
 
