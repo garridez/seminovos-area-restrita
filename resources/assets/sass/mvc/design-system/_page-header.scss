@@ -10,9 +10,8 @@
 //
 //  A marcação legada é inconsistente (umas telas usam
 //  `<h3 class="font-montserrat all-caps hint-text">`, outras só
-//  `<h3>` puro). Por isso a forma garantida é a classe
-//  `.ds-page-title`. As classes legadas continuam aqui como
-//  rede de segurança para telas ainda não ajustadas.
+//  `<h3>` puro). A forma garantida é a classe `.ds-page-title`;
+//  as classes legadas seguem aqui como rede de segurança.
 //
 //  Importar por ÚLTIMO no _all.scss.
 // =============================================================
@@ -26,6 +25,9 @@ body {
   .ds-historico__head h3,
   .ds-propostas__head h3,
   &.c-pages.a-central-informacoes .topo h1 {
+    display: flex !important;
+    align-items: center;
+    gap: 13px;
     font-family: $ds-font !important;
     font-size: 1.5rem !important;
     font-weight: 700 !important;
@@ -33,6 +35,16 @@ body {
     letter-spacing: -.01em !important;
     text-transform: none !important;   // desfaz o .all-caps legado
     color: $ds-text !important;        // desfaz o cinza-claro do hint-text
+
+    // assinatura: barrinha vertical da marca antes do título
+    &::before {
+      content: "";
+      flex: none;
+      width: 5px;
+      height: 1.15em;
+      border-radius: 3px;
+      background: linear-gradient(180deg, $ds-brand, $ds-brand-hover);
+    }
   }
 
   // espaçamento p/ títulos "soltos" (sem header wrapper próprio)
@@ -48,7 +60,8 @@ body {
   .ds-propostas__head p,
   &.c-pages.a-central-informacoes .topo span {
     display: block;
-    margin: -#{$ds-space-2} 0 0;       // encosta sob o título
+    margin: 5px 0 0;
+    padding-left: 18px;                // alinha sob o texto do título
     font-family: $ds-font;
     font-size: .95rem;
     line-height: 1.5;
