@@ -1,0 +1,49 @@
+// =============================================================
+//  DESIGN SYSTEM · TÍTULO DE PÁGINA
+//  resources/assets/sass/mvc/design-system/_page-header.scss
+//
+//  Padrão ÚNICO de título para toda a área restrita. Unifica:
+//   • páginas legadas  -> <h1/h2/h3 class="... hint-text all-caps">
+//   • páginas novas    -> .ds-historico__head h3, .ds-propostas__head h3
+//   • Central de Info. -> .topo h1
+//
+//  !important nas propriedades-chave para vencer o tema legado
+//  (cinza-claro do .hint-text, caixa-alta do .all-caps, fonte
+//  Montserrat) de forma garantida.
+//
+//  Importar por ÚLTIMO no _all.scss.
+// =============================================================
+
+body {
+
+  // ---- O TÍTULO ------------------------------------------------
+  h1.hint-text, h2.hint-text, h3.hint-text,
+  h1.all-caps,  h2.all-caps,  h3.all-caps,
+  .ds-historico__head h3,
+  .ds-propostas__head h3,
+  &.c-pages.a-central-informacoes .topo h1 {
+    font-family: $ds-font !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -.01em !important;
+    text-transform: none !important;   // desfaz o .all-caps legado
+    color: $ds-text !important;        // desfaz o cinza-claro do hint-text
+  }
+
+  // espaçamento p/ títulos legados "soltos" (sem wrapper próprio)
+  h1.hint-text, h2.hint-text, h3.hint-text,
+  h1.all-caps,  h2.all-caps,  h3.all-caps {
+    margin: 0 0 $ds-space-4;
+  }
+
+  // ---- O SUBTÍTULO (quando existir) ----------------------------
+  .ds-historico__head p,
+  .ds-propostas__head p,
+  &.c-pages.a-central-informacoes .topo span {
+    font-family: $ds-font;
+    font-size: .95rem;
+    line-height: 1.5;
+    color: $ds-text-soft;
+  }
+}

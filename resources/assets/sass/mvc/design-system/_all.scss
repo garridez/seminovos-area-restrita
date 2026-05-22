@@ -23,3 +23,6 @@
 @import "fatura";         // telas de fatura (revenda e particular)
 @import "contrato";       // tela "Contrato de prestação de serviço"
 @import "central";        // tela "Central de Informações"
+
+// page-header POR ÚLTIMO: padroniza os títulos de todas as telas
+@import "page-header";    // título de página — padrão único
