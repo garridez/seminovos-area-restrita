@@ -5,6 +5,14 @@ global $container;
 $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 ?>
 <div class="sidebar-menu mt-md-5">
+    <div class="btn-sidebar-collapse">
+        <div class="btn-collapse" title="Fechar menu">
+            <i class="fa fa-angles-left" aria-hidden="true"></i>
+        </div>
+        <div class="btn-expand" title="Abrir menu">
+            <i class="fa fa-angles-right" aria-hidden="true"></i>
+        </div>
+    </div>
     <!-- BEGIN SIDEBAR MENU ITEMS-->
     <ul class="menu-items">
         <li class="mt-md-5 m-b-20">
@@ -55,7 +63,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         <li>
             <a href="<?= $url . '?' . substr(random_int(0, mt_getrandmax()), 0, 4) ?>" title="Ir para o site">
                 <span class="icon-thumbnail">
-                    <img src="/favicon.ico">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
                 </span>
                 <span class="title">Ir para o site</span>
             </a>
@@ -68,12 +76,4 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
         </li>
     </ul>
     <div class="clearfix"></div>
-    <div class="btn-sidebar-collapse">
-        <div class="btn-collapse" title="Fechar menu">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        </div>
-        <div class="btn-expand" title="Abrir menu">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        </div>
-    </div>
 </div>

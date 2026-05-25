@@ -15,15 +15,10 @@ body .header {
   box-shadow: 0 2px 14px rgba(0, 0, 0, .14);
   color: #fff;
 
-  // ---- Logo SEMINOVOS — maior e claro sobre o navy ------------
-  // best-effort: se as letras não clarearem, preciso ver o SVG.
+  // ---- Logo SEMINOVOS — maior (usa o logo_white.svg) ----------
   .snbh-logo {
-    height: 42px;
+    height: 44px;
     width: auto;
-
-    .layer-letters { fill: #fff; }
-    .brand-letters,
-    .letter { fill: #fff; }
   }
 
   // ---- Hambúrguer (somente mobile, .d-lg-none) ----------------

@@ -175,9 +175,32 @@ body .page-sidebar {
     }
   }
 
-  // ---- Botão recolher menu ------------------------------------
+  // ---- Botão recolher menu — círculo discreto no topo --------
   .btn-sidebar-collapse {
-    background-color: $ds-brand;
-    color: #fff;
+    position: static;                 // vence o position fixo legado
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 14px 2px;
+    background: transparent;          // remove o laranja antigo
+
+    .btn-collapse,
+    .btn-expand {
+      width: 30px;
+      height: 30px;
+      line-height: 28px;              // centra o ícone (−2 da borda)
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: $sb-text;
+      cursor: pointer;
+      transition: background-color $ds-transition, color $ds-transition;
+
+      i { font-size: .8rem; }
+
+      &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+    }
   }
 }
