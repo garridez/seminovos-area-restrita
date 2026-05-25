@@ -17,7 +17,7 @@ body .header {
   color: #fff;
   align-items: stretch;
 
-  // ---- Logo SEMINOVOS — maior (usa /img/logo_white.svg) -------
+  // ---- Logo SEMINOVOS — maior (usa /img/svg/logo.svg) --------
   .snbh-logo {
     height: 44px;
     width: auto;
@@ -57,4 +57,9 @@ body .header {
       border-right: 1px solid rgba(255, 255, 255, .09);
     }
   }
+}
+
+// ---- Letras da logo em branco (header e sidebar mobile) -------
+body .snbh-logo .layer-letters {
+  fill: #fff;
 }
