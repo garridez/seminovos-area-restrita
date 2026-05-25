@@ -19,6 +19,23 @@ body .page-sidebar {
   background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, .05);
 
+  // ---- Barra de rolagem — pill suave sobre o navy -----------
+  scrollbar-width: thin;                                 // Firefox
+  scrollbar-color: rgba(255, 255, 255, .2) transparent;
+
+  &::-webkit-scrollbar { width: 12px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .15);
+    border-radius: $ds-radius-pill;
+    border: 3px solid transparent;          // "padding" em volta do pill
+    background-clip: padding-box;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, .3);
+    background-clip: padding-box;
+  }
+
   a, button { color: $sb-text; }
 
   .sidebar-menu .menu-items {
