@@ -43,9 +43,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <nav class="page-sidebar animated" data-pages="sidebar">
         <div class="sidebar-header d-flex d-md-none justify-content-center mt-0">
             <a href="<?= $url . '?' . substr(time(), 0, 4) ?>" title="Voltar para o site seminovos.com.br !!11">
-                <svg viewBox="0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-                    <use xlink:href="/img/svg/logo.svg#layer_letters" class="layer-letters"></use>
-                    <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                <svg viewBox="0 0 180 66" width="120" height="44" class="snbh-logo inverse brand">
+                    <use xlink:href="/img/logo_white.svg#layer_letters" class="layer-letters"></use>
+                    <use xlink:href="/img/logo_white.svg#layer_car" class="layer-car"></use>
                 </svg>
             </a>
         </div>
@@ -78,9 +78,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </a>
             <div class="sidebar-header">
                 <a  href="/" title="Meus veículos">
-                    <svg viewBox=" 0 0 180 66" width="90" height="33" class="snbh-logo inverse brand">
-                        <use xlink:href="/img/svg/logo.svg#layer_letters"></use>
-                        <use xlink:href="/img/svg/logo.svg#layer_car" class="layer-car"></use>
+                    <svg viewBox=" 0 0 180 66" width="120" height="44" class="snbh-logo inverse brand">
+                        <use xlink:href="/img/logo_white.svg#layer_letters"></use>
+                        <use xlink:href="/img/logo_white.svg#layer_car" class="layer-car"></use>
                     </svg>
                 </a>
             </div>
@@ -165,6 +165,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
   <?php /*<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
   <script src="/js/app.js?<?= $assetSufix ?>" async="true"></script>*/ ?>
+    <script>
+    // marca o item do menu lateral correspondente à página atual
+    (function () {
+        var path = location.pathname.replace(/\/+$/, '');
+        var links = document.querySelectorAll(
+            '.page-sidebar .menu-items > li > a[href]:not(.btn)'
+        );
+        links.forEach(function (a) {
+            try {
+                var href = a.getAttribute('href') || '';
+                var ap = new URL(href, location.origin).pathname.replace(/\/+$/, '');
+                if (ap && ap === path) {
+                    a.closest('li').classList.add('active');
+                }
+            } catch (e) {}
+        });
+    })();
+    </script>
 </body>
 
 </html>

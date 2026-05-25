@@ -1,32 +1,60 @@
 // =============================================================
-//  DESIGN SYSTEM · HEADER (barra superior navy)
+//  DESIGN SYSTEM · HEADER (barra superior navy, duas zonas)
 //  resources/assets/sass/mvc/design-system/_header.scss
 //
-//  Estiliza o <div class="header"> do layout: fundo navy,
-//  hambúrguer claro e logo legível sobre o escuro.
+//  Header navy com DUAS zonas no desktop:
+//   • zona da logo (à esquerda, sobre a sidebar) — navy profundo,
+//     com uma borda sutil à direita;
+//   • restante da barra — navy um pouco mais claro.
 //  O menu do cliente (usermenu) é tratado no _usermenu.scss.
 // =============================================================
 
 body .header {
   min-height: 64px;
-  padding: 0 20px;
-  background: linear-gradient(120deg, #16213e 0%, #20305a 100%);
+  background: linear-gradient(120deg, #1d2c50 0%, #243a66 100%);
   border: 0 !important;                       // mata a borda do tema
-  box-shadow: 0 2px 14px rgba(0, 0, 0, .14);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, .16);
   color: #fff;
+  align-items: stretch;
 
-  // ---- Logo SEMINOVOS — maior (usa o logo_white.svg) ----------
+  // ---- Logo SEMINOVOS — maior (usa /img/logo_white.svg) -------
   .snbh-logo {
     height: 44px;
     width: auto;
   }
 
+  // ---- Bloco do usermenu — à direita, centralizado ------------
+  .ml-auto {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+  }
+
   // ---- Hambúrguer (somente mobile, .d-lg-none) ----------------
   .toggle-sidebar {
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
     color: #fff;
 
     i { color: #fff; }
     .thumbnail-wrapper,
     .icon-thumbnail { background: rgba(255, 255, 255, .12); color: #fff; }
+  }
+
+  // ---- Desktop: zona da logo em navy distinto -----------------
+  @media (min-width: 992px) {
+    justify-content: flex-start !important;   // logo encostada à esquerda
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      width: 260px;                 // AJUSTE p/ casar com a largura da sidebar
+      padding: 0 16px;
+      background: #15203c;          // navy profundo — continua a sidebar
+      border-right: 1px solid rgba(255, 255, 255, .09);
+    }
   }
 }

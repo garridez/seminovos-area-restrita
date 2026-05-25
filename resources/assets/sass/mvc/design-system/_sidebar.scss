@@ -80,19 +80,21 @@ body .page-sidebar {
       }
     }
 
-    // ---- Item ativo — PÍLULA CLARA sobre o navy ---------------
+    // ---- Item ativo — pílula navy elevada ---------------------
     > li.active > a,
-    > li.open > a {
-      background: $ds-surface;
-      color: $ds-text;
+    > li.open > a,
+    > li > a.active {
+      background: linear-gradient(180deg, #2c3b66 0%, #232f53 100%);
+      color: #fff;
       font-weight: 600;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+      border: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .4);
 
       .icon-thumbnail { color: $ds-brand; }
 
       &:hover {
-        background: $ds-surface;
-        color: $ds-text;
+        background: linear-gradient(180deg, #2c3b66 0%, #232f53 100%);
+        color: #fff;
         .icon-thumbnail { color: $ds-brand; }
       }
     }
