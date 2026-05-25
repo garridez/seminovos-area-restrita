@@ -2,6 +2,14 @@
 /** @var \AreaRestrita\View\Helper\AutocompleteClass $this */
 use \SnBH\Common\Helper\StringFuncs;
 
+// Ícone FontAwesome de cada plano. Para trocar, é só editar aqui.
+$iconesPlano = [
+    'nitro' => 'fa-bolt',
+    'turbo' => 'fa-rocket',
+    'flex'  => 'fa-car',
+];
+$iconePadrao = 'fa-tag';
+
 if ($this->userInfo('tipoCadastro') == 1) {
     $arrayPlanos = [
         1 => ['nitro', 'Nitro', '15', 'alta', '', '', 'nitro-value', $this->qtdAnuncios()->totalNitro, $this->qtdAnuncios()->totalNitroPublicados],
@@ -10,18 +18,13 @@ if ($this->userInfo('tipoCadastro') == 1) {
     ];
     foreach ($arrayPlanos as $i => $plano):
         [$slug, $plano, $fotos, $nivel, $video, $preco, $classValue, $totalAnuncio, $totalAnuncioPublicado] = $plano;
+        $icone = $iconesPlano[$slug] ?? $iconePadrao;
 
         ?>
-        <div class="justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2">
-            <div class="linha-plano size-2x plano-<?= $slug ?> m-0">
-                <div class="icon-plano m-0">
-                    <span class="bar-1"></span>
-                    <span class="bar-2"></span>
-                    <span class="bar-3"></span>
-                    <span class="bar-4"></span>
-                    <span class="bar-4"></span>
-                </div>
-            </div>
+        <div class="qtd-plano d-flex align-items-center bg-color-menu-dark my-1 p-2 plano-<?= $slug ?>">
+            <span class="qtd-plano-icone">
+                <i class="fa <?= $icone ?>" aria-hidden="true"></i>
+            </span>
             <div class="text-left ml-2 title">
                 <div>
                     <b><?= $plano ?></b> <?php echo $totalAnuncioPublicado . "/" . $totalAnuncio ?>
@@ -43,18 +46,13 @@ if ($this->userInfo('tipoCadastro') == 1) {
             'publicado' => 0,
             'total' => 0
         ];
+        $icone = $iconesPlano[strtolower($slug)] ?? $iconePadrao;
 
         ?>
-        <div class="justify-content-start d-flex align-items-center bg-color-menu-dark my-1 p-2" title="<?php echo  "{$usados['publicado']} ativo(s) / {$usados['total']} cadastrado(s)"  ?>">
-            <div class="linha-plano size-2x plano-<?= $slug ?> m-0">
-                <div class="icon-plano m-0">
-                    <span class="bar-1"></span>
-                    <span class="bar-2"></span>
-                    <span class="bar-3"></span>
-                    <span class="bar-4"></span>
-                    <span class="bar-4"></span>
-                </div>
-            </div>
+        <div class="qtd-plano d-flex align-items-center bg-color-menu-dark my-1 p-2 plano-<?= $slug ?>" title="<?php echo  "{$usados['publicado']} ativo(s) / {$usados['total']} cadastrado(s)"  ?>">
+            <span class="qtd-plano-icone">
+                <i class="fa <?= $icone ?>" aria-hidden="true"></i>
+            </span>
             <div class="text-left ml-2 title">
                 <div>
                     <b><?= $plano['nomePlano'] ?></b>
@@ -65,4 +63,3 @@ if ($this->userInfo('tipoCadastro') == 1) {
         <?php
     endforeach;
 }
-

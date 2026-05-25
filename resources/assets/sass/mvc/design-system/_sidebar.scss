@@ -160,20 +160,46 @@ body .page-sidebar {
   // ---- Contadores de plano (Nitro / Turbo / Flex) -------------
   .qtd-anuncios-menu {
     margin-top: 8px;
-    padding-top: 10px;
+    padding: 10px 0;
     border-top: 1px solid $sb-line;
+    border-bottom: 1px solid $sb-line;        // cerca o bloco de contadores
 
-    .bg-color-menu-dark {
+    .qtd-plano {
       background-color: rgba(255, 255, 255, .05) !important;
       border: 1px solid rgba(255, 255, 255, .07);
       border-radius: $ds-radius-sm;
-      padding: 9px 11px !important;
+      padding: 8px 10px !important;
     }
+
+    // ícone do plano (raio / foguete / carro)
+    .qtd-plano-icone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      width: 28px;
+      height: 28px;
+      border-radius: $ds-radius-sm;
+      background: rgba(255, 255, 255, .06);
+      color: $sb-text;
+      font-size: .82rem;
+    }
+
     .title {
       font-size: .85rem;
       color: $sb-text;
 
       b { color: #fff; font-weight: 700; }
+    }
+
+    // plano premium (Nitro) em destaque, como no mockup
+    .plano-nitro {
+      box-shadow: inset 3px 0 0 $ds-brand;
+
+      .qtd-plano-icone {
+        background: rgba($ds-brand, .16);
+        color: $ds-brand;
+      }
     }
   }
 
