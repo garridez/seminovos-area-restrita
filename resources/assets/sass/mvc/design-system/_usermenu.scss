@@ -36,24 +36,25 @@ body {
     appearance: none;
     transition: background $ds-transition, border-color $ds-transition;
 
-    &:hover { background: $ds-muted; }
+    // o toggle fica sobre o header navy
+    &:hover { background: rgba(255, 255, 255, .1); }
     &:focus { outline: none; }
     &[aria-expanded="true"] {
-      background: $ds-muted;
-      border-color: $ds-border;
+      background: rgba(255, 255, 255, .1);
+      border-color: rgba(255, 255, 255, .16);
     }
   }
 
   .ds-usermenu__toggle-name {
     font-size: .9rem;
     font-weight: 600;
-    color: $ds-text;
+    color: #fff;
     white-space: nowrap;
   }
 
   .ds-usermenu__caret {
     font-size: .78rem;
-    color: $ds-text-soft;
+    color: rgba(255, 255, 255, .65);
     transition: transform $ds-transition;
   }
   .ds-usermenu__toggle[aria-expanded="true"] .ds-usermenu__caret {

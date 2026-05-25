@@ -1,41 +1,37 @@
 // =============================================================
-//  DESIGN SYSTEM · MENU LATERAL  (escuro refinado)
+//  DESIGN SYSTEM · MENU LATERAL  (navy)
 //  resources/assets/sass/mvc/design-system/_sidebar.scss
 //
-//  Cobre .page-sidebar: itens de menu, banner de expiração
-//  (3 estados de cor) e os contadores de plano.
+//  Sidebar azul-marinho: itens de menu (ativo = pílula clara),
+//  banner de expiração (3 estados) e contadores de plano.
 //  Aninhado em `body` para vencer o tema legado.
 // =============================================================
 
-// tons exclusivos do menu escuro — refinado
-// near-black profundo: a esta escuridão o tom lê como neutro,
-// então deixa de "brigar" com o laranja quente da marca.
-$sb-bg-top:    #1e212a;   // topo — levemente mais claro
-$sb-bg-bottom: #14161d;   // base — mais profundo
-$sb-text:      #c3c8d1;   // texto dos itens
-$sb-text-soft: #848a95;   // ícones / secundário
-$sb-line:      rgba(255, 255, 255, .07);
-$sb-hover:     rgba(255, 255, 255, .05);
+// paleta navy do shell
+$sb-bg-top:    #1d2b4c;   // topo
+$sb-bg-bottom: #141c33;   // base
+$sb-text:      #a9b1c4;   // texto dos itens
+$sb-text-soft: #6e7793;   // ícones / secundário
+$sb-line:      rgba(255, 255, 255, .08);
+$sb-hover:     rgba(255, 255, 255, .06);
 
 body .page-sidebar {
-  // degradê vertical sutil dá profundidade — não é mais um bloco chapado
   background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%);
-  // fio de luz na borda interna direita — separa do conteúdo claro
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, .05);
 
   a, button { color: $sb-text; }
 
   .sidebar-menu .menu-items {
-    padding: 8px 10px;
+    padding: 8px 12px;
 
     // ---- Item de menu -----------------------------------------
     > li > a {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 11px 12px;
-      margin-bottom: 2px;
-      border-radius: $ds-radius-sm;
+      padding: 11px 13px;
+      margin-bottom: 3px;
+      border-radius: $ds-radius;
       font-family: $ds-font;
       font-size: .9rem;
       font-weight: 500;
@@ -63,19 +59,25 @@ body .page-sidebar {
       &:hover {
         background-color: $sb-hover;
         color: #fff;
-        .icon-thumbnail { color: $ds-brand; }
+        .icon-thumbnail { color: #fff; }
       }
     }
 
-    // ---- Item ativo — destaque laranja ------------------------
+    // ---- Item ativo — PÍLULA CLARA sobre o navy ---------------
     > li.active > a,
     > li.open > a {
-      background-color: rgba($ds-brand, .15);
-      color: #fff;
+      background: $ds-surface;
+      color: $ds-text;
       font-weight: 600;
-      box-shadow: inset 3px 0 0 $ds-brand;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
 
       .icon-thumbnail { color: $ds-brand; }
+
+      &:hover {
+        background: $ds-surface;
+        color: $ds-text;
+        .icon-thumbnail { color: $ds-brand; }
+      }
     }
 
     // contador de mensagens não lidas (Chat)
@@ -91,27 +93,27 @@ body .page-sidebar {
 
   // ---- Banner de expiração do plano ---------------------------
   // Classes de estado vêm do PHP (menu-revenda.phtml):
-  //   .plano-expira-mes    -> +7 dias  (tranquilo / verde)
-  //   .plano-expira-semana -> 1-7 dias (atenção  / amarelo)
-  //   .plano-expirou       -> expirado (crítico  / vermelho)
+  //   .plano-expira-mes    -> +7 dias  (verde)
+  //   .plano-expira-semana -> 1-7 dias (âmbar)
+  //   .plano-expirou       -> expirado (vermelho)
   .aviso-expiracao {
-    margin: 12px 10px 10px;
-    padding: 14px 12px !important;
+    margin: 12px 12px 10px;
+    padding: 16px 12px !important;
     border-radius: $ds-radius;
     text-align: center;
     color: #fff;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .28);   // "levanta" o banner
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
 
     .icone {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       margin: 0 auto 8px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, .22);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
     h5 {
       margin: 0;
@@ -120,16 +122,16 @@ body .page-sidebar {
       line-height: 1.4;
       color: inherit;
 
-      b { font-size: 1.05rem; font-weight: 700; }
+      b { font-size: 1.1rem; font-weight: 700; }
     }
 
     &.plano-expira-mes {
       background: linear-gradient(135deg, #25a85f, #1c8049);
     }
     &.plano-expira-semana {
-      background: linear-gradient(135deg, #f3c218, #e08a00);
+      background: linear-gradient(135deg, #f7c948, #e08a00);
       color: #3d2c00;
-      .icone { background: rgba(0, 0, 0, .14); }
+      .icone { background: rgba(0, 0, 0, .16); }
     }
     &.plano-expirou {
       background: linear-gradient(135deg, #e0473e, #c23b32);
@@ -140,19 +142,19 @@ body .page-sidebar {
   .qtd-anuncios-menu {
     margin-top: 8px;
     padding-top: 10px;
-    border-top: 1px solid $sb-line;   // divisória sutil de seção
+    border-top: 1px solid $sb-line;
 
     .bg-color-menu-dark {
-      background-color: rgba(255, 255, 255, .045) !important;
-      border: 1px solid rgba(255, 255, 255, .06);
+      background-color: rgba(255, 255, 255, .05) !important;
+      border: 1px solid rgba(255, 255, 255, .07);
       border-radius: $ds-radius-sm;
-      padding: 9px 10px !important;
+      padding: 9px 11px !important;
     }
     .title {
       font-size: .85rem;
       color: $sb-text;
 
-      b { color: #fff; font-weight: 600; }
+      b { color: #fff; font-weight: 700; }
     }
   }
 
