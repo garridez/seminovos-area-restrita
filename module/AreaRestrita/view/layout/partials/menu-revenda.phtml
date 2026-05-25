@@ -21,7 +21,7 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 ?>
 <div class="sidebar-menu mt-3">
     <!-- BEGIN SIDEBAR MENU ITEMS-->
-    <ul class="menu-items mt-0">
+    <ul class="menu-items mt-5">
         <?php if ($this->userInfo('concessionaria') == 'N') : ?>
             <li class="m-t-12 pt-3 <?= $bgExpiracao ?> aviso-expiracao">
                 <div class="icone d-flex justify-content-center mt-2">
