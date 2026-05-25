@@ -238,5 +238,5 @@ body .page-sidebar {
 // sem sentido — então some com eles enquanto o menu está
 // recolhido. Voltam ao expandir.
 body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
-  display: none;
+  display: none!important;
 }
