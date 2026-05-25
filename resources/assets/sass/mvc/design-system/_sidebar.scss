@@ -230,3 +230,13 @@ body .page-sidebar {
   // ---- Botão recolher menu — agora fica no header -------------
   // (estilo do .ds-sidebar-toggle está no _header.scss)
 }
+
+// =============================================================
+//  MENU RECOLHIDO
+// =============================================================
+// Sem o texto "9/9" os contadores de plano viram caixinhas
+// sem sentido — então some com eles enquanto o menu está
+// recolhido. Voltam ao expandir.
+body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
+  display: none;
+}
