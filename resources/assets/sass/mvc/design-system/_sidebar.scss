@@ -19,20 +19,20 @@ body .page-sidebar {
   background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, .05);
 
-  // ---- Barra de rolagem — pill suave sobre o navy -----------
+  // ---- Barra de rolagem — pill dourado sobre o navy ---------
   scrollbar-width: thin;                                 // Firefox
-  scrollbar-color: rgba(255, 255, 255, .2) transparent;
+  scrollbar-color: $ds-brand transparent;
 
   &::-webkit-scrollbar { width: 12px; }
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .15);
+    background: linear-gradient(180deg, #f7c948 0%, #{$ds-brand} 100%);
     border-radius: $ds-radius-pill;
     border: 3px solid transparent;          // "padding" em volta do pill
     background-clip: padding-box;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, .3);
+    background: linear-gradient(180deg, #f9d65f 0%, #{$ds-brand-hover} 100%);
     background-clip: padding-box;
   }
 
@@ -203,32 +203,6 @@ body .page-sidebar {
     }
   }
 
-  // ---- Botão recolher menu — círculo discreto no topo --------
-  .btn-sidebar-collapse {
-    position: static;                 // vence o position fixo legado
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 14px 2px;
-    background: transparent;          // remove o laranja antigo
-
-    .btn-collapse,
-    .btn-expand {
-      width: 30px;
-      height: 30px;
-      line-height: 28px;              // centra o ícone (−2 da borda)
-      text-align: center;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .07);
-      border: 1px solid rgba(255, 255, 255, .12);
-      color: $sb-text;
-      cursor: pointer;
-      transition: background-color $ds-transition, color $ds-transition;
-
-      i { font-size: .8rem; }
-
-      &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
-    }
-  }
+  // ---- Botão recolher menu — agora fica no header -------------
+  // (estilo do .ds-sidebar-toggle está no _header.scss)
 }

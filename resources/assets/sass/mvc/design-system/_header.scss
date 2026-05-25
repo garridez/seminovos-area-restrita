@@ -42,11 +42,45 @@ body .header {
     .icon-thumbnail { background: rgba(255, 255, 255, .12); color: #fff; }
   }
 
+  // ---- Botão de recolher o menu — círculo sobre a borda -------
+  .ds-sidebar-toggle {
+    display: none;                  // aparece só no desktop
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: #1f2d4f;
+    border: 1px solid rgba(255, 255, 255, .16);
+    color: #c3c8d1;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    transition: background-color $ds-transition, color $ds-transition;
+
+    i {
+      font-size: .78rem;
+      transition: transform $ds-transition;
+    }
+
+    &:hover { background: #283a63; color: #fff; }
+    &:focus { outline: none; }
+  }
+
   // ---- Desktop: zona da logo em navy distinto -----------------
   @media (min-width: 992px) {
     justify-content: flex-start !important;   // logo encostada à esquerda
 
     .sidebar-header {
+      position: relative;           // âncora p/ o botão de recolher
+      overflow: visible;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -56,7 +90,14 @@ body .header {
       background: #15203c;          // navy profundo — continua a sidebar
       border-right: 1px solid rgba(255, 255, 255, .09);
     }
+
+    .ds-sidebar-toggle { display: flex; }
   }
+}
+
+// quando o menu está recolhido, a seta aponta para o outro lado
+body.sidebar-collapsed .ds-sidebar-toggle i {
+  transform: translateY(0) rotate(180deg);
 }
 
 // ---- Letras da logo em branco (header e sidebar mobile) -------
