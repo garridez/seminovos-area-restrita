@@ -101,6 +101,10 @@ body.sidebar-collapsed .ds-sidebar-toggle i {
 }
 
 // ---- Letras da logo em branco (header e sidebar mobile) -------
+// O `fill` não vence: as letras vêm de um arquivo externo
+// (logo.svg via <use>) e têm cor embutida lá dentro — CSS de fora
+// não alcança. O `filter` força branco independente da cor-fonte,
+// e atinge só a layer-letters (a layer-car não é afetada).
 body .snbh-logo .layer-letters {
-  fill: #fff;
+  filter: brightness(0) invert(1);
 }

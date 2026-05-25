@@ -19,29 +19,45 @@ body .page-sidebar {
   background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, .05);
 
-  // ---- Barra de rolagem — pill dourado sobre o navy ---------
-  // !important porque o tema legado força border-radius/border
-  // no thumb e estava deixando ele quadrado e coladão.
-  scrollbar-width: thin;                                 // Firefox
+  // ---- Barra de rolagem -------------------------------------
+  // O scroll fica num container interno (.sidebar-menu/.menu-items).
+  //
+  // Detalhe-chave da spec: quando scrollbar-width/scrollbar-color
+  // têm valor != "auto", elas SOBRESCREVEM o ::-webkit-scrollbar.
+  // Logo: Firefox usa as props padrão; navegadores webkit resetam
+  // elas p/ "auto" (dentro do @supports) e aí o pill assume.
+  scrollbar-width: thin;                           // Firefox
   scrollbar-color: #{$ds-brand} transparent;
 
-  &::-webkit-scrollbar {
-    width: 14px !important;
-    background: transparent !important;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent !important;
-    border: 0 !important;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #f7c948 0%, #{$ds-brand} 100%) !important;
-    border: 4px solid transparent !important;       // recuo -> vira pill
-    border-radius: 999px !important;
-    background-clip: padding-box !important;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #f9d65f 0%, #{$ds-brand-hover} 100%) !important;
-    background-clip: padding-box !important;
+  // Chrome / Edge / Safari — pill dourado de verdade
+  @supports selector(::-webkit-scrollbar) {
+    .sidebar-menu,
+    .menu-items {
+      scrollbar-width: auto;        // reseta p/ não anular o webkit
+      scrollbar-color: auto;
+
+      &::-webkit-scrollbar {
+        width: 14px;
+        background: transparent;
+      }
+      // remove as setinhas das pontas (vinham tortas no Chrome)
+      &::-webkit-scrollbar-button {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+      &::-webkit-scrollbar-track { background: transparent; }
+      &::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #f7c948 0%, #{$ds-brand} 100%);
+        border: 4px solid transparent;            // recuo -> vira pill
+        border-radius: 999px;
+        background-clip: padding-box;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #f9d65f 0%, #{$ds-brand-hover} 100%);
+        background-clip: padding-box;
+      }
+    }
   }
 
   a, button { color: $sb-text; }
