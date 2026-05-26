@@ -108,3 +108,9 @@ body.sidebar-collapsed .ds-sidebar-toggle i {
 body .snbh-logo .layer-letters {
   filter: brightness(0) invert(1);
 }
+
+// EXCEÇÃO — criar-anúncio: o header dessa página é branco, então
+// as letras brancas sumiriam. Aqui elas precisam ser pretas.
+body.l-criar-anuncio .snbh-logo .layer-letters {
+  filter: brightness(0);
+}
