@@ -167,153 +167,158 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
                         <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
                         <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
                         <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
-                        <th><span title="Clique para ordenar por &quot;Clique em Ver Telfone&quot;">Ver Telefone</span></th>
+                        <th><span title="Clique para ordenar por &quot;L100&quot;">L100</span></th>
+                        <th><span title="Clique para ordenar por &quot;Leads&quot;">Leads</span></th>
                         <th class="no-sort"></th>
                         <th class="no-sort"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach ($veiculos as $key => $veiculo) : ?>
-                        <?php
-                        $isVeiculoAtivo = $veiculo['idStatus'] == 2;
-                        $tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
+				<tbody>
+					<?php foreach ($veiculos as $key => $veiculo) : ?>
+						<?php
+						$isVeiculoAtivo = $veiculo['idStatus'] == 2;
+						$tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
 
-                        $acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
-                        $impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
-                        $telefoneTotal = $veiculo['metricas']['telefone']['total'] ?? 0;
-                        ?>
-                        <tr>
-                            <td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
-                                <div class="<?= $isVeiculoAtivo ? 'text-success' : 'text-danger' ?>" title="<?= $isVeiculoAtivo ? 'Ativo' : 'Inativo' ?>">
-                                    <i class="fa fa-circle" aria-hidden="true"></i>
-                                </div>
-                            </td>
-                            <td class="status-veiculo">
-                                <img style="width: 80px;height: 60px;" src="<?= $veiculo['thumb'] ?>" loading="lazy">
-                            </td>
-                            <td class="data-placa"><?= StringFuncs::placaFormat($veiculo['placa'] ?? '') ?></td>
-                            <td class="data-marca-modelo">
-                                <?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
-                            </td>
-                            <td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
-                                <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
-                                <br>
-                                <?php
-                                if ($veiculo['precoInfo']['mediaValor']) {
-                                    $textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
-                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
+						$acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
+						$impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
 
-                                    if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
-                                        echo '<span title="Preço acima da média da Seminovos">';
-                                        echo $textMedia;
-                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                    } else {
-                                        echo '<span title="Preço abaixo da média da Seminovos">';
-                                        echo $textMedia;
-                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                    }
-                                    echo '</span>';
-                                } else {
-                                    echo '<span class="text-muted">Média indisponível</span>';
-                                }
-                                ?>
-                                <br>
-                                <?php if ($veiculo['precoInfo']['fipe']) :
-                                    $textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
-                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
-                                    if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
-                                        echo '<span title="Preço acima da tabela FIPE">';
-                                        echo $textFipe;
-                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                        //echo $arrowUp;
-                                    } else {
-                                        echo '<span title="Preço abaixo da tabela FIPE">';
-                                        echo $textFipe;
-                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                        //echo $arrowDown;
-                                    }
-                                    echo '</span>';
-                                else :
-                                    echo '<small class="text-muted">FIPE indisponível</small>';
-                                endif;
-                                ?>
-                            </td>
-                            <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
-                            <td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
-                                <?= $veiculo['nomePlano'] ?? '' ?>
-                            </td>
-                            <td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
-                                <?php
+						$l100       = $veiculo['metricas']['l100']  ?? null;
+						$leadsTotal = $veiculo['metricas']['leads'] ?? 0;
 
-                                $diff = $hoje->diff(new DateTime($veiculo['dataCadastro']));
+						// faixa de cor do L100 — AJUSTE os limites pela sua distribuição real
+						$l100Classe = $l100 === null ? 'text-muted'
+							: ($l100 >= 3 ? 'text-success'
+							: ($l100 >= 1 ? 'text-warning' : 'text-danger'));
+						?>
+						<tr>
+							<td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
+								<div class="<?= $isVeiculoAtivo ? 'text-success' : 'text-danger' ?>" title="<?= $isVeiculoAtivo ? 'Ativo' : 'Inativo' ?>">
+									<i class="fa fa-circle" aria-hidden="true"></i>
+								</div>
+							</td>
+							<td class="status-veiculo">
+								<img style="width: 80px;height: 60px;" src="<?= $veiculo['thumb'] ?>" loading="lazy">
+							</td>
+							<td class="data-placa"><?= StringFuncs::placaFormat($veiculo['placa'] ?? '') ?></td>
+							<td class="data-marca-modelo">
+								<?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
+							</td>
+							<td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
+								<?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
+								<br>
+								<?php
+								if ($veiculo['precoInfo']['mediaValor']) {
+									$textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
+									$percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
 
-                                $diffValues = [
-                                    'anos' => (int) $diff->format('%Y'),
-                                    'meses' => (int) $diff->format('%m'),
-                                    'dias' => (int) $diff->format('%d'),
-                                ];
-                                if ($diffValues['anos']) {
-                                    echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
-                                }
-                                if ($diffValues['meses']) {
-                                    echo $diffValues['meses'] . ($diffValues['meses'] > 1 ? ' meses' : ' mês') . ' e ';
-                                }
-                                if ($diffValues['dias']) {
-                                    echo $diffValues['dias'] . ($diffValues['dias'] > 1 ? ' dias' : ' dia');
-                                }
+									if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
+										echo '<span title="Preço acima da média da Seminovos">';
+										echo $textMedia;
+										echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
+									} else {
+										echo '<span title="Preço abaixo da média da Seminovos">';
+										echo $textMedia;
+										echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
+									}
+									echo '</span>';
+								} else {
+									echo '<span class="text-muted">Média indisponível</span>';
+								}
+								?>
+								<br>
+								<?php if ($veiculo['precoInfo']['fipe']) :
+									$textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
+									$percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
+									if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
+										echo '<span title="Preço acima da tabela FIPE">';
+										echo $textFipe;
+										echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
+									} else {
+										echo '<span title="Preço abaixo da tabela FIPE">';
+										echo $textFipe;
+										echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
+									}
+									echo '</span>';
+								else :
+									echo '<small class="text-muted">FIPE indisponível</small>';
+								endif;
+								?>
+							</td>
+							<td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
+							<td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
+								<?= $veiculo['nomePlano'] ?? '' ?>
+							</td>
+							<td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
+								<?php
 
-                                ?>
-                            </td>
+								$diff = $hoje->diff(new DateTime($veiculo['dataCadastro']));
 
-                            <td data-sort="<?= $acessoTotal ?>">
-                                <?php
+								$diffValues = [
+									'anos' => (int) $diff->format('%Y'),
+									'meses' => (int) $diff->format('%m'),
+									'dias' => (int) $diff->format('%d'),
+								];
+								if ($diffValues['anos']) {
+									echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
+								}
+								if ($diffValues['meses']) {
+									echo $diffValues['meses'] . ($diffValues['meses'] > 1 ? ' meses' : ' mês') . ' e ';
+								}
+								if ($diffValues['dias']) {
+									echo $diffValues['dias'] . ($diffValues['dias'] > 1 ? ' dias' : ' dia');
+								}
 
-                                echo StringFuncs::nF($acessoTotal);
+								?>
+							</td>
 
-                                if ($acessoTotal) {
-                                    echo '<br>';
-                                    echo StringFuncs::nF($acessoTotal / $tempoCadastro) . '/dia';
-                                }
-                                ?>
-                            </td>
-                            <td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
-                                <?php
-                                echo StringFuncs::nF($impressaoTotal);
-                                if ($impressaoTotal) {
-                                    echo '<br>';
-                                    echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
-                                }
-                                ?>
-                            </td>
-                            <td class="data-telefone-total" data-sort="<?= $telefoneTotal ?>">
-                                <?php
-                                echo StringFuncs::nF($telefoneTotal);
+							<td data-sort="<?= $acessoTotal ?>">
+								<?php
 
-                                ?>
-                            </td>
-                            <td class="d-none cliques">
-                                -
-                            </td>
-                            <td>
-                                <div class="icon-1-5x text-success">
-                                    <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
-                                        <i class="fa fa-eye" aria-hidden="true">
-                                        </i>
-                                    </a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icon-1-5x text-success">
-                                    <a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
-                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                                    </a>
+								echo StringFuncs::nF($acessoTotal);
 
-                                </div>
-                            </td>
+								if ($acessoTotal) {
+									echo '<br>';
+									echo StringFuncs::nF($acessoTotal / $tempoCadastro) . '/dia';
+								}
+								?>
+							</td>
+							<td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
+								<?php
+								echo StringFuncs::nF($impressaoTotal);
+								if ($impressaoTotal) {
+									echo '<br>';
+									echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
+								}
+								?>
+							</td>
+							<td class="data-l100" data-sort="<?= $l100 ?? -1 ?>">
+								<span class="<?= $l100Classe ?> font-weight-bold">
+									<?= $l100 === null ? '—' : number_format($l100, 1, ',', '.') ?>
+								</span>
+							</td>
+							<td class="data-leads-total" data-sort="<?= $leadsTotal ?>">
+								<?= StringFuncs::nF($leadsTotal) ?>
+							</td>
+							<td>
+								<div class="icon-1-5x text-success">
+									<a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
+										<i class="fa fa-eye" aria-hidden="true">
+										</i>
+									</a>
+								</div>
+							</td>
+							<td>
+								<div class="icon-1-5x text-success">
+									<a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
+										<i class="fa fa-pencil-square" aria-hidden="true"></i>
+									</a>
 
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+								</div>
+							</td>
+
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
             </table>
         </div>
     </div>
