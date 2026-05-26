@@ -1,0 +1,241 @@
+// =============================================================
+//  DESIGN SYSTEM · ESTATÍSTICAS (painel)
+//  resources/assets/sass/mvc/design-system/_estatisticas.scss
+//
+//  Cobre o que está na view principal: layout da página,
+//  área de filtros e a tabela "Meus Veículos".
+//  Os cards do topo e as abas dos gráficos vêm de partials
+//  (card.phtml / graficos/*.phtml) e serão tratados à parte.
+// =============================================================
+
+body .painel-revenda {
+
+  // ---- Layout / espaçamento ----------------------------------
+  .row + .row { margin-top: $ds-space-3; }
+
+  hr {
+    border: 0;
+    border-top: 1px solid $ds-border;
+    margin: $ds-space-5 0 $ds-space-4;
+  }
+
+  // ---- Cabeçalho da seção "Meus Veículos" --------------------
+  .step-meus-veiculos > .col-12 h3 {
+    font-family: $ds-font;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $ds-text;
+    margin: 0 0 $ds-space-3;
+  }
+
+  // ---- Área de filtros ---------------------------------------
+  label[for="filtar-meus-veiculos"] {
+    font-size: .8rem;
+    font-weight: 600;
+    color: $ds-text-soft;
+  }
+
+  .filtro-date {
+    align-items: flex-end;
+    gap: $ds-space-2;
+    margin-bottom: $ds-space-2;
+
+    .input-group-text {
+      background: $ds-muted;
+      border-color: $ds-border;
+      color: $ds-text-soft;
+      font-size: .85rem;
+    }
+    label { margin: 0; }
+  }
+
+  // ---- Tabela "Meus Veículos" --------------------------------
+  #table-meus-veiculos {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    overflow: hidden;
+    font-size: .85rem;
+    box-shadow: $ds-shadow-sm;
+
+    // cabeçalho navy
+    thead th {
+      background: #1d2b4c;
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      padding: 12px 10px;
+      border: 0 !important;          // mata o table-bordered
+      vertical-align: middle;
+      white-space: nowrap;
+
+      span { color: inherit; cursor: pointer; }
+    }
+
+    // células
+    tbody td {
+      padding: 10px;
+      vertical-align: middle;
+      border: 0 !important;          // mata o table-bordered
+      border-bottom: 1px solid $ds-border !important;
+      color: $ds-text;
+      line-height: 1.4;
+    }
+    tbody tr:last-child td { border-bottom: 0 !important; }
+
+    // zebra + hover suaves
+    &.table-striped tbody tr:nth-of-type(odd) td { background: #fafbfc; }
+    tbody tr:hover td { background: $ds-brand-soft; }
+
+    // miniatura do veículo
+    .status-veiculo img {
+      border-radius: $ds-radius-sm;
+      object-fit: cover;
+      display: block;
+    }
+
+    // bolinha de status (ativo/inativo)
+    .status-veiculo .fa-circle { font-size: .7rem; }
+
+    .data-placa { font-weight: 700; white-space: nowrap; }
+
+    .data-marca-modelo { min-width: 130px; }
+
+    // L100 — mantém as cores semânticas, só dá peso
+    .data-l100 span { font-size: .95rem; }
+
+    // ícones de ação (ver / editar) viram botõezinhos
+    .icon-1-5x {
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: $ds-radius-sm;
+        background: $ds-brand-soft;
+        color: $ds-brand;
+        transition: background-color $ds-transition, color $ds-transition;
+
+        &:hover { background: $ds-brand; color: #fff; }
+        i { font-size: .9rem; }
+      }
+    }
+  }
+
+  // botão "Exportar como planilha"
+  [data-table2excel] { margin-bottom: $ds-space-2; }
+
+  // ---- Cards do topo (PLANO / NITRO / TURBO / FLEX) ----------
+  .card {
+    height: 100%;
+    background: $ds-surface !important;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    box-shadow: $ds-shadow-sm;
+    overflow: hidden;
+
+    .card-header {
+      margin: 0;
+      padding: 9px 12px;
+      background: $ds-muted;
+      border-bottom: 1px solid $ds-border;
+      text-align: center;
+
+      b {
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        color: $ds-text-soft;
+      }
+    }
+
+    .card-body {
+      margin: 0;
+      padding: 14px 10px;
+
+      > .col-6 {
+        text-align: center;
+        padding: 0 6px;
+
+        br { display: none; }
+
+        .h4 {
+          margin: 0;
+
+          &:first-child {
+            font-size: .76rem;
+            font-weight: 600;
+            color: $ds-text-soft;
+            margin-bottom: 4px;
+          }
+          &:last-child {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: $ds-text;
+          }
+        }
+      }
+      > .col-6:first-child { border-right: 1px solid $ds-border; }
+    }
+  }
+
+  // ---- Abas dos gráficos -------------------------------------
+  .nav-tabs {
+    margin-bottom: 0;
+    border-bottom: 1px solid $ds-border;
+    gap: 4px;
+
+    .nav-item { margin: 0; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: $ds-text-soft;
+      cursor: pointer;
+      transition: color $ds-transition, border-color $ds-transition,
+                  background-color $ds-transition;
+
+      h5 {
+        margin: 0;
+        font-family: $ds-font;
+        font-size: .9rem;
+        font-weight: 600;
+        line-height: 1;
+        color: inherit;
+      }
+      i { font-size: .95rem; }
+
+      &:hover { color: $ds-text; background: $ds-muted; }
+
+      // aba ativa — o Bootstrap marca aria-expanded no trigger
+      &.active,
+      &[aria-expanded="true"] {
+        color: $ds-brand;
+        border-bottom-color: $ds-brand;
+        background: transparent;
+      }
+    }
+  }
+
+  // ---- Gráficos emoldurados em card --------------------------
+  .metricas-container,
+  .container-chart {
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    padding: $ds-space-3;
+    box-shadow: $ds-shadow-sm;
+  }
+}
