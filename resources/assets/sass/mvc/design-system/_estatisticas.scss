@@ -118,6 +118,7 @@ body .painel-revenda {
 
       &.active {
         color: $ds-brand;
+        background: $ds-surface;
         border-bottom-color: $ds-brand;
       }
     }
@@ -238,4 +239,53 @@ body .painel-revenda {
       i { font-size: .9rem; }
     }
   }
+}
+
+// ---- Filtro AJAX: overlay de carregamento + ordenação --------
+body .painel-revenda {
+
+  // necessário para posicionar o overlay
+  .ds-tabs-panel { position: relative; }
+
+  .painel-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+    background: rgba(255, 255, 255, .72);
+
+    &[hidden] { display: none; }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid $ds-border;
+      border-top-color: $ds-brand;
+      border-radius: 50%;
+      animation: ds-spin .7s linear infinite;
+    }
+  }
+
+  // cabeçalho ordenável — seta indicadora
+  .tableveiculos thead th.ds-sortable {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
+    &::after {
+      content: '\2195';
+      margin-left: 5px;
+      font-size: .8em;
+      opacity: .35;
+    }
+    &[data-sort-dir="asc"]::after  { content: '\2191'; opacity: 1; }
+    &[data-sort-dir="desc"]::after { content: '\2193'; opacity: 1; }
+  }
+}
+
+@keyframes ds-spin {
+  to { transform: rotate(360deg); }
 }

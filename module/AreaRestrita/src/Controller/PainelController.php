@@ -32,7 +32,6 @@ class PainelController extends AbstractActionController
 		$planosModel = $container->get(Planos::class);
 		/** @var array $dadosPlanos */
 		$dadosPlanos = $planosModel->get('revenda') ?? [];
-
 		$key = array_search($cadastro['idPlano'] ?? null, array_column($dadosPlanos ?: [], 'idPlanoRevenda'));
 		$valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
@@ -41,12 +40,11 @@ class PainelController extends AbstractActionController
 		$veiculos = $veiculosModel->getAll([
 			'idCadastro' => $idCadastro,
 		], 60 * 10);
-
 		$veiculos['data'] = $veiculos['data'] ?? [];
 		$totalVeiculos = $veiculos['total'] ?? count($veiculos['data']);
+
 		$idsVeiculos = [];
 		$totalVeiculosAtivos = 0;
-
 		foreach ($veiculos['data'] as $veiculo) {
 			if (in_array($veiculo['idStatus'] ?? null, [2, 8, 9], true)) {
 				$totalVeiculosAtivos++;
@@ -57,9 +55,15 @@ class PainelController extends AbstractActionController
 		/** @var ApiClient $apiClient */
 		$apiClient = $container->get(ApiClient::class);
 
-		$dateStart = $this->request->getQuery('date-start', 0);
-		$dateEnd = $this->request->getQuery('date-end', 0);
-		$filtradoPorData = (bool) ($dateStart || $dateEnd);
+		// Datas do filtro. Sem parâmetros na URL => padrão dos últimos 7 dias.
+		// $filtradoPorData continua valendo só quando o usuário filtrou de fato
+		// (mantém o comportamento de esconder veículos sem métrica no período).
+		$rawDateStart = $this->request->getQuery('date-start');
+		$rawDateEnd = $this->request->getQuery('date-end');
+		$filtradoPorData = (bool) ($rawDateStart || $rawDateEnd);
+
+		$dateStart = $rawDateStart ?: date('Y-m-d', strtotime('-7 days'));
+		$dateEnd = $rawDateEnd ?: date('Y-m-d');
 
 		// metricas por veiculo (agrupado por veiculo)
 		$metricas = [];
@@ -123,7 +127,6 @@ class PainelController extends AbstractActionController
 			$anoF = $v['anoFabricacao'] ?? 0;
 			$anoM = $v['anoModelo'] ?? 0;
 			$groupKey = "{$modelo}:{$anoF}:{$anoM}";
-
 			$groups[$groupKey]['indices'][] = $idx;
 			if (!isset($groups[$groupKey]['repId'])) {
 				$groups[$groupKey]['repId'] = $v['idVeiculo'] ?? 0;
@@ -137,7 +140,6 @@ class PainelController extends AbstractActionController
 		foreach ($groups as $groupKey => $meta) {
 			$cacheKey = "veiculos-preco-{$groupKey}";
 			$precoInfo = $this->cacheGet($localCache, $cacheKey);
-
 			if ($precoInfo === null) {
 				// tenta via model local primeiro
 				try {
@@ -150,7 +152,6 @@ class PainelController extends AbstractActionController
 					error_log('veiculosInfoModel->get error: ' . $e->getMessage());
 					$precoInfo = [];
 				}
-
 				// se estiver vazio, usa um idVeiculo representativo para buscar FIPE via API
 				$repId = (int) $meta['repId'];
 				if ($repId) {
@@ -165,10 +166,8 @@ class PainelController extends AbstractActionController
 				} else {
 					$precoInfo['fipe'] = [];
 				}
-
 				$this->cacheSet($localCache, $cacheKey, $precoInfo, $this->cacheTtlVeiculosInfo);
 			}
-
 			// aplica precoInfo para todos os indices do grupo
 			foreach ($meta['indices'] as $idx) {
 				$veiculos['data'][$idx]['precoInfo'] = $precoInfo;
@@ -178,12 +177,10 @@ class PainelController extends AbstractActionController
 		// 3) Anexa métricas e aplica filtro por data (mantendo comportamento anterior)
 		foreach ($veiculos['data'] as $k => $veiculo) {
 			$idVeiculo = $veiculo['idVeiculo'] ?? 0;
-
 			if ($filtradoPorData && empty($metricas[$idVeiculo])) {
 				unset($veiculos['data'][$k]);
 				continue;
 			}
-
 			if ($idVeiculo && isset($metricas[$idVeiculo])) {
 				$veiculos['data'][$k]['metricas'] ??= [];
 				foreach ($metricas[$idVeiculo] as $metricaName => $metricasRow) {
@@ -194,23 +191,31 @@ class PainelController extends AbstractActionController
 			}
 		}
 
-		return new ViewModel([
+		$viewModel = new ViewModel([
 			'totalVeiculos' => $totalVeiculos,
 			'totalVeiculosAtivos' => $totalVeiculosAtivos,
 			'veiculos' => $veiculos,
 			'valorPlanoRevenda' => $valorPlanoRevenda,
 			'metricasPorData' => $metricasPorData,
 			'maisAcessados' => $maisAcessados,
+			'dateStart' => $dateStart,
+			'dateEnd' => $dateEnd,
 		]);
+
+		// Requisição AJAX (filtro): devolve só o painel de abas, sem layout.
+		if ($this->request->isXmlHttpRequest()) {
+			$viewModel->setTemplate('area-restrita/painel/painel-abas');
+			$viewModel->setTerminal(true);
+		}
+
+		return $viewModel;
 	}
 
 	public function contadorPorMarcaAction(): JsonModel
 	{
 		$container = $this->getServiceContainer();
 		$apiClient = $container->get(ApiClient::class);
-
 		$contador = $apiClient->contadorGet(['marca' => true])->getData();
-
 		return new JsonModel([
 			'success' => 'SUCCESS',
 			'data' => $contador,
@@ -221,9 +226,7 @@ class PainelController extends AbstractActionController
 	{
 		$container = $this->getServiceContainer();
 		$apiClient = $container->get(ApiClient::class);
-
 		$contador = $apiClient->contadorGet(['modelo' => true])->getData();
-
 		return new JsonModel([
 			'success' => 'SUCCESS',
 			'data' => $contador,
@@ -234,9 +237,7 @@ class PainelController extends AbstractActionController
 	{
 		$container = $this->getServiceContainer();
 		$apiClient = $container->get(ApiClient::class);
-
 		$contador = $apiClient->contadorGet(['categoria' => true])->getData();
-
 		return new JsonModel([
 			'success' => 'SUCCESS',
 			'data' => $contador,
@@ -247,13 +248,12 @@ class PainelController extends AbstractActionController
 	{
 		$container = $this->getServiceContainer();
 		$idVeiculo = (int) $this->params('idVeiculo');
+
 		/** @var Veiculos $veiculoModel */
 		$veiculoModel = $container->get(Veiculos::class);
-
 		$veiculo = $veiculoModel->get($idVeiculo);
 
 		$apiClient = $container->get(ApiClient::class);
-
 		$dateStart = $this->request->getQuery('date-start', $veiculo['dataCadastro'] ?? 0);
 		$dateEnd = $this->request->getQuery('date-end', 0);
 
@@ -287,7 +287,6 @@ class PainelController extends AbstractActionController
 		$cliques = $metricas['acesso']['total'] ?? 0;
 		$impressoes = $metricas['impressao']['total'] ?? 0;
 		$contato = 0;
-
 		$frase = "";
 
 		$temp_acoes = [
@@ -372,14 +371,12 @@ class PainelController extends AbstractActionController
 	{
 		$container = $this->getServiceContainer();
 		$params = $this->params()->fromPost();
-
 		$apiClient = $container->get(ApiClient::class);
 		$data = $apiClient->versaoGet([
 			'idModelo' => $params['modeloCarro'],
 			'ano' => $params['ano'],
 			'idMarca' => $params['idMarca'],
 		])->getData();
-
 		return new JsonModel([
 			'success' => '200',
 			'data' => $data,
@@ -398,12 +395,10 @@ class PainelController extends AbstractActionController
 				return $app->getServiceManager();
 			}
 		}
-
 		// fallback para compatibilidade com versões antigas
 		if (method_exists($this, 'getServiceLocator')) {
 			return $this->getServiceLocator();
 		}
-
 		throw new \RuntimeException('ServiceManager not available in controller context');
 	}
 
@@ -423,7 +418,6 @@ class PainelController extends AbstractActionController
 			'FilesystemCache',
 			'RedisCache',
 		];
-
 		foreach ($candidates as $name) {
 			try {
 				if ($container->has($name)) {
@@ -433,7 +427,6 @@ class PainelController extends AbstractActionController
 				// ignora e tenta o próximo
 			}
 		}
-
 		// fallback: cache simples em memória
 		return new class {
 			private array $store = [];

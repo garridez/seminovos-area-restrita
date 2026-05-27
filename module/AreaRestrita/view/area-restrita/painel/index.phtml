@@ -1,11 +1,14 @@
 <?php
 
 use AreaRestrita\View\Helper\AutocompleteClass;
-use AreaRestrita\View\Helper\Data;
-use SnBH\Common\Helper\NumberFuncs;
 use SnBH\Common\Helper\StringFuncs;
 
 /** @var AutocompleteClass $this */
+/** @var array  $veiculos */
+/** @var array  $metricasPorData */
+/** @var array  $maisAcessados */
+/** @var string $dateStart */
+/** @var string $dateEnd */
 
 if ($this->userInfo('tipoCadastro') == 1) {
     $arrayPlanos = [
@@ -23,14 +26,6 @@ if ($this->userInfo('tipoCadastro') == 1) {
     ];
 }
 
-$hoje = new DateTime();
-$formatDate = new Data();
-$arrowUp = '<i class="fa fa-arrow-up text-warning"></i>';
-$arrowDown = '<i class="fa fa-arrow-down text-success"></i>';
-$veiculos = $this->veiculos['data'];
-
-usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
-
 ?>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -41,7 +36,7 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
     <?= file_get_contents(__DIR__ . '/../../layout/partials/graficos/highcharts-lang.js') ?>
 </script>
 <script src="https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js"></script>
-<div class="container-fluid painel-revenda mt-3">
+<div class="container-fluid painel-revenda">
     <div class="row step step-geral justify-content-between">
         <div class="col-12">
             <h3 class="ds-page-title">Estatísticas</h3>
@@ -98,317 +93,182 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
         ?>
     </div>
 
-    <div class="ds-tabs-panel">
-        <ul class="nav nav-tabs" id="painel-tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="tab-veiculos-btn" href="#tab-veiculos" role="tab" aria-controls="tab-veiculos" aria-selected="true">
-                    <i class="fa fa-car" aria-hidden="true"></i> Meus Veículos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab-buscados-btn" href="#tab-buscados" role="tab" aria-controls="tab-buscados" aria-selected="false">
-                    <i class="fa fa-magnifying-glass" aria-hidden="true"></i> Mais Buscados
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab-clique-btn" href="#tab-clique" role="tab" aria-controls="tab-clique" aria-selected="false">
-                    <i class="fa fa-arrow-pointer" aria-hidden="true"></i> Clique
-                </a>
-            </li>
-			<li class="nav-item">
-				<a class="nav-link" id="tab-leads-btn" href="#tab-leads" role="tab" aria-controls="tab-leads" aria-selected="false">
-					<i class="fa fa-user-plus" aria-hidden="true"></i> Leads
-				</a>
-			</li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab-impressao-btn" href="#tab-impressao" role="tab" aria-controls="tab-impressao" aria-selected="false">
-                    <i class="fa fa-eye" aria-hidden="true"></i> Impressão
-                </a>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-
-            <!-- ===== Meus Veículos ===== -->
-            <div class="tab-pane fade show active" id="tab-veiculos" role="tabpanel" aria-labelledby="tab-veiculos-btn">
-                <div class="painel-toolbar">
-                    <div class="form-group">
-                        <label for="filtar-meus-veiculos">Filtrar:</label>
-                        <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa, veículo ou plano">
-                    </div>
-                    <form method="get" class="form-inline filtro-date">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">De:</span>
-                            </div>
-                            <label>
-                                <input type="date" name="date-start" class="form-control" value="<?= $_GET['date-start'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
-                            </label>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Até:</span>
-                            </div>
-                            <label>
-                                <input type="date" name="date-end" class="form-control" value="<?= $_GET['date-end'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-laranja">Filtrar</button>
-                    </form>
-                    <button type="button" class="btn btn-sm btn-outline-info" data-table2excel="#table-meus-veiculos">Exportar como planilha</button>
-                </div>
-
-                <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th></th>
-                            <th class="no-sort"></th>
-                            <th><span title="Clique para ordenar por &quot;Placa&quot;">Placa</span></th>
-                            <th><span title="Clique para ordenar por &quot;Veículo&quot;">Veículo</span></th>
-                            <th><span title="Clique para ordenar por &quot;Preço&quot;">Preço</span></th>
-                            <th><span title="Clique para ordenar por &quot;Data cadastro&quot;">Data cadastro</span></th>
-                            <th><span title="Clique para ordenar por &quot;Plano&quot;">Plano</span></th>
-                            <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
-                            <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
-                            <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
-                            <th><span title="Clique para ordenar por &quot;L100&quot;">L100</span></th>
-                            <th><span title="Clique para ordenar por &quot;Leads&quot;">Leads</span></th>
-                            <th class="no-sort"></th>
-                            <th class="no-sort"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($veiculos as $key => $veiculo) : ?>
-                            <?php
-                            $isVeiculoAtivo = $veiculo['idStatus'] == 2;
-                            $tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
-
-                            $acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
-                            $impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
-
-                            $l100       = $veiculo['metricas']['l100']  ?? null;
-                            $leadsTotal = $veiculo['metricas']['leads'] ?? 0;
-
-                            // faixa de cor do L100 — AJUSTE os limites pela sua distribuição real
-                            $l100Classe = $l100 === null ? 'text-muted'
-                                : ($l100 >= 3 ? 'text-success'
-                                : ($l100 >= 1 ? 'text-warning' : 'text-danger'));
-                            ?>
-                            <tr>
-                                <td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
-                                    <div class="<?= $isVeiculoAtivo ? 'text-success' : 'text-danger' ?>" title="<?= $isVeiculoAtivo ? 'Ativo' : 'Inativo' ?>">
-                                        <i class="fa fa-circle" aria-hidden="true"></i>
-                                    </div>
-                                </td>
-                                <td class="status-veiculo">
-                                    <img style="width: 80px;height: 60px;" src="<?= $veiculo['thumb'] ?>" loading="lazy">
-                                </td>
-                                <td class="data-placa"><?= StringFuncs::placaFormat($veiculo['placa'] ?? '') ?></td>
-                                <td class="data-marca-modelo">
-                                    <?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
-                                </td>
-                                <td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
-                                    <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
-                                    <br>
-                                    <?php
-                                    if ($veiculo['precoInfo']['mediaValor']) {
-                                        $textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
-                                        $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
-
-                                        if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
-                                            echo '<span title="Preço acima da média da Seminovos">';
-                                            echo $textMedia;
-                                            echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                        } else {
-                                            echo '<span title="Preço abaixo da média da Seminovos">';
-                                            echo $textMedia;
-                                            echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                        }
-                                        echo '</span>';
-                                    } else {
-                                        echo '<span class="text-muted">Média indisponível</span>';
-                                    }
-                                    ?>
-                                    <br>
-                                    <?php if ($veiculo['precoInfo']['fipe']) :
-                                        $textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
-                                        $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
-                                        if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
-                                            echo '<span title="Preço acima da tabela FIPE">';
-                                            echo $textFipe;
-                                            echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                        } else {
-                                            echo '<span title="Preço abaixo da tabela FIPE">';
-                                            echo $textFipe;
-                                            echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                        }
-                                        echo '</span>';
-                                    else :
-                                        echo '<small class="text-muted">FIPE indisponível</small>';
-                                    endif;
-                                    ?>
-                                </td>
-                                <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
-                                <td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
-                                    <?= $veiculo['nomePlano'] ?? '' ?>
-                                </td>
-                                <td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
-                                    <?php
-
-                                    $diff = $hoje->diff(new DateTime($veiculo['dataCadastro']));
-
-                                    $diffValues = [
-                                        'anos' => (int) $diff->format('%Y'),
-                                        'meses' => (int) $diff->format('%m'),
-                                        'dias' => (int) $diff->format('%d'),
-                                    ];
-                                    if ($diffValues['anos']) {
-                                        echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
-                                    }
-                                    if ($diffValues['meses']) {
-                                        echo $diffValues['meses'] . ($diffValues['meses'] > 1 ? ' meses' : ' mês') . ' e ';
-                                    }
-                                    if ($diffValues['dias']) {
-                                        echo $diffValues['dias'] . ($diffValues['dias'] > 1 ? ' dias' : ' dia');
-                                    }
-
-                                    ?>
-                                </td>
-
-                                <td data-sort="<?= $acessoTotal ?>">
-                                    <?php
-
-                                    echo StringFuncs::nF($acessoTotal);
-
-                                    if ($acessoTotal) {
-                                        echo '<br>';
-                                        echo StringFuncs::nF($acessoTotal / $tempoCadastro) . '/dia';
-                                    }
-                                    ?>
-                                </td>
-                                <td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
-                                    <?php
-                                    echo StringFuncs::nF($impressaoTotal);
-                                    if ($impressaoTotal) {
-                                        echo '<br>';
-                                        echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
-                                    }
-                                    ?>
-                                </td>
-                                <td class="data-l100" data-sort="<?= $l100 ?? -1 ?>">
-                                    <span class="<?= $l100Classe ?> font-weight-bold">
-                                        <?= $l100 === null ? '—' : number_format($l100, 1, ',', '.') ?>
-                                    </span>
-                                </td>
-                                <td class="data-leads-total" data-sort="<?= $leadsTotal ?>">
-                                    <?= StringFuncs::nF($leadsTotal) ?>
-                                </td>
-                                <td>
-                                    <div class="icon-1-5x text-success">
-                                        <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
-                                            <i class="fa fa-eye" aria-hidden="true">
-                                            </i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="icon-1-5x text-success">
-                                        <a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
-                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                                        </a>
-
-                                    </div>
-                                </td>
-
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===== Mais Buscados ===== -->
-            <div class="tab-pane fade" id="tab-buscados" role="tabpanel" aria-labelledby="tab-buscados-btn">
-                <?= $this->partial(
-                    'partials/graficos/mais-acessados.phtml',
-                    [
-                        'maisAcessados' => $maisAcessados,
-                    ]
-                ) ?>
-            </div>
-
-            <!-- ===== Clique ===== -->
-            <div class="tab-pane fade" id="tab-clique" role="tabpanel" aria-labelledby="tab-clique-btn">
-                <?= $this->partial(
-                    'partials/graficos/metricas-totais.phtml',
-                    [
-                        'metricasPorData' => $metricasPorData,
-                        'metrica' => 'acesso',
-                    ]
-                ) ?>
-            </div>
-
-            <!-- ===== Telefone ===== -->
-			<div class="tab-pane fade" id="tab-leads" role="tabpanel" aria-labelledby="tab-leads-btn">
-				<?= $this->partial(
-					'partials/graficos/metricas-totais.phtml',
-					[
-						'metricasPorData' => $metricasPorData,
-						'metrica' => 'leads',
-					]
-				) ?>
-			</div>
-
-            <!-- ===== Impressão ===== -->
-            <div class="tab-pane fade" id="tab-impressao" role="tabpanel" aria-labelledby="tab-impressao-btn">
-                <?= $this->partial(
-                    'partials/graficos/metricas-totais.phtml',
-                    [
-                        'metricasPorData' => $metricasPorData,
-                        'metrica' => 'impressao',
-                    ]
-                ) ?>
-            </div>
-
-        </div>
-    </div>
+    <?= $this->partial('area-restrita/painel/painel-abas', [
+        'veiculos' => $veiculos,
+        'metricasPorData' => $metricasPorData,
+        'maisAcessados' => $maisAcessados,
+        'dateStart' => $dateStart,
+        'dateEnd' => $dateEnd,
+    ]) ?>
 </div>
 
 <script>
     (function () {
-        // Troca de abas — independente do plugin de tabs do Bootstrap.
-        var tabs = document.querySelectorAll('#painel-tabs .nav-link');
+        'use strict';
+
+        var panel = document.getElementById('painel-abas');
+        if (!panel) { return; }
+
+        var loading = panel.querySelector('.painel-loading');
+        var lastSort = { idx: null, dir: 1 };
+
+        function getTable() { return document.getElementById('table-meus-veiculos'); }
+        function getTbody() { var t = getTable(); return t ? t.querySelector('tbody') : null; }
 
         function reflowCharts() {
             if (window.Highcharts && Highcharts.charts) {
-                Highcharts.charts.forEach(function (c) {
-                    if (c) { c.reflow(); }
-                });
+                Highcharts.charts.forEach(function (c) { if (c) { c.reflow(); } });
             }
         }
 
-        function activate(link) {
-            var target = document.querySelector(link.getAttribute('href'));
-
-            tabs.forEach(function (t) {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            document.querySelectorAll('.ds-tabs-panel .tab-pane').forEach(function (p) {
-                p.classList.remove('show', 'active');
-            });
-
-            link.classList.add('active');
-            link.setAttribute('aria-selected', 'true');
-            if (target) {
-                target.classList.add('show', 'active');
-            }
-            // Highcharts dentro de aba oculta nasce com largura 0 — refluir ao exibir.
-            reflowCharts();
-        }
-
-        tabs.forEach(function (link) {
+        // ---- Abas ---------------------------------------------
+        var tabLinks = panel.querySelectorAll('#painel-tabs .nav-link');
+        tabLinks.forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-                activate(link);
+                var target = panel.querySelector(link.getAttribute('href'));
+                tabLinks.forEach(function (t) {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                panel.querySelectorAll('.tab-pane').forEach(function (p) {
+                    p.classList.remove('show', 'active');
+                });
+                link.classList.add('active');
+                link.setAttribute('aria-selected', 'true');
+                if (target) { target.classList.add('show', 'active'); }
+                reflowCharts();
             });
         });
+
+        // ---- Filtro de texto (instantâneo) --------------------
+        var filtroTexto = document.getElementById('filtar-meus-veiculos');
+        function aplicarFiltroTexto() {
+            var tbody = getTbody();
+            if (!filtroTexto || !tbody) { return; }
+            var termo = filtroTexto.value.trim().toLowerCase();
+            tbody.querySelectorAll('tr').forEach(function (tr) {
+                tr.style.display = tr.textContent.toLowerCase().indexOf(termo) !== -1 ? '' : 'none';
+            });
+        }
+        if (filtroTexto) {
+            filtroTexto.addEventListener('input', aplicarFiltroTexto);
+        }
+
+        // ---- Ordenação por coluna (usa data-sort) -------------
+        function ordenar(idx, dir) {
+            var tbody = getTbody();
+            if (!tbody) { return; }
+            var linhas = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+            linhas.sort(function (a, b) {
+                var ca = a.children[idx], cb = b.children[idx];
+                if (!ca || !cb) { return 0; }
+                var va = ca.hasAttribute('data-sort') ? ca.getAttribute('data-sort') : ca.textContent.trim();
+                var vb = cb.hasAttribute('data-sort') ? cb.getAttribute('data-sort') : cb.textContent.trim();
+                var na = parseFloat(va), nb = parseFloat(vb);
+                if (!isNaN(na) && !isNaN(nb) && va !== '' && vb !== '') {
+                    return (na - nb) * dir;
+                }
+                return va.localeCompare(vb, 'pt-BR') * dir;
+            });
+            linhas.forEach(function (tr) { tbody.appendChild(tr); });
+        }
+        (function ligarOrdenacao() {
+            var table = getTable();
+            if (!table) { return; }
+            var ths = table.querySelectorAll('thead th');
+            ths.forEach(function (th, idx) {
+                if (th.classList.contains('no-sort')) { return; }
+                th.classList.add('ds-sortable');
+                th.addEventListener('click', function () {
+                    var dir = (lastSort.idx === idx) ? -lastSort.dir : 1;
+                    lastSort = { idx: idx, dir: dir };
+                    ths.forEach(function (o) { o.removeAttribute('data-sort-dir'); });
+                    th.setAttribute('data-sort-dir', dir > 0 ? 'asc' : 'desc');
+                    ordenar(idx, dir);
+                });
+            });
+        })();
+
+        // ---- Exportar planilha --------------------------------
+        var btnExport = panel.querySelector('[data-table2excel]');
+        if (btnExport) {
+            btnExport.addEventListener('click', function () {
+                if (typeof Table2Excel === 'undefined') {
+                    console.warn('Table2Excel não carregado.');
+                    return;
+                }
+                var alvo = document.querySelector(btnExport.getAttribute('data-table2excel'));
+                if (alvo) { new Table2Excel().export(alvo, 'meus-veiculos.xlsx'); }
+            });
+        }
+
+        // ---- Filtro por data via AJAX -------------------------
+        function trocarPainel(paneId, novoPane) {
+            var pane = document.getElementById(paneId);
+            if (!pane || !novoPane) { return; }
+            // destrói o gráfico antigo desse painel
+            var divAntiga = pane.querySelector('.container-chart');
+            if (divAntiga && window.Highcharts && Highcharts.charts) {
+                Highcharts.charts.forEach(function (c) {
+                    if (c && c.renderTo === divAntiga) { c.destroy(); }
+                });
+            }
+            pane.innerHTML = novoPane.innerHTML;
+            // re-executa os <script> (innerHTML não dispara script sozinho)
+            pane.querySelectorAll('script').forEach(function (velho) {
+                var novo = document.createElement('script');
+                novo.textContent = velho.textContent;
+                velho.parentNode.replaceChild(novo, velho);
+            });
+        }
+
+        function filtrarAjax(url) {
+            if (loading) { loading.hidden = false; }
+            fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin'
+            })
+                .then(function (resp) {
+                    if (!resp.ok) { throw new Error('HTTP ' + resp.status); }
+                    return resp.text();
+                })
+                .then(function (html) {
+                    var doc = new DOMParser().parseFromString(html, 'text/html');
+
+                    // tabela — troca só o corpo (thead e ordenação seguem ligados)
+                    var novoTbody = doc.querySelector('#table-meus-veiculos tbody');
+                    var tbody = getTbody();
+                    if (novoTbody && tbody) { tbody.innerHTML = novoTbody.innerHTML; }
+
+                    // gráficos que dependem da data
+                    ['tab-clique', 'tab-telefone', 'tab-impressao'].forEach(function (id) {
+                        trocarPainel(id, doc.getElementById(id));
+                    });
+
+                    // reaplica filtro de texto e ordenação que estavam ativos
+                    aplicarFiltroTexto();
+                    if (lastSort.idx !== null) { ordenar(lastSort.idx, lastSort.dir); }
+                    reflowCharts();
+                })
+                .catch(function (err) {
+                    console.error('Falha ao filtrar:', err);
+                    alert('Não foi possível filtrar agora. Tente novamente.');
+                })
+                .then(function () {
+                    if (loading) { loading.hidden = true; }
+                });
+        }
+
+        var formData = panel.querySelector('.filtro-date');
+        if (formData) {
+            formData.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var params = new URLSearchParams(new FormData(formData)).toString();
+                var url = window.location.pathname + '?' + params;
+                history.replaceState(null, '', url);
+                filtrarAjax(url);
+            });
+        }
     })();
 </script>
