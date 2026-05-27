@@ -4,11 +4,9 @@ use AreaRestrita\View\Helper\AutocompleteClass;
 use SnBH\Common\Helper\StringFuncs;
 
 /** @var AutocompleteClass $this */
-/** @var array  $veiculos */
-/** @var array  $metricasPorData */
-/** @var array  $maisAcessados */
-/** @var string $dateStart */
-/** @var string $dateEnd */
+/** @var int    $totalVeiculos */
+/** @var int    $totalVeiculosAtivos */
+/** @var float  $valorPlanoRevenda */
 
 if ($this->userInfo('tipoCadastro') == 1) {
     $arrayPlanos = [
@@ -93,66 +91,66 @@ if ($this->userInfo('tipoCadastro') == 1) {
         ?>
     </div>
 
-    <?= $this->partial('area-restrita/painel/painel-abas', [
-        'veiculos' => $veiculos,
-        'metricasPorData' => $metricasPorData,
-        'maisAcessados' => $maisAcessados,
-        'dateStart' => $dateStart,
-        'dateEnd' => $dateEnd,
-    ]) ?>
+    <!-- O painel inteiro (tabela + gráficos) é carregado por AJAX. -->
+    <div id="painel-abas-container">
+        <div class="painel-skeleton">
+            <span class="spinner" aria-label="Carregando estatísticas"></span>
+        </div>
+    </div>
 </div>
 
 <script>
     (function () {
         'use strict';
 
-        var panel = document.getElementById('painel-abas');
-        if (!panel) { return; }
+        var container = document.getElementById('painel-abas-container');
+        if (!container) { return; }
 
-        var loading = panel.querySelector('.painel-loading');
+        var ajaxOpts = {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin'
+        };
         var lastSort = { idx: null, dir: 1 };
 
+        function urlPainel() {
+            return window.location.pathname + window.location.search;
+        }
         function getTable() { return document.getElementById('table-meus-veiculos'); }
-        function getTbody() { var t = getTable(); return t ? t.querySelector('tbody') : null; }
-
+        function getTbody() {
+            var t = getTable();
+            return t ? t.querySelector('tbody') : null;
+        }
         function reflowCharts() {
             if (window.Highcharts && Highcharts.charts) {
                 Highcharts.charts.forEach(function (c) { if (c) { c.reflow(); } });
             }
         }
-
-        // ---- Abas ---------------------------------------------
-        var tabLinks = panel.querySelectorAll('#painel-tabs .nav-link');
-        tabLinks.forEach(function (link) {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                var target = panel.querySelector(link.getAttribute('href'));
-                tabLinks.forEach(function (t) {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
-                panel.querySelectorAll('.tab-pane').forEach(function (p) {
-                    p.classList.remove('show', 'active');
-                });
-                link.classList.add('active');
-                link.setAttribute('aria-selected', 'true');
-                if (target) { target.classList.add('show', 'active'); }
-                reflowCharts();
+        // re-executa <script> (innerHTML não dispara script sozinho)
+        function execScripts(escopo) {
+            escopo.querySelectorAll('script').forEach(function (velho) {
+                var novo = document.createElement('script');
+                novo.textContent = velho.textContent;
+                velho.parentNode.replaceChild(novo, velho);
             });
-        });
+        }
+        function destruirGraficos(escopo) {
+            if (!window.Highcharts || !Highcharts.charts) { return; }
+            escopo.querySelectorAll('.container-chart').forEach(function (div) {
+                Highcharts.charts.forEach(function (c) {
+                    if (c && c.renderTo === div) { c.destroy(); }
+                });
+            });
+        }
 
         // ---- Filtro de texto (instantâneo) --------------------
-        var filtroTexto = document.getElementById('filtar-meus-veiculos');
         function aplicarFiltroTexto() {
+            var filtro = document.getElementById('filtar-meus-veiculos');
             var tbody = getTbody();
-            if (!filtroTexto || !tbody) { return; }
-            var termo = filtroTexto.value.trim().toLowerCase();
+            if (!filtro || !tbody) { return; }
+            var termo = filtro.value.trim().toLowerCase();
             tbody.querySelectorAll('tr').forEach(function (tr) {
                 tr.style.display = tr.textContent.toLowerCase().indexOf(termo) !== -1 ? '' : 'none';
             });
-        }
-        if (filtroTexto) {
-            filtroTexto.addEventListener('input', aplicarFiltroTexto);
         }
 
         // ---- Ordenação por coluna (usa data-sort) -------------
@@ -173,62 +171,116 @@ if ($this->userInfo('tipoCadastro') == 1) {
             });
             linhas.forEach(function (tr) { tbody.appendChild(tr); });
         }
-        (function ligarOrdenacao() {
-            var table = getTable();
-            if (!table) { return; }
-            var ths = table.querySelectorAll('thead th');
-            ths.forEach(function (th, idx) {
-                if (th.classList.contains('no-sort')) { return; }
-                th.classList.add('ds-sortable');
-                th.addEventListener('click', function () {
-                    var dir = (lastSort.idx === idx) ? -lastSort.dir : 1;
-                    lastSort = { idx: idx, dir: dir };
-                    ths.forEach(function (o) { o.removeAttribute('data-sort-dir'); });
-                    th.setAttribute('data-sort-dir', dir > 0 ? 'asc' : 'desc');
-                    ordenar(idx, dir);
+
+        // ---- Liga os comportamentos (1x por injeção completa) -
+        function ligarPainel() {
+            var painel = document.getElementById('painel-abas');
+            if (!painel) { return; }
+
+            // abas
+            var tabLinks = painel.querySelectorAll('#painel-tabs .nav-link');
+            tabLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var alvo = painel.querySelector(link.getAttribute('href'));
+                    tabLinks.forEach(function (t) {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    painel.querySelectorAll('.tab-pane').forEach(function (p) {
+                        p.classList.remove('show', 'active');
+                    });
+                    link.classList.add('active');
+                    link.setAttribute('aria-selected', 'true');
+                    if (alvo) { alvo.classList.add('show', 'active'); }
+                    reflowCharts();
                 });
             });
-        })();
 
-        // ---- Exportar planilha --------------------------------
-        var btnExport = panel.querySelector('[data-table2excel]');
-        if (btnExport) {
-            btnExport.addEventListener('click', function () {
-                if (typeof Table2Excel === 'undefined') {
-                    console.warn('Table2Excel não carregado.');
-                    return;
-                }
-                var alvo = document.querySelector(btnExport.getAttribute('data-table2excel'));
-                if (alvo) { new Table2Excel().export(alvo, 'meus-veiculos.xlsx'); }
-            });
+            // filtro de texto
+            var filtro = document.getElementById('filtar-meus-veiculos');
+            if (filtro) { filtro.addEventListener('input', aplicarFiltroTexto); }
+
+            // ordenação
+            var table = getTable();
+            if (table) {
+                var ths = table.querySelectorAll('thead th');
+                ths.forEach(function (th, idx) {
+                    if (th.classList.contains('no-sort')) { return; }
+                    th.classList.add('ds-sortable');
+                    th.addEventListener('click', function () {
+                        var dir = (lastSort.idx === idx) ? -lastSort.dir : 1;
+                        lastSort = { idx: idx, dir: dir };
+                        ths.forEach(function (o) { o.removeAttribute('data-sort-dir'); });
+                        th.setAttribute('data-sort-dir', dir > 0 ? 'asc' : 'desc');
+                        ordenar(idx, dir);
+                    });
+                });
+            }
+
+            // exportar planilha
+            var btnExport = painel.querySelector('[data-table2excel]');
+            if (btnExport) {
+                btnExport.addEventListener('click', function () {
+                    if (typeof Table2Excel === 'undefined') {
+                        console.warn('Table2Excel não carregado.');
+                        return;
+                    }
+                    var alvo = document.querySelector(btnExport.getAttribute('data-table2excel'));
+                    if (alvo) { new Table2Excel().export(alvo, 'meus-veiculos.xlsx'); }
+                });
+            }
+
+            // filtro por data (AJAX)
+            var formData = painel.querySelector('.filtro-date');
+            if (formData) {
+                formData.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var params = new URLSearchParams(new FormData(formData)).toString();
+                    var url = window.location.pathname + '?' + params;
+                    history.replaceState(null, '', url);
+                    filtrar(url);
+                });
+            }
         }
 
-        // ---- Filtro por data via AJAX -------------------------
+        // ---- Troca cirúrgica de um painel de gráfico ----------
         function trocarPainel(paneId, novoPane) {
             var pane = document.getElementById(paneId);
             if (!pane || !novoPane) { return; }
-            // destrói o gráfico antigo desse painel
-            var divAntiga = pane.querySelector('.container-chart');
-            if (divAntiga && window.Highcharts && Highcharts.charts) {
-                Highcharts.charts.forEach(function (c) {
-                    if (c && c.renderTo === divAntiga) { c.destroy(); }
-                });
-            }
+            destruirGraficos(pane);
             pane.innerHTML = novoPane.innerHTML;
-            // re-executa os <script> (innerHTML não dispara script sozinho)
-            pane.querySelectorAll('script').forEach(function (velho) {
-                var novo = document.createElement('script');
-                novo.textContent = velho.textContent;
-                velho.parentNode.replaceChild(novo, velho);
-            });
+            execScripts(pane);
         }
 
-        function filtrarAjax(url) {
+        // ---- Carga (inicial e retry): injeta o painel inteiro -
+        function carregarPainel(url) {
+            container.innerHTML =
+                '<div class="painel-skeleton"><span class="spinner" aria-label="Carregando"></span></div>';
+            fetch(url, ajaxOpts)
+                .then(function (resp) {
+                    if (!resp.ok) { throw new Error('HTTP ' + resp.status); }
+                    return resp.text();
+                })
+                .then(function (html) {
+                    container.innerHTML = html;
+                    execScripts(container);
+                    ligarPainel();
+                    reflowCharts();
+                })
+                .catch(function (err) {
+                    console.error('Falha ao carregar o painel:', err);
+                    mostrarErro(url);
+                });
+        }
+
+        // ---- Filtro: troca só tbody + gráficos de data --------
+        function filtrar(url) {
+            var painel = document.getElementById('painel-abas');
+            var loading = painel ? painel.querySelector('.painel-loading') : null;
             if (loading) { loading.hidden = false; }
-            fetch(url, {
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                credentials: 'same-origin'
-            })
+
+            fetch(url, ajaxOpts)
                 .then(function (resp) {
                     if (!resp.ok) { throw new Error('HTTP ' + resp.status); }
                     return resp.text();
@@ -236,17 +288,14 @@ if ($this->userInfo('tipoCadastro') == 1) {
                 .then(function (html) {
                     var doc = new DOMParser().parseFromString(html, 'text/html');
 
-                    // tabela — troca só o corpo (thead e ordenação seguem ligados)
                     var novoTbody = doc.querySelector('#table-meus-veiculos tbody');
                     var tbody = getTbody();
                     if (novoTbody && tbody) { tbody.innerHTML = novoTbody.innerHTML; }
 
-                    // gráficos que dependem da data
                     ['tab-clique', 'tab-telefone', 'tab-impressao'].forEach(function (id) {
                         trocarPainel(id, doc.getElementById(id));
                     });
 
-                    // reaplica filtro de texto e ordenação que estavam ativos
                     aplicarFiltroTexto();
                     if (lastSort.idx !== null) { ordenar(lastSort.idx, lastSort.dir); }
                     reflowCharts();
@@ -260,15 +309,21 @@ if ($this->userInfo('tipoCadastro') == 1) {
                 });
         }
 
-        var formData = panel.querySelector('.filtro-date');
-        if (formData) {
-            formData.addEventListener('submit', function (e) {
-                e.preventDefault();
-                var params = new URLSearchParams(new FormData(formData)).toString();
-                var url = window.location.pathname + '?' + params;
-                history.replaceState(null, '', url);
-                filtrarAjax(url);
-            });
+        // ---- Estado de erro com botão de retry ----------------
+        function mostrarErro(url) {
+            container.innerHTML =
+                '<div class="painel-skeleton">' +
+                '<p>Não foi possível carregar as estatísticas.<br>' +
+                'Isso costuma acontecer quando a consulta demora demais.</p>' +
+                '<button type="button" class="btn btn-laranja" id="painel-retry">Tentar novamente</button>' +
+                '</div>';
+            var btn = document.getElementById('painel-retry');
+            if (btn) {
+                btn.addEventListener('click', function () { carregarPainel(url); });
+            }
         }
+
+        // ---- Início -------------------------------------------
+        carregarPainel(urlPainel());
     })();
 </script>

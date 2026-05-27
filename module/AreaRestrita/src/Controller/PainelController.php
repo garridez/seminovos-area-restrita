@@ -43,14 +43,27 @@ class PainelController extends AbstractActionController
 		$veiculos['data'] = $veiculos['data'] ?? [];
 		$totalVeiculos = $veiculos['total'] ?? count($veiculos['data']);
 
-		$idsVeiculos = [];
 		$totalVeiculosAtivos = 0;
 		foreach ($veiculos['data'] as $veiculo) {
 			if (in_array($veiculo['idStatus'] ?? null, [2, 8, 9], true)) {
 				$totalVeiculosAtivos++;
 			}
-			$idsVeiculos[] = $veiculo['idVeiculo'] ?? 0;
 		}
+
+		// Carga inicial (navegação normal): devolve só a "casca" da página.
+		// Os cards são leves; o painel pesado (métricas) é buscado depois,
+		// por AJAX, pelo próprio index.phtml. Assim a navegação nunca trava.
+		if (!$this->request->isXmlHttpRequest()) {
+			return new ViewModel([
+				'totalVeiculos' => $totalVeiculos,
+				'totalVeiculosAtivos' => $totalVeiculosAtivos,
+				'valorPlanoRevenda' => $valorPlanoRevenda,
+			]);
+		}
+
+		// ===================================================================
+		//  A PARTIR DAQUI: somente requisições AJAX — monta o painel de abas.
+		// ===================================================================
 
 		/** @var ApiClient $apiClient */
 		$apiClient = $container->get(ApiClient::class);
@@ -192,21 +205,16 @@ class PainelController extends AbstractActionController
 		}
 
 		$viewModel = new ViewModel([
-			'totalVeiculos' => $totalVeiculos,
-			'totalVeiculosAtivos' => $totalVeiculosAtivos,
 			'veiculos' => $veiculos,
-			'valorPlanoRevenda' => $valorPlanoRevenda,
 			'metricasPorData' => $metricasPorData,
 			'maisAcessados' => $maisAcessados,
 			'dateStart' => $dateStart,
 			'dateEnd' => $dateEnd,
 		]);
 
-		// Requisição AJAX (filtro): devolve só o painel de abas, sem layout.
-		if ($this->request->isXmlHttpRequest()) {
-			$viewModel->setTemplate('area-restrita/painel/painel-abas');
-			$viewModel->setTerminal(true);
-		}
+		// devolve só o painel de abas, sem layout
+		$viewModel->setTemplate('area-restrita/painel/painel-abas');
+		$viewModel->setTerminal(true);
 
 		return $viewModel;
 	}
