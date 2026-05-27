@@ -129,44 +129,6 @@ usort($listaVeiculos, fn($a, $b) => ($a['prioridadePlano'] ?? 0) <=> ($b['priori
                             </td>
                             <td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
                                 <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
-                                <br>
-                                <?php
-                                if ($veiculo['precoInfo']['mediaValor']) {
-                                    $textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
-                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
-
-                                    if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
-                                        echo '<span title="Preço acima da média da Seminovos">';
-                                        echo $textMedia;
-                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                    } else {
-                                        echo '<span title="Preço abaixo da média da Seminovos">';
-                                        echo $textMedia;
-                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                    }
-                                    echo '</span>';
-                                } else {
-                                    echo '<span class="text-muted">Média indisponível</span>';
-                                }
-                                ?>
-                                <br>
-                                <?php if ($veiculo['precoInfo']['fipe']) :
-                                    $textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
-                                    $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
-                                    if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
-                                        echo '<span title="Preço acima da tabela FIPE">';
-                                        echo $textFipe;
-                                        echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-                                    } else {
-                                        echo '<span title="Preço abaixo da tabela FIPE">';
-                                        echo $textFipe;
-                                        echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-                                    }
-                                    echo '</span>';
-                                else :
-                                    echo '<small class="text-muted">FIPE indisponível</small>';
-                                endif;
-                                ?>
                             </td>
                             <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
                             <td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">

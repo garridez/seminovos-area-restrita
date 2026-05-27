@@ -30,16 +30,13 @@ class PainelController extends AbstractActionController
 
 		/** @var Planos $planosModel */
 		$planosModel = $container->get(Planos::class);
-		/** @var array $dadosPlanos */
 		$dadosPlanos = $planosModel->get('revenda') ?? [];
 		$key = array_search($cadastro['idPlano'] ?? null, array_column($dadosPlanos ?: [], 'idPlanoRevenda'));
 		$valorPlanoRevenda = $dadosPlanos[$key]['valor'] ?? 0;
 
 		/** @var Veiculos $veiculosModel */
 		$veiculosModel = $container->get(Veiculos::class);
-		$veiculos = $veiculosModel->getAll([
-			'idCadastro' => $idCadastro,
-		], 60 * 10);
+		$veiculos = $veiculosModel->getAll(['idCadastro' => $idCadastro], 60 * 10);
 		$veiculos['data'] = $veiculos['data'] ?? [];
 		$totalVeiculos = $veiculos['total'] ?? count($veiculos['data']);
 
@@ -50,9 +47,8 @@ class PainelController extends AbstractActionController
 			}
 		}
 
-		// Carga inicial (navegação normal): devolve só a "casca" da página.
-		// Os cards são leves; o painel pesado (métricas) é buscado depois,
-		// por AJAX, pelo próprio index.phtml. Assim a navegação nunca trava.
+		// Navegação normal: devolve só a casca da página (cards leves).
+		// O painel pesado é buscado depois por AJAX pelo próprio index.phtml.
 		if (!$this->request->isXmlHttpRequest()) {
 			return new ViewModel([
 				'totalVeiculos' => $totalVeiculos,
@@ -61,60 +57,50 @@ class PainelController extends AbstractActionController
 			]);
 		}
 
-		// ===================================================================
-		//  A PARTIR DAQUI: somente requisições AJAX — monta o painel de abas.
-		// ===================================================================
+		// ===== Daqui pra baixo: só requisições AJAX — monta o painel de abas =====
 
 		/** @var ApiClient $apiClient */
 		$apiClient = $container->get(ApiClient::class);
 
-		// Datas do filtro. Sem parâmetros na URL => padrão dos últimos 7 dias.
-		// $filtradoPorData continua valendo só quando o usuário filtrou de fato
-		// (mantém o comportamento de esconder veículos sem métrica no período).
+		// Sem filtro na URL => padrão últimos 7 dias. $filtradoPorData só vale
+		// quando o usuário filtrou de fato (esconde veículos sem métrica no período).
 		$rawDateStart = $this->request->getQuery('date-start');
 		$rawDateEnd = $this->request->getQuery('date-end');
 		$filtradoPorData = (bool) ($rawDateStart || $rawDateEnd);
 
 		$dateStart = $rawDateStart ?: date('Y-m-d', strtotime('-7 days'));
 		$dateEnd = $rawDateEnd ?: date('Y-m-d');
+		$datesParam = ['start' => $dateStart, 'end' => $dateEnd];
 
-		// metricas por veiculo (agrupado por veiculo)
+		// métricas por veículo — alimenta a tabela
 		$metricas = [];
 		try {
 			$metricas = $apiClient->veiculosMetricasGet([
 				'idCadastro' => $idCadastro,
 				'agruparPor' => 'veiculo',
 				'incluirHistorico' => true,
-				'dates' => [
-					'start' => $dateStart,
-					'end' => $dateEnd,
-				],
+				'dates' => $datesParam,
 				'dias' => 30,
 			], null, $this->cacheTtlMetricas)->getData() ?? [];
 		} catch (\Throwable $e) {
 			error_log('veiculosMetricasGet error: ' . $e->getMessage());
-			$metricas = [];
 		}
 
-		// metricas por data para gráficos
+		// métricas por data — alimenta os gráficos
 		$metricasPorData = [];
 		try {
 			$metricasPorData = $apiClient->veiculosMetricasGet([
 				'idCadastro' => $idCadastro,
 				'agruparPor' => 'data',
 				'incluirHistorico' => true,
-				'dates' => [
-					'start' => $dateStart,
-					'end' => $dateEnd,
-				],
+				'dates' => $datesParam,
 				'dias' => 30,
 			], null, $this->cacheTtlMetricas)->getData() ?? [];
 		} catch (\Throwable $e) {
 			error_log('veiculosMetricasGet(data) error: ' . $e->getMessage());
-			$metricasPorData = [];
 		}
 
-		/** @var array $maisAcessados */
+		// ranking de mais buscados
 		$maisAcessados = [];
 		try {
 			$maisAcessados = $apiClient->maisAcessadosGet([
@@ -122,86 +108,18 @@ class PainelController extends AbstractActionController
 			], null, 60 * 60)->getData() ?? [];
 		} catch (\Throwable $e) {
 			error_log('maisAcessadosGet error: ' . $e->getMessage());
-			$maisAcessados = [];
 		}
 
-		$apiClient->setStatusRangeCacheable(200, 404);
-
-		/** @var VeiculosInfo $veiculosInfoModel */
-		$veiculosInfoModel = $container->get(VeiculosInfo::class);
-
-		// robust cache resolver com fallback embutido
-		$localCache = $this->resolveLocalCache($container);
-
-		// 1) Agrupar por modelo+anoFabricacao+anoModelo para evitar chamadas N por veiculo
-		$groups = [];
-		foreach ($veiculos['data'] as $idx => $v) {
-			$modelo = $v['idModelo'] ?? 0;
-			$anoF = $v['anoFabricacao'] ?? 0;
-			$anoM = $v['anoModelo'] ?? 0;
-			$groupKey = "{$modelo}:{$anoF}:{$anoM}";
-			$groups[$groupKey]['indices'][] = $idx;
-			if (!isset($groups[$groupKey]['repId'])) {
-				$groups[$groupKey]['repId'] = $v['idVeiculo'] ?? 0;
-				$groups[$groupKey]['modelo'] = $modelo;
-				$groups[$groupKey]['anoFabricacao'] = $anoF;
-				$groups[$groupKey]['anoModelo'] = $anoM;
-			}
-		}
-
-		// 2) Resolver precoInfo por grupo (cache local)
-		foreach ($groups as $groupKey => $meta) {
-			$cacheKey = "veiculos-preco-{$groupKey}";
-			$precoInfo = $this->cacheGet($localCache, $cacheKey);
-			if ($precoInfo === null) {
-				// tenta via model local primeiro
-				try {
-					$precoInfo = $veiculosInfoModel->get(
-						$meta['modelo'],
-						$meta['anoFabricacao'],
-						$meta['anoModelo']
-					) ?? [];
-				} catch (\Throwable $e) {
-					error_log('veiculosInfoModel->get error: ' . $e->getMessage());
-					$precoInfo = [];
-				}
-				// se estiver vazio, usa um idVeiculo representativo para buscar FIPE via API
-				$repId = (int) $meta['repId'];
-				if ($repId) {
-					try {
-						/** @var ApiResponse $fipeData */
-						$fipeData = $apiClient->veiculosInfoGet([], $repId, 60 * 60 * 24);
-						$precoInfo['fipe'] = ($fipeData && $fipeData->status === 200) ? $fipeData->getData() : [];
-					} catch (\Throwable $e) {
-						error_log('veiculosInfoGet API error: ' . $e->getMessage());
-						$precoInfo['fipe'] = [];
-					}
-				} else {
-					$precoInfo['fipe'] = [];
-				}
-				$this->cacheSet($localCache, $cacheKey, $precoInfo, $this->cacheTtlVeiculosInfo);
-			}
-			// aplica precoInfo para todos os indices do grupo
-			foreach ($meta['indices'] as $idx) {
-				$veiculos['data'][$idx]['precoInfo'] = $precoInfo;
-			}
-		}
-
-		// 3) Anexa métricas e aplica filtro por data (mantendo comportamento anterior)
+		// anexa as métricas em cada veículo; com filtro, descarta os sem métrica no período
 		foreach ($veiculos['data'] as $k => $veiculo) {
 			$idVeiculo = $veiculo['idVeiculo'] ?? 0;
+
 			if ($filtradoPorData && empty($metricas[$idVeiculo])) {
 				unset($veiculos['data'][$k]);
 				continue;
 			}
-			if ($idVeiculo && isset($metricas[$idVeiculo])) {
-				$veiculos['data'][$k]['metricas'] ??= [];
-				foreach ($metricas[$idVeiculo] as $metricaName => $metricasRow) {
-					$veiculos['data'][$k]['metricas'][$metricaName] = $metricasRow;
-				}
-			} else {
-				$veiculos['data'][$k]['metricas'] = $veiculos['data'][$k]['metricas'] ?? [];
-			}
+
+			$veiculos['data'][$k]['metricas'] = $metricas[$idVeiculo] ?? [];
 		}
 
 		$viewModel = new ViewModel([
