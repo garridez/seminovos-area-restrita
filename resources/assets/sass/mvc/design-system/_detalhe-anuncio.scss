@@ -1,0 +1,170 @@
+// =============================================================
+//  DESIGN SYSTEM · DETALHE DO ANÚNCIO (painel/{idVeiculo})
+//  resources/assets/sass/mvc/design-system/_detalhe-anuncio.scss
+//
+//  Tela aberta pelo ícone de "olho" da tabela de estatísticas.
+//  Container: .painel-anuncio. Tudo CSS — não edita o .phtml.
+// =============================================================
+
+body .painel-anuncio {
+
+  // ---- Cartão principal do veículo ---------------------------
+  .step-titulo .veiculo {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: $ds-space-3 !important;
+    background: $ds-surface !important;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius-lg;
+    box-shadow: $ds-shadow-sm;
+  }
+
+  // imagem do veículo
+  .veiculo img.img-fluid {
+    border-radius: $ds-radius;
+    object-fit: cover;
+  }
+
+  // título e preço
+  .veiculo .text-cinza-escuro { color: $ds-text !important; }
+  .veiculo p.h4 {
+    font-family: $ds-font;
+    span { font-size: 1.05rem; font-weight: 700; }
+  }
+  .veiculo h4.h4 {                       // o preço
+    font-weight: 700;
+    color: $ds-brand !important;
+  }
+  .veiculo .border-bottom-c {            // divisória sob o título
+    border-bottom: 1px solid $ds-border !important;
+  }
+
+  // lista de informações (Visualizações, Placa, Cadastrado...)
+  .veiculo ul {
+    list-style: none;
+    margin: $ds-space-2 0 0;
+    padding: 0;
+
+    li {
+      padding: 6px 2px;
+      border-bottom: 1px solid $ds-border;
+      font-size: .85rem;
+      color: $ds-text-soft;
+
+      &:last-child { border-bottom: 0; }
+      span { color: $ds-text; font-weight: 600; }
+    }
+  }
+
+  // botões de ação (editar dados / fotos)
+  .btn-group {
+    gap: 6px;
+    margin-top: $ds-space-1;
+
+    .btn.icon-2 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: $ds-radius-sm !important;
+      background: $ds-brand;
+      border: 0;
+      color: #fff;
+      transition: background-color $ds-transition;
+
+      &:hover { background: $ds-brand-hover; color: #fff; }
+      i { font-size: 1rem; margin: 0; }
+    }
+  }
+  .btn-complete {
+    background: $ds-success;
+    border-color: $ds-success;
+    color: #fff;
+    border-radius: $ds-radius-sm;
+    font-weight: 600;
+
+    &:hover { background: #1a8a4a; color: #fff; }
+  }
+
+  // caixa "Valor a Combinar"
+  .bg-master-lightest {
+    background: $ds-muted !important;
+    border-radius: $ds-radius-sm;
+  }
+
+  // caixas de plano / status
+  .company-stat-box {
+    background: $ds-surface !important;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    padding: $ds-space-2 !important;
+
+    p { font-size: .8rem; color: $ds-text; margin: 0; }
+    .hint-text { color: $ds-text-soft; }
+  }
+
+  // ---- Filtro por data ---------------------------------------
+  .filtro-date {
+    align-items: center;
+    gap: $ds-space-2;
+
+    .input-group-text {
+      background: $ds-muted;
+      border-color: $ds-border;
+      color: $ds-text-soft;
+      font-size: .85rem;
+    }
+    label { margin: 0; }
+  }
+
+  // ---- Cards de métricas -------------------------------------
+  //  markup é <div class="col-* card"> com header+body soltos;
+  //  neutraliza o .card da coluna e monta o cartão no header+body
+  .step-resumo .card {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-bottom: $ds-space-3;
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 10px 12px;
+      background: $ds-muted;
+      border: 1px solid $ds-border;
+      border-bottom: 0;
+      border-radius: $ds-radius $ds-radius 0 0;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: $ds-text-soft;
+      text-align: center;
+    }
+    .card-body {
+      padding: 16px 12px;
+      background: $ds-surface;
+      border: 1px solid $ds-border;
+      border-top: 0;
+      border-radius: 0 0 $ds-radius $ds-radius;
+      box-shadow: $ds-shadow-sm;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: $ds-text;
+      text-align: center;
+    }
+  }
+
+  // ---- Gráfico -----------------------------------------------
+  #container-highcharts {
+    background: $ds-surface;
+    border: 1px solid $ds-border;
+    border-radius: $ds-radius;
+    padding: $ds-space-3;
+    box-shadow: $ds-shadow-sm;
+    margin-top: $ds-space-2;
+  }
+}

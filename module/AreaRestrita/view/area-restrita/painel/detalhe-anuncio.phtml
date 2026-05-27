@@ -267,10 +267,10 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
             <div class="card-body"><?= $this->metricas['acesso']['total'] ?></div>
         </div>
 
-        <div class="col-6 col-md-4 card">
-            <div class="card-header text-center">Cliques em ver telefone</div>
-            <div class="card-body"><?= $this->metricas['telefone']['total'] ?> </div>
-        </div>
+		<div class="col-6 col-md-4 card">
+			<div class="card-header text-center">Leads</div>
+			<div class="card-body"><?= (int) ($this->metricas['leads'] ?? 0) ?></div>
+		</div>
     </div>
 
     <div class="graficos">

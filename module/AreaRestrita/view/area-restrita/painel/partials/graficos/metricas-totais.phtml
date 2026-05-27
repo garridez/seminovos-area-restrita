@@ -3,104 +3,23 @@
 use AreaRestrita\View\Helper\AutocompleteClass;
 
 /** @var AutocompleteClass $this */
+/** @var array  $metricasPorData */
+/** @var string $metrica  'acesso' | 'telefone' | 'impressao' */
 
-echo '<div class="metricas-container de-bug mb-4"></div>';
-
-$veiculos = array_map(function ($veiculo) {
-    return [
-        'dataCadastro' => $veiculo['dataCadastro'],
-    ];
-}, $veiculos);
-
-usort($veiculos, fn ($a, $b) => $a['dataCadastro'] <=> $b['dataCadastro']);
-
-$firstDate = min(
-    array_key_first($metricasPorData['acesso'] ?? []),
-    array_key_first($metricasPorData['impressao'] ?? []),
-    array_key_first($metricasPorData['telefone'] ?? []),
-);
-$lastDate = max(
-    array_key_last($metricasPorData['acesso'] ?? []),
-    array_key_last($metricasPorData['impressao'] ?? []),
-    array_key_last($metricasPorData['telefone'] ?? []),
-);
-
-$serieVeiculosPorData = [
-    'name' => 'Veículos ativos',
-    'yAxis' => 0,
-    'dashStyle' => 'dash',
-    'custom' => [
-        'description' => 'Histórico de veículos ativos',
-    ],
-    'data' => [],
+$titulos = [
+    'acesso'    => 'Cliques em veículos',
+    'telefone'  => 'Cliques em ver telefone',
+    'impressao' => 'Veículos impressos no resultado de busca',
 ];
-
-$totalVeiculosPorData = 0;
+$titulo = $titulos[$metrica] ?? ucfirst((string) $metrica);
 
 $dateHelper = $this->dateHelper();
 
-foreach ($veiculos as $veiculo) {
-    $totalVeiculosPorData++;
-
-    if ($veiculo['dataCadastro'] < $firstDate) {
-        continue;
-    }
-
-    $x = $dateHelper->dateToJsTimestamp($veiculo['dataCadastro']);
-
-    $serieVeiculosPorData['data'][] = [
-        'x' => $x,
-        'y' => $totalVeiculosPorData,
-    ];
-}
-if (is_string($lastDate)) {
-    $serieVeiculosPorData['data'][] = [
-        'x' => $dateHelper->dateToJsTimestamp($lastDate),
-        'y' => $totalVeiculosPorData,
-    ];
-}
-
-$serieVeiculosPorData['data'] = array_values($serieVeiculosPorData['data']);
-usort($serieVeiculosPorData['data'], function ($a, $b) {
-    return $a['x'] <=> $b['x'];
-});
-
-$series = [
-    //'veiculosPorData' => $serieVeiculosPorData,
-];
-$seriesOptions = [
-    'acesso' => [
-        'name' => 'Clique',
-        'custom' => [
-            'description' => 'Cliques em veículos',
-        ],
-        'data' => [],
-    ],
-    'telefone' => [
-        'name' => 'Telefone',
-        'custom' => [
-            'description' => 'Cliques em ver telefone',
-        ],
-        'data' => [],
-    ],
-    'impressao' => [
-        'name' => 'Impressão',
-        'custom' => [
-            'description' => 'Veículos impressos',
-        ],
-        'data' => [],
-    ],
-];
-foreach ($seriesOptions as $metricaKey => $serieOptions) {
-    if (!isset($metricasPorData[$metricaKey])) {
-        continue;
-    }
-    $series[$metricaKey] ??= $serieOptions;
-
-    ksort($metricasPorData[$metricaKey]);
-
-    foreach ($metricasPorData[$metricaKey] as $date => $value) {
-        $series[$metricaKey]['data'][] = [
+$data = [];
+if (!empty($metricasPorData[$metrica])) {
+    ksort($metricasPorData[$metrica]);
+    foreach ($metricasPorData[$metrica] as $date => $value) {
+        $data[] = [
             'x' => $dateHelper->dateToJsTimestamp($date),
             'y' => $value,
         ];
@@ -108,8 +27,30 @@ foreach ($seriesOptions as $metricaKey => $serieOptions) {
 }
 
 ?>
+<div class="container-chart" id="chart-metrica-<?= $metrica ?>"></div>
 <script>
-    (function() {
-        window.metricasSerie = <?= json_encode($series); ?>;
+    (function () {
+        Highcharts.chart(document.getElementById('chart-metrica-<?= $metrica ?>'), {
+            chart: { type: 'area' },
+            title: { text: '<?= $titulo ?>' },
+            subtitle: { text: 'No último mês na seminovos.com.br' },
+            xAxis: { type: 'datetime' },
+            yAxis: { title: { text: 'Quantidade' }, allowDecimals: false },
+            legend: { enabled: false },
+            credits: { enabled: false },
+            tooltip: { crosshairs: true, shared: true },
+            plotOptions: {
+                area: {
+                    marker: { enabled: false },
+                    fillOpacity: 0.15,
+                },
+                series: { animation: false },
+            },
+            series: [{
+                name: '<?= $titulo ?>',
+                color: '#db9524',
+                data: <?= json_encode($data) ?>,
+            }],
+        });
     })();
 </script>

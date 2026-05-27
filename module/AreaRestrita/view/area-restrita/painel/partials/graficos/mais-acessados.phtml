@@ -3,15 +3,11 @@
 use AreaRestrita\View\Helper\AutocompleteClass;
 
 /** @var AutocompleteClass $this */
-
+/** @var array $maisAcessados */
 
 $dateHelper = $this->dateHelper();
 
-$renderChart = function (
-    $data,
-    $key,
-    $title
-) use ($dateHelper) {
+$renderChart = function ($data, $key, $title) use ($dateHelper) {
     $series = [];
 
     foreach ($data as $date => $rows) {
@@ -27,82 +23,36 @@ $renderChart = function (
             ];
         }
     }
-    foreach ($series as $kSerie => $serie){
-        usort($serie['data'], function($a, $b) {
+    foreach ($series as $kSerie => $serie) {
+        usort($serie['data'], function ($a, $b) {
             return $a['x'] <=> $b['x'];
         });
         $series[$kSerie]['data'] = $serie['data'];
     }
-?>
-    <div id="metricas-por-data-<?= $key ?>" class="collapse w-100" data-parent="#metricas-por-data-container">
-        <div class="container-chart"></div>
-    </div>
+    ?>
+    <div class="container-chart" id="chart-buscados-<?= $key ?>"></div>
     <script>
-        (function() {
-
+        (function () {
             var series = <?= json_encode(array_values($series)); ?>;
-            var selector = '#metricas-por-data-<?= $key ?> .container-chart';
-            Highcharts.chart(document.querySelector(selector), {
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: '<?= $title ?>'
-                },
-                subtitle: {
-                    text: 'No último mês na seminovos.com.br'
-                },
-
-                xAxis: {
-                    type: 'datetime',
-                },
-                yAxis: [{
-                    title: {
-                        text: 'Quantidade de buscas'
-                    },
-                }],
-                tooltip: {
-                    crosshairs: true,
-                    shared: true
-                },
+            Highcharts.chart(document.getElementById('chart-buscados-<?= $key ?>'), {
+                chart: { type: 'line' },
+                title: { text: '<?= $title ?>' },
+                subtitle: { text: 'No último mês na seminovos.com.br' },
+                xAxis: { type: 'datetime' },
+                yAxis: [{ title: { text: 'Quantidade de buscas' } }],
+                credits: { enabled: false },
+                tooltip: { crosshairs: true, shared: true },
                 plotOptions: {
-                    line: {
-
-                        marker: {
-                            enabled: false
-                        },
-                    },
-                    series: {
-                        animation: false,
-
-                    }
+                    line: { marker: { enabled: false } },
+                    series: { animation: false },
                 },
-                series: series
-
+                series: series,
             });
         })();
     </script>
-<?php
-};
-?>
-
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link" href="#metricas-por-data-marca" data-toggle="collapse">
-            <i class="fa fa-tags" aria-hidden="true"></i>
-            <h5>Marcas mais buscadas</h5>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#metricas-por-data-modelo" data-toggle="collapse">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            <h5>Modelos mais buscados</h5>
-        </a>
-    </li>
-</ul>
-<div id="metricas-por-data-container">
     <?php
-    $renderChart($maisAcessados['marca'], 'marca', 'Marcas mais buscadas');
-    $renderChart($maisAcessados['modelo'], 'modelo', 'Modelos mais buscados');
-    ?>
-</div>
+};
+
+// modelos em cima, marcas embaixo — sem sub-abas
+$renderChart($maisAcessados['modelo'], 'modelo', 'Modelos mais buscados');
+$renderChart($maisAcessados['marca'], 'marca', 'Marcas mais buscadas');

@@ -25,6 +25,7 @@
 @import "contrato";       // tela "Contrato de prestação de serviço"
 @import "central";        // tela "Central de Informações"
 @import "estatisticas";   // tela "Estatísticas" (painel)
+@import "detalhe-anuncio"; // tela "Detalhe do anúncio" (painel/{id})
 
 // page-header POR ÚLTIMO: padroniza os títulos de todas as telas
 @import "page-header";    // título de página — padrão único

@@ -38,7 +38,7 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
 <script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script><!---->
 <script>
-    <?= file_get_contents(__DIR__ . '/highcharts-lang.js') ?>
+    <?= file_get_contents(__DIR__ . '/../../layout/partials/graficos/highcharts-lang.js') ?>
 </script>
 <script src="https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js"></script>
 <div class="container-fluid painel-revenda">
@@ -98,229 +98,317 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
         ?>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <?= $this->partial(
-                'partials/graficos/metricas-totais.phtml',
-                [
-                    'veiculos' => $veiculos,
-                    'metricasPorData' => $metricasPorData,
-                ]
-            ) ?>
-        </div>
-    </div>
+    <div class="ds-tabs-panel">
+        <ul class="nav nav-tabs" id="painel-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab-veiculos-btn" href="#tab-veiculos" role="tab" aria-controls="tab-veiculos" aria-selected="true">
+                    <i class="fa fa-car" aria-hidden="true"></i> Meus Veículos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-buscados-btn" href="#tab-buscados" role="tab" aria-controls="tab-buscados" aria-selected="false">
+                    <i class="fa fa-magnifying-glass" aria-hidden="true"></i> Mais Buscados
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-clique-btn" href="#tab-clique" role="tab" aria-controls="tab-clique" aria-selected="false">
+                    <i class="fa fa-arrow-pointer" aria-hidden="true"></i> Clique
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-telefone-btn" href="#tab-telefone" role="tab" aria-controls="tab-telefone" aria-selected="false">
+                    <i class="fa fa-phone" aria-hidden="true"></i> Telefone
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-impressao-btn" href="#tab-impressao" role="tab" aria-controls="tab-impressao" aria-selected="false">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Impressão
+                </a>
+            </li>
+        </ul>
 
-    <div class="row">
-        <div class="col-12">
-            <?= $this->partial(
-                'partials/graficos/mais-acessados.phtml',
-                [
-                    'maisAcessados' => $maisAcessados,
-                ]
-            ) ?>
-        </div>
-    </div>
-    <hr>
-    <div class="row step step-meus-veiculos">
-        <div class="col-12 col-md-8">
-            <h3>Meus Veículos</h3>
-        </div>
-        <div class="col-12">
-            <div class="form-group col-md-4">
-                <label for="filtar-meus-veiculos">Filtrar:</label>
-                <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa, veículo ou plano">
-            </div>
-            <form method="get" class="form-inline filtro-date">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">De:</span>
+        <div class="tab-content">
+
+            <!-- ===== Meus Veículos ===== -->
+            <div class="tab-pane fade show active" id="tab-veiculos" role="tabpanel" aria-labelledby="tab-veiculos-btn">
+                <div class="painel-toolbar">
+                    <div class="form-group">
+                        <label for="filtar-meus-veiculos">Filtrar:</label>
+                        <input type="text" id="filtar-meus-veiculos" class="form-control" placeholder="Filtrar por placa, veículo ou plano">
                     </div>
-                    <label>
-                        <input type="date" name="date-start" class="form-control" value="<?= $_GET['date-start'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
-                    </label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Até:</span>
-                    </div>
-                    <label>
-                        <input type="date" name="date-end"   class="form-control" value="<?= $_GET['date-end'] ?? '' ?>" max="<?= date('Y-m-d') ?>" value="<?= date('Y-m-d') ?>" />
-                    </label>
+                    <form method="get" class="form-inline filtro-date">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">De:</span>
+                            </div>
+                            <label>
+                                <input type="date" name="date-start" class="form-control" value="<?= $_GET['date-start'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
+                            </label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Até:</span>
+                            </div>
+                            <label>
+                                <input type="date" name="date-end" class="form-control" value="<?= $_GET['date-end'] ?? '' ?>" max="<?= date('Y-m-d') ?>"/>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-laranja">Filtrar</button>
+                    </form>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-table2excel="#table-meus-veiculos">Exportar como planilha</button>
                 </div>
-                <label>
-                    <button type="submit" class="btn btn-laranja">Filtrar</button>
-                </label>
 
-            </form>
-            <div class="m-2">
-                <button type="button" class="btn btn-sm btn-outline-info" data-table2excel="#table-meus-veiculos">Exportar como planilha</button>
+                <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th></th>
+                            <th class="no-sort"></th>
+                            <th><span title="Clique para ordenar por &quot;Placa&quot;">Placa</span></th>
+                            <th><span title="Clique para ordenar por &quot;Veículo&quot;">Veículo</span></th>
+                            <th><span title="Clique para ordenar por &quot;Preço&quot;">Preço</span></th>
+                            <th><span title="Clique para ordenar por &quot;Data cadastro&quot;">Data cadastro</span></th>
+                            <th><span title="Clique para ordenar por &quot;Plano&quot;">Plano</span></th>
+                            <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
+                            <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
+                            <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
+                            <th><span title="Clique para ordenar por &quot;L100&quot;">L100</span></th>
+                            <th><span title="Clique para ordenar por &quot;Leads&quot;">Leads</span></th>
+                            <th class="no-sort"></th>
+                            <th class="no-sort"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($veiculos as $key => $veiculo) : ?>
+                            <?php
+                            $isVeiculoAtivo = $veiculo['idStatus'] == 2;
+                            $tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
+
+                            $acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
+                            $impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
+
+                            $l100       = $veiculo['metricas']['l100']  ?? null;
+                            $leadsTotal = $veiculo['metricas']['leads'] ?? 0;
+
+                            // faixa de cor do L100 — AJUSTE os limites pela sua distribuição real
+                            $l100Classe = $l100 === null ? 'text-muted'
+                                : ($l100 >= 3 ? 'text-success'
+                                : ($l100 >= 1 ? 'text-warning' : 'text-danger'));
+                            ?>
+                            <tr>
+                                <td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
+                                    <div class="<?= $isVeiculoAtivo ? 'text-success' : 'text-danger' ?>" title="<?= $isVeiculoAtivo ? 'Ativo' : 'Inativo' ?>">
+                                        <i class="fa fa-circle" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                                <td class="status-veiculo">
+                                    <img style="width: 80px;height: 60px;" src="<?= $veiculo['thumb'] ?>" loading="lazy">
+                                </td>
+                                <td class="data-placa"><?= StringFuncs::placaFormat($veiculo['placa'] ?? '') ?></td>
+                                <td class="data-marca-modelo">
+                                    <?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
+                                </td>
+                                <td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
+                                    <?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
+                                    <br>
+                                    <?php
+                                    if ($veiculo['precoInfo']['mediaValor']) {
+                                        $textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
+                                        $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
+
+                                        if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
+                                            echo '<span title="Preço acima da média da Seminovos">';
+                                            echo $textMedia;
+                                            echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
+                                        } else {
+                                            echo '<span title="Preço abaixo da média da Seminovos">';
+                                            echo $textMedia;
+                                            echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
+                                        }
+                                        echo '</span>';
+                                    } else {
+                                        echo '<span class="text-muted">Média indisponível</span>';
+                                    }
+                                    ?>
+                                    <br>
+                                    <?php if ($veiculo['precoInfo']['fipe']) :
+                                        $textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
+                                        $percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
+                                        if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
+                                            echo '<span title="Preço acima da tabela FIPE">';
+                                            echo $textFipe;
+                                            echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
+                                        } else {
+                                            echo '<span title="Preço abaixo da tabela FIPE">';
+                                            echo $textFipe;
+                                            echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
+                                        }
+                                        echo '</span>';
+                                    else :
+                                        echo '<small class="text-muted">FIPE indisponível</small>';
+                                    endif;
+                                    ?>
+                                </td>
+                                <td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
+                                <td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
+                                    <?= $veiculo['nomePlano'] ?? '' ?>
+                                </td>
+                                <td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
+                                    <?php
+
+                                    $diff = $hoje->diff(new DateTime($veiculo['dataCadastro']));
+
+                                    $diffValues = [
+                                        'anos' => (int) $diff->format('%Y'),
+                                        'meses' => (int) $diff->format('%m'),
+                                        'dias' => (int) $diff->format('%d'),
+                                    ];
+                                    if ($diffValues['anos']) {
+                                        echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
+                                    }
+                                    if ($diffValues['meses']) {
+                                        echo $diffValues['meses'] . ($diffValues['meses'] > 1 ? ' meses' : ' mês') . ' e ';
+                                    }
+                                    if ($diffValues['dias']) {
+                                        echo $diffValues['dias'] . ($diffValues['dias'] > 1 ? ' dias' : ' dia');
+                                    }
+
+                                    ?>
+                                </td>
+
+                                <td data-sort="<?= $acessoTotal ?>">
+                                    <?php
+
+                                    echo StringFuncs::nF($acessoTotal);
+
+                                    if ($acessoTotal) {
+                                        echo '<br>';
+                                        echo StringFuncs::nF($acessoTotal / $tempoCadastro) . '/dia';
+                                    }
+                                    ?>
+                                </td>
+                                <td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
+                                    <?php
+                                    echo StringFuncs::nF($impressaoTotal);
+                                    if ($impressaoTotal) {
+                                        echo '<br>';
+                                        echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
+                                    }
+                                    ?>
+                                </td>
+                                <td class="data-l100" data-sort="<?= $l100 ?? -1 ?>">
+                                    <span class="<?= $l100Classe ?> font-weight-bold">
+                                        <?= $l100 === null ? '—' : number_format($l100, 1, ',', '.') ?>
+                                    </span>
+                                </td>
+                                <td class="data-leads-total" data-sort="<?= $leadsTotal ?>">
+                                    <?= StringFuncs::nF($leadsTotal) ?>
+                                </td>
+                                <td>
+                                    <div class="icon-1-5x text-success">
+                                        <a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
+                                            <i class="fa fa-eye" aria-hidden="true">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icon-1-5x text-success">
+                                        <a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
+                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                        </a>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
 
-            <table id="table-meus-veiculos" class="table tableveiculos table-striped table-bordered table-sm sortable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th></th>
-                        <th class="no-sort"></th>
-                        <th><span title="Clique para ordenar por &quot;Placa&quot;">Placa</span></th>
-                        <th><span title="Clique para ordenar por &quot;Veículo&quot;">Veículo</span></th>
-                        <th><span title="Clique para ordenar por &quot;Preço&quot;">Preço</span></th>
-                        <th><span title="Clique para ordenar por &quot;Data cadastro&quot;">Data cadastro</span></th>
-                        <th><span title="Clique para ordenar por &quot;Plano&quot;">Plano</span></th>
-                        <th><span title="Clique para ordenar por &quot;Tempo cadastro&quot;">Tempo cadastro</span></th>
-                        <th><span title="Clique para ordenar por &quot;Cliques&quot;">Cliques</span></th>
-                        <th><span title="Clique para ordenar por &quot;Impressões&quot;">Impressões</span></th>
-                        <th><span title="Clique para ordenar por &quot;L100&quot;">L100</span></th>
-                        <th><span title="Clique para ordenar por &quot;Leads&quot;">Leads</span></th>
-                        <th class="no-sort"></th>
-                        <th class="no-sort"></th>
-                    </tr>
-                </thead>
-				<tbody>
-					<?php foreach ($veiculos as $key => $veiculo) : ?>
-						<?php
-						$isVeiculoAtivo = $veiculo['idStatus'] == 2;
-						$tempoCadastro = max(1, $formatDate->dias($veiculo['dataCadastro']));
+            <!-- ===== Mais Buscados ===== -->
+            <div class="tab-pane fade" id="tab-buscados" role="tabpanel" aria-labelledby="tab-buscados-btn">
+                <?= $this->partial(
+                    'partials/graficos/mais-acessados.phtml',
+                    [
+                        'maisAcessados' => $maisAcessados,
+                    ]
+                ) ?>
+            </div>
 
-						$acessoTotal = $veiculo['metricas']['acesso']['total'] ?? 0;
-						$impressaoTotal = $veiculo['metricas']['impressao']['total'] ?? 0;
+            <!-- ===== Clique ===== -->
+            <div class="tab-pane fade" id="tab-clique" role="tabpanel" aria-labelledby="tab-clique-btn">
+                <?= $this->partial(
+                    'partials/graficos/metricas-totais.phtml',
+                    [
+                        'metricasPorData' => $metricasPorData,
+                        'metrica' => 'acesso',
+                    ]
+                ) ?>
+            </div>
 
-						$l100       = $veiculo['metricas']['l100']  ?? null;
-						$leadsTotal = $veiculo['metricas']['leads'] ?? 0;
+            <!-- ===== Telefone ===== -->
+            <div class="tab-pane fade" id="tab-telefone" role="tabpanel" aria-labelledby="tab-telefone-btn">
+                <?= $this->partial(
+                    'partials/graficos/metricas-totais.phtml',
+                    [
+                        'metricasPorData' => $metricasPorData,
+                        'metrica' => 'telefone',
+                    ]
+                ) ?>
+            </div>
 
-						// faixa de cor do L100 — AJUSTE os limites pela sua distribuição real
-						$l100Classe = $l100 === null ? 'text-muted'
-							: ($l100 >= 3 ? 'text-success'
-							: ($l100 >= 1 ? 'text-warning' : 'text-danger'));
-						?>
-						<tr>
-							<td class="status-veiculo" data-status='<?= $veiculo['idStatus'] ?>'>
-								<div class="<?= $isVeiculoAtivo ? 'text-success' : 'text-danger' ?>" title="<?= $isVeiculoAtivo ? 'Ativo' : 'Inativo' ?>">
-									<i class="fa fa-circle" aria-hidden="true"></i>
-								</div>
-							</td>
-							<td class="status-veiculo">
-								<img style="width: 80px;height: 60px;" src="<?= $veiculo['thumb'] ?>" loading="lazy">
-							</td>
-							<td class="data-placa"><?= StringFuncs::placaFormat($veiculo['placa'] ?? '') ?></td>
-							<td class="data-marca-modelo">
-								<?= $veiculo['marca'] . ' <br>' . $veiculo['modelo'] . ' <br>' . $veiculo['anoFabricacao'] ?>/<?= $veiculo['anoModelo'] ?>
-							</td>
-							<td class="text-right text-nowrap" data-sort="<?= $veiculo['valor'] ?>">
-								<?php echo 'R$ ' . StringFuncs::nF((float) $veiculo['valor'], 2); ?>
-								<br>
-								<?php
-								if ($veiculo['precoInfo']['mediaValor']) {
-									$textMedia = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['mediaValor'], 2) . '</small>';
-									$percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['mediaValor']);
+            <!-- ===== Impressão ===== -->
+            <div class="tab-pane fade" id="tab-impressao" role="tabpanel" aria-labelledby="tab-impressao-btn">
+                <?= $this->partial(
+                    'partials/graficos/metricas-totais.phtml',
+                    [
+                        'metricasPorData' => $metricasPorData,
+                        'metrica' => 'impressao',
+                    ]
+                ) ?>
+            </div>
 
-									if ($veiculo['precoInfo']['mediaValor'] < $veiculo['valor']) {
-										echo '<span title="Preço acima da média da Seminovos">';
-										echo $textMedia;
-										echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-									} else {
-										echo '<span title="Preço abaixo da média da Seminovos">';
-										echo $textMedia;
-										echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-									}
-									echo '</span>';
-								} else {
-									echo '<span class="text-muted">Média indisponível</span>';
-								}
-								?>
-								<br>
-								<?php if ($veiculo['precoInfo']['fipe']) :
-									$textFipe = '<small>R$ ' . StringFuncs::nF($veiculo['precoInfo']['fipe']['valor'], 2) . '</small>';
-									$percentual = NumberFuncs::calcDiffPercent($veiculo['valor'], $veiculo['precoInfo']['fipe']['valor']);
-									if ($veiculo['precoInfo']['fipe']['valor'] < $veiculo['valor']) {
-										echo '<span title="Preço acima da tabela FIPE">';
-										echo $textFipe;
-										echo '<small class="text-muted text-info"> (+' . $percentual . "%) $arrowUp</small>";
-									} else {
-										echo '<span title="Preço abaixo da tabela FIPE">';
-										echo $textFipe;
-										echo '<small class="text-muted text-success"> (' . $percentual . "%) $arrowDown</small>";
-									}
-									echo '</span>';
-								else :
-									echo '<small class="text-muted">FIPE indisponível</small>';
-								endif;
-								?>
-							</td>
-							<td class="data-cadastro" data-sort="<?= $veiculo['dataCadastro'] ?>"><?= $formatDate->converterDataBR($veiculo['dataCadastro']) ?></td>
-							<td class="data-plano" data-sort="<?= $veiculo['prioridadePlano'] ?? 0 ?>">
-								<?= $veiculo['nomePlano'] ?? '' ?>
-							</td>
-							<td data-sort="<?= time() - strtotime($veiculo['dataCadastro']) ?>">
-								<?php
-
-								$diff = $hoje->diff(new DateTime($veiculo['dataCadastro']));
-
-								$diffValues = [
-									'anos' => (int) $diff->format('%Y'),
-									'meses' => (int) $diff->format('%m'),
-									'dias' => (int) $diff->format('%d'),
-								];
-								if ($diffValues['anos']) {
-									echo $diffValues['anos'] . ' ' . ($diffValues['anos'] > 1 ? ' anos' : ' ano') . ', ';
-								}
-								if ($diffValues['meses']) {
-									echo $diffValues['meses'] . ($diffValues['meses'] > 1 ? ' meses' : ' mês') . ' e ';
-								}
-								if ($diffValues['dias']) {
-									echo $diffValues['dias'] . ($diffValues['dias'] > 1 ? ' dias' : ' dia');
-								}
-
-								?>
-							</td>
-
-							<td data-sort="<?= $acessoTotal ?>">
-								<?php
-
-								echo StringFuncs::nF($acessoTotal);
-
-								if ($acessoTotal) {
-									echo '<br>';
-									echo StringFuncs::nF($acessoTotal / $tempoCadastro) . '/dia';
-								}
-								?>
-							</td>
-							<td class="data-impressao-total" data-sort="<?= $impressaoTotal ?>">
-								<?php
-								echo StringFuncs::nF($impressaoTotal);
-								if ($impressaoTotal) {
-									echo '<br>';
-									echo StringFuncs::nF($impressaoTotal / $tempoCadastro) . '/dia';
-								}
-								?>
-							</td>
-							<td class="data-l100" data-sort="<?= $l100 ?? -1 ?>">
-								<span class="<?= $l100Classe ?> font-weight-bold">
-									<?= $l100 === null ? '—' : number_format($l100, 1, ',', '.') ?>
-								</span>
-							</td>
-							<td class="data-leads-total" data-sort="<?= $leadsTotal ?>">
-								<?= StringFuncs::nF($leadsTotal) ?>
-							</td>
-							<td>
-								<div class="icon-1-5x text-success">
-									<a href="<?= 'painel/' . $veiculo['idVeiculo'] ?>">
-										<i class="fa fa-eye" aria-hidden="true">
-										</i>
-									</a>
-								</div>
-							</td>
-							<td>
-								<div class="icon-1-5x text-success">
-									<a href="<?= strtolower((string) $veiculo['tipo']) . '/' . $veiculo['idVeiculo'] ?>">
-										<i class="fa fa-pencil-square" aria-hidden="true"></i>
-									</a>
-
-								</div>
-							</td>
-
-						</tr>
-					<?php endforeach; ?>
-				</tbody>
-            </table>
         </div>
     </div>
 </div>
 
+<script>
+    (function () {
+        // Troca de abas — independente do plugin de tabs do Bootstrap.
+        var tabs = document.querySelectorAll('#painel-tabs .nav-link');
+
+        function reflowCharts() {
+            if (window.Highcharts && Highcharts.charts) {
+                Highcharts.charts.forEach(function (c) {
+                    if (c) { c.reflow(); }
+                });
+            }
+        }
+
+        function activate(link) {
+            var target = document.querySelector(link.getAttribute('href'));
+
+            tabs.forEach(function (t) {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.ds-tabs-panel .tab-pane').forEach(function (p) {
+                p.classList.remove('show', 'active');
+            });
+
+            link.classList.add('active');
+            link.setAttribute('aria-selected', 'true');
+            if (target) {
+                target.classList.add('show', 'active');
+            }
+            // Highcharts dentro de aba oculta nasce com largura 0 — refluir ao exibir.
+            reflowCharts();
+        }
+
+        tabs.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                activate(link);
+            });
+        });
+    })();
+</script>
