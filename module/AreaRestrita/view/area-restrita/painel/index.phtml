@@ -115,11 +115,11 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
                     <i class="fa fa-arrow-pointer" aria-hidden="true"></i> Clique
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="tab-telefone-btn" href="#tab-telefone" role="tab" aria-controls="tab-telefone" aria-selected="false">
-                    <i class="fa fa-phone" aria-hidden="true"></i> Telefone
-                </a>
-            </li>
+			<li class="nav-item">
+				<a class="nav-link" id="tab-leads-btn" href="#tab-leads" role="tab" aria-controls="tab-leads" aria-selected="false">
+					<i class="fa fa-user-plus" aria-hidden="true"></i> Leads
+				</a>
+			</li>
             <li class="nav-item">
                 <a class="nav-link" id="tab-impressao-btn" href="#tab-impressao" role="tab" aria-controls="tab-impressao" aria-selected="false">
                     <i class="fa fa-eye" aria-hidden="true"></i> Impressão
@@ -346,15 +346,15 @@ usort($veiculos, fn($a, $b) => $a['prioridadePlano'] <=> $b['prioridadePlano']);
             </div>
 
             <!-- ===== Telefone ===== -->
-            <div class="tab-pane fade" id="tab-telefone" role="tabpanel" aria-labelledby="tab-telefone-btn">
-                <?= $this->partial(
-                    'partials/graficos/metricas-totais.phtml',
-                    [
-                        'metricasPorData' => $metricasPorData,
-                        'metrica' => 'telefone',
-                    ]
-                ) ?>
-            </div>
+			<div class="tab-pane fade" id="tab-leads" role="tabpanel" aria-labelledby="tab-leads-btn">
+				<?= $this->partial(
+					'partials/graficos/metricas-totais.phtml',
+					[
+						'metricasPorData' => $metricasPorData,
+						'metrica' => 'leads',
+					]
+				) ?>
+			</div>
 
             <!-- ===== Impressão ===== -->
             <div class="tab-pane fade" id="tab-impressao" role="tabpanel" aria-labelledby="tab-impressao-btn">
