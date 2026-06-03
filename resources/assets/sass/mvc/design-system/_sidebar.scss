@@ -254,6 +254,7 @@ body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
 
   body .page-sidebar {
     background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%) !important;
+	width: 290px !important;
 
     // legacy wrappers — deixa o navy do pai aparecer
     .sidebar-menu,
@@ -267,6 +268,11 @@ body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
     .scroll-content {
       background: transparent !important;
     }
+	
+	.menu-items{
+		padding: 0!important;
+		padding-top: 8px !important;
+	}
 
     // zona da logo no topo do drawer (.d-md-none só aparece no mobile)
     > .sidebar-header {
@@ -275,6 +281,8 @@ body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
       display: flex !important;
       align-items: center;
       justify-content: center;
+	  background-color: none!important;
+	  border-bottom: none!important;
 
       a {
         display: inline-flex;
