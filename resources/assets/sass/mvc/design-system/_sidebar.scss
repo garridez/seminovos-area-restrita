@@ -238,5 +238,62 @@ body .page-sidebar {
 // sem sentido — então some com eles enquanto o menu está
 // recolhido. Voltam ao expandir.
 body.sidebar-collapsed .page-sidebar .qtd-anuncios-menu {
-  display: none!important;
+  display: none;
+}
+
+// =============================================================
+//  MOBILE (<992px) — drawer aberto pelo hambúrguer
+// =============================================================
+// O tema legado pinta wrappers internos (.sidebar-menu, .scroll-*,
+// .sidebar-overlay-slide-*) com fundos próprios (preto/marrom) que
+// vazam por cima do navy. Aqui transparentizo esses wrappers e
+// reasserto o gradiente navy no drawer. Também ajusto a zona da
+// logo (que vinha colada no topo e enorme) e zero o offset do
+// .page-container para o drawer encostar no conteúdo.
+@media (max-width: 991.98px) {
+
+  body .page-sidebar {
+    background: linear-gradient(180deg, $sb-bg-top 0%, $sb-bg-bottom 100%) !important;
+
+    // legacy wrappers — deixa o navy do pai aparecer
+    .sidebar-menu,
+    .menu-items,
+    .scroll-element,
+    .scroll-bar,
+    .scrollable,
+    .sidebar-overlay-slide,
+    .sidebar-overlay-slide-top,
+    .sidebar-overlay-slide-bottom,
+    .scroll-content {
+      background: transparent !important;
+    }
+
+    // zona da logo no topo do drawer (.d-md-none só aparece no mobile)
+    > .sidebar-header {
+      padding: 22px 16px 18px !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    // logo do drawer — estava 180×66, reduzo p/ caber bonito
+    .snbh-logo {
+      height: 40px !important;
+      width: auto !important;
+    }
+  }
+
+  // o tema às vezes deixa um padding/margin-left no container que
+  // cria um vão entre o drawer e o conteúdo no mobile — zero
+  body .page-container {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
 }
