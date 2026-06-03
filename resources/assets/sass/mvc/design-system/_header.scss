@@ -114,3 +114,57 @@ body .snbh-logo .layer-letters {
 body.l-criar-anuncio .snbh-logo .layer-letters {
   filter: brightness(0);
 }
+
+// ---- Mobile (<992px) -----------------------------------------
+// O tema legado ("Pages") tem regras mobile com bastante
+// especificidade / !important que estavam vencendo as minhas
+// (header voltando branco, hambúrguer escondido, logo solta).
+// Aqui re-asserto o estilo navy especificamente pra mobile.
+@media (max-width: 991.98px) {
+  body .header {
+    background: linear-gradient(120deg, #1d2c50 0%, #243a66 100%) !important;
+    border: 0 !important;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .16) !important;
+    color: #fff !important;
+    padding: 0 4px;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    // hambúrguer sempre visível no mobile
+    .toggle-sidebar {
+      display: flex !important;
+      align-items: center;
+      padding: 0 12px;
+      color: #fff !important;
+
+      i { color: #fff !important; }
+      .thumbnail-wrapper,
+      .icon-thumbnail {
+        background: rgba(255, 255, 255, .12) !important;
+        color: #fff !important;
+      }
+    }
+
+    // zona da logo: sem o width fixo de desktop, só ocupa espaço
+    .sidebar-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1 1 auto;
+      width: auto !important;
+      padding: 0 8px !important;
+      background: transparent !important;
+      border-right: 0 !important;
+
+      // a seta de recolher é só desktop
+      .ds-sidebar-toggle { display: none !important; }
+    }
+
+    .snbh-logo {
+      height: 36px !important;
+      width: auto;
+    }
+
+    .ml-auto { padding-right: 8px !important; }
+  }
+}
