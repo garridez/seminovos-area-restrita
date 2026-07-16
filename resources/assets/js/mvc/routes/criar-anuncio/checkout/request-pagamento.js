@@ -309,13 +309,15 @@ export default function (formData, ajaxParams) {
     }
 
     /**
-     * Session ID do GA4 (cookie _ga_MQD4MY64QS = GS1.1.<sessionId>...).
+     * Session ID do GA4 (cookie _ga_MQD4MY64QS). Aceita os dois formatos:
+     *   antigo: GS1.1.<sessionId>.<...>
+     *   novo:   GS2.1.s<sessionId>$o1$... (o `s?` cobre esse caso)
      *
      * @returns {String}
      */
     function getGaSessionId() {
         try {
-            var m = document.cookie.match(/_ga_MQD4MY64QS=GS\d\.\d\.(\d+)/);
+            var m = document.cookie.match(/_ga_MQD4MY64QS=GS\d\.\d\.s?(\d+)/);
             return m ? m[1] : '';
         } catch (e) {
             return '';
