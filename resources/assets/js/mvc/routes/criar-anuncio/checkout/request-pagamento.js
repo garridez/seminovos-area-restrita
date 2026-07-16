@@ -71,6 +71,12 @@ export default function (formData, ajaxParams) {
     data.push({ name: 'timezoneOffset', value: timezoneOffset });
     data.push({ name: 'userAgent', value: userAgent });
 
+    // Atribuição GA4/Google Ads: envia o _ga (client_id) e o session_id do GA4,
+    // pra venda ser atribuída à origem/campanha certa (o purchase é disparado
+    // server-side no webhook, quando pix/boleto/cartão confirmam).
+    data.push({ name: 'gaClientId', value: getGaClientId() });
+    data.push({ name: 'gaSessionId', value: getGaSessionId() });
+
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
     var dataRedirectPagamento = {
         urlAguardando: `/carro/novo/checkout/aguardando-pagamento?idVeiculo=${idVeiculo}`,
@@ -285,5 +291,34 @@ export default function (formData, ajaxParams) {
         const offsetHours = Math.abs(offset / 60);
         const sign = offset < 0 ? '+' : '-';
         return `UTC${sign}${offsetHours}`;
+    }
+
+    /**
+     * Client ID do GA4 (cookie _ga = GA1.1.<clientId>). Usado pra atribuir a
+     * venda à sessão/origem certa no GA4 -> Google Ads. Retorna '' se não houver.
+     *
+     * @returns {String}
+     */
+    function getGaClientId() {
+        try {
+            var m = document.cookie.match(/_ga=GA\d\.\d\.(\d+\.\d+)/);
+            return m ? m[1] : '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    /**
+     * Session ID do GA4 (cookie _ga_MQD4MY64QS = GS1.1.<sessionId>...).
+     *
+     * @returns {String}
+     */
+    function getGaSessionId() {
+        try {
+            var m = document.cookie.match(/_ga_MQD4MY64QS=GS\d\.\d\.(\d+)/);
+            return m ? m[1] : '';
+        } catch (e) {
+            return '';
+        }
     }
 }
