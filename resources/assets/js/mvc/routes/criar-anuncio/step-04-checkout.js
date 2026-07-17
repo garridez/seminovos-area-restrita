@@ -1,6 +1,7 @@
 import advancedAlerts from '../../../components/AdvancedAlerts';
 import Confirms from '../../../components/Confirms';
 import stopEvent from '../../../helpers/StopEvent';
+import dispararGA4Ecommerce from './checkout/ga4-ecommerce';
 
 export const seletor = '.c-criar-anuncio.a-index';
 export const prepend = true;
@@ -73,6 +74,12 @@ export const callback = ($) => {
 
             window.location = '#checkout';
             var planoAtual = $('#dados-basicos #idPlano').val();
+
+            // [GA4] início de compra (só quando não é o plano grátis)
+            if (planoAtual !== '1') {
+                dispararGA4Ecommerce('begin_checkout');
+            }
+
             // Se for grátis vai para a tela de selecionar um plano
             if (planoAtual === '1') {
                 stepContainer.stepPlugin('goTo', '.step-plano');

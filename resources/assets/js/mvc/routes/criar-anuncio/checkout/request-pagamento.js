@@ -4,6 +4,7 @@ import advancedAlerts from '../../../../components/AdvancedAlerts';
 import DataLayerGTMPopulate from '../../../../helpers/DataLayerGTMPopulate';
 import pagamentoEmAndamento from './pagamento-em-andamento';
 import requestAlerts from './request-alerts';
+import dispararGA4Ecommerce from './ga4-ecommerce';
 /**
  *
  * @param array formData Dados adicionais na requisição
@@ -233,6 +234,9 @@ export default function (formData, ajaxParams) {
             closeText: 'ESTOU CIENTE',
         })
         .on('hide.bs.modal', function () {
+            if (metodo) {
+                dispararGA4Ecommerce('add_payment_info', { payment_type: metodo });
+            }
             $.ajax(ajaxParamsMerged);
         });
 
