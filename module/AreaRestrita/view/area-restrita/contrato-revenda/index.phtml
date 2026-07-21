@@ -3,6 +3,77 @@
 $this->headTitle('Contrato');
 
 ?>
+
+<style>
+    /* ==========================================================================
+       Contrato de Revenda (área restrita) — estilos escopados
+       Prefixo .ppr para não vazar para o tema Pages/admin.
+       ========================================================================== */
+    .ppr { --ppr-accent: #ff6a00; --ppr-accent-soft: #fff3ea; --ppr-ink: #2b2f36; --ppr-muted: #5b6470; --ppr-line: #e7e9ee; color: var(--ppr-ink); }
+    .ppr-callout { display: flex; gap: .75rem; align-items: flex-start; background: var(--ppr-accent-soft); border: 1px solid #ffd9be; border-left: 4px solid var(--ppr-accent); border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 1.5rem; }
+    .ppr-callout .ppr-ico { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; color: var(--ppr-accent); }
+    .ppr-callout strong { display: block; text-transform: uppercase; font-size: .78rem; letter-spacing: .03em; color: var(--ppr-accent); }
+    .ppr-callout span { font-size: .88rem; color: var(--ppr-ink); }
+
+    .ppr-section { padding: 1.15rem 0 .25rem; border-top: 1px solid var(--ppr-line); }
+    .ppr-section:first-of-type { border-top: 0; padding-top: .25rem; }
+    .ppr-section > h3 { display: flex; align-items: center; gap: .6rem; font-size: 1.15rem; font-weight: 700; margin: 0 0 .8rem; color: var(--ppr-ink); }
+    .ppr-num { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; min-width: 1.9rem; height: 1.9rem; padding: 0 .5rem; border-radius: 8px; background: var(--ppr-accent); color: #fff; font-size: .9rem; font-weight: 700; }
+    .ppr-section p { color: var(--ppr-muted); line-height: 1.6; margin-bottom: .55rem; }
+    .ppr-section p:last-child { margin-bottom: 0; }
+    .ppr-section a { color: var(--ppr-accent); font-weight: 600; text-decoration: none; }
+    .ppr-section a:hover { text-decoration: underline; }
+
+    .ppr-list { list-style: none; padding: 0; margin: .25rem 0 0; }
+    .ppr-list li { position: relative; padding-left: 1.5rem; margin-bottom: .5rem; color: var(--ppr-muted); line-height: 1.55; }
+    .ppr-list li::before { content: ""; position: absolute; left: .1rem; top: .5rem; width: .5rem; height: .5rem; border-radius: 50%; background: var(--ppr-accent); }
+    .ppr-list li b { color: var(--ppr-ink); }
+
+    .ppr-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: .25rem 0; }
+    @media (max-width: 991px) { .ppr-plans { grid-template-columns: 1fr; } }
+    .ppr-plan { border: 1px solid var(--ppr-line); border-radius: 12px; padding: 1.05rem 1.1rem; background: #fff; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+    .ppr-plan:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(20,23,28,.08); border-color: #ffd9be; }
+    .ppr-plan-name { font-size: 1.05rem; font-weight: 700; margin: 0 0 .5rem; }
+    .ppr-plan-prio { display: inline-flex; align-items: center; gap: .45rem; font-size: .85rem; font-weight: 600; color: var(--ppr-muted); }
+    .ppr-bars { display: inline-flex; gap: 3px; align-items: flex-end; height: 16px; }
+    .ppr-bars i { width: 5px; background: var(--ppr-line); border-radius: 2px; }
+    .ppr-bars i:nth-child(1) { height: 7px; } .ppr-bars i:nth-child(2) { height: 11px; } .ppr-bars i:nth-child(3) { height: 16px; }
+    .ppr-plan[data-prio="1"] .ppr-bars i:nth-child(-n+1),
+    .ppr-plan[data-prio="2"] .ppr-bars i:nth-child(-n+2),
+    .ppr-plan[data-prio="3"] .ppr-bars i:nth-child(-n+3) { background: var(--ppr-accent); }
+
+    .ppr-discounts { display: flex; flex-wrap: wrap; gap: .75rem; margin: .35rem 0 .6rem; }
+    .ppr-disc { flex: 1 1 220px; display: flex; align-items: center; gap: .75rem; border: 1px dashed #ffcba6; background: var(--ppr-accent-soft); border-radius: 10px; padding: .7rem .9rem; }
+    .ppr-disc-tag { flex: 0 0 auto; font-size: 1.1rem; font-weight: 800; color: var(--ppr-accent); }
+    .ppr-disc-lbl { font-size: .9rem; color: var(--ppr-ink); }
+
+    .ppr-pay { display: flex; flex-wrap: wrap; gap: .5rem; margin: .35rem 0 .5rem; }
+    .ppr-chip { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem; font-weight: 600; padding: .38rem .8rem; border-radius: 999px; }
+    .ppr-chip.ok { background: #eafaf0; color: #16794c; border: 1px solid #bfe9d0; }
+    .ppr-chip.no { background: #fdeeee; color: #b23b3b; border: 1px solid #f3caca; text-decoration: line-through; }
+
+    .ppr-lgpd { display: flex; gap: .75rem; align-items: flex-start; background: #f2f7ff; border: 1px solid #d5e4fb; border-left: 4px solid #2f6fed; border-radius: 10px; padding: 1rem 1.15rem; }
+    .ppr-lgpd .ppr-ico { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; color: #2f6fed; }
+    .ppr-lgpd p { color: #3a4658; margin-bottom: .5rem; }
+
+    .ppr-note { background: #f7f8fa; border: 1px solid var(--ppr-line); border-radius: 10px; padding: .9rem 1.1rem; margin-top: .8rem; }
+    .ppr-note p { font-size: .85rem; margin: 0; color: var(--ppr-muted); }
+    .ppr-note strong { color: var(--ppr-ink); }
+
+    .ppr-resumo { margin-top: 1.4rem; border: 1px solid #ffd9be; border-radius: 14px; overflow: hidden; }
+    .ppr-resumo-head { display: flex; align-items: center; gap: .6rem; background: var(--ppr-accent); color: #fff; padding: .75rem 1.15rem; font-size: 1.05rem; font-weight: 700; }
+    .ppr-resumo-head .ppr-num { background: rgba(255,255,255,.25); }
+    .ppr-resumo-body { padding: 1rem 1.2rem; background: #fff; }
+    .ppr-resumo-body .ppr-list li { color: var(--ppr-ink); }
+
+    .ppr-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.4rem; }
+    .ppr-link { flex: 1 1 260px; display: flex; align-items: center; gap: .65rem; border: 1px solid var(--ppr-line); border-radius: 10px; padding: .8rem .95rem; text-decoration: none; color: var(--ppr-ink); transition: border-color .15s ease, box-shadow .15s ease; }
+    .ppr-link:hover { border-color: #ffd9be; box-shadow: 0 6px 16px rgba(20,23,28,.06); text-decoration: none; }
+    .ppr-link .ppr-ico { flex: 0 0 auto; width: 20px; height: 20px; color: var(--ppr-accent); }
+    .ppr-link b { display: block; font-size: .92rem; }
+    .ppr-link small { color: var(--ppr-muted); }
+</style>
+
 <div class=" container-fluid   container-fixed-lg mt-4">
     <div class="row">
         <div class="col-lg-2"></div>
@@ -22,183 +93,163 @@ $this->headTitle('Contrato');
                         COBRANÇA DO SISTEMA.
                     </div>
                 </div>
-                <div class="card-body">
-                    <h3><span class="semi-bold">1.</span> Objeto</h3>
-                    <p>É objeto do presente contrato a prestação do serviço de hospedagem de
-                        anúncios de veículos em
-                        nossa página da internet. <br>Esta hospedagem de anúncios inclui a
-                        divulgação de fotografias e
-                        todas as especificações dos veículos no site, juntamente com as
-                        informações pertinentes à
-                        revendedora, como o nome, endereço, telefones, e-mail, endereço
-                        eletrônico, logomarca e mapa
-                        do endereço da loja. </p>
-                    <br>
-                    <h3><span class="semi-bold">2.</span> Prazo</h3>
-                    <p>O contrato tem início no momento da assinatura e/ou pagamento, seguido da
-                        inserção dos anúncios
-                        e terá duração mínima de 30 dias. <br>
-                        O contrato poderá ser cancelado por parte do contratante a qualquer
-                        momento, desde que não exista
-                        nenhuma pendência financeira.
-                    </p>
-                    <br>
-                    <h3><span class="semi-bold">3.</span> Anúncios</h3>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div data-pages="card" class="card card-default" id="card-basic">
-                                <div class="card-body">
-                                    <h4><span class="semi-bold">Flex/Básico</span></h4>
-                                    <p>Anúncio com baixa
-                                        prioridade de exibição na busca.</p>
-                                </div>
+                <div class="card-body ppr">
+
+                    <div class="ppr-callout" role="note">
+                        <svg class="ppr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>
+                            <strong>Atenção</strong>
+                            Cliente, solicitamos que leia atentamente ao formato de cobrança do sistema.
+                        </span>
+                    </div>
+
+                    <!-- 1. Objeto -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">1</span> Objeto</h3>
+                        <p>É objeto do presente contrato a prestação do serviço de hospedagem de anúncios de veículos em nossa página da internet.</p>
+                        <p>Esta hospedagem de anúncios inclui a divulgação de fotografias e todas as especificações dos veículos no site, juntamente com as informações pertinentes à revendedora, como o nome, endereço, telefones, e-mail, endereço eletrônico, logomarca e mapa do endereço da loja.</p>
+                    </div>
+
+                    <!-- 2. Prazo -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">2</span> Prazo</h3>
+                        <p>O contrato tem início no momento da assinatura e/ou pagamento, seguido da inserção dos anúncios e terá duração mínima de 30 dias.</p>
+                        <p>O contrato poderá ser cancelado por parte do contratante a qualquer momento, desde que não exista nenhuma pendência financeira.</p>
+                    </div>
+
+                    <!-- 3. Anúncios (Planos) -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">3</span> Anúncios (Planos)</h3>
+                        <div class="ppr-plans">
+                            <div class="ppr-plan" data-prio="1">
+                                <p class="ppr-plan-name">Flex / Básico</p>
+                                <span class="ppr-plan-prio"><span class="ppr-bars"><i></i><i></i><i></i></span> Baixa prioridade na busca</span>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div data-pages="card" class="card card-default" id="card-basic">
-                                <div class="card-body">
-                                    <h4><span class="semi-bold">Turbo</span></h4>
-                                    <p>Anúncio com prioridade
-                                        média de exibição na busca.</p>
-                                </div>
+                            <div class="ppr-plan" data-prio="2">
+                                <p class="ppr-plan-name">Turbo</p>
+                                <span class="ppr-plan-prio"><span class="ppr-bars"><i></i><i></i><i></i></span> Prioridade média na busca</span>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div data-pages="card" class="card card-default" id="card-basic">
-                                <div class="card-body">
-                                    <h4><span class="semi-bold">Nitro</span></h4>
-                                    <p>Anúncio com prioridade
-                                        alta de exibição na busca.</p>
-                                </div>
+                            <div class="ppr-plan" data-prio="3">
+                                <p class="ppr-plan-name">Nitro</p>
+                                <span class="ppr-plan-prio"><span class="ppr-bars"><i></i><i></i><i></i></span> Prioridade alta na busca</span>
                             </div>
                         </div>
                     </div>
-                    <h3><span class="semi-bold">4.</span> Condições</h3>
-                    <p>Os planos de anúncio descritos acima podem sofrer alterações em sua composição
-                        ou preço sendo exibido as novas informações no site na opção planos e pacotes endereço eletrônico https://seminovos.com.br/planos-revenda <br>
-                        Em cada plano estará disponível o número correspondente de anúncios,
-                        podendo o Contratante
-                        solicitar a alteração em contato com o atendimento. <br>
-                        Dentro do período de validade do plano, o contratante poderá: alterar,
-                        incluir, excluir ou
-                        substituir qualquer de seus anúncios no site, obedecendo a disponibilidade
-                        de anúncios
-                        do plano contratado. <br>
-                        O Contratante que fizer parte de uma Revendedora de Veículos e estiver
-                        anunciando como particular,
-                        terá seu(s) anúncio(s) removido(s) deliberadamente (caso comprovada tal
-                        ação) sem o ressarcimento
-                        dos valores pagos. <br>
-                        O Contratante poderá divulgar as informações pertinentes aos seus
-                        anúncios, mas não poderá fazer
-                        nenhum tipo de sub-locação do espaço, bem como divulgar links ou websites
-                        de outra empresas. <br>
-                        O Contratante só poderá colocar o endereço eletrônico da sua loja se o
-                        site não tiver vínculos
-                        com qualquer outro site de revenda ou administrador de anúncios. <br>
-                        O Contratante não poderá incluir ou administrar veículos e anúncios de
-                        outro(s) revendedor(es). <br>
-                        É necessário inclusão das fotos do veículo não sendo permitido fotos ilustrativas
-                        ou anúncios de veículos que não estejam na loja em se tratando de veículos seminovos. <br>
-                        Em caso de cancelamento do plano contratado o contratante poderá solicitar em contato com atendimento
-                        e esse poderá ser cancelado a partir do vencimento do período pago.
-                    </p>
-                    <br>
-                    <h3><span class="semi-bold">5.</span> Tipos de veículos anúnciados</h3>
-                    <p>Trabalhamos apenas com divulgação específica de automóveis, motocicletas e
-                        caminhões desde que
-                        não estejam sinistrados. Infelizmente não publicamos no site veículos
-                        batidos, avariados ou
-                        sem condições de uso. <br>
-                        Não serão aceitos nenhum tipo de serviço anexo ao veículo publicado,
-                        tais como, carta de credito, financiamento, consorcio contemplado ou não,
-                        ou qualquer tipo de serviço que não seja especificamente a venda do veículo
-                        em questão. <br>
-                        Todo veículo publicado terá que obrigatoriamente informar os dados do veículo
-                        a venda como marca, modelo. Não serão aceitos no campo versão do anúncio,
-                        dados que não sejam relacionados a versão específica do veículo. <br>
-                        Não serão permitidos a publicação de imagens com textos, descrições do
-                        veiculo ou qualquer
-                        informação publicitaria. <br>
-                        Só serão permitidos veículos com valores reais do mesmo ou condição verdadeira de compra.
-                    </p>
-                    <br>
-                    <h3><span class="semi-bold">5.1.</span> Veículo de Leilão/Recuperado</h3>
-                    <p class="mb-0">É permitida a publicação no portal de anúncios de veículos com passagem por leilão ou recuperados mediante as seguintes regras:</p>
-                    <ul class="list-styled mb-0">
-                        <li><span>Todos os anúncios devem obrigatoriamente conter informações detalhadas sobre o ocorrido.</span></li>
-                        <li><span>É total responsabilidade do anunciante incluir/selecionar no campo especifico “veículo de leilão” no momento da confecção do anúncio, informação de passagem do veículo por leilão.</span></li>
-                        <li><span>O veículo deve obrigatoriamente estar em condições de uso de acordo com o Art.27 do CTB (código de trânsito brasileiro)</span></li>
-                        <li><span>O veículo em questão deve estar em nome do anunciante ou terceiro devidamente eleito através de procuração pública.</span></li>
-                    </ul>
-                    <p>Em caso de descumprimento de uma ou mais cláusulas acima, o anúncio será removido sem ressarcimento da importância paga.</p>
-                    <br>
-                    <h3><span class="semi-bold">6.</span> SEGURANÇA DAS INFORMAÇÕES</h3>
-                    <p>
-                        Segundo o Art. 18 da lei 13.709, conhecida como Lei Geral de Proteção de Dados Pessoais (LGPD)
-                        um dos direitos do titular de dados, seja no ambiente físico ou virtual,
-                        é a segurança de que suas informações não estão sendo compartilhadas ou
-                        usadas por qualquer meio e com qualquer finalidade sem a sua prévia autorização. <br>
-                        O titular passa a ter também maior controle sobre como os seus dados estão sendo utilizados e com que finalidade. <br>
-                        Ele poderá ainda, solicitar no website e no Portal que informou seus dados de identificação, a confirmação de tratamento de dados,
-                        a alteração, a remoção ou exclusão de dados, resguardando-se os casos previsto na Lei. <br>
-                        Pensando nisso, a Seminovos.com.br procura sempre se atualizar e se adaptar às exigências legais, buscando oferecer um serviço com maior segurança e qualidade para seus usuários. <br>
-                        Ao final deste documento, a nossa Equipe disponibiliza links da lei integral em questão e do Código de Defesa do Consumidor, para que você, usuário e internauta, possa também se informar sobre
-                        seus direitos e deveres enquanto titular de dados.
-                    </p>
-                    <br>
-                    <h3><span class="semi-bold">7.</span> Pagamentos</h3>
-                    <p>O cliente deve entrar em sua área, clicar em financeiro e
-                        gerar o boleto bancário ou efetuar o pagamento por cartão de crédito/debito
-                        ou pix QR Code, lembrando que o pagamento ocorre de forma antecipada.
-                        Plano trimestral tem 5% de desconto, plano semestral tem 10% de desconto
-                        e o plano anual tem 15% de desconto. <br>
-                        Seu contrato permanece ativo conforme plano contratado, sendo necessário
-                        efetuar um novo
-                        pagamento próximo a data de expiração do plano para que sua loja continue
-                        ativa em nosso
-                        sistema. Em caso de não pagamento haverá a suspensão do plano e
-                        consequentemente dos anúncios.
-                    </p>
-                    <br>
-                    <h3><span class="semi-bold"></span> Resumo</h3>
-                    <div class="">
-                        <ul class="">
-                            <li class="">O contrato tem início no momento do pagamento do plano escolhido,
-                                com duração mínima de
-                                1 a 12 meses de acordo com seu plano, sendo a vista ou parcelado, o
-                                mesmo será prorrogado
-                                automaticamente ao final do período mediante a um novo pagamento.
-                            </li>
-                            <li>O cliente não poderá diminuir o plano de anúncio durante o período
-                                contratado e pago.
-                            </li>
-                            <li>Planos de anuncio pagos só poderão ser diminuídos ao final do
-                                período contratado.
-                            </li>
-                            <li>Caso o cliente queira alterar o seu plano de anúncio para um
-                                superior será necessário
-                                contato conosco para maiores informações.
-                            </li>
-                            <li>Não é possível a devolução dos valores pagos mediante a suspensão ou
-                                cancelamento do
-                                contrato, independente do período pago.
-                            </li>
-                            <li>Os pagamentos poderão ser efetuados via crédito, débito, boleto
-                                ou pix através da área restrita do usuário ou solicitando através do nosso atendimento.
-                            </li>
-                            <li>Obrigatoriamente informar os dados do veiculo a venda como marca,
-                                modelo e versão.
-                                Não serão aceitos no campo versão do anúncio, dados que não sejam
-                                relacionados a
-                                versão específica do veiculo.
-                            </li>
-                            <li>Não serão permitidos a publicação de imagens com textos, descrições
-                                do veiculo ou
-                                qualquer informação publicitaria.
-                            </li>
+
+                    <!-- 4. Condições -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">4</span> Condições</h3>
+                        <ul class="ppr-list">
+                            <li>Os planos de anúncio descritos acima podem sofrer alterações em sua composição ou preço, sendo exibidas as novas informações no site na opção planos e pacotes no endereço eletrônico: <a href="https://seminovos.com.br/planos-revenda" target="_blank" rel="noopener">https://seminovos.com.br/planos-revenda</a>.</li>
+                            <li>A Seminovos reserva-se o direito prudencial de readequar, modificar ou alterar a estrutura dos planos de anúncios oferecidos, pautando-se em métricas de performance sistêmica, tais como a volumetria de leads gerados ou o nível de tráfego de acessos originados por meio de nossa plataforma.</li>
+                            <li>Em cada plano estará disponível o número correspondente de anúncios, podendo o Contratante solicitar a alteração em contato com o atendimento.</li>
+                            <li>Dentro do período de validade do plano, o contratante poderá: alterar, incluir, excluir ou substituir qualquer de seus anúncios no site, obedecendo a disponibilidade de anúncios do plano contratado.</li>
+                            <li>O Contratante que fizer parte de uma Revendedora de Veículos e estiver anunciando como particular, terá seu(s) anúncio(s) removido(s) deliberadamente (caso comprovada tal ação) sem o ressarcimento dos valores pagos.</li>
+                            <li>O Contratante poderá divulgar as informações pertinentes aos seus anúncios, mas não poderá fazer nenhum tipo de sub-locação do espaço, bem como divulgar links ou websites de outras empresas.</li>
+                            <li>O Contratante só poderá colocar o endereço eletrônico da sua loja se o site não tiver vínculos com qualquer outro site de revenda ou administrador de anúncios.</li>
+                            <li>O Contratante não poderá incluir ou administrar veículos e anúncios de outro(s) revendedor(es).</li>
+                            <li>É necessário a inclusão das fotos do veículo, não sendo permitido fotos ilustrativas ou anúncios de veículos que não estejam na loja em se tratando de veículos seminovos.</li>
+                            <li>Em caso de cancelamento do plano contratado, o contratante poderá solicitar em contato com o atendimento, e este poderá ser cancelado a partir do vencimento do período pago.</li>
                         </ul>
                     </div>
+
+                    <!-- 5. Tipos de Veículos Anunciados -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">5</span> Tipos de Veículos Anunciados</h3>
+                        <p>Trabalhamos apenas com divulgação específica de automóveis, motocicletas e caminhões desde que não estejam sinistrados. Infelizmente não publicamos no site veículos batidos, avariados ou sem condições de uso.</p>
+                        <p>Não serão aceitos nenhum tipo de serviço anexo ao veículo publicado, tais como: carta de crédito, financiamento, consórcio contemplado ou não, ou qualquer tipo de serviço que não seja especificamente a venda do veículo em questão.</p>
+                        <p>Todo veículo publicado terá que obrigatoriamente informar os dados do veículo à venda como marca e modelo. Não serão aceitos, no campo versão do anúncio, dados que não sejam relacionados à versão específica do veículo.</p>
+                        <p>Não serão permitidas a publicação de imagens com textos, descrições do veículo ou qualquer informação publicitária.</p>
+                        <p>Só serão permitidos veículos com valores reais do mesmo ou condição verdadeira de compra.</p>
+                    </div>
+
+                    <!-- 6. Veículo de Leilão/Recuperado -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">6</span> Veículo de Leilão/Recuperado</h3>
+                        <p>É permitida a publicação no portal de anúncios de veículos com passagem por leilão ou recuperados, mediante as seguintes regras:</p>
+                        <ul class="ppr-list">
+                            <li>Todos os anúncios devem obrigatoriamente conter informações detalhadas sobre o ocorrido.</li>
+                            <li>É de total responsabilidade do anunciante incluir/selecionar no campo específico &ldquo;veículo de leilão&rdquo;, no momento da confecção do anúncio, a informação de passagem do veículo por leilão.</li>
+                            <li>O veículo deve obrigatoriamente estar em condições de uso de acordo com o Art. 27 do CTB (Código de Trânsito Brasileiro).</li>
+                            <li>O veículo em questão deve estar em nome do anunciante ou terceiro devidamente eleito através de procuração pública.</li>
+                        </ul>
+                        <p>Em caso de descumprimento de uma ou mais cláusulas acima, o anúncio será removido sem ressarcimento da importância paga.</p>
+                    </div>
+
+                    <!-- 7. Segurança das Informações -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">7</span> Segurança das Informações</h3>
+                        <div class="ppr-lgpd">
+                            <svg class="ppr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <div>
+                                <p>Segundo o Art. 18 da Lei 13.709, conhecida como Lei Geral de Proteção de Dados Pessoais (LGPD), um dos direitos do titular de dados, seja no ambiente físico ou virtual, é a segurança de que suas informações não estão sendo compartilhadas ou usadas por qualquer meio e com qualquer finalidade sem a sua prévia autorização.</p>
+                                <p>O titular passa a ter também maior controle sobre como os seus dados estão sendo utilizados e com que finalidade.</p>
+                                <p>Ele poderá ainda solicitar, no website e no Portal que informou seus dados de identificação, a confirmação de tratamento de dados, a alteração, a remoção ou exclusão de dados, resguardando-se os casos previstos na Lei.</p>
+                                <p>Pensando nisso, a Seminovos.com.br procura sempre se atualizar e se adaptar às exigências legais, buscando oferecer um serviço com maior segurança e qualidade para seus usuários.</p>
+                                <p class="mb-0">Ao final deste documento, a nossa Equipe disponibiliza links da lei integral em questão e do Código de Defesa do Consumidor, para que você, usuário e internauta, possa também se informar sobre seus direitos e deveres enquanto titular de dados.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Pagamentos -->
+                    <div class="ppr-section">
+                        <h3><span class="ppr-num">8</span> Pagamentos</h3>
+                        <p>O cliente deve entrar em sua área, clicar em &ldquo;financeiro&rdquo; e gerar o boleto bancário ou efetuar o pagamento por cartão de crédito ou PIX QR Code, lembrando que o pagamento ocorre de forma antecipada. Informamos que não trabalhamos com cartão de débito, sendo aceitos apenas:</p>
+                        <div class="ppr-pay">
+                            <span class="ppr-chip ok">Boleto bancário</span>
+                            <span class="ppr-chip ok">Cartão de crédito</span>
+                            <span class="ppr-chip ok">PIX</span>
+                            <span class="ppr-chip no">Cartão de débito</span>
+                        </div>
+                        <p>Descontos vigentes para os pacotes:</p>
+                        <div class="ppr-discounts">
+                            <div class="ppr-disc"><span class="ppr-disc-tag">5% OFF</span><span class="ppr-disc-lbl">Plano <b>Semestral</b></span></div>
+                            <div class="ppr-disc"><span class="ppr-disc-tag">10% OFF</span><span class="ppr-disc-lbl">Plano <b>Anual</b></span></div>
+                        </div>
+                        <p>Seu contrato permanece ativo conforme plano contratado, sendo necessário efetuar um novo pagamento próximo à data de expiração do plano para que sua loja continue ativa em nosso sistema. Em caso de não pagamento, haverá a suspensão do plano e consequentemente dos anúncios.</p>
+                    </div>
+
+                    <!-- 9. Resumo das Regras Gerais -->
+                    <div class="ppr-resumo">
+                        <div class="ppr-resumo-head"><span class="ppr-num">9</span> Resumo das Regras Gerais</div>
+                        <div class="ppr-resumo-body">
+                            <ul class="ppr-list">
+                                <li>O contrato tem início no momento do pagamento do plano escolhido, com duração mínima de 1 a 12 meses de acordo com seu plano, sendo à vista ou parcelado. O mesmo será prorrogado automaticamente ao final do período mediante a um novo pagamento.</li>
+                                <li>O cliente não poderá diminuir o plano de anúncio durante o período contratado e pago.</li>
+                                <li>Planos de anúncio pagos só poderão ser diminuídos ao final do período contratado.</li>
+                                <li>Caso o cliente queira alterar o seu plano de anúncio para um superior, será necessário contato conosco para maiores informações.</li>
+                                <li>Não é possível a devolução dos valores pagos mediante a suspensão ou cancelamento do contrato, independente do período pago.</li>
+                                <li>Os pagamentos poderão ser efetuados via crédito, boleto ou PIX (não trabalhamos com débito) através da área restrita do usuário ou solicitando através do nosso atendimento.</li>
+                                <li>Obrigatoriamente informar os dados do veículo à venda como marca, modelo e versão. Não serão aceitos no campo versão do anúncio dados que não sejam relacionados à versão específica do veículo.</li>
+                                <li>Não será permitida a publicação de imagens com textos, descrições do veículo ou qualquer informação publicitária.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Links legais -->
+                    <div class="ppr-links">
+                        <a class="ppr-link" href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener">
+                            <svg class="ppr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            <span><b>Lei nº 13.709/2018 (LGPD)</b><small>Lei Geral de Proteção de Dados Pessoais</small></span>
+                        </a>
+                        <a class="ppr-link" href="https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm" target="_blank" rel="noopener">
+                            <svg class="ppr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            <span><b>Lei nº 8.078/1990 (CDC)</b><small>Código de Defesa do Consumidor</small></span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
