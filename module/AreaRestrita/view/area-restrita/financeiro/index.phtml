@@ -36,26 +36,28 @@
         <div class="tab-content tab-content-main">
             <div class="tab-pane px-md-4 p-0 active slide-left" id="tab-planos">
                 <div class="row">
-                    <div class="col-md-5 col-12 b-r b-dashed b-grey sm-b-b">
-                        <div class="">
-                            <h4 class="text-center font-weight-bolder">
-                                Pacote contratado
-                            </h4>   
-                        </div>
-                        <div class="m-t-30">
-                            <h4 class="text-center font-weight-normal">
-                                <?php echo $plano['nitro'] + $plano['turbo'] + $plano['simples']; ?> Espaços
-                            </h4>   
-                        </div>
-                        <div class="sm-m-t-5 m-t-30">
-                            <i class="fa fa-shopping-cart fa-2x hint-text"></i>
-                            <h5>Valor mensal do plano atual: R$ <?= $dadosFinanceiro['valor'] ?></h5>
-                            <p class="small hint-text">Escolha o tempo que deseja pagar.</p>
+                    <div class="col-md-4 col-12 b-r b-dashed b-grey sm-b-b">
+                        <div class="plano-atual-card">
+                            <div class="plano-atual-card__icone">
+                                <i class="fa fa-store" aria-hidden="true"></i>
+                            </div>
+                            <span class="plano-atual-card__rotulo">Pacote contratado</span>
+                            <h4 class="plano-atual-card__espacos">
+                                <?php echo $plano['nitro'] + $plano['turbo'] + $plano['simples']; ?> espaços
+                            </h4>
+                            <div class="plano-atual-card__valor">
+                                <small>Valor mensal do plano atual</small>
+                                <strong>R$ <?= $dadosFinanceiro['valor'] ?></strong>
+                            </div>
+                            <p class="plano-atual-card__dica">
+                                <i class="fa fa-hand-point-right" aria-hidden="true"></i>
+                                Escolha ao lado por quanto tempo deseja renovar — quanto maior o período, maior o desconto.
+                            </p>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12">
+                    <div class="col-md-8 col-12">
                         <form class="form-planos">
-                            <table class="table-condensed w-100">
+                            <table class="table-condensed w-100 planos-lista">
                                 <?php
                             $planos = [
                                 [
@@ -95,9 +97,11 @@
                             ];
 
                             foreach ($planos as $i => $plano):
+                                $temDesconto = $plano['desconto'] > 0;
+                                $ehAnual = $plano['nome'] === 'Plano Anual';
                                 ?>
-                                <tr class="border-bottom">
-                                    <td class="pl-0">
+                                <tr class="planos-lista__item">
+                                    <td class="planos-lista__radio pl-0">
                                         <div class="radio radio-success">
                                             <input type="radio" name="tempo_contrato" id="tempo_contrato<?= $i ?>"
                                                 value="<?= $plano['value_checkbox'] ?>"
@@ -107,48 +111,46 @@
                                                 <span id="plano"><?= $plano['nome'] ?></span>
                                             </label>
                                         </div>
-                                    </td>
-                                    <td class="">
-										<?php if($plano['desconto'] > 0){ ?>
-                                        <span>Desconto de
-                                            <span id="desconto" class="mr-2"><?= $plano['desconto'] ?>
+                                        <?php if ($ehAnual) { ?>
+                                            <span class="planos-lista__badge-melhor">
+                                                <i class="fa fa-star" aria-hidden="true"></i> Mais vantajoso
                                             </span>
-                                            <small id="economia">
-                                                (R$ <?= $plano['economia'] ?>)
-                                            </small>
-                                        </span>
-										<?php } ?>
+                                        <?php } ?>
                                     </td>
-                                    <td class="">
+                                    <td class="planos-lista__desconto">
+                                        <span class="planos-lista__badge-off <?= $temDesconto ? '' : 'is-zero' ?>">
+                                            <span id="desconto"><?= $plano['desconto'] ?></span>&nbsp;OFF
+                                        </span>
+                                        <small class="planos-lista__economia <?= $temDesconto ? '' : 'is-zero' ?>">
+                                            Economize R$ <span id="economia"><?= $plano['economia'] ?></span>
+                                        </small>
+                                    </td>
+                                    <td class="planos-lista__preco">
                                         <h4 class="text-orange font-montserrat">R$
                                             <span id="valor"><?= $plano['valor'] ?></span>
                                         </h4>
+                                        <?php if ($plano['parcelas'] > 1) { ?>
+                                            <small class="planos-lista__mensal-equivalente"><?= $plano['parcelas'] ?> meses</small>
+                                        <?php } else { ?>
+                                            <small class="planos-lista__mensal-equivalente">por mês</small>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </table>
                         </form>
-                        <div class="row  mt-3" id="resultado">
-                            <div class="col-md-3 p-l-10 sm-padding-15 align-items-center d-flex">
-                                <div>
-                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
-                                        Desconto </h5>
-                                    <p class="no-margin"><span id="desconto">-</span></p>
-                                </div>
+                        <div class="resumo-selecao mt-3" id="resultado">
+                            <div class="resumo-selecao__item">
+                                <small>Desconto</small>
+                                <span><span id="desconto">-</span></span>
                             </div>
-                            <div class="col-md-3 col-middle sm-padding-15 align-items-center d-flex">
-                                <?php if($plano['desconto'] > 0){ ?>
-								<div>
-                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold">
-                                        Economia</h5>
-                                    <p class="no-margin">R$ <span id="economia">-</span></p>
-                                </div>
-								<?php } ?>
+                            <div class="resumo-selecao__item">
+                                <small>Economia</small>
+                                <span>R$ <span id="economia">-</span></span>
                             </div>
-                            <div class="col-md-6 text-right bg-dark padding-10">
-                                <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">
-                                    Total</h5>
-                                <h4 class="no-margin text-white">R$ <span id="total">-</span></h4>
+                            <div class="resumo-selecao__total">
+                                <small>Total</small>
+                                <strong>R$ <span id="total">-</span></strong>
                             </div>
                         </div>
                     </div>
@@ -159,38 +161,42 @@
                     <div class="col-md-6 col-12 b-r b-dashed b-grey ">
                         <div class="">
                             <h2>Forma de pagamento</h2>
-                            <p>Escolha uma forma de pagamento para manter o seu plano.</p>
-                            <p class="small hint-text">Dados do plano contratado</p>
-                            <table class="table-condensed" width="100%">
-                                <tr>
-                                    <td class="">
-                                        <div class="align-items-center d-flex">
-                                            <span class="m-l-10 font-montserrat fs-11 all-caps" id="plano">
-                                                Selecione um plano
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="align-items-center text-right">
-                                        <div class="d-flex align-items-center">
-                                            <span>Desconto </span>
-                                            <span id="desconto">-</span>
-                                        </div>
-                                    </td>
-                                    <td class="align-items-center text-right">
-                                        <span>Economia R$ </span>
-                                        <a id="economia">-</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="col-md-3 text-center justify-content-end">
-                                        <h4 class="text-dark no-margin font-montserrat align-items-center">
-                                            <span>R$ </span>
-                                            <span id="valor">-<span>
-                                        </h4>
-                                    </td>
-                                </tr>
-                            </table>
-                            <p>A fatura estará disponível no seu histórico de pagamentos após a confirmação de pagamento.<br>Condições de pagamento: Pix, Cartão de Crédito ou Boleto Bancário</p>
+                            <p>Escolha como quer renovar o seu plano.</p>
+
+                            <div class="resumo-pedido">
+                                <span class="resumo-pedido__titulo">
+                                    <i class="fa fa-receipt" aria-hidden="true"></i> Resumo do pedido
+                                </span>
+                                <div class="resumo-pedido__linha">
+                                    <span>Plano</span>
+                                    <span class="font-montserrat all-caps" id="plano">Selecione um plano</span>
+                                </div>
+                                <div class="resumo-pedido__linha">
+                                    <span>Desconto</span>
+                                    <span id="desconto">-</span>
+                                </div>
+                                <div class="resumo-pedido__linha">
+                                    <span>Economia</span>
+                                    <span>R$ <span id="economia">-</span></span>
+                                </div>
+                                <div class="resumo-pedido__total">
+                                    <span>Total a pagar</span>
+                                    <strong>R$ <span id="valor">-</span></strong>
+                                </div>
+                            </div>
+
+                            <ul class="resumo-pedido__metodos">
+                                <li><i class="fa fa-qrcode" aria-hidden="true"></i> PIX</li>
+                                <li><i class="fa fa-credit-card" aria-hidden="true"></i> Cartão de Crédito</li>
+                                <li><i class="fa fa-barcode" aria-hidden="true"></i> Boleto</li>
+                            </ul>
+
+                            <p class="resumo-pedido__nota">
+                                <i class="fa fa-file-invoice" aria-hidden="true"></i>
+                                A fatura fica disponível no seu
+                                <a href="/historico-pagamentos">histórico de pagamentos</a>
+                                assim que o pagamento for confirmado.
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
