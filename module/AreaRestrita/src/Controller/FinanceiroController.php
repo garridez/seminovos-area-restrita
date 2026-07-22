@@ -6,16 +6,26 @@
 
 namespace AreaRestrita\Controller;
 
+use AreaRestrita\Model\CadastroRecorrencia;
 use AreaRestrita\Model\Cadastros;
 use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Request as HttpRequest;
 use Laminas\Router\Http\RouteMatch;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use Psr\Container\ContainerInterface;
+use Throwable;
 
 class FinanceiroController extends AbstractActionController
 {
+    /**
+     * Serviço Node responsável pelas cobranças/assinaturas CelCash
+     */
+    public const PAGAMENTOS_ENDPOINT = 'https://pagamentos.seminovos.com.br';
+
     protected ContainerInterface $container;
 
     protected array $routeParams;
@@ -136,9 +146,85 @@ class FinanceiroController extends AbstractActionController
         //        var_dump($dadosFinanceiro);
         //        die;
 
+        /**
+         * Recorrência ativa (assinatura CelCash) do cadastro.
+         * Se existir, a view mostra o overlay informativo e bloqueia um novo pagamento.
+         */
+        /** @var CadastroRecorrencia $recorrenciaModel */
+        $recorrenciaModel = $this->getContainer()->get(CadastroRecorrencia::class);
+        $recorrencia = $recorrenciaModel->getAtiva();
+
         return new ViewModel([
             'financeiro' => $dadosFinanceiro,
             'plano' => $dadosPlano,
-        ]); 
+            'recorrencia' => $recorrencia,
+        ]);
+    }
+
+    /**
+     * Cancela a recorrência (assinatura CelCash) do usuário logado.
+     *
+     * POST /financeiro/cancelar-recorrencia
+     * O idCadastro NUNCA vem do POST: é sempre o da sessão autenticada.
+     */
+    public function cancelarRecorrenciaAction(): JsonModel
+    {
+        $response = $this->getResponse();
+
+        if (!$this->getRequest()->isPost()) {
+            $response->setStatusCode(405);
+            return new JsonModel([
+                'status' => 405,
+                'error' => 'Método não permitido',
+            ]);
+        }
+
+        /** @var Cadastros $cadastrosModel */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        $dadosCadastro = $cadastrosModel->getCurrent(false);
+        $idCadastro = (int) ($dadosCadastro['idCadastro'] ?? 0);
+
+        if ($idCadastro <= 0) {
+            $response->setStatusCode(403);
+            return new JsonModel([
+                'status' => 403,
+                'error' => 'Sessão expirada. Faça login novamente.',
+            ]);
+        }
+
+        try {
+            $client = new HttpClient(self::PAGAMENTOS_ENDPOINT . '/recorrencia/cancel', [
+                'timeout' => 30,
+                'adapter' => HttpClient\Adapter\Curl::class,
+            ]);
+
+            $client->setMethod(HttpRequest::METHOD_POST);
+            $client->setEncType('application/json');
+            $client->setRawBody(json_encode(['idCadastro' => $idCadastro]));
+
+            $httpResponse = $client->send();
+            $body = json_decode($httpResponse->getBody(), true) ?: [];
+
+            if (!$httpResponse->isSuccess()) {
+                $response->setStatusCode(502);
+                return new JsonModel([
+                    'status' => 502,
+                    'error' => $body['error']
+                        ?? 'Não conseguimos falar com o serviço de pagamentos. Tente novamente em instantes.',
+                ]);
+            }
+
+            return new JsonModel([
+                'status' => 200,
+                'cancelado' => (bool) ($body['cancelado'] ?? false),
+                'message' => $body['message'] ?? 'Recorrência cancelada com sucesso.',
+            ]);
+        } catch (Throwable $e) {
+            $response->setStatusCode(500);
+            return new JsonModel([
+                'status' => 500,
+                'error' => 'Não foi possível cancelar a recorrência agora. Tente novamente em instantes.',
+            ]);
+        }
     }
 }

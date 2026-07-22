@@ -10,60 +10,170 @@ import 'jquery-validation/dist/localization/messages_pt_BR';
 
 import advancedAlerts from '../../../components/AdvancedAlerts';
 import Alerts from '../../../components/Alerts';
-import HandleApiError from '../../../components/HandleApiError';
+import Confirms from '../../../components/Confirms';
 import Loading from '../../../components/Loading';
-import requestAlerts from '../criar-anuncio/checkout/request-alerts';
 
 export const seletor = '.c-financeiro.a-index';
 export const callback = ($: JQueryStatic) => {
-    const pagamentoEmAndamento = function () {
-        requestAlerts.erro('Existe uma transação em andamento! Aguarde');
+    type ErrorDetails = Record<string, string[]>;
+
+    type ErrorResponse = {
+        error?:
+            | string
+            | {
+                  message?: string;
+                  details?: ErrorDetails;
+              };
+        title?: string;
+        detail?: string;
+        message?: string;
     };
-	
-	type ErrorDetails = Record<string, string[]>;
 
-	type ErrorResponse = {
-		error?: {
-			message?: string;
-			details?: ErrorDetails;
-		};
-	};
+    // ------------------------------------------------------------------
+    // Feedback de erros — renderiza um card amigável em .pagamento-feedback
+    // ------------------------------------------------------------------
+    const $feedback = $('.pagamento-feedback');
 
-	const buildErrorHtmlFromResponse = (responseJSON: ErrorResponse): string => {
-		const error = responseJSON?.error;
-		const details: ErrorDetails = error?.details || {};
+    const limparErro = () => {
+        $feedback.empty();
+    };
 
-		let html = `
-		<div class="alert alert-danger d-flex align-items-start" role="alert">
-			<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
-			<div>
-				<p class="mb-1 fw-bold">
-					${error?.message || 'Ocorreram erros de validação:'}
-				</p>
-				<ul class="error-list list-unstyled mb-0">
-		`;
+    const mostrarErro = (titulo: string, mensagemHtml: string) => {
+        const html = `
+            <div class="pagamento-erro" role="alert">
+                <div class="pagamento-erro__icone">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p class="pagamento-erro__titulo">${titulo}</p>
+                    <div class="pagamento-erro__mensagem">${mensagemHtml}</div>
+                    <div class="pagamento-erro__acoes">
+                        <button type="button" class="btn btn-outline-danger js-fechar-erro">
+                            Tentar novamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
 
-		Object.entries(details).forEach(([fieldName, messages]) => {
-			messages.forEach((message: string) => {
-				html += `
-					<li class="d-flex align-items-start mb-1">
-						<i class="bi bi-x-circle-fill me-2 mt-1"></i>
-						<span>${message}</span>
-					</li>
-				`;
-			});
-		});
+        $feedback.html(html);
+        $feedback[0]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
 
-		html += `
-				</ul>
-			</div>
-		</div>
-		`;
+    $feedback.on('click', '.js-fechar-erro', limparErro);
 
-		return html;
-	};
+    /**
+     * Extrai uma mensagem legível de qualquer formato de erro retornado
+     * (CelCash, serviço de pagamentos ou API).
+     */
+    const extrairMensagemErro = (payload: ErrorResponse | string | undefined | null): string => {
+        const fallback =
+            'Não conseguimos processar seu pagamento agora.<br>' +
+            'Nenhum valor foi cobrado — confira os dados e tente novamente.';
 
-	
+        if (!payload) {
+            return fallback;
+        }
+
+        if (typeof payload === 'string') {
+            return payload;
+        }
+
+        if (typeof payload.error === 'string' && payload.error) {
+            return payload.error;
+        }
+
+        if (payload.error && typeof payload.error === 'object') {
+            let html = payload.error.message || 'Ocorreram erros de validação:';
+            const details = payload.error.details || {};
+            const itens: string[] = [];
+
+            Object.values(details).forEach((messages) => {
+                (messages || []).forEach((message) => itens.push(`<li>${message}</li>`));
+            });
+
+            if (itens.length) {
+                html += `<ul>${itens.join('')}</ul>`;
+            }
+            return html;
+        }
+
+        if (payload.detail) {
+            return payload.detail;
+        }
+
+        if (payload.message) {
+            return payload.message;
+        }
+
+        return fallback;
+    };
+
+    // ------------------------------------------------------------------
+    // Overlay de recorrência — cancelamento
+    // ------------------------------------------------------------------
+    $('.js-cancelar-recorrencia').on('click', function () {
+        Confirms.warning({
+            title: 'Cancelar pagamento recorrente?',
+            text:
+                '<div class="text-left">' +
+                '<p>A cobrança automática no seu cartão <strong>para imediatamente</strong>.</p>' +
+                '<p>Seu plano continua ativo até o fim do período já pago. Depois disso, ' +
+                'será preciso pagar manualmente (PIX, cartão ou boleto) para manter ' +
+                'seus anúncios no ar.</p>' +
+                '<p class="mb-0">Deseja mesmo cancelar?</p>' +
+                '</div>',
+            confirmText: 'Sim, cancelar recorrência',
+            negateText: 'Manter como está',
+            confirmCallback: function () {
+                $('.modal').modal('hide');
+                Loading.addFeedbackTexts(['Falando com a operadora do cartão...', 'Cancelando a recorrência...']);
+                Loading.open();
+
+                $.ajax({
+                    url: '/financeiro/cancelar-recorrencia',
+                    type: 'POST',
+                    dataType: 'json',
+                })
+                    .done(function (res: { status?: number; message?: string; error?: string }) {
+                        Loading.close();
+
+                        if (res && res.status === 200) {
+                            advancedAlerts.success({
+                                title: 'Recorrência cancelada',
+                                text:
+                                    '<p>Prontinho! A cobrança automática foi cancelada e nenhum novo ' +
+                                    'valor será debitado do seu cartão.</p>' +
+                                    '<p class="mb-0">Seu plano segue ativo até o fim do período já pago.</p>',
+                                time: 8000,
+                                closeCallback: function () {
+                                    document.location.reload();
+                                },
+                            });
+                            return;
+                        }
+
+                        advancedAlerts.error({
+                            title: 'Não foi possível cancelar',
+                            text: extrairMensagemErro(res),
+                            time: 10_000,
+                        });
+                    })
+                    .fail(function (xhr) {
+                        Loading.close();
+                        advancedAlerts.error({
+                            title: 'Não foi possível cancelar',
+                            text: extrairMensagemErro(xhr.responseJSON),
+                            time: 10_000,
+                        });
+                    });
+            },
+        });
+    });
+
+    // ------------------------------------------------------------------
+    // Máscaras + detecção de bandeira do cartão
+    // ------------------------------------------------------------------
     const optional = { translation: { '?': { pattern: /[0-9]/, optional: true } } };
     const formCC = $('.pagamento-cc-form');
     $('.retorno-pix').hide();
@@ -72,10 +182,69 @@ export const callback = ($: JQueryStatic) => {
     formCC.find('[name="cvc_cartao"]').mask('999?', optional);
     formCC.find('[name="numero_cartao"]').mask('9999 9999 9999 9??? ????', optional);
 
+    const detectarBandeira = (numero: string): string | null => {
+        const d = numero.replace(/\D/g, '');
+        if (!d.length) return null;
+
+        const p2 = parseInt(d.substring(0, 2), 10);
+        const p4 = parseInt(d.substring(0, 4), 10);
+
+        if (/^4/.test(d)) return 'visa';
+        if ((p2 >= 51 && p2 <= 55) || (p4 >= 2221 && p4 <= 2720)) return 'mastercard';
+        if (p2 === 34 || p2 === 37) return 'amex';
+        return null;
+    };
+
+    formCC.find('[name="numero_cartao"]').on('input', function () {
+        const bandeira = detectarBandeira(String($(this).val() || ''));
+        const $bandeiras = $('.cc-bandeiras');
+
+        $bandeiras.toggleClass('has-match', !!bandeira);
+        $bandeiras.find('.brand').removeClass('brand-match');
+        if (bandeira) {
+            $bandeiras.find(`.brand[data-brand="${bandeira}"]`).addClass('brand-match');
+        }
+    });
+
+    // Link "Pague com PIX" dentro do card de boleto
+    $('.pagamento-boleto-form').on('click', '.js-ir-para-pix', function (e) {
+        e.preventDefault();
+        $('[data-target="#pix_tab"]').tab('show');
+    });
+
+    // ------------------------------------------------------------------
+    // Copia e cola do PIX
+    // ------------------------------------------------------------------
+    $('.retorno-pix').on('click', '#copy', function () {
+        const codigo = String($('.text-pix').val() || '');
+        const $btn = $(this);
+
+        const copiado = () => {
+            $btn.html('<i class="fa fa-check mr-1" aria-hidden="true"></i> Copiado!');
+            setTimeout(() => {
+                $btn.html('<i class="fa fa-copy mr-1" aria-hidden="true"></i> Copiar');
+            }, 3000);
+        };
+
+        if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(codigo).then(copiado);
+        } else {
+            const input = $('.text-pix')[0] as HTMLInputElement;
+            input.select();
+            document.execCommand('copy');
+            copiado();
+        }
+    });
+
+    // ------------------------------------------------------------------
+    // Envio do pagamento (PIX / boleto / cartão)
+    // ------------------------------------------------------------------
     $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').on(
         'submit',
         function (e) {
             e.preventDefault();
+            limparErro();
+
             const data = $(this).serializeArray();
             const tempo_contrato = $('.tab-content')
                 .find('input[name="tempo_contrato"]:checked')
@@ -108,44 +277,31 @@ export const callback = ($: JQueryStatic) => {
             Loading.addFeedbackTexts(['Validando informações...', 'Realizando pagamento ...']);
 
             Loading.open();
-            const $btnSubmit = $(this).find('button[type="submit"]');
             const dataRedirectPagamento: ModalPagamentoBoletoParam = {
                 url: '',
                 urlAguardando: '/historico-pagamentos',
             };
 
-            type ProcessarResponseType = {
-                html?: string;
-                type?: number;
-                status: number;
-                data?: {
-                    qr_code?: string;
-                    img_qr_code?: string;
-                    redirect?: string;
-                    url: string;
-                };
-            };
-			
-			let checkout_endpoint = '';
-			const metodo = data.find(x => x.name === 'metodo')?.value;
+            let checkout_endpoint = '';
+            const metodo = data.find((x) => x.name === 'metodo')?.value;
 
-			switch (metodo) {
-				case 'pix':
-					checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
-					break;
+            switch (metodo) {
+                case 'pix':
+                    checkout_endpoint = 'https://pagamentos.seminovos.com.br/pix/charge';
+                    break;
 
-				case 'card':
-					checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
-					break;
-					
-				case 'boleto':
-					checkout_endpoint = 'https://pagamentos.seminovos.com.br/boleto/charge';
-					break;
+                case 'card':
+                    checkout_endpoint = 'https://pagamentos.seminovos.com.br/card/charge';
+                    break;
 
-				default:
-					checkout_endpoint = '/carro/checkout/processar';
-					break;
-			}
+                case 'boleto':
+                    checkout_endpoint = 'https://pagamentos.seminovos.com.br/boleto/charge';
+                    break;
+
+                default:
+                    checkout_endpoint = '/carro/checkout/processar';
+                    break;
+            }
 
             const ajaxDefaultParams: JQuery.AjaxSettings = {
                 url: checkout_endpoint,
@@ -154,88 +310,93 @@ export const callback = ($: JQueryStatic) => {
                 type: 'POST',
                 dataType: 'json',
                 success: function (httpResponse: any) {
-                    Loading.close();                    
-					if(metodo == 'pix'){
-						if(httpResponse.status == "ok"){
-							$('.qrcode-img').attr('src', httpResponse.pix.image || '');
-							$('.text-pix').html(httpResponse.pix.qrCode);
-							$('.form-pix').hide();
-							$('.retorno-pix').show();
-							Loading.close();
-						} else {
-							if (httpResponse?.error) {
-								requestAlerts.erro(httpResponse?.error);
-								return;
-							}
-							
-							HandleApiError(httpResponse);
-							return;							
-						}
-                        return;
-					}
-					
-					if(metodo == 'boleto'){
-						if(httpResponse.status == "ok"){
-							dataRedirectPagamento.url = httpResponse.boleto.pdf;
-							modalPagamentoBoleto(dataRedirectPagamento);						
-						} else {
-							if (httpResponse?.error) {
-								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
-								return;
-							}							
-							
-							HandleApiError(httpResponse);
-							return;							
-						}
-                        return;
-					}
-					
-					if(metodo === 'card') {
-						if(httpResponse.status == "captured"){
-							const title = 'Pagamento aprovado!';
-							const text = $(`<div>
-											<h4 class="text-primary font-weight-bold">Meio de pagamento cadastrado com sucesso!</h4>
-											<h5 class="text-primary font-weight-bold">tempo estimado 30 minutos</h5>
-										</div>`);
-							const closeText = 'Li e concordo';
-							const time = 0;
-							advancedAlerts.success({
-								title,
-								text,
-								closeText,
-								time,
-							});
+                    Loading.close();
 
-							$('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
-						} else if(httpResponse.status == "denied"){
-							if(httpResponse?.error){
-								requestAlerts.erro(httpResponse?.error);
-							} else {
-								requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
-							}							
-						} else {
-							pagamentoEmAndamento();
-						}
-						return;					
-					}
+                    if (metodo == 'pix') {
+                        if (httpResponse.status == 'ok') {
+                            $('.qrcode-img').attr('src', httpResponse.pix.image || '');
+                            $('.text-pix').val(httpResponse.pix.qrCode);
+                            $('.form-pix').hide();
+                            $('.retorno-pix').show();
+                            $('.retorno-pix')[0]?.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                            });
+                        } else {
+                            mostrarErro(
+                                'Não conseguimos gerar seu PIX',
+                                extrairMensagemErro(httpResponse),
+                            );
+                        }
+                        return;
+                    }
+
+                    if (metodo == 'boleto') {
+                        if (httpResponse.status == 'ok') {
+                            dataRedirectPagamento.url = httpResponse.boleto.pdf;
+                            modalPagamentoBoleto(dataRedirectPagamento);
+                        } else {
+                            mostrarErro(
+                                'Não conseguimos gerar seu boleto',
+                                extrairMensagemErro(httpResponse),
+                            );
+                        }
+                        return;
+                    }
+
+                    if (metodo === 'card') {
+                        if (httpResponse.status == 'captured') {
+                            const ehRecorrente = String(tempo_contrato) === '1';
+                            const title = 'Pagamento aprovado!';
+                            const text = $(`<div>
+                                            <h4 class="text-primary font-weight-bold">Tudo certo, seu plano foi renovado.</h4>
+                                            ${
+                                                ehRecorrente
+                                                    ? '<p>A partir de agora a renovação é automática todo mês no seu cartão — sem boletos, sem preocupação. Você pode cancelar quando quiser aqui na Central de Pagamentos.</p>'
+                                                    : ''
+                                            }
+                                            <h5 class="text-primary font-weight-bold">A ativação leva cerca de 30 minutos.</h5>
+                                        </div>`);
+                            const closeText = 'Li e concordo';
+                            const time = 0;
+                            advancedAlerts.success({
+                                title,
+                                text,
+                                closeText,
+                                time,
+                            });
+
+                            $('.nav-main-financeiro [data-target="#tab-finalizar"]').tab('show');
+                        } else if (httpResponse.status == 'denied') {
+                            mostrarErro(
+                                'Pagamento não autorizado',
+                                extrairMensagemErro(httpResponse) +
+                                    '<br><small>Nenhum valor foi cobrado. Verifique os dados do ' +
+                                    'cartão ou tente outro método de pagamento.</small>',
+                            );
+                        } else {
+                            mostrarErro(
+                                'Pagamento em processamento',
+                                'Já existe uma transação em andamento. Aguarde alguns instantes ' +
+                                    'antes de tentar novamente.',
+                            );
+                        }
+                        return;
+                    }
                 },
                 error: function (e) {
-					console.log('erro');
-					console.log(e);
-					
-					if (e.responseJSON?.error) {
-						console.log(e.responseJSON?.error);
-						if(e.responseJSON?.error){
-							requestAlerts.erro(e.responseJSON?.error);
-						} else {
-							requestAlerts.erro(buildErrorHtmlFromResponse(e.responseJSON));
-						}
-						Loading.close();
-						return;
-					}					
-					
-                    HandleApiError(e.responseJSON);
                     Loading.close();
+
+                    const tituloPorMetodo: Record<string, string> = {
+                        pix: 'Não conseguimos gerar seu PIX',
+                        boleto: 'Não conseguimos gerar seu boleto',
+                        card: 'Pagamento não autorizado',
+                    };
+
+                    mostrarErro(
+                        tituloPorMetodo[String(metodo)] || 'Não conseguimos processar o pagamento',
+                        extrairMensagemErro(e.responseJSON),
+                    );
                 },
             };
             $.ajax($.extend(ajaxDefaultParams, {}));
@@ -419,31 +580,34 @@ const optionsParcelas = (valor: number, plano: string) => {
     const parcelas = $('#parcelas');
     const row_parcelas = $('#row_parcelas');
     parcelas.html('');
-	const btn = $('#add_payment_form');
-	btn.html('EFETUAR PAGAMENTO');
+    const btn = $('#add_payment_form');
+    const hintRecorrencia = $('#recorrencia-hint');
+    btn.html('EFETUAR PAGAMENTO');
+    hintRecorrencia.removeClass('show');
     switch (plano) {
         case 'Plano Mensal':
             parcelas.append(generateOption(0));
-			btn.html('ADICIONAR FORMA DE PAGAMENTO');
-			row_parcelas.hide();
+            btn.html('ATIVAR PAGAMENTO RECORRENTE');
+            hintRecorrencia.addClass('show');
+            row_parcelas.hide();
             break;
         case 'Plano Trimestral':
             for (let i = 0; i < 3; i++) {
                 parcelas.append(generateOption(i));
             }
-			row_parcelas.show();
+            row_parcelas.show();
             break;
         case 'Plano Semestral':
             for (let i = 0; i < 6; i++) {
                 parcelas.append(generateOption(i));
             }
-			row_parcelas.show();
+            row_parcelas.show();
             break;
         case 'Plano Anual':
             for (let i = 0; i < 12; i++) {
                 parcelas.append(generateOption(i));
             }
-			row_parcelas.show();
+            row_parcelas.show();
             break;
         default:
             break;

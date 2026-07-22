@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * Overlay exibido quando o cadastro possui recorrência (assinatura CelCash) ativa.
+ * Bloqueia o wizard de pagamento para evitar cobrança duplicada e permite cancelar.
+ *
+ * Recebe: $this->recorrencia (array retornado pela API /cadastro-recorrencia)
+ */
+$recorrencia = $this->recorrencia;
+
+if (!$recorrencia) {
+    return;
+}
+
+$card = $recorrencia['card'] ?? [];
+
+$bandeiraId = strtolower((string) ($card['bandeiraId'] ?? ''));
+$bandeiraNome = $card['bandeira'] ?? 'Cartão de crédito';
+$final = $card['final'] ?? '';
+
+$logosBandeiras = [
+    'visa' => '/img/svg/visa_logo.svg',
+    'mastercard' => '/img/svg/mastercard_logo.svg',
+    'amex' => '/img/svg/american-express.svg',
+];
+$logoBandeira = $logosBandeiras[$bandeiraId] ?? null;
+
+// "2033-09" -> "09/2033"
+$validade = (string) ($card['validade'] ?? '');
+if (preg_match('/^(\d{4})-(\d{2})$/', $validade, $m)) {
+    $validade = $m[2] . '/' . $m[1];
+}
+
+$valor = number_format((float) ($recorrencia['valor'] ?? 0), 2, ',', '.');
+?>
+
+<div class="recorrencia-overlay" id="recorrencia-overlay">
+    <div class="recorrencia-card">
+        <div class="recorrencia-header">
+            <span class="recorrencia-badge">
+                <i class="fa fa-sync-alt" aria-hidden="true"></i>
+                Pagamento recorrente ativo
+            </span>
+            <h3>Pode ficar tranquilo, está tudo certo por aqui <i class="fa fa-check-circle text-success" aria-hidden="true"></i></h3>
+            <p>
+                Atualmente seu plano está configurado em <strong>pagamento recorrente</strong>.
+                Não se preocupe: a renovação acontece automaticamente todo mês no seu cartão,
+                e seus anúncios continuam no ar sem você precisar fazer nada.
+            </p>
+        </div>
+
+        <div class="recorrencia-cartao" aria-label="Cartão cadastrado">
+            <div class="recorrencia-cartao__chip" aria-hidden="true"></div>
+            <div class="recorrencia-cartao__numero">
+                <span aria-hidden="true">&bull;&bull;&bull;&bull;</span>
+                <span aria-hidden="true">&bull;&bull;&bull;&bull;</span>
+                <span aria-hidden="true">&bull;&bull;&bull;&bull;</span>
+                <span><?= $this->escapeHtml($final ?: '····') ?></span>
+            </div>
+            <div class="recorrencia-cartao__rodape">
+                <div>
+                    <small>Validade</small>
+                    <span><?= $this->escapeHtml($validade ?: '--/----') ?></span>
+                </div>
+                <div>
+                    <small>Mensalidade</small>
+                    <span>R$ <?= $valor ?></span>
+                </div>
+                <div class="recorrencia-cartao__bandeira">
+                    <?php if ($logoBandeira) : ?>
+                        <img src="<?= $logoBandeira ?>" alt="<?= $this->escapeHtmlAttr($bandeiraNome) ?>" width="51" height="32">
+                    <?php else : ?>
+                        <span class="recorrencia-cartao__bandeira-nome"><?= $this->escapeHtml($bandeiraNome) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <ul class="recorrencia-beneficios">
+            <li>
+                <i class="fa fa-bolt" aria-hidden="true"></i>
+                <span>Seus anúncios ficam <strong>sempre ativos</strong>, sem risco de expirar por esquecimento.</span>
+            </li>
+            <li>
+                <i class="fa fa-calendar-check" aria-hidden="true"></i>
+                <span>Nada de boletos ou PIX todo mês — <strong>a renovação é automática</strong>.</span>
+            </li>
+            <li>
+                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                <span>Sem fidelidade: você pode <strong>cancelar quando quiser</strong>, direto por aqui.</span>
+            </li>
+        </ul>
+
+        <div class="recorrencia-acoes">
+            <a href="/" class="btn btn-laranja text-white btn-cons">
+                <i class="fa fa-home mr-1" aria-hidden="true"></i> Voltar ao painel
+            </a>
+            <button type="button" class="btn btn-link recorrencia-btn-cancelar js-cancelar-recorrencia">
+                Quero cancelar a recorrência
+            </button>
+        </div>
+
+        <p class="recorrencia-aviso">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+            Ao cancelar, a cobrança automática para na hora. Seu plano continua ativo até o fim
+            do período já pago — depois disso, é só pagar manualmente por PIX, cartão ou boleto.
+        </p>
+    </div>
+</div>

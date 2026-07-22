@@ -1,31 +1,28 @@
-<form role="form" class="pagamento-cc-form">
-	<input type="hidden" name="idCadastro" value="<?= $this->userInfo('idCadastro') ?>" />
-    <div class="bg-master-light padding-30 b-rad-lg">
+<form role="form" class="pagamento-cc-form col-12">
+    <input type="hidden" name="idCadastro" value="<?= $this->userInfo('idCadastro') ?>" />
+    <div class="pagamento-metodo-card pagamento-metodo-card--form">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h2 class="pull-left no-margin">Cartão de Crédito</h2>
-            <div class="d-flex align-items-center ml-3">
-                <div>
-                    <img width="51" height="32" class="brand" alt="logo"
-                         src="img/svg/visa_logo.svg">
-                </div>
-                <div>
-                    <img width="51" height="32" class="brand" alt="logo"
-                         src="img/svg/mastercard_logo.svg">
-                </div>
-                <div>
-                    <img width="51" height="32" class="brand" alt="logo"
-                         src="img/svg/american-express.svg">
-                </div>
+            <h4 class="pull-left no-margin">Cartão de Crédito</h4>
+            <div class="d-flex align-items-center ml-3 cc-bandeiras">
+                <img width="51" height="32" class="brand" data-brand="visa" alt="Visa"
+                     src="/img/svg/visa_logo.svg">
+                <img width="51" height="32" class="brand" data-brand="mastercard" alt="MasterCard"
+                     src="/img/svg/mastercard_logo.svg">
+                <img width="51" height="32" class="brand" data-brand="amex" alt="American Express"
+                     src="/img/svg/american-express.svg">
             </div>
         </div>
+
         <div class="form-group form-group-default required">
             <label for="numero_cartao">Número do Cartão</label>
             <input type="text" class="form-control" name="numero_cartao" id="numero_cartao"
-                   placeholder="8888-8888-8888-8888" required>
+                   inputmode="numeric" autocomplete="cc-number"
+                   placeholder="0000 0000 0000 0000" required>
         </div>
         <div class="form-group form-group-default required">
             <label for="nome_cartao">Nome igual ao do Cartão</label>
-            <input type="text" class="form-control" placeholder="Nome no cartão"
+            <input type="text" class="form-control" placeholder="Nome impresso no cartão"
+                   autocomplete="cc-name"
                    id="nome_cartao" name="nome_cartao" required>
         </div>
 
@@ -35,6 +32,7 @@
                      title="Validade do cartão">
                     <label for="validade_cartao">Validade</label>
                     <input type="text" class="form-control" id="validade_cartao"
+                           inputmode="numeric" autocomplete="cc-exp"
                            name="validade_cartao" placeholder="mês/ano"
                            required>
                 </div>
@@ -42,12 +40,13 @@
             <div class="col-md-6">
                 <div class="form-group form-group-default required"
                      title="Código de segurança do cartão">
-                    <label for="cvc_cartao">CVV </label>
+                    <label for="cvc_cartao">CVV</label>
                     <input type="text"
                            class="form-control"
                            id="cvc_cartao"
+                           inputmode="numeric" autocomplete="cc-csc"
                            name="cvc_cartao"
-                           placeholder="CVV / Código de Segurança" required
+                           placeholder="Código de segurança" required
                            maxlength="4">
                 </div>
             </div>
@@ -55,8 +54,8 @@
         <div class="row" id="row_parcelas">
             <div class="col-12">
                 <div class="form-group form-group-default required"
-                     title="Validade do cartão">
-                    <label for="validade_cartao">Parcelas</label>
+                     title="Número de parcelas">
+                    <label for="parcelas">Parcelas</label>
                     <select id="parcelas" name="parcelas"
                             class="full-width select2-hidden-accessible"
                             data-init-plugin="select2" tabindex="-1"
@@ -67,12 +66,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="recorrencia-hint" id="recorrencia-hint">
+            <i class="fa fa-sync-alt" aria-hidden="true"></i>
+            <span>
+                No <strong>Plano Mensal</strong> o pagamento é recorrente: seu cartão é cobrado
+                automaticamente todo mês e seus anúncios nunca saem do ar.
+                Você pode cancelar quando quiser, aqui mesmo na Central de Pagamentos.
+            </span>
+        </div>
+
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
+                <div class="form-group mb-0">
                     <input type="hidden" name="metodo" value="card" required aria-required="true">
                     <button type="submit" id="add_payment_form" class="btn btn-success btn-block btn-submit-pagt block">EFETUAR PAGAMENTO</button>
                 </div>
+                <p class="pagamento-processado-por mt-2">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    Ambiente seguro — seus dados são enviados criptografados e não ficam salvos no site.
+                </p>
             </div>
         </div>
     </div>

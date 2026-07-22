@@ -1,24 +1,32 @@
-<form class="pagamento-boleto-form">
-	<input type="hidden" name="idCadastro" value="<?= $this->userInfo('idCadastro') ?>" />
-    <?php
-    // @todo verificar se as revendas precisam de aceitar os termos
-    /* <div class="form-group" title="Termos de adesão">
-      <label>
-      <input type="checkbox" name="termos" required>
-      Li e estou de acordo com o <a href="/termos/pessoa-fisica" target="_BLANK">Termo de adesão</a>
-      </label>
-      </div> */
-    ?>
+<form class="pagamento-boleto-form col-12">
+    <input type="hidden" name="idCadastro" value="<?= $this->userInfo('idCadastro') ?>" />
+    <input type="hidden" name="metodo" value="boleto" required aria-required="true">
 
-    <div class="form-group">
-        <input type="hidden" name="metodo" value="boleto" required aria-required="true">
-        <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">GERAR BOLETO</button>
-
-        <div class="d-flex align-items-center mt-3 text-warning" role="alert">
-          <i class="fas fa-exclamation-triangle me-2"></i>
-          <div class="text-danger">
-              <strong> &nbsp;Ativação em até 3 dias úteis.</strong>
-          </div>
+    <div class="pagamento-metodo-card">
+        <div class="pagamento-metodo-card__icone pagamento-metodo-card__icone--boleto">
+            <i class="fa fa-barcode" aria-hidden="true"></i>
         </div>
+        <h4>Pague com Boleto Bancário</h4>
+        <p class="pagamento-metodo-card__descricao">
+            Geramos o boleto na hora e também <strong>enviamos uma cópia para o seu e-mail</strong>.
+            Você pode pagar pelo app do banco, internet banking ou lotérica.
+        </p>
+
+        <ul class="pagamento-vantagens">
+            <li><i class="fa fa-calendar-alt" aria-hidden="true"></i> Vencimento em 3 dias</li>
+            <li><i class="fa fa-envelope" aria-hidden="true"></i> Cópia enviada por e-mail</li>
+            <li><i class="fa fa-file-pdf" aria-hidden="true"></i> Download do PDF na hora</li>
+        </ul>
+
+        <button type="submit" class="btn btn-success btn-block btn-submit-pagt block">
+            <i class="fa fa-barcode mr-2" aria-hidden="true"></i> GERAR BOLETO
+        </button>
+
+        <p class="pagamento-metodo-card__alerta">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            A compensação do boleto leva até <strong>3 dias úteis</strong> —
+            seu plano é ativado assim que o banco confirmar o pagamento.
+            Precisa de ativação imediata? <a href="#" class="js-ir-para-pix">Pague com PIX</a>.
+        </p>
     </div>
 </form>

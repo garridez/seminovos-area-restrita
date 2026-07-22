@@ -1,6 +1,576 @@
-#parcelas{
-    border:0px;
+// =============================================================
+// Central de Pagamentos (Financeiro) — revenda
+// Overlay de recorrência + layout PIX / boleto / cartão + erros
+// =============================================================
+
+$fin-laranja: #f37032;
+$fin-laranja-escuro: #ed9902;
+$fin-verde: #10a54a;
+$fin-cinza-texto: #52565c;
+$fin-borda: #e4e7ea;
+
+#parcelas {
+    border: 0px;
 }
-#rootwizard > ul > li.nav-item a{
+
+#rootwizard > ul > li.nav-item a {
     pointer-events: none;
+}
+
+#rootwizard {
+    position: relative;
+}
+
+// ---------------------------------------------------------
+// Overlay de recorrência ativa
+// ---------------------------------------------------------
+#rootwizard.has-recorrencia {
+    min-height: 680px;
+
+    > .nav-tabs,
+    > .tab-content {
+        filter: blur(3px);
+        pointer-events: none;
+        user-select: none;
+    }
+}
+
+.recorrencia-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 12px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(2px);
+    animation: recorrencia-fade-in 0.35s ease;
+}
+
+.recorrencia-card {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border: 1px solid $fin-borda;
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(23, 30, 45, 0.18);
+    padding: 28px 28px 20px;
+    text-align: center;
+}
+
+.recorrencia-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba($fin-verde, 0.1);
+    color: $fin-verde;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-radius: 30px;
+    padding: 6px 14px;
+    margin-bottom: 14px;
+
+    i {
+        font-size: 11px;
+        margin-right: 6px;
+    }
+}
+
+.recorrencia-header {
+    h3 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: $fin-cinza-texto;
+        font-size: 14px;
+        line-height: 1.55;
+        max-width: 440px;
+        margin: 0 auto 6px;
+    }
+}
+
+// Cartão "visual" com os dados mascarados
+.recorrencia-cartao {
+    max-width: 340px;
+    margin: 18px auto;
+    padding: 18px 20px 14px;
+    border-radius: 14px;
+    text-align: left;
+    color: #fff;
+    background: linear-gradient(135deg, #2d3436 0%, #494f56 60%, #5d666e 100%);
+    box-shadow: 0 10px 24px rgba(23, 30, 45, 0.28);
+
+    &__chip {
+        width: 38px;
+        height: 27px;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #e6c463, #c9a13b);
+        margin-bottom: 14px;
+    }
+
+    &__numero {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'PT Mono', 'Courier New', monospace;
+        font-size: 19px;
+        letter-spacing: 2px;
+        margin-bottom: 14px;
+    }
+
+    &__rodape {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        small {
+            display: block;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            opacity: 0.65;
+        }
+
+        span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+    }
+
+    &__bandeira {
+        img {
+            background: #fff;
+            border-radius: 4px;
+            padding: 2px 4px;
+            width: 51px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        &-nome {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.recorrencia-beneficios {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 18px;
+    max-width: 430px;
+    text-align: left;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        font-size: 13.5px;
+        color: $fin-cinza-texto;
+        padding: 7px 0;
+
+        i {
+            color: $fin-verde;
+            margin: 3px 10px 0 0;
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+    }
+}
+
+.recorrencia-acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .btn-laranja {
+        min-width: 220px;
+    }
+}
+
+.recorrencia-btn-cancelar {
+    color: #98a0a8;
+    font-size: 13px;
+    text-decoration: underline;
+    margin-top: 4px;
+
+    &:hover {
+        color: #d63031;
+    }
+}
+
+.recorrencia-aviso {
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px dashed $fin-borda;
+    font-size: 12px;
+    color: #8a9199;
+    line-height: 1.5;
+
+    i {
+        color: $fin-laranja-escuro;
+        margin-right: 4px;
+    }
+}
+
+// ---------------------------------------------------------
+// Cards dos métodos de pagamento (PIX / boleto / cartão)
+// ---------------------------------------------------------
+.pagamento-metodo-card {
+    background: #fff;
+    border: 1px solid $fin-borda;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+
+    h4 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    &--form {
+        text-align: left;
+    }
+
+    &__icone {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--pix {
+            background: rgba(50, 188, 173, 0.12);
+        }
+
+        &--boleto {
+            background: rgba($fin-laranja, 0.1);
+
+            i {
+                font-size: 28px;
+                color: $fin-laranja;
+            }
+        }
+    }
+
+    &__descricao {
+        color: $fin-cinza-texto;
+        font-size: 13.5px;
+        line-height: 1.55;
+        max-width: 360px;
+        margin: 0 auto 16px;
+    }
+
+    &__alerta {
+        margin: 14px 0 0;
+        padding: 10px 12px;
+        background: #fff8ec;
+        border: 1px solid #ffe3b3;
+        border-radius: 8px;
+        font-size: 12.5px;
+        color: #8a6d3b;
+        text-align: left;
+        line-height: 1.5;
+
+        i {
+            color: $fin-laranja-escuro;
+            margin-right: 4px;
+        }
+    }
+}
+
+.pagamento-vantagens {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 0 18px;
+
+    li {
+        font-size: 12.5px;
+        color: $fin-cinza-texto;
+        white-space: nowrap;
+        margin: 3px 8px;
+
+        i {
+            color: $fin-verde;
+            margin-right: 4px;
+        }
+    }
+}
+
+.pagamento-processado-por {
+    margin: 12px 0 0;
+    font-size: 11.5px;
+    color: #98a0a8;
+
+    i {
+        margin-right: 4px;
+    }
+}
+
+// Destaque da bandeira detectada no formulário de cartão
+.cc-bandeiras {
+    .brand {
+        opacity: 0.9;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        margin-left: 6px;
+    }
+
+    &.has-match .brand {
+        opacity: 0.25;
+
+        &.brand-match {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+    }
+}
+
+.recorrencia-hint {
+    display: none;
+    align-items: flex-start;
+    background: rgba($fin-verde, 0.07);
+    border: 1px solid rgba($fin-verde, 0.25);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: $fin-cinza-texto;
+    line-height: 1.5;
+    text-align: left;
+
+    i {
+        color: $fin-verde;
+        margin: 3px 10px 0 0;
+    }
+
+    &.show {
+        display: flex;
+    }
+}
+
+// ---------------------------------------------------------
+// Retorno do PIX (QR Code + copia e cola)
+// ---------------------------------------------------------
+.retorno-pix {
+    display: none;
+}
+
+.pix-resultado {
+    background: #fff;
+    border: 1px solid $fin-borda;
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+    animation: recorrencia-fade-in 0.3s ease;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+
+        h5 {
+            margin: 0 8px;
+            font-weight: 700;
+        }
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba($fin-verde, 0.1);
+        color: $fin-verde;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 30px;
+        padding: 4px 10px;
+        text-transform: uppercase;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    &__qrcode {
+        margin-bottom: 14px;
+
+        .qrcode-img {
+            width: 210px;
+            max-width: 80%;
+            height: auto;
+            border: 1px solid $fin-borda;
+            border-radius: 10px;
+            padding: 8px;
+            background: #fff;
+        }
+    }
+
+    &__passos {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto 16px;
+        max-width: 400px;
+        text-align: left;
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+            color: $fin-cinza-texto;
+            padding: 5px 0;
+
+            span {
+                flex-shrink: 0;
+                width: 22px;
+                height: 22px;
+                margin-right: 10px;
+                border-radius: 50%;
+                background: rgba($fin-laranja, 0.12);
+                color: $fin-laranja;
+                font-size: 12px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    &__copia {
+        display: flex;
+        max-width: 430px;
+        margin: 0 auto 14px;
+
+        .text-pix {
+            font-family: 'PT Mono', 'Courier New', monospace;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            margin-right: 8px;
+        }
+
+        .btn {
+            white-space: nowrap;
+        }
+    }
+
+    &__aguardando {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12.5px;
+        color: $fin-cinza-texto;
+        max-width: 420px;
+        margin: 0 auto;
+        line-height: 1.5;
+
+        .pix-spinner {
+            margin-right: 8px;
+        }
+    }
+}
+
+.pix-spinner {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba($fin-verde, 0.25);
+    border-top-color: $fin-verde;
+    border-radius: 50%;
+    animation: pix-spin 0.9s linear infinite;
+    display: inline-block;
+}
+
+// ---------------------------------------------------------
+// Feedback de erros de pagamento
+// ---------------------------------------------------------
+.pagamento-feedback {
+    &:empty {
+        display: none;
+    }
+
+    .pagamento-erro {
+        display: flex;
+        align-items: flex-start;
+        background: #fdf3f4;
+        border: 1px solid #f3c2c6;
+        border-left: 4px solid #d63031;
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        text-align: left;
+        animation: recorrencia-fade-in 0.25s ease;
+
+        &__icone {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            margin-right: 12px;
+            border-radius: 50%;
+            background: rgba(214, 48, 49, 0.12);
+            color: #d63031;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        &__titulo {
+            font-weight: 700;
+            font-size: 14px;
+            color: #b02a2b;
+            margin: 0 0 3px;
+        }
+
+        &__mensagem {
+            font-size: 13px;
+            color: #7c3a3b;
+            margin: 0;
+            line-height: 1.5;
+
+            ul {
+                margin: 6px 0 0;
+                padding-left: 16px;
+            }
+        }
+
+        &__acoes {
+            margin-top: 8px;
+
+            .btn {
+                font-size: 12px;
+                padding: 3px 12px;
+            }
+        }
+    }
+}
+
+@keyframes recorrencia-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pix-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -248,6 +248,18 @@ return [
                 'action' => 'index',
             ],
         ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'cancelar-recorrencia' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/cancelar-recorrencia',
+                    'defaults' => [
+                        'action' => 'cancelar-recorrencia',
+                    ],
+                ],
+            ],
+        ],
     ],
     'banners' => [
         'type' => Http\Literal::class,
