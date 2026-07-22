@@ -559,6 +559,222 @@ $fin-borda: #e4e7ea;
 }
 
 // ---------------------------------------------------------
+// Stepper do wizard (Plano → Pagamento → Finalizar)
+// ---------------------------------------------------------
+.financeiro-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid $fin-borda;
+    padding: 18px 8px;
+    background: #fff;
+
+    li.nav-item {
+        display: flex;
+        align-items: center;
+    }
+
+    li.nav-item a {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 6px;
+        border: 0 !important;
+        background: transparent !important;
+        opacity: 1 !important;
+
+        // remove o triângulo/underline do tema
+        &::after,
+        &::before {
+            display: none !important;
+        }
+    }
+
+    // linha conectando os passos
+    li.nav-item + li.nav-item::before {
+        content: '';
+        width: 56px;
+        height: 2px;
+        border-radius: 2px;
+        background: $fin-borda;
+        margin: 0 14px;
+        transition: background 0.25s ease;
+    }
+
+    &__num {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        margin-right: 9px;
+        border-radius: 50%;
+        border: 2px solid #cdd3d8;
+        background: #fff;
+        color: #98a0a8;
+        font-size: 13px;
+        font-weight: 700;
+        transition: all 0.25s ease;
+        flex-shrink: 0;
+    }
+
+    &__label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #98a0a8;
+        transition: color 0.25s ease;
+    }
+
+    // passo ATIVO
+    li.nav-item a.active {
+        .financeiro-stepper__num {
+            border-color: $fin-laranja;
+            background: $fin-laranja;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba($fin-laranja, 0.35);
+        }
+
+        .financeiro-stepper__label {
+            color: #2d3436;
+        }
+    }
+
+    // passos CONCLUÍDOS (anteriores ao ativo): círculo verde com check
+    li.nav-item:has(~ li a.active) {
+        .financeiro-stepper__num {
+            border-color: $fin-verde;
+            background: $fin-verde;
+            color: transparent;
+            font-size: 0;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 8px;
+                left: 7px;
+                width: 12px;
+                height: 7px;
+                border-left: 2px solid #fff;
+                border-bottom: 2px solid #fff;
+                transform: rotate(-45deg);
+            }
+        }
+
+        .financeiro-stepper__label {
+            color: $fin-verde;
+        }
+    }
+
+    // linha antes de um passo concluído/ativo fica verde
+    li.nav-item:has(a.active)::before,
+    li.nav-item:has(~ li a.active) + li.nav-item::before {
+        background: $fin-verde;
+    }
+
+    li.nav-item:has(a.active)::before {
+        background: $fin-verde;
+    }
+}
+
+@media (max-width: 575px) {
+    .financeiro-stepper {
+        li.nav-item + li.nav-item::before {
+            width: 20px;
+            margin: 0 8px;
+        }
+
+        &__label {
+            font-size: 10.5px;
+        }
+
+        &__num {
+            width: 26px;
+            height: 26px;
+            margin-right: 6px;
+
+            &::after {
+                top: 7px !important;
+                left: 5px !important;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------
+// Seletor de método de pagamento (Cartão / PIX / Boleto)
+// ---------------------------------------------------------
+.metodos-tabs {
+    display: flex;
+    border: 1px solid $fin-borda;
+    border-radius: 10px;
+    background: #f4f5f7;
+    padding: 4px;
+    margin-bottom: 16px;
+
+    li.nav-item {
+        flex: 1;
+    }
+
+    li.nav-item a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 6px;
+        border: 0 !important;
+        border-radius: 8px;
+        background: transparent !important;
+        color: #7b838b;
+        font-size: 12.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        opacity: 1 !important;
+        transition: all 0.2s ease;
+
+        &::after,
+        &::before {
+            display: none !important;
+        }
+
+        i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        &:hover {
+            color: #2d3436;
+        }
+
+        &.active {
+            background: #fff !important;
+            color: $fin-laranja;
+            box-shadow: 0 2px 8px rgba(23, 30, 45, 0.12);
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .metodos-tabs {
+        .metodos-tabs__extra {
+            display: none;
+        }
+
+        li.nav-item a {
+            font-size: 11.5px;
+
+            i {
+                margin-right: 4px;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------
 // Aba PLANO — pacote contratado + lista de planos como cards
 // ---------------------------------------------------------
 .plano-atual-card {

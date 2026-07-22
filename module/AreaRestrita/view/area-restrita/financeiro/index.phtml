@@ -15,21 +15,24 @@
 <div class=" container-fluid container-fixed-lg">
     <div id="rootwizard" class="<?= $this->recorrencia ? 'has-recorrencia' : '' ?>">
         <?= $this->partial('area-restrita/financeiro/recorrencia-overlay.phtml', ['recorrencia' => $this->recorrencia]) ?>
-        <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm nav-main-financeiro"
-            role="tablist" data-init-reponsive-tabs="dropdownfx">
+        <ul class="nav nav-tabs nav-main-financeiro financeiro-stepper"
+            role="tablist">
             <li class="nav-item">
                 <a class="active" data-toggle="tab" href="#tab-planos" data-target="#tab-planos" role="tab">
-                    <i class="fa fa-shopping-cart tab-icon"></i> <span>Plano</span>
+                    <span class="financeiro-stepper__num">1</span>
+                    <span class="financeiro-stepper__label">Plano</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="" data-toggle="tab" href="#tab-pagamento" data-target="#tab-pagamento" role="tab">
-                    <i class="fa fa-credit-card tab-icon"></i> <span>Pagamento</span>
+                    <span class="financeiro-stepper__num">2</span>
+                    <span class="financeiro-stepper__label">Pagamento</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="" data-toggle="tab" href="#tab-finalizar" data-target="#tab-finalizar" role="tab">
-                    <i class="fa fa-check tab-icon"></i> <span>Finalizar</span>
+                    <span class="financeiro-stepper__num">3</span>
+                    <span class="financeiro-stepper__label">Finalizar</span>
                 </a>
             </li>
         </ul>
@@ -201,24 +204,23 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="pagamento-feedback" aria-live="polite"></div>
-                        <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm" role="tablist"
-                            data-init-reponsive-tabs="dropdownfx">
+                        <ul class="nav nav-tabs metodos-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="active" data-toggle="tab" href="#tab1" data-target="#cartao_tab" role="tab">
-                                    <i class="fa fa-shopping-cart tab-icon"></i>
-                                    <span>Cartão de Crédito</span>
+                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                    <span>Cartão<span class="metodos-tabs__extra"> de Crédito</span></span>
                                 </a>
-                            </li>							
+                            </li>
                             <li class="nav-item">
                                 <a data-toggle="tab" href="#tab3" data-target="#pix_tab" role="tab">
-                                    <i class="fa fa-credit-card tab-icon"></i>
+                                    <i class="fa fa-qrcode" aria-hidden="true"></i>
                                     <span>PIX</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="" data-toggle="tab" href="#tab3" data-target="#boleto_tab" role="tab">
-                                    <i class="fa fa-file-text tab-icon"></i>
-                                    <span>Boleto Bancário</span>
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    <span>Boleto</span>
                                 </a>
                             </li>
                         </ul>

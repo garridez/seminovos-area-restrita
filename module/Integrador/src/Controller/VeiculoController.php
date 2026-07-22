@@ -51,6 +51,13 @@ class VeiculoController extends AbstractActionController
 
         $data['idPlano'] ??= 5;
 
+        // O integrador não possui a opção "chat ativo/inativo", então por padrão
+        // o anúncio é publicado com todas as opções de contato ativas (chat, ligação e proposta).
+        // Caso o integrador passe esses campos no futuro, os valores enviados são respeitados.
+        $data['aceitaChat'] ??= 1;
+        $data['aceitaLigacao'] ??= 1;
+        $data['aceitaProposta'] ??= 1;
+
         if ($data['idPlano'] == 5 && $plano['totalBasico'] <= $plano['totalBasicoPublicado']) {
             return new JsonModel(['status' => 405, 'detail' => 'Excedido número de veículos do plano Básico']);
         } elseif ($data['idPlano'] == 2 && $plano['totalTurbo'] <= $plano['totalTurboPublicados']) {
