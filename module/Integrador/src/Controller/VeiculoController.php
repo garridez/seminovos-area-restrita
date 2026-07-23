@@ -17,6 +17,20 @@ class VeiculoController extends AbstractActionController
         /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
 
+        // Loja inativa na Seminovos não pode ter anúncios publicados pelo integrador
+        if (!$this->isLojaAtiva()) {
+            file_put_contents(
+                'data/logs/' . date('Y-m-d-') . $idCadastro . '.log',
+                json_encode(['bloqueado' => 'loja-inativa', 'post' => $request->getPost()->toArray()]) . "\n",
+                FILE_APPEND
+            );
+
+            return new JsonModel([
+                'status' => 403,
+                'detail' => 'Loja inativa na Seminovos. O anúncio não foi publicado.',
+            ]);
+        }
+
         $plano = $this->getApiClient()->planosGet([
             'idCadastro' => $idCadastro,
             'tipoCadastro' => 1,
@@ -115,6 +129,19 @@ class VeiculoController extends AbstractActionController
 
         /** @var ApiClient $apiClient */
         $apiClient = $this->getContainer()->get(ApiClient::class);
+
+        // Com a loja inativa na Seminovos, o integrador não pode ativar/reativar anúncios
+        // (idStatus 2 = ativo, 9 = reservado — ambos deixam o anúncio visível no site)
+        if (
+            isset($data['idStatus'])
+            && in_array((int) $data['idStatus'], [2, 9], true)
+            && !$this->isLojaAtiva()
+        ) {
+            return new JsonModel([
+                'status' => 403,
+                'detail' => 'Loja inativa na Seminovos. O anúncio não foi ativado.',
+            ]);
+        }
 
         if (!isset($data['flagIpva'])) {
             $data['flagIpva'] = 0;

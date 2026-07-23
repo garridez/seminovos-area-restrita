@@ -19,6 +19,11 @@ use SnBH\ApiClient\Response;
 class AbstractActionController extends ZendAbstractActionController
 {
     /**
+     * Status do cadastro (loja) ativo na Seminovos
+     */
+    public const CADASTRO_STATUS_ATIVO = 1;
+
+    /**
      * Retorna o idCadastro que foi passado por header
      */
     public function getIdCadastro(): int
@@ -27,6 +32,30 @@ class AbstractActionController extends ZendAbstractActionController
         $headerIdCadastro = $request->getHeader('X-SnBH-IdCadastro');
 
         return (int) $headerIdCadastro->getFieldValue();
+    }
+
+    /**
+     * Verifica se a loja (cadastro) da requisição está ativa na Seminovos.
+     *
+     * Usa considerarInativo=1 para a API retornar o cadastro mesmo quando
+     * inativo (sem esse parâmetro a busca filtra por idStatus = 1 e não
+     * daria para diferenciar loja inativa de loja inexistente).
+     * Sem cache, pois o status pode mudar a qualquer momento.
+     * Em caso de falha na consulta, retorna false (fail-closed).
+     */
+    public function isLojaAtiva(): bool
+    {
+        $response = $this->getApiClient()
+            ->cadastrosGet(['considerarInativo' => 1], $this->getIdCadastro(), false);
+
+        if ($response->status !== 200) {
+            return false;
+        }
+
+        $cadastro = $response->getData()[0] ?? null;
+
+        return $cadastro !== null
+            && (int) ($cadastro['idStatus'] ?? 0) === self::CADASTRO_STATUS_ATIVO;
     }
 
     public function getContainer(): ServiceManager
