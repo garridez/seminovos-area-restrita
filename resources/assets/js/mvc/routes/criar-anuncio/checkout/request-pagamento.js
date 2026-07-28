@@ -20,27 +20,66 @@ export default function (formData, ajaxParams) {
         data = data.concat(formData);
     }
 	
+	var escapeHtmlErro = function (txt) {
+		return String(txt).replace(/[&<>"']/g, function (c) {
+			return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+		});
+	};
+
+	/**
+	 * Monta o alerta de erro do pagamento. Aceita os dois formatos que o
+	 * pagamentos.seminovos devolve:
+	 *   - erro de validação:  { error: { details: { campo: ['msg'] } } }
+	 *   - motivo da operadora: { error: 'texto', detail: 'texto' }  (cartão negado, falha PIX)
+	 */
 	var buildErrorHtmlFromResponse = function (responseJSON) {
-		const error = responseJSON?.error || {};
-		const details = error.details || {};
+		const error = responseJSON?.error;
+		const details = (error && typeof error === 'object' && error.details) || {};
+
+		// Mensagem em texto (motivo da recusa) - o caso mais comum de cartão negado.
+		let mensagem = '';
+		if (typeof error === 'string' && error.trim()) {
+			mensagem = error.trim();
+		} else if (error && typeof error === 'object' && typeof error.message === 'string') {
+			mensagem = error.message.trim();
+		} else if (typeof responseJSON?.detail === 'string' && responseJSON.detail.trim()) {
+			mensagem = responseJSON.detail.trim();
+		}
+
+		const itens = [];
+		Object.entries(details).forEach(([fieldName, messages]) => {
+			(Array.isArray(messages) ? messages : [messages]).forEach((message) => {
+				itens.push(String(message));
+			});
+		});
+
+		// Sem detalhes de validação: mostra o motivo como item único.
+		if (itens.length === 0 && mensagem) {
+			itens.push(mensagem);
+		}
+		if (itens.length === 0) {
+			itens.push('Não foi possível concluir o pagamento. Tente novamente.');
+		}
+
+		const titulo = Object.keys(details).length
+			? 'Ocorreram erros de validação:'
+			: 'Não foi possível concluir o pagamento:';
 
 		let html = `
 			<div class="alert alert-danger d-flex align-items-start" role="alert">
 				<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
 				<div>
-					<p class="mb-1 fw-bold">Ocorreram erros de validação:</p>
+					<p class="mb-1 fw-bold">${titulo}</p>
 					<ul class="error-list list-unstyled mb-0">
 		`;
 
-		Object.entries(details).forEach(([fieldName, messages]) => {
-			messages.forEach((message) => {
-				html += `
-					<li class="d-flex align-items-start mb-1">
-						<i class="bi bi-x-circle-fill me-2 mt-1"></i>
-						<span>${message}</span>
-					</li>
-				`;
-			});
+		itens.forEach((message) => {
+			html += `
+				<li class="d-flex align-items-start mb-1">
+					<i class="bi bi-x-circle-fill me-2 mt-1"></i>
+					<span>${escapeHtmlErro(message)}</span>
+				</li>
+			`;
 		});
 
 		html += `
@@ -149,10 +188,13 @@ export default function (formData, ajaxParams) {
 				if(httpResponse.status == "captured"){
 					const tipo = window.location.pathname.split('/').filter(Boolean)[0];
 					window.location.href = `/${tipo}/${httpResponse.idVeiculo}/checkout/aprovado`;
+				} else if (httpResponse.status == "denied" || httpResponse?.error) {
+					// Cartão recusado: mostra o motivo da operadora em vez de "em andamento".
+					requestAlerts.erro(buildErrorHtmlFromResponse(httpResponse));
 				} else {
 					pagamentoEmAndamento();
 				}
-                return;					
+                return;
 			}
 			
 			if(metodo === 'boleto'){
