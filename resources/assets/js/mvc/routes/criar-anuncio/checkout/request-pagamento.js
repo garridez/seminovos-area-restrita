@@ -116,6 +116,9 @@ export default function (formData, ajaxParams) {
     // server-side no webhook, quando pix/boleto/cartão confirmam).
     data.push({ name: 'gaClientId', value: getGaClientId() });
     data.push({ name: 'gaSessionId', value: getGaSessionId() });
+    // Origem da venda: o purchase sai com origem_venda=area_restrita, permitindo
+    // separar deste fluxo o que vem do wizard do site (o evento continua 'purchase').
+    data.push({ name: 'origem', value: 'area_restrita' });
 
     var idVeiculo = $('#dados-basicos form').find('input[name="idVeiculo"]').val() || '';
     var dataRedirectPagamento = {
