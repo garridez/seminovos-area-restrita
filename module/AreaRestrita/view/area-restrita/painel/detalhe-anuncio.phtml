@@ -44,7 +44,11 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             <?php endif; ?>
                         </p>
                         <h4 class="d-flex justify-content-start justify-content-md-end col-12 col-md-6 m-0 p-0 h4 text-cinza-escuro">
-                            R$ <?= $veiculo['valorFormatado'] ?>
+                            <?php if (!empty($veiculo['combinarValor']) && $veiculo['combinarValor'] != '0') : ?>
+                                Valor a combinar
+                            <?php else : ?>
+                                R$ <?= $veiculo['valorFormatado'] ?>
+                            <?php endif; ?>
                         </h4>
                     </div>
                     <div class="col-12 col-lg-6 mt-2">

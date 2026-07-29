@@ -32,7 +32,9 @@ $temPropostas = count($this->propostas) > 0;
                     </h4>
                     <ul class="ds-data-list">
                         <li><span>Placa</span><strong><?= strtoupper((string) $veiculo['placa']) ?></strong></li>
-                        <li><span>Valor</span><strong>R$ <?= $veiculo['valorFormatado'] ?></strong></li>
+                        <li><span>Valor</span><strong><?= (!empty($veiculo['combinarValor']) && $veiculo['combinarValor'] != '0')
+                            ? 'A combinar'
+                            : 'R$ ' . $veiculo['valorFormatado'] ?></strong></li>
                         <li><span>Quilometragem</span><strong><?= $veiculo['kilometragemFormatada'] ?> km</strong></li>
                         <li><span>Código</span><strong><?= $veiculo['idVeiculo'] ?></strong></li>
                     </ul>

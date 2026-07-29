@@ -121,7 +121,11 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             <h4
                                                 class="d-flex h4 text-cinza-escuro flex-wrap">
                                                 <span class="mr-3 mr-md-0">
-                                                    R$ <?= $veiculo['valorFormatado'] ?>
+                                                    <?php if (!empty($veiculo['combinarValor']) && $veiculo['combinarValor'] != '0') : ?>
+                                                        Valor a combinar
+                                                    <?php else : ?>
+                                                        R$ <?= $veiculo['valorFormatado'] ?>
+                                                    <?php endif; ?>
                                                 </span>
                                                 <?php if ($veiculo['financiamento']) : ?>
                                                     <div>
