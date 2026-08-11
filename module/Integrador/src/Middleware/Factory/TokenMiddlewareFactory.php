@@ -11,8 +11,15 @@ class TokenMiddlewareFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $tokens = $this->getTokens($container);
-        return new TokenMiddleware($tokens);
+        /** @var ApiClient $apiClient */
+        $apiClient = $container->get(ApiClient::class);
+
+        return new TokenMiddleware(
+            $this->getTokens($container),
+            // Fallback sem cache: usado quando o token não está na lista cacheada
+            // (ex.: token recém-criado após reativação da loja)
+            static fn () => $apiClient->integracaoTokenGet([], null, false)->getData() ?? []
+        );
     }
 
     public function getTokens(ContainerInterface $container)

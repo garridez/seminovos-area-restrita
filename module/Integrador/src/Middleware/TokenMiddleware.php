@@ -11,7 +11,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class TokenMiddleware implements MiddlewareInterface
 {
-    public function __construct(protected $tokens) {}
+    /**
+     * @param array $tokens Lista de tokens (normalmente vinda do cache)
+     * @param callable|null $refreshTokens Callback que retorna a lista de tokens
+     *                                     atualizada (sem cache). Usado como
+     *                                     fallback quando o token não é
+     *                                     encontrado na lista cacheada.
+     */
+    public function __construct(protected $tokens, protected $refreshTokens = null) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -53,7 +60,8 @@ class TokenMiddleware implements MiddlewareInterface
         }
 
         // O idCadastro passado deve ser igual ao idCadastro que está no banco
-        if ($tokenData['idCadastro'] !== $idCadastro && !$acessoToken) {
+        // (cast para int pois o valor pode chegar como string do JSON da API)
+        if (!$acessoToken && (int) $tokenData['idCadastro'] !== $idCadastro) {
             return $this->naoAutorizadoResponse();
         }
 
@@ -70,6 +78,11 @@ class TokenMiddleware implements MiddlewareInterface
     /**
      * Retorna os dados do token
      *
+     * Se o token não estiver na lista (que normalmente vem de cache),
+     * busca a lista atualizada sem cache uma única vez antes de negar.
+     * Isso cobre tokens recém-criados — ex.: loja reativada que refaz o
+     * login do integrador e recebe um token novo, ainda fora do cache.
+     *
      * @param string $token
      */
     public function getTokenData($token): bool|array
@@ -79,6 +92,15 @@ class TokenMiddleware implements MiddlewareInterface
                 return $tokenData;
             }
         }
+
+        if ($this->refreshTokens !== null) {
+            $this->tokens = (array) ($this->refreshTokens)();
+            // Evita nova busca na mesma requisição
+            $this->refreshTokens = null;
+
+            return $this->getTokenData($token);
+        }
+
         return false;
     }
 
