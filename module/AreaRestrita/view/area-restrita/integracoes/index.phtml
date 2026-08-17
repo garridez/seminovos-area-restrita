@@ -1,0 +1,213 @@
+<?php
+/**
+ * Tela de Integrações da revenda
+ *
+ * Variáveis vindas do IntegracoesController:
+ * - $tokens: array de tokens do integrador (id_token, nome, token)
+ * - $webmotors: registro do feed Webmotors ou null (token, tokenExpire, data_atualizacao)
+ */
+?>
+<div class="container-fluid p-4 pagina-integracoes">
+    <h3 class="mb-1">Integrações</h3>
+    <p class="text-muted mb-4">
+        Conecte o seu sistema de gestão de estoque e portais parceiros à Seminovos.
+    </p>
+
+    <!-- ============================================= -->
+    <!-- CARD 1: Credenciais do Integrador             -->
+    <!-- ============================================= -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <b><i class="fa fa-plug" aria-hidden="true"></i> Credenciais do Integrador</b>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">
+                Estas credenciais permitem que o seu sistema de gestão de estoque
+                (Boom, Revenda Mais, etc.) publique e sincronize os seus anúncios na
+                Seminovos automaticamente. Informe ao seu fornecedor o
+                <b>Token</b> e o <b>ID do cadastro:
+                <span class="badge badge-dark"><?= (int) $this->userInfo('idCadastro') ?></span></b>
+            </p>
+
+            <?php if (empty($tokens)) : ?>
+                <div class="alert alert-info">
+                    Você ainda não possui nenhum token. Clique em
+                    <b>Gerar novo token</b> para criar o primeiro.
+                </div>
+            <?php else : ?>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th style="width:180px">Nome</th>
+                                <th>Token</th>
+                                <th style="width:180px" class="text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($tokens as $t) : ?>
+                            <tr>
+                                <td><?= $this->escapeHtml($t['nome']) ?></td>
+                                <td>
+                                    <code class="token-valor"><?= $this->escapeHtml($t['token']) ?></code>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-secondary js-copiar-token"
+                                            data-token="<?= $this->escapeHtmlAttr($t['token']) ?>"
+                                            title="Copiar token">
+                                        <i class="fa fa-copy" aria-hidden="true"></i> Copiar
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger js-excluir-token"
+                                            data-id="<?= (int) $t['id_token'] ?>"
+                                            title="Excluir token">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+
+            <form class="form-inline js-gerar-token mt-2">
+                <input type="text"
+                       name="nome"
+                       class="form-control mr-2 mb-2"
+                       placeholder="Nome (ex: Boom Sistemas)"
+                       maxlength="50">
+                <button type="submit" class="btn btn-laranja mb-2">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Gerar novo token
+                </button>
+            </form>
+
+            <small class="text-muted d-block mt-2">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                Gerar um token novo não desativa os anteriores. Ao excluir um token,
+                o sistema que o utiliza pode levar até 5 minutos para perder o acesso.
+            </small>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- CARD 2: Feed Webmotors                        -->
+    <!-- ============================================= -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <b><i class="fa fa-rss" aria-hidden="true"></i> Integração Webmotors</b>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">
+                Cole aqui o token fornecido pela Webmotors para ativar a
+                sincronização do seu estoque. Se você ainda não possui um token,
+                solicite ao seu contato na Webmotors.
+            </p>
+
+            <form class="form-inline js-salvar-webmotors">
+                <input type="text"
+                       name="token"
+                       class="form-control mr-2 mb-2"
+                       style="min-width:340px"
+                       placeholder="Token da Webmotors"
+                       value="<?= $this->escapeHtmlAttr($webmotors['token'] ?? '') ?>">
+                <button type="submit" class="btn btn-laranja mb-2">
+                    <i class="fa fa-save" aria-hidden="true"></i> Salvar
+                </button>
+            </form>
+
+            <?php if (!empty($webmotors['data_atualizacao'])) : ?>
+                <small class="text-muted d-block mt-2">
+                    <i class="fa fa-clock" aria-hidden="true"></i>
+                    Atualizado em <?= $this->escapeHtml($webmotors['data_atualizacao']) ?>
+                </small>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+    // Gerar novo token do integrador
+    $('.js-gerar-token').on('submit', function (e) {
+        e.preventDefault();
+
+        var $btn = $(this).find('button').prop('disabled', true);
+
+        $.post('/integracoes/gerar-token', $(this).serialize())
+            .done(function () {
+                location.reload();
+            })
+            .fail(function () {
+                alert('Erro ao gerar o token. Tente novamente.');
+                $btn.prop('disabled', false);
+            });
+    });
+
+    // Excluir token do integrador
+    $(document).on('click', '.js-excluir-token', function () {
+        if (!confirm('Excluir este token? O sistema que o utiliza perderá o acesso.')) {
+            return;
+        }
+
+        $.post('/integracoes/excluir-token/' + $(this).data('id'))
+            .done(function (res) {
+                if (res && res.status === 200) {
+                    location.reload();
+                } else {
+                    alert((res && res.detail) || 'Erro ao excluir o token.');
+                }
+            })
+            .fail(function () {
+                alert('Erro ao excluir o token. Tente novamente.');
+            });
+    });
+
+    // Copiar token para a área de transferência
+    $(document).on('click', '.js-copiar-token', function () {
+        var token = $(this).data('token');
+        var $btn = $(this);
+
+        function feedback() {
+            var htmlOriginal = $btn.html();
+            $btn.html('<i class="fa fa-check" aria-hidden="true"></i> Copiado!');
+            setTimeout(function () { $btn.html(htmlOriginal); }, 1500);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(token).then(feedback);
+        } else {
+            var input = document.createElement('input');
+            input.value = token;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            feedback();
+        }
+    });
+
+    // Salvar token do feed Webmotors
+    $('.js-salvar-webmotors').on('submit', function (e) {
+        e.preventDefault();
+
+        var $btn = $(this).find('button').prop('disabled', true);
+
+        $.post('/integracoes/salvar-webmotors', $(this).serialize())
+            .done(function (res) {
+                if (res && res.status === 200) {
+                    alert('Token da Webmotors salvo com sucesso!');
+                } else {
+                    alert((res && res.detail) || 'Erro ao salvar o token.');
+                }
+            })
+            .fail(function () {
+                alert('Erro ao salvar o token. Tente novamente.');
+            })
+            .always(function () {
+                $btn.prop('disabled', false);
+            });
+    });
+});
+</script>

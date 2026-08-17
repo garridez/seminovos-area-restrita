@@ -176,6 +176,7 @@ return [
             Controller\XmlController::class => InvokableFactory::class,
             Controller\HistoricoPagamentosController::class => InvokableFactory::class,
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\IntegracoesController::class => InvokableFactory::class,
             Controller\JsonController::class => InvokableFactory::class,
             Controller\MeuSiteController::class => InvokableFactory::class,
             Controller\MeusDadosController::class => InvokableFactory::class,

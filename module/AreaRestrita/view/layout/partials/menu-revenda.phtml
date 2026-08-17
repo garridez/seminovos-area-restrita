@@ -95,6 +95,12 @@ $url = $container->get('Config')['SnBH']['urls']['site'] ?? "/meus_veiculos";
 			</a>
 		</li>
         <li>
+            <a href="<?= $this->url('restrito/integracoes') ?>" title="Integrações">
+                <span class="icon-thumbnail"><i class="fa fa-plug" aria-hidden="true"></i></span>
+                <span class="title">Integrações</span>
+            </a>
+        </li>
+        <li>
             <a href="<?= $this->url('restrito/contrato-revenda') ?>" title="Contrato">
                 <span class="icon-thumbnail"><i class="fa fa-address-book" aria-hidden="true"></i></span>
                 <span class="title">Contrato</span>

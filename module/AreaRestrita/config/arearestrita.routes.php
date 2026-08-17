@@ -334,6 +334,50 @@ return [
             ],
         ]
     ],*/
+    'integracoes' => [
+        'type' => Http\Literal::class,
+        'options' => [
+            'route' => 'integracoes',
+            'defaults' => [
+                'controller' => PipeSpec::class,
+                'controller_name' => Ctrl\IntegracoesController::class,
+                'action' => 'index',
+            ],
+        ],
+        'may_terminate' => true,
+        'child_routes' => [
+            'gerar-token' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/gerar-token',
+                    'defaults' => [
+                        'action' => 'gerar-token',
+                    ],
+                ],
+            ],
+            'excluir-token' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/excluir-token/:idToken',
+                    'constraints' => [
+                        'idToken' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'action' => 'excluir-token',
+                    ],
+                ],
+            ],
+            'salvar-webmotors' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/salvar-webmotors',
+                    'defaults' => [
+                        'action' => 'salvar-webmotors',
+                    ],
+                ],
+            ],
+        ],
+    ],
     'meus-veiculos' => [
         'type' => Http\Literal::class,
         'options' => [
