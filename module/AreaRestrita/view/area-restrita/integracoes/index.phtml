@@ -24,10 +24,25 @@
             <p class="text-muted">
                 Estas credenciais permitem que o seu sistema de gestão de estoque
                 (Boom, Revenda Mais, etc.) publique e sincronize os seus anúncios na
-                Seminovos automaticamente. Informe ao seu fornecedor o
-                <b>Token</b> e o <b>ID do cadastro:
-                <span class="badge badge-dark"><?= (int) $this->userInfo('idCadastro') ?></span></b>
+                Seminovos automaticamente.
             </p>
+
+            <div class="alert alert-secondary py-2">
+                <i class="fa fa-key" aria-hidden="true"></i>
+                A integração usa <b>duas credenciais juntas</b>: o
+                <b>ID do Cadastro</b> abaixo e um <b>Token</b> da lista.
+                Informe os dois ao seu fornecedor.
+                <div class="mt-2">
+                    <b>ID do Cadastro:</b>
+                    <code class="token-valor"><?= (int) $idCadastro ?></code>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary js-copiar-token ml-2"
+                            data-token="<?= (int) $idCadastro ?>"
+                            title="Copiar ID do Cadastro">
+                        <i class="fa fa-copy" aria-hidden="true"></i> Copiar
+                    </button>
+                </div>
+            </div>
 
             <?php if (empty($tokens)) : ?>
                 <div class="alert alert-info">

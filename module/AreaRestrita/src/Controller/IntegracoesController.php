@@ -40,6 +40,7 @@ class IntegracoesController extends AbstractActionController
         return new ViewModel([
             'tokens' => $tokens,
             'webmotors' => $webmotors[0] ?? null,
+            'idCadastro' => (int) $idCadastro,
         ]);
     }
 
