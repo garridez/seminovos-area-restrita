@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 import advancedAlerts from '../../../components/AdvancedAlerts';
 import HandleApiError from '../../../components/HandleApiError';
 import DataLayerGTMPopulate from '../../../helpers/DataLayerGTMPopulate';
@@ -5,6 +7,20 @@ import stopEvent from '../../../helpers/StopEvent';
 import BtnContinuar from './helpers/BtnContinuar';
 
 export const seletor = '.c-criar-anuncio.a-index';
+
+/**
+ * O plano escolhido já inclui o Certificado Documental ("Histórico veicular")?
+ * Vem de data-certificado-incluso no radio do plano (planos.historicoVeicular).
+ * Compartilhado com step-04-servicos-adicionais.js e checkout/cartao-de-credito.js.
+ */
+export function planoIncluiCertificado() {
+    var $radio = $('input[name="idPlano"]:checked').first();
+    if (!$radio.length) {
+        return false;
+    }
+    return String($radio.data('certificadoIncluso') || $radio.attr('data-certificado-incluso') || '0') === '1';
+}
+
 export const callback = ($) => {
     $('.anuncio-steps').on('click', '.step-plano label[data-plano-desativado]', function (e) {
         advancedAlerts.warning({
@@ -90,8 +106,24 @@ export const callback = ($) => {
         }
 
         var servicoAdicionalCertificado = $('#servico-adicional-certificado');
-        if (servicoAdicionalCertificado.is(':checked')) {
-            valorTotal += parseFloat(servicoAdicionalCertificado.data('valor'));
+        var certIncluso = planoIncluiCertificado() && location.hash.indexOf('addCertificado') === -1;
+        if (certIncluso) {
+            // Certificado é benefício do plano: vai no pedido (certificado=1) sem somar
+            // os R$ 39,90 do add-on. Desmarca o add-on para não cobrar duas vezes.
+            if (servicoAdicionalCertificado.is(':checked')) {
+                servicoAdicionalCertificado.prop('checked', false);
+            }
+            $('#dados-basicos .certificado').val(1);
+            $('.resumo-compra .servico-adicional-certificado').addClass('hide');
+            $('.resumo-compra .servico-adicional-certificado-incluso').removeClass('hide');
+        } else {
+            $('.resumo-compra .servico-adicional-certificado-incluso').addClass('hide');
+            // Trocou de um plano com certificado incluso para um sem: o hidden volta a
+            // seguir o add-on, senão o serviço cobraria os R$ 39,90 sem a pessoa marcar.
+            $('#dados-basicos .certificado').val(servicoAdicionalCertificado.is(':checked') ? 1 : '');
+            if (servicoAdicionalCertificado.is(':checked')) {
+                valorTotal += parseFloat(servicoAdicionalCertificado.data('valor'));
+            }
         }
         $('.valor-total')
             .find('[data-valor-total]')

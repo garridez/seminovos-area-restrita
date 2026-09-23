@@ -6,6 +6,7 @@ import 'jquery-validation/dist/localization/messages_pt_BR';
 import $ from 'jquery';
 
 import requestPagamento from './request-pagamento';
+import { planoIncluiCertificado } from '../save-04-planos';
 
 var CERTIFICADO_VALOR = 39.9;
 
@@ -35,7 +36,8 @@ function montarParcelas() {
     if (acao === 'trocarPlano' || acao === 'addCertificado') {
         max = 1;
     }
-    if ($('#servico-adicional-certificado').is(':checked')) {
+    // Add-on só soma quando o plano NÃO inclui o certificado (senão cobraria em dobro).
+    if ($('#servico-adicional-certificado').is(':checked') && !planoIncluiCertificado()) {
         valor += CERTIFICADO_VALOR;
     }
 

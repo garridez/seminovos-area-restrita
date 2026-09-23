@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import stopEvent from '../../../helpers/StopEvent';
 import BtnContinuar from './helpers/BtnContinuar';
+import { planoIncluiCertificado } from './save-04-planos';
 export const seletor = '.c-criar-anuncio.a-index';
 export const prepend = true;
 
@@ -29,6 +30,25 @@ function init() {
             $('.btn-continuar').trigger('click');
             $('.step-container').stepPlugin('goTo', '.step-checkout');
             $('.step-container .step-servicos-adicionais').remove();
+            return stopEvent(e);
+        }
+
+        // Plano com "Histórico veicular" já inclui o certificado: não faz sentido
+        // vender o add-on (cobraria duas vezes). Marca no pedido e pula este passo.
+        // Exceção: compra avulsa do certificado (addCertificado) para anúncio no ar.
+        var compraAvulsa = location.hash && location.hash.indexOf('addCertificado') !== -1;
+        if (planoIncluiCertificado() && !compraAvulsa) {
+            $('input#servico-adicional-certificado').prop('checked', false);
+            $('#dados-basicos .certificado').val(1);
+
+            // Pula na direção em que a pessoa está indo. Não remove o passo (como o
+            // caso sem placa faz): se ela voltar e trocar para um plano sem o
+            // benefício, o add-on precisa voltar a aparecer.
+            var $steps = $('.step-container').find('> [class*="step-"]');
+            var atual = $steps.filter('.active').index();
+            var alvo = $steps.filter('.step-servicos-adicionais').index();
+            var voltando = atual > -1 && alvo > -1 && alvo < atual;
+            $('.step-container').stepPlugin('goTo', voltando ? '.step-plano' : '.step-checkout');
             return stopEvent(e);
         }
     });
