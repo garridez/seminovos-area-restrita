@@ -250,19 +250,9 @@ export const callback = ($) => {
                         url: '/carro/placa-disponivel/' + placa.toLowerCase(),
                         dataType: 'json',
                         success: function (response) {
-                            placaInput
-                                .parent()
-                                .removeClass('is-invalid is-valid')
-                                .addClass(response.placaDisponivel ? 'is-valid' : 'is-invalid');
-                            if (!response.placaDisponivel) {
-                                BtnContinuar.disable();
-                                advancedAlerts.error({
-                                    title: 'Placa já cadastrada',
-                                    text: 'Placa já cadastrada no sistema, confira a placa ou entre em cotato.',
-                                    time: 10000,
-                                });
-                                return;
-                            }
+                            // Placa duplicada é permitida: a consulta serve só para o
+                            // autopreenchimento (historicoCarro). Sem modal, sem campo vermelho.
+                            placaInput.parent().removeClass('is-invalid is-valid').addClass('is-valid');
 
                             if (
                                 response.historicoCarro &&
@@ -535,7 +525,11 @@ export const callback = ($) => {
 
                             BtnContinuar.enable();
                         },
-                        error: function () {},
+                        // A consulta é só conveniência: se falhar, a pessoa segue preenchendo à mão.
+                        // Antes o botão ficava desabilitado para sempre em caso de erro.
+                        error: function () {
+                            BtnContinuar.enable();
+                        },
                     });
                 });
         })

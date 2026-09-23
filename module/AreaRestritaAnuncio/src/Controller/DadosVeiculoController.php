@@ -159,17 +159,37 @@ class DadosVeiculoController extends AbstractActionController
                 $res = $apiClient->veiculosPost($data, $idVeiculo);
             }
 
+            // A resposta da API precisa virar JSON ANTES de qualquer efeito colateral:
+            // se a API devolver HTML (502/504 do nginx, fatal), ->json() lança exceção e,
+            // sem isso, a pessoa recebia um 500 em branco atrás do overlay de loading.
+            try {
+                $json = $res->json();
+            } catch (\Throwable $e) {
+                error_log('[carro/dados] resposta inválida da API: ' . $e->getMessage());
+                $this->response->setStatusCode(502);
+                return new JsonModel([
+                    'status' => 502,
+                    'title'  => 'Não foi possível salvar agora',
+                    'detail' => 'O servidor não respondeu. Tente novamente em alguns segundos; seus dados continuam preenchidos.',
+                ]);
+            }
+
             if (!is_null($idVeiculo)) {
+                // Melhor esforço, com timeout curto: não pode travar o salvamento.
                 VeiculoClearCache::clearCache($idVeiculo);
 
                 // Limpa o cache do middleware
-                $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
+                try {
+                    $this->getContainer()->get(Veiculos::class)->clearIsOwnerCache();
+                } catch (\Throwable $e) {
+                    error_log('[carro/dados] clearIsOwnerCache: ' . $e->getMessage());
+                }
             }
 
             if ($res->status) {
                 $this->response->setStatusCode($res->status);
             }
-            return new JsonModel($res->json());
+            return new JsonModel($json);
         }
 
         $checkedLeilao = empty($veiculoDados) ? false : $veiculoDados['flagLeilao'];
@@ -460,45 +480,40 @@ class DadosVeiculoController extends AbstractActionController
 	}
 
     /**
-     * Verifica se a placa está disponível para cadastro
-     * Retorna TRUE se a placa estiver disponível
-     * Retorna FALSE se a placa estiver indisponível
+     * Consulta a placa ao sair do campo.
+     *
+     * Placa duplicada é PERMITIDA (decisão de negócio: o mesmo veículo pode ter mais de
+     * um anúncio, como já acontece no wizard público e na API, que não bloqueiam). Antes
+     * este endpoint devolvia placaDisponivel=false para placa já cadastrada e o JS
+     * mostrava modal + campo vermelho e travava o "Continuar".
+     *
+     * A chamada à API continua só para devolver `historicoCarro` (autopreenchimento).
+     * Se ela falhar, não pode travar o cadastro: devolve disponível e sem histórico.
      */
     public function placaDisponivelAction()
     {
-        $statusPermitidos = [
-            /*1, // aguardando pagamento
-                        3, // cadastrando */
-            7, // removido
-            8, // vendido
-        ];
         $placa = $this->params()->fromRoute('placa', false);
         if (!$placa) {
             return new JsonModel(['status' => 405, 'detail' => 'Placa não informada']);
         }
-        /** @var ApiClient $apiClient */
-        $apiClient = $this->getContainer()->get(ApiClient::class);
 
-
-        $veiculo = $apiClient->veiculosGet([
-            "ignorarCondicoesBasicas" => 1,
-            "flagPlaca" => 1,
-        ], $placa, false)->json();
-
-        $placaDisponivel = false;
-        if (isset($veiculo) && $veiculo['status'] != 200) {
-            $placaDisponivel = true;
-        } elseif (!isset($veiculo['data'][0]['idVeiculo'])) {
-            $placaDisponivel = true;
-        } else {
-            $placaDisponivel = in_array($veiculo['data'][0]['idStatus'], $statusPermitidos);
+        $historicoCarro = null;
+        try {
+            /** @var ApiClient $apiClient */
+            $apiClient = $this->getContainer()->get(ApiClient::class);
+            $veiculo = $apiClient->veiculosGet([
+                "ignorarCondicoesBasicas" => 1,
+                "flagPlaca" => 1,
+            ], $placa, false)->json();
+            $historicoCarro = $veiculo['data'][0]['historicoCarro'] ?? null;
+        } catch (\Throwable $e) {
+            error_log('[placa-disponivel] consulta falhou para ' . $placa . ': ' . $e->getMessage());
         }
 
-        //$placaDisponivel = true;
         return new JsonModel([
             'status' => 200,
-            'placaDisponivel' => $placaDisponivel,
-            'historicoCarro' => $veiculo['data'][0]['historicoCarro'],
+            'placaDisponivel' => true,
+            'historicoCarro' => $historicoCarro,
         ]);
     }
 
