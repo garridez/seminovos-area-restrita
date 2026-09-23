@@ -163,6 +163,18 @@
 	color:#fff;
 }
 
+/* Parcelamento sem juros (maxParcelas do plano, editável no adm) */
+.plano-parcelas{
+	margin:-18px 0 18px;
+	font-size:14px;
+	color:#f4d100;
+	text-align:center;
+	line-height:1.2;
+}
+.plano-parcelas b{
+	color:#fff;
+}
+
 /* LISTA */
 .plano-card ul{
 	list-style:none;

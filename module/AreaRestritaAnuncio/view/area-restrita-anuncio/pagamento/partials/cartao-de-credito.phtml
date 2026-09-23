@@ -41,6 +41,18 @@
         </div>
     </div>
 
+    <?php // Parcelamento sem juros: opções montadas no JS pelo maxParcelas do plano escolhido. ?>
+    <div class="row" data-parcelas-campo hidden>
+        <div class="col-md-12">
+            <div class="form-group form-group-default" title="Número de parcelas sem juros">
+                <label for="parcelas">Parcelamento</label>
+                <select class="form-control" id="parcelas" name="parcelas">
+                    <option value="1">À vista</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group form-group-default" title="Termos de adesão">
         <label>
             <input type="checkbox" name="termos" required>

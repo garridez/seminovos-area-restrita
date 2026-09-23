@@ -65,6 +65,16 @@ if (isset($planoAtualDados) && $planoAtualDados && !$isRevenda) {
 }
 
 $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
+
+// Parcelamento sem juros configurado por plano (adm > Planos de anúncio).
+// Só faz sentido no valor cheio (não na diferença de upgrade) e fora da revenda.
+$maxParcelas = (int) ($plano['maxParcelas'] ?? 1);
+$mostrarParcelas = !$isRevenda && !$isGratis && $maxParcelas > 1
+    && !(isset($planoAtualDados) && $planoAtualDados && $planoAtualDados['idPlano'] != $plano['idPlano']);
+$valorParcela = $mostrarParcelas ? number_format($valorExibido / $maxParcelas, 2, ',', '.') : '';
+
+// Validade: dias = 0 significa "até a venda" (o sistema grava 9999-12-31 nesse caso).
+$diasPlano = (int) ($plano['dias'] ?? 0);
 ?>
 
 	<div class="plano-card plano-box">
@@ -113,9 +123,16 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 					<span class="centavos">,<?= $valorReal[1] ?></span>
 				</div>			
 				<?php endif; ?>
+
+				<?php if ($mostrarParcelas): ?>
+					<div class="plano-parcelas">
+						ou <b><?= $maxParcelas ?>x de R$ <?= $valorParcela ?></b> sem juros
+					</div>
+				<?php endif; ?>
 			<?php endif; ?>
 
-			<!-- LISTA -->
+			<!-- LISTA: benefícios vêm das flags do plano (editáveis em adm > Planos de anúncio).
+			     Antes eram texto fixo aqui, então mudar a oferta exigia deploy. -->
 			<ul>
 				<?php if ($plano['prioridade'] == 1 && !$isRevenda): ?>
 					<li>
@@ -126,29 +143,15 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 					</li>
 				<?php endif; ?>
 
-				<li>
-					<i class="fa fa-plus-square"></i>
-					<div class="item-texto">
-						<?= $isGratis ? 'Apenas ' : '' ?><?= $plano['quantidadeFotos'] ?> fotos
-					</div>
-				</li>
-
-				<li>
-					<i class="fa fa-plus-square"></i>
-					<div class="item-texto">
-						<?= $slug[$plano['prioridade']] == 'nitro' ? '1 vídeo' : 'Sem vídeos' ?>
-					</div>
-				</li>
-
 				<?php if (!$isRevenda): ?>
 					<li>
 						<i class="fa fa-plus-square"></i>
 						<div class="item-texto">
 							<?php
-							if ($isGratis) {
-								echo "Exibição no site por <b>{$plano['dias']} dias</b>";
+							if ($diasPlano === 0) {
+								echo "Anúncio no ar <b>até a venda</b>";
 							} else {
-								echo "Exibição no site até a venda*";
+								echo "Exibição no site por <b>{$diasPlano} dias</b>";
 							}
 							?>
 						</div>
@@ -158,9 +161,51 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 				<li>
 					<i class="fa fa-plus-square"></i>
 					<div class="item-texto">
-						Prioridade <b><?= $prioridadeNomes[$plano['prioridade']] ?></b>
+						<?= $isGratis ? 'Apenas ' : 'Até ' ?><?= (int) $plano['quantidadeFotos'] ?> fotos
 					</div>
 				</li>
+
+				<li>
+					<i class="<?= !empty($plano['permiteVideo']) ? 'fa fa-plus-square' : 'fa fa-minus-square text-muted' ?>"></i>
+					<div class="item-texto<?= !empty($plano['permiteVideo']) ? '' : ' text-muted' ?>">
+						<?= !empty($plano['permiteVideo']) ? 'Vídeo do seu veículo' : 'Sem vídeo' ?>
+					</div>
+				</li>
+
+				<?php if (!empty($plano['historicoVeicular'])): ?>
+					<li>
+						<i class="fa fa-plus-square"></i>
+						<div class="item-texto">Histórico veicular</div>
+					</li>
+				<?php endif; ?>
+
+				<?php if (!empty($plano['funilHistorico'])): ?>
+					<li>
+						<i class="fa fa-plus-square"></i>
+						<div class="item-texto">Funil de histórico</div>
+					</li>
+				<?php endif; ?>
+
+				<li>
+					<i class="fa fa-plus-square"></i>
+					<div class="item-texto">
+						Prioridade <b><?= $prioridadeNomes[$plano['prioridade']] ?? 'de exibição' ?></b>
+					</div>
+				</li>
+
+				<?php if (!empty($plano['disparoWhatsapp'])): ?>
+					<li>
+						<i class="fa fa-plus-square"></i>
+						<div class="item-texto">Disparos de proposta no WhatsApp</div>
+					</li>
+				<?php endif; ?>
+
+				<?php foreach (array_filter(array_map('trim', explode(';', (string) ($plano['beneficiosExtras'] ?? '')))) as $extra): ?>
+					<li>
+						<i class="fa fa-plus-square"></i>
+						<div class="item-texto"><?= $this->escapeHtml($extra) ?></div>
+					</li>
+				<?php endforeach; ?>
 
 				<?php if ($isGratis && !$isRevenda): ?>
 					<li>
@@ -183,6 +228,7 @@ $valorPlano = explode(',', number_format($valorExibido, 2, ',', '.'));
 			class="input-radio-plano"
 			<?= ($desabilitarPlano || $desabilitarPlanoRenda || !$diminuirPlano) ? 'disabled' : '' ?>
 			data-valor-plano="<?= $valorExibido ?>"
+			data-max-parcelas="<?= $mostrarParcelas ? $maxParcelas : 1 ?>"
 			style="height:0!important"
 		>
 
