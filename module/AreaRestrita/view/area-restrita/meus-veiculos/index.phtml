@@ -365,7 +365,15 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 <?php if ($veiculo['idStatus'] == 2 && (int) $this->userInfo('tipoCadastro') == 2): ?>
                                     <div class="d-flex mt-1">
                                         <small class="hint-text mt-1">
-                                            <?php if ($veiculo["intervaloData"] == 0) { ?>
+                                            <?php
+                                            // Planos "até a venda" gravam a data sentinela 9999-12-31
+                                            // (não pode ser NULL: a tabela veiculos_ativos filtra por
+                                            // dataExpiracao >= NOW() e o anúncio sumiria da busca).
+                                            $ateAVenda = strpos((string) $veiculo['dataExpiracao'], '9999') !== false;
+                                            ?>
+                                            <?php if ($ateAVenda) { ?>
+                                                No ar até a venda
+                                            <?php } elseif ($veiculo["intervaloData"] == 0) { ?>
                                                 Expira Hoje
                                             <?php } elseif ($veiculo["intervaloData"] >= 1) { ?>
                                                 Expira em <?= $veiculo["intervaloData"] ?> dias
