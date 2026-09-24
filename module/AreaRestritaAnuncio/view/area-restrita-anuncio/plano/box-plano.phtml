@@ -189,7 +189,7 @@ $diasPlano = (int) ($plano['dias'] ?? 0);
 					</div>
 				</li>
 
-				<?php if (!empty($plano['historicoVeicular'])): ?>
+				<?php if (!empty($plano['historicoVeicular']) && !$isRevenda): /* certificado incluso é só para particular */ ?>
 					<li>
 						<i class="fa fa-plus-square"></i>
 						<?php /* = Certificado Documental incluso: vai no pedido sem cobrar o add-on de R$ 39,90. */ ?>
@@ -247,7 +247,7 @@ $diasPlano = (int) ($plano['dias'] ?? 0);
 			<?= ($desabilitarPlano || $desabilitarPlanoRenda || !$diminuirPlano) ? 'disabled' : '' ?>
 			data-valor-plano="<?= $valorExibido ?>"
 			data-max-parcelas="<?= $mostrarParcelas ? $maxParcelas : 1 ?>"
-			data-certificado-incluso="<?= !empty($plano['historicoVeicular']) ? '1' : '0' ?>"
+			data-certificado-incluso="<?= (!empty($plano['historicoVeicular']) && !$isRevenda) ? '1' : '0' ?>"
 			style="height:0!important"
 		>
 

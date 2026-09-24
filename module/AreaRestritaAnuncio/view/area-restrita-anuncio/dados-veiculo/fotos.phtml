@@ -64,13 +64,18 @@ unset($foto, $fotosNewKeys);
                             <?php
                             $count = 0;
                             $default = ['idFoto' => null, 'idVeiculo' => null, 'foto' => null, 'ordem' => null, 'imagem' => 'https://placehold.it/262x196&text=Enviar%20Foto'];
-                            foreach (range(0, 2) as $i):
+                            // 20 espaços (4 x 5): o maior plano (Nitro) publica 20 fotos. Todas as fotos
+                            // ficam guardadas; o site mostra só as N primeiras do plano contratado.
+                            // Placeholders ilustrados existem até a 12ª; da 13ª em diante usa o genérico.
+                            $placeholderGenerico = '/img/placeholder_criar_anuncio/carro_12.png';
+                            foreach (range(0, 3) as $i):
 
                                 ?>
                                 <?php
                                 foreach (range(0, 4) as $i):
                                     $count++;
-                                    $default['imagem'] = "/img/placeholder_criar_anuncio/carro_$count.png";
+                                    $placeholder = $count <= 12 ? "/img/placeholder_criar_anuncio/carro_$count.png" : $placeholderGenerico;
+                                    $default['imagem'] = $placeholder;
                                     $foto = $fotos[$count] ?? $default;
                                     $isDefault = ($fotos[$count] ?? false) ? false : true;
                                     $foto_ = $foto['imagem'];
@@ -94,7 +99,7 @@ unset($foto, $fotosNewKeys);
                                             <div class="display-img img-thumbnail" style="background-image: url('<?= $foto_ ?>')"
                                                 data-posicao-rotacao=0
                                                 data-idfoto="<?= $foto['idFoto'] ?>"
-                                                data-placeholder="/img/placeholder_criar_anuncio/carro_<?=$count?>.png"
+                                                data-placeholder="<?= $placeholder ?>"
                                                 data-original="<?= $foto['imagem'] ?>" title="Enviar Foto"></div>
                                         </div>
                                         <div class="loader"></div>
