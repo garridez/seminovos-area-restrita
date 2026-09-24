@@ -163,16 +163,34 @@
 	color:#fff;
 }
 
-/* Parcelamento sem juros (maxParcelas do plano, editável no adm) */
+/* Parcela em destaque: "3x" pequeno antes do valor grande (3x R$ 59,97) */
+.preco--parcela .vezes{
+	font-size:20px;
+	font-weight:800;
+	color:#f4d100;
+	background:rgba(255,255,255,0.10);
+	border-radius:8px;
+	padding:2px 8px;
+	margin-right:4px;
+	margin-top:10px;
+	line-height:1.2;
+}
+
+/* Linha abaixo do preço: valor cheio à vista (com parcelas) ou "pagamento à vista"/"sem custo".
+   Sempre presente para os cards alinharem na mesma altura. */
 .plano-parcelas{
 	margin:-18px 0 18px;
 	font-size:14px;
 	color:#f4d100;
 	text-align:center;
 	line-height:1.2;
+	min-height:1.2em;
 }
 .plano-parcelas b{
 	color:#fff;
+}
+.plano-parcelas--vazia{
+	color:rgba(255,255,255,0.55);
 }
 
 /* LISTA */

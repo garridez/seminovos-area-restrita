@@ -44,11 +44,23 @@ function init() {
             // Pula na direção em que a pessoa está indo. Não remove o passo (como o
             // caso sem placa faz): se ela voltar e trocar para um plano sem o
             // benefício, o add-on precisa voltar a aparecer.
-            var $steps = $('.step-container').find('> [class*="step-"]');
-            var atual = $steps.filter('.active').index();
-            var alvo = $steps.filter('.step-servicos-adicionais').index();
-            var voltando = atual > -1 && alvo > -1 && alvo < atual;
-            $('.step-container').stepPlugin('goTo', voltando ? '.step-plano' : '.step-checkout');
+            //
+            // ATENÇÃO: há DOIS .step-container aninhados (o externo e o .step-veiculo).
+            // Os índices têm que vir do plugin do container EXTERNO — ler ".active" no
+            // DOM pegava um sub-passo interno, o cálculo dava "voltando" e o goTo caía
+            // no passo atual, que o plugin trata como fora do intervalo e desativa
+            // todos os passos (tela em branco).
+            var $outer = $('.anuncio-steps.step-container').first();
+            var atual = $outer.stepPlugin('getCurrentStepIndex');
+            var alvo = $outer.stepPlugin('getStepIndex', '.step-servicos-adicionais');
+            var voltando = atual !== false && alvo > -1 && alvo < atual;
+            var destino = voltando ? '.step-plano' : '.step-checkout';
+
+            // Nunca mandar para o passo atual (deixaria a tela em branco).
+            if ($outer.stepPlugin('getStepIndex', destino) === atual) {
+                return; // deixa o plugin seguir para o passo pedido
+            }
+            $outer.stepPlugin('goTo', destino);
             return stopEvent(e);
         }
     });

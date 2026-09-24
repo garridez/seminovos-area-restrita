@@ -265,3 +265,78 @@
       }
   }
 }
+// ---------------------------------------------------------------------------
+// Certificado Documental no card: apontamentos + toggle "mostrar no anúncio"
+// ---------------------------------------------------------------------------
+.cert-box {
+    border-left: 3px solid transparent;
+
+    &--alerta {
+        border-left-color: #e65100;
+        background: #fff7ed !important;
+    }
+}
+
+.cert-apontamentos {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+
+    .fa-exclamation-triangle { color: #e65100; }
+}
+
+// Toggle estilo iOS: pílula 44x24, bolinha branca, cinza desligado / verde ligado.
+.cert-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    &__slider {
+        position: relative;
+        flex: 0 0 auto;
+        width: 44px;
+        height: 24px;
+        border-radius: 24px;
+        background: #cfd4da;
+        transition: background 0.2s ease;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s ease;
+        }
+    }
+
+    &__texto {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #6b7280;
+        min-width: 66px;
+    }
+
+    input:checked + &__slider {
+        background: #2e7d32;
+        &::before { transform: translateX(20px); }
+    }
+    input:checked ~ &__texto { color: #2e7d32; }
+
+    input:focus-visible + &__slider { box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3); }
+
+    &.is-salvando { opacity: 0.6; pointer-events: none; }
+}

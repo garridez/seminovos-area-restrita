@@ -453,6 +453,16 @@ return [
                     ],
                 ],
             ],
+            // Toggle "mostrar certificado no anúncio" (?exibir=0|1)
+            'exibir-certificado' => [
+                'type' => Http\Segment::class,
+                'options' => [
+                    'route' => '/exibir-certificado/:idVeiculo',
+                    'defaults' => [
+                        'action' => 'exibirCertificado',
+                    ],
+                ],
+            ],
             'excluir' => [
                 'type' => Http\Segment::class,
                 'options' => [

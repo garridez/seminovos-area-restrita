@@ -1,10 +1,13 @@
 <?php
 
+// Posição na busca (1º = topo). Mesmos rótulos do wizard e de /planos-de-anuncio.
+// Antes o mapa seguia a numeração antiga (2 => máxima, 3 => alta...), e com as
+// posições atuais o Turbo saía "máxima" e o Flex "alta".
 $prioridadeNomes = [
     1 => 'máxima',
-    2 => 'máxima',
-    3 => 'alta',
-    4 => 'média',
+    2 => 'alta',
+    3 => 'média',
+    4 => 'básica',
     5 => 'mínima',
 ];
 
@@ -104,12 +107,24 @@ $diasPlano = (int) ($plano['dias'] ?? 0);
 				<!-- PREÇO -->
 				<?php
 					if(!$isDiscounted):
+						// Parcela em destaque (igual ao wizard e a /planos-de-anuncio):
+						// "3x" pequeno, R$ 59,97 grande, valor cheio pequeno embaixo.
+						$valorParcelaPartes = $mostrarParcelas ? explode(',', $valorParcela) : null;
 				?>
+				<?php if ($mostrarParcelas && $valorParcelaPartes): ?>
+				<div class="preco preco--parcela">
+					<span class="vezes"><?= $maxParcelas ?>x</span>
+					<span class="moeda">R$</span>
+					<span class="valor"><?= $valorParcelaPartes[0] ?></span>
+					<span class="centavos">,<?= $valorParcelaPartes[1] ?></span>
+				</div>
+				<?php else: ?>
 				<div class="preco">
 					<span class="moeda">R$</span>
 					<span class="valor"><?= $valorPlano[0] ?></span>
 					<span class="centavos">,<?= $valorPlano[1] ?></span>
 				</div>
+				<?php endif; ?>
 				<?php else: ?>
 				<div class="preco" style="margin-bottom: 0">
 					<span class="moeda">R$</span>
@@ -124,24 +139,26 @@ $diasPlano = (int) ($plano['dias'] ?? 0);
 				</div>			
 				<?php endif; ?>
 
-				<?php if ($mostrarParcelas): ?>
+				<?php if ($mostrarParcelas && !$isDiscounted): ?>
+					<div class="plano-parcelas">
+						ou <b>R$ <?= $valorPlano[0] ?>,<?= $valorPlano[1] ?> à vista</b> &middot; sem juros
+					</div>
+				<?php elseif ($mostrarParcelas): ?>
 					<div class="plano-parcelas">
 						ou <b><?= $maxParcelas ?>x de R$ <?= $valorParcela ?></b> sem juros
 					</div>
+				<?php elseif (!$isGratis): ?>
+					<div class="plano-parcelas plano-parcelas--vazia">pagamento à vista</div>
+				<?php else: ?>
+					<div class="plano-parcelas plano-parcelas--vazia">sem custo</div>
 				<?php endif; ?>
 			<?php endif; ?>
 
 			<!-- LISTA: benefícios vêm das flags do plano (editáveis em adm > Planos de anúncio).
 			     Antes eram texto fixo aqui, então mudar a oferta exigia deploy. -->
 			<ul>
-				<?php if ($plano['prioridade'] == 1 && !$isRevenda): ?>
-					<li>
-						<i class="fa fa-plus-square"></i>
-						<div class="item-texto">
-							Exibição na Home por 30 dias<br>(renováveis)
-						</div>
-					</li>
-				<?php endif; ?>
+				<?php /* "Exibição na Home por 30 dias" era texto fixo aqui; o que o plano dá agora vem
+				         das flags/benefícios extras cadastrados no adm (mesma fonte do wizard). */ ?>
 
 				<?php if (!$isRevenda): ?>
 					<li>

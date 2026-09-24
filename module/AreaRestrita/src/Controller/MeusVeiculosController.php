@@ -19,6 +19,7 @@ use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Model\ViewModel;
 use Psr\Container\ContainerInterface;
+use SnBH\Common\Helper\VeiculoClearCache;
 
 class MeusVeiculosController extends AbstractActionController
 {
@@ -554,6 +555,42 @@ class MeusVeiculosController extends AbstractActionController
             'idStatus' => 8,
         ], $idVeiculo);
         echo json_encode($dadosVeiculos);
+        die;
+    }
+
+    /**
+     * Toggle "mostrar certificado no anúncio" (/meus-veiculos/exibir-certificado/:idVeiculo?exibir=0|1).
+     *
+     * O certificado continua emitido e visível aqui na área restrita; só deixa de aparecer
+     * no anúncio público (badge da listagem, "Saiba mais" e tabela de inspeção). Útil quando
+     * o histórico traz apontamentos (leilão, sinistro...) que o vendedor prefere não expor.
+     * A API só aceita o PUT do dono do veículo (mesmo controle dos outros botões daqui).
+     */
+    public function exibirCertificadoAction(): never
+    {
+        $idVeiculo = (int) $this->params('idVeiculo');
+        $exibir = (int) $this->params()->fromQuery('exibir', 1) === 0 ? 0 : 1;
+
+        /** @var Veiculos $veiculosModel */
+        $veiculosModel = $this->getContainer()->get(Veiculos::class);
+
+        try {
+            $resposta = $veiculosModel->put([
+                'idVeiculo' => $idVeiculo,
+                'exibirCertificado' => $exibir,
+            ], $idVeiculo);
+        } catch (\Throwable $e) {
+            error_log('[exibir-certificado] veiculo ' . $idVeiculo . ': ' . $e->getMessage());
+            $resposta = ['status' => 502, 'detail' => 'Não foi possível salvar agora. Tente novamente.'];
+        }
+
+        if (($resposta['status'] ?? 200) == 200) {
+            // Página do anúncio no site é cacheada: derruba para refletir na hora (melhor esforço, com timeout).
+            VeiculoClearCache::clearCache($idVeiculo);
+            $resposta['exibirCertificado'] = $exibir;
+        }
+
+        echo json_encode($resposta);
         die;
     }
 

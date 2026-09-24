@@ -42,6 +42,9 @@ class Veiculos extends ApiModelVeiculos
         return parent::get([
             'idCadastro' => $this->getIdentity(),
             'ignorarCondicoesBasicas' => true,
+            // Traz `certificados` (flags de leilão/sinistro/etc.) para a listagem mostrar os
+            // apontamentos e o toggle "mostrar no anúncio". A API ignora por padrão na listagem.
+            'ignorarCertificado' => 0,
             'registrosPagina' => 100,
             'paginaAtual' => $page,
             'ordenarPor' => 6, // veiculos_status.ordemAreaRestrita

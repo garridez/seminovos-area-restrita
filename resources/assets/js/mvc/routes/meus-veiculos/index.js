@@ -24,6 +24,8 @@ export const callback = ($) => {
         .on('click', 'a.renovar[data-confirm]', renovarDataConfirm)
         .on('click', 'a.anuncios[data-confirm]', anuncioDataConfirm)
         .on('click', 'a.vendido[data-confirm]', vendidoDataConfirm)
+        // Toggle "mostrar certificado no anúncio" (card do veículo com certificado)
+        .on('change', '.js-exibir-certificado', exibirCertificadoChange)
         // Configura os modais genericos
         .on('click', '.anuncios [data-modal]', anunciosModal)
         .on('click', '.sidebar-menu .menu-items .btn-novo-anuncio', function (e) {
@@ -182,6 +184,55 @@ export const callback = ($) => {
         $.get('/meus-veiculos/qtd-anuncios-menu', function (data) {
             $('.qtd-anuncios-menu').html(data);
         });
+    }
+
+    /**
+     * Mostrar/ocultar o Certificado Documental no anúncio público.
+     * Salva na hora, sem recarregar a lista; se falhar, volta o toggle e avisa.
+     */
+    function exibirCertificadoChange() {
+        var $input = $(this);
+        var $label = $input.closest('.cert-toggle');
+        var idVeiculo = $input.data('idVeiculo');
+        var exibir = $input.is(':checked') ? 1 : 0;
+
+        $input.prop('disabled', true);
+        $label.addClass('is-salvando');
+
+        // Exceção dentro de .done() NÃO cai no .fail() (jQuery 3), então o erro de
+        // negócio (status != 200) é tratado pela mesma função do erro de rede.
+        function falhou(msg) {
+            $input.prop('checked', !exibir); // desfaz o clique
+            advancedAlerts.error({
+                title: 'Não foi possível salvar',
+                text: msg || 'Tente novamente em alguns segundos.',
+                time: 8000,
+            });
+        }
+
+        $.getJSON('/meus-veiculos/exibir-certificado/' + idVeiculo, { exibir: exibir })
+            .done(function (data) {
+                if (!data || parseInt(data.status, 10) !== 200) {
+                    falhou(data && data.detail);
+                    return;
+                }
+                $label.find('.cert-toggle__texto').text(exibir ? 'No anúncio' : 'Oculto');
+                $label.attr('title', exibir ? 'Visível no anúncio. Clique para ocultar.' : 'Oculto no anúncio. Clique para mostrar.');
+                advancedAlerts.success({
+                    title: exibir ? 'Certificado visível' : 'Certificado oculto',
+                    text: exibir
+                        ? 'O certificado voltou a aparecer no seu anúncio.'
+                        : 'O certificado não aparece mais no anúncio. Você continua vendo ele aqui.',
+                    time: 5000,
+                });
+            })
+            .fail(function () {
+                falhou();
+            })
+            .always(function () {
+                $input.prop('disabled', false);
+                $label.removeClass('is-salvando');
+            });
     }
 
     function pesquisaSatisfacaoDataForm(veiculo) {

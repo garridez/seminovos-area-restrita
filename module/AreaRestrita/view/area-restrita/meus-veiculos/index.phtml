@@ -231,11 +231,52 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                                 </a>
                                             </div>
                                         <?php /*endif;*/ ?>
-                                        <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1): ?>
-                                        <div class="bg-master-lightest mt-1 padding-15">
-                                            <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
-                                                <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
-                                            </a>
+                                        <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1):
+                                            // Apontamentos do Certificado Documental (flags 0/1 gravadas pelo cron da AboutCar).
+                                            $cert = $veiculo['certificados'][0] ?? [];
+                                            $apontamentosMapa = [
+                                                'flagSinistro'  => 'Sinistro',
+                                                'flagLeilao'    => 'Leilão',
+                                                'flagFurto'     => 'Roubo/Furto',
+                                                'flagGravame'   => 'Gravame',
+                                                'flagRestricao' => 'Restrição',
+                                            ];
+                                            $apontamentos = [];
+                                            foreach ($apontamentosMapa as $flag => $rotulo) {
+                                                if (!empty($cert[$flag])) {
+                                                    $apontamentos[] = $rotulo;
+                                                }
+                                            }
+                                            $certProcessando = $cert && empty($cert['dataCadastro']);
+                                            $exibirCert = (int) ($veiculo['exibirCertificado'] ?? 1) !== 0;
+                                        ?>
+                                        <div class="bg-master-lightest mt-1 padding-15 cert-box<?= $apontamentos ? ' cert-box--alerta' : '' ?>">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
+                                                    <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
+                                                </a>
+                                                <?php /* Toggle: mostrar o certificado no anúncio público. Salva via AJAX (index.js). */ ?>
+                                                <label class="cert-toggle mb-0" title="<?= $exibirCert ? 'Visível no anúncio. Clique para ocultar.' : 'Oculto no anúncio. Clique para mostrar.' ?>">
+                                                    <input type="checkbox" class="js-exibir-certificado" data-id-veiculo="<?= (int) $veiculo['idVeiculo'] ?>"<?= $exibirCert ? ' checked' : '' ?>>
+                                                    <span class="cert-toggle__slider"></span>
+                                                    <span class="cert-toggle__texto"><?= $exibirCert ? 'No anúncio' : 'Oculto' ?></span>
+                                                </label>
+                                            </div>
+                                            <?php if ($apontamentos): ?>
+                                                <div class="cert-apontamentos">
+                                                    <i class="fa fa-exclamation-triangle mr-1"></i>
+                                                    <b>Apontamentos:</b> <?= $this->escapeHtml(implode(', ', $apontamentos)) ?>.
+                                                    <span class="text-muted">Se preferir, oculte o certificado do anúncio no botão ao lado.</span>
+                                                </div>
+                                            <?php elseif ($certProcessando): ?>
+                                                <div class="cert-apontamentos text-muted">
+                                                    <i class="fa fa-clock-o mr-1"></i> Certificado em processamento (até 24h).
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="cert-apontamentos text-success">
+                                                    <i class="fa fa-check-circle mr-1"></i> Sem apontamentos.
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                         <?php endif ?>
                                     </div>
