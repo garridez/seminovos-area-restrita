@@ -269,11 +269,25 @@
 // Certificado Documental no card: apontamentos + toggle "mostrar no anúncio"
 // ---------------------------------------------------------------------------
 .cert-box {
-    border-left: 3px solid transparent;
+    border-left: 3px solid #2e7d32;
 
+    // Certificado com apontamento (sinistro/leilão/furto/gravame/restrição): card vermelho.
     &--alerta {
-        border-left-color: #e65100;
-        background: #fff7ed !important;
+        border-left-color: #d32f2f;
+        background: #fff1f0 !important;
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    &__ver {
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
     }
 }
 
@@ -282,14 +296,21 @@
     font-size: 0.8rem;
     line-height: 1.35;
 
-    .fa-exclamation-triangle { color: #e65100; }
+    &--alerta {
+        color: #b71c1c;
+        font-weight: 600;
+    }
 }
 
-// Toggle estilo iOS: pílula 44x24, bolinha branca, cinza desligado / verde ligado.
+// Toggle estilo iOS com estado ESCRITO ao lado (duas linhas: estado + o que o clique faz).
+// O visual segue a classe is-on/is-off do label (o JS troca), com :checked como reforço.
 .cert-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.12);
     cursor: pointer;
     user-select: none;
 
@@ -303,6 +324,7 @@
     &__slider {
         position: relative;
         flex: 0 0 auto;
+        margin-top: 2px;
         width: 44px;
         height: 24px;
         border-radius: 24px;
@@ -324,19 +346,29 @@
     }
 
     &__texto {
-        font-size: 0.78rem;
-        font-weight: 700;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+    }
+    &__estado {
+        font-size: 0.82rem;
         color: #6b7280;
-        min-width: 66px;
+    }
+    &__acao {
+        font-size: 0.74rem;
+        color: #8a8f98;
+        margin-top: 2px;
     }
 
-    input:checked + &__slider {
+    &.is-on .cert-toggle__slider,
+    input:checked + .cert-toggle__slider {
         background: #2e7d32;
         &::before { transform: translateX(20px); }
     }
-    input:checked ~ &__texto { color: #2e7d32; }
+    &.is-on .cert-toggle__estado { color: #2e7d32; }
+    &.is-off .cert-toggle__estado { color: #b71c1c; }
 
-    input:focus-visible + &__slider { box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3); }
+    input:focus-visible + .cert-toggle__slider { box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3); }
 
     &.is-salvando { opacity: 0.6; pointer-events: none; }
 }

@@ -216,8 +216,10 @@ export const callback = ($) => {
                     falhou(data && data.detail);
                     return;
                 }
-                $label.find('.cert-toggle__texto').text(exibir ? 'No anúncio' : 'Oculto');
-                $label.attr('title', exibir ? 'Visível no anúncio. Clique para ocultar.' : 'Oculto no anúncio. Clique para mostrar.');
+                // Estado visual e textos por extenso (vêm do data-* do label, definidos no phtml).
+                $label.toggleClass('is-on', !!exibir).toggleClass('is-off', !exibir);
+                $label.find('.cert-toggle__estado').text($label.data(exibir ? 'txtEstadoOn' : 'txtEstadoOff') || '');
+                $label.find('.cert-toggle__acao').text($label.data(exibir ? 'txtAcaoOn' : 'txtAcaoOff') || '');
                 advancedAlerts.success({
                     title: exibir ? 'Certificado visível' : 'Certificado oculto',
                     text: exibir

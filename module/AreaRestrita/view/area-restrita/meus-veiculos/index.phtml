@@ -250,33 +250,53 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             $certProcessando = $cert && empty($cert['dataCadastro']);
                                             $exibirCert = (int) ($veiculo['exibirCertificado'] ?? 1) !== 0;
                                         ?>
+                                        <?php
+                                            // Textos do toggle por estado. Com apontamento, o cron já deixa oculto por
+                                            // padrão; aqui a pessoa decide exibir por vontade própria.
+                                            $txtEstadoOn  = 'Certificado visível no anúncio';
+                                            $txtAcaoOn    = 'Quem vê seu anúncio vê o histórico do veículo. Clique para ocultar.';
+                                            $txtEstadoOff = 'Certificado oculto no anúncio';
+                                            $txtAcaoOff   = $apontamentos
+                                                ? 'Ocultamos por causa dos apontamentos. Só você vê aqui. Clique para exibir mesmo assim.'
+                                                : 'Só você vê o histórico aqui. Clique para exibir no anúncio.';
+                                        ?>
                                         <div class="bg-master-lightest mt-1 padding-15 cert-box<?= $apontamentos ? ' cert-box--alerta' : '' ?>">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <a href="/certificados/placa/<?php echo $veiculo['placa']?>" title="Ver certificado">
-                                                    <i class="text-s-2 fa fa-eye mr-2"></i><b class="text-s-2">Certificado Ativo</b>
+                                            <div class="cert-box__head">
+                                                <b class="text-s-2"><i class="fa fa-shield mr-1"></i> Certificado Documental</b>
+                                                <a href="/certificados/placa/<?php echo $veiculo['placa']?>" class="cert-box__ver" title="Abrir o certificado completo">
+                                                    <i class="fa fa-eye mr-1"></i>Ver certificado
                                                 </a>
-                                                <?php /* Toggle: mostrar o certificado no anúncio público. Salva via AJAX (index.js). */ ?>
-                                                <label class="cert-toggle mb-0" title="<?= $exibirCert ? 'Visível no anúncio. Clique para ocultar.' : 'Oculto no anúncio. Clique para mostrar.' ?>">
-                                                    <input type="checkbox" class="js-exibir-certificado" data-id-veiculo="<?= (int) $veiculo['idVeiculo'] ?>"<?= $exibirCert ? ' checked' : '' ?>>
-                                                    <span class="cert-toggle__slider"></span>
-                                                    <span class="cert-toggle__texto"><?= $exibirCert ? 'No anúncio' : 'Oculto' ?></span>
-                                                </label>
                                             </div>
+
                                             <?php if ($apontamentos): ?>
-                                                <div class="cert-apontamentos">
+                                                <div class="cert-apontamentos cert-apontamentos--alerta">
                                                     <i class="fa fa-exclamation-triangle mr-1"></i>
                                                     <b>Apontamentos:</b> <?= $this->escapeHtml(implode(', ', $apontamentos)) ?>.
-                                                    <span class="text-muted">Se preferir, oculte o certificado do anúncio no botão ao lado.</span>
                                                 </div>
                                             <?php elseif ($certProcessando): ?>
                                                 <div class="cert-apontamentos text-muted">
-                                                    <i class="fa fa-clock-o mr-1"></i> Certificado em processamento (até 24h).
+                                                    <i class="fa fa-clock-o mr-1"></i> Em processamento (até 24h).
                                                 </div>
                                             <?php else: ?>
                                                 <div class="cert-apontamentos text-success">
                                                     <i class="fa fa-check-circle mr-1"></i> Sem apontamentos.
                                                 </div>
                                             <?php endif; ?>
+
+                                            <?php /* Toggle: mostrar o certificado no anúncio público. Salva via AJAX (index.js).
+                                                     O estado visual vem da classe is-on/is-off (não só do :checked). */ ?>
+                                            <label class="cert-toggle mb-0 <?= $exibirCert ? 'is-on' : 'is-off' ?>"
+                                                   data-txt-estado-on="<?= $this->escapeHtmlAttr($txtEstadoOn) ?>"
+                                                   data-txt-acao-on="<?= $this->escapeHtmlAttr($txtAcaoOn) ?>"
+                                                   data-txt-estado-off="<?= $this->escapeHtmlAttr($txtEstadoOff) ?>"
+                                                   data-txt-acao-off="<?= $this->escapeHtmlAttr($txtAcaoOff) ?>">
+                                                <input type="checkbox" class="js-exibir-certificado" data-id-veiculo="<?= (int) $veiculo['idVeiculo'] ?>"<?= $exibirCert ? ' checked' : '' ?>>
+                                                <span class="cert-toggle__slider" aria-hidden="true"></span>
+                                                <span class="cert-toggle__texto">
+                                                    <b class="cert-toggle__estado"><?= $this->escapeHtml($exibirCert ? $txtEstadoOn : $txtEstadoOff) ?></b>
+                                                    <small class="cert-toggle__acao"><?= $this->escapeHtml($exibirCert ? $txtAcaoOn : $txtAcaoOff) ?></small>
+                                                </span>
+                                            </label>
                                         </div>
                                         <?php endif ?>
                                     </div>
