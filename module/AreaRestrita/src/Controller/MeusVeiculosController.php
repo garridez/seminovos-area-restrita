@@ -323,7 +323,9 @@ class MeusVeiculosController extends AbstractActionController
                     $temp_acoes["editar_fotos"] = true;
                     $temp_acoes["excluir"] = true;
                     $temp_acoes["compartilhar"] = true;
-                    if ($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa'])) {
+                    // Não oferece o certificado para quem já pagou e está aguardando a emissão
+                    // (até 24h na AboutCar). A API marca certificadoEmGeracao nesses casos.
+                    if ($veiculo['flagCertificado'] != 1 && !empty($veiculo['placa']) && empty($veiculo['certificadoEmGeracao'])) {
                         $temp_acoes["certificado"] = true;
                     }
                     if ($veiculo['idPlano'] != 4) {

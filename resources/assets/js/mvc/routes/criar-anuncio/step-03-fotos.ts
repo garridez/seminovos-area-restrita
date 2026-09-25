@@ -103,11 +103,20 @@ function init() {
 			loading.open(true);
 			$('.btn-continuar').prop('disabled', true);
 
-			for (let i = 0; i < arr.length; i++) {
+			// Cada foto ocupa um espaço da grade. As que passarem do número de espaços eram
+			// descartadas em silêncio (parecia que "não aceitava" mais fotos): agora avisa.
+			const cabem = Math.min(arr.length, imgs.length);
+			for (let i = 0; i < cabem; i++) {
 				const file = arr[i];
 				const img = imgs.eq(i);
 				showPhoto(img, file);
 				uploadCount++;
+			}
+			if (arr.length > imgs.length) {
+				window.alert(
+					'Você selecionou ' + arr.length + ' fotos, mas o anúncio aceita até ' + imgs.length +
+					'. Foram adicionadas as ' + imgs.length + ' primeiras.'
+				);
 			}
 			
 			console.log('Count');

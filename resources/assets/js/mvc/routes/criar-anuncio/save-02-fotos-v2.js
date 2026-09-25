@@ -50,24 +50,22 @@ export default async function () {
 async function init() {
     var $fotosContainer = $('.fotos-container');
 
-    var countDelay = 0;
 	var currentUploads = 0;
+    // Fila: uma foto por vez. Antes cada foto disparava sua requisição com 500ms de
+    // intervalo; como cada upload leva segundos, várias rodavam juntas no mesmo anúncio,
+    // davam "Deadlock" no banco e fotos sumiam ou trocavam de ordem.
+    var filaUpload = Promise.resolve();
 
     $fotosContainer.find('.display-img').on('fotos:selecionada', function () {
-        if (countDelay === 0) {
-            countDelay++;
-			currentUploads++;
-            uploadImage(this, false, false);
-            return;
-        }
-        countDelay++;
+        var el = this;
         currentUploads++;
-        setTimeout(
-            function () {
-                uploadImage(this, false, false);
-            }.bind(this),
-            countDelay * 500,
-        );
+        filaUpload = filaUpload
+            .then(function () {
+                return uploadImage(el, false, false);
+            })
+            .catch(function () {
+                // o erro já foi mostrado em uploadImage; segue a fila
+            });
     });
 
     $('.step-container').on('step:pre-exit:fotos', function () {

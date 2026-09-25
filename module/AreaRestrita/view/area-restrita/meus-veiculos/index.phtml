@@ -515,6 +515,16 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                 </div>
                             </div>
                         </div>
+                        <?php if (!empty($veiculo['certificadoEmGeracao']) && (int) ($veiculo['flagCertificado'] ?? 0) !== 1) { ?>
+                            <?php /* Já contratado, aguardando a AboutCar: placeholder no lugar da oferta. */ ?>
+                            <div class="cert-geracao w-100 mb-2">
+                                <i class="fa fa-hourglass-half cert-geracao__icone" aria-hidden="true"></i>
+                                <div>
+                                    <b>Certificado Documental em geração</b>
+                                    <small>Consulta em andamento na base nacional. Fica pronto em até 24h e aparece aqui e no seu anúncio automaticamente.</small>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <?php if ($veiculo["botoes"]["certificado"] ?? false) { ?>
                             <a href="<?= $urls['editarAnuncio'] ?>?editar=certificado#servicos-adicionais&addCertificado&planoCem" class="btn-certificado btn bg-verde text-white text-center w-100 mb-2">
                                 <div class="mt-2"><span>Adquira seu Certificado de Procedência Digital</span></div>
