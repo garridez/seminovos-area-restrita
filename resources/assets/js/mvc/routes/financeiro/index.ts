@@ -346,7 +346,10 @@ export const callback = ($: JQueryStatic) => {
 
                     if (metodo === 'card') {
                         if (httpResponse.status == 'captured') {
-                            const ehRecorrente = String(tempo_contrato) === '1';
+                            // recorrente: false = a assinatura não saiu e o pagamentos cobrou só este
+                            // mês (avulso, em outro gateway); não prometer renovação automática.
+                            const ehRecorrente =
+                                String(tempo_contrato) === '1' && httpResponse.recorrente !== false;
                             const title = 'Pagamento aprovado!';
                             const text = $(`<div>
                                             <h4 class="text-primary font-weight-bold">Tudo certo, seu plano foi renovado.</h4>
