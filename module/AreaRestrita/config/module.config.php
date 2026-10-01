@@ -52,6 +52,8 @@ return [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/key/:dados',
+                            // O token da API (/crypter) é base64 e pode ter "/"
+                            'constraints' => ['dados' => '.+'],
                             'defaults' => [
                                 'controller' => Controller\AuthController::class,
                                 'action' => 'login-automatico',

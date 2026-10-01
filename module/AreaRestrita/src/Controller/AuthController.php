@@ -204,7 +204,14 @@ class AuthController extends AbstractActionController
      */
     public function loginAutomaticoAction()
     {
-        $encryptedText = $this->params('dados');
+        $encryptedText = (string) $this->params('dados');
+
+        // Links do WhatsApp (cron whatsapp-anuncios) usam base64 url-safe: "-" e "_"
+        // no lugar de "+" e "/", sem "=". O token dos e-mails não tem "-"/"_" e passa igual.
+        if (strpbrk($encryptedText, '-_') !== false || strlen($encryptedText) % 4 !== 0) {
+            $encryptedText = strtr($encryptedText, '-_', '+/');
+            $encryptedText .= str_repeat('=', (4 - strlen($encryptedText) % 4) % 4);
+        }
 
         $dataRes = $this->getApiClient()->crypterGet([
             'data' => $encryptedText,
@@ -214,6 +221,20 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('auth');
         }
         $data = json_decode((string) $dataRes->getData(), true);
+
+        // Clique no botão de uma mensagem automática de WhatsApp (cron whatsapp-anuncios).
+        // Registra antes da checagem de validade: clique em link vencido também conta.
+        if (is_array($data) && (!empty($data['wppEnvio']) || !empty($data['wppTeste']))) {
+            try {
+                $this->getApiClient()->whatsappCliquesPost([
+                    'idEnvio' => (int) ($data['wppEnvio'] ?? 0),
+                    'idTeste' => (int) ($data['wppTeste'] ?? 0),
+                    'idCadastro' => (int) ($data['idCadastro'] ?? 0),
+                ]);
+            } catch (\Throwable $e) {
+                // o rastreio nunca impede o login
+            }
+        }
 
         /**
          * É enviado o "time" de quando o encrypt é criado
