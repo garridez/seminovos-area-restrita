@@ -480,6 +480,17 @@ $fin-borda: #e4e7ea;
         .pix-spinner {
             margin-right: 8px;
         }
+
+        // estados do polling (financeiro/index.ts)
+        &--pago {
+            color: $fin-verde;
+            font-weight: 600;
+        }
+
+        &--cancelado {
+            color: #c0392b;
+            font-weight: 600;
+        }
     }
 }
 

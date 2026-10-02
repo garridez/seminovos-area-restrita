@@ -260,9 +260,9 @@ class PagamentoController extends AbstractActionController
         }
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
-            if (($dados['metodo'] == 'cielo' || $dados['metodo'] == 'card') && isset($dados['placaVeiculo']) && $dados['certificado']) {
-                $res = $apiClient->veiculosCertificadosPost(['placa' => $dados['placaVeiculo'], 'idVeiculo' => $idVeiculo, 'idCadastro' => $dadosPagamento['idCadastro']])->getData();
-            }
+            // Certificado NÃO é emitido aqui: isso consultava a AboutCar (R$ 16) logo após
+            // CRIAR a cobrança, antes de o pagamento ser confirmado. Quem emite é o
+            // pagamentos.seminovos (Node), só quando o pagamento é confirmado.
             if ($dados['metodo'] == 'deposito' && $controle) {
                 $response['data']['url'] = $getUrlRedirect('comprovante');
             }

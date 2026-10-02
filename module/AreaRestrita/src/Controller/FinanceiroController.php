@@ -8,6 +8,7 @@ namespace AreaRestrita\Controller;
 
 use AreaRestrita\Model\CadastroRecorrencia;
 use AreaRestrita\Model\Cadastros;
+use AreaRestrita\Model\Pagamentos;
 use AreaRestrita\Model\Planos;
 use AreaRestrita\Model\ServicosAdicionais;
 use AreaRestrita\Model\SiteHospedado;
@@ -158,6 +159,66 @@ class FinanceiroController extends AbstractActionController
             'financeiro' => $dadosFinanceiro,
             'plano' => $dadosPlano,
             'recorrencia' => $recorrencia,
+        ]);
+    }
+
+    /**
+     * Polling do PIX: o pagamento caiu? Olha a TABELA pagamentos via API (o webhook do
+     * gateway - CelCash ou Asaas - grava status 2 quando o PIX é pago).
+     *
+     * GET /financeiro/pagamento-status?idPagamento=N
+     *   -> { status: 200, pago: bool, statusPagamento: 1|2|3 }
+     *
+     * Só devolve pagamento do cadastro logado (o idPagamento vem do /pix/charge).
+     */
+    public function pagamentoStatusAction(): JsonModel
+    {
+        $response = $this->getResponse();
+
+        /** @var Cadastros $cadastrosModel */
+        $cadastrosModel = $this->getContainer()->get(Cadastros::class);
+        $dadosCadastro = $cadastrosModel->getCurrent(false);
+        $idCadastro = (int) ($dadosCadastro['idCadastro'] ?? 0);
+
+        if ($idCadastro <= 0) {
+            $response->setStatusCode(403);
+            return new JsonModel([
+                'status' => 403,
+                'pago' => false,
+                'error' => 'Sessão expirada. Faça login novamente.',
+            ]);
+        }
+
+        $idPagamento = (int) preg_replace('/[^0-9]/', '', (string) $this->params()->fromQuery('idPagamento', ''));
+        if ($idPagamento <= 0) {
+            $response->setStatusCode(422);
+            return new JsonModel([
+                'status' => 422,
+                'pago' => false,
+                'error' => 'idPagamento obrigatório',
+            ]);
+        }
+
+        $statusPagamento = 0;
+        try {
+            /** @var Pagamentos $pagamentosModel */
+            $pagamentosModel = $this->getContainer()->get(Pagamentos::class);
+            $pagamento = $pagamentosModel->get($idPagamento)['data'][0] ?? [];
+
+            // pagamento de outro cadastro: trata como inexistente
+            if ((int) ($pagamento['idCadastro'] ?? 0) === $idCadastro) {
+                $statusPagamento = (int) ($pagamento['status'] ?? 0);
+            }
+        } catch (Throwable $e) {
+            $statusPagamento = 0;
+        }
+
+        $response->getHeaders()->addHeaderLine('Cache-Control', 'no-store');
+
+        return new JsonModel([
+            'status' => 200,
+            'pago' => $statusPagamento === 2,
+            'statusPagamento' => $statusPagamento,
         ]);
     }
 

@@ -322,6 +322,7 @@ export const callback = ($: JQueryStatic) => {
                                 behavior: 'smooth',
                                 block: 'center',
                             });
+                            iniciarPollingPix(Number(httpResponse.idPagamento), httpResponse.gateway);
                         } else {
                             mostrarErro(
                                 'Não conseguimos gerar seu PIX',
@@ -438,6 +439,107 @@ export const callback = ($: JQueryStatic) => {
         url: string;
         urlAguardando: string;
     };
+
+    // ------------------------------------------------------------------
+    // PIX: a tela não recebe o webhook (ele chega no pagamentos.seminovos e grava
+    // status 2 em `pagamentos`). Então, depois de mostrar o QR, fica perguntando
+    // ao servidor se o pagamento caiu e recarrega a tela quando cair. Vale para
+    // qualquer gateway (CelCash ou Asaas).
+    // ------------------------------------------------------------------
+    const NOME_GATEWAY: Record<string, string> = {
+        celcash: 'CelCash (Celcoin)',
+        asaas: 'Asaas',
+    };
+    const POLLING_PIX_INTERVALO_MS = 3000;
+    const POLLING_PIX_LIMITE_MS = 2 * 60 * 60 * 1000; // desiste depois de 2h com a aba aberta
+
+    let pollingPixTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function pararPollingPix() {
+        if (pollingPixTimer) {
+            clearTimeout(pollingPixTimer);
+            pollingPixTimer = null;
+        }
+    }
+
+    function iniciarPollingPix(idPagamento: number, gateway?: string) {
+        pararPollingPix();
+
+        $('.retorno-pix .js-gateway-nome').text(
+            NOME_GATEWAY[String(gateway || '').toLowerCase()] || 'nosso gateway de pagamento',
+        );
+
+        if (!idPagamento) {
+            return;
+        }
+
+        const $aguardando = $('.retorno-pix .pix-resultado__aguardando');
+        const inicio = Date.now();
+
+        const consultar = () => {
+            if (Date.now() - inicio > POLLING_PIX_LIMITE_MS) {
+                return;
+            }
+
+            $.ajax({
+                url: '/financeiro/pagamento-status',
+                data: { idPagamento },
+                type: 'GET',
+                cache: false,
+                dataType: 'json',
+            })
+                .done((r: { pago?: boolean; statusPagamento?: number }) => {
+                    if (r?.pago) {
+                        pagamentoPixConfirmado($aguardando);
+                        return;
+                    }
+
+                    if (Number(r?.statusPagamento) === 3) {
+                        $aguardando
+                            .removeClass('pix-resultado__aguardando--pago')
+                            .addClass('pix-resultado__aguardando--cancelado')
+                            .html(
+                                '<i class="fa fa-times-circle mr-1" aria-hidden="true"></i> ' +
+                                    'Este PIX foi cancelado. Gere um novo código para pagar.',
+                            );
+                        return;
+                    }
+
+                    pollingPixTimer = setTimeout(consultar, POLLING_PIX_INTERVALO_MS);
+                })
+                .fail(() => {
+                    // rede/sessão: insiste, mais devagar
+                    pollingPixTimer = setTimeout(consultar, POLLING_PIX_INTERVALO_MS * 3);
+                });
+        };
+
+        pollingPixTimer = setTimeout(consultar, POLLING_PIX_INTERVALO_MS);
+    }
+
+    function pagamentoPixConfirmado($aguardando: JQuery) {
+        pararPollingPix();
+
+        $aguardando
+            .removeClass('pix-resultado__aguardando--cancelado')
+            .addClass('pix-resultado__aguardando--pago')
+            .html(
+                '<i class="fa fa-check-circle mr-1" aria-hidden="true"></i> ' +
+                    'Pagamento confirmado! Atualizando seu plano...',
+            );
+
+        advancedAlerts.success({
+            title: 'Pagamento confirmado!',
+            text: $(`<div>
+                        <h4 class="text-primary font-weight-bold">Tudo certo, seu plano foi renovado.</h4>
+                        <h5 class="text-primary font-weight-bold">A ativação leva cerca de 30 minutos.</h5>
+                    </div>`),
+            closeText: 'Ok',
+            time: 8000,
+            closeCallback: () => {
+                document.location.reload();
+            },
+        });
+    }
 
     function modalPagamentoBoleto(data: ModalPagamentoBoletoParam) {
         const text = `

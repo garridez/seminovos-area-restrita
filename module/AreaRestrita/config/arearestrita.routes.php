@@ -259,6 +259,16 @@ return [
                     ],
                 ],
             ],
+            // GET /financeiro/pagamento-status?idPagamento=N -> { pago: bool } (polling do PIX)
+            'pagamento-status' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/pagamento-status',
+                    'defaults' => [
+                        'action' => 'pagamento-status',
+                    ],
+                ],
+            ],
         ],
     ],
     'banners' => [
