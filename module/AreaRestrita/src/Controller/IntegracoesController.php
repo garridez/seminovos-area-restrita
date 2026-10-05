@@ -116,6 +116,25 @@ class IntegracoesController extends AbstractActionController
         return new JsonModel($res);
     }
 
+    public function excluirWebmotorsAction(): JsonModel
+    {
+        if (!$this->isRevenda()) {
+            return $this->naoAutorizado();
+        }
+
+        // idCadastro da sessão: a loja só consegue apagar o próprio registro
+        $res = $this->getApiClient()->webmotorsCadastrosDelete([], $this->getCadastro('idCadastro'));
+
+        if (!$res->getHttpResponse()->isSuccess()) {
+            return new JsonModel([
+                'status' => 500,
+                'detail' => 'Erro ao excluir o token da Webmotors.',
+            ]);
+        }
+
+        return new JsonModel(['status' => 200]);
+    }
+
     protected function naoAutorizado(): JsonModel
     {
         return new JsonModel([

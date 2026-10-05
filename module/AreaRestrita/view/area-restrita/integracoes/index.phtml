@@ -120,30 +120,78 @@
                 solicite ao seu contato na Webmotors.
             </p>
 
+            <?php $temWebmotors = !empty($webmotors['token']); ?>
+
+            <?php if ($temWebmotors) : ?>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th style="width:190px">Status</th>
+                                <th style="width:150px">Atualizado em</th>
+                                <th style="width:90px" class="text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <code class="token-valor"><?= $this->escapeHtml($webmotors['token']) ?></code>
+                                </td>
+                                <td>
+                                    <?php if (!empty($webmotors['tokenExpire'])) : ?>
+                                        <span class="badge badge-success">Conectado</span>
+                                    <?php else : ?>
+                                        <span class="badge badge-warning">Aguardando validação</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?= !empty($webmotors['data_atualizacao'])
+                                        ? date('d/m/Y H:i', strtotime($webmotors['data_atualizacao']))
+                                        : '-' ?>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger js-excluir-webmotors"
+                                            title="Excluir token da Webmotors">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+
             <form class="form-inline js-salvar-webmotors">
                 <input type="text"
                        name="token"
                        class="form-control mr-2 mb-2"
                        style="min-width:340px"
-                       placeholder="Token da Webmotors"
-                       value="<?= $this->escapeHtmlAttr($webmotors['token'] ?? '') ?>">
+                       autocomplete="off"
+                       required
+                       placeholder="<?= $temWebmotors ? 'Novo token (substitui o atual)' : 'Token da Webmotors' ?>">
                 <button type="submit" class="btn btn-laranja mb-2">
-                    <i class="fa fa-save" aria-hidden="true"></i> Salvar
+                    <i class="fa fa-save" aria-hidden="true"></i> <?= $temWebmotors ? 'Substituir' : 'Salvar' ?>
                 </button>
             </form>
-
-            <?php if (!empty($webmotors['data_atualizacao'])) : ?>
-                <small class="text-muted d-block mt-2">
-                    <i class="fa fa-clock" aria-hidden="true"></i>
-                    Atualizado em <?= $this->escapeHtml($webmotors['data_atualizacao']) ?>
-                </small>
-            <?php endif; ?>
         </div>
     </div>
 </div>
 
 <script>
-$(function () {
+// O jQuery vem do /js/app.js, que o layout carrega com async DEPOIS deste conteúdo.
+// Chamar $(...) direto aqui dava "$ is not defined" e nenhum botão da tela funcionava
+// (o form fazia submit nativo via GET e a página só recarregava).
+(function aguardarJquery(tentativas) {
+    if (!window.jQuery) {
+        if (tentativas > 0) {
+            setTimeout(function () { aguardarJquery(tentativas - 1); }, 100);
+        }
+        return;
+    }
+
+window.jQuery(function ($) {
     // Gerar novo token do integrador
     $('.js-gerar-token').on('submit', function (e) {
         e.preventDefault();
@@ -213,6 +261,7 @@ $(function () {
             .done(function (res) {
                 if (res && res.status === 200) {
                     alert('Token da Webmotors salvo com sucesso!');
+                    location.reload();
                 } else {
                     alert((res && res.detail) || 'Erro ao salvar o token.');
                 }
@@ -224,5 +273,25 @@ $(function () {
                 $btn.prop('disabled', false);
             });
     });
+
+    // Excluir token do feed Webmotors
+    $(document).on('click', '.js-excluir-webmotors', function () {
+        if (!confirm('Excluir o token da Webmotors? A sincronização do estoque será interrompida.')) {
+            return;
+        }
+
+        $.post('/integracoes/excluir-webmotors')
+            .done(function (res) {
+                if (res && res.status === 200) {
+                    location.reload();
+                } else {
+                    alert((res && res.detail) || 'Erro ao excluir o token.');
+                }
+            })
+            .fail(function () {
+                alert('Erro ao excluir o token. Tente novamente.');
+            });
+    });
 });
+})(150);
 </script>

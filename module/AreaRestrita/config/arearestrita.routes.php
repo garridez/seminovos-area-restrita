@@ -386,6 +386,15 @@ return [
                     ],
                 ],
             ],
+            'excluir-webmotors' => [
+                'type' => Http\Literal::class,
+                'options' => [
+                    'route' => '/excluir-webmotors',
+                    'defaults' => [
+                        'action' => 'excluir-webmotors',
+                    ],
+                ],
+            ],
         ],
     ],
     'meus-veiculos' => [
