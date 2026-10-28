@@ -1259,3 +1259,16 @@ $fin-borda: #e4e7ea;
     color: $fin-verde;
     font-weight: 600;
 }
+
+// Preço com o cupom aplicado, embaixo do preço de cada período (financeiro/index.ts)
+.planos-lista__cupom {
+    display: block;
+    margin-top: 2px;
+    color: $fin-verde;
+    font-size: 12px;
+    line-height: 16px;
+
+    b {
+        font-weight: 700;
+    }
+}

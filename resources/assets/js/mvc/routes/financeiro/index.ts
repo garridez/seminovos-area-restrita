@@ -282,7 +282,124 @@ export const callback = ($: JQueryStatic) => {
         return cupomAtual.opcoes[String(meses)]?.[formaEscolhida()] || null;
     };
 
+    // Valor "1.234,56" -> 1234.56
+    const numeroBr = (t: unknown): number => {
+        const n = parseFloat(String(t ?? '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.'));
+        return Number.isFinite(n) ? n : 0;
+    };
+
+    /** Formas em que o cupom vale no período (pix, boleto, cartao, parcelado). null = sem cupom aplicado. */
+    const formasDoCupom = (meses: number): string[] | null => {
+        if (!cupomAtual?.ok || !cupomAtual.opcoes) return null;
+        const op = cupomAtual.opcoes[String(meses)] || {};
+        return Object.keys(op).filter((f) => op[f] && op[f].ok);
+    };
+
+    const formaDaAba = (alvo: string): string => (alvo === '#pix_tab' ? 'pix' : alvo === '#boleto_tab' ? 'boleto' : 'cartao');
+
+    const formaPermitida = (formas: string[] | null, forma: string): boolean =>
+        !formas || (forma === 'cartao' ? formas.includes('cartao') || formas.includes('parcelado') : formas.includes(forma));
+
+    /**
+     * Cupom condicionado: some o período em que ele não vale (ex.: 1º mês grátis só no mensal
+     * recorrente no cartão -> fica só o Plano Mensal) e cada card mostra o preço com o cupom.
+     * Devolve true quando trocou o período escolhido (o change do período refaz a tela).
+     */
+    const restringirPeriodos = (): boolean => {
+        const ativo = !!(cupomAtual?.ok && cupomAtual.opcoes);
+        const $radios = $('input[name="tempo_contrato"]');
+        let $primeiro: JQuery<HTMLElement> | null = null;
+        $radios.each(function () {
+            const $r = $(this);
+            const meses = Number($r.data('tempo_contrato')) || 0;
+            const formas = ativo ? formasDoCupom(meses) : null;
+            const mostrar = !formas || formas.length > 0;
+            const $tr = $r.closest('tr');
+            $tr.css('display', mostrar ? '' : 'none');
+            $tr.find('.planos-lista__cupom').remove();
+            if (formas && formas.length && cupomAtual?.cupom && cupomAtual.opcoes) {
+                const preferida = formas.includes('cartao') ? 'cartao' : formas[0];
+                const op = cupomAtual.opcoes[String(meses)][preferida];
+                const primeiroMes = op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total;
+                $tr.find('.planos-lista__preco').append(
+                    `<small class="planos-lista__cupom">com ${escCupom(cupomAtual.cupom.codigo)}: <b>R$ ${brl(Number(op.total))}</b>${
+                        primeiroMes ? ' no 1º mês' : ''
+                    }</small>`,
+                );
+            }
+            if (mostrar && !$primeiro) {
+                $primeiro = $r;
+            }
+        });
+        const $marcado = $radios.filter(':checked');
+        const marcadoVisivel = $marcado.length > 0 && $marcado.closest('tr').css('display') !== 'none';
+        if (!ativo || marcadoVisivel || !$primeiro) {
+            return false;
+        }
+        // Cupom aplicado: escolhe o primeiro período em que ele vale
+        $marcado.prop('checked', false);
+        ($primeiro as JQuery<HTMLElement>).prop('checked', true).trigger('change');
+        return true;
+    };
+
+    /** Abas de pagamento, lista de formas do resumo e parcelas só com o que o cupom aceita. */
+    const restringirFormas = () => {
+        const meses = mesesEscolhidos();
+        const formas = meses ? formasDoCupom(meses) : null;
+        let $primeira: JQuery<HTMLElement> | null = null;
+        $('.metodos-tabs a').each(function () {
+            const ok = formaPermitida(formas, formaDaAba(String($(this).data('target'))));
+            $(this).closest('li').css('display', ok ? '' : 'none');
+            if (ok && !$primeira) {
+                $primeira = $(this);
+            }
+        });
+        $('.resumo-pedido__metodos li').each(function () {
+            const $li = $(this);
+            const forma = $li.find('.fa-qrcode').length ? 'pix' : $li.find('.fa-barcode').length ? 'boleto' : 'cartao';
+            $li.css('display', formaPermitida(formas, forma) ? '' : 'none');
+        });
+        const $ativa = $('.metodos-tabs a.active');
+        if ($primeira && (!$ativa.length || $ativa.closest('li').css('display') === 'none')) {
+            ($primeira as JQuery<HTMLElement>).tab('show');
+        }
+        if (formas) {
+            const $p = $('#parcelas');
+            if (!formas.includes('parcelado')) {
+                $p.find('option').filter((_, o) => Number((o as HTMLOptionElement).value) > 1).remove();
+            }
+            if (!formas.includes('cartao') && $p.find('option').length > 1) {
+                $p.find('option[value="1"]').remove();
+            }
+            if ($p.find('option').length <= 1) {
+                $('#row_parcelas').hide();
+            }
+        }
+    };
+
+    /** Desconto, economia e total (seleção do período e resumo do pagamento) com o cupom. */
+    const pintarTotaisComCupom = (op: OpcaoCupom) => {
+        const $tr = $('input[name="tempo_contrato"]:checked').closest('tr');
+        if (!$tr.length) return;
+        const descontoPlano = String($tr.find('#desconto').html() || '').trim();
+        const economia = numeroBr($tr.find('#economia').html()) + Number(op.desconto || 0);
+        const desconto = `${descontoPlano} + cupom`;
+        const total = brl(Number(op.total));
+        const primeiroMes = op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total;
+        $('#resultado').find('#desconto').html(desconto);
+        $('#resultado').find('#economia').html(brl(economia));
+        $('#resultado').find('#total').html(total + (primeiroMes ? ' <small>no 1º mês</small>' : ''));
+        const $pag = $('#tab-pagamento');
+        $pag.find('#desconto').html(desconto);
+        $pag.find('#economia').html(brl(economia));
+        $pag.find('#valor').html(total + (primeiroMes ? ' <small>no 1º mês</small>' : ''));
+    };
+
     const renderCupom = () => {
+        if (restringirPeriodos()) {
+            return; // trocou o período: o change chama atualizarPlano(), que volta aqui
+        }
+        restringirFormas();
         const $res = $cupomBox.find('.cupom-box__resultado');
         const $linha = $('.resumo-pedido__cupom');
         $cupomBox.find('.js-remover-cupom').prop('hidden', !cupomAtual);
@@ -313,9 +430,44 @@ export const callback = ($: JQueryStatic) => {
             $linha.prop('hidden', false);
             $linha.find('.js-cupom-codigo').text(c.codigo);
             $linha.find('.js-cupom-valor').text(`−R$ ${brl(Number(op.desconto))}`);
+            pintarTotaisComCupom(op);
         }
         $cupomBox.addClass(op && !op.ok ? 'is-erro' : 'is-ok');
         $res.html(`<b>${escCupom(c.codigo)}</b>: ${escCupom(c.texto)}<br><small>${detalhe}</small>`);
+    };
+
+    /**
+     * Período escolhido (ou cupom aplicado/removido, ou troca de aba): valores do período e
+     * resumo, parcelas, e por cima o cupom (preço, total, períodos e formas permitidos).
+     */
+    const atualizarPlano = () => {
+        const $tr = $('.tab-content').find('input[name="tempo_contrato"]:checked').closest('tr');
+        if ($tr.length) {
+            const plano = String($tr.find('#plano').html() || '');
+            const desconto = $tr.find('#desconto').html();
+            const economia = $tr.find('#economia').html();
+            const valor = numeroBr($tr.find('#valor').html());
+            const valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            const $resultado = $('#resultado');
+            const $pagamento = $('#tab-pagamento');
+            $resultado.find('#desconto').html(desconto);
+            $resultado.find('#economia').html(economia);
+            $resultado.find('#total').html(valorFormatado);
+            $pagamento.find('#plano').html(plano);
+            $pagamento.find('#desconto').html(desconto);
+            $pagamento.find('#economia').html(economia);
+            $pagamento.find('#valor').html(valorFormatado);
+            // parcelas sobre o valor com cupom (cartão à vista/parcelado), mantendo a escolhida
+            const meses = mesesEscolhidos();
+            const ops = cupomAtual?.ok && cupomAtual.opcoes ? cupomAtual.opcoes[String(meses)] || {} : {};
+            const opCartao = (ops.parcelado && ops.parcelado.ok && ops.parcelado) || (ops.cartao && ops.cartao.ok && ops.cartao) || null;
+            const escolhida = String($('#parcelas').val() || '');
+            optionsParcelas(opCartao && !opCartao.recorrente ? Number(opCartao.total) : valor, plano);
+            if (escolhida && $('#parcelas').find(`option[value="${escolhida}"]`).length) {
+                $('#parcelas').val(escolhida);
+            }
+        }
+        renderCupom();
     };
 
     const aplicarCupom = (codigo: string) => {
@@ -323,7 +475,7 @@ export const callback = ($: JQueryStatic) => {
         $cupomInput.val(limpo);
         if (!limpo) {
             cupomAtual = null;
-            renderCupom();
+            atualizarPlano();
             return;
         }
         const $btn = $cupomBox.find('.js-aplicar-cupom').prop('disabled', true);
@@ -341,7 +493,7 @@ export const callback = ($: JQueryStatic) => {
             })
             .always(() => {
                 $btn.prop('disabled', false);
-                renderCupom();
+                atualizarPlano();
             });
     };
 
@@ -355,12 +507,14 @@ export const callback = ($: JQueryStatic) => {
     $cupomBox.on('click', '.js-remover-cupom', () => {
         cupomAtual = null;
         $cupomInput.val('');
-        renderCupom();
+        atualizarPlano();
     });
-    $('.table-condensed').on('change', renderCupom);
-    $('.metodos-tabs a').on('shown.bs.tab', renderCupom);
-    $(document).on('change', '#parcelas', renderCupom);
+    $('.table-condensed').on('change', () => atualizarPlano());
+    $('.metodos-tabs a').on('shown.bs.tab', () => renderCupom());
+    $(document).on('change', '#parcelas', () => renderCupom());
+    // Link com cupom (WhatsApp / ?cupom=): valida e aplica ao abrir a página
     if ($cupomBox.data('cupom')) {
+        $cupomInput.val(String($cupomBox.data('cupom')));
         aplicarCupom(String($cupomBox.data('cupom')));
     }
 
@@ -765,31 +919,7 @@ export const callback = ($: JQueryStatic) => {
         $('.pager .finish')[!state.finish ? 'addClass' : 'removeClass']('hide');
     });
 
-    $('.table-condensed').on('change', function () {
-        const clickado = $('.tab-content')
-            .find('input[name="tempo_contrato"]:checked')
-            .closest('tr');
-        const resultado = $('#resultado');
-        const pagamento = $('#tab-pagamento');
-
-        const plano = $(clickado).find('#plano').html();
-        const desconto = $(clickado).find('#desconto').html();
-        const economia = $(clickado).find('#economia').html();
-        const valor = parseFloat(
-            $(clickado).find('#valor').html().replace('.', '').replace(',', '.').replace(' ', ''),
-        );
-        const valorFormatado = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-
-        resultado.find('#desconto').html(desconto);
-        resultado.find('#economia').html(economia);
-        resultado.find('#total').html(valorFormatado);
-
-        pagamento.find('#plano').html(plano);
-        pagamento.find('#desconto').html(desconto);
-        pagamento.find('#economia').html(economia);
-        pagamento.find('#valor').html(valorFormatado);
-        optionsParcelas(valor, plano);
-    });
+    // período escolhido: atualizarPlano() (no bloco do cupom)
     const tabsCallback = {
         planos: function () {
             if (!$<HTMLFormElement>('form.form-planos')[0].checkValidity()) {
