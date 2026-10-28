@@ -72,6 +72,31 @@ return [
                     ],
                 ],
             ],
+            // Permalink de reativação da loja (WhatsApp/e-mail): /reativar-loja/{token} ou /reativar-loja?cupom=X
+            'reativar-loja' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/reativar-loja[/:dados]',
+                    // token da API (/crypter) em base64 url-safe (pode ter "/" nos links antigos)
+                    'constraints' => ['dados' => '.+'],
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'reativar-loja',
+                    ],
+                ],
+            ],
+            // Botão "Parar ofertas" dos zaps de marketing das lojas: /parar-ofertas/{token}
+            'parar-ofertas' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/parar-ofertas[/:dados]',
+                    'constraints' => ['dados' => '.+'],
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'parar-ofertas',
+                    ],
+                ],
+            ],
             'logout' => [
                 'type' => Literal::class,
                 'options' => [

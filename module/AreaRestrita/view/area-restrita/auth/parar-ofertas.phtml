@@ -1,0 +1,19 @@
+<?php
+/** Resposta do botão "Parar ofertas" (AuthController::pararOfertasAction). */
+$this->headTitle($this->ok ? 'Ofertas desativadas' : 'Não foi possível desativar');
+?>
+<div style="max-width:440px;margin:12vh auto;padding:28px 24px;font-family:Montserrat,Arial,sans-serif;text-align:center;color:#2d3436">
+    <img src="https://seminovos.com.br/img/logo.svg" alt="Seminovos" style="height:34px;margin-bottom:22px" onerror="this.style.display='none'">
+    <?php if ($this->ok): ?>
+        <h2 style="font-size:22px;margin:0 0 10px">Pronto, você não vai mais receber nossas ofertas.</h2>
+        <p style="color:#6b7177;font-size:15px;line-height:22px;margin:0 0 18px">
+            <?= $this->teste ? '(Este era um teste do adm: nada foi gravado.)' : 'Avisos sobre o vencimento do plano da sua loja continuam chegando.' ?>
+        </p>
+        <p style="font-size:14px;margin:0">Mudou de ideia? É só reativar a loja pelo
+            <a href="/financeiro" style="color:#f37032;font-weight:600">financeiro</a>.</p>
+    <?php else: ?>
+        <h2 style="font-size:22px;margin:0 0 10px">Não conseguimos desativar agora.</h2>
+        <p style="color:#6b7177;font-size:15px;line-height:22px;margin:0">O link pode estar incompleto. Fale com o atendimento da
+            Seminovos que a gente desativa para você.</p>
+    <?php endif ?>
+</div>

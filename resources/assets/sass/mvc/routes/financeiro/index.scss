@@ -1191,3 +1191,71 @@ $fin-borda: #e4e7ea;
         transform: rotate(360deg);
     }
 }
+
+// Cupom de desconto (prévia via pagamentos /cupom/validar)
+.cupom-box {
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px dashed $fin-borda;
+    border-radius: 10px;
+
+    &__rotulo {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: $fin-cinza-texto;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+
+        .fa {
+            color: $fin-laranja;
+        }
+    }
+
+    &__linha {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+    }
+
+    &__input {
+        flex: 1 1 180px;
+        max-width: 260px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    &__resultado {
+        margin-top: 8px;
+        font-size: 13px;
+        color: $fin-cinza-texto;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__erro {
+        color: #c0392b;
+    }
+
+    &.is-ok {
+        border-style: solid;
+        border-color: $fin-verde;
+
+        .cupom-box__resultado b {
+            color: $fin-verde;
+        }
+    }
+
+    &.is-erro {
+        border-color: #e6b0aa;
+    }
+}
+
+.resumo-pedido__cupom .js-cupom-valor {
+    color: $fin-verde;
+    font-weight: 600;
+}

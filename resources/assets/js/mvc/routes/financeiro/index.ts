@@ -237,6 +237,134 @@ export const callback = ($: JQueryStatic) => {
     });
 
     // ------------------------------------------------------------------
+    // Cupom de desconto (pagamentos.seminovos /cupom/validar)
+    // A prévia mostra o desconto do período e da forma escolhidos; quem decide o valor
+    // de verdade é o /charge (que valida o cupom de novo).
+    // ------------------------------------------------------------------
+    type OpcaoCupom = {
+        ok: boolean;
+        erro?: string;
+        total?: number;
+        desconto?: number;
+        totalSemCupom?: number;
+        recorrente?: boolean;
+        valorRecorrente?: number | null;
+        validacaoCartao?: boolean;
+    };
+    type RespostaCupom = {
+        ok: boolean;
+        erro?: string;
+        cupom?: { codigo: string; titulo: string; texto: string; validoAte: string | null };
+        opcoes?: Record<string, Record<string, OpcaoCupom>>;
+    };
+
+    const $cupomBox = $('.cupom-box');
+    const $cupomInput = $cupomBox.find('#cupom-codigo');
+    let cupomAtual: RespostaCupom | null = null;
+
+    const escCupom = (t: unknown) =>
+        String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
+    const brl = (v: number) => Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const mesesEscolhidos = (): number =>
+        Number($('.tab-content').find('input[name="tempo_contrato"]:checked').data('tempo_contrato')) || 0;
+
+    /** pix | boleto | cartao (1x; no mensal é a recorrência) | parcelado */
+    const formaEscolhida = (): string => {
+        if ($('#pix_tab').hasClass('active')) return 'pix';
+        if ($('#boleto_tab').hasClass('active')) return 'boleto';
+        return Number($('#parcelas').val() || 1) > 1 ? 'parcelado' : 'cartao';
+    };
+
+    const opcaoDoCupom = (): OpcaoCupom | null => {
+        const meses = mesesEscolhidos();
+        if (!cupomAtual?.ok || !cupomAtual.opcoes || !meses) return null;
+        return cupomAtual.opcoes[String(meses)]?.[formaEscolhida()] || null;
+    };
+
+    const renderCupom = () => {
+        const $res = $cupomBox.find('.cupom-box__resultado');
+        const $linha = $('.resumo-pedido__cupom');
+        $cupomBox.find('.js-remover-cupom').prop('hidden', !cupomAtual);
+        $linha.prop('hidden', true);
+        $cupomBox.removeClass('is-ok is-erro');
+        if (!cupomAtual) {
+            $res.empty();
+            return;
+        }
+        if (!cupomAtual.ok || !cupomAtual.cupom) {
+            $cupomBox.addClass('is-erro');
+            $res.html(`<span class="cupom-box__erro">${escCupom(cupomAtual.erro || 'Cupom inválido.')}</span>`);
+            return;
+        }
+        const c = cupomAtual.cupom;
+        const op = opcaoDoCupom();
+        let detalhe = 'Escolha o período para ver o desconto.';
+        if (mesesEscolhidos() && (!op || !op.ok)) {
+            detalhe = `<span class="cupom-box__erro">${escCupom(op?.erro || 'O cupom não vale nesta opção.')}</span>`;
+        } else if (op && op.ok) {
+            if (op.recorrente && op.validacaoCartao) {
+                detalhe = `1º mês grátis: agora cobramos só R$ ${brl(Number(op.total))} no cartão para validar. A mensalidade de R$ ${brl(Number(op.valorRecorrente))} começa daqui a 1 mês.`;
+            } else if (op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total) {
+                detalhe = `1ª mensalidade de R$ ${brl(Number(op.total))} (−R$ ${brl(Number(op.desconto))}); depois, R$ ${brl(Number(op.valorRecorrente))} por mês.`;
+            } else {
+                detalhe = `Desconto de R$ ${brl(Number(op.desconto))}: você paga R$ ${brl(Number(op.total))}${op.recorrente ? ' por mês' : ''}.`;
+            }
+            $linha.prop('hidden', false);
+            $linha.find('.js-cupom-codigo').text(c.codigo);
+            $linha.find('.js-cupom-valor').text(`−R$ ${brl(Number(op.desconto))}`);
+        }
+        $cupomBox.addClass(op && !op.ok ? 'is-erro' : 'is-ok');
+        $res.html(`<b>${escCupom(c.codigo)}</b>: ${escCupom(c.texto)}<br><small>${detalhe}</small>`);
+    };
+
+    const aplicarCupom = (codigo: string) => {
+        const limpo = codigo.toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+        $cupomInput.val(limpo);
+        if (!limpo) {
+            cupomAtual = null;
+            renderCupom();
+            return;
+        }
+        const $btn = $cupomBox.find('.js-aplicar-cupom').prop('disabled', true);
+        $.ajax({
+            url: String($cupomBox.data('endpoint')),
+            data: { codigo: limpo, idCadastro: $cupomBox.data('id-cadastro') },
+            dataType: 'json',
+            cache: false,
+        })
+            .done((r: RespostaCupom) => {
+                cupomAtual = r;
+            })
+            .fail((x) => {
+                cupomAtual = { ok: false, erro: (x.responseJSON && x.responseJSON.erro) || 'Não foi possível validar o cupom agora.' };
+            })
+            .always(() => {
+                $btn.prop('disabled', false);
+                renderCupom();
+            });
+    };
+
+    $cupomBox.on('click', '.js-aplicar-cupom', () => aplicarCupom(String($cupomInput.val() || '')));
+    $cupomInput.on('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            aplicarCupom(String($cupomInput.val() || ''));
+        }
+    });
+    $cupomBox.on('click', '.js-remover-cupom', () => {
+        cupomAtual = null;
+        $cupomInput.val('');
+        renderCupom();
+    });
+    $('.table-condensed').on('change', renderCupom);
+    $('.metodos-tabs a').on('shown.bs.tab', renderCupom);
+    $(document).on('change', '#parcelas', renderCupom);
+    if ($cupomBox.data('cupom')) {
+        aplicarCupom(String($cupomBox.data('cupom')));
+    }
+
+    // ------------------------------------------------------------------
     // Envio do pagamento (PIX / boleto / cartão)
     // ------------------------------------------------------------------
     $('form.pagamento-cc-form, form.pagamento-boleto-form, form.pagamento-pix-form').on(
@@ -254,6 +382,19 @@ export const callback = ($: JQueryStatic) => {
                 name: 'tempo_contrato',
                 value: tempo_contrato,
             });
+
+            // Cupom aplicado: vai junto. Se ele não vale nesta opção, avisa em vez de cobrar cheio.
+            if (cupomAtual?.ok && cupomAtual.cupom) {
+                const op = opcaoDoCupom();
+                if (op && !op.ok) {
+                    mostrarErro(
+                        'O cupom não vale nesta opção',
+                        escCupom(op.erro || '') + '<br><small>Escolha outro período ou forma de pagamento, ou remova o cupom.</small>',
+                    );
+                    return;
+                }
+                data.push({ name: 'cupom', value: cupomAtual.cupom.codigo });
+            }
 
             //FIELDS DATA ONLY
             const colorDepth = screen.colorDepth;
@@ -351,12 +492,27 @@ export const callback = ($: JQueryStatic) => {
                             // mês (avulso, em outro gateway); não prometer renovação automática.
                             const ehRecorrente =
                                 String(tempo_contrato) === '1' && httpResponse.recorrente !== false;
+                            // cupom de 1º mês: a assinatura começa a cobrar no vencimento do 1º mês
+                            const inicio = String(httpResponse.primeiraCobrancaEm || '');
+                            const inicioBr = /^\d{4}-\d{2}-\d{2}$/.test(inicio)
+                                ? inicio.split('-').reverse().join('/')
+                                : '';
                             const title = 'Pagamento aprovado!';
                             const text = $(`<div>
                                             <h4 class="text-primary font-weight-bold">Tudo certo, seu plano foi renovado.</h4>
                                             ${
+                                                httpResponse.gratis
+                                                    ? `<p><b>Seu 1º mês é grátis.</b> Cobramos R$ ${brl(Number(httpResponse.valorCobrado || 1))} só para validar o cartão.</p>`
+                                                    : ''
+                                            }
+                                            ${
                                                 ehRecorrente
                                                     ? '<p>A partir de agora a renovação é automática todo mês no seu cartão — sem boletos, sem preocupação. Você pode cancelar quando quiser aqui na Central de Pagamentos.</p>'
+                                                    : ''
+                                            }
+                                            ${
+                                                ehRecorrente && inicioBr
+                                                    ? `<p>A mensalidade no cartão começa em <b>${inicioBr}</b>.</p>`
                                                     : ''
                                             }
                                             <h5 class="text-primary font-weight-bold">A ativação leva cerca de 30 minutos.</h5>

@@ -155,10 +155,15 @@ class FinanceiroController extends AbstractActionController
         $recorrenciaModel = $this->getContainer()->get(CadastroRecorrencia::class);
         $recorrencia = $recorrenciaModel->getAtiva();
 
+        // Cupom vindo do link (/reativar-loja ou ?cupom=): o financeiro já abre com ele aplicado
+        $cupomInicial = strtoupper(preg_replace('/[^A-Za-z0-9_-]/', '', (string) $this->params()->fromQuery('cupom', '')));
+
         return new ViewModel([
             'financeiro' => $dadosFinanceiro,
             'plano' => $dadosPlano,
             'recorrencia' => $recorrencia,
+            'cupomInicial' => substr($cupomInicial, 0, 30),
+            'idCadastro' => (int) ($dadosCadastro['idCadastro'] ?? 0),
         ]);
     }
 

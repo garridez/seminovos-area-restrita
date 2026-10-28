@@ -202,6 +202,121 @@ class AuthController extends AbstractActionController
      *
      * @return Response|null
      */
+    /**
+     * Permalink de reativação da loja (botões do WhatsApp das lojas, cron whatsapp-anuncios):
+     *   /reativar-loja/{token}        token da API /crypter (o mesmo do /entrar/key): registra o
+     *                                 clique, entra na conta (token de até 5 dias) e abre o
+     *                                 financeiro com o cupom do token já aplicado (?cupom=)
+     *   /reativar-loja?cupom=VOLTA50  sem token (e-mail, link manual): financeiro com o cupom;
+     *                                 sem sessão, passa pelo login e volta para lá
+     * Token vencido ou inválido não bloqueia: cai no login e depois no financeiro.
+     */
+    public function reativarLojaAction()
+    {
+        /** @var ServiceManager $container */
+        global $container;
+
+        $limpar = static function ($c) {
+            return strtoupper(preg_replace('/[^A-Za-z0-9_-]/', '', (string) $c));
+        };
+        $cupom = $limpar($this->params()->fromQuery('cupom', ''));
+        $token = (string) $this->params('dados', '');
+
+        $data = null;
+        if ($token !== '') {
+            if (strpbrk($token, '-_') !== false || strlen($token) % 4 !== 0) {
+                $token = strtr($token, '-_', '+/');
+                $token .= str_repeat('=', (4 - strlen($token) % 4) % 4);
+            }
+            try {
+                $dataRes = $this->getApiClient()->crypterGet(['data' => $token]);
+                if ($dataRes->status === 200) {
+                    $data = json_decode((string) $dataRes->getData(), true);
+                }
+            } catch (\Throwable $e) {
+                $data = null;
+            }
+        }
+
+        if (is_array($data)) {
+            if (!empty($data['cupom'])) {
+                $cupom = $limpar($data['cupom']);
+            }
+            // clique no botão do WhatsApp: conta mesmo com o token vencido
+            if (!empty($data['wppEnvio']) || !empty($data['wppTeste'])) {
+                try {
+                    $this->getApiClient()->whatsappCliquesPost([
+                        'idEnvio' => (int) ($data['wppEnvio'] ?? 0),
+                        'idTeste' => (int) ($data['wppTeste'] ?? 0),
+                        'idCadastro' => (int) ($data['idCadastro'] ?? 0),
+                    ]);
+                } catch (\Throwable $e) {
+                    // o rastreio nunca impede a reativação
+                }
+            }
+        }
+
+        $destino = '/financeiro' . ($cupom !== '' ? '?cupom=' . rawurlencode($cupom) : '');
+
+        /** @var AuthenticationService $authService */
+        $authService = $container->get(AuthenticationService::class);
+
+        $valido = is_array($data) && !empty($data['idCadastro']) && isset($data['time'])
+            && (time() - (int) $data['time']) <= 60 * 60 * 24 * 5;
+        if ($valido && !$authService->hasIdentity()) {
+            /** @var AuthManager $authManager */
+            $authManager = $container->get(AuthManager::class);
+            $authManager->login([
+                'loginWithoutPassword' => true,
+                'idCadastro' => $data['idCadastro'],
+                'rememberMe' => true,
+            ]);
+        }
+
+        if (!$authService->hasIdentity()) {
+            return $this->redirect()->toUrl('/entrar?redirect=' . rawurlencode(base64_encode($destino)));
+        }
+        return $this->redirect()->toUrl($destino);
+    }
+
+    /**
+     * Botão "Parar ofertas" dos templates de marketing das lojas (cron whatsapp-anuncios):
+     * /parar-ofertas/{token}. O token (API /crypter) traz o envio; a API grava em
+     * whatsapp_optout e o cron não manda mais marketing para a loja. Não precisa de login.
+     */
+    public function pararOfertasAction()
+    {
+        $token = (string) $this->params('dados', '');
+        if (strpbrk($token, '-_') !== false || strlen($token) % 4 !== 0) {
+            $token = strtr($token, '-_', '+/');
+            $token .= str_repeat('=', (4 - strlen($token) % 4) % 4);
+        }
+        $ok = false;
+        $teste = false;
+        if ($token !== '') {
+            try {
+                $res = $this->getApiClient()->crypterGet(['data' => $token]);
+                $data = $res->status === 200 ? json_decode((string) $res->getData(), true) : null;
+                if (is_array($data) && ($data['acao'] ?? '') === 'parar-ofertas') {
+                    $teste = empty($data['wppEnvio']) && !empty($data['wppTeste']);
+                    $r = $this->getApiClient()->whatsappCliquesPost([
+                        'acao' => 'parar-ofertas',
+                        'idEnvio' => (int) ($data['wppEnvio'] ?? 0),
+                        'idTeste' => (int) ($data['wppTeste'] ?? 0),
+                        'idCadastro' => (int) ($data['idCadastro'] ?? 0),
+                    ]);
+                    $ok = (int) $r->status === 200;
+                }
+            } catch (\Throwable $e) {
+                $ok = false;
+            }
+        }
+        $view = new ViewModel(['ok' => $ok, 'teste' => $teste]);
+        $view->setTemplate('area-restrita/auth/parar-ofertas');
+        $this->layout('layout/blank.phtml');
+        return $view;
+    }
+
     public function loginAutomaticoAction()
     {
         $encryptedText = (string) $this->params('dados');

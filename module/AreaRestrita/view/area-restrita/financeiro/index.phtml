@@ -156,6 +156,21 @@
                                 <strong>R$ <span id="total">-</span></strong>
                             </div>
                         </div>
+                        <div class="cupom-box mt-3"
+                             data-endpoint="https://pagamentos.seminovos.com.br/cupom/validar"
+                             data-id-cadastro="<?= (int) $this->idCadastro ?>"
+                             data-cupom="<?= $this->escapeHtmlAttr((string) $this->cupomInicial) ?>">
+                            <label class="cupom-box__rotulo" for="cupom-codigo">
+                                <i class="fa fa-ticket-alt" aria-hidden="true"></i> Tem um cupom de desconto?
+                            </label>
+                            <div class="cupom-box__linha">
+                                <input type="text" id="cupom-codigo" class="form-control cupom-box__input" maxlength="30"
+                                       placeholder="Digite o cupom" autocomplete="off" autocapitalize="characters">
+                                <button type="button" class="btn btn-laranja text-white js-aplicar-cupom">Aplicar</button>
+                                <button type="button" class="btn btn-link js-remover-cupom" hidden>Remover</button>
+                            </div>
+                            <div class="cupom-box__resultado" aria-live="polite"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,6 +196,10 @@
                                 <div class="resumo-pedido__linha">
                                     <span>Economia</span>
                                     <span>R$ <span id="economia">-</span></span>
+                                </div>
+                                <div class="resumo-pedido__linha resumo-pedido__cupom" hidden>
+                                    <span>Cupom <b class="js-cupom-codigo"></b></span>
+                                    <span class="js-cupom-valor"></span>
                                 </div>
                                 <div class="resumo-pedido__total">
                                     <span>Total a pagar</span>
