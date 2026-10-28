@@ -317,14 +317,16 @@ export const callback = ($: JQueryStatic) => {
             const $tr = $r.closest('tr');
             $tr.css('display', mostrar ? '' : 'none');
             $tr.find('.planos-lista__cupom').remove();
+            $tr.removeClass('com-cupom');
             if (formas && formas.length && cupomAtual?.cupom && cupomAtual.opcoes) {
                 const preferida = formas.includes('cartao') ? 'cartao' : formas[0];
                 const op = cupomAtual.opcoes[String(meses)][preferida];
                 const primeiroMes = op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total;
+                // valor com o cupom em destaque (verde, maior); o cheio fica riscado (CSS .com-cupom)
+                $tr.addClass('com-cupom');
                 $tr.find('.planos-lista__preco').append(
-                    `<small class="planos-lista__cupom">com ${escCupom(cupomAtual.cupom.codigo)}: <b>R$ ${brl(Number(op.total))}</b>${
-                        primeiroMes ? ' no 1º mês' : ''
-                    }</small>`,
+                    `<div class="planos-lista__cupom"><small>com ${escCupom(cupomAtual.cupom.codigo)}</small>` +
+                        `<strong>R$ ${brl(Number(op.total))}</strong>${primeiroMes ? '<small>no 1º mês</small>' : ''}</div>`,
                 );
             }
             if (mostrar && !$primeiro) {
@@ -395,11 +397,36 @@ export const callback = ($: JQueryStatic) => {
         $pag.find('#valor').html(total + (primeiroMes ? ' <small>no 1º mês</small>' : ''));
     };
 
+    /** Card "Valor mensal do plano atual": com cupom no mensal, mostra quanto fica o 1º mês. */
+    const pintarValorMensal = () => {
+        const $box = $('.plano-atual-card__cupom');
+        const $valor = $('.js-valor-mensal');
+        const ops = cupomAtual?.ok && cupomAtual.opcoes ? cupomAtual.opcoes['1'] || {} : {};
+        const op = (ops.cartao && ops.cartao.ok && ops.cartao) || (ops.pix && ops.pix.ok && ops.pix) || (ops.boleto && ops.boleto.ok && ops.boleto) || null;
+        if (!op || !cupomAtual?.cupom || !(Number(op.desconto) > 0)) {
+            $box.prop('hidden', true).empty();
+            $valor.removeClass('is-riscado');
+            return;
+        }
+        const codigo = escCupom(cupomAtual.cupom.codigo);
+        const base = Number(op.totalSemCupom) || Number(op.total) + Number(op.desconto);
+        const pct = base > 0 ? Math.round((100 * Number(op.desconto)) / base) : 0;
+        $valor.addClass('is-riscado');
+        $box.prop('hidden', false).html(
+            op.validacaoCartao
+                ? `1º mês <b>grátis</b> com <b>${codigo}</b><span class="plano-atual-card__cupom-valor">R$ ${brl(Number(op.total))}</span><small>só para validar o cartão; depois R$ ${brl(Number(op.valorRecorrente ?? base))} por mês</small>`
+                : op.recorrente && op.valorRecorrente != null && Number(op.valorRecorrente) === Number(op.total)
+                  ? `Com <b>${codigo}</b> (−${pct}%)<span class="plano-atual-card__cupom-valor">R$ ${brl(Number(op.total))}</span><small>por mês</small>`
+                  : `1º mês com <b>${codigo}</b> (−${pct}%)<span class="plano-atual-card__cupom-valor">R$ ${brl(Number(op.total))}</span><small>depois R$ ${brl(Number(op.valorRecorrente ?? base))} por mês</small>`,
+        );
+    };
+
     const renderCupom = () => {
         if (restringirPeriodos()) {
             return; // trocou o período: o change chama atualizarPlano(), que volta aqui
         }
         restringirFormas();
+        pintarValorMensal();
         const $res = $cupomBox.find('.cupom-box__resultado');
         const $linha = $('.resumo-pedido__cupom');
         $cupomBox.find('.js-remover-cupom').prop('hidden', !cupomAtual);
