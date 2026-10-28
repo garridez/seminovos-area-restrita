@@ -46,7 +46,11 @@ class AuthAdapter implements AdapterInterface
 
     public function authenticateNoPassword(): AuthResult
     {
-        $res = $this->apiClient->cadastrosGet([], $this->data['idCadastro']);
+        // considerarInativo: a API só acha cadastro ativo sem ele (loja desativada pelo vencimento)
+        $res = $this->apiClient->cadastrosGet(
+            !empty($this->data['considerarInativo']) ? ['considerarInativo' => 1] : [],
+            $this->data['idCadastro']
+        );
 
         $code = $res->status == 200 ? AuthResult::SUCCESS : AuthResult::FAILURE;
 

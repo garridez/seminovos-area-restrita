@@ -204,8 +204,11 @@ class AuthController extends AbstractActionController
      */
     /**
      * Permalink de reativação da loja (botões do WhatsApp das lojas, cron whatsapp-anuncios):
-     *   /reativar-loja/{token}        token da API /crypter (o mesmo do /entrar/key): registra o
-     *                                 clique, entra na conta (token de até 5 dias) e abre o
+     *   /renovar-plano/{token} ou /reativar-loja/{token} (mesma ação; o /entrar/key/{token} com destino
+     *                                 /financeiro também cai aqui)
+     *                                 token da API /crypter (o mesmo do /entrar/key): registra o
+     *                                 clique, entra na conta SEM LOGIN, mesmo com a loja desativada
+     *                                 (token de até 30 dias; o token é único por envio) e abre o
      *                                 financeiro com o cupom do token já aplicado (?cupom=)
      *   /reativar-loja?cupom=VOLTA50  sem token (e-mail, link manual): financeiro com o cupom;
      *                                 sem sessão, passa pelo login e volta para lá
@@ -262,15 +265,23 @@ class AuthController extends AbstractActionController
         $authService = $container->get(AuthenticationService::class);
 
         $valido = is_array($data) && !empty($data['idCadastro']) && isset($data['time'])
-            && (time() - (int) $data['time']) <= 60 * 60 * 24 * 5;
-        if ($valido && !$authService->hasIdentity()) {
+            && (time() - (int) $data['time']) <= 60 * 60 * 24 * 30;
+        if ($valido && (int) $authService->getIdentity() !== (int) $data['idCadastro']) {
             /** @var AuthManager $authManager */
             $authManager = $container->get(AuthManager::class);
-            $authManager->login([
-                'loginWithoutPassword' => true,
-                'idCadastro' => $data['idCadastro'],
-                'rememberMe' => true,
-            ]);
+            if ($authService->hasIdentity()) {
+                $authManager->logout(); // outra conta aberta neste navegador: o link é desta loja
+            }
+            try {
+                $authManager->login([
+                    'loginWithoutPassword' => true,
+                    'idCadastro' => $data['idCadastro'],
+                    'considerarInativo' => true, // loja fora do ar não loga pela senha; pelo link entra
+                    'rememberMe' => true,
+                ]);
+            } catch (\Throwable $e) {
+                // cai no login abaixo
+            }
         }
 
         if (!$authService->hasIdentity()) {
@@ -336,6 +347,17 @@ class AuthController extends AbstractActionController
             return $this->redirect()->toRoute('auth');
         }
         $data = json_decode((string) $dataRes->getData(), true);
+
+        // Token de pagar o plano da loja (botões "Pagar agora" do WhatsApp das lojas, que levam
+        // ao /financeiro): vai para o /renovar-plano, que entra sem login mesmo com a loja desativada.
+        // O clique é registrado lá.
+        $destinoToken = is_array($data) ? (string) ($data['url'] ?? '') : '';
+        $caminhoToken = (string) parse_url($destinoToken, PHP_URL_PATH);
+        $hostToken = (string) parse_url($destinoToken, PHP_URL_HOST);
+        if ($caminhoToken !== '' && preg_match('#^/financeiro/?$#', $caminhoToken)
+            && ($hostToken === '' || str_contains($hostToken, 'meus-anuncios'))) {
+            return $this->redirect()->toUrl('/renovar-plano/' . (string) $this->params('dados'));
+        }
 
         // Clique no botão de uma mensagem automática de WhatsApp (cron whatsapp-anuncios).
         // Registra antes da checagem de validade: clique em link vencido também conta.

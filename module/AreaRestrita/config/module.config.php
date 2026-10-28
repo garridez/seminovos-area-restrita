@@ -85,6 +85,20 @@ return [
                     ],
                 ],
             ],
+            // Pagar/renovar o plano da loja sem login, ativa ou desativada (botões de pagar do
+            // WhatsApp das lojas): /renovar-plano/{token}. Mesma ação do /reativar-loja.
+            // (/renovar/:idVeiculo já é a renovação de anúncio)
+            'renovar-plano' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/renovar-plano[/:dados]',
+                    'constraints' => ['dados' => '.+'],
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action' => 'reativar-loja',
+                    ],
+                ],
+            ],
             // Botão "Parar ofertas" dos zaps de marketing das lojas: /parar-ofertas/{token}
             'parar-ofertas' => [
                 'type' => Segment::class,

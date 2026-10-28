@@ -40,6 +40,8 @@ class AuthManager
             'loginWithoutPassword' => false,
             'tipoCadastro' => '',
             'rememberMe' => false,
+            // sem senha (token): loja desativada também entra (link de reativação do WhatsApp)
+            'considerarInativo' => false,
         ];
 
         $options = array_merge($optionsDefault, $options);
@@ -53,13 +55,17 @@ class AuthManager
         /** @var AuthAdapter $authAdapter */
         $authAdapter = $this->authService->getAdapter();
 
-        $authAdapter->setData([
+        $dados = [
             'loginWithoutPassword' => $options['loginWithoutPassword'],
             'idCadastro' => $options['idCadastro'],
             'usuarioEmail' => $options['emailOrCnpj'],
             'usuarioSenha' => $options['usuarioSenha'],
             'tipoCadastro' => $options['tipoCadastro'],
-        ]);
+        ];
+        if ($options['considerarInativo'] && $options['loginWithoutPassword']) {
+            $dados['considerarInativo'] = true; // só no login sem senha (não vai para a API /login)
+        }
+        $authAdapter->setData($dados);
         $result = $this->authService->authenticate();
 
         if ($result->getCode() == Result::SUCCESS && $options['rememberMe']) {
