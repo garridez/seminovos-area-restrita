@@ -58,6 +58,87 @@ class AbstractActionController extends ZendAbstractActionController
             && (int) ($cadastro['idStatus'] ?? 0) === self::CADASTRO_STATUS_ATIVO;
     }
 
+    /**
+     * Token interno da Seminovos (repasse e parceiros).
+     * Requisicoes com ele nao passam pela checagem de dono do veiculo.
+     */
+    private const TOKEN_INTERNO = '879db53b62e90337D13316e85e81FaBe6f4943722090B568d6';
+
+    /**
+     * Diz se o veiculo e, com certeza, de OUTRO cadastro (loja) que nao o da requisicao.
+     *
+     * Fail-open de proposito, para nao interromper integracoes em uso.
+     * Retorna false (segue como antes) quando:
+     * - a requisicao veio com o header X-SnBH-Cadastro ou com o token interno;
+     * - o idCadastro do header ou o idVeiculo nao vieram;
+     * - nao deu para ler o veiculo na API (erro, nao encontrado ou sem dono).
+     * So retorna true quando o dono foi lido e e diferente do idCadastro do header.
+     *
+     * @param int|string|null $idVeiculo
+     */
+    public function isVeiculoDeOutroCadastro($idVeiculo): bool
+    {
+        $request = $this->getRequest();
+
+        $headerCadastro = $request->getHeader('X-SnBH-Cadastro');
+        if ($headerCadastro && $headerCadastro->getFieldValue()) {
+            return false;
+        }
+
+        $headerToken = $request->getHeader('X-SnBH-Token');
+        if ($headerToken && $headerToken->getFieldValue() === self::TOKEN_INTERNO) {
+            return false;
+        }
+
+        // Le o header direto (sem getIdCadastro) para nao quebrar quando ele nao vier
+        $headerIdCadastro = $request->getHeader('X-SnBH-IdCadastro');
+        $idCadastro = $headerIdCadastro ? (int) $headerIdCadastro->getFieldValue() : 0;
+        $idVeiculo = (int) $idVeiculo;
+
+        if ($idCadastro <= 0 || $idVeiculo <= 0) {
+            return false;
+        }
+
+        try {
+            $response = $this->getApiClient()
+                ->veiculosGet(['ignorarCondicoesBasicas' => 1], $idVeiculo, true);
+        } catch (\Throwable) {
+            return false;
+        }
+
+        if ($response->status !== 200) {
+            return false;
+        }
+
+        $dono = (int) ($response->getData()[0]['idCadastro'] ?? 0);
+
+        return $dono > 0 && $dono !== $idCadastro;
+    }
+
+    /**
+     * Resposta quando o veiculo e de outra loja. Registra a tentativa no log do dia.
+     *
+     * @param int|string|null $idVeiculo
+     */
+    public function veiculoDeOutroCadastroResponse($idVeiculo, string $acao): JsonModel
+    {
+        file_put_contents(
+            'data/logs/' . date('Y-m-d-') . $this->getIdCadastro() . '.log',
+            json_encode([
+                'bloqueado' => 'veiculo-de-outro-cadastro',
+                'acao' => $acao,
+                'idVeiculo' => $idVeiculo,
+                'data' => date('Y-m-d H:i:s'),
+            ]) . "\n",
+            FILE_APPEND
+        );
+
+        return new JsonModel([
+            'status' => 403,
+            'detail' => 'Veículo não pertence a este cadastro.',
+        ]);
+    }
+
     public function getContainer(): ServiceManager
     {
         global $container;

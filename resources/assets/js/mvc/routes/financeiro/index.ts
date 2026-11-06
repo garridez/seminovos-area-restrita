@@ -250,6 +250,7 @@ export const callback = ($: JQueryStatic) => {
         recorrente?: boolean;
         valorRecorrente?: number | null;
         validacaoCartao?: boolean;
+        gratis?: boolean;
     };
     type RespostaCupom = {
         ok: boolean;
@@ -322,11 +323,13 @@ export const callback = ($: JQueryStatic) => {
                 const preferida = formas.includes('cartao') ? 'cartao' : formas[0];
                 const op = cupomAtual.opcoes[String(meses)][preferida];
                 const primeiroMes = op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total;
+                // 1º mês grátis no semestral/anual: um mês sai do total (paga 5, leva 6)
+                const levaPaga = op.gratis && !op.recorrente && meses > 1 ? `<small>leva ${meses}, paga ${meses - 1}</small>` : '';
                 // valor com o cupom em destaque (verde, maior); o cheio fica riscado (CSS .com-cupom)
                 $tr.addClass('com-cupom');
                 $tr.find('.planos-lista__preco').append(
                     `<div class="planos-lista__cupom"><small>com ${escCupom(cupomAtual.cupom.codigo)}</small>` +
-                        `<strong>R$ ${brl(Number(op.total))}</strong>${primeiroMes ? '<small>no 1º mês</small>' : ''}</div>`,
+                        `<strong>R$ ${brl(Number(op.total))}</strong>${primeiroMes ? '<small>no 1º mês</small>' : levaPaga}</div>`,
                 );
             }
             if (mostrar && !$primeiro) {
@@ -451,6 +454,9 @@ export const callback = ($: JQueryStatic) => {
                 detalhe = `1º mês grátis: agora cobramos só R$ ${brl(Number(op.total))} no cartão para validar. A mensalidade de R$ ${brl(Number(op.valorRecorrente))} começa daqui a 1 mês.`;
             } else if (op.recorrente && op.valorRecorrente != null && op.valorRecorrente !== op.total) {
                 detalhe = `1ª mensalidade de R$ ${brl(Number(op.total))} (−R$ ${brl(Number(op.desconto))}); depois, R$ ${brl(Number(op.valorRecorrente))} por mês.`;
+            } else if (op.gratis && !op.recorrente && mesesEscolhidos() > 1) {
+                const m = mesesEscolhidos();
+                detalhe = `1º mês grátis: você leva ${m} meses e paga ${m - 1}. Desconto de R$ ${brl(Number(op.desconto))}: você paga R$ ${brl(Number(op.total))}.`;
             } else {
                 detalhe = `Desconto de R$ ${brl(Number(op.desconto))}: você paga R$ ${brl(Number(op.total))}${op.recorrente ? ' por mês' : ''}.`;
             }

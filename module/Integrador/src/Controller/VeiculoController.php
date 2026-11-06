@@ -123,6 +123,11 @@ class VeiculoController extends AbstractActionController
     {
         $idVeiculo = $this->params('id');
 
+        // So o dono altera o veiculo (fail-open: ver isVeiculoDeOutroCadastro)
+        if ($this->isVeiculoDeOutroCadastro($idVeiculo)) {
+            return $this->veiculoDeOutroCadastroResponse($idVeiculo, 'veiculo-update');
+        }
+
         parse_str(file_get_contents("php://input"), $_PUT);
         $data = $_PUT;
         $request = $this->request;
@@ -186,6 +191,11 @@ class VeiculoController extends AbstractActionController
     public function delete()
     {
         $idVeiculo = $this->params('id');
+
+        // So o dono exclui o veiculo (fail-open: ver isVeiculoDeOutroCadastro)
+        if ($this->isVeiculoDeOutroCadastro($idVeiculo)) {
+            return $this->veiculoDeOutroCadastroResponse($idVeiculo, 'veiculo-delete');
+        }
 
         /** @var Veiculos $veiculosModel */
         $veiculosModel = $this->getContainer()->get(Veiculos::class);

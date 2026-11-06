@@ -15,7 +15,8 @@ class ModelosController extends AbstractActionController
 
         if (!isset($idMarca) && !$idMarca || empty($idMarca)) {
             return new JsonModel([
-                'staus' => 405,
+                'staus' => 405, // chave antiga com erro de digitacao, mantida por compatibilidade
+                'status' => 405,
                 'detail' => 'É obrigatório o paramêtro idMarca',
             ]);
         }

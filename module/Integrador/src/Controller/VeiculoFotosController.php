@@ -15,6 +15,11 @@ class VeiculoFotosController extends AbstractActionController
         $request = $this->request;
         if ($request->isPost()) {
             $dataPost = $request->getPost();
+
+            // So o dono envia fotos para o veiculo (fail-open: ver isVeiculoDeOutroCadastro)
+            if ($this->isVeiculoDeOutroCadastro($dataPost->get('idVeiculo'))) {
+                return $this->veiculoDeOutroCadastroResponse($dataPost->get('idVeiculo'), 'fotos-create');
+            }
             //var_dump($dataPost); exit;
             $apiClient = $this->getApiClient();
             $tempDir = $this->getContainer()->get('config')['dir']['upload'];
@@ -170,6 +175,11 @@ class VeiculoFotosController extends AbstractActionController
     {
         $idFoto = $this->params('id');
         $idVeiculo = $this->params()->fromQuery('idVeiculo');
+
+        // Com idVeiculo informado, so o dono exclui (fail-open: ver isVeiculoDeOutroCadastro)
+        if ($this->isVeiculoDeOutroCadastro($idVeiculo)) {
+            return $this->veiculoDeOutroCadastroResponse($idVeiculo, 'fotos-delete');
+        }
 
         /** @var VeiculosFotos $veiculosFotosModel */
         $veiculosFotosModel = $this->getContainer()->get(VeiculosFotos::class);
