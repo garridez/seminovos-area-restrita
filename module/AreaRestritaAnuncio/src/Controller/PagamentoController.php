@@ -260,7 +260,7 @@ class PagamentoController extends AbstractActionController
         }
         // Em caso de sucesso no pagamento
         if (isset($response['status']) && $response['status'] == 200) {
-            // Certificado NÃO é emitido aqui: isso consultava a AboutCar (R$ 16) logo após
+            // Certificado NÃO é emitido aqui: isso consultava a 9mobile (R$ 16) logo após
             // CRIAR a cobrança, antes de o pagamento ser confirmado. Quem emite é o
             // pagamentos.seminovos (Node), só quando o pagamento é confirmado.
             if ($dados['metodo'] == 'deposito' && $controle) {

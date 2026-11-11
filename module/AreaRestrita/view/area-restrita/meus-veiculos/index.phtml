@@ -232,7 +232,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                             </div>
                                         <?php /*endif;*/ ?>
                                         <?php if(isset($veiculo['flagCertificado']) && $veiculo['flagCertificado'] == 1):
-                                            // Apontamentos do Certificado Documental (flags 0/1 gravadas pelo cron da AboutCar).
+                                            // Apontamentos do Certificado Documental (flags 0/1 gravadas pelo cron da 9mobile).
                                             $cert = $veiculo['certificados'][0] ?? [];
                                             $apontamentosMapa = [
                                                 'flagSinistro'  => 'Sinistro',
@@ -516,7 +516,7 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                             </div>
                         </div>
                         <?php if (!empty($veiculo['certificadoEmGeracao']) && (int) ($veiculo['flagCertificado'] ?? 0) !== 1) { ?>
-                            <?php /* Já contratado, aguardando a AboutCar: placeholder no lugar da oferta. */ ?>
+                            <?php /* Já contratado, aguardando a 9mobile: placeholder no lugar da oferta. */ ?>
                             <div class="cert-geracao w-100 mb-2">
                                 <i class="fa fa-hourglass-half cert-geracao__icone" aria-hidden="true"></i>
                                 <div>
