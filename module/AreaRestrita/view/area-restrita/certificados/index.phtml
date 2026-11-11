@@ -46,6 +46,19 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
             <i class="link-primary fa fa-print mr-1"></i>
             Imprimir
         </a>
+        <?php if ($this->certificadoPdf): ?>
+            <?php /* PDF para baixar e compartilhar (o mesmo do app): public/certificado-pdf/certificado-pdf.js */ ?>
+            <button type="button" class="btn" data-pdf-certificado
+                    data-baixar-agora="<?= $this->baixarPdfAgora ? '1' : '0' ?>"
+                    title="Baixar o certificado em PDF para mandar a quem vai comprar">
+                <i class="link-primary fa fa-file-pdf mr-1"></i>
+                Baixar PDF
+            </button>
+            <label class="btn mb-0 font-weight-normal" title="Desmarcado: chassi, Renavam e motor aparecem só com os 4 últimos dígitos">
+                <input type="checkbox" class="mr-1" data-pdf-completo>
+                Chassi e Renavam completos no PDF
+            </label>
+        <?php endif; ?>
     </div>
 </div>
 <div class="container-fluid to-print">
@@ -627,3 +640,8 @@ if (isset($dadosCertificados['dadosBasicos']['body']['data']) && $dadosCertifica
         </div>
     </div>
 </div>
+
+<?php if ($this->certificadoPdf): ?>
+<script type="application/json" id="certificado-pdf-dados"><?= json_encode($this->certificadoPdf, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_INVALID_UTF8_SUBSTITUTE) ?></script>
+<script src="/certificado-pdf/certificado-pdf.js?v=1" defer></script>
+<?php endif; ?>

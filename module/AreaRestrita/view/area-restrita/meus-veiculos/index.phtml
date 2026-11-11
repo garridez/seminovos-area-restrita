@@ -263,9 +263,17 @@ $nome = $this->userInfo('responsavelNome') ?? $this->userInfo('nomeFantasia') ??
                                         <div class="bg-master-lightest mt-1 padding-15 cert-box<?= $apontamentos ? ' cert-box--alerta' : '' ?>">
                                             <div class="cert-box__head">
                                                 <b class="text-s-2"><i class="fa fa-shield mr-1"></i> Certificado Documental</b>
-                                                <a href="/certificados/placa/<?php echo $veiculo['placa']?>" class="cert-box__ver" title="Abrir o certificado completo">
-                                                    <i class="fa fa-eye mr-1"></i>Ver certificado
-                                                </a>
+                                                <?php $urlCertificado = '/certificados/placa/' . rawurlencode((string) $veiculo['placa']) . '?v=' . (int) $veiculo['idVeiculo']; ?>
+                                                <span>
+                                                    <a href="<?= $this->escapeHtmlAttr($urlCertificado) ?>" class="cert-box__ver" title="Abrir o certificado completo">
+                                                        <i class="fa fa-eye mr-1"></i>Ver certificado
+                                                    </a>
+                                                    <?php if ($cert && !$certProcessando): ?>
+                                                        <a href="<?= $this->escapeHtmlAttr($urlCertificado . '&pdf=1') ?>" class="cert-box__ver ml-2" title="Baixar o certificado em PDF para mandar a quem vai comprar">
+                                                            <i class="fa fa-file-pdf mr-1"></i>PDF
+                                                        </a>
+                                                    <?php endif; ?>
+                                                </span>
                                             </div>
 
                                             <?php if ($apontamentos): ?>
