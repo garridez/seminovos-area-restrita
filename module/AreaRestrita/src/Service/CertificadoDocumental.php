@@ -180,30 +180,44 @@ final class CertificadoDocumental
     }
 
     /**
-     * Versão com motor e válvulas, sem repetir o que o anunciante escreveu (a mesma regra do
-     * site: module/Site/src/Helpers/VersaoVeiculo.php).
+     * Versão com motor e válvulas, sem repetir o que o anunciante escreveu nem pôr o motor do
+     * cadastro ao lado de outro que ele escreveu; moto fica só com o texto do anunciante (a mesma
+     * regra do site: module/Site/src/Helpers/VersaoVeiculo.php; mudou lá, mude aqui).
      */
     public static function versaoVeiculo(array $v): string
     {
         $caracteristica = self::texto($v['caracteristica'] ?? '') ?? '';
-        if ((int) ($v['idCombustivel'] ?? 0) === 11) {
+        // Anúncio salvo com o motor e as válvulas já na frente do texto ("2.0 8v 2.0 VVT-IE XEI").
+        $prefixo = '/^(\d{1,2}[.,]\d)\s+\d{1,2}\s*v\s+(?=\1(?!\d))/iu';
+        $caracteristica = preg_replace($prefixo, '', $caracteristica) ?? $caracteristica;
+        if ((int) ($v['idCombustivel'] ?? 0) === 11 || (int) ($v['idTipo'] ?? $v['tipoVeiculo'] ?? 0) === 3) {
             return $caracteristica;
         }
-        $partes = [];
-        $motor = self::texto($v['motor'] ?? '') ?? '';
         $vazio = static fn (string $x): bool => $x === '' || preg_match('/^0+([.,]0+)?$/', $x) === 1;
-        $padraoMotor = str_replace('\\.', '[.,]', preg_quote($motor, '/'));
-        if (!$vazio($motor) && !preg_match('/(^|[^\\d.,])' . $padraoMotor . '(?!\\d)/iu', $caracteristica)) {
-            $partes[] = $motor;
+        $motor = self::texto($v['motor'] ?? '') ?? '';
+        $valvulas = preg_replace('/\s*v$/i', '', self::texto($v['valvula'] ?? '') ?? '') ?? '';
+        $valvulas = $vazio($valvulas) || preg_match('/(?<!\w)\d{1,2}\s*(?:v(?!\pL)|v[aá]lv)/iu', $caracteristica)
+            ? ''
+            : $valvulas . 'v';
+
+        // Motor escrito no texto, com o que vem grudado ("1.0L", "2.0T", "1.8/1.8"): um dígito antes
+        // do ponto ("24.280" e "45.5 mil km" não são motor) ou o próprio motor do cadastro.
+        $motores = '\d[.,]\d';
+        if (preg_match('/^(\d{1,2})[.,](\d)$/', $motor, $mm)) {
+            $motores .= '|' . $mm[1] . '[.,]' . $mm[2];
         }
-        $valvulas = preg_replace('/\\s*v$/i', '', self::texto($v['valvula'] ?? '') ?? '') ?? '';
-        if (
-            !$vazio($valvulas)
-            && !preg_match('/(^|\\D)' . preg_quote($valvulas, '/') . '\\s*(v(?![a-z])|v[aá]lv)/iu', $caracteristica)
-        ) {
-            $partes[] = $valvulas . 'v';
+        $motorNoTexto = '/(?<![\w.,])(?:' . $motores . ')(?!\d)[^\s,;()]*?(?=\.*(?:[\s,;()]|$))/u';
+
+        // O anunciante já escreveu um motor: vale o dele; as válvulas entram logo depois.
+        if (preg_match($motorNoTexto, $caracteristica, $m, PREG_OFFSET_CAPTURE)) {
+            if ($valvulas === '') {
+                return $caracteristica;
+            }
+            $fim = $m[0][1] + strlen($m[0][0]);
+
+            return trim(substr($caracteristica, 0, $fim) . ' ' . $valvulas . substr($caracteristica, $fim));
         }
-        $partes[] = $caracteristica;
+        $partes = [$vazio($motor) ? '' : $motor, $valvulas, $caracteristica];
 
         return trim(implode(' ', array_filter($partes, static fn (string $p): bool => $p !== '')));
     }
