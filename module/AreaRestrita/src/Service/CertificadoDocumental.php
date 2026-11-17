@@ -327,9 +327,29 @@ final class CertificadoDocumental
         if ($t !== '' && !mb_check_encoding($t, 'UTF-8')) {
             $t = mb_convert_encoding($t, 'UTF-8', 'ISO-8859-1');
         }
+        $t = self::semEntidades($t);
         $t = trim(preg_replace('/\s+/u', ' ', $t) ?? '');
 
         return $t === '' ? null : $t;
+    }
+
+    /**
+     * A 9mobile manda alguns textos com códigos HTML ("Ve&iacute;culo", "N&Atilde;O"), que
+     * apareciam assim no app e no PDF. Converte para as letras. "&lacute;" vem no lugar de
+     * "&Iacute;" (VE&lacute;CULO = VEÍCULO): o I maiúsculo virou l no sistema deles.
+     */
+    private static function semEntidades(string $t): string
+    {
+        if (!str_contains($t, '&')) {
+            return $t;
+        }
+        $t = str_replace(['&lacute;', '&Lacute;'], '&Iacute;', $t);
+        // Duas vezes: às vezes vem "&amp;atilde;".
+        for ($i = 0; $i < 2 && str_contains($t, '&'); $i++) {
+            $t = html_entity_decode($t, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+
+        return $t;
     }
 
     private static function data(mixed $valor): ?string
