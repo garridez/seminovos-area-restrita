@@ -9,6 +9,14 @@ export const seletor = '.c-auth.a-login';
  * @param {JQueryStatic} $
  */
 export const callback = ($) => {
+    // Login com Google recusado (token não aceito pela API, API fora): avisa em vez de não fazer nada.
+    function avisarErroGoogle() {
+        $('#modalErroSenha .msg-principal').html(
+            'Não foi possível entrar com o Google agora. Tente de novo em alguns minutos ou entre com seu e-mail e senha.',
+        );
+        $('#modalErroSenha').modal('show');
+    }
+
     window.gsi_login_callback = function (response) {
         const urlParams = new URLSearchParams(window.location.search);
         const redirectBase64 = urlParams.get('redirect');
@@ -54,8 +62,11 @@ export const callback = ($) => {
                         .trigger('submit');
                     return;
                 }
+                // Antes não mostrava nada: o popup fechava e a pessoa ficava parada no login.
+                avisarErroGoogle();
             })
             .catch(function (e) {
+                avisarErroGoogle();
                 var html = e.responseText;
                 try {
                     html = JSON.parse(html);

@@ -61,12 +61,15 @@ class AuthAdapter implements AdapterInterface
     {
         /** @var Response */
         $res = $this->apiClient->loginPost($this->data);
-        if ($res->status === 404) {
+        if ((int) $res->status === 404) {
             $data = $res->getData();
             return new AuthResult(AuthResult::FAILURE_IDENTITY_NOT_FOUND, $data);
         }
 
-        if ($res->status !== 200) {
+        if ((int) $res->status !== 200) {
+            // A tela só mostra "não foi possível": o motivo da api2 fica no log do container.
+            error_log('[login google] api2 recusou: status=' . var_export($res->status, true)
+                . ' detalhe=' . substr((string) ($res->detail ?? $res->message ?? $res->getBody()), 0, 300));
             return new AuthResult(AuthResult::FAILURE, 0);
         }
 
